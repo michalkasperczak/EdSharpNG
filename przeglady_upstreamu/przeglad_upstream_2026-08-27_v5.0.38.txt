@@ -1,0 +1,129 @@
+Przegląd zmian u autora EdSharpa - stan na 27 sierpnia 2026
+
+Krótko na początek: od naszego ostatniego meldunku autor wydał piętnaście
+nowych wersji, do 5.0.38 włącznie. Najważniejsza wiadomość nie jest jednak
+w liczbie wersji, a w tym, że autor doszedł do tych samych funkcji, które my
+zrobiliśmy dla Ciebie - i przypisał im częściowo te same klawisze. Są
+rozstrzygnięcia, które musisz podjąć Ty, bo dotyczą tego, co usłyszysz po
+naciśnięciu klawisza. Niżej wszystko po kolei.
+
+
+1. Nasze zgłoszone poprawki zostały u autora odrzucone
+
+Pięć propozycji, które wysłaliśmy do autora w czerwcu, zostało zamkniętych
+19 sierpnia bez przyjęcia. Wśród nich był tryb przeglądania Markdown
+włączany Escape'em oraz działania na plikach w liście ostatnio otwieranych.
+Autor ich nie przyjął, ale zaraz potem zrobił podobne rzeczy po swojemu.
+Wniosek praktyczny: nasze funkcje pozostają tylko nasze i utrzymujemy je
+sami. Nic z tego, co u Ciebie działa, nie zniknie - ale też nie licz na to,
+że autor będzie to za nas rozwijał.
+
+
+2. Co autor faktycznie dorobił, w kolejności wagi dla Ciebie
+
+Sprawdzanie pisowni bez pakietu Office. F7 chodzi po dokumencie błąd po
+błędzie, wymawia i literuje słowo, mówi, w którym miejscu przebiegu jesteś,
+i daje propozycje w polu, które można edytować. Słownik jest w instalatorze,
+Word nie jest potrzebny. Shift+F7 daje synonimy pogrupowane znaczeniami.
+
+Rozmowa z modelem AI działa na Twoim komputerze, bez konta i bez wysyłania
+czegokolwiek w sieć. F12 zadaje pytanie, Shift+F12 pyta o otwarty tekst.
+Tłumaczenie między osiemnastoma językami pod Alt+Shift+F7 działa na tym
+samym silniku - stara komenda tłumaczenia od lat nie działała, bo opierała
+się na usłudze sieciowej, którą wycofano.
+
+Otwieranie PDF-ów zostało przebudowane. PDF zachowuje teraz nagłówki, listy
+i tabele, więc da się po nim chodzić blok po bloku, a nie czytać go jak jedną
+ścianę tekstu. Droga przez Worda zniknęła.
+
+Mniej gadania. Autor doszedł do tego samego wniosku co my: program nie
+powinien mówić tego, co czytnik ekranu i tak przeczyta. Tytuły okien i nazwy
+kontrolek zostawia czytnikowi, mówi tylko to, co wie sam. Komunikaty idą
+jednym głosem, nie dwoma.
+
+Dwanaście samouczków pod Control+Shift+F1, ułożonych według rodzaju pracy,
+a nie według funkcji programu.
+
+
+3. Poprawka, która unieważnia to, co powiedzieliśmy Ci wcześniej
+
+Autor naprawił rzecz, o której warto wiedzieć, bo dotyka każdego, kto ma
+EdSharpa zainstalowanego od dawna. Opisy klawiszy żyły dotąd wyłącznie w
+pliku obok programu, a instalator takiego pliku nie nadpisuje. Skutek był
+taki, że komputer, na którym EdSharp był już kiedyś zainstalowany, po
+aktualizacji nadal nie znał nowych komend - w trybie opisywania klawiszy
+słyszało się "brak opisu". Autor przeniósł opisy do samego programu; plik
+nadal jest czytany i nadal ma pierwszeństwo, gdy ktoś własne opisy sobie
+dopisał. Czyli: aktualizacja na starej instalacji od teraz mówi prawdę.
+
+Druga poprawka tego samego rodzaju: zablokowany konwerter nie zawiesza już
+programu na dobre. Dostaje dwie minuty i jest przerywany, a Ty widzisz
+komunikat błędu zamiast martwego okna.
+
+Ważne ostrzeżenie od samego autora: wersje od 5.0.11 do 5.0.19 zawierają
+program, który się nie uruchamia, i nie należy ich instalować. Jeśli gdzieś
+masz ściągnięty instalator z tego przedziału, skasuj go.
+
+
+4. Konflikty klawiszy - tu potrzebuję Twojej decyzji
+
+Porównałem klawisz po klawiszu naszą wersję z wersją 5.0.38 autora. Wyszło
+siedem miejsc, w których ten sam klawisz robi u nas co innego niż u autora.
+Dwa z nich znaliśmy już wcześniej, pięć jest nowych.
+
+Nowe konflikty:
+
+Control+F9 - u autora podgląd Markdown, u nas powiedzenie, jaki kompilator
+jest wybrany.
+
+Alt+F9 - u autora sprawdzanie Markdown pod kątem błędów, u nas doklejanie ze
+schowka.
+
+Control+F12 - u autora skopiowanie ścieżki dziennika sesji, u nas zawijanie
+wierszy.
+
+Control+Shift+F2 - u autora lista przykładowych programów, u nas przejście
+do poprzedniej zmiany wyrównania pionowego.
+
+Control+L - u autora ten sam klawisz obsługuje teraz dwie komendy naraz, co
+samo w sobie wygląda na jego przeoczenie.
+
+Konflikty, które znaliśmy już przy wersji 5.0.21 i które się nie zmieniły:
+
+Alt+Shift+T - u nas tworzy markdownowy spis treści z odsyłaczami, ten
+zrobiony na Twoje zamówienie. U autora wstawia zwykły spis treści na
+początek dokumentu, bez odsyłaczy.
+
+F6 - u nas otwiera drzewo nawigacji po dokumencie, u autora skacze z pozycji
+spisu treści do odpowiedniego miejsca w tekście.
+
+Jest też grupa nowych klawiszy autora, które u nas są po prostu wolne i nic
+nie psują: F12 i Shift+F12 na rozmowę z AI, Control+Shift+F1 na samouczki,
+Alt+Shift+F9 na uruchamianie bloków kodu.
+
+
+5. Na co czekam
+
+Nie ruszyłem naszego kodu ani o linijkę - przenoszenie czegokolwiek od
+autora do nas to Twoja decyzja, nie moja. Historia u autora została
+przepisana od zera, więc nie ma żadnego automatu, który to złączy; każda
+funkcja idzie ręcznie, pojedynczo.
+
+Proszę o rozstrzygnięcie trzech rzeczy:
+
+Pierwsza. Czy przy naszych siedmiu spornych klawiszach zostajemy na naszym
+ustawieniu, czy idziemy za autorem? Argument za pozostaniem przy naszym:
+nauczyłeś się tych klawiszy, a nasze wersje robią więcej, zwłaszcza spis
+treści z odsyłaczami i drzewo nawigacji. Argument za autorem: kto przesiądzie
+się kiedyś na jego wersję, nie będzie musiał przestawiać palców. Moje zdanie:
+zostać przy naszym, bo te funkcje nie są równoważne.
+
+Druga. Czy któraś z nowych rzeczy autora jest dla Ciebie na tyle wartościowa,
+żeby ją przenieść do naszej wersji? Najpoważniejsi kandydaci to sprawdzanie
+pisowni bez Office i lepsze otwieranie PDF-ów. To duża praca, więc nie
+zaczynam bez Twojego słowa.
+
+Trzecia. Czy zrobić przy naszej wersji to samo, co autor zrobił z opisami
+klawiszy - czyli wpisać opisy do samego programu, żeby stara instalacja po
+aktualizacji nie milczała? Zmiana jest mała i czysto na plus, ale i tak
+pytam, bo dotyka tego, co słyszysz.

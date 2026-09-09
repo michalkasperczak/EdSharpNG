@@ -1,0 +1,94 @@
+EdSharpNG 5.0.56: zakładki z nazwą
+
+Czeka u Ciebie 5 pytań naraz (lista linków, przypisy, zakładki z ulubionymi i
+jedno nowe). Wystarczy jedna odpowiedź na wszystkie, choćby literami. Ta paczka
+nie jest ponaglaniem: to gotowa praca z tego samego zgłoszenia, w którym pytałeś
+o Control+Shift+B.
+
+CO WESZŁO
+
+Zakładki z nazwą działają, na tych klawiszach, o które pytałeś. Control+Shift+B
+wstawia zakładkę z nazwą w bieżącym wierszu, Alt+Shift+B pokazuje ich listę.
+Oba klawisze były wolne: pierwszy po usuniętej nawigacji po blokach kodu, drugi
+po zdjętym nagrywaniu płyt.
+
+Lista jest DRUGA, osobna. Alt+B pokazuje wyłącznie zakładki zwykłe,
+Alt+Shift+B wyłącznie nazwane, żadne okno nie pyta, którego rodzaju chcesz.
+Tak ustaliliśmy i tak jest zrobione.
+
+Nazwa jest obowiązkowa, a w polu czeka treść bieżącego wiersza jako propozycja,
+więc najczęściej wystarczy Enter. Stojąc w wierszu, który już ma zakładkę,
+ten sam klawisz zmienia jej nazwę, a wyczyszczenie pola zakładkę zdejmuje.
+Tytuł okna mówi, który to przypadek: "Set Named Bookmark" albo "Rename
+Bookmark". Na liście Delete zdejmuje pozycję bez wychodzenia z okna.
+
+Wiersz listy brzmi "nazwa, line N", czyli treść przed współrzędną, tak jak
+w tabelach i w spisie treści.
+
+CO JEST INACZEJ NIŻ PRZY ZAKŁADKACH ZWYKŁYCH, I DLACZEGO WARTO O TYM WIEDZIEĆ
+
+Zakładki z nazwą trzymamy w OSOBNEJ sekcji pliku ustawień. Skutek jest dla
+Ciebie korzystny: zdjęcie pliku z ulubionych czyści zakładki zwykłe (o tym
+wiesz, program mówi to wprost i to jest treść pytania, które u Ciebie czeka),
+ale nazwanych NIE rusza. Nie musiałem przy tym zmieniać formatu pliku ustawień,
+który masz na dysku, bo nowa sekcja tylko dochodzi.
+
+Druga różnica: zakładka z nazwą pamięta NUMER WIERSZA, a nie pozycję znaku.
+Dopisanie słowa w środku akapitu jej nie rusza. Zwykłe zakładki mają
+pozycję znaku i tego nie ruszałem.
+
+CO ZMIERZYŁEM
+
+Sonda refleksyjna na zbudowanej binarce, z kontrolą negatywną na binarce 5.0.55:
+46 sprawdzeń, wszystkie przechodzą, i każde "to jest w nowej wersji" ma parę
+"tego nie było w poprzedniej".
+
+Drugi pomiar, na prawdziwym pliku ustawień, przez metody z binarki: 27
+sprawdzeń. Sprawdzone między innymi, że lista jest sortowana po wierszu a nie po
+kolejności zapisu, że zakładki innego pliku nie wyciekają, że zmiana nazwy nie
+mnoży pozycji, że trzydzieści zakładek mieści się na liście bez ucięcia, i że
+plik o nazwie z polskimi znakami ma swoje zakładki widoczne (to ta stara
+pułapka z kodowaniem pliku ustawień, która kiedyś gubiła Ci ulubione).
+
+Kontrola kodu na sześciu warstwach: pole klasy, pozycja menu, wstawienie do
+menu, obsługa klawisza, metody magazynu i to, że każda z nich jest naprawdę
+wołana. 56 sprawdzeń. Porównanie pełnej mapy klawisz - komenda przed i po:
+dokładnie dwa nowe skróty, żaden nie zmienił właściciela, zero podwójnych
+przypisań.
+
+Opisy mówione poprawione w trzech plikach, więc Control+F1 czyta prawdę.
+Przy okazji znalazłem zaległy rozjazd: plik hotkeys.txt nie miał wcale opisów
+zakładek sekwencyjnych z Shift+PageUp i Shift+PageDown, choć drugi plik je
+miał. Dopisane, oba pliki są teraz zgodne co do znaku.
+
+CZEGO NIE ZMIERZYŁEM
+
+Nie sprawdzę u siebie, jak Twój czytnik czyta wiersz listy przy długiej nazwie
+ani czy propozycja nazwy z treści wiersza jest wygodna. Nie mam też sposobu
+sprawdzić, czy numer wiersza jako punkt zaczepienia zachowa się dobrze przy
+Twoim sposobie edycji dużych plików - to widać dopiero w pracy.
+
+CZEGO ŚWIADOMIE NIE ZROBIŁEM
+
+Nie ruszałem drugiej połowy Twojego zgłoszenia z rodziny Control z literami:
+Control+U, Control+I, Control+Y, Control+E, Control+X, Control+Shift+Z i pytania
+"co jeszcze sensownie usunąć". To przegląd kilkudziesięciu komend i propozycje
+zdjęć, czyli osobna, większa porcja. Wrzucenie jej do tej samej wersji co
+zakładki utrudniłoby Ci test i cofnięcie, gdyby coś było nie po Twojej myśli.
+Wchodzi w następnej iteracji.
+
+Nie zmieniałem magazynu zakładek ZWYKŁYCH, które nadal dzielą sekcję z
+ulubionymi. To jest właśnie treść pytania, które u Ciebie czeka: rozdzielić je
+(zmiana formatu pliku ustawień, który masz na dysku) czy zostawić z jawnym
+komunikatem. Nie zgaduję.
+
+Pliku z zadaniami testowymi nie dołączam, jak prosiłeś. Rozdział 34 z trzynastu
+punktów jest napisany i leży w repozytorium, wyślę na żądanie.
+
+NOWE PYTANIE, KRÓTKIE
+
+Przy Control+Shift+B na nowej zakładce pole nazwy dostaje propozycję z treści
+wiersza. Wolisz:
+A. propozycję z wiersza, jak teraz (moja rekomendacja: najczęściej wystarcza
+   Enter, a jak nie pasuje, to i tak piszesz swoje),
+B. puste pole zawsze.
