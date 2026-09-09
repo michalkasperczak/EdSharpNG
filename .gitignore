@@ -1,0 +1,49 @@
+# EdSharp .gitignore
+# Files produced by BuildEdSharp.cmd, or fetched by it, or built by Inno Setup,
+# are reproducible and are not committed. A clone plus BuildEdSharp.cmd (and
+# Inno Setup, for the installer) regenerates everything below.
+
+# Compiled output
+EdSharp.exe
+EdSharp.dll
+*.pdb
+BuildEdSharp.log
+
+# Pomiary z katalogu testy sa kompilowane z .cs obok nich (csc /r:EdSharpNG.exe)
+/testy/*.exe
+
+# Installer output (built from EdSharp_Setup.iss with Inno Setup)
+EdSharp_Setup.exe
+
+# Encoding-detection library fetched by FetchUde.ps1
+Ude.dll
+
+# Third-party Convert tools fetched by FetchConvertTools.ps1
+/Convert/astyle/
+/Convert/Pandoc/
+/Convert/Tidy/
+/Convert/liblouis/
+/Convert/Xpdf/
+/Convert/Tools.lock
+
+# Pandoc configuration backup written by ModernizePandocConfig.ps1
+*.pandoc-bak
+
+# Scratch files
+temp.txt
+temp.htm
+*.tmp
+
+# Artefakty wydania (budowane lokalnie, nie wersjonowane)
+dist/
+EdSharp_Setup.exe
+EdSharp_setup.exe
+*.xlsx
+EdSharpNG.exe
+EdSharpNG-spellcheck.nvda-addon
+
+# Wyniki pomiarow spisu tresci (odtwarzalne: testy/pomiar_eksportu_spisu.py)
+/testy/pomiar_spisu/ze_spisem.*
+/testy/pomiar_spisu/zepsuty.*
+/testy/pomiar_spisu/proba*.docx
+/testy/pomiar_spisu/proba*.html

@@ -1,0 +1,53 @@
+=== przygotowanie ===
+
+=== krok 1: otwieramy kreator tabeli (Control+Shift+T) ===
+   MOWA: Insert Table | <FocusLossCancellableSpeechCommand>
+   MOWA: Table cells | tabela | Alt+ | <CharacterModeCommand> | t | <CharacterModeCommand> | <FocusLossCancellableSpeechCommand>
+   MOWA: Wiersz 0 | wiersz | <FocusLossCancellableSpeechCommand>
+   MOWA: Column 1 Wiersz 0 | (zerowy) | zaznaczony | <FocusLossCancellableSpeechCommand>
+   fokus po otwarciu: rola=29 klasa='WindowsForms10.Window.8.app.0.34f5582_r6_ad1' nazwa='Column 1 Wiersz 0'
+  -> [OK   ] pierwsza wypowiedz: 'Insert Table | <FocusLossCancellableSpeechCommand>'
+
+=== krok 2: wpisujemy tresc w dwie kolumny i dwa wiersze ===
+
+=== TEST A: strzalka w PRAWO - tresc, potem kolumna, potem wiersz ===
+   pozycje w mowie: tresc(30)=-1 column=-1 row=-1
+  -> [UWAGA] BRAK MOWY
+
+=== TEST B: strzalka w GORE - tresc, potem wiersz, potem kolumna ===
+   MOWA: Table cells | tabela | Alt+ | <CharacterModeCommand> | t | <CharacterModeCommand> | <FocusLossCancellableSpeechCommand>
+   MOWA: Wiersz 1 | wiersz | <FocusLossCancellableSpeechCommand>
+   MOWA: Column 2 Wiersz 1 | 3Ala0 | niezaznaczony | <FocusLossCancellableSpeechCommand>
+   MOWA: Wiersz 0 | wiersz | <FocusLossCancellableSpeechCommand>
+   MOWA: Column 2 Wiersz 0 | Wiek | zaznaczony | <FocusLossCancellableSpeechCommand>
+   pozycje w mowie: tresc(Wiek)=332 column=176 row=-1
+  -> [UWAGA] mowa: 'Table cells | tabela | Alt+ | <CharacterModeCommand> | t | <CharacterModeCommand> | <FocusLossCancellableSpeechCommand> Wiersz 1 | wiersz | <FocusLossCancellableSpeechCommand> Colu'
+  -> [UWAGA] row=-1 column=176
+
+=== TEST C: Delete czysci tresc komorki ===
+  -> [UWAGA] mowa: ''
+   MOWA po powrocie: Wiersz 1 | wiersz | <FocusLossCancellableSpeechCommand>
+   MOWA po powrocie: Column 2 Wiersz 1 | 3Ala0 | zaznaczony | <FocusLossCancellableSpeechCommand>
+   MOWA po powrocie: Wiersz 0 | wiersz | <FocusLossCancellableSpeechCommand>
+   MOWA po powrocie: Column 2 Wiersz 0 | Wiek | zaznaczony | <FocusLossCancellableSpeechCommand>
+  -> [UWAGA] mowa po powrocie: 'wiersz 1 | wiersz | <focuslosscancellablespeechcommand> column 2 wiersz 1 | 3ala0 | zaznaczony | <focuslosscancellablespeechcommand> wiersz 0 | wiersz | <focuslosscancellablespeech'
+
+=== sprzatanie: Escape (bez wstawiania) ===
+
+==============================================================
+PODSUMOWANIE: mowa czytnika w siatce kreatora tabeli
+==============================================================
+  [OK   ] KONTROLA POZYTYWNA: czytnik mowi przy otwarciu okna
+          pierwsza wypowiedz: 'Insert Table | <FocusLossCancellableSpeechCommand>'
+  [UWAGA] A ruch w prawo cokolwiek mowi
+          BRAK MOWY
+  [UWAGA] B tresc komorki jest PIERWSZA po ruchu w gore
+          mowa: 'Table cells | tabela | Alt+ | <CharacterModeCommand> | t | <CharacterModeCommand> | <FocusLossCancellableSpeechCommand> Wiersz 1 | wiersz | <FocusLossCancellableSpeechCommand> Colu'
+  [UWAGA] B po tresci wiersz PRZED kolumna
+          row=-1 column=176
+  [UWAGA] C Delete cokolwiek mowi (potwierdzenie czyszczenia)
+          mowa: ''
+  [UWAGA] C po Delete komorka jest PUSTA (nie slychac starej tresci)
+          mowa po powrocie: 'wiersz 1 | wiersz | <focuslosscancellablespeechcommand> column 2 wiersz 1 | 3ala0 | zaznaczony | <focuslosscancellablespeechcommand> wiersz 0 | wiersz | <focuslosscancellablespeech'
+
+zaliczone: 1 z 6

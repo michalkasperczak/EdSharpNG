@@ -1,0 +1,20 @@
+# Kotwice naglowkow ZMIERZONE pandokiem pandoc 3.10.2
+# tytul<TAB>kotwica
+Instalacja	instalacja
+Pierwsze kroki	pierwsze-kroki
+Zażółć gęślą jaźń	zażółć-gęślą-jaźń
+A, B: C!	a-b-c
+Rozdział 1 (wstęp)	rozdział-1-wstęp
+100 lat	100-lat
+-- kreski --	---kreski---
+Wersja 5.0.25	wersja-5025
+proste_z_podkresleniem	proste_z_podkresleniem
+Ala & Ola	ala--ola
+Koniec	koniec
+Tytuł z myślnikiem - i dalej	tytuł-z-myślnikiem---i-dalej
+Slash / backslash pipe	slash--backslash-pipe
+Kropka. Przecinek, Srednik;	kropka-przecinek-srednik
+MiXeD CaSe	mixed-case
+1. Punkt	1-punkt
+Ą	ą
+Test kod i pogrubienie	test-kod-i-pogrubienie

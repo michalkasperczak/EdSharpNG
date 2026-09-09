@@ -1,0 +1,6 @@
+Plik zwyklego tekstu, celowo NIE Markdown.
+
+# Ten wiersz wyglada jak naglowek Markdown, ale plik ma rozszerzenie txt,
+wiec komenda spisu tresci ma go NIE ruszac.
+
+Sluzy do punktu 15.4 listy testow.

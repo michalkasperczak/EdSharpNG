@@ -1,0 +1,6 @@
+# Bez kreskek
+
+| Nazwa |
+| Ala |
+
+---
