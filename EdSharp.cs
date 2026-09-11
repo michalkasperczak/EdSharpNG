@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.76";
+public const string VersionString = "5.0.77";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1081,7 +1081,7 @@ public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReve
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
 public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
-public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReportProblem;
+public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem;
 public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
 
@@ -1834,8 +1834,9 @@ menuHelpElevateVersion = CreateMenuItem("Elevate Version", "F11", menuItem_Click
 // a nie w cudzej stronie internetowej, bo tester nie ma czym jej znalezc.
 // Skrot Alt+Shift+F1 - jest wolny (sprawdzone na liscie wszystkich skrotow) i
 // stoi obok Alt+F1 (About), gdzie uzytkownik szuka rzeczy o samym programie.
+menuHelpReinstall = CreateMenuItem("Reinstall Current Version", "", menuItem_Click, "frame speak");
 menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", menuItem_Click, "frame silent");
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReportProblem});
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuDelete, menuNavigate, menuQuery, menuMisc, menuWindow, menuHelp});
@@ -6798,6 +6799,10 @@ if (menuItem == menuHelpElevateVersion) {
 ElevateVersion();
 }
 
+if (menuItem == menuHelpReinstall) {
+ElevateVersion(true);
+}
+
 if (menuItem == menuHelpReportProblem) {
 ReportProblem();
 }
@@ -7505,7 +7510,11 @@ rtb.Index = iStart;
 }
 } // Thesaurus method
 
-public void ElevateVersion() {
+// bForce = user SWIADOMIE wybral ponowna instalacje biezacej wersji
+// (menu Reinstall Current Version).  Przy zwyklym sprawdzaniu aktualizacji
+// (F11) bForce jest false i rownosc wersji konczy sie samym komunikatem.
+public void ElevateVersion() { ElevateVersion(false); }
+public void ElevateVersion(bool bForce) {
 // Check GitHub for the latest EdSharp release and, if the user agrees, download
 // and run its installer.  This replaces the old AppStamp.ini / Win32.Url2File
 // mechanism with the GitHub Releases approach used by the sibling DbDo project.
@@ -7546,13 +7555,26 @@ return;
 string sLocal = App.VersionString;
 string sLatest = sTag.TrimStart('v', 'V').Trim();
 int iCompare = Util.CompareVersions(sLatest, sLocal);
+// GDY WERSJA JEST AKTUALNA, NIE PYTAMY O NIC (poprawka 11.09.2026).
+// Do tej pory rownosc wersji konczyla sie pytaniem "Download and install
+// the latest release from the web now?" - czyli program pytal user, czy
+// pobrac to, co juz ma.  Michal zglosil to wprost: "to nie powinno byc
+// tak/nie, jesli mam najnowsza".  Mial racje: pytanie bez sensownej
+// odpowiedzi to nie ostroznosc, tylko przerzucanie decyzji na user.
+// Teraz mowimy jedno zdanie i konczymy.  Ponowne pobranie tej samej
+// wersji zostaje mozliwe, ale jako SWIADOMY wybor z menu (Reinstall
+// Current Version), a nie jako pytanie, ktore wyskakuje samo.
+if (iCompare == 0 && !bForce) {
+Dialog.Show("Elevate Version", "EdSharpNG " + sLocal + " is up to date.");
+return;
+}
 string sDefault = "N";
 string sMsg;
 if (iCompare > 0) {
 sMsg = "A newer EdSharp is available.\nInstalled: " + sLocal + "\nAvailable: " + sLatest + "\n\nDownload and run the new installer now?";
 sDefault = "Y";
 }
-else if (iCompare == 0) sMsg = "EdSharp's version number (" + sLocal + ") matches the latest release (" + sLatest + "), so no newer version was detected.\nA newer build may still have been published under the same version number.\n\nDownload and install the latest release from the web now?";
+else if (iCompare == 0) sMsg = "EdSharpNG " + sLocal + " is already the latest release.\n\nDownload and install it again anyway?";
 else sMsg = "EdSharp's version number (" + sLocal + ") is higher than the latest public release (" + sLatest + ").\n\nDownload and install the latest public release from the web anyway?";
 if (Dialog.Confirm("Elevate Version", sMsg, sDefault) != "Y") return;
 
