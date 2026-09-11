@@ -51,6 +51,13 @@ public class App : WindowsFormsApplicationBase {
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
 public const string VersionString = "5.0.73";
+// GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
+// NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
+// gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
+// ustawien).  Adres e-mail opiekuna programu NIE jest wpisany w kod - siedzi w
+// pliku ustawien pod kluczem ReportMail, bo adres prywatny nie ma czego szukac
+// w binarce rozdawanej testerom.
+public const string ReportIssuesUrl = "https://github.com/michalkasperczak/EdSharpNG/issues/new";
 public static App Shell;
 public static MdiFrame Frame;
 public static string ProgramName;
@@ -160,22 +167,22 @@ string sMessage = ex.Message;
 sMessage += "\n\nStack trace:\n" + ex.StackTrace;
 // sMessage += "\nExit EdSharp?\n\nStack trace:\n" + ex.StackTrace;
 // e.ExitApplication = Dialog.Confirm("Confirm", "Unexpected event!\n" + sMessage + ".\nExit EdSharp?", "N") == "Y";
-string[] aButtons = {"&Mail to Developer", "Copy to Clipboard", "Exit EdSharp"};
+string[] aButtons = {"&Report the Problem", "Copy to Clipboard", "Exit EdSharp"};
 string sButton = Dialog.Choose("Unexpected Event", sMessage, aButtons, 0);
 switch (sButton) {
-case "&Mail to Developer" :
+case "&Report the Problem" :
+// ZGLOSZENIE AWARII IDZIE DO NAS, NIE DO AUTORA ORYGINALU (naprawa 11.09.2026).
+// Do tej pory ten przycisk nazywal sie "Mail to Developer" i wysylal awarie
+// EdSharpNG na jamal@EmpowermentZone.com - adres autora programu, z ktorego
+// forkowalismy.  Zgloszenie o NASZEJ zmianie szlo wiec do czlowieka, ktory tego
+// kodu nie pisal i nie moze go naprawic, a my nie dowiadywalismy sie o awarii
+// wcale.  Teraz slad awarii wchodzi do tego samego okna zgloszen, co reszta:
+// z opisem, kopia na dysku i uczciwym komunikatem, czy wyszlo.
 Util.Say("Please add steps to reproduce the problem, if possible.");
-string sSubject = "EdSharp error: " + ex.Message;
-KeyValuePair<string, string>[] aAddresses = new KeyValuePair<string, string>[1];
-string sName = "Jamal Mazrui";
-string sAddress = "jamal@EmpowermentZone.com";
-aAddresses[0] = new KeyValuePair<String, String>(sName, sAddress);
 try {
-MapiMail.SendMail(sSubject, sMessage, aAddresses, null);
+if (App.Shell != null && App.Frame != null) App.Frame.ReportProblem("EdSharp error: " + ex.Message, sMessage);
 }
-catch {
-Util.MailMessage(sAddress, sSubject, sMessage);
-}
+catch {}
 break;
 case "Copy to Clipboard" :
 Util.SetClipboardText(sMessage);
@@ -1068,7 +1075,7 @@ public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReve
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
 public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
-public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion;
+public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReportProblem;
 public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
 
@@ -1106,13 +1113,15 @@ menuFileRecent = CreateMenuItem("Recent Files ...", "Alt+R", menuItem_Click, "fr
 // menu, wiec po jednym nacisnieciu szly DWIE wypowiedzi: najpierw "Toggle
 // Favorite", potem "Added to favorites".  Pierwsza z nich nie niesie zadnej
 // informacji, bo nazwe klawisza uzytkownik zna, a przy przelaczniku wazny jest
-// KIERUNEK zmiany.  Opcja "silent" oddaje nazwe paskowi stanu, a mowi wylacznie
-// AddMessage ze skutkiem.
-menuFileSetFavorite = CreateMenuItem("Toggle Favorite", "Alt+Shift+L", menuItem_Click, "child silent");
+// KIERUNEK zmiany.  Opcja "quiet" nie oddaje nazwy nigdzie - ani mowie, ani
+// paskowi stanu - a mowi wylacznie AddMessage ze skutkiem.  Samo "silent" tu
+// nie wystarczylo: nazwa zostawala na pasku i wracala w mowie razem z
+// komunikatem (poprawione 11.09.2026).
+menuFileSetFavorite = CreateMenuItem("Toggle Favorite", "Alt+Shift+L", menuItem_Click, "child quiet");
 // Clear Favorite tak samo, plus komunikat, ktorego dotad NIE BYLO WCALE: ta
 // komenda kasowala klucz w ciszy, wiec dla niewidomego brzmiala identycznie na
 // pliku ulubionym i na pliku, ktorego na liscie nigdy nie bylo.
-menuFileClearFavorite = CreateMenuItem("Clear Favorite", "", menuItem_Click, "child silent");
+menuFileClearFavorite = CreateMenuItem("Clear Favorite", "", menuItem_Click, "child quiet");
 menuFileListFavorites = CreateMenuItem("List Favorites ...", "Alt+L", menuItem_Click, "frame silent");
 menuFileFind = CreateMenuItem("File Find ...", "Alt+Shift+F", menuItem_Click, "frame speak");
 menuFileSave = CreateMenuItem("&Save", "Control+S", menuItem_Click, "child speak");
@@ -1814,7 +1823,13 @@ menuHelpAlternateMenu= CreateMenuItem("Alternate Menu ...", "Alt+F10", menuItem_
 menuHelpContextMenu= CreateMenuItem("Context Menu ...", "Shift+F10", menuItem_Click, "child silent");
 menuHelpSendToMenu= CreateMenuItem("SendTo Menu ...", "Control+F10", menuItem_Click, "child silent");
 menuHelpElevateVersion = CreateMenuItem("Elevate Version", "F11", menuItem_Click, "frame speak");
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion});
+// ZGLOSZENIE PROBLEMU JAKO POZYCJA MENU POMOC (dolozone 11.09.2026).  Wzorzec z
+// czytnikow ekranu: droga od "cos nie dziala" do zgloszenia ma byc w programie,
+// a nie w cudzej stronie internetowej, bo tester nie ma czym jej znalezc.
+// Skrot Alt+Shift+F1 - jest wolny (sprawdzone na liscie wszystkich skrotow) i
+// stoi obok Alt+F1 (About), gdzie uzytkownik szuka rzeczy o samym programie.
+menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", menuItem_Click, "frame silent");
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReportProblem});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuDelete, menuNavigate, menuQuery, menuMisc, menuWindow, menuHelp});
@@ -2210,7 +2225,11 @@ string sText = oText.ToString();
 Util.Say(sText, bGlobal);
 if (App.CaptureOutput) Util.StringAppend2File(sText + "\r\n", App.TempFile);
 //sText = this.statusBar.Items[0].Text + "\t" + sText;
-sText = this.statusBar.Items[0].Text + "   " + sText;
+// PASEK STANU BEZ WIODACYCH ODSTEPOW, gdy nic na nim nie stalo: przy opcji
+// "quiet" nazwy komendy nie ma, wiec sklejanie dawaloby "   Added to
+// favorites" - trzy spacje, ktore czytnik potrafi wypowiedziec jako pauze.
+string sPrior = this.statusBar.Items[0].Text;
+sText = (sPrior.Length == 0) ? sText : sPrior + "   " + sText;
 SetStatus(sText);
 } // AddMessage method
 
@@ -2625,7 +2644,18 @@ AddMessage(aSummary[2], bDescribeGlobal);
 return;
 }
 
-if (sOptions.Contains(" silent ")) SetStatus(sLabel);
+// OPCJA "quiet": ani mowy, ani nazwy komendy na pasku stanu.
+//
+// "silent" zdejmowalo tylko MOWE, ale nazwe pozycji nadal kladlo na pasek
+// stanu, a AddMessage DOPISUJE swoj komunikat do tego, co na pasku juz
+// stoi.  Po Alt+Shift+L pasek mial wiec "Toggle Favorite   Added to
+// favorites" i stad wracalo slowo "toggle", ktore Kasperczak zglosil
+// powtornie 11.09.2026 ("niepotrzebnie za kazdym razem mowi toggle") -
+// pierwsza poprawka uciszyla mowe, ale nie ruszyla paska.  Przy
+// przelaczniku nazwa komendy nie niesie nic: uzytkownik wie, ktory klawisz
+// nacisnal, a chce uslyszec KIERUNEK zmiany.
+if (sOptions.Contains(" quiet ")) SetStatus("");
+else if (sOptions.Contains(" silent ")) SetStatus(sLabel);
 else SetMessage(sLabel);
 
 MdiChild child = this.Child;
@@ -6762,6 +6792,10 @@ if (menuItem == menuHelpElevateVersion) {
 ElevateVersion();
 }
 
+if (menuItem == menuHelpReportProblem) {
+ReportProblem();
+}
+
 } // menuItem_Click handler
 
 object[] GetChunk() {
@@ -7480,16 +7514,18 @@ public void ElevateVersion() {
 // rodzaj awarii: klawisz nazywa sie "aktualizuj", a odbiera wszystkie nasze
 // funkcje bez jednego slowa ostrzezenia.
 //
-// Nasze repozytorium nie ma jeszcze ZADNEGO wydania (zmierzone: API zwraca 404),
-// bo paczki ida do niego Telegramem.  Dlatego brak wydania nie jest bledem sieci
-// i nie wolno go tak nazwac - komenda mowi wprost, ze nowszej wersji nie ma.
-string sOwnerRepo = "michaldziwisz/EdSharp";
+// REPOZYTORIUM ZMIENIONE NA michalkasperczak/EdSharpNG (11.09.2026).  Poprzednie
+// "michaldziwisz/EdSharp" tez nie bylo nasze i nie mialo ANI JEDNEGO wydania, co
+// zmierzone: API zwracalo 404.  Wydania ida teraz do repozytorium wlasciciela
+// programu, wiec F11 wreszcie ma skad brac paczki.
+string sOwnerRepo = "michalkasperczak/EdSharpNG";
 string sReleasesUrl = "https://github.com/" + sOwnerRepo + "/releases/latest";
 string sName = "EdSharpNG_Setup.exe";
 
 Util.Say("Checking for updates");
 int iHttp;
-string sTag = Util.FetchLatestReleaseTag(sOwnerRepo, out iHttp);
+string sNotes, sAssetUrl;
+string sTag = Util.FetchLatestRelease(sOwnerRepo, sName, out sNotes, out sAssetUrl, out iHttp);
 if (sTag.Length == 0) {
 // DWA ROZNE POWODY, DWA ROZNE KOMUNIKATY.  404 znaczy, ze serwer odpowiedzial
 // i wydania po prostu nie ma - mowic wtedy o "sprawdz polaczenie z internetem"
@@ -7515,11 +7551,44 @@ else sMsg = "EdSharp's version number (" + sLocal + ") is higher than the latest
 if (Dialog.Confirm("Elevate Version", sMsg, sDefault) != "Y") return;
 
 Util.Say("Downloading installer");
-string sUrl = sReleasesUrl + "/download/" + sName;
+// Adres z API wydania; skladanie z nazwy tylko wtedy, gdy API go nie oddalo.
+string sUrl = (sAssetUrl.Length > 0) ? sAssetUrl : (sReleasesUrl + "/download/" + sName);
 string sFile = Homer.Web.download(sUrl, Path.GetTempPath(), sName);
 if (sFile.Length == 0) {
 Dialog.Show("Elevate Version", "The download did not complete.\nYou can download the installer manually from\n" + sReleasesUrl);
 return;
+}
+
+// BEZPIECZNA AKTUALIZACJA ZNACZY SPRAWDZONA PACZKA (dolozone 11.09.2026).
+// W opisie wydania publikujemy sume SHA-256 instalatora.  Tutaj liczymy ja z
+// pobranego pliku i porownujemy.  Instalator, ktory nie zgadza sie z suma, NIE
+// jest uruchamiany - to jedyny moment, w ktorym program moze wykryc, ze zamiast
+// naszej paczki przyszlo cos innego (uszkodzone pobranie, podmiana w drodze).
+// Gdy w wydaniu sumy NIE MA, mowimy to wprost i pytamy o zgode, zamiast cicho
+// pominac kontrole - milczenie kazaloby userowi wierzyc, ze sprawdzenie bylo.
+string sExpected = "";
+Match matchSum = Regex.Match(sNotes == null ? "" : sNotes, "\\b([0-9a-fA-F]{64})\\b");
+if (matchSum.Success) sExpected = matchSum.Groups[1].Value.ToUpperInvariant();
+if (sExpected.Length == 64) {
+Util.Say("Checking the installer");
+string sActual = Util.FileSha256(sFile);
+if (sActual.Length == 0) {
+Dialog.Show("Elevate Version", "The downloaded installer could not be checked, so it was NOT started.\nThe file is here, if you want to inspect it yourself:\n" + sFile);
+return;
+}
+if (sActual != sExpected) {
+// Plik kasujemy: zostawienie w katalogu tymczasowym pliku o nazwie
+// EdSharpNG_Setup.exe, ktory nie jest nasza paczka, samo w sobie jest pulapka.
+try { File.Delete(sFile); } catch {}
+Dialog.Show("Elevate Version", "STOP: the downloaded installer does not match the checksum published with release " + sTag + ".\nIt was NOT started and has been deleted.\n\nThis can mean a broken download, or a file that is not ours.\nTry again later, or download it yourself from\n" + sReleasesUrl);
+return;
+}
+}
+else {
+if (Dialog.Confirm("Elevate Version", "Release " + sTag + " does not publish a checksum, so EdSharp cannot verify that the downloaded installer is genuine.\n\nRun it anyway?", "N") != "Y") {
+Dialog.Show("Elevate Version", "The installer was not started.\nThe downloaded file is here:\n" + sFile);
+return;
+}
 }
 
 Util.Say("Starting installer");
@@ -7533,6 +7602,151 @@ catch (Exception ex) {
 Dialog.Show("Elevate Version", "The installer downloaded but could not be started.\n" + ex.Message + "\n\nThe file is here:\n" + sFile);
 }
 } // ElevateVersion method
+
+public void ReportProblem() {
+ReportProblem("", "");
+} // ReportProblem method
+
+public void ReportProblem(string sPreSubject, string sPreBody) {
+// ZGLOSZENIE PROBLEMU LUB PROSBY O FUNKCJE (dolozone 11.09.2026).
+//
+// Dwa argumenty sa dla wywolania z okna awarii: temat i slad wyjatku sa juz
+// wtedy znane, a uzytkownik ma tylko dopisac, co robil.  Z menu Pomoc oba sa
+// puste i formularz otwiera sie czysty.
+//
+// Okno ma cztery pola i nic wiecej: temat, adres e-mail, rodzaj zgloszenia
+// (lista rozwijana) i opis.  Imienia i nazwiska NIE PYTAMY - adres zwrotny
+// wystarcza do odpowiedzi, a kazde dodatkowe pole to kolejny przystanek dla
+// osoby, ktora wlasnie na cos sie natknela i chce to opisac, nie wypelniac
+// ankiety.
+//
+// PIERWSZA RZECZ TO ZAPIS NA DYSKU, DOPIERO POTEM WYSYLKA.  Tresc, ktora ktos
+// napisal, nie moze zniknac przez brak internetu ani przez awarie serwera:
+// kopia lezy w katalogu danych programu i komunikat zawsze mowi, gdzie.
+// Nie wolno powiedziec "wyslano", kiedy wyslanie sie nie udalo, wiec kazda z
+// trzech drog konczy sie osobnym, prawdziwym komunikatem.
+string[] asKind = new string[] {
+"Something does not work",
+"Request for a new feature",
+"Question or other remark"
+};
+string sEmailLast = App.ReadData("ReportEmail", "");
+
+LbcDialog dlg = new LbcDialog("Report a Problem", App.Frame);
+TextBox txtSubject = dlg.addInputBox("&Subject", sPreSubject == null ? "" : sPreSubject);
+// Adres pamietamy miedzy zgloszeniami - tester zglaszajacy piata rzecz nie ma
+// powodu wpisywac go za kazdym razem.
+TextBox txtEmail = dlg.addInputBox("Your &e-mail address", sEmailLast);
+ComboBox cboKind = dlg.addComboPickBox("&Kind of report", new List<string>(asKind), asKind[0], "");
+// Przy awarii slad wyjatku jest juz w polu opisu, a kursor stoi nad nim: user
+// dopisuje "co robilem", nie przepisuje komunikatu bledu z pamieci.
+string sBodyStart = "";
+if (sPreBody != null && sPreBody.Trim().Length > 0)
+sBodyStart = "\r\n\r\n--- what EdSharp reported ---\r\n" + sPreBody;
+TextBox txtBody = dlg.addTextMemo("&Description", sBodyStart);
+bool bOk = dlg.runOkCancel();
+string sSubject = bOk ? txtSubject.Text.Trim() : "";
+string sEmail = bOk ? txtEmail.Text.Trim() : "";
+string sKind = bOk ? (cboKind.Text == null ? "" : cboKind.Text.Trim()) : "";
+string sBody = bOk ? txtBody.Text : "";
+dlg.Dispose();
+if (!bOk) return;
+
+if (sSubject.Length == 0 && sBody.Trim().Length == 0) {
+Dialog.Show("Report a Problem", "Nothing was written, so no report was created.");
+return;
+}
+if (sSubject.Length == 0) sSubject = "(no subject)";
+if (sKind.Length == 0) sKind = asKind[0];
+if (sEmail.Length > 0) App.WriteData("ReportEmail", sEmail);
+
+// Dane techniczne dokladamy sami.  Pytanie testera o wersje programu i system
+// jest pytaniem o rzecz, ktora program o sobie wie.
+StringBuilder sbEnv = new StringBuilder();
+sbEnv.Append("EdSharpNG " + App.VersionString + " (" + Util.GetProgramBuildDate() + ")\r\n");
+try { sbEnv.Append("Windows: " + Environment.OSVersion.VersionString + (Environment.Is64BitOperatingSystem ? " 64-bit" : " 32-bit") + "\r\n"); } catch {}
+try { sbEnv.Append(".NET: " + Environment.Version.ToString() + "\r\n"); } catch {}
+try { sbEnv.Append("Culture: " + CultureInfo.CurrentCulture.Name + "\r\n"); } catch {}
+sbEnv.Append("Reported: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
+string sEnv = sbEnv.ToString();
+
+StringBuilder sbReport = new StringBuilder();
+sbReport.Append("Kind: " + sKind + "\r\n");
+sbReport.Append("E-mail: " + (sEmail.Length > 0 ? sEmail : "(not given)") + "\r\n");
+sbReport.Append("\r\n" + sBody.TrimEnd() + "\r\n");
+sbReport.Append("\r\n---\r\n" + sEnv);
+string sReport = sbReport.ToString();
+
+// [1] KOPIA NA DYSKU - zawsze, przed jakakolwiek siecia.
+string sSaved = "";
+try {
+string sDir = Path.Combine(App.DataDir, "Reports");
+if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+string sFile = Path.Combine(sDir, "report-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".txt");
+File.WriteAllText(sFile, "Subject: " + sSubject + "\r\n" + sReport, Encoding.UTF8);
+sSaved = sFile;
+}
+catch {}
+
+// [2] WYSYLKA NA NASZ PUNKT ODBIORCZY, gdy jest skonfigurowany.  Adres siedzi w
+// pliku ustawien (klucz ReportUrl), a nie w kodzie, zeby zmiana punktu odbioru
+// nie wymagala nowej wersji programu i zeby tester mogl zglaszac do wlasnego.
+string sUrl = App.ReadData("ReportUrl", "").Trim();
+if (sUrl.Length > 0) {
+Util.Say("Sending report");
+StringBuilder sbJson = new StringBuilder();
+sbJson.Append("{\"product\":\"EdSharpNG\"");
+sbJson.Append(",\"version\":\"" + Homer.Web.jsonEscape(App.VersionString) + "\"");
+sbJson.Append(",\"kind\":\"" + Homer.Web.jsonEscape(sKind) + "\"");
+sbJson.Append(",\"subject\":\"" + Homer.Web.jsonEscape(sSubject) + "\"");
+sbJson.Append(",\"email\":\"" + Homer.Web.jsonEscape(sEmail) + "\"");
+sbJson.Append(",\"body\":\"" + Homer.Web.jsonEscape(sBody) + "\"");
+sbJson.Append(",\"environment\":\"" + Homer.Web.jsonEscape(sEnv) + "\"");
+sbJson.Append("}");
+int iStatus;
+string sError;
+Homer.Web.post(sUrl, sbJson.ToString(), "application/json", out iStatus, out sError);
+if (iStatus >= 200 && iStatus < 300) {
+Dialog.Show("Report a Problem", "Your report was sent. Thank you.\r\n\r\nA copy is kept here:\r\n" + (sSaved.Length > 0 ? sSaved : "(the copy could not be written)"));
+return;
+}
+// Wysylka nie wyszla - mowimy to wprost i proponujemy droge zapasowa, zamiast
+// udawac sukces albo zostawic czlowieka z komunikatem o kodzie HTTP.
+string sWhy = (iStatus == 0) ? "There was no answer from the server (no internet connection, or the server is down)." : ("The server refused the report (HTTP " + iStatus + ").");
+if (Dialog.Confirm("Report a Problem", "The report could NOT be sent.\r\n" + sWhy + "\r\n\r\nA copy is saved here:\r\n" + (sSaved.Length > 0 ? sSaved : "(the copy could not be written)") + "\r\n\r\nSend it by e-mail instead?", "Y") != "Y") return;
+}
+
+// [3] DROGA ZAPASOWA: otwarcie formularza zgloszen w przegladarce z wypelnionym
+// tematem i trescia, albo listu e-mail, gdy opiekun programu ma wpisany adres w
+// pliku ustawien (klucz ReportMail).  Ta droga dziala bez naszego serwera, wiec
+// jest tym, co zostaje, gdy zawiedzie wszystko inne.
+string sMailTo = App.ReadData("ReportMail", "").Trim();
+string sOpen;
+if (sMailTo.Length > 0)
+sOpen = "mailto:" + sMailTo
++ "?subject=" + Homer.Web.urlEncode("[EdSharpNG] " + sSubject)
++ "&body=" + Homer.Web.urlEncode(sReport);
+else
+sOpen = App.ReportIssuesUrl
++ "?title=" + Homer.Web.urlEncode("[" + sKind + "] " + sSubject)
++ "&body=" + Homer.Web.urlEncode(sReport);
+bool bOpened = false;
+try {
+ProcessStartInfo psiOpen = new ProcessStartInfo();
+psiOpen.FileName = sOpen;
+psiOpen.UseShellExecute = true;
+Process.Start(psiOpen);
+bOpened = true;
+}
+catch {}
+string sWhere = (sSaved.Length > 0) ? sSaved : "(the copy could not be written)";
+if (bOpened && sMailTo.Length > 0)
+Dialog.Show("Report a Problem", "Your e-mail program was opened with the report ready to send.\r\nCheck it and press send there.\r\n\r\nA copy is kept here:\r\n" + sWhere);
+else if (bOpened)
+Dialog.Show("Report a Problem", "The report form was opened in your web browser with everything filled in.\r\nPress the button that submits it there.\r\n\r\nA copy is kept here:\r\n" + sWhere);
+else
+Dialog.Show("Report a Problem", "The report could not be sent from EdSharp, and neither your web browser nor an e-mail program answered.\r\n\r\nThe report is saved here, so nothing is lost:\r\n" + sWhere + "\r\n\r\nYou can attach that file to a report at\r\n" + App.ReportIssuesUrl);
+} // ReportProblem method
 
 public bool ExitApp() {
 while (this.Child != null) {
@@ -17361,7 +17575,9 @@ return sReturn;
 //   Right Arrow    - Open With... (system "Open with" dialog)
 //   Left Arrow     - speak the full path of the current item
 //   Ctrl+Enter     - show the file in Windows Explorer
-//   Ctrl+C         - copy the full path to the clipboard
+//   Ctrl+C         - copy the selected FILES (pasteable in Explorer)
+//   Ctrl+Shift+C   - the same; both copy whole files, not just names
+//   Alt+C          - append the full paths to the clipboard as text
 //   Delete / Back  - remove EVERY selected entry from the list (and sSection)
 //   Shift+Delete   - permanently delete the file from disk (confirmed)
 // sSection is the INI section the list is stored in ("Recent" /
@@ -17427,23 +17643,30 @@ catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
-// KOPIOWANIE BIERZE WSZYSTKIE ZAZNACZONE POZYCJE.  Control+C oddaje
-// PELNE SCIEZKI (tego na liscie nie widac, wiec to jest tresc, po ktora
-// sie tu siega), Control+Shift+C same NAZWY plikow, czyli dokladnie to,
-// co mowi wiersz listy, a Alt+C dopisuje sciezki do schowka zamiast go
-// zastapic - tak samo jak na kazdej innej liscie w programie.
+// KOPIOWANIE BIERZE WSZYSTKIE ZAZNACZONE POZYCJE.  Control+C i Control+Shift+C
+// robia to samo: kladza na schowek SAME PLIKI (wklejaja sie w Eksploratorze), a
+// rownolegle sciezki jako tekst, wiec wklejenie do dokumentu tez dziala.  Alt+C
+// dopisuje sciezki do schowka zamiast go zastapic.
+//
+// DWA KLAWISZE NA TE SAMA RZECZ SA TU CELOWE (jego zgloszenie 11.09.2026:
+// "mielismy poprawic kopiowanie calych plikow control shift C (...) w dalszym
+// ciagu to nie dziala").  Control+Shift+C kladl dotad same NAZWY plikow -
+// tekst, ktorego powloka za plik nie uzna - wiec z jego strony skrot byl
+// zepsuty.  Nazwa jako tresc schowka byla pomyslem nietrafionym: wiersz listy
+// nazwe POKAZUJE, a plik trzeba czyms przeniesc.  Control+C zostaje przy plikach
+// bez zmiany, bo tak dziala od 5.0.71 i o to prosil wczesniej.
 case Keys.Control | Keys.C:
-PickFileCopySelection(lb, lVal, lDisp, true, false);
+PickFileCopySelection(lb, lVal, lDisp, "files", false);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
 case Keys.Control | Keys.Shift | Keys.C:
-PickFileCopySelection(lb, lVal, lDisp, false, false);
+PickFileCopySelection(lb, lVal, lDisp, "files", false);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
 case Keys.Alt | Keys.C:
-PickFileCopySelection(lb, lVal, lDisp, true, true);
+PickFileCopySelection(lb, lVal, lDisp, "text", true);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
@@ -17497,19 +17720,20 @@ return sReturn;
 // Kolejnosc bierzemy z SelectedIndices, ktore ListBox trzyma posortowane
 // rosnaco, wiec skopiowany blok czyta sie tak, jak stoi na liscie,
 // niezaleznie od tego, czy zaznaczano z gory w dol czy odwrotnie.
-private static void PickFileCopySelection(ListBox lb, List<string> lVal, List<string> lDisp, bool bPaths, bool bAppend) {
+private static void PickFileCopySelection(ListBox lb, List<string> lVal, List<string> lDisp, string sMode, bool bAppend) {
+bool bFiles = (sMode == "files");
 List<string> lsPicked = new List<string>();
 foreach (int iSel in lb.SelectedIndices) {
-List<string> lSource = bPaths ? lVal : lDisp;
-if (iSel >= 0 && iSel < lSource.Count) lsPicked.Add(lSource[iSel]);
+if (iSel >= 0 && iSel < lVal.Count) lsPicked.Add(lVal[iSel]);
 }
 if (lsPicked.Count == 0) { App.Frame.AddMessage("No item!"); return; }
 string sText = string.Join("\r\n", lsPicked.ToArray());
+bool bPaths = bFiles;
 // LICZBA POZYCJI W KOMUNIKACIE: bez niej niewidomy nie wie, ile wlasnie
 // zabral, bo podswietlenia nie slyszy.
 string sHowMany = (lsPicked.Count == 1) ? "" : " " + lsPicked.Count + " items";
-string sWhat = bPaths ? "path" : "name";
-string sWhatMany = bPaths ? "paths" : "names";
+string sWhat = "path";
+string sWhatMany = "paths";
 if (bAppend) {
 string sPrior = Util.GetClipboardText();
 if (sPrior.Length > 0 && !sPrior.EndsWith("\n")) sPrior += "\r\n";
@@ -17546,10 +17770,11 @@ if (iMissing > 0) sSaid += ", " + iMissing + " missing as text only";
 App.Frame.AddMessage(sSaid);
 return;
 }
-// Zaden z zaznaczonych wpisow nie istnieje na dysku: zostaje sam tekst i
-// POWIEDZENIE, ze pliku nie bedzie czym wkleic.
+// Zaden z zaznaczonych wpisow nie istnieje na dysku: pliku nie ma czym
+// skopiowac, wiec MOWIMY to wprost, a na schowek idzie sama sciezka jako
+// tekst - to jedyne, co w tej sytuacji da sie oddac.
 if (!Util.SetClipboardText(sText)) { App.Frame.AddMessage("Clipboard is busy, nothing copied!"); return; }
-App.Frame.AddMessage((lsPicked.Count == 1) ? "Path copied as text, file not found" : "Copied" + sHowMany + " as text, no file found");
+App.Frame.AddMessage((lsPicked.Count == 1) ? "File not found, path copied as text only" : "No file found, copied" + sHowMany + " as text only");
 return;
 }
 if (Util.SetClipboardText(sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? Char.ToUpper(sWhat[0]) + sWhat.Substring(1) + " copied" : "Copied" + sHowMany + " (" + sWhatMany + ")");
@@ -19770,19 +19995,37 @@ return FetchLatestReleaseTag(sOwnerRepo, out iStatus);
 } // FetchLatestReleaseTag method
 
 public static string FetchLatestReleaseTag(string sOwnerRepo, out int iStatus) {
-// Return the tag of the latest GitHub release for "owner/repo", e.g. "v5.0.0".
-// The public REST API is tried first (no credentials needed); on any failure
-// the releases/latest page is fetched and its post-redirect address, which
-// ends in the tag, is used instead.  Returns "" if neither path yields a tag.
-// Homer.Web supplies the User-Agent header and modern TLS that GitHub needs.
-//
-// iStatus ODDAJE KOD HTTP z zapytania API (dolozone 06.09.2026), zeby wolajacy
-// mogl odroznic "repozytorium nie ma jeszcze zadnego wydania" (404) od braku
-// lacznosci (0).  Bez tego jedna komunikat o awarii sieci mowilby o obu.
+string sBody, sAsset;
+return FetchLatestRelease(sOwnerRepo, "", out sBody, out sAsset, out iStatus);
+} // FetchLatestReleaseTag method
+
+public static string FetchLatestRelease(string sOwnerRepo, string sAssetName, out string sBody, out string sAssetUrl, out int iStatus) {
+// Oddaj tag NAJNOWSZEGO wydania oraz - dolozone 11.09.2026 - opis wydania i
+// adres pliku instalatora.  Opis jest potrzebny, bo w nim publikujemy sume
+// kontrolna SHA-256 paczki; bez niej "bezpieczna aktualizacja" znaczylaby tylko
+// "pobierz i uruchom, co przyszlo", a to nie jest zadne zabezpieczenie.
+// Adres pliku bierzemy z API, a nie skladamy z nazwy, bo przy zmianie nazwy
+// artefaktu skladanie po cichu dawaloby 404 zamiast aktualizacji.
+sBody = "";
+sAssetUrl = "";
 string sApiUrl = "https://api.github.com/repos/" + sOwnerRepo + "/releases/latest";
 string sFinalUrl = "";
 string sJson = Homer.Web.getPage(sApiUrl, out sFinalUrl, out iStatus);
 if (sJson.Length > 0) {
+Match matchBody = Regex.Match(sJson, "\"body\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
+if (matchBody.Success) sBody = JsonUnescape(matchBody.Groups[1].Value);
+if (sAssetName != null && sAssetName.Length > 0) {
+// Kazdy artefakt wydania to obiekt z "name" i "browser_download_url";
+// szukamy pary, w ktorej nazwa zgadza sie z zadana.
+foreach (Match m in Regex.Matches(sJson, "\"name\"\\s*:\\s*\"([^\"]+)\"[^{}]*?\"browser_download_url\"\\s*:\\s*\"([^\"]+)\"")) {
+if (string.Equals(m.Groups[1].Value, sAssetName, StringComparison.OrdinalIgnoreCase)) { sAssetUrl = m.Groups[2].Value; break; }
+}
+if (sAssetUrl.Length == 0) {
+// Zapasowo: pierwszy artefakt .exe w wydaniu.  Lepiej wziac instalator o
+// innej nazwie niz nie zaktualizowac wcale.
+foreach (Match m in Regex.Matches(sJson, "\"browser_download_url\"\\s*:\\s*\"([^\"]+\\.exe)\"")) { sAssetUrl = m.Groups[1].Value; break; }
+}
+}
 Match matchTag = Regex.Match(sJson, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"");
 if (matchTag.Success) return matchTag.Groups[1].Value;
 }
@@ -19795,7 +20038,49 @@ string sTag = sRedirect.Substring(iSlash + 1);
 if (!sTag.Equals("latest", StringComparison.OrdinalIgnoreCase)) return sTag;
 }
 return "";
-} // FetchLatestReleaseTag method
+} // FetchLatestRelease method
+
+public static string JsonUnescape(string sText) {
+// Rozkoduj zawartosc lancucha JSON.  Opis wydania jest wieloliniowy, wiec bez
+// tego suma kontrolna tonelaby w literalnych "\n".
+if (sText == null) return "";
+StringBuilder sb = new StringBuilder(sText.Length);
+for (int i = 0; i < sText.Length; i++) {
+char c = sText[i];
+if (c != '\\' || i + 1 >= sText.Length) { sb.Append(c); continue; }
+char cNext = sText[++i];
+switch (cNext) {
+case 'n': sb.Append('\n'); break;
+case 'r': sb.Append('\r'); break;
+case 't': sb.Append('\t'); break;
+case 'b': sb.Append('\b'); break;
+case 'f': sb.Append('\f'); break;
+case '/': sb.Append('/'); break;
+case '"': sb.Append('"'); break;
+case '\\': sb.Append('\\'); break;
+case 'u':
+if (i + 4 < sText.Length) {
+int iCode;
+if (int.TryParse(sText.Substring(i + 1, 4), NumberStyles.HexNumber, CultureInfo.InvariantCulture, out iCode)) { sb.Append((char) iCode); i += 4; }
+}
+break;
+default: sb.Append(cNext); break;
+}
+}
+return sb.ToString();
+} // JsonUnescape method
+
+public static string FileSha256(string sPath) {
+// Suma kontrolna pliku, pisana wielkimi literami bez separatorow - w tej
+// postaci porownujemy ja z suma z opisu wydania.
+try {
+using (FileStream fs = new FileStream(sPath, FileMode.Open, FileAccess.Read))
+using (System.Security.Cryptography.SHA256 sha = System.Security.Cryptography.SHA256.Create()) {
+return BitConverter.ToString(sha.ComputeHash(fs)).Replace("-", "");
+}
+}
+catch { return ""; }
+} // FileSha256 method
 
 public static int CompareVersions(string sA, string sB) {
 // Compare two dotted-numeric version strings, e.g. "5.0.1" versus "5.0.0".
