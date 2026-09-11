@@ -549,7 +549,7 @@ Use the Environment Variables command, in the menu with no shortcut of its own, 
 
 The Burn to CD command was removed in EdSharpNG.  The Path List command, Control+Shift+P, still gathers the paths of a folder into the document, which remains useful on its own.
 
-Use the Elevate Version command, F11, to update EdSharpNG to the latest version published on the [EdSharpNG releases page](<https://github.com/michaldziwisz/EdSharp/releases/latest>).  EdSharpNG checks that page and, if a newer release is available, offers to download and run its installer.  The command looks at the EdSharpNG fork, not at the original EdSharp by Jamal Mazrui: installing the original would silently replace EdSharpNG and every feature added to it.  While EdSharpNG is in testing no release is published there, so the command says that there is nothing to update to and names the version you are running; test builds reach you directly instead.
+Use the Elevate Version command, F11, to update EdSharpNG to the latest version published on the [EdSharpNG releases page](<https://github.com/michalkasperczak/EdSharpNG/releases/latest>).  EdSharpNG checks that page and, if a newer release is available, offers to download and run its installer.  The command looks at the EdSharpNG fork, not at the original EdSharp by Jamal Mazrui: installing the original would silently replace EdSharpNG and every feature added to it.  While EdSharpNG is in testing no release is published there, so the command says that there is nothing to update to and names the version you are running; test builds reach you directly instead.
 ### Hotkey Summary
 The following are EdSharp commands listed in related groups.
 
@@ -843,7 +843,7 @@ with a license in the file GetText.txt (in the EdSharp\Convert\GetText folder).
 
 I welcome feedback, which helps EdSharp improve over time.  When reporting a problem, the more specifics the better, including steps to reproduce it, if possible.
 
-The latest version of EdSharpNG is available on the [EdSharpNG releases page](<https://github.com/michaldziwisz/EdSharp/releases/latest>).
+The latest version of EdSharpNG is available on the [EdSharpNG releases page](<https://github.com/michalkasperczak/EdSharpNG/releases/latest>).
 This may be downloaded and installed with the Elevate Version command, F11.  The original EdSharp by Jamal Mazrui lives at its own [releases page](<https://github.com/JamalMazrui/EdSharp/releases/latest>) and is a separate program: installing it would replace EdSharpNG.
 
 Jamal Mazrui

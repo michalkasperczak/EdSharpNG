@@ -56,7 +56,7 @@ spr(ile("EdSharpNG 5.0.1 (beta)") == 0,
     "STARY napis 'EdSharpNG 5.0.1 (beta)' zniknal")
 spr(ile("August 5, 2026") == 0,
     "STARA stala data 'August 5, 2026' zniknela")
-spr(ile("michaldziwisz/EdSharp") >= 1,
+spr(ile("michalkasperczak/EdSharpNG") >= 1,
     "aktualizacja siega do naszego repozytorium")
 spr(ile("JamalMazrui/EdSharp") == 0,
     "ROZLACZNOSC: adres repozytorium upstreamu zniknal z binarki")
@@ -83,7 +83,7 @@ for f in Hotkeys.ini hotkeys.txt EdSharp.md; do
     echo "  $f: nowa=$N stara_dokladnie=$S_DOKL"
     [[ "$N" -ge 1 && "$S_DOKL" -eq 0 ]]; spr $? "$f ma nowy opis komendy F11 i nie ma starego"
 done
-grep -aq "michaldziwisz/EdSharp/releases" "$STAGE/EdSharp.md"; spr $? "EdSharp.md wskazuje NASZA strone wydan"
+grep -aq "michalkasperczak/EdSharpNG/releases" "$STAGE/EdSharp.md"; spr $? "EdSharp.md wskazuje NASZA strone wydan"
 
 echo
 echo "== 5. LOG INSTALATORA I SWIEZOSC PACZKI =="

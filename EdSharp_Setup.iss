@@ -17,9 +17,9 @@ AppVerName=EdSharpNG 5.0.12 (beta)
 VersionInfoVersion=5.0.12
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
-AppPublisher=Michal Dziwisz (fork of EdSharp by Jamal Mazrui)
-AppPublisherURL=https://github.com/michaldziwisz/EdSharp
-AppCopyright=Copyright 2006-2026 by Jamal Mazrui
+AppPublisher=Michal Kasperczak
+AppPublisherURL=https://github.com/michalkasperczak/EdSharpNG
+AppCopyright=EdSharpNG changes copyright 2026 by Michal Kasperczak; based on EdSharp, copyright 2006-2026 by Jamal Mazrui
 DefaultDirName={autopf}\EdSharpNG
 DefaultGroupName=EdSharpNG
 ; x64compatible matches both x64 and ARM64 (Inno Setup 6.3+), so the AnyCPU

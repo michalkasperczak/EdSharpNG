@@ -211,8 +211,8 @@ static int Main(string[] args) {
     // ---------- RODZINA 4: aktualizacja z NASZEGO repozytorium ----------
     List<MethodBase> lElev = MetodyZNosnikiem(tFrame, "ElevateVersion");
     Sprawdz(lElev.Count > 0, "MdiFrame.ElevateVersion istnieje");
-    Sprawdz(KtorasMaLiteral(lElev, "michaldziwisz/EdSharp"),
-        "ElevateVersion siega do NASZEGO repozytorium michaldziwisz/EdSharp");
+    Sprawdz(KtorasMaLiteral(lElev, "michalkasperczak/EdSharpNG"),
+        "ElevateVersion siega do NASZEGO repozytorium michalkasperczak/EdSharpNG");
     Sprawdz(!KtorasMaLiteral(lElev, "JamalMazrui/EdSharp"),
         "ROZLACZNOSC: literal upstreamu JamalMazrui/EdSharp zniknal z ElevateVersion");
     Sprawdz(KtorasMaLiteral(lElev, "EdSharpNG_Setup.exe"),
