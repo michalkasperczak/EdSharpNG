@@ -178,6 +178,86 @@ return sPath;
 catch { return ""; }
 } // download method
 
+public static string post(string sUrl, string sBody, string sContentType, out int iStatus, out string sError) {
+// Wyslij zadanie POST z trescia tekstowa (u nas JSON) i oddaj odpowiedz serwera.
+// Dolozone 11.09.2026 dla funkcji "Report a Problem": zgloszenie musi opuscic
+// komputer uzytkownika, a Homer.Web umial dotad tylko czytac i sciagac.
+//
+// TRZY WYNIKI, NIE DWA.  Wolajacy musi umiec powiedziec czlowiekowi, co sie
+// stalo, wiec oddajemy osobno: tresc odpowiedzi, kod HTTP (0 = nie bylo
+// odpowiedzi wcale, czyli brak lacznosci) oraz komunikat bledu.  Puste
+// zwrocenie bez kodu kazaloby zgadywac, a przy zgloszeniu bledu najgorsze,
+// co mozna zrobic, to powiedziec "wyslano", gdy nic nie wyszlo.
+iStatus = 0;
+sError = "";
+if (string.IsNullOrEmpty(sContentType)) sContentType = "application/json";
+try {
+HttpWebRequest request = makeRequest(sUrl, "POST");
+request.ContentType = sContentType;
+byte[] abBody = Encoding.UTF8.GetBytes(sBody == null ? "" : sBody);
+request.ContentLength = abBody.Length;
+using (Stream streamOut = request.GetRequestStream()) streamOut.Write(abBody, 0, abBody.Length);
+using (HttpWebResponse response = (HttpWebResponse) request.GetResponse()) {
+iStatus = (int) response.StatusCode;
+using (StreamReader reader = new StreamReader(response.GetResponseStream(), Encoding.UTF8)) {
+return reader.ReadToEnd();
+}
+}
+}
+catch (WebException exWeb) {
+sError = exWeb.Message;
+HttpWebResponse respErr = exWeb.Response as HttpWebResponse;
+if (respErr != null) {
+iStatus = (int) respErr.StatusCode;
+// Tresc odpowiedzi bledu czesto mowi DLACZEGO serwer odmowil - bez niej
+// zostaje samo "400", z czym nie da sie nic zrobic.
+try {
+using (StreamReader reader = new StreamReader(respErr.GetResponseStream(), Encoding.UTF8)) {
+string sErrBody = reader.ReadToEnd();
+if (sErrBody.Length > 0) sError = sError + ": " + sErrBody;
+}
+}
+catch {}
+respErr.Close();
+}
+return "";
+}
+catch (Exception ex) { sError = ex.Message; return ""; }
+} // post method
+
+public static string jsonEscape(string sText) {
+// Zamien tekst na zawartosc lancucha JSON.  Piszemy to sami, bo caly projekt
+// stoi na bibliotece bazowej .NET bez JavaScriptSerializer/Json.NET, a
+// zgloszenie uzytkownika zawiera wieloliniowy opis, cudzyslowy i polskie znaki.
+if (sText == null) return "";
+StringBuilder sb = new StringBuilder(sText.Length + 16);
+foreach (char c in sText) {
+switch (c) {
+case '"': sb.Append("\\\""); break;
+case '\\': sb.Append("\\\\"); break;
+case '\n': sb.Append("\\n"); break;
+case '\r': sb.Append("\\r"); break;
+case '\t': sb.Append("\\t"); break;
+case '\b': sb.Append("\\b"); break;
+case '\f': sb.Append("\\f"); break;
+default:
+// Znaki sterujace musza byc uciekane; polskie litery zostawiamy wprost,
+// bo tresc idzie jako UTF-8 i serwer ma ja przyjac czytelna.
+if (c < ' ') sb.Append("\\u").Append(((int) c).ToString("x4"));
+else sb.Append(c);
+break;
+}
+}
+return sb.ToString();
+} // jsonEscape method
+
+public static string urlEncode(string sText) {
+// Kodowanie do czesci zapytania adresu (uzywane przy zapasowej sciezce
+// zgloszenia, ktora otwiera przegladarke z wypelnionym formularzem GitHuba).
+if (sText == null) return "";
+return Uri.EscapeDataString(sText);
+} // urlEncode method
+
 public static string fileFromDisposition(string sHeader) {
 // Pull a filename out of a Content-Disposition header. Prefers the RFC 5987
 // filename* form (which may be percent-encoded with a charset prefix) and
