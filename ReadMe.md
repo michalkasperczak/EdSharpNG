@@ -1,10 +1,30 @@
-# EdSharp
-[Modified GPL License](lgpl.md)
+# EdSharpNG
+
+A continuation of the EdSharp text editor, maintained by Michal Kasperczak.
+
+EdSharpNG builds on **EdSharp by Jamal Mazrui**, whose work this editor
+comes from and to whom it owes its design, its screen reader support and
+most of its code. EdSharpNG is an independent continuation: it is not
+released, endorsed or supported by the original author, so please do not
+send him reports about this version.
+
+[GNU Lesser General Public License, version 3](lgpl.txt)
 
 ## Quick Links
-[Download Latest Release](https://github.com/EmpowermentZone/EdSharp/releases/download/4.0/EdSharp_setup.exe)
+
+[Download Latest Release](https://github.com/michalkasperczak/EdSharpNG/releases/latest)
 [User Guide](EdSharp.md)
-<a href="mailto:edsharp-request@freelists.org?subject=subscribe">Subscribe to the EdSharp email list</a>
+[Report a Problem in EdSharpNG](https://github.com/michalkasperczak/EdSharpNG/issues)
+
+## The original EdSharp
+
+- Original author: Jamal Mazrui, <jamal@EmpowermentZone.com>
+- Original project: <https://github.com/JamalMazrui/EdSharp>
+- Mailing list of the original project:
+  <a href="mailto:edsharp-request@freelists.org?subject=subscribe">subscribe to the EdSharp email list</a>
+
+Please report anything specific to EdSharpNG on this project's issue
+tracker, not to the original author or his mailing list.
 
 ## Description
 

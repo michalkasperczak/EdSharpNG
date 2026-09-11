@@ -1,7 +1,13 @@
-//EdSharp 5.0
-// June 16, 2026
-//Copyright 2007 - 2026 by Jamal Mazrui
+//EdSharpNG 5.0 - a continuation of EdSharp, maintained by Michal Kasperczak.
+//
+//Based on EdSharp by Jamal Mazrui.
+//Original work copyright 2007 - 2026 by Jamal Mazrui.
+//Modifications for EdSharpNG copyright 2026 by Michal Kasperczak.
 // GNU Lesser General Public License (LGPL)
+//
+//This is a modified version.  It is not released or supported by the
+//original author; reports about EdSharpNG belong on
+//https://github.com/michalkasperczak/EdSharpNG/issues
 
 using Microsoft.VisualBasic.ApplicationServices;
 using System.Windows.Automation.Provider;
@@ -32,8 +38,8 @@ using Homer;
 [assembly: AssemblyProduct("EdSharpNG")]
 [assembly: AssemblyVersion("5.0.*")]
 [assembly: AssemblyDescription("EdSharpNG editor")]
-[assembly: AssemblyCompany("EmpowermentZone.com")]
-[assembly: AssemblyCopyright("Copyright 2007 - 2026 by Jamal Mazrui")]
+[assembly: AssemblyCompany("Michal Kasperczak")]
+[assembly: AssemblyCopyright("Based on EdSharp, copyright 2007 - 2026 by Jamal Mazrui.  EdSharpNG modifications copyright 2026 by Michal Kasperczak.  LGPL v3.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCulture("")]
@@ -50,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.75";
+public const string VersionString = "5.0.76";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -6727,7 +6733,7 @@ if (menuItem == menuHelpAbout) {
 // samej nieprawdy - datownik bierzemy z pliku programu, wiec zawsze zgadza sie
 // z tym, co user naprawde uruchomil.
 sText = "EdSharpNG " + App.VersionString + " (beta)\n" + Util.GetProgramBuildDate() + "\n\n";
-sText += "Fork of EdSharp by Jamal Mazrui.\nCopyright 2007 - 2026 by Jamal Mazrui\nGNU Lesser General Public License (LGPL)\n\n";
+sText += "Based on EdSharp by Jamal Mazrui.\nOriginal work copyright 2007 - 2026 by Jamal Mazrui.\nEdSharpNG changes copyright 2026 by Michal Kasperczak.\nGNU Lesser General Public License (LGPL)\n\n";
 sText += ".NET Framework " + RuntimeEnvironment.GetSystemVersion() + "\n\n";
 sText += Util.GetPortableExecutableKind();
 Dialog.Show("About", sText);
