@@ -10,14 +10,28 @@
 # Wymaga (sprawdzone 13.08.2026 na Garfieldzie):
 # - Windows .NET Framework csc.exe + jsc.exe (sa w C:\Windows\Microsoft.NET),
 # - UIAutomationProvider/Types w GAC,
-# - Inno Setup 6 per-user: C:\Users\g\AppData\Local\Programs\Inno Setup 6,
+# - Inno Setup 6 per-user (sciezka szukana automatycznie w profilach uzytkownikow;
+#   inna na Garfieldzie "g", inna na Hermesie "Michal"),
 # - uruchomienie z WSL, repo na /mnt/d/projekty/edsharp-pr.
 set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VERSION="${1:-}"
 STAGE="/mnt/c/EdSharp"
-ISCC="/mnt/c/Users/g/AppData/Local/Programs/Inno Setup 6/ISCC.exe"
+# SCIEZKA DO INNO SETUP SZUKANA, NIE WPISANA NA SZTYWNO (11.09.2026).  Stalo tu
+# C:\Users\g\... - profil Garfielda.  Na Hermesie uzytkownik nazywa sie Michal,
+# wiec skrypt konczyl sie "brak Inno Setup" mimo poprawnie zainstalowanego
+# programu.  Przeszukujemy profile i standardowe katalogi Program Files;
+# zmienna ISCC z otoczenia ma pierwszenstwo, gdyby ktos mial go gdzie indziej.
+ISCC="${ISCC:-}"
+if [[ -z "$ISCC" || ! -x "$ISCC" ]]; then
+    for kandydat in \
+        /mnt/c/Users/*/AppData/Local/Programs/"Inno Setup 6"/ISCC.exe \
+        "/mnt/c/Program Files (x86)/Inno Setup 6/ISCC.exe" \
+        "/mnt/c/Program Files/Inno Setup 6/ISCC.exe"; do
+        if [[ -x "$kandydat" ]]; then ISCC="$kandydat"; break; fi
+    done
+fi
 LOG_BUILD="$ROOT/BuildEdSharp.log"
 LOG_ISCC="/tmp/edsharp-iscc-${VERSION:-brak}.log"
 
