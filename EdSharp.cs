@@ -50,7 +50,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.73";
+public const string VersionString = "5.0.75";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -17575,8 +17575,9 @@ return sReturn;
 //   Right Arrow    - Open With... (system "Open with" dialog)
 //   Left Arrow     - speak the full path of the current item
 //   Ctrl+Enter     - show the file in Windows Explorer
-//   Ctrl+C         - copy the selected FILES (pasteable in Explorer)
-//   Ctrl+Shift+C   - the same; both copy whole files, not just names
+//   Ctrl+C         - copy the selected FILES (pasteable in Explorer);
+//                    their paths ride along as text in the same clipboard
+//   Ctrl+Shift+C   - free, does nothing here (see the key handler for why)
 //   Alt+C          - append the full paths to the clipboard as text
 //   Delete / Back  - remove EVERY selected entry from the list (and sSection)
 //   Shift+Delete   - permanently delete the file from disk (confirmed)
@@ -17643,24 +17644,21 @@ catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
-// KOPIOWANIE BIERZE WSZYSTKIE ZAZNACZONE POZYCJE.  Control+C i Control+Shift+C
-// robia to samo: kladza na schowek SAME PLIKI (wklejaja sie w Eksploratorze), a
-// rownolegle sciezki jako tekst, wiec wklejenie do dokumentu tez dziala.  Alt+C
-// dopisuje sciezki do schowka zamiast go zastapic.
+// JEDEN KLAWISZ KOPIUJACY, NIE DWA (jego decyzja 11.09.2026: "zostawiamy
+// Copied Ctrl+C, a Ctrl+Shift+C na listach plikow zwalniamy, nie robi nic").
 //
-// DWA KLAWISZE NA TE SAMA RZECZ SA TU CELOWE (jego zgloszenie 11.09.2026:
-// "mielismy poprawic kopiowanie calych plikow control shift C (...) w dalszym
-// ciagu to nie dziala").  Control+Shift+C kladl dotad same NAZWY plikow -
-// tekst, ktorego powloka za plik nie uzna - wiec z jego strony skrot byl
-// zepsuty.  Nazwa jako tresc schowka byla pomyslem nietrafionym: wiersz listy
-// nazwe POKAZUJE, a plik trzeba czyms przeniesc.  Control+C zostaje przy plikach
-// bez zmiany, bo tak dziala od 5.0.71 i o to prosil wczesniej.
+// Control+C bierze WSZYSTKIE zaznaczone pozycje i kladzie je na schowek W OBU
+// FORMATACH NARAZ: jako pliki (CF_HDROP, wkleja sie w Eksploratorze i w Total
+// Commanderze) i rownolegle jako sciezki tekstem (wkleja sie w dokumencie).
+// O tym, ktory format zostanie uzyty, decyduje MIEJSCE WKLEJENIA, a nie my.
+//
+// Dlatego osobny skrot "kopiuj sama sciezke" byl fikcja: udawal wybor, ktorego
+// w Windows nie ma, a uzytkownik musialby pamietac rozroznienie, ktore system i
+// tak ignoruje.  Control+Shift+C kladl do 5.0.73 same NAZWY plikow - tekst,
+// ktorego zadna powloka za plik nie uzna - wiec byl po prostu zepsuty.  Zamiast
+// dublowac nim Control+C, ZWALNIAMY go: na tych listach nie robi nic i jest
+// wolny pod przyszla komende.  Alt+C zostaje i dopisuje sciezki do schowka.
 case Keys.Control | Keys.C:
-PickFileCopySelection(lb, lVal, lDisp, "files", false);
-ev.Handled = true; ev.SuppressKeyPress = true;
-break;
-
-case Keys.Control | Keys.Shift | Keys.C:
 PickFileCopySelection(lb, lVal, lDisp, "files", false);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
@@ -17761,11 +17759,17 @@ catch (Exception) {}
 int iMissing = lsPicked.Count - lsFiles.Count;
 if (lsFiles.Count > 0) {
 if (!Util.SetClipboardFileDrop(lsFiles, sText)) { App.Frame.AddMessage("Clipboard is busy, nothing copied!"); return; }
-// KOMUNIKAT MOWI, ZE TO PLIKI, a nie sam tekst - bo od tego zalezy, czy
-// wklejenie w Eksploratorze ma sens.  Gdy czesc wpisow nie istnieje,
-// mowimy ILE: cisza w tym miejscu znaczylaby, ze wkleja sie mniej, niz
-// sie zaznaczylo, i nie byloby jak tego uslyszec.
-string sSaid = (lsFiles.Count == 1) ? "File copied" : "Copied " + lsFiles.Count + " files";
+// KOMUNIKAT MOWI, ZE SKOPIOWANO - I NIC WIECEJ (jego decyzja 11.09.2026:
+// "trocha mylaco mowi Copied file (...) powinien mowic Copied po prostu").
+// Slowo "file" nazywalo FORMAT schowka, czyli wewnetrzna sprawe programu, a
+// nie to, co sie stalo.  Na schowku i tak leza OBA formaty naraz - plik i
+// sciezka jako tekst - i to miejsce wklejenia wybiera, ktory wezmie: pole
+// tekstowe wklei sciezke, Total Commander czy Eksplorator caly plik.
+// Zapowiadanie jednego z nich z gory bylo wiec mylace w druga strone niz
+// mial ten komunikat pomagac.
+// Liczba przy wielu pozycjach ZOSTAJE: bez niej niewidomy nie wie, ile
+// wlasnie zabral, bo podswietlenia nie slyszy.
+string sSaid = (lsFiles.Count == 1) ? "Copied" : "Copied " + lsFiles.Count + " items";
 if (iMissing > 0) sSaid += ", " + iMissing + " missing as text only";
 App.Frame.AddMessage(sSaid);
 return;
@@ -17774,7 +17778,7 @@ return;
 // skopiowac, wiec MOWIMY to wprost, a na schowek idzie sama sciezka jako
 // tekst - to jedyne, co w tej sytuacji da sie oddac.
 if (!Util.SetClipboardText(sText)) { App.Frame.AddMessage("Clipboard is busy, nothing copied!"); return; }
-App.Frame.AddMessage((lsPicked.Count == 1) ? "File not found, path copied as text only" : "No file found, copied" + sHowMany + " as text only");
+App.Frame.AddMessage((lsPicked.Count == 1) ? "Copied path as text, file no longer on disk" : "Copied" + sHowMany + " as text, files no longer on disk");
 return;
 }
 if (Util.SetClipboardText(sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? Char.ToUpper(sWhat[0]) + sWhat.Substring(1) + " copied" : "Copied" + sHowMany + " (" + sWhatMany + ")");

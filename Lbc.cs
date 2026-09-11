@@ -1348,12 +1348,17 @@ public class LbcDialog : IDisposable
     {
         ListBox lb = sender as ListBox;
         if (lb == null) return;
-        // File-path lists (EdSharp Recent / Favorites) handle the whole copy
-        // family themselves: Ctrl+C copies full PATHS, Ctrl+Shift+C the file
-        // NAMES and Alt+C appends the paths, all across every selected item.
+        // File-path lists (EdSharp Recent / Favorites) own the whole copy
+        // family: Ctrl+C copies the selected FILES (and their paths as text in
+        // the same clipboard), Alt+C appends the paths, and Ctrl+Shift+C is
+        // deliberately FREE there - it must stay silent, not fall through.
         // Defer on all three - a KeyDown handler added later in the chain runs
         // even after this one sets Handled, so leaving any of them here would
         // write to the clipboard twice and speak two different messages.
+        // Ctrl+Shift+C is listed on purpose even though EdSharp now ignores it:
+        // without this line the generic copy below would grab the freed key and
+        // put the RAW LIST ROW on the clipboard - the decorated display text,
+        // not a file - which is the confusing behaviour we just removed.
         // The Link List does the same for Ctrl+C and Ctrl+Shift+C: it copies
         // the link itself, not the "Line 12. text, address, link" row shown.
         if (lb.Tag is string && (string)lb.Tag == "edsharp-filelist"
