@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.85";
+public const string VersionString = "5.0.86";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -7957,14 +7957,71 @@ return;
 }
 
 Util.Say("Starting installer");
+// PROGRAM ZAMYKA SIE SAM PRZED AKTUALIZACJA (poprawka 12.09.2026).
+//
+// Michal zglosil: przy aktualizacji instalator pokazywal "Setup has detected
+// that EdSharpNG is currently running. Please close all instances of it now".
+// To nasza wina, nie jego: program uruchamial instalator i DALEJ dzialal.
+//
+// Dlaczego CloseApplications=force w skrypcie instalatora tego nie zalatwilo:
+// to dwa rozne mechanizmy. AppMutex jest sprawdzany na samym POCZATKU (zanim
+// pojawi sie pierwsze okno instalatora) i konczy sie wlasnie tym zdaniem,
+// a CloseApplications dziala DUZO pozniej, na etapie "Preparing to install".
+// Skoro nasz mutex zyje, gdy instalator startuje, pytanie MUSI sie pojawic.
+// Poprawka moze byc tylko po naszej stronie: wyjsc, zanim instalator wstanie.
+//
+// KOLEJNOSC JEST TU WAZNA i celowa:
+// 1. Najpierw zamykamy otwarte pliki normalna droga (ExitApp -> CloseWindow),
+//    czyli z pytaniem o zapis tego, co niezapisane. Aktualizacja NIE MOZE
+//    kosztowac nikogo niezapisanej pracy.
+// 2. Gdy uzytkownik w ktoryms z tych pytan wybierze Anuluj, przerywamy CALA
+//    aktualizacje - anulowanie zapisu znaczy "nie teraz", a nie "zapomnij, co
+//    napisalem". Plik instalatora zostaje na dysku i mowimy, gdzie lezy.
+// 3. Instalator odpalamy z KILKUSEKUNDOWYM opoznieniem, przez cmd.exe. Bez
+//    tego byloby wyscig: my dopiero konczymy prace (zwalniamy mutex, zapisujemy
+//    ustawienia), a instalator w tym czasie juz sprawdza mutex i znow pyta.
+//    Kilka sekund to zapas na spokojne zamkniecie, a nie "chyba wystarczy".
+bool bLaunched = false;
+string sDelayedError = "";
+try {
+// Opoznienie: ping do siebie zamiast "timeout" - timeout.exe wymaga
+// prawdziwej konsoli i w tle potrafi zakonczyc sie bledem, ping dziala
+// wszedzie. 5 pakietow to ok. 4 sekundy.
+ProcessStartInfo psiDelayed = new ProcessStartInfo();
+psiDelayed.FileName = "cmd.exe";
+psiDelayed.Arguments = "/c ping -n 5 127.0.0.1 >nul & start \"\" \"" + sFile + "\"";
+psiDelayed.UseShellExecute = false;
+psiDelayed.CreateNoWindow = true;
+Process.Start(psiDelayed);
+bLaunched = true;
+}
+catch (Exception ex) {
+sDelayedError = ex.Message;
+}
+
+if (!bLaunched) {
+// Awaryjnie: stara droga, bez opoznienia. Wtedy pytanie o zamkniecie moze
+// sie pojawic - ale to lepsze niz brak aktualizacji.
 try {
 ProcessStartInfo processStartInfo = new ProcessStartInfo();
 processStartInfo.FileName = sFile;
 processStartInfo.UseShellExecute = true;
 Process.Start(processStartInfo);
+bLaunched = true;
 }
 catch (Exception ex) {
 Dialog.Show("Elevate Version", "The installer downloaded but could not be started.\n" + ex.Message + "\n\nThe file is here:\n" + sFile);
+return;
+}
+}
+
+// Teraz wychodzimy. Mowimy o tym wprost, bo samoczynne zamkniecie programu
+// bez slowa wygladaloby jak awaria - zwlaszcza przy czytniku ekranu.
+Util.Say("Closing EdSharp so the update can install");
+if (!ExitApp()) {
+// Uzytkownik anulowal zapis - program zostaje otwarty. Instalator juz
+// czeka w tle, wiec uczciwie mowimy, co sie stanie.
+Dialog.Show("Elevate Version", "The update was not installed, because closing EdSharp was cancelled.\nNothing was lost - your files are still open here.\n\nThe installer is ready at\n" + sFile + "\nand will start in a moment; you can close EdSharp and let it run, or cancel it and update later.");
 }
 } // ElevateVersion method
 
