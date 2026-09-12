@@ -40,6 +40,10 @@ fi
 echo "== 1/3 kopiuje zrodla do $BUILD"
 cp "$REPO"/*.cs "$BUILD"/ || exit 4
 cp "$REPO"/*.js "$BUILD"/ 2>/dev/null
+# Polecenie kompilacji tez trzeba przekopiowac.  Bez tego dodanie NOWEGO pliku
+# zrodlowego konczy sie bledem "nazwa nie istnieje": zrodlo lezy na dysku C, ale
+# kompilator dostaje stara liste plikow z poprzedniej kopii BuildEdSharp.cmd.
+cp "$REPO"/BuildEdSharp.cmd "$BUILD"/ || exit 4
 
 echo "== 2/3 kompiluje (cmd.exe BuildEdSharp.cmd)"
 cd "$BUILD" || exit 5

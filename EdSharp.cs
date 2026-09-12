@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.83";
+public const string VersionString = "5.0.84";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -7491,7 +7491,99 @@ App.Frame.Activate();
 App.Frame.Child.RTB.Select();
 } // MailBody method
 
+// SPRAWDZANIE PISOWNI (F7).
+//
+// Najpierw probuje sprawdzania wbudowanego w Windows (Pisownia.cs): zna polski,
+// nie wymaga Worda i nie wyrzuca uzytkownika z edytora.  Gdy system tego nie ma
+// albo nie zna wybranego jezyka, spada na stara droge przez Worda - zeby nikomu
+// nie zabrac dzialajacej funkcji.
+// Na zadanie: wpis SpellUseWord=Y w [Options] pliku EdSharpNG.ini wymusza Worda.
 public void SpellCheck() {
+bool bWymusWord = App.ReadOption("SpellUseWord", "N").ToUpper().StartsWith("Y");
+if (!bWymusWord && Pisownia.Dostepne()) { SpellCheckSystem(); return; }
+SpellCheckWord();
+} // SpellCheck method
+
+// Sprawdzanie pisowni sprawdzaczem systemu Windows.  Idzie blad za bledem: dla
+// kazdego pokazuje slowo, jego OTOCZENIE (bez kontekstu nie widac, o ktore
+// miejsce chodzi) i liste podpowiedzi.  Kursor w dokumencie ustawia sie na
+// biezacym bledzie, zeby czytnik ekranu czytal to samo miejsce, ktore widac.
+public void SpellCheckSystem() {
+HomerRichTextBox rtb = this.Child.RTB;
+int iBaza;
+string sText;
+if (rtb.SelectionLength == 0) { AddMessage("All"); iBaza = 0; sText = rtb.Text; }
+else { AddMessage("Selected"); iBaza = rtb.SelectionStart; sText = rtb.SelectedText; }
+if (sText.Length == 0) { AddMessage("No text!"); return; }
+
+List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sText);
+if (lBledy.Count == 0) { AddMessage("No spelling errors found"); Say.say("No spelling errors found"); return; }
+
+// Poprawki zbieram i nakladam OD KONCA, bo kazda zmienia dlugosc tekstu, a
+// wtedy pozycje kolejnych bledow przestalyby sie zgadzac.
+List<int> lPoz = new List<int>();
+List<int> lDlug = new List<int>();
+List<string> lNowe = new List<string>();
+int iPoprawionych = 0, iDodanych = 0;
+bool bPrzerwane = false;
+
+for (int i = 0; i < lBledy.Count; i++) {
+Pisownia.Blad b = lBledy[i];
+rtb.Index = iBaza + b.Start;   // czytnik ekranu idzie za kursorem
+rtb.Select(iBaza + b.Start, b.Dlugosc);
+
+string sOtoczenie = Otoczenie(sText, b.Start, b.Dlugosc);
+LbcDialog dlg = new LbcDialog(String.Format("Spelling {0} of {1}: {2}", i + 1, lBledy.Count, b.Slowo), App.Frame);
+dlg.addLabel(String.Format("Not in dictionary: {0}", b.Slowo));
+dlg.addLabel(String.Format("Context: {0}", sOtoczenie));
+List<string> lWybor = new List<string>(b.Podpowiedzi);
+ListBox lst = null;
+TextBox txt = dlg.addInputBox("Replace with", b.Podpowiedzi.Count > 0 ? b.Podpowiedzi[0] : b.Slowo);
+if (lWybor.Count > 0) lst = dlg.addListBox("Suggestions", lWybor, lWybor[0]);
+// Wybor z listy przepisuje sie do pola tekstowego, zeby dalo sie i wybrac
+// podpowiedz, i dopisac wlasna wersje - bez przeskakiwania miedzy trybami.
+if (lst != null) {
+ListBox lstL = lst; TextBox txtL = txt;
+lst.SelectedIndexChanged += delegate(object s, EventArgs e) { if (lstL.SelectedItem != null) txtL.Text = lstL.SelectedItem.ToString(); };
+}
+string sBtn = dlg.runWithButtons(new string[] {"Replace", "Skip", "Add to dictionary", "Cancel"});
+string sNowe = txt.Text;
+dlg.Dispose();
+
+if (sBtn.Length == 0 || String.Equals(sBtn, "Cancel", StringComparison.OrdinalIgnoreCase)) { bPrzerwane = true; break; }
+if (String.Equals(sBtn, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
+if (Pisownia.Dodaj(b.Slowo)) { iDodanych++; AddMessage(String.Format("Added: {0}", b.Slowo)); }
+else AddMessage("Could not add word");
+continue;
+}
+if (String.Equals(sBtn, "Skip", StringComparison.OrdinalIgnoreCase)) { Pisownia.Pomijaj(b.Slowo); continue; }
+if (sNowe.Length == 0 || sNowe == b.Slowo) continue;
+lPoz.Add(b.Start); lDlug.Add(b.Dlugosc); lNowe.Add(sNowe);
+iPoprawionych++;
+} // for each error
+
+for (int i = lPoz.Count - 1; i >= 0; i--) {
+int iOd = iBaza + lPoz[i];
+rtb.ReplaceRange(iOd, iOd + lDlug[i], lNowe[i]);
+}
+rtb.Index = iBaza;
+string sPodsumowanie = String.Format("{0} replaced, {1} added to dictionary{2}", iPoprawionych, iDodanych, bPrzerwane ? ", stopped" : "");
+AddMessage(sPodsumowanie);
+Say.say(sPodsumowanie);
+} // SpellCheckSystem method
+
+// Otoczenie slowa - do przeczytania na glos, zeby bylo wiadomo, o ktore
+// miejsce w tekscie chodzi.  Lamania linii zamieniam na odstepy, bo w jednej
+// linijce okna i tak sie nie pokaza, a czytnik czytalby je jako przerwy.
+static string Otoczenie(string sText, int iStart, int iDlugosc) {
+int iOd = Math.Max(0, iStart - 40);
+int iDo = Math.Min(sText.Length, iStart + iDlugosc + 40);
+string s = sText.Substring(iOd, iDo - iOd).Replace("\r", " ").Replace("\n", " ").Replace("\t", " ");
+while (s.Contains("  ")) s = s.Replace("  ", " ");
+return (iOd > 0 ? "..." : "") + s.Trim() + (iDo < sText.Length ? "..." : "");
+} // Otoczenie method
+
+public void SpellCheckWord() {
 bool bCreate, bVisible;
 int iDisplayAlerts, iStart, iEnd, iLength;
 string sText, sOldText;
@@ -18274,11 +18366,56 @@ PickFileRemoveEntry(lb, lVal, lDisp, sSection, i, false);
 catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 } // PickFileDeleteFromDisk method
 
+// CZYTANIE TRESCI OKIENKA PRZEZ CZYTNIK EKRANU (zgloszenie Kasperczaka
+// 12.09.2026: "warto, zeby NVDA sam czytal te okienka, bo na razie czyta Tak/Nie,
+// a recznie zawartosc musze przeczytac").
+//
+// DLACZEGO TRESC NIE BYLA CZYTANA.  Okienka stawia MessageBox.Show.  Czytnik
+// oglasza to, co dostaje FOKUS, a fokus w takim okienku dostaje PRZYCISK -
+// stad samo "Tak/Nie". Sam tekst komunikatu to etykieta bez fokusu, wiec
+// uzytkownik musi po niego wracac recznie. Przy pytaniu, na ktore odpowiada
+// sie Tak albo Nie, to jest grozne: mozna odpowiedziec, nie wiedzac na co.
+//
+// DLACZEGO Z OPOZNIENIEM, A NIE OD RAZU.  Gdybysmy powiedzieli tekst przed
+// pokazaniem okienka, czytnik natychmiast przerwalby go wlasnym oglaszaniem
+// okna i przycisku - uzytkownik uslyszalby poczatek zdania i "Tak". Dlatego
+// mowimy PO tym, jak czytnik skonczy swoje: w osobnym watku, po krotkiej
+// przerwie. Watek jest konieczny, bo MessageBox.Show blokuje wszystko do
+// zamkniecia okienka.
+//
+// Dlugosc przerwy da sie zmienic wpisem DialogSpeechDelayMs w sekcji [Options],
+// a wpisanie 0 wylacza czytanie calkiem - gdyby czyjs czytnik radzil sobie sam
+// i mowil wszystko dwa razy.
+static void SayDialogText(string sTitle, string sText) {
+try {
+string sDelay = App.ReadOption("DialogSpeechDelayMs", "400").Trim();
+int iDelay;
+if (!Int32.TryParse(sDelay, out iDelay) || iDelay < 0) iDelay = 400;
+if (iDelay == 0) return;
+if (String.IsNullOrEmpty(sText)) return;
+// Tytul dokladamy tylko wtedy, gdy nie powtarza tresci - czytnik i tak
+// oglasza nazwe okna, a slyszenie tego samego dwa razy pod rzad jest
+// gorsze niz nieslyszenie w ogole.
+string sSay = sText;
+System.Threading.Thread th = new System.Threading.Thread(delegate() {
+try {
+System.Threading.Thread.Sleep(iDelay);
+Say.sayForced(sSay);
+}
+catch {}
+});
+th.IsBackground = true;   // nie moze trzymac programu przy zamykaniu
+th.Start();
+}
+catch {}
+} // SayDialogText method
+
 public static string Confirm(string sTitle, string sText, string sDefault) {
 MessageBoxDefaultButton defaultButton;
 if (sDefault.ToLower() == "n") defaultButton = MessageBoxDefaultButton.Button2;
 else defaultButton = MessageBoxDefaultButton.Button1;
 
+SayDialogText(sTitle, sText);
 switch (MessageBox.Show(sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, defaultButton)) {
 case DialogResult.Yes :
 //Util.Say("Yes");
@@ -18300,7 +18437,11 @@ string sTitle = oTitle.ToString();
 string sText = oText.ToString();
 if (oTitle is bool) sTitle = ((bool) oTitle) ? "true" : "false";
 if (oText is bool) sText = (bool) oText ? "true" : "false";
-MessageBox.Show(oText.ToString(), oTitle.ToString());
+// Tresc czytana tak samo jak w pytaniach - tu chodzi zwykle o komunikat,
+// ktorego uzytkownik NIE zamowil (np. wynik sprawdzenia paczki), wiec
+// przeczytanie go jest jedynym sposobem, zeby do niego dotarl.
+SayDialogText(sTitle, sText);
+MessageBox.Show(sText, sTitle);
 } // Show method
 
 public static void Properties(string sPath) {
