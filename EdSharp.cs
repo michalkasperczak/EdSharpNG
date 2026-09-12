@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.80";
+public const string VersionString = "5.0.81";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -90,6 +90,12 @@ public static string MatchParagraph = @"\n(\s*\n)+\s*";
 public static string MatchSentence = @"([.?!]\s+)|(" + MatchParagraph + ")";
 public static Dictionary<string, int> BomDictionary = null;
 
+// Uchwyt mutexu rozpoznawanego przez instalator (AppMutex w
+// EdSharp_Setup.iss).  Statyczny, zeby nie zostal sprzatniety przez GC w
+// trakcie dzialania programu - bo wtedy instalator uznalby, ze program juz sie
+// zamknal, i podmienil pliki pod dzialajaca kopia.
+private static System.Threading.Mutex mutexRunning = null;
+
 [STAThread]
 public static void Main(string[] cmdLineArgs) {
 // Installer Finish-page option: "EdSharp.exe --install-jaws-settings" copies
@@ -107,6 +113,23 @@ MessageBox.Show(sReport, "EdSharp JAWS scripts: " + iCopied + " copied, " + iCom
 return;
 }
 }
+// MUTEX DLA INSTALATORA W TRYBIE CICHYM (dolozone 11.09.2026 razem z
+// CloseApplications/AppMutex w EdSharp_Setup.iss).  Nazwa MUSI byc identyczna
+// z AppMutex w skrypcie instalatora: EdSharpNG_Running_Mutex.
+// Po co: w trybie cichym nie ma komu pokazac prosby "zamknij program", wiec
+// instalator musi sam sprawdzic, czy EdSharpNG siedzi w pamieci, i poczekac az
+// zniknie.  Bez tego cicha aktualizacja albo staje, albo podmienia pliki pod
+// dzialajacym programem - a to drugie konczy sie awaria u kogos, kto ma
+// otwarty niezapisany dokument.
+// "Local\\" (nie "Global\\") swiadomie: wystarczy jedna sesja uzytkownika, a
+// mutex globalny wymaga uprawnien, ktorych zwykly start programu nie ma.
+// Uchwyt trzymamy w statycznym polu do konca zycia procesu i NIE zwalniamy go
+// jawnie - system oddaje go przy zakonczeniu, takze po awarii.
+// Cale w try: brak mozliwosci zalozenia mutexu nie moze przeszkodzic w
+// uruchomieniu edytora.
+try { mutexRunning = new System.Threading.Mutex(false, "Local\\EdSharpNG_Running_Mutex"); }
+catch {}
+
 // Multicore background JIT: record JIT decisions on first launch and, on
 // later launches, compile methods in parallel on background cores. This
 // shortens startup for a large single-assembly app. Wrapped so a failure
@@ -261,9 +284,77 @@ if (cmdLineArgs.Count > 2) sColumn = cmdLineArgs[2];
 // Frame.OpenOrActivateWindow(sFile, 1, sLine, sColumn);
 App.Frame.OpenOrActivateWindow(sFile, App.Frame.GetViewLevel(sFile), sLine, sColumn);
 }
+// SPRAWDZANIE NOWEJ WERSJI PRZY URUCHOMIENIU (zadanie 7 z listy 11.09.2026).
+// Ostatnia rzecz po otwarciu plikow: start ma sie skonczyc, a dopiero potem
+// program moze zagladac do sieci.
+CheckForUpdateOnStartup();
 };
 
 } // App constructor
+
+// SPRAWDZANIE AKTUALIZACJI PRZY STARCIE - CICHE, W TLE, RAZ NA DOBE.
+// Zlecenie Kasperczaka 11.09.2026: "Sprawdzanie nowej wersji przy uruchomieniu".
+//
+// TRZY REGULY, KTORYCH TU NIE WOLNO ZLAMAC:
+//
+// 1. ZERO OKIEN I ZERO PYTAN.  Osoba niewidoma po uruchomieniu edytora ma
+//    fokus w dokumencie i zaczyna pisac.  Okno dialogowe wyskakujace sekunde
+//    pozniej zabiera fokus i zjada wpisany tekst, a pytanie "czy pobrac"
+//    zatrzymuje prace, ktorej nikt nie zaczynal po to, by aktualizowac
+//    program.  Wiadomosc idzie wiec TYLKO do paska wiadomosci ramki
+//    (AddMessage) - tam, gdzie i tak lada komunikaty startowe.  Pobranie
+//    zostaje swiadomym wyborem: F11.
+//
+// 2. NIC NIE MOZE OPOZNIC STARTU.  Cala robota siedzi na watku w tle o
+//    niskim priorytecie i jest oznaczona jako IsBackground, wiec zamkniecie
+//    programu nie czeka na zawieszone polaczenie.  Gdy sieci nie ma, nie
+//    mowimy NIC - user nie prosil o sprawdzenie, wiec nie ma go po co
+//    informowac o nieudanym sprawdzeniu, ktorego nie zlecil.  To rozni sie od
+//    F11, gdzie milczenie byloby zignorowaniem polecenia.
+//
+// 3. RAZ NA DOBE, NIE PRZY KAZDYM URUCHOMIENIU.  Edytor odpala sie po
+//    kilkanascie razy dziennie i pytanie GitHuba za kazdym razem to ruch bez
+//    wartosci.  Data ostatniego sprawdzenia siedzi w kluczu
+//    UpdateCheckLastDate.
+//
+// Wylaczenie: w EdSharpNG.ini w sekcji [Options] wpisac
+// CheckUpdateOnStartup=N.  Sprawdzanie zostaje domyslnie WLACZONE, bo
+// przeoczona aktualizacja to dla testera realny koszt - siedzi na wersji z
+// bledem, ktory jest juz naprawiony.
+public void CheckForUpdateOnStartup() {
+try {
+if (App.ReadOption("CheckUpdateOnStartup", "Y").ToLower().StartsWith("n")) return;
+string sToday = DateTime.Now.ToString("yyyy-MM-dd");
+if (App.ReadData("UpdateCheckLastDate", "") == sToday) return;
+
+System.Threading.Thread thread = new System.Threading.Thread(delegate() {
+try {
+int iHttp;
+string sNotes, sAssetUrl;
+string sTag = Util.FetchLatestRelease("michalkasperczak/EdSharpNG", "EdSharpNG_Setup.exe", out sNotes, out sAssetUrl, out iHttp);
+// Date zapisujemy TYLKO po udanym sprawdzeniu.  Inaczej jeden dzien bez
+// internetu kasowalby sprawdzanie do nastepnej doby.
+if (sTag.Length == 0) return;
+App.WriteData("UpdateCheckLastDate", sToday);
+string sLatest = sTag.TrimStart('v', 'V').Trim();
+if (Util.CompareVersions(sLatest, App.VersionString) <= 0) return;
+// Wracamy na watek okna: AddMessage dotyka interfejsu.
+if (App.Frame == null || !App.Frame.IsHandleCreated) return;
+App.Frame.BeginInvoke((MethodInvoker)delegate() {
+try {
+App.Frame.AddMessage("EdSharpNG " + sLatest + " is available. Press F11 to update. You have " + App.VersionString + ".");
+}
+catch {}
+});
+}
+catch {}
+});
+thread.IsBackground = true;
+thread.Priority = System.Threading.ThreadPriority.BelowNormal;
+thread.Start();
+}
+catch {}
+} // CheckForUpdateOnStartup method
 
 protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e) {
 /*

@@ -40,6 +40,22 @@ DisableProgramGroupPage=yes
 DisableStartupPrompt=yes
 Uninstallable=yes
 SetupLogging=yes
+; TRYB CICHY (zlecenie Kasperczaka 11.09.2026: "Instalator w trybie cichym").
+; Instalator obsluguje juz /SILENT i /VERYSILENT z samego Inno Setup, ale bez
+; ponizszych ustawien tryb cichy PRZERYWAL prosba o zamkniecie dzialajacego
+; EdSharpNG - a w trybie cichym nie ma komu tej prosby pokazac, wiec instalacja
+; stawala.  Teraz:
+;   CloseApplications=force   - dzialajacy EdSharpNG jest zamykany sam,
+;   RestartApplications=no    - i NIE jest wznawiany przez instalator, bo to
+;                               robi sam program (patrz InstallUpdateSilently
+;                               w EdSharp.cs), zeby wrocil z tym samym
+;                               dokumentem, a nie z pustym oknem,
+;   AppMutex                  - po czym instalator ma po czym rozpoznac, ze
+;                               program faktycznie zniknal z pamieci.
+; Wywolanie bez interfejsu:  EdSharpNG_Setup.exe /VERYSILENT /NORESTART
+CloseApplications=force
+RestartApplications=no
+AppMutex=EdSharpNG_Running_Mutex
 
 [Files]
 ; Built artifacts (present after BuildEdSharp.cmd).
