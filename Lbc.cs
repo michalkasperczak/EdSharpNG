@@ -1862,6 +1862,19 @@ public class LbcDialog : IDisposable
         // left-to-right as given. RightToLeft FlowDirection
         // puts the first-added at the right; we want first-
         // given at the left, so iterate in reverse.
+        //
+        // TAB ORDER MUST NOT FOLLOW THE ADD ORDER (fixed 12.09.2026 on
+        // Kasperczak's report about F11: "Przycisk Yes powinien byc od razu
+        // jako pierwszy, a nie jako ostatni pod Tab").  The loop below runs
+        // BACKWARDS for layout reasons, so incrementing iTabIndex inside it
+        // gave the LAST-given button the lowest tab index and the FIRST-given
+        // one the highest -- reversing the keyboard order of every button row
+        // in the program.  A sighted user never noticed (the row looked
+        // right); a screen reader user tabs in the real order and met Help
+        // and Cancel before Yes.  So the tab index is computed from the
+        // GIVEN position i, while the controls are still added in reverse.
+        int iTabBase = iTabIndex;
+        iTabIndex += aButtonLabels.Length;
         for (int i = aButtonLabels.Length - 1; i >= 0; i--)
         {
             string sLabel = aButtonLabels[i] ?? "";
@@ -1882,7 +1895,7 @@ public class LbcDialog : IDisposable
             btn.UseMnemonic = true;
             btn.AccessibleName = sPlain;
             btn.Size = new Size(DefaultButtonWidth, DefaultButtonHeight);
-            btn.TabIndex = iTabIndex++;
+            btn.TabIndex = iTabBase + i;   // GIVEN order, not add order - see above
             btn.Margin = new Padding(DefaultRowGap, 0, 0, 0);
             btn.UseVisualStyleBackColor = true;
 
