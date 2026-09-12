@@ -101,7 +101,10 @@ Source: "EdSharp.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
 ; otherwise an existing install keeps announcing chords that have moved.
 Source: "Hotkeys.ini";        DestDir: "{app}"; Flags: ignoreversion
 ; Hotkey Summary (Alt+Shift+H) opens this file from the program directory.
-Source: "HotKeys.txt";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+; The name must match what the code opens: EdSharp_Hotkeys.txt.  The old
+; "HotKeys.txt" line staged a file that has not existed since 5.0.73, and the
+; skipifsourcedoesntexist flag hid that silently.
+Source: "EdSharp_Hotkeys.txt"; DestDir: "{app}"; Flags: ignoreversion
 ; Documentation.
 Source: "EdSharp.md";         DestDir: "{app}"; Flags: ignoreversion
 Source: "EdSharp.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

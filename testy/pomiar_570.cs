@@ -32,6 +32,16 @@
 //   cmd.exe /c "testy\out_570.exe EdSharpNG.exe"
 //
 // KONTROLA NEGATYWNA: testy/kontrola_negatywna_570.sh na binarce 5.0.69.
+//
+// ZMIANA DECYZJI 13.09.2026 (5.0.95), jego slowami: "zgodzilem sie na 1 skrot,
+// to byl jednak blad".  Do 5.0.94 nazwe pliku kopiowal Control+Shift+C, potem
+// (5.0.74) ten klawisz byl zwolniony, a Control+C robil wszystko.  Teraz wraca
+// rozroznienie, ale ODWROTNIE niz pierwotnie:
+//   Control+C       -> sama NAZWA pliku
+//   Control+Shift+C -> PELNA SCIEZKA + plik (CF_HDROP)
+// Asercje tej sondy pytaja o TRYBY nosnika ("names" / "files"), nie o klawisze,
+// wiec pilnuja rozlacznosci formatu plikowego nadal poprawnie.  Nie oslabiaj
+// ich - to one broni tego, zeby CF_HDROP nie lecial przy kopiowaniu nazwy.
 
 using System;
 using System.IO;
@@ -169,20 +179,49 @@ static void Main(string[] aArgs) {
     // Bez tej asercji "wrzucaj CF_HDROP zawsze" tez byloby zielone, a nazwa
     // pliku bez katalogu nie wskazuje niczego, co powloka mogla by wkleic.
     // Galaz plikowa musi wiec byc WARUNKOWA, nie bezwarunkowa.
+    //
+    // ODWROCONE 13.09.2026 (5.0.95) - patrz naglowek pliku: do 5.0.94 nazwe
+    // kopiowal Control+Shift+C, teraz robi to Control+C, a Control+Shift+C
+    // kopiuje sciezke.  Asercje mowia o TRYBACH nosnika ("names"/"files"), a nie
+    // o klawiszach, wiec pilnuja rozlacznosci niezaleznie od przypisania
+    // klawiszy - i to one zostaja.  Osobno, ponizej, pytamy o same klawisze.
     Sprawdz(MaLiteral(miKopiuj, "path") && MaLiteral(miKopiuj, "name"),
             "komunikat nadal rozroznia SCIEZKE od NAZWY (dwa klawisze, dwa skutki)");
+    Sprawdz(MaLiteral(miKopiuj, "names") && MaLiteral(miKopiuj, "paths"),
+            "mnoga forma komunikatu tez rozroznia NAZWY od SCIEZEK");
     Sprawdz(MaFragment(miKopiuj, " as text"),
             "jest osobna droga TEKSTOWA dla wpisow, ktorych na dysku nie ma");
+    // TRYB "names" MUSI BYC ROZPOZNAWANY W NOSNIKU.  Bez tego literalu nosnik
+    // nie ma jak odroznic kopiowania nazwy od kopiowania sciezki i caly powrot
+    // do dwoch klawiszy byl by pozorny przy zielonym buildzie.
+    Sprawdz(MaLiteral(miKopiuj, "names"),
+            "nosnik rozpoznaje tryb \"names\" (kopiowanie samej nazwy pliku)");
+    Sprawdz(WolaMetode(miKopiuj, "GetFileName"),
+            "nazwa jest WYCINANA ZE SCIEZKI (Path.GetFileName), nie brana z wiersza listy");
 
     // ---------- 4. MOWA ROZROZNIA TRZY SKUTKI ----------
-    Sprawdz(MaFragment(miKopiuj, "File copied"),
-            "skopiowanie JEDNEGO pliku mowi, ze to PLIK (od tego zalezy, czy wklejenie ma sens)");
+    // ODWROCONE 13.09.2026 (5.0.95).  Ta asercja pilnowala napisu "File copied",
+    // ktorego uzytkownik sam sie pozbyl 11.09.2026: "trocha mylaco mowi Copied
+    // file (...) powinien mowic Copied po prostu".  Slowo "file" nazywalo FORMAT
+    // schowka, nie skutek - a na schowku leza oba formaty naraz.  Asercja
+    // oblewala wiec na kodzie POPRAWNYM juz w 5.0.94 (zmierzone: literalu "File
+    // copied" nie ma ani w 5.0.94, ani w 5.0.95) i zaslaniala prawdziwe regresje.
+    // Pytamy teraz o to, czego chcemy: skopiowanie POJEDYNCZEJ pozycji melduje
+    // sie slowem "Copied" bez nazywania formatu.
+    Sprawdz(MaFragment(miKopiuj, "Copied"),
+            "skopiowanie melduje sie slowem \"Copied\" (bez nazywania formatu schowka)");
     Sprawdz(MaFragment(miKopiuj, "files"),
             "skopiowanie wielu plikow mowi LICZBE plikow");
     Sprawdz(MaFragment(miKopiuj, "missing"),
             "gdy czesc wpisow nie istnieje, program MOWI ILE (inaczej wkleja sie mniej bez sygnalu)");
-    Sprawdz(MaFragment(miKopiuj, "not found") || MaFragment(miKopiuj, "no file found"),
-            "gdy zaden wpis nie istnieje, program MOWI, ze pliku nie bedzie czym wkleic");
+    // ODWROCONE 13.09.2026 (5.0.95), ta sama rodzina co asercja o "File copied"
+    // wyzej.  Komunikat brzmial "not found", a zostal przepisany na "file no
+    // longer on disk" / "files no longer on disk" - napis mowiacy uzytkownikowi,
+    // CO SIE STALO z plikiem, a nie tylko ze go nie znaleziono.  Zmierzone: "not
+    // found" nie ma w tej metodzie ani w 5.0.94, ani w 5.0.95, wiec asercja
+    // oblewala na kodzie poprawnym.  Pytamy o obecny napis.
+    Sprawdz(MaFragment(miKopiuj, "no longer on disk"),
+            "gdy wpisu nie ma na dysku, program MOWI to wprost (sciezka idzie sama, jako tekst)");
     Sprawdz(MaFragment(miKopiuj, "Clipboard is busy"),
             "nieudany zapis nadal MOWI o niepowodzeniu");
 

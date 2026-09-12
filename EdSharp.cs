@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.94";
+public const string VersionString = "5.0.95";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -85,6 +85,22 @@ public static bool ExtraSpeech = true;
 public static bool IndentChange = true;
 public static bool CaptureOutput = false;
 public static string SpeechLog;
+
+// DZIENNIK AWARII (dolozony 13.09.2026 na jego prosbe: "Logi diagnostyczne.
+// Sa, jesli nie ma to wprowadzic-poprawic").
+//
+// Sprawdzone: NIE BYLO ich wcale.  Przy nieoczekiwanym bledzie program
+// pokazywal okno ze sladem wyjatku i na tym koniec - po zamknieciu okna slad
+// przepadal.  Uzytkownik niewidomy, ktory chce zglosic awarie pol godziny
+// pozniej, nie ma czego dolaczyc, a ja nie mam czego czytac.  Speech.log to co
+// innego: on zapisuje MOWE, i to tylko przy wlaczonej opcji, a przy starcie
+// jest kasowany.
+//
+// Dziennik jest JEDNYM plikiem tekstowym w katalogu danych, dopisywanym na
+// koncu i przycinanym, gdy urosnie - zaden mechanizm diagnostyczny nie ma prawa
+// zapchac dysku ani spowolnic programu.
+public static string ErrorLog;
+public const int ErrorLogMaxBytes = 512 * 1024;
 public static string MatchChunk = @"\s+";
 public static string MatchParagraph = @"\n(\s*\n)+\s*";
 public static string MatchSentence = @"([.?!]\s+)|(" + MatchParagraph + ")";
@@ -194,6 +210,10 @@ this.UnhandledException += delegate(object sender, Microsoft.VisualBasic.Applica
 Exception ex = (Exception) e.Exception;
 string sMessage = ex.Message;
 sMessage += "\n\nStack trace:\n" + ex.StackTrace;
+// SLAD AWARII IDZIE NA DYSK, ZANIM ZOBACZY GO UZYTKOWNIK (13.09.2026).
+// Do 5.0.94 slad istnial tylko w tym okienku: kto je zamknal, tracil dowod.
+// Teraz jest w katalogu danych i mozna go dolaczyc do zgloszenia pozniej.
+Util.LogDiagnostic("awaria", ex.GetType().Name + ": " + sMessage);
 // sMessage += "\nExit EdSharp?\n\nStack trace:\n" + ex.StackTrace;
 // e.ExitApplication = Dialog.Confirm("Confirm", "Unexpected event!\n" + sMessage + ".\nExit EdSharp?", "N") == "Y";
 string[] aButtons = {"&Report the Problem", "Copy to Clipboard", "Exit EdSharp"};
@@ -249,6 +269,11 @@ MigrateBookmarksOutOfFavorites();
 ClearExtraSpeechOption();
 App.SpeechLog = Path.Combine(App.DataDir, "Speech.log");
 if (File.Exists(App.SpeechLog)) File.Delete(App.SpeechLog);
+// DZIENNIK AWARII: ustawiany obok Speech.log, ale NIE KASOWANY przy starcie -
+// awaria z wczoraj musi przetrwac do dzisiejszego zgloszenia.  Wpis "start"
+// daje tez date uruchomienia, wiec widac, ktory przebieg programu sie wywrocil.
+App.ErrorLog = Path.Combine(App.DataDir, "EdSharpNG-diagnostyka.log");
+Util.LogDiagnostic("start", "EdSharpNG " + App.VersionString + " uruchomiony");
 App.ExtraSpeech = (App.ReadOption("E&xtraSpeech", "Y").ToLower().Substring(0, 1) == "n") ? false : true;
 App.IndentChange = App.ReadOption("E&xtraSpeech", "Y").Contains("-") ? false : true;
 
@@ -2886,6 +2911,26 @@ public void FocusChildEditControl() {
 try {
 this.BeginInvoke((MethodInvoker) delegate {
 try {
+// NAJPIERW WYJDZ Z TRYBU MENU, POTEM USTAWIAJ FOKUS.  Zgloszenie
+// (13.09.2026): "naciskam Alt, przechodze po opcjach menu, wychodze.  Niby
+// NVDA mowi, ze jestem w polu edycyjnym, a tak naprawde klawisze strzalek
+// dalej czytaja elementy menu.  Dopiero Alt-Tab i ponowne przywolanie okna
+// powoduje, ze mozna normalnie nawigowac po tekscie".
+//
+// Przyczyna nie jest w fokusie - fokus faktycznie wracal na pole edycyjne
+// (dlatego czytnik slusznie mowil "pole edycyjne").  WinForms trzyma osobny,
+// globalny filtr komunikatow klawiatury (ToolStripManager.ModalMenuFilter):
+// dopoki on jest wlaczony, KAZDE nacisniecie strzalki przechwytuje pasek
+// menu, niezaleznie od tego, co ma fokus.  Alt+Tab pomagal wlasnie dlatego,
+// ze przelaczenie okna ten filtr wylacza.  Samo Focus() nie moglo pomoc, bo
+// nie dotyka filtra - i to tlumaczy, czemu wczesniejsza poprawka wygladala
+// jak dzialajaca, a objaw zostal.
+//
+// ExitMenuMode() jest w .NET wewnetrzne (internal), wiec wolamy je przez
+// refleksje.  Gdyby w przyszlej wersji .NET zniknelo, catch to przelknie i
+// zostaje samo ustawienie fokusu - czyli zachowanie sprzed poprawki, nigdy
+// gorsze.
+ExitMenuKeyboardMode();
 MdiChild child = this.Child;
 if (child == null || child.IsDisposed) return;
 if (child.MarkdownReviewMode && child.MarkdownReviewView != null && !child.MarkdownReviewView.IsDisposed) child.MarkdownReviewView.Focus();
@@ -2896,6 +2941,20 @@ catch {}
 }
 catch {}
 } // FocusChildEditControl method
+
+// Wylacza globalny filtr klawiatury paska menu (ToolStripManager.ModalMenuFilter).
+// Osobna metoda, bo wola sie ja z dwoch miejsc i bo refleksja zasluguje na
+// wlasna klatke z komentarzem, a nie na wtracenie w cudzej metodzie.
+public static void ExitMenuKeyboardMode() {
+try {
+Type tFilter = typeof(ToolStripManager).Assembly.GetType("System.Windows.Forms.ToolStripManager+ModalMenuFilter");
+if (tFilter == null) return;
+MethodInfo mExit = tFilter.GetMethod("ExitMenuMode", BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+if (mExit == null) return;
+mExit.Invoke(null, null);
+}
+catch {}
+} // ExitMenuKeyboardMode method
 
 public void menuItem_Click(object sender, EventArgs e) {
 //Util.Beep();
@@ -7134,7 +7193,13 @@ this.KeyDescriber = true;
 }
 
 if (menuItem == menuHelpHotKeySummary) {
-sFile = Path.Combine(App.ProgramDir, "HotKeys.txt");
+// NAZWA PLIKU MUSI ZGADZAC SIE Z TYM, CO LEZY W KATALOGU PROGRAMU.
+// Do 5.0.94 stalo tu "HotKeys.txt", a w katalogu programu (i w repozytorium)
+// od 5.0.73 lezy "EdSharp_Hotkeys.txt".  Skutek: Podsumowanie skrotow
+// (Alt+Shift+H) otwieralo plik, ktorego nie ma - czytnik ekranu zglaszal
+// pusty, nowy dokument zamiast listy skrotow.  Zmierzone: w C:\EdSharp
+// jest EdSharp_Hotkeys.txt, HotKeys.txt nie ma tam wcale.
+sFile = Path.Combine(App.ProgramDir, "EdSharp_Hotkeys.txt");
 OpenOrActivateWindow(sFile, 1);
 }
 
@@ -8459,11 +8524,22 @@ string sBodyStart = "";
 if (sPreBody != null && sPreBody.Trim().Length > 0)
 sBodyStart = "\r\n\r\n--- what EdSharp reported ---\r\n" + sPreBody;
 TextBox txtBody = dlg.addTextMemo("&Description", sBodyStart);
+// DZIENNIK DIAGNOSTYCZNY DOLACZAMY TYLKO NA ZYCZENIE (13.09.2026).
+// Log moze zawierac nazwy otwieranych plikow, wiec nie wysylam go za czyimis
+// plecami.  Pytanie pojawia sie tylko wtedy, gdy dziennik faktycznie istnieje -
+// martwy checkbox w oknie zgloszenia to jeden przystanek wiecej dla czytnika.
+bool bLogExists = false;
+try { bLogExists = (App.ErrorLog != null && File.Exists(App.ErrorLog)); } catch {}
+CheckBox cbLog = null;
+if (bLogExists)
+cbLog = dlg.addCheckBox("Attach the diagnostic &log", true,
+"Start times and error traces, with names of files EdSharp opened.");
 bool bOk = dlg.runOkCancel();
 string sSubject = bOk ? txtSubject.Text.Trim() : "";
 string sEmail = bOk ? txtEmail.Text.Trim() : "";
 string sKind = bOk ? (cboKind.Text == null ? "" : cboKind.Text.Trim()) : "";
 string sBody = bOk ? txtBody.Text : "";
+bool bAttachLog = bOk && cbLog != null && cbLog.Checked;
 dlg.Dispose();
 if (!bOk) return;
 
@@ -8489,6 +8565,17 @@ StringBuilder sbReport = new StringBuilder();
 sbReport.Append("Kind: " + sKind + "\r\n");
 sbReport.Append("E-mail: " + (sEmail.Length > 0 ? sEmail : "(not given)") + "\r\n");
 sbReport.Append("\r\n" + sBody.TrimEnd() + "\r\n");
+// OGON DZIENNIKA, NIE CALY PLIK.  Bierzemy ostatnie 200 wierszy: awaria jest
+// zawsze na koncu, a zgloszenie nie ma wazyc pol megabajta.
+if (bAttachLog) {
+try {
+string[] aLog = File.ReadAllLines(App.ErrorLog, Encoding.UTF8);
+int iFrom = Math.Max(0, aLog.Length - 200);
+sbReport.Append("\r\n--- diagnostic log (last " + (aLog.Length - iFrom) + " lines) ---\r\n");
+for (int i = iFrom; i < aLog.Length; i++) sbReport.Append(aLog[i] + "\r\n");
+}
+catch {}
+}
 sbReport.Append("\r\n---\r\n" + sEnv);
 string sReport = sbReport.ToString();
 
@@ -9704,8 +9791,6 @@ string sItem = Dialog.Pick("Alternate Menu", aItems, true, 0);
 if (sItem.Length == 0) return;
 
 foreach (ToolStripMenuItem item in items) {
-//if (sItem == item.Text.Replace("&", "")) {
-// if (sItem == item.Text.Replace("&", "") + "\t" + item.ShortcutKeyDisplayString) {
 string[] aSummary = GetKeySummary(item);
 string sText = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
 if (sItem == sText) {
@@ -9713,10 +9798,20 @@ iChoice = items.IndexOf(item);
 break;
 }
 }
+// NIE WOLAJ POLECENIA, KTOREGO NIE ROZPOZNANO.  iChoice zostaje -1, gdy wybrany
+// wiersz nie zgadza sie z zadna pozycja (tak dzieje sie, gdy tekst pozycji
+// zmieni sie miedzy zbudowaniem listy a wyborem - np. polecenie przelaczajace
+// zmienia nazwe).  Dotad szlo prosto w items[-1] i program przewracal sie
+// wyjatkiem ArgumentOutOfRange - dla osoby niewidomej to znikajace okno bez
+// slowa wyjasnienia.  Lepiej powiedziec wprost i nie robic nic.
+if (iChoice < 0 || iChoice >= items.Count) {
+Say.sayForced("Command not recognized");
+return;
+}
 items[iChoice].PerformClick();
 } // AlternateMenu method
 
-// PALETA POLECEN (Control+Shift+P) - jego zlecenie 11.09.2026: "Paleta
+// PALETA POLECEN (Control+Shift+X) - jego zlecenie 11.09.2026: "Paleta
 // polecen.  Trzeba ja wprowadzic, jak w AMC.  Zaproponuj skrot klawiszowy",
 // a nastepnie: "Paleta w AMC jezeli chodzi o filtrowanie i to co czyta NVDA,
 // jest dobrze zrobiona.  Mozesz sie jakos tam wzorowac".
@@ -9730,7 +9825,7 @@ items[iChoice].PerformClick();
 //   - porownanie bez wielkosci liter i BEZ OGONKOW, bo szukanie ma dzialac,
 //     gdy sie pisze "zapisz" albo "zaznacz" z klawiatury programisty.
 // Filtr jest w polu tekstowym, nie w liscie: NVDA sam czyta wpisywane znaki,
-// a strzalka w dol schodzi do wynikow.  Skrot Control+Shift+P byl wolny
+// a strzalka w dol schodzi do wynikow.  Skrot Control+Shift+X byl wolny
 // (sprawdzone w KeyMap i menu); NIE uzywam Control+Alt+litera, bo prawy Alt
 // zjada polskie znaki.
 public void CommandPalette() {
@@ -9746,8 +9841,18 @@ if (item.IsMdiWindowListEntry) continue;
 if (!item.Enabled) continue;
 string[] aSummary = GetKeySummary(item);
 string sKeys = (aSummary[1] == null) ? "" : aSummary[1].Trim();
-string sLabel = menu.Text.Replace("&", "") + ": " + aSummary[0];
+// NAZWA POLECENIA IDZIE PIERWSZA, MENU NA KONCU.  Do 5.0.94 wiersz zaczynal
+// sie od nazwy menu ("File: List Favorites, Alt+L"), wiec czytnik ekranu przy
+// KAZDEJ pozycji zaczynal od slowa, ktore nic nie wnosi - zeby uslyszec, co to
+// za polecenie, trzeba bylo czekac.  Przy przegladaniu kilkudziesieciu wynikow
+// to kilkadziesiat niepotrzebnych slow.  Uzytkownik: "niepotrzebnie czyta
+// przed poleceniem menu, z ktorego pochodzi".
+// Menu ZOSTAJE, tylko na koncu: rozroznia pozycje o tej samej nazwie w roznych
+// menu i nadal daje sie po nim filtrowac (wpisanie "file" zawezi do menu File).
+string sMenu = menu.Text.Replace("&", "").Trim();
+string sLabel = aSummary[0];
 if (sKeys.Length > 0) sLabel += ", " + sKeys;
+if (sMenu.Length > 0) sLabel += " (" + sMenu + ")";
 items.Add(item);
 lLabels.Add(sLabel);
 }
@@ -19264,9 +19369,9 @@ return sReturn;
 //   Right Arrow    - Open With... (system "Open with" dialog)
 //   Left Arrow     - speak the full path of the current item
 //   Ctrl+Enter     - show the file in Windows Explorer
-//   Ctrl+C         - copy the selected FILES (pasteable in Explorer);
-//                    their paths ride along as text in the same clipboard
-//   Ctrl+Shift+C   - free, does nothing here (see the key handler for why)
+//   Ctrl+C         - copy the file NAME only (no folder)
+//   Ctrl+Shift+C   - copy the full PATH; the files themselves ride along in
+//                    the same clipboard, so Explorer pastes the file
 //   Alt+C          - append the full paths to the clipboard as text
 //   Delete / Back  - remove EVERY selected entry from the list (and sSection)
 //   Shift+Delete   - permanently delete the file from disk (confirmed)
@@ -19333,21 +19438,31 @@ catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
-// JEDEN KLAWISZ KOPIUJACY, NIE DWA (jego decyzja 11.09.2026: "zostawiamy
-// Copied Ctrl+C, a Ctrl+Shift+C na listach plikow zwalniamy, nie robi nic").
+// DWA KLAWISZE KOPIUJACE, DWIE ROZNE RZECZY (jego decyzja 13.09.2026,
+// odwracajaca moja propozycje z 11.09.2026: "zgodzilem sie na 1 skrot, to byl
+// jednak blad").  Rozroznienie wraca do stanu z przed 5.0.73:
 //
-// Control+C bierze WSZYSTKIE zaznaczone pozycje i kladzie je na schowek W OBU
-// FORMATACH NARAZ: jako pliki (CF_HDROP, wkleja sie w Eksploratorze i w Total
-// Commanderze) i rownolegle jako sciezki tekstem (wkleja sie w dokumencie).
-// O tym, ktory format zostanie uzyty, decyduje MIEJSCE WKLEJENIA, a nie my.
+//   Control+C        -> sama NAZWA pliku, bez katalogu
+//   Control+Shift+C  -> PELNA SCIEZKA, a przy okazji sam plik (CF_HDROP)
 //
-// Dlatego osobny skrot "kopiuj sama sciezke" byl fikcja: udawal wybor, ktorego
-// w Windows nie ma, a uzytkownik musialby pamietac rozroznienie, ktore system i
-// tak ignoruje.  Control+Shift+C kladl do 5.0.73 same NAZWY plikow - tekst,
-// ktorego zadna powloka za plik nie uzna - wiec byl po prostu zepsuty.  Zamiast
-// dublowac nim Control+C, ZWALNIAMY go: na tych listach nie robi nic i jest
-// wolny pod przyszla komende.  Alt+C zostaje i dopisuje sciezki do schowka.
+// Dlaczego to NIE jest fikcyjny wybor, jak twierdzil poprzedni komentarz w tym
+// miejscu: obie komendy kopiuja INNY TEKST, a nie ten sam tekst w dwoch
+// formatach.  Nazwa pliku jest tym, czego sie zwykle potrzebuje w zdaniu albo w
+// polu wyszukiwania, i po nazwie nie da sie dojsc z pelnej sciezki bez recznego
+// ciecia.  Osobny skrot na nazwe zabiera wiec prace, a nie udaje wyboru.
+//
+// Control+Shift+C zostaje przy zachowaniu, ktore juz mial: obok tekstu ze
+// sciezka kladzie na schowek format plikowy, wiec w polu tekstowym wklei sie
+// sciezka, a w Eksploratorze, Total Commanderze czy w polu "wczytaj plik"
+// przegladarki - caly plik.  To miejsce wklejenia wybiera format, nie my.
+//
+// Alt+C bez zmian: dopisuje sciezki do tego, co juz jest na schowku.
 case Keys.Control | Keys.C:
+PickFileCopySelection(lb, lVal, lDisp, "names", false);
+ev.Handled = true; ev.SuppressKeyPress = true;
+break;
+
+case Keys.Control | Keys.Shift | Keys.C:
 PickFileCopySelection(lb, lVal, lDisp, "files", false);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
@@ -19394,10 +19509,14 @@ return sReturn;
 // PickFileCopySelection: kopiowanie z listy plikow, dla WSZYSTKICH
 // zaznaczonych pozycji naraz.
 //
-// bPaths rozstrzyga, CO idzie do schowka: pelne sciezki (Control+C) albo
-// same nazwy plikow (Control+Shift+C).  Sciezka jest tu domysla, bo wiersz
-// listy pokazuje wylacznie nazwe - po sciezke sie tu wlasnie siega, a nazwe
-// mozna tez odczytac z ekranu.
+// sMode rozstrzyga, CO idzie do schowka:
+//   "names" -> same NAZWY plikow, bez katalogu (Control+C)
+//   "files" -> PELNE SCIEZKI plus format plikowy CF_HDROP (Control+Shift+C)
+//   "text"  -> pelne sciezki dopisane do schowka (Alt+C, bAppend)
+//
+// Nazwy sa osobna komenda, a nie wygodnickim skrotem: nazwa pliku to zwykle to,
+// co wpisuje sie w zdanie albo w pole wyszukiwania, a z pelnej sciezki nie da
+// sie jej wyciac bez recznej roboty.
 // bAppend dopisuje do schowka zamiast go zastapic (Alt+C).
 //
 // Przy sciezkach na schowek idzie TAKZE format plikowy CF_HDROP, wiec
@@ -19409,18 +19528,36 @@ return sReturn;
 // niezaleznie od tego, czy zaznaczano z gory w dol czy odwrotnie.
 private static void PickFileCopySelection(ListBox lb, List<string> lVal, List<string> lDisp, string sMode, bool bAppend) {
 bool bFiles = (sMode == "files");
+bool bNames = (sMode == "names");
 List<string> lsPicked = new List<string>();
 foreach (int iSel in lb.SelectedIndices) {
 if (iSel >= 0 && iSel < lVal.Count) lsPicked.Add(lVal[iSel]);
 }
 if (lsPicked.Count == 0) { App.Frame.AddMessage("No item!"); return; }
+// NAZWE WYCINAMY ZE SCIEZKI, nie bierzemy jej z wiersza listy: wiersz moze
+// byc dopowiedziany (numer, katalog w nawiasie), a do schowka ma isc czysta
+// nazwa pliku.  Gdy sciezka jest nietypowa i Path nie umie jej rozebrac,
+// zostaje przy calosci - lepiej dac za duzo niz nic.
+if (bNames) {
+List<string> lsNames = new List<string>();
+foreach (string sPick in lsPicked) {
+string sName = sPick;
+try { string sTry = Path.GetFileName(sPick); if (sTry.Length > 0) sName = sTry; }
+catch (Exception) {}
+lsNames.Add(sName);
+}
+lsPicked = lsNames;
+}
 string sText = string.Join("\r\n", lsPicked.ToArray());
 bool bPaths = bFiles;
 // LICZBA POZYCJI W KOMUNIKACIE: bez niej niewidomy nie wie, ile wlasnie
 // zabral, bo podswietlenia nie slyszy.
 string sHowMany = (lsPicked.Count == 1) ? "" : " " + lsPicked.Count + " items";
-string sWhat = "path";
-string sWhatMany = "paths";
+// KOMUNIKAT NAZYWA TO, CO FAKTYCZNIE POSZLO NA SCHOWEK.  Przy nazwie mowi
+// "name", przy sciezce "path" - inaczej dwa rozne skroty zapowiadalyby to
+// samo i nie dalo by sie ich po sluchu odroznic.
+string sWhat = bNames ? "name" : "path";
+string sWhatMany = bNames ? "names" : "paths";
 if (bAppend) {
 string sPrior = Util.GetClipboardText();
 if (sPrior.Length > 0 && !sPrior.EndsWith("\n")) sPrior += "\r\n";
@@ -21690,6 +21827,43 @@ return iByteCount;
 } // MazoviaEncoding class
 
 public class Util {
+
+// DZIENNIK DIAGNOSTYCZNY - JEDNA DROGA ZAPISU DLA CALEGO PROGRAMU.
+//
+// Zasady, ktore ta funkcja musi spelniac, bo inaczej szkodzi wiecej niz pomaga:
+//  1. NIGDY nie rzuca wyjatkiem.  Zapis diagnostyki nie moze wywrocic programu
+//     ani drugi raz wywrocic obslugi awarii, ktora go wlasnie wolala.
+//  2. NIGDY nie mowi.  Czytnik ekranu nie ma ogloszac, ze cos zapisano do logu.
+//  3. Przycina plik, gdy przekroczy App.ErrorLogMaxBytes - zostawia ogon, bo
+//     najswiezsze wpisy sa najwazniejsze.
+//  4. Dopisuje na koncu, z data w formacie sortowalnym.
+public static void LogDiagnostic(string sKind, string sBody) {
+try {
+if (App.ErrorLog == null || App.ErrorLog.Length == 0) return;
+string sLine = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\t" + sKind + "\t"
++ (sBody == null ? "" : sBody.Replace("\r\n", " | ").Replace("\n", " | ")) + "\r\n";
+File.AppendAllText(App.ErrorLog, sLine, Encoding.UTF8);
+TrimDiagnosticLog();
+}
+catch {}
+}
+
+// Przycinanie: czytamy wiersze i zostawiamy druga polowe.  Robione TYLKO gdy
+// plik przekroczyl prog, wiec przy normalnej pracy nie kosztuje nic.
+private static void TrimDiagnosticLog() {
+try {
+FileInfo fi = new FileInfo(App.ErrorLog);
+if (!fi.Exists || fi.Length <= App.ErrorLogMaxBytes) return;
+string[] aLines = File.ReadAllLines(App.ErrorLog, Encoding.UTF8);
+int iFrom = aLines.Length / 2;
+StringBuilder sb = new StringBuilder();
+sb.Append("(starsze wpisy usuniete, plik przekroczyl "
++ (App.ErrorLogMaxBytes / 1024) + " KB)\r\n");
+for (int i = iFrom; i < aLines.Length; i++) sb.Append(aLines[i] + "\r\n");
+File.WriteAllText(App.ErrorLog, sb.ToString(), Encoding.UTF8);
+}
+catch {}
+}
 
 public static string GetPortableExecutableKind() {
 PortableExecutableKinds peKind  ;

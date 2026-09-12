@@ -7,9 +7,16 @@ Kazdy skrot cytowany w liscie musi byc zarejestrowany w CreateMenuItem albo
 obsluzony w Handle*Key. Kontrola negatywna: celowo bledne cytaty MUSZA oblac,
 inaczej test przechodzi zawsze i nic nie dowodzi.
 """
-import re, sys, pathlib
+import re, sys, pathlib, os
 
-REPO = pathlib.Path("/mnt/d/projekty/edsharp-pr")
+# KORZEN REPOZYTORIUM LICZYMY Z POLOZENIA TEGO PLIKU, nie z zaszytej sciezki.
+# Do 13.09.2026 stalo tu na stalo "/mnt/d/projekty/edsharp-pr" - katalog, ktorego
+# na tej maszynie NIE MA, wiec sonda wywalala sie wyjatkiem FileNotFoundError,
+# zamiast cokolwiek zmierzyc.  Sonda, ktora nie startuje, jest gorsza od braku
+# sondy: w przebiegu wyglada jak blad narzedzia, wiec sie ja pomija.
+# Zmienna EDSHARP_REPO nadal pozwala wskazac inne repozytorium (np. przy
+# porownywaniu dwoch kopii).
+REPO = pathlib.Path(os.environ.get("EDSHARP_REPO", pathlib.Path(__file__).resolve().parent.parent))
 CS = (REPO / "EdSharp.cs").read_text(encoding="utf-8", errors="replace")
 HOT = (REPO / "Hotkeys.ini").read_text(encoding="utf-8", errors="replace")
 LBC = (REPO / "Lbc.cs").read_text(encoding="utf-8", errors="replace")
@@ -492,8 +499,15 @@ spr("IsStrictUtf8 uzywa STRICT dekodera (rzuca, nie podstawia U+FFFD)",
     "new UTF8Encoding(false, true)" in CS_KOD)
 body_det = CS[CS.find("public static Encoding DetectEncodingNoBom("):]
 body_det = body_det[:body_det.find("} // DetectEncodingNoBom method")]
-spr("brak rozstrzygniecia detektora + nie-UTF-8 daje ANSI (Encoding.Default)",
-    "IsStrictUtf8(aBytes)" in body_det and "Encoding.Default" in body_det)
+# ZAKTUALIZOWANE 13.09.2026 (5.0.95).  Asercja pytala o "Encoding.Default"
+# (systemowa strona kodowa ANSI).  Kod poszedl PROSCIEJ I DALEJ: bez
+# rozstrzygniecia detektora i przy bajtach niedozwolonych w UTF-8 wola
+# PickPolishLegacyEncoding, ktore rozstrzyga miedzy windows-1250 i pokrewnymi -
+# a to wlasnie ratuje polskie ogonki, o ktore ta sonda walczy.  Pytanie o
+# Encoding.Default oblewalo wiec na kodzie LEPSZYM niz opisany.
+spr("brak rozstrzygniecia detektora + nie-UTF-8 idzie na polskie kodowanie",
+    "IsStrictUtf8(aBytes)" in body_det
+    and "PickPolishLegacyEncoding(aBytes)" in body_det)
 # KONTROLA POZYTYWNA: dotychczasowe zachowanie MUSI zostac nietkniete dla
 # plikow, ktore UTF-8 SA, i dla wykrytych stron kodowych.
 spr("KONTROLA: poprawny UTF-8 nadal idzie na utf8b", "return enUtf8b;" in body_det)
@@ -703,8 +717,14 @@ spr("klawisze list zakladek sa w pomocy F1, nie w pasku stanu",
     'setHelpDetail(lst, "Keys: Delete or Backspace removes the bookmark' in CS
     and 'setHelpDetail(lst, "Keys: Delete or Backspace removes the named bookmark' in CS)
 # Strzalka w lewo na trzech listach - kazda mowi INNA brakujaca informacje.
-spr("lista zakladek: strzalka w lewo mowi numer wiersza",
-    'Say.sayForced("Line " + (rtbHere.GetLineFromCharIndex(iCharAt) + 1));' in CS)
+# ODWROCONE 13.09.2026 (5.0.95).  Ta asercja pilnowala, ze strzalka w lewo na
+# liscie zakladek MOWI NUMER WIERSZA ("Line 42").  Uzytkownik kazal to usunac:
+# strzalka w lewo ma czytac TYLKO tresc wiersza, a pusty wiersz nazwac "Empty
+# line".  Numer wiersza w tym momencie zagaduje to, po co sie tam siega.
+# Pytamy wiec o stan obecny, nie o poprzedni.  (Asercja o tresci wiersza jest
+# nizej i pilnuje wlasciwego zachowania.)
+spr("lista zakladek: strzalka w lewo NIE mowi numeru wiersza",
+    'Say.sayForced("Line " + (rtbHere.GetLineFromCharIndex(iCharAt) + 1));' not in CS)
 spr("lista zakladek z nazwa: strzalka w lewo czyta tresc wiersza",
     'Say.sayForced(sRowRead.Length == 0 ? "Empty line" : sRowRead);' in CS)
 spr("lista przypisow: strzalka w lewo czyta zdanie ze znacznikiem",
@@ -1013,7 +1033,36 @@ spr("bramka pomija wiersz zamiast rzucac okno bledu",
 # KONTROLA: zaden opis mowiony nie moze juz obiecywac Control+T dla tej komendy.
 # Czytamy hotkeys.txt osobno - HOT to Hotkeys.ini, a oba pliki musza sie zgadzac
 # (drugi jest tracked MALA litera, patrz pulapka gita w skillu).
-_HOTTXT = (REPO / "hotkeys.txt").read_text(encoding="utf-8", errors="replace")
+# PLIK PODSUMOWANIA SKROTOW: "EdSharp_Hotkeys.txt", nie "hotkeys.txt".
+# Stara nazwa nie istnieje w repozytorium od 5.0.73, wiec sonda wywalala sie
+# wyjatkiem, zamiast zmierzyc cokolwiek.
+_HOTTXT_SUROWY = (REPO / "EdSharp_Hotkeys.txt").read_text(encoding="utf-8", errors="replace")
+
+# FORMATY OBU PLIKOW SIE ROZNIA, TRESC MUSI BYC TA SAMA.
+#   Hotkeys.ini          "Nazwa=Skrot, opis"   (czyta program)
+#   EdSharp_Hotkeys.txt  "Nazwa, Skrot, opis"  (czyta czlowiek pod Alt+Shift+H)
+# Asercje nizej pisane sa w zapisie z Hotkeys.ini, wiec sprowadzamy tekst
+# podsumowania do tego samego zapisu.  Inaczej kazde pytanie o podsumowanie
+# oblewalo z powodu przecinka zamiast znaku rownosci - czyli sonda mierzyla
+# format, a chcemy mierzyc TRESC.
+def _na_zapis_ini(tekst):
+    wyj = []
+    for linia in tekst.replace("\r\n", "\n").split("\n"):
+        czesci = linia.split(", ", 1)
+        wyj.append(czesci[0] + "=" + czesci[1] if len(czesci) == 2 else linia)
+    return "\n".join(wyj)
+
+_HOTTXT = _na_zapis_ini(_HOTTXT_SUROWY)
+
+# PODSUMOWANIE MUSI BYC WYGENEROWANE ZE ZRODLA, nie dopisane rekami.  To jedyna
+# asercja, ktora pilnuje samego mechanizmu: gdyby ktos poprawil txt bez ini,
+# przy nastepnym budowaniu jego zmiana zniknie - lepiej dowiedziec sie teraz.
+import subprocess
+_gen = subprocess.run(
+    [sys.executable, str(REPO / "testy" / "generuj_podsumowanie_skrotow.py"), "--sprawdz"],
+    capture_output=True, text=True, env={**os.environ, "EDSHARP_REPO": str(REPO)})
+spr("podsumowanie skrotow zgadza sie z Hotkeys.ini (jest generowane)",
+    _gen.returncode == 0)
 for _plik, _tresc in (("Hotkeys.ini", HOT), ("hotkeys.txt", _HOTTXT)):
     _zle = [l for l in _tresc.split("\n")
             if "Text Convert" in l and "Control+T" in l]

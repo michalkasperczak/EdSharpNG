@@ -55,6 +55,13 @@ for INI in "$REPO/Hotkeys.ini" "$REPO/EdSharp.ini"; do
 done
 
 echo "== 1/3 kopiuje zrodla do $BUILD"
+# PODSUMOWANIE SKROTOW POWSTAJE ZE ZRODLA, NIE Z PAMIECI.  EdSharp_Hotkeys.txt
+# (Alt+Shift+H) byl do 5.0.94 pisany rekami obok Hotkeys.ini i rozjechal sie
+# doszczetnie: zero opisow komentarzy, stare chordy zakladek, Control+T dla
+# komendy, ktora dawno ma inny klawisz.  Uzytkownik niewidomy nie ma jak tego
+# wychwycic - lista wyglada normalnie, tylko mowi nieprawde.  Od 5.0.95 jest
+# generowana przy KAZDYM budowaniu, wiec dwa pliki nie moga sie roznic.
+python3 "$REPO/testy/generuj_podsumowanie_skrotow.py" || exit 12
 cp "$REPO"/*.cs "$BUILD"/ || exit 4
 cp "$REPO"/*.js "$BUILD"/ 2>/dev/null
 # Polecenie kompilacji tez trzeba przekopiowac.  Bez tego dodanie NOWEGO pliku
