@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.79";
+public const string VersionString = "5.0.80";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -17648,8 +17648,11 @@ if (lb == null) return;
 // 11.09.2026: "Strzalka w lewo nie ma czytac numeru linii z zakladka, tylko
 // tresc wiersza, w ktorej jest zakladka, ale bez wychodzenia z menu.  Taki
 // podglad").  Do 5.0.78 mowila "Line 148" - numer sam nie mowi, gdzie sie
-// jest, a tresc mowi.  Numer wiersza zostaje na koncu, po tresci, bo bywa
-// potrzebny przy skoku - ale juz nie jako jedyna informacja.
+// jest, a tresc mowi.  W 5.0.79 dopisywalem numer na koncu tresci z wlasnej
+// inicjatywy - ZLE, sprostowal to od razu (11.09.2026: "on nie ma mowic
+// numeru linii tylko ma mowic tresc linii ma czytac ten wiersz po prostu a
+// nie jakis numer linii 138").  Sama tresc, nic wiecej: numer jest widoczny
+// w samej pozycji listy, a dopowiadanie go przy kazdym podgladzie to halas.
 // Pusty wiersz trzeba nazwac, inaczej strzalka w lewo brzmi jak awaria.
 // Fokus nie drgnal, wiec mowa MUSI byc wymuszona - czytnik nie ma z czego
 // sam wywnioskowac zmiany.  Okno zostaje otwarte: to podglad, nie skok.
@@ -17665,8 +17668,9 @@ int iRowHere = rtbHere.GetLineFromCharIndex(iCharAt);
 string[] aLinesHere = rtbHere.Lines;
 string sRowHere = (iRowHere >= 0 && iRowHere < aLinesHere.Length)
 ? (aLinesHere[iRowHere] ?? "").Trim() : "";
-if (sRowHere.Length == 0) sRowHere = "Blank line";
-Say.sayForced(sRowHere + ", line " + (iRowHere + 1));
+// "Empty line" tym samym slowem co lista zakladek nazwanych nizej - dwa
+// rozne komunikaty na to samo zjawisko brzmialyby jak dwa rozne bledy.
+Say.sayForced(sRowHere.Length == 0 ? "Empty line" : sRowHere);
 return;
 }
 
