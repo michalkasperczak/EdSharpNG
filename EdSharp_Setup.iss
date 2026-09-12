@@ -76,6 +76,7 @@ Source: "KeyMap.cs";          DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "Web.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Pisownia.cs";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Skladniki.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Csv.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "EdSharp.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "EdSharp.js";         DestDir: "{app}"; Flags: ignoreversion
 Source: "EdSharp.manifest";   DestDir: "{app}"; Flags: ignoreversion

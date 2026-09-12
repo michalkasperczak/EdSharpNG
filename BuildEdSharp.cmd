@@ -103,7 +103,7 @@ echo Compiling EdSharp.cs -^> EdSharpNG.exe ...
 if exist EdSharpNG.exe del /f /q EdSharpNG.exe
 set "icon="
 if exist EdSharp.ico set "icon=/win32icon:EdSharp.ico"
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs >> "!log!" 2>&1
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs >> "!log!" 2>&1
 if errorlevel 1 goto failed
 
 rem ---- native pre-JIT (ngen) is handled by the INSTALLER, not here ----

@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.86";
+public const string VersionString = "5.0.87";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1111,6 +1111,36 @@ en = Encoding.Unicode;
 this.RTB.Text = Util.File2String(sFile, ref en);
 }
 this.YieldEncoding = en;
+// PLIK CSV: PROPOZYCJA OTWARCIA JAKO TABELA (zadanie 10, 5.0.87).
+//
+// Nie otwieramy tabeli SAMI, bo plik CSV bywa tez po prostu tekstem do
+// przeczytania albo do poprawienia recznie - decyzja nalezy do uzytkownika.
+// Pytamy tylko wtedy, gdy tresc NAPRAWDE wyglada na tabele (rowne kolumny,
+// co najmniej dwie), czyli gdy odpowiedz "tak" ma sens. Plik .csv, ktory w
+// srodku jest zwyklym tekstem, otwiera sie po cichu jak tekst.
+try {
+string sExt = Path.GetExtension(sFile).ToLower();
+if ((sExt == ".csv" || sExt == ".tsv") && !bLiteral) {
+char cSepDetect;
+int iColsDetect, iRowsDetect;
+if (EdSharp.Csv.WygladaNaTabele(sText, out cSepDetect, out iColsDetect, out iRowsDetect)) {
+string sQ = "This looks like a table: " + iRowsDetect + " rows and " + iColsDetect + " columns.\n\nOpen it as a table you can read and edit column by column?";
+if (Dialog.Confirm("CSV Table", sQ, "Y") == "Y") {
+// Okno tabeli otwieramy PO tym, jak dokument stanie sie widoczny -
+// inaczej modalne okno wstaje nad niegotowa jeszcze ramka.
+string sCsvPath = sFile;
+System.Threading.Tasks.Task.Delay(150).ContinueWith(delegate(System.Threading.Tasks.Task t) {
+try {
+if (App.Frame != null && !App.Frame.IsDisposed)
+App.Frame.BeginInvoke((MethodInvoker) delegate() { App.Frame.EditCsvAsTable(sCsvPath); });
+}
+catch {}
+});
+}
+}
+}
+}
+catch {}
 // POWIEDZ, GDY PLIK BYL W STARYM POLSKIM KODOWANIU (zadanie 9, 12.09.2026).
 // Bez tego konwersja dzieje sie po cichu: uzytkownik widzi poprawne polskie
 // litery, ale nie wie, ze plik na dysku jest inny niz to, co ma na ekranie -
@@ -1256,7 +1286,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
-public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
+public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1775,6 +1805,10 @@ menuMiscPreviewMarkdownBrowser = CreateMenuItem("Preview Markdown in Web Browser
 // sam wzorzec co Word Wrap i Unwrap w 5.0.34.
 menuMiscTextCombine = CreateMenuItem("Text Combine", "", menuItem_Click, "child speak");
 menuMiscInsertTable = CreateMenuItem("Insert Table ...", "Control+Shift+T", menuItem_Click, "child silent");
+// CSV JAKO TABELA NA ZADANIE (zadanie 10, 5.0.87). Bez skrotu klawiszowego -
+// przy otwieraniu pliku .csv program pyta sam, a to jest droga dla pliku
+// otwartego wczesniej albo otwartego jako tekst swiadomie.
+menuMiscCsvTable = CreateMenuItem("Edit CSV as Table ...", "", menuItem_Click, "child silent");
 // LISTY POD LITERA L (Kasperczak, 31.08.2026, ustalenia edsharpng-56 i -57):
 // "CTRL-l punktowana, cTRL-Shift-l numerowana.  Jak przelaczniku wlacza/zamienia
 // na tekst zwykly.  CTRL-Shift-7 i 8 staja sie wolne".  Litera L jest tu
@@ -1983,7 +2017,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // decyzja o zawartosci repo, nie o zachowaniu programu.
 menuMiscWebDownload = CreateMenuItem("Web Download", "Alt+Shift+W", menuItem_Click, "frame speak");
 menuMiscWebClientUtilities = CreateMenuItem("Web Client Utilities", "Alt+Shift+Space", menuItem_Click, "frame speak");
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -6011,6 +6045,31 @@ AddMessage("Document is guarded!");
 return;
 }
 InsertMarkdownLink(rtb);
+}
+
+// CSV JAKO TABELA (zadanie 10, 5.0.87). Dziala na pliku, ktory jest otwarty
+// w edytorze - i wymaga, by byl zapisany na dysku, bo tabela czyta i
+// nadpisuje PLIK, nie tresc w oknie. Niezapisane zmiany pytamy o zapis
+// najpierw, inaczej tabela pokazalaby stara tresc.
+if (menuItem == menuMiscCsvTable) {
+if (child == null) return;
+if (child.File == null || child.File.Length == 0) {
+AddMessage("Save this file first, then it can be edited as a table.");
+return;
+}
+if (rtb != null && rtb.Modified) {
+if (Dialog.Confirm("CSV Table", "This file has unsaved changes.  Save them now and open it as a table?", "Y") != "Y") return;
+child.SaveTextOrRtfFile(child.File);
+if (rtb != null) rtb.Modified = false;
+}
+EditCsvAsTable(child.File);
+// Tresc pliku na dysku mogla sie zmienic w tabeli - okno w edytorze
+// pokazywalo by wtedy stara. Wczytanie na nowo zdejmuje ta rozbieznosc.
+if (File.Exists(child.File)) {
+child.LoadTextOrRtfFile(child.File, true);
+if (rtb != null) rtb.Modified = false;
+}
+return;
 }
 
 if (menuItem == menuMiscInsertTable) {
@@ -12332,6 +12391,253 @@ Util.Say(GetMarkdownLinkSpeech(pick));
 return;
 }
 } // ShowMarkdownLinkList method
+
+// CSV JAKO TABELA - PRZEGLADANIE I EDYCJA (zadanie 10, 5.0.87).
+//
+// Zgloszenie Kasperczaka: "CSV ma sie otwierac jako tabela w naszym
+// systemie-kreatorze tabel", a po dopytaniu: "i edycje chyba tez w takiej
+// formie". Czyli JEDNO okno do obu rzeczy - nie osobna przegladarka i osobny
+// edytor.
+//
+// Po co to w ogole: plik CSV otwarty jako tekst to jeden dlugi wiersz na
+// rekord. Zeby dowiedziec sie, co stoi w trzeciej kolumnie, trzeba liczyc
+// przecinki w pamieci. W siatce czytnik przy kazdej komorce mowi nazwe
+// kolumny, wiec ta sama informacja jest slyszalna od razu.
+//
+// NAZWY KOLUMN BIERZEMY Z PIERWSZEGO WIERSZA PLIKU, nie "Column 1, Column 2".
+// To jest cala roznica miedzy "kolumna trzecia: 1978" i "rok urodzenia: 1978".
+// Kreator tabel Markdown ma tam numery, bo tam pierwszy wiersz jest trescia
+// tabeli, ktora uzytkownik wlasnie pisze; w pliku CSV pierwszy wiersz to
+// prawie zawsze naglowki, wiec je wykorzystujemy.
+//
+// Zapis idzie tam, skad plik przyszedl - z zachowaniem separatora i rodzaju
+// konca wiersza, ktore plik mial. Zmiana pliku ze srednikami na przecinkowy
+// przy okazji edycji jednej komorki byla by cicha zmiana cudzych danych.
+public void EditCsvAsTable(string sFile) {
+if (sFile == null || sFile.Length == 0) return;
+if (!File.Exists(sFile)) {
+Dialog.Show("CSV Table", "This file no longer exists:\n" + sFile);
+return;
+}
+
+string sText;
+// Kodowanie wykrywamy z pliku (przekazujemy null), tak samo jak przy
+// otwieraniu dokumentu. Zapamietujemy je, bo zapis MUSI wrocic w tym samym
+// kodowaniu - inaczej plik w Latin II wrocilby jako UTF-8 i polskie litery
+// zmienily by sie w krzaki dla programu, ktory ten plik czyta.
+Encoding enFile = null;
+try {
+sText = Util.File2String(sFile, ref enFile);
+if (enFile == null) enFile = new UTF8Encoding(true);
+}
+catch (Exception ex) {
+Dialog.Show("CSV Table", "This file could not be read.\n" + ex.Message);
+return;
+}
+
+// Separator i konce wiersza z PLIKU - zapamietane przed rozlozeniem na
+// komorki, bo po rozlozeniu nie da sie ich odtworzyc.
+char cSep = EdSharp.Csv.RozpoznajSeparator(sText);
+string sBreak = "\r\n";
+if (sText.IndexOf("\r\n") < 0) {
+if (sText.IndexOf('\n') >= 0) sBreak = "\n";
+else if (sText.IndexOf('\r') >= 0) sBreak = "\r";
+}
+
+List<List<string>> rows = EdSharp.Csv.Czytaj(sText, cSep, 0);
+if (rows.Count == 0) {
+Dialog.Show("CSV Table", "This file is empty, so there is no table to show.");
+return;
+}
+
+int iCols = EdSharp.Csv.NajwiecejKolumn(rows);
+if (iCols < 1) iCols = 1;
+
+// Pierwszy wiersz jako naglowki - ale tylko gdy naprawde na nie wyglada:
+// same niepuste pola, bez powtorzen. Plik BEZ naglowkow (od razu dane)
+// dostaje numery kolumn, bo wziecie pierwszego rekordu za naglowki
+// UKRYLOBY ten rekord przed uzytkownikiem, a to jest utrata danych z widoku.
+bool bMaNaglowki = true;
+List<string> naglowki = new List<string>();
+if (rows.Count < 2) bMaNaglowki = false;
+else {
+List<string> w0 = rows[0];
+for (int c = 0; c < iCols; c++) {
+string sH = (c < w0.Count && w0[c] != null) ? w0[c].Trim() : "";
+if (sH.Length == 0) { bMaNaglowki = false; break; }
+// Powtorzona nazwa kolumny byla by dla czytnika myląca ("rok" dwa razy).
+foreach (string sIstniejacy in naglowki) {
+if (string.Compare(sIstniejacy, sH, true) == 0) { bMaNaglowki = false; break; }
+}
+if (!bMaNaglowki) break;
+naglowki.Add(sH);
+}
+}
+
+string sTytul = Path.GetFileName(sFile);
+LbcDialog dlg = new LbcDialog("CSV Table - " + sTytul, App.Frame);
+Homer.LbcGrid grid = dlg.addPickGrid("&Table cells", "Correct the cells; Control+Enter saves the file");
+dlg.setHelpDetail(grid, "Keys: Arrow keys move between cells, Right Arrow from the last column adds a column, Down Arrow from the last row adds a row, typing replaces what is in the cell, F2 edits what is already there and Enter confirms it, Delete clears the cell, Control+Enter saves the file, Escape closes without changing the file. Column names come from the first line of the file.");
+
+for (int c = 0; c < iCols; c++) {
+string sHeader = bMaNaglowki ? naglowki[c] : ("Column " + (c + 1));
+Homer.LbcDialog.addGridColumn(grid, "c" + (c + 1), sHeader);
+}
+
+// Gdy pierwszy wiersz posluzyl za naglowki, do siatki wchodza wiersze od
+// drugiego - inaczej naglowki widniały by dwa razy.
+int iFirstData = bMaNaglowki ? 1 : 0;
+for (int r = iFirstData; r < rows.Count; r++) {
+int iNew = grid.Rows.Add();
+for (int c = 0; c < rows[r].Count && c < iCols; c++)
+grid.Rows[iNew].Cells[c].Value = rows[r][c];
+}
+if (grid.Rows.Count == 0) grid.Rows.Add();
+
+// Naglowki wierszy PUSTE. Czytnik czyta naglowek wiersza przed trescia
+// komorki, a komorka podaje juz swoja wspolrzedna sama (LbcGridCell) -
+// numer w naglowku znaczyl by slyszenie tego samego dwa razy.
+for (int i = 0; i < grid.Rows.Count; i++) grid.Rows[i].HeaderCell.Value = "";
+
+if (grid.Rows.Count > 0 && grid.Columns.Count > 0) grid.CurrentCell = grid.Rows[0].Cells[0];
+dlg.setInitialFocus(grid);
+
+// Stan wejsciowy - do rozpoznania, czy Escape ma o cokolwiek pytac.
+string sOryginal = BuildCsvFromGrid(grid, bMaNaglowki ? naglowki : null, cSep, sBreak);
+
+bool[] abSave = new bool[] {false};
+
+grid.PreviewCmdKey += delegate(object oSender, KeyEventArgs ev) {
+Keys keyData = ev.KeyData;
+bool bEditing = grid.IsCurrentCellInEditMode;
+TextBox tbEdit = grid.EditingControl as TextBox;
+
+if (keyData == (Keys.Control | Keys.Enter)) {
+ev.Handled = true;
+if (bEditing) grid.EndEdit();
+abSave[0] = true;
+Form frmHost = grid.FindForm();
+if (frmHost != null) {frmHost.DialogResult = DialogResult.OK; frmHost.Close();}
+return;
+}
+
+if (keyData == Keys.Escape) {
+if (bEditing) return;
+if (BuildCsvFromGrid(grid, bMaNaglowki ? naglowki : null, cSep, sBreak) != sOryginal) {
+if (Dialog.Confirm("Confirm", "Close the table without saving your changes to the file?", "N") != "Y") {
+ev.Handled = true;
+return;
+}
+}
+ev.Handled = true;
+Form frmHost = grid.FindForm();
+if (frmHost != null) {frmHost.DialogResult = DialogResult.Cancel; frmHost.Close();}
+return;
+}
+
+if (grid.CurrentCell == null) return;
+
+if (keyData == Keys.Delete) {
+if (bEditing) return;
+ev.Handled = true;
+string sBylo = GetMarkdownTableCellText(grid, grid.CurrentCell.RowIndex, grid.CurrentCell.ColumnIndex);
+if (sBylo.Trim().Length == 0) { Say.sayForced("Cell is already empty"); return; }
+grid.CurrentCell.Value = "";
+Say.sayForced("Cleared");
+return;
+}
+
+if (keyData == Keys.Left) {
+if (bEditing && grid.EditStartedByF2 && tbEdit != null
+    && (tbEdit.SelectionStart + tbEdit.SelectionLength) > 0) return;
+if (!bEditing) return;
+ev.Handled = true;
+int iRowL = grid.CurrentCell.RowIndex;
+int iColL = grid.CurrentCell.ColumnIndex;
+grid.EndEdit();
+if (iColL > 0) grid.CurrentCell = grid.Rows[iRowL].Cells[iColL - 1];
+return;
+}
+
+if (keyData == Keys.Right) {
+if (bEditing && tbEdit != null
+    && (tbEdit.SelectionStart + tbEdit.SelectionLength) < tbEdit.TextLength) return;
+if (grid.CurrentCell.ColumnIndex != grid.Columns.Count - 1) return;
+ev.Handled = true;
+int iRow = grid.CurrentCell.RowIndex;
+if (bEditing) grid.EndEdit();
+// Nowa kolumna dostaje numer, nie nazwe - nazwy z pliku sa tylko dla
+// kolumn, ktore plik mial.
+int iNew = Homer.LbcDialog.addGridColumn(grid, "c" + (grid.Columns.Count + 1), "Column " + (grid.Columns.Count + 1));
+if (bMaNaglowki) naglowki.Add("Column " + grid.Columns.Count);
+grid.CurrentCell = grid.Rows[iRow].Cells[iNew];
+return;
+}
+
+if (keyData == Keys.Down) {
+if (grid.CurrentCell.RowIndex != grid.Rows.Count - 1) return;
+ev.Handled = true;
+int iCol = grid.CurrentCell.ColumnIndex;
+if (bEditing) grid.EndEdit();
+int iNew = grid.Rows.Add();
+grid.Rows[iNew].HeaderCell.Value = "";
+grid.CurrentCell = grid.Rows[iNew].Cells[iCol];
+return;
+}
+};
+
+dlg.runWithButtons(new string[] {"Save", "Cancel"});
+if (!abSave[0]) return;
+
+string sNowy = BuildCsvFromGrid(grid, bMaNaglowki ? naglowki : null, cSep, sBreak);
+if (sNowy == sOryginal) {
+AddMessage("Nothing changed in " + sTytul);
+return;
+}
+
+// KOPIA ZAPASOWA PRZED NADPISANIEM. Zapis tabeli podmienia CALY plik, wiec
+// blad w moim kodzie kosztowal by uzytkownika dane, ktorych nie da sie
+// odtworzyc. Kopia .bak jest tania i zdejmuje ten koszt.
+try {
+string sBak = sFile + ".bak";
+File.Copy(sFile, sBak, true);
+}
+catch {}
+
+try {
+File.WriteAllText(sFile, sNowy, enFile);
+}
+catch (Exception ex) {
+Dialog.Show("CSV Table", "The file could not be saved.\n" + ex.Message + "\n\nYour previous version is still on disk.");
+return;
+}
+
+// Gdy ten sam plik jest otwarty w edytorze, jego tresc na ekranie jest juz
+// nieaktualna - milczenie kazalo by uzytkownikowi pracowac na starej.
+AddMessage("Saved " + sTytul + " (a copy of the previous version is in " + Path.GetFileName(sFile) + ".bak)");
+} // EditCsvAsTable method
+
+// Sklada plik CSV z siatki. Naglowki wracaja jako pierwszy wiersz TYLKO
+// wtedy, gdy stamtad przyszly - dopisanie ich do pliku, ktory ich nie mial,
+// byloby dodaniem wiersza danych, ktorego uzytkownik nie wpisal.
+private string BuildCsvFromGrid(DataGridView grid, List<string> naglowki, char cSep, string sBreak) {
+List<List<string>> rows = new List<List<string>>();
+if (naglowki != null && naglowki.Count > 0) {
+List<string> h = new List<string>();
+for (int c = 0; c < grid.Columns.Count; c++)
+h.Add(c < naglowki.Count ? naglowki[c] : ("Column " + (c + 1)));
+rows.Add(h);
+}
+
+int iRows, iCols;
+GetMarkdownTableGridExtent(grid, out iRows, out iCols);
+for (int r = 0; r < iRows; r++) {
+List<string> w = new List<string>();
+for (int c = 0; c < iCols; c++) w.Add(GetMarkdownTableCellText(grid, r, c));
+rows.Add(w);
+}
+return EdSharp.Csv.Zapisz(rows, cSep, sBreak);
+} // BuildCsvFromGrid method
 
 private void RunMarkdownTableWizard(HomerRichTextBox rtb) {
 if (rtb == null) return;
