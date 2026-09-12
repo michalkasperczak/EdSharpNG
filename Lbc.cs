@@ -1927,6 +1927,37 @@ public class LbcDialog : IDisposable
         assignQueuedAccessKeys();
         if (btnAccept != null) frm.AcceptButton = btnAccept;
         if (btnCancel != null) frm.CancelButton = btnCancel;
+        // ESCAPE ZAMYKA KAZDE OKNO, ZAWSZE (12.09.2026, na polecenie
+        // Kasperczaka "Tak na stale, wszedzie", po zgloszeniu "Esc nie
+        // wychodzi z okienka wywolanego F7").
+        //
+        // Do tej pory Escape dzialal TYLKO wtedy, gdy okno mialo przycisk
+        // nazwany doslownie "Cancel" albo "Close" -- bo tylko wtedy powstawal
+        // CancelButton. Okno z przyciskami "Correct / Ignore all / Finish"
+        // (lista bledow pisowni) nie mialo zadnego z tych slow, wiec Escape
+        // nie robil NIC i jedynym wyjsciem bylo dotabowanie do Finish.
+        // Uzaleznianie ucieczki od NAZWY przycisku jest pulapka: kazde nowe
+        // okno z wlasnym slownictwem ("Finish", "Done", "Zamknij") rodzi ten
+        // sam blad od nowa, a osoba niewidoma odkrywa go dopiero wtedy, gdy
+        // utknie w oknie.
+        //
+        // Dlatego ucieczka nie zalezy juz od slow. Gdy nie ma przycisku
+        // Cancel/Close, Escape zamyka okno wprost -- wynik jest wtedy pusty
+        // ("" z runWithButtons), dokladnie tak samo jak przy zamknieciu
+        // krzyzykiem, wiec kod wolajacy nie musi nic o tym wiedziec i tak
+        // czy inaczej traktuje pusty wynik jako rezygnacje.
+        if (btnCancel == null)
+        {
+            Form frmEsc = frm;
+            frm.KeyDown += delegate(object sender, KeyEventArgs evArgs)
+            {
+                if (evArgs.KeyCode != Keys.Escape || evArgs.Modifiers != Keys.None) return;
+                evArgs.Handled = true;
+                evArgs.SuppressKeyPress = true;
+                frmEsc.DialogResult = DialogResult.Cancel;
+                frmEsc.Close();
+            };
+        }
         // Control+Enter presses the accept button regardless of
         // keyboard focus -- including inside a multi-line memo,
         // where plain Enter inserts a newline (AcceptsReturn) and

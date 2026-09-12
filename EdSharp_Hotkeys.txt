@@ -121,7 +121,8 @@ Review Output, Alt+Shift+F5, Open standard output of last prompt or compile comm
 Compile Command, Control+F5, Compile source code, say output, and jump to error position
 Pick Compiler, Control+Shift+F5, Pick a compiler or interpreter from the list of those configured
 
-Spell Check, F7, Spell check all or selected text
+Spell Check, F7, Spell check from the cursor to the end, or selected text
+Word Spelling Menu, Apps, Menu for the word at the cursor: add to dictionary, ignore, replacements
 Thesaurus, Shift+F7, Look up synonyms for word at cursor
 Web Lookup, Alt+F7, Look up information from dictionary.com, thesaurus.com, and wikipedia.org
 

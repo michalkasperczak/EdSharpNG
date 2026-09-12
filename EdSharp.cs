@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.90";
+public const string VersionString = "5.0.91";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1286,7 +1286,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
-public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
+public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1723,6 +1723,9 @@ menuMiscExtraSpeechLog = CreateMenuItem("Extra Speech Log", "Alt+Shift+X", menuI
 // wyswietlanego skrotu.  Litera E jest teraz WOLNA pod Control.
 menuMiscEnvironmentVariables = CreateMenuItem("&Environment Variables ...", "", menuItem_Click, "frame speak");
 menuMiscSpellCheck = CreateMenuItem("Spell Check", "F7", menuItem_Click, "child speak");
+// Ta sama rzecz co klawisz Aplikacje, ale widoczna w menu - dla klawiatur,
+// ktore klawisza Aplikacje nie maja (laptopy, klawiatury brajlowskie).
+menuMiscSpellingWordMenu = CreateMenuItem("Word Spelling Menu", "Apps", menuItem_Click, "child silent");
 menuMiscThesaurus = CreateMenuItem("Thesaurus", "Shift+F7", menuItem_Click, "child speak");
 menuMiscLookupTerm = CreateMenuItem("Lookup Term", "Alt+F7", menuItem_Click, "frame silent");
 menuMiscTranslateLanguage = CreateMenuItem("Translate Language", "Alt+Shift+F7", menuItem_Click, "frame speak");
@@ -2017,7 +2020,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // decyzja o zawartosci repo, nie o zachowaniu programu.
 menuMiscWebDownload = CreateMenuItem("Web Download", "Alt+Shift+W", menuItem_Click, "frame speak");
 menuMiscWebClientUtilities = CreateMenuItem("Web Client Utilities", "Alt+Shift+Space", menuItem_Click, "frame speak");
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -2187,6 +2190,7 @@ this.KeyIndex = iIndex;
 // Util.Say("Repeat " + this.KeyRepeat);
 
 if (HandleFileSlotKey(keyData)) return true;
+if (HandleSpellingWordMenuKey(keyData)) return true;
 if (HandleWindowNumberKey(keyData)) return true;
 if (HandleCloseWindowKey(keyData)) return true;
 if (HandleMdiWindowCycleKey(keyData)) return true;
@@ -4154,6 +4158,10 @@ AddMessage("Done");
 
 if (menuItem == menuMiscSpellCheck) {
 SpellCheck();
+}
+
+if (menuItem == menuMiscSpellingWordMenu) {
+SpellingWordMenu();
 }
 
 if (menuItem == menuMiscExtraSpeechLog) {
@@ -7701,12 +7709,39 @@ public void SpellCheckSystem() {
 HomerRichTextBox rtb = this.Child.RTB;
 int iBaza;
 string sText;
-if (rtb.SelectionLength == 0) { AddMessage("All"); iBaza = 0; sText = rtb.Text; }
-else { AddMessage("Selected"); iBaza = rtb.SelectionStart; sText = rtb.SelectedText; }
+// SPRAWDZANIE OD KURSORA, NIE OD POCZATKU PLIKU (12.09.2026, na prosbe
+// Kasperczaka: "Sprawdzanie F7 od kursora a nie od poczatku pliku").
+// Powod jest praktyczny: przy dlugim tekscie, do ktorego dopisuje sie na
+// koncu, sprawdzanie od gory przeprowadza uzytkownika przez setki spraw
+// juz raz rozstrzygnietych, zanim dojdzie do zdania, ktore wlasnie
+// napisal. Zaznaczenie ma pierwszenstwo - gdy cos jest zaznaczone,
+// sprawdzamy dokladnie to i nic wiecej.
+//
+// Gdy od kursora do konca nie ma nic do poprawienia, NIE konczymy w
+// ciszy "nie ma bledow" - to bylby falszywy spokoj, skoro wyzej moglo
+// zostac cokolwiek. Pytamy wtedy, czy sprawdzic tekst od poczatku.
+bool bOdKursora = false;
+if (rtb.SelectionLength > 0) { AddMessage("Selected"); iBaza = rtb.SelectionStart; sText = rtb.SelectedText; }
+else if (rtb.SelectionStart > 0) {
+bOdKursora = true; iBaza = rtb.SelectionStart; sText = rtb.Text.Substring(iBaza);
+AddMessage("From cursor");
+}
+else { AddMessage("All"); iBaza = 0; sText = rtb.Text; }
 if (sText.Length == 0) { AddMessage("No text!"); return; }
 
 List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sText);
-if (lBledy.Count == 0) { AddMessage("No spelling errors found"); Say.say("No spelling errors found"); return; }
+if (lBledy.Count == 0 && bOdKursora) {
+// Od kursora czysto - proponujemy calosc, zeby brak bledow nie znaczyl
+// czegos innego, niz uzytkownik uslyszal.
+if (String.Equals(Dialog.Confirm("Spelling", "No spelling errors from the cursor to the end.\n\nCheck the whole document from the beginning?", "Y"), "Y")) {
+iBaza = 0; sText = rtb.Text; bOdKursora = false;
+lBledy = Pisownia.Sprawdz(sText);
+}
+}
+if (lBledy.Count == 0) {
+string sGdzie = bOdKursora ? "No spelling errors from the cursor to the end" : "No spelling errors found";
+AddMessage(sGdzie); Say.say(sGdzie); return;
+}
 
 List<BladWTrakcie> lStan = new List<BladWTrakcie>();
 foreach (Pisownia.Blad b in lBledy) { BladWTrakcie w = new BladWTrakcie(); w.B = b; lStan.Add(w); }
@@ -7758,12 +7793,34 @@ rtbL.Index = iBazaL + bb.Start;
 rtbL.Select(iBazaL + bb.Start, bb.Dlugosc);
 };
 }
-string sBtnL = dlgL.runWithButtons(new string[] {"Correct", "Ignore all", "Finish"});
+string sBtnL = dlgL.runWithButtons(new string[] {"Correct", "&Add to dictionary", "&Ignore all", "Finish"});
 int iSel = lstB.SelectedIndex;
 dlgL.Dispose();
 if (sBtnL.Length == 0 || String.Equals(sBtnL, "Finish", StringComparison.OrdinalIgnoreCase)) { bPrzerwane = true; break; }
 if (iSel < 0 || iSel >= lMapa.Count) continue;
 iWybrany = lMapa[iSel];
+
+// "Add to dictionary" WPROST Z LISTY (12.09.2026, prosba Kasperczaka:
+// "Lepiej zeby na wierzchu przed wejsciem w korekte danego slowa bylo
+// dodaje do slownika, jezeli widzimy, ze slowo jest OK").  Zdecydowana
+// wiekszosc tego, co sprawdzacz zglasza w polskim tekscie, to nazwiska,
+// skroty i nazwy wlasne - slowa poprawne, ktorych nie ma w slowniku.
+// Otwieranie dla kazdego z nich okna z podpowiedziami, ktorych i tak sie
+// nie uzyje, to czysty koszt.
+//
+// Dodanie do slownika ZARAZEM zdejmuje blad ze wszystkich wystapien (i
+// z przyszlych sprawdzen), bo slowo uznane za poprawne przestaje byc
+// bledem - nie trzeba go osobno ignorowac.
+if (String.Equals(sBtnL, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
+string sSl = lStan[iWybrany].B.Slowo;
+if (Pisownia.Dodaj(sSl)) {
+iDodanych++;
+int iIle = OznaczWszystkie(lStan, sSl, "added");
+AddMessage(String.Format("Added: {0} ({1})", sSl, iIle));
+}
+else AddMessage("Could not add word");
+continue;
+}
 
 // "Ignore all" z listy - dla nazwiska, ktore wraca kilkanascie razy, bez
 // wchodzenia w okno poprawiania.
@@ -10592,7 +10649,124 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 		// assigning to slot 6 is the one gap in the range.
 		private const string c_sFileSlotSection = "FileSlots";
 
-		private bool HandleFileSlotKey(Keys keyData) {
+		// MENU KONTEKSTOWE PISOWNI NA WYRAZIE POD KURSOREM (12.09.2026, prosba
+		// Kasperczaka: "Dobrze tez, zeby to wszystko bylo dostepne z menu
+		// kontekstowego na danym slowie").
+		//
+		// Klawisz: Aplikacje (Keys.Apps, ten obok prawego Ctrl) - i TYLKO on.
+		// Dlaczego wlasnie ten i dlaczego nie ma drugiego:
+		//   - Keys.Apps nie wystepowal w calym kodzie ani w Hotkeys.ini - byl
+		//     wolny, a jest to klawisz, ktory kazdy uzytkownik czytnika ma w
+		//     palcach jako "menu na tym, na czym stoje".
+		//   - Shift+F10 (drugi naturalny kandydat) jest ZAJETY przez "Context
+		//     Menu" powloki Windows dla pliku.
+		//   - Alt+Shift+F7 sprawdzilem i tez jest ZAJETY - "Translate Language"
+		//     w Hotkeys.ini.  Pierwotnie wpisalem tu wlasnie ten skrot i byl to
+		//     blad wychwycony dopiero przy sprawdzeniu Hotkeys.ini, nie kodu:
+		//     kolizje skrotow trzeba sprawdzac W OBU miejscach, bo plik skrotow
+		//     zna przypisania, ktorych w kodzie C# nie widac.
+		//   - Ctrl+Alt+litera odpada z zasady: przez AltGr zjada polskie znaki.
+		// Dla klawiatur bez klawisza Aplikacje ta sama rzecz jest w menu
+		// Miscellaneous jako "Word Spelling Menu", wiec nikt nie zostaje bez
+		// dostepu tylko z powodu sprzetu.
+		//
+		// Menu dziala na wyrazie POD KURSOREM, bez uruchamiania calego
+		// sprawdzania - to jest szybka sciezka dla jednego slowa, ktore wlasnie
+		// wyglada podejrzanie.
+		private bool HandleSpellingWordMenuKey(Keys keyData) {
+			Keys keyCode = keyData & Keys.KeyCode;
+			if (keyCode != Keys.Apps) return false;
+			if ((keyData & (Keys.Control | Keys.Alt | Keys.Shift)) != Keys.None) return false;
+			if (this.Child == null) return false;
+			this.SpellingWordMenu();
+			return true;
+		} // HandleSpellingWordMenuKey method
+
+// Menu pisowni dla JEDNEGO wyrazu - tego, na ktorym stoi kursor.
+// Kolejnosc pozycji jest celowa: najpierw "Add to dictionary", bo w
+// polskim tekscie najczestszym powodem zgloszenia jest poprawne nazwisko
+// lub nazwa wlasna, ktorej brak w slowniku.  Podpowiedzi sa nizej, bo
+// siega sie po nie rzadziej.
+public void SpellingWordMenu() {
+	MdiChild child = this.Child;
+	if (child == null) return;
+	HomerRichTextBox rtb = child.RTB;
+
+	if (!Pisownia.Dostepne()) { Say.say("Spell checking not available"); return; }
+
+	// Granice wyrazu wokol kursora.  Litera to dla nas wszystko, co .NET
+	// uznaje za litere (wiec polskie znaki tez), plus apostrof i lacznik
+	// wewnatrz wyrazu.
+	string sText = rtb.Text;
+	int iPos = rtb.SelectionStart;
+	if (sText.Length == 0) { Say.say("No text"); return; }
+	if (iPos >= sText.Length) iPos = sText.Length - 1;
+	if (iPos < 0) iPos = 0;
+	// Gdy kursor stoi ZA wyrazem (spacja, koniec zdania), cofamy sie o
+	// jeden znak - tak jak dziala czytanie wyrazu w czytniku ekranu.
+	if (!Char.IsLetter(sText[iPos]) && iPos > 0 && Char.IsLetter(sText[iPos - 1])) iPos--;
+	if (!Char.IsLetter(sText[iPos])) { Say.say("No word at cursor"); return; }
+
+	int iStart = iPos;
+	while (iStart > 0 && (Char.IsLetter(sText[iStart - 1]) || sText[iStart - 1] == '\'' || sText[iStart - 1] == '-')) iStart--;
+	int iEnd = iPos;
+	while (iEnd + 1 < sText.Length && (Char.IsLetter(sText[iEnd + 1]) || sText[iEnd + 1] == '\'' || sText[iEnd + 1] == '-')) iEnd++;
+	// Lacznik/apostrof na samym brzegu nie nalezy do wyrazu.
+	while (iEnd > iStart && !Char.IsLetter(sText[iEnd])) iEnd--;
+	string sWord = sText.Substring(iStart, iEnd - iStart + 1);
+	if (sWord.Length == 0) { Say.say("No word at cursor"); return; }
+
+	List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sWord);
+	bool bBlad = (lBledy.Count > 0);
+	List<string> lPodp = bBlad ? lBledy[0].Podpowiedzi : new List<string>();
+
+	List<string> lOpcje = new List<string>();
+	lOpcje.Add("Add to dictionary");
+	lOpcje.Add("Ignore this word");
+	if (bBlad) {
+		int iIle = 0;
+		foreach (string sP in lPodp) {
+			if (sP == null || sP.Length == 0) continue;
+			lOpcje.Add("Replace with: " + sP);
+			iIle++;
+			if (iIle >= 10) break;
+		}
+	}
+	lOpcje.Add("Spell check from here");
+
+	string sTytul = bBlad ? ("Spelling: " + sWord) : ("Spelling: " + sWord + " (correct)");
+	string sWybor = Dialog.Pick(sTytul, lOpcje.ToArray(), true, 0);
+	if (sWybor.Length == 0) return;
+
+	if (String.Equals(sWybor, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
+		if (Pisownia.Dodaj(sWord)) { AddMessage("Added: " + sWord); Say.say("Added to dictionary"); }
+		else Say.say("Could not add word");
+		return;
+	}
+	if (String.Equals(sWybor, "Ignore this word", StringComparison.OrdinalIgnoreCase)) {
+		if (Pisownia.Pomijaj(sWord)) { AddMessage("Ignoring: " + sWord); Say.say("Ignoring this word"); }
+		else Say.say("Could not ignore word");
+		return;
+	}
+	if (String.Equals(sWybor, "Spell check from here", StringComparison.OrdinalIgnoreCase)) {
+		// Od poczatku TEGO wyrazu, nie od miejsca kursora w jego srodku -
+		// inaczej wyraz, ktory wlasnie ogladamy, wypadlby ze sprawdzania.
+		rtb.Select(iStart, 0);
+		this.SpellCheckSystem();
+		return;
+	}
+	if (sWybor.StartsWith("Replace with: ")) {
+		string sNowe = sWybor.Substring("Replace with: ".Length);
+		rtb.Select(iStart, sWord.Length);
+		rtb.SelectedText = sNowe;
+		rtb.Select(iStart + sNowe.Length, 0);
+		AddMessage(String.Format("Replaced: {0} -> {1}", sWord, sNowe));
+		Say.say("Replaced");
+		return;
+	}
+} // SpellingWordMenu method
+
+private bool HandleFileSlotKey(Keys keyData) {
 		if ((keyData & Keys.Alt) != Keys.Alt) return false;
 		if ((keyData & Keys.Control) == Keys.Control) return false;
 		bool bAssign = ((keyData & Keys.Shift) == Keys.Shift);
