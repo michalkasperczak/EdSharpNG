@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.91";
+public const string VersionString = "5.0.92";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2813,6 +2813,25 @@ else {
 sKey = sValue.Substring(0, iComma);
 sDescription = sValue.Substring(iComma + 1);
 }
+// SKROT BIERZEMY Z KODU, NIE Z PLIKU OPISOW (12.09.2026, zgloszenie
+// Kasperczaka: "Paleta polecen, wszystko dobrze, ale nie czyta skrotow
+// klawiszowych po poleceniu").
+//
+// Do tej pory chord pochodzil z pierwszego pola wiersza w Hotkeys.ini, a
+// ten plik jest OPISEM, nie zrodlem przypisan - klawisze siedza w kodzie
+// (argument sKey w CreateMenuItem, przez KeyMap.register).  Skutek byl
+// dwojaki i oba przypadki zmierzylem:
+//   - 3 polecenia (Tutorial, Report a Problem, Command Palette) mialy
+//     klawisz w kodzie, a w Hotkeys.ini nie mialy wiersza w ogole, wiec
+//     paleta czytala je BEZ skrotu;
+//   - 36 polecen mialo w pliku inna PISOWNIE chordu niz faktyczna
+//     ("Alt+Backspace" wobec "Alt+Back", "Alt+DownArrow" wobec
+//     "Alt+Down"), czyli paleta mowila nazwe klawisza, ktorej nie ma.
+// KeyMap zna chord przypisany NAPRAWDE, wiec pytamy jego, a plik zostaje
+// przy tym, do czego sluzy: przy opisie slownym.  Gdy KeyMap nic nie ma
+// (polecenie bez skrotu), zostaje to, co bylo - czyli nic.
+Keys keyBound = KeyMap.getKey(sCommand);
+if (keyBound != Keys.None) sKey = Util.KeyToSpoken(keyBound);
 return new string[] {sCommand, sKey, sDescription};
 } // GetKeySummary method
 
@@ -22239,6 +22258,61 @@ return true;
 public static string Key2String(Keys keyData) {
 return TypeDescriptor.GetConverter(typeof(Keys)).ConvertToString(keyData);
 } // Key2String method
+
+// NAZWA CHORDU DO WYMOWIENIA (12.09.2026, przy naprawie palety polecen).
+//
+// Key2String zwraca nazwe z wnetrza .NET, a ta nie jest nazwa klawisza,
+// ktory czlowiek ma pod palcami: "Alt+Back" zamiast Backspace,
+// "Alt+OemQuotes" zamiast apostrofu, "Alt+OemQuestion" zamiast ukosnika,
+// "Alt+D1" zamiast jedynki.  W palecie polecen czytnik ekranu wymawia to
+// doslownie, wiec uzytkownik slyszy nazwe, ktorej na klawiaturze nie ma.
+// Tu jest jedno miejsce, ktore tlumaczy chord na slowa - klawisze Oem
+// wprost, strzalki z dopowiedzeniem "Arrow" (samo "Left" jest dwuznaczne
+// w zdaniu), cyfry bez litery D.  Kolejnosc modyfikatorow jest STALA
+// (Control, Alt, Shift), bo brzmienie tej samej kombinacji nie moze sie
+// zmieniac miedzy poleceniami.
+public static string KeyToSpoken(Keys keyData) {
+if (keyData == Keys.None) return "";
+Keys keyCode = keyData & Keys.KeyCode;
+string sName;
+switch (keyCode) {
+case Keys.Back: sName = "Backspace"; break;
+case Keys.Return: sName = "Enter"; break;
+case Keys.Escape: sName = "Escape"; break;
+case Keys.Space: sName = "Space"; break;
+case Keys.Left: sName = "Left Arrow"; break;
+case Keys.Right: sName = "Right Arrow"; break;
+case Keys.Up: sName = "Up Arrow"; break;
+case Keys.Down: sName = "Down Arrow"; break;
+case Keys.PageUp: sName = "Page Up"; break;
+case Keys.PageDown: sName = "Page Down"; break;
+case Keys.Delete: sName = "Delete"; break;
+case Keys.Insert: sName = "Insert"; break;
+case Keys.Apps: sName = "Applications"; break;
+case Keys.Oemcomma: sName = "Comma"; break;
+case Keys.OemPeriod: sName = "Period"; break;
+case Keys.OemQuestion: sName = "Slash"; break;
+case Keys.OemMinus: sName = "Minus"; break;
+case Keys.Oemplus: sName = "Equals"; break;
+case Keys.OemQuotes: sName = "Apostrophe"; break;
+case Keys.OemSemicolon: sName = "Semicolon"; break;
+case Keys.OemOpenBrackets: sName = "Left Bracket"; break;
+case Keys.OemCloseBrackets: sName = "Right Bracket"; break;
+case Keys.OemPipe: sName = "Backslash"; break;
+case Keys.Oemtilde: sName = "Grave Accent"; break;
+default:
+sName = keyCode.ToString();
+// D1..D0 to cyfry rzedu gornego - litera D nalezy do .NET, nie do
+// klawiatury.
+if (sName.Length == 2 && sName[0] == 'D' && Char.IsDigit(sName[1])) sName = sName.Substring(1);
+break;
+}
+string sMods = "";
+if ((keyData & Keys.Control) == Keys.Control) sMods += "Control+";
+if ((keyData & Keys.Alt) == Keys.Alt) sMods += "Alt+";
+if ((keyData & Keys.Shift) == Keys.Shift) sMods += "Shift+";
+return sMods + sName;
+} // KeyToSpoken method
 
 // STRAZNIK PISANIA.  Czy tym chordem uzytkownik WPISUJE znak na biezacym
 // ukladzie klawiatury?  Jesli tak, chord nie moze zostac skrotem komendy.

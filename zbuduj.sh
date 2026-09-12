@@ -37,6 +37,23 @@ if ! grep -q "VersionString = \"$WERSJA\"" "$REPO/EdSharp.cs"; then
     exit 3
 fi
 
+# ZNACZNIK BOM W PLIKACH INI TO CICHA AWARIA.  Zmierzone 12.09.2026: trzy
+# bajty EF BB BF na poczatku Hotkeys.ini sprawiaja, ze Windows (funkcja
+# GetPrivateProfileString, ktora czyta te pliki) NIE WIDZI pierwszej sekcji -
+# nazwa sekcji brzmi dla niej "<BOM>[Hotkeys]", a nie "[Hotkeys]".  Skutek:
+# WSZYSTKIE opisy i skroty polecen czytaly sie jako puste, a program nie
+# zglaszal zadnego bledu, tylko milczal - paleta polecen nie mowila skrotow.
+# Plik wyglada przy tym normalnie w kazdym edytorze, wiec bez pomiaru nie ma
+# tego jak zauwazyc.  Dlatego sprawdzamy to przy KAZDYM budowaniu.
+for INI in "$REPO/Hotkeys.ini" "$REPO/EdSharp.ini"; do
+    [ -f "$INI" ] || continue
+    if [ "$(head -c 3 "$INI" | od -An -tx1 | tr -d ' \n')" = "efbbbf" ]; then
+        echo "BLAD: $INI zaczyna sie znacznikiem BOM - Windows nie odczyta z niego sekcji."
+        echo "      Usun trzy pierwsze bajty (EF BB BF) i zbuduj ponownie."
+        exit 11
+    fi
+done
+
 echo "== 1/3 kopiuje zrodla do $BUILD"
 cp "$REPO"/*.cs "$BUILD"/ || exit 4
 cp "$REPO"/*.js "$BUILD"/ 2>/dev/null
