@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.82";
+public const string VersionString = "5.0.83";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -16718,6 +16718,9 @@ return cp;
 } // CreateParams property
 private static IntPtr hMsftEdit = IntPtr.Zero;
 public int OldTextLength = -1;
+// Ile ms czekac po ustawieniu kursora.  Statyczne: wartosc jest wspolna dla
+// wszystkich okien i czytana raz.
+private static int iCaretMoveDelayMs = 0;
 public static string CR = "\r";
 public static string LF = "\n";
 public static string LB = LF;
@@ -16741,9 +16744,30 @@ this.ScrollToCaret();
 this.Update();
 this.Refresh();
 Application.DoEvents();
-System.Threading.Thread.Sleep(100);
-//this.OnNotifyMessage();
-//this.OnSelectionChanged();
+// CZEKANIE PO KAZDYM RUCHU KURSORA - USUNIETE Z DOMYSLNEGO DZIALANIA
+// (zadanie 5, 12.09.2026).
+//
+// Stalo tu Thread.Sleep(100) - bezwarunkowo, przy KAZDYM ustawieniu
+// kursora.  ZMIERZONE (testy/pomiar_kursor.cs) na zywej kontrolce:
+//   jeden ruch kursora z tym czekaniem   114,4 ms
+//   ten sam ruch bez niego                 2,9 ms
+//   20 ruchow pod rzad: 2287 ms wobec 58 ms
+// Czyli 97 procent kosztu ruchu kursora to bylo samo czekanie, a nie praca
+// kontrolki - odswiezenie jest szybkie.  Dwadziescia ruchow to ponad dwie
+// sekundy stania programu, i to jest druga polowa "zamarzania kursora":
+// pierwsza to ukrywanie karetki (patrz konstruktor, HideSelection).
+//
+// UBOCZNY SKUTEK, KTORY TRZEBA ZNAC: czytnik ekranu czeka na ruch karetki
+// najwyzej 100 ms (NVDA, caretMoveTimeoutMs).  Ruch trwal 114 ms, czyli
+// WYPADAL NA GRANICY tego okna - raz w nim, raz poza nim.  To wyjasnione
+// juz w komentarzu przy bNavigateReaderSaysAll: stad "czyta 2 razy, ale
+// tak jakby tez nie zawsze".  Teraz ruch trwa 3 ms, wiec wypada w oknie
+// ZAWSZE.  Zachowanie przestaje byc losowe - to jest poprawa - ale przy
+// Alt+strzalka czytnik bedzie teraz konsekwentnie czytal wiersz, zamiast
+// czasem zdania.  Slyszy to tylko uzytkownik, wiec zostawiam furtke:
+// wpis CaretMoveDelayMs w sekcji [Options] przywraca czekanie (100
+// odtwarza stan sprzed tej zmiany).
+if (iCaretMoveDelayMs > 0) System.Threading.Thread.Sleep(iCaretMoveDelayMs);
 }
 } // Index property
 
@@ -17021,6 +17045,34 @@ set {
 } // RowLength property
 
 public HomerRichTextBox() {
+// KARETKA I ZAZNACZENIE ZOSTAJA WIDOCZNE, GDY OKNO TRACI FOKUS
+// (zadanie 5, 12.09.2026 - zgloszenie: "po Alt+Tab kursor jakby zamarza,
+// czasem przy wyszukiwaniu, Esc pomaga").
+//
+// RichTextBox ma HideSelection DOMYSLNIE WLACZONE - ZMIERZONE, nie
+// zalozone: swieza kontrolka zwraca True (testy/pomiar_kursor.cs).
+// EdSharp nie ustawial tego nigdzie, wiec dzialal z ta wartoscia, a to
+// znaczy, ze przy KAZDYM odejsciu fokusu kontrolka ukrywala zaznaczenie
+// i karetke.  Odejsc fokusu jest wiecej, niz sie wydaje: Alt+Tab, ale
+// takze otwarcie okna wyszukiwania - jest modalne, wiec zabiera fokus.
+// Stad "czasem przy wyszukiwaniu".
+//
+// Samo polozenie kursora PRZEZYWA utrate fokusu (zmierzone: start i
+// dlugosc wracaja te same).  Znika WIDOCZNOSC - a to wlasnie widoczna
+// karetka jest tym, czego szuka czytnik ekranu i czym jest dla
+// uzytkownika "kursor".  Dlatego objawem bylo "zamarza", a nie "skacze":
+// nic sie nie psulo w polozeniu, tylko przestawalo byc pokazywane.
+//
+// Escape "pomagal" z tego samego powodu i nie byl rozwiazaniem: zamykal
+// okno wyszukiwania, czyli oddawal fokus kontrolce, a wtedy zaznaczenie
+// znow stawalo sie widoczne.  Poprawka usuwa potrzebe tej sztuczki.
+this.HideSelection = false;
+// Czekanie po ruchu kursora - domyslnie ZERO (patrz setter Index, gdzie
+// stoi pomiar).  Czytane raz, przy tworzeniu kontrolki, bo setter Index
+// chodzi tysiace razy i siegania do pliku ini przy kazdym ruchu kursora
+// bylo by tym samym bledem, ktory tu naprawiam.
+string sOpoznienie = App.ReadOption("CaretMoveDelayMs", "0").Trim();
+if (!Int32.TryParse(sOpoznienie, out iCaretMoveDelayMs) || iCaretMoveDelayMs < 0) iCaretMoveDelayMs = 0;
 SectionBreak = App.ReadOption("SectionBreak", SectionBreak);
 string s = App.ReadOption("UseIndentModeDefault", "N").Trim().ToUpper();
 if (s == "Y" || s == "YES") this.IndentMode = true;
