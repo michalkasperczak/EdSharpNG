@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.93";
+public const string VersionString = "5.0.94";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1309,7 +1309,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMiscAutoSave, menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1702,17 +1702,17 @@ menuMiscSetDefaultFont = CreateMenuItem("Set Default Font and Color ...", "Alt+S
 // wystapienie przecinka w mapie klawiszy to Control+Shift+Oemcomma (Start Tag).
 menuMiscConfigurationOptions = CreateMenuItem("Configuration Options ...", "Control+Oemcomma", menuItem_Click, "frame silent");
 menuMiscManualOptions = CreateMenuItem("Manual Options", "Alt+Shift+M", menuItem_Click, "frame silent");
-// CIAGLOSC PRACY - DWA PRZELACZNIKI W MENU, NIE TYLKO KLUCZE W PLIKU
-// (jego warunek z 12.09.2026: "trzeba bedzie jakos wlaczyc i wylaczyc bo nie
-// kazdy moze sobie czegos takiego zyczyc, tak samo jak auto zapisu").
-// Klucze RestoreSession i AutoSaveSeconds daje sie ustawic w Configuration
-// Options, ale tam sa wsrod trzydziestu innych i nazywaja sie po angielsku
-// jednym slowem - czyli praktycznie niewidoczne.  Te dwie pozycje MOWIA STAN
-// przy kazdym wywolaniu ("Work continuity is off"), wiec czytnik ekranu podaje
-// go bez szukania.  Bez skrotow klawiszowych: to ustawienie wlaczane raz, a nie
-// czynnosc powtarzana - klawisz byloby marnotrawstwem.
-menuMiscWorkContinuity = CreateMenuItem("Restore &Work Continuity", "", menuItem_Click, "frame silent");
-menuMiscAutoSave = CreateMenuItem("A&uto Save", "", menuItem_Click, "frame silent");
+// CIAGLOSC PRACY - WLASNE OKNO USTAWIEN OBOK Configuration Options.
+//
+// Jego polecenie z 12.09.2026: "Ja w ogole nie chcialbym zeby cokolwiek tam
+// trzeba bylo robic w pliku ustawien.  Chcialbym zeby do tych ustawien
+// normalnie byl dostep."  Klucze RestoreSession i AutoSaveSeconds SA w
+// Configuration Options, ale tam leza wsrod trzydziestu innych, nazywaja sie
+// jednym angielskim slowem i przyjmuja goly tekst - to nie jest "normalny
+// dostep", tylko ten sam plik ustawien w innym oknie.  Stad osobna pozycja,
+// ktora otwiera okno z polami wyboru (obsluga: strzalki, spacja, Enter).
+// Bez skrotu klawiszowego: to rzecz wlaczana raz, a nie czynnosc powtarzana.
+menuMiscWorkContinuity = CreateMenuItem("Work Continuity", "", menuItem_Click, "frame silent");
 // Moved off Alt+Shift+D0 so file slot 10 can be assigned like every other
 // slot -- Kasperczak authorized this move explicitly (14.08.2026 18:19).
 // This command wipes settings, so it now sits on a chord that is hard to
@@ -2054,7 +2054,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // decyzja o zawartosci repo, nie o zachowaniu programu.
 menuMiscWebDownload = CreateMenuItem("Web Download", "Alt+Shift+W", menuItem_Click, "frame speak");
 menuMiscWebClientUtilities = CreateMenuItem("Web Client Utilities", "Alt+Shift+Space", menuItem_Click, "frame speak");
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscAutoSave, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -6190,41 +6190,61 @@ else ToggleBulletListShortcut(child);
 }
 
 if (menuItem == menuMiscWorkContinuity) {
-// PRZELACZNIK MOWI SKUTEK, NIE NAZWE KOMENDY - ta sama zasada, co przy
-// Guard Document: nazwa pozycji menu nie niesie stanu, wiec bez komunikatu
-// niewidomy nie odroznilby wlaczenia od wylaczenia.
-bool bTeraz = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));
-bool bNowe = !bTeraz;
-App.WriteOption(Sesja.OpcjaSesja, bNowe ? "Y" : "N");
+// PRAWDZIWE OKNO USTAWIEN, NIE PLIK ANI PYTANIE O LICZBE.
+//
+// Polecenie Kasperczaka (12.09.2026): "Ja w ogole nie chcialbym zeby cokolwiek
+// tam trzeba bylo robic w pliku ustawien.  Chcialbym zeby do tych ustawien
+// normalnie byl dostep."  Wczesniejsza wersja tego miejsca byla dwoma
+// przelacznikami plus okienkiem pytajacym o liczbe sekund - czyli dalej
+// grzebaniem w wartosciach, tylko przez inne drzwi.
+//
+// Okno ma trzy pola i przyciski OK/Anuluj, wiec dziala tak, jak ustawienia w
+// kazdym innym programie: strzalka albo Tab po polach, spacja przelacza,
+// Enter zatwierdza, Escape wychodzi bez zmian.  Pola wyboru NIOSA SWOJ STAN
+// (czytnik ekranu mowi "zaznaczone" albo "niezaznaczone"), wiec nie trzeba
+// osobnych komunikatow "wlaczone"/"wylaczone", ktore przy przelacznikach w
+// menu byly jedynym zrodlem tej wiedzy.
+//
+// Liczba sekund to NumericUpDown, a nie pole tekstowe: ma wbudowane granice
+// (5 do 3600), wiec czlowiek nie ma jak wpisac wartosci, ktora program
+// musialby po cichu poprawiac, a strzalki gora/dol zmieniaja ja bez pisania.
+bool bSesjaTeraz = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));
+int iSekundTeraz = Sesja.SekundyAutozapisu(App.ReadOption(Sesja.OpcjaAutozapis, "0"));
+
+LbcDialog dlgCiag = new LbcDialog("Work Continuity", this);
+dlgCiag.addLabel("EdSharp can bring your work back after a restart, a crash, or a power cut.");
+CheckBox cbSesja = dlgCiag.addCheckBox("Restore &open files and cursor positions on startup", bSesjaTeraz, "Files that were open last time are opened again, each with its cursor where you left it.");
+CheckBox cbAuto = dlgCiag.addCheckBox("&Auto save a recovery copy of unsaved changes", iSekundTeraz > 0, "Your own file on disk is never written without you; the copy is kept in EdSharp's data folder and used only to recover after a crash.");
+NumericUpDown nudSek = dlgCiag.addNumericUpDown("&Seconds between auto saves", iSekundTeraz > 0 ? iSekundTeraz : Sesja.SekundyDomyslne, Sesja.SekundyMinimum, 3600, "How often the recovery copy is refreshed. Lower means less lost work after a crash.");
+if (!dlgCiag.runOkCancel()) { dlgCiag.Dispose(); return; }
+bool bSesjaNowa = cbSesja.Checked;
+// Liczba sekund liczy sie tylko wtedy, gdy autozapis jest zaznaczony - inaczej
+// zapisujemy zero, czyli wylaczony.  Jedna wartosc zamiast pary
+// "wlaczone" + "co ile", wiec nie ma stanu sprzecznego do rozstrzygania.
+int iSekundNowe = cbAuto.Checked ? (int) nudSek.Value : 0;
+dlgCiag.Dispose();
+
+App.WriteOption(Sesja.OpcjaSesja, bSesjaNowa ? "Y" : "N");
+App.WriteOption(Sesja.OpcjaAutozapis, iSekundNowe.ToString());
 UstawCiaglosc();
-if (bNowe) AddMessage("Work continuity on: open files and cursor positions come back after restart");
-else {
-// Wylaczenie znaczy takze: sprzatamy to, co juz lezy na dysku.  Zostawienie
-// zapisanej sesji i kopii po wylaczeniu funkcji byloby trzymaniem
-// fragmentow dokumentow bez zgody uzytkownika.
-Sesja.Wyczysc();
+
+// SPRZATANIE PO WYLACZENIU.  Zostawienie zapisanej sesji i kopii dokumentow
+// po tym, jak czlowiek wylaczyl funkcje, byloby trzymaniem fragmentow jego
+// tekstow bez zgody - a przy wlaczonej sesji stary plik kazalby przy
+// nastepnym starcie pytac o pliki sprzed wylaczenia.
+if (!bSesjaNowa) Sesja.Wyczysc();
+if (iSekundNowe <= 0) {
 try { foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia); }
 catch {}
-AddMessage("Work continuity off");
-}
 }
 
-if (menuItem == menuMiscAutoSave) {
-// Autozapis ma WARTOSC, nie tylko wlaczone/wylaczone, wiec pytamy o liczbe
-// sekund - z podpowiedziana wartoscia biezaca.  Zero wylacza.
-int iTeraz = Sesja.SekundyAutozapisu(App.ReadOption(Sesja.OpcjaAutozapis, "0"));
-string sPodpowiedz = iTeraz > 0 ? iTeraz.ToString() : Sesja.SekundyDomyslne.ToString();
-string sOdpowiedz = Dialog.Input("Auto Save", "Seconds between auto saves (0 turns auto save off).\r\nAuto save keeps a recovery copy in EdSharp's own folder; your file on disk is never written without you.", sPodpowiedz);
-if (sOdpowiedz == null || sOdpowiedz.Trim().Length == 0) return;
-int iNowe = Sesja.SekundyAutozapisu(sOdpowiedz);
-App.WriteOption(Sesja.OpcjaAutozapis, iNowe.ToString());
-UstawCiaglosc();
-if (iNowe > 0) AddMessage("Auto save every " + iNowe + " seconds");
-else {
-try { foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia); }
-catch {}
-AddMessage("Auto save off");
-}
+// Jedno zdanie potwierdzenia mowi SKUTEK obu ustawien naraz, bo to one razem
+// skladaja sie na "ciaglosc pracy" - osobne komunikaty kazalyby skladac ten
+// obraz w glowie.
+if (bSesjaNowa && iSekundNowe > 0) AddMessage("Work continuity on: files come back on startup, recovery copy every " + iSekundNowe + " seconds");
+else if (bSesjaNowa) AddMessage("Files come back on startup; auto save off");
+else if (iSekundNowe > 0) AddMessage("Recovery copy every " + iSekundNowe + " seconds; files do not come back on startup");
+else AddMessage("Work continuity off");
 }
 
 if (menuItem == menuMiscSetDefaultFont) {
