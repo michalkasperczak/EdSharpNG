@@ -61,6 +61,13 @@ cp "$REPO"/*.js "$BUILD"/ 2>/dev/null
 # zrodlowego konczy sie bledem "nazwa nie istnieje": zrodlo lezy na dysku C, ale
 # kompilator dostaje stara liste plikow z poprzedniej kopii BuildEdSharp.cmd.
 cp "$REPO"/BuildEdSharp.cmd "$BUILD"/ || exit 4
+# Uruchamiacze pomiarow sa wersjonowane w repozytorium (testy/uruchamiacze), bo
+# wczesniej istnialy TYLKO w katalogu wymiany na dysku C - czyli poza kopia
+# zapasowa i poza GitHubem. Skasowanie tego katalogu zabieralo mozliwosc
+# powtorzenia pomiarow, a same pliki .cs pomiarow zostawaly bez sposobu
+# uruchomienia (kazdy wymaga wlasnej listy plikow i odwolan do UIA).
+cp "$REPO"/testy/uruchamiacze/*.cmd "$BUILD"/ 2>/dev/null
+cp "$REPO"/testy/*.cs "$BUILD"/ 2>/dev/null
 
 echo "== 2/3 kompiluje (cmd.exe BuildEdSharp.cmd)"
 cd "$BUILD" || exit 5

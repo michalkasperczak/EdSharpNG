@@ -94,7 +94,7 @@ Two commands produce text in a new window after comparing sets of lines.  Lines 
 ### Deleting
 As usual, Delete (without a selection) deletes a character in the forward direction, and Backspace deletes backward.  Control+Delete deletes forward by a word, and Control+Backspace deletes backward.  Control+Shift+Delete deletes from the cursor to the end of the line, and Control+Shift+Backspace deletes from the cursor to the start of the line.  Alt+Shift+Delete deletes from the cursor to the end of the document, and Alt+Shift+Backspace deletes from the cursor to the top of the document.  Alt+Backspace deletes the current line.  Control+D deletes the current hard line (past wrapping to the next hard line break).  Control+Shift+D deletes the current paragraph (past one or more blank lines).  After deleting, EdSharp reads the new character, word, or line at the cursor.
 
-Press F7 to spell check all or selected text.  Use the Thesaurus command, Shift+F7, to look up synonyms for the word at the cursor position.  These features rely on an installation of Microsoft Word (and use the same hot keys).
+Press F7 to spell check all or selected text.  With no selection, checking starts at the cursor rather than at the top of the document, so you can resume where you left off.  EdSharpNG uses the spell checker built into Windows -- the same one other Windows programs use -- so Microsoft Word is no longer required and the check happens without leaving the editor.  Polish is supported, as is any other language whose dictionary is installed in Windows.  Use the Thesaurus command, Shift+F7, to look up synonyms for the word at the cursor position; that one still relies on Microsoft Word.
 
 ## Navigating
 Press Home or End to go to the start or end of the line, and automatically hear the character there.  Press Alt+Home or Alt+End to go to the first or last non-blank character of the line.  Press Control+Home or Control+End to go to the top or bottom of the document, and automatically hear the line there.
@@ -429,6 +429,32 @@ The Extra Speech Toggle command is gone as of 5.0.65: Kasperczak asked for its r
 With the optional JAWS scripts, you can toggle a speech setting of reading all or no punctuation using JAWSKey plus the grave accent at the top left of the main keypad (U.S. keyboard).  All punctuation is useful when reading carefully for details whereas no punctuation is useful when reading quickly for concepts.
 
 Word wrap is on the Miscellaneous menu, as the Word Wrap and Unwrap commands; neither has a keyboard shortcut, since wrapping is rarely toggled while writing.  Use the Guard Document command, Control+F7, to turn read-only protection on or off, preventing accidental modifications.  One key does both directions, so the command announces the RESULT rather than its own name: it says "Guard on" when the protection goes on and "Guard off" when it comes off.  Guarding is not available while the Markdown preview is open, since the preview guards the document itself; the command says "Close the preview first!" there.  Wrap and guard settings are restored the next time a file is opened.
+
+### Finding a Command Without the Menus
+
+Press Control+Shift+X for the Command Palette.  Type any part of a command name and the list narrows as you type; Enter runs what is selected.  Each entry shows its keyboard shortcut, so the palette doubles as a way to learn the shortcuts for what you actually use.  This is faster than walking a menu tree with several hundred commands in it, particularly when you know the name but not the menu.
+
+### Opening a CSV File as a Table
+
+A file of comma-separated values reads badly as plain text: one long line per record, with the columns separated by commas you have to count.  When you open a `.csv` or `.tsv` file that really looks like a table -- several rows, at least two columns -- EdSharpNG offers to show it in the table grid instead, the same grid used by Insert Table.  There your screen reader names the column heading at every cell.  Answer No and the file opens as ordinary text, because a CSV file is sometimes just text you want to edit.
+
+In the grid, Right Arrow from the last column adds a column and Down Arrow from the last row adds a row.  F2 edits a cell, Delete clears it, Control+Enter saves the table back to the file, and Escape asks before discarding changes.  You can also reach this deliberately with the Edit CSV as Table command on the Miscellaneous menu.
+
+### Polish and Other Legacy Encodings
+
+Older Polish text files use encodings that predate Unicode: Mazovia (the Polish DOS layout), Latin II (code page 852) and Windows-1250.  All three are on the encoding lists used by Yield Encoding, opening and saving, so text from those files reads correctly instead of showing damaged letters.  Mazovia is handled by EdSharpNG's own code, since Windows itself no longer knows that code page.
+
+### Work Continuity
+
+EdSharpNG can bring your work back after a restart, a crash, or a power cut.  Both halves of that are OFF until you ask for them, because not everyone wants a program keeping copies of their text.  Open the Work Continuity command on the Miscellaneous menu; it has no keyboard shortcut, since it is something you set once rather than a command you repeat.  The window holds two check boxes and one number, so your screen reader states the current setting as you move through it -- there is nothing to look up in a settings file.
+
+The first check box restores your open files on startup, along with the cursor position in each one and any bookmarks you had set.  The state is written while you work, not only when you exit, so it survives the program being killed or the machine losing power.
+
+The second check box turns on auto save, and the number below it sets how many seconds pass between saves, from five to an hour, thirty by default.  Auto save does NOT write to your document.  It keeps a recovery copy in EdSharp's own data directory, so declining to save on exit still discards your changes exactly as it always did; nothing is decided behind your back.
+
+When EdSharpNG starts and finds unsaved changes from a session that ended badly, it asks whether to bring them back, and the question says how many files are waiting and when they were last saved, so you are not choosing blind.  If every file was saved normally, they simply reopen without a question.  Recovery copies older than a fortnight are cleared out on their own, and turning the feature off deletes the stored session together with every copy.
+
+One more consequence: the empty NoName document is created only when there is nothing to restore.  Previously it appeared first, every time, so restoring a session left you with your files AND a blank window to close.
 
 EdSharp checks whether the file in the current editing window has been modified by another program since being loaded from disk.  If so, you are prompted whether to open it again (like what Alt+O does manually).  If you answer No, version checking on the current file stops until you save or reload it.
 

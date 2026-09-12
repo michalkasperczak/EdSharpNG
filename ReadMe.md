@@ -14,6 +14,7 @@ send him reports about this version.
 
 [Download Latest Release](https://github.com/michalkasperczak/EdSharpNG/releases/latest)
 [User Guide](EdSharp.md)
+[Technical Documentation](docs/README.md)
 [Report a Problem in EdSharpNG](https://github.com/michalkasperczak/EdSharpNG/issues)
 
 ## The original EdSharp
