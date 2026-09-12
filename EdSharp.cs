@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.87";
+public const string VersionString = "5.0.88";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -18870,6 +18870,84 @@ catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 // Dlugosc przerwy da sie zmienic wpisem DialogSpeechDelayMs w sekcji [Options],
 // a wpisanie 0 wylacza czytanie calkiem - gdyby czyjs czytnik radzil sobie sam
 // i mowil wszystko dwa razy.
+// OKIENKA KOMUNIKATOW I PYTAN - WLASNE, NIE MessageBox (12.09.2026).
+//
+// ZGLOSZENIE Kasperczaka: "F11 czyta wpierw OK a potem EdSharpNG 5.0.87 is up
+// to date.  A powinien wpierw okno a potem OK, tak samo wpierw okno o
+// dostepnych aktualizacjach, a potem Tak/Nie."  I ogolniej: "tak okienka
+// powinny dzialac".
+//
+// DLACZEGO POPRZEDNIE PODEJSCIE BYLO ZLE.  W 5.0.84 dolozylem czytanie tresci
+// z opoznieniem (SayDialogText: odczekaj 400 ms, potem powiedz).  To ZLE
+// rozwiazanie, mimo ze cos poprawialo: opoznienie jest WYSCIGIEM z czytnikiem.
+// Nie da sie dobrac liczby, ktora bedzie dobra zawsze - przy szybkiej mowie
+// czytnik konczy wczesniej i tresc pada w cisze, przy wolnej wchodzi mu w
+// slowo, a na obcionym komputerze wszystko sie przesuwa.  Wynik slyszalny dla
+// uzytkownika: najpierw "OK", potem tresc - czyli odwrotnie niz trzeba.
+//
+// WLASCIWE ROZWIAZANIE: ZMIENIC BUDOWE OKNA, NIE DOBIERAC OPOZNIENIA.
+// Czytnik czyta zawartosc okna dialogowego i element, na ktorym stoi fokus.
+// W MessageBox fokus startuje NA PRZYCISKU, a tresc jest zwyklym napisem
+// (statycznym tekstem), ktorego kolejnosc odczytu zalezy od czytnika.  Dlatego
+// budujemy okno SAMI: tresc jest POLEM TEKSTOWYM tylko do czytania i to ONO
+// dostaje fokus na starcie.  Wtedy kolejnosc "najpierw tresc, potem przycisk"
+// wynika z BUDOWY okna, a nie z tego, czy zdazylismy - i jest taka sama przy
+// kazdej szybkosci mowy i w kazdym czytniku.
+//
+// Skutki dodatkowe, wszystkie pozytywne:
+// - tresc da sie PRZECZYTAC PONOWNIE strzalkami, bez zamykania okna;
+// - dluga tresc da sie przewijac i skopiowac (Ctrl+C);
+// - Enter i Escape dzialaja jak wszedzie w programie;
+// - kazde okno ma przycisk Help (F1), jak reszta okien EdSharpNG.
+//
+// TA SAMA PULAPKA W AMC: Alt+F4 przy nagrywaniu w tle nie meldowal, co robi.
+// Wzorzec do zapamietania: NIGDY nie zalatwiaj kolejnosci mowy opoznieniem -
+// ustaw fokus na tresci.  Opis w umiejetnosci komunikaty-i-skroty-dla-czytnika-ekranu.
+//
+// Wpis DialogSpeechDelayMs=0 w [Options] wraca do zwyklego MessageBox - na
+// wypadek gdyby ktos wolal zachowanie systemowe.
+static bool UzyjWlasnychOkien() {
+try {
+string sDelay = App.ReadOption("DialogSpeechDelayMs", "400").Trim();
+int iDelay;
+if (!Int32.TryParse(sDelay, out iDelay)) return true;
+return iDelay != 0;
+}
+catch { return true; }
+} // UzyjWlasnychOkien method
+
+// Buduje okno z trescia jako polem do czytania i podanymi przyciskami.
+// Zwraca napis przycisku, ktory uzytkownik nacisnal ("" przy Escape).
+static string PokazOknoZTrescia(string sTitle, string sText, string[] asButtons, string sTip) {
+LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
+TextBox tb = dlg.addMemo(sText, sTip);
+tb.ReadOnly = true;
+// WYSOKOSC DOPASOWANA DO TRESCI.  addMemo daje staly rozmiar na kilka
+// wierszy, bo sluzy do WPISYWANIA tekstu.  Tutaj tresc jest znana z gory:
+// jednozdaniowy komunikat ("EdSharpNG 5.0.87 is up to date") w wysokim
+// pustym prostokacie wyglada jak blad, a dluga tresc ma sie zmiescic bez
+// przewijania.  Licze wiersze i dokladam zapas na zawijanie dlugich linii.
+try {
+int iLinie = 1;
+foreach (string sLinia in sText.Replace("\r\n", "\n").Split('\n')) {
+iLinie += 1 + (sLinia.Length / 70);   // 70 znakow na wiersz przy tej szerokosci
+}
+if (iLinie < 2) iLinie = 2;
+if (iLinie > 18) iLinie = 18;         // wyzej i tak nie zmiesci sie na ekranie
+tb.Height = tb.Font.Height * iLinie + 8;
+}
+catch {}
+// Fokus NA TRESCI - to jest cala poprawka.  Bez tego czytnik zaczyna od
+// przycisku, tak jak w MessageBox.
+tb.AccessibleName = "Message";
+dlg.setInitialFocus(tb);
+return dlg.runWithButtons(asButtons);
+} // PokazOknoZTrescia method
+
+// SayDialogText - czytanie tresci z opoznieniem.  ZOSTAJE tylko dla drogi
+// awaryjnej (DialogSpeechDelayMs=0 wlacza systemowy MessageBox, gdzie nic
+// innego nie da sie zrobic).  W zwyklej pracy programu NIE jest uzywana -
+// patrz komentarz przy UzyjWlasnychOkien.
 static void SayDialogText(string sTitle, string sText) {
 try {
 string sDelay = App.ReadOption("DialogSpeechDelayMs", "400").Trim();
@@ -18899,6 +18977,29 @@ MessageBoxDefaultButton defaultButton;
 if (sDefault.ToLower() == "n") defaultButton = MessageBoxDefaultButton.Button2;
 else defaultButton = MessageBoxDefaultButton.Button1;
 
+// WLASNE OKNO: tresc pytania ma fokus, wiec czytnik mowi JA pierwsza, a
+// dopiero potem przycisk - patrz dlugi komentarz przy UzyjWlasnychOkien.
+// Kolejnosc przyciskow zalezy od domyslnej odpowiedzi, bo pierwszy przycisk
+// jest tym, ktory naciska Enter.  Przy pytaniu grozniejszym (domyslne "nie")
+// pod Enterem MUSI byc "No" - inaczej odruchowy Enter robi to, czego
+// uzytkownik nie chcial.
+if (UzyjWlasnychOkien()) {
+try {
+string[] asButtons = (sDefault.ToLower() == "n")
+  ? new string[] {"&No", "&Yes", "Cancel"}
+  : new string[] {"&Yes", "&No", "Cancel"};
+string sWybor = PokazOknoZTrescia(sTitle, sText, asButtons,
+  "Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.");
+if (sWybor == "Yes") return "Y";
+if (sWybor == "No") return "N";
+return "";
+}
+catch {
+// Gdyby wlasne okno z jakiegos powodu nie wstalo, pytanie MUSI sie
+// pokazac - inaczej program cicho podjalby decyzje za uzytkownika.
+}
+}
+
 SayDialogText(sTitle, sText);
 switch (MessageBox.Show(sText, sTitle, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question, defaultButton)) {
 case DialogResult.Yes :
@@ -18921,9 +19022,21 @@ string sTitle = oTitle.ToString();
 string sText = oText.ToString();
 if (oTitle is bool) sTitle = ((bool) oTitle) ? "true" : "false";
 if (oText is bool) sText = (bool) oText ? "true" : "false";
-// Tresc czytana tak samo jak w pytaniach - tu chodzi zwykle o komunikat,
-// ktorego uzytkownik NIE zamowil (np. wynik sprawdzenia paczki), wiec
-// przeczytanie go jest jedynym sposobem, zeby do niego dotarl.
+// Tresc czytana JAKO PIERWSZA, bo ma fokus - w tym wlasnie tkwila skarga
+// na F11 ("czyta wpierw OK a potem EdSharpNG jest aktualny").  Chodzi
+// zwykle o komunikat, ktorego uzytkownik NIE zamowil, wiec przeczytanie go
+// w calosci i we wlasciwej kolejnosci jest jedynym sposobem, zeby dotarl.
+if (UzyjWlasnychOkien()) {
+try {
+PokazOknoZTrescia(sTitle, sText, new string[] {"OK"},
+  "Read the message with the arrow keys.  Enter or Escape closes this window.");
+return;
+}
+catch {
+// Komunikat MUSI sie pokazac - spadamy na okno systemowe.
+}
+}
+
 SayDialogText(sTitle, sText);
 MessageBox.Show(sText, sTitle);
 } // Show method
