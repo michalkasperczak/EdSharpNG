@@ -397,6 +397,24 @@ public class LbcForm : Form
 {
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
+        // ALT+F4 ZAMYKA TO OKIENKO, NIE CALY PROGRAM (Kasperczak, 11.09.2026:
+        // "Alt F cztery zamyka program no chyba ze jest jakies otwarte
+        // Okienko, to pewnie musi to Okienko wpierw zamknac").
+        // Skrot menu "Exit EdSharp" jest zarejestrowany na glownym oknie, a
+        // listy i okienka dialogowe oddaja mu nieobsluzone klawisze - wiec
+        // Alt+F4 na liscie zakladek czy okien konczyl caly program, choc w
+        // Windows Alt+F4 zamyka OKNO.  Tutaj przerywamy to wczesniej, zeby
+        // klawisz nigdy nie dotarl do tablicy skrotow glownego okna.
+        // Zamykamy przez DialogResult.Cancel, czyli dokladnie to samo co
+        // Escape - inaczej wywolujacy dostalby "OK" i potraktowal wyjscie
+        // jako wybor pozycji.
+        if (keyData == (Keys.Alt | Keys.F4))
+        {
+            this.DialogResult = DialogResult.Cancel;
+            this.Close();
+            return true;
+        }
+
         if (keyData == (Keys.Control | Keys.Enter))
         {
             Button btnOk = findButton(this, true);   // by DialogResult.OK

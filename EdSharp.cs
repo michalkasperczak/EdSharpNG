@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.78";
+public const string VersionString = "5.0.79";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1081,6 +1081,7 @@ public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReve
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
 public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
+public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem;
 public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
@@ -1836,7 +1837,13 @@ menuHelpElevateVersion = CreateMenuItem("Elevate Version", "F11", menuItem_Click
 // stoi obok Alt+F1 (About), gdzie uzytkownik szuka rzeczy o samym programie.
 menuHelpReinstall = CreateMenuItem("Reinstall Current Version", "", menuItem_Click, "frame speak");
 menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", menuItem_Click, "frame silent");
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem});
+// PALETA POLECEN JAKO POZYCJA MENU (11.09.2026).  Skrot Control+Shift+X:
+// Control+Shift+P, ktory sam zaproponowalem, jest ZAJETY przez Path List
+// (EdSharp.cs oraz Hotkeys.ini) - sprawdzone przed przypisaniem.  X jest
+// wolne w kodzie i w Hotkeys.ini.  Swiadomie NIE Control+Alt+litera: prawy
+// Alt w Windows to Ctrl+Alt, wiec takie skroty zjadaja polskie znaki.
+menuHelpCommandPalette = CreateMenuItem("Command Palette ...", "Control+Shift+X", menuItem_Click, "frame silent");
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem, menuHelpCommandPalette});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuDelete, menuNavigate, menuQuery, menuMisc, menuWindow, menuHelp});
@@ -6775,6 +6782,10 @@ if (menuItem == menuHelpAlternateMenu) {
 AlternateMenu();
 }
 
+if (menuItem == menuHelpCommandPalette) {
+CommandPalette();
+}
+
 if (menuItem == menuHelpContextMenu) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
@@ -8662,6 +8673,49 @@ break;
 }
 items[iChoice].PerformClick();
 } // AlternateMenu method
+
+// PALETA POLECEN (Control+Shift+P) - jego zlecenie 11.09.2026: "Paleta
+// polecen.  Trzeba ja wprowadzic, jak w AMC.  Zaproponuj skrot klawiszowy",
+// a nastepnie: "Paleta w AMC jezeli chodzi o filtrowanie i to co czyta NVDA,
+// jest dobrze zrobiona.  Mozesz sie jakos tam wzorowac".
+//
+// Rozne od Alternate Menu (Control+Shift+M), ktore pokazuje CALE menu na
+// raz i wymaga strzalkowania przez ~200 pozycji: tutaj sie PISZE, a lista
+// sie zawęza.  Zapozyczone z AMC (CommandPaletteSearch.Filter i FoldForSearch):
+//   - zapytanie dzielone na SLOWA, pozycja zostaje gdy zawiera WSZYSTKIE
+//     (wiec "zap plik" znajduje "Save File As" po polsku i angielsku bez
+//     pamietania kolejnosci),
+//   - porownanie bez wielkosci liter i BEZ OGONKOW, bo szukanie ma dzialac,
+//     gdy sie pisze "zapisz" albo "zaznacz" z klawiatury programisty.
+// Filtr jest w polu tekstowym, nie w liscie: NVDA sam czyta wpisywane znaki,
+// a strzalka w dol schodzi do wynikow.  Skrot Control+Shift+P byl wolny
+// (sprawdzone w KeyMap i menu); NIE uzywam Control+Alt+litera, bo prawy Alt
+// zjada polskie znaki.
+public void CommandPalette() {
+List<ToolStripMenuItem> items = new List<ToolStripMenuItem>();
+List<string> lLabels = new List<string>();
+foreach (ToolStripMenuItem menu in menuMain.Items) {
+foreach (object o in menu.DropDownItems) {
+ToolStripMenuItem item = o as ToolStripMenuItem;
+if (item == null) continue;
+if (item == menuHelpAlternateMenu) continue;
+if (item == menuHelpCommandPalette) continue;   // nie wypisuj samej palety
+if (item.IsMdiWindowListEntry) continue;
+if (!item.Enabled) continue;
+string[] aSummary = GetKeySummary(item);
+string sKeys = (aSummary[1] == null) ? "" : aSummary[1].Trim();
+string sLabel = menu.Text.Replace("&", "") + ": " + aSummary[0];
+if (sKeys.Length > 0) sLabel += ", " + sKeys;
+items.Add(item);
+lLabels.Add(sLabel);
+}
+}
+if (items.Count == 0) { Say.sayForced("No commands available"); return; }
+
+int iChosen = Dialog.PickCommand("Command Palette", lLabels);
+if (iChosen < 0 || iChosen >= items.Count) return;
+items[iChosen].PerformClick();
+} // CommandPalette method
 
 new void ContextMenu(string sFile) {
 MdiChild child = this.Child;
@@ -16914,6 +16968,16 @@ ListBox lst = this.lst;
 bool bChecked = false;
 if (lst is CheckedListBox) bChecked = true;
 
+// ALT+F4 ZAMYKA TO OKNO, NIE CALY PROGRAM (Kasperczak, 11.09.2026).
+// Ta klasa jest NIEZALEZNA od LbcForm, wiec ta sama poprawka musi byc
+// w obu - inaczej czesc list zamykalaby program, a czesc nie, i nikt by
+// nie wiedzial, ktora jest ktora.  Cancel, czyli to samo co Escape.
+if (keyData == (Keys.Alt | Keys.F4)) {
+this.DialogResult = DialogResult.Cancel;
+this.Close();
+return true;
+}
+
 switch (keyData) {
 case Keys.Alt | Keys.A :
 App.Frame.AddMessage("Alpha order");
@@ -17435,6 +17499,132 @@ return sReturn;
 // on the last item it moves up. Emptying the list closes the dialog.
 // aValue holds the character indexes (possibly space-padded, as Pick
 // does), aDisplay the line texts.
+// PickCommand: okno palety polecen.  Pole filtra na gorze, lista wynikow
+// pod nim; zwraca INDEKS w przekazanej liscie (nie tekst), bo wywolujacy
+// trzyma obok rownolegla liste pozycji menu do klikniecia.  -1 = rezygnacja.
+//
+// Wzorowane na palecie AMC (CommandPaletteSearch), o ktora sam prosil:
+// filtr slowo-po-slowie i zwijanie ogonkow, patrz FoldCommandSearch nizej.
+// Pod czytnik istotne sa trzy rzeczy, ktorych brak w zwyklym Pick:
+//   1. Fokus startuje w POLU FILTRA - NVDA czyta wpisywane znaki sam,
+//      wiec nie trzeba nic wymuszac przy pisaniu.
+//   2. Po kazdej zmianie filtra mowimy LICZBE wynikow i PIERWSZY z nich,
+//      inaczej niewidomy pisze w prozni: lista sie zmienia bezglosnie, bo
+//      fokus zostal w polu.  Mowa wymuszona, bo fokus sie nie przesunal.
+//   3. Enter W POLU wybiera pierwszy wynik - najczestszy przypadek jest
+//      wtedy dwuruchowy (pisz, Enter), bez schodzenia do listy.
+// Strzalka w dol z pola wchodzi do listy, gdzie Enter wybiera podswietlone.
+public static int PickCommand(string sTitle, IList<string> lLabels) {
+List<string> lAll = new List<string>(lLabels);
+List<int> lMap = new List<int>();      // pozycja na liscie -> indeks w lAll
+for (int i = 0; i < lAll.Count; i++) lMap.Add(i);
+
+LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
+dlg.addLabel("Type to filter commands:");
+TextBox tbFilter = dlg.addTextBox("", "");
+dlg.addLabel("Commands:");
+ListBox lst = dlg.addListBox(lAll, "", "");
+lst.SelectionMode = SelectionMode.One;
+dlg.setHelpDetail(tbFilter, "Type words in any order to narrow the list; matching ignores case and Polish diacritics. Enter runs the first match, Down Arrow moves into the list, Escape closes the palette.");
+dlg.setHelpDetail(lst, "Enter runs the highlighted command, Escape closes the palette, Shift+Tab returns to the filter box.");
+LbcDialog.selectOnly(lst, 0);
+dlg.setInitialFocus(tbFilter);
+
+tbFilter.TextChanged += delegate(object oSender, EventArgs ev) {
+string sQuery = tbFilter.Text;
+lMap.Clear();
+lst.BeginUpdate();
+lst.Items.Clear();
+for (int i = 0; i < lAll.Count; i++) {
+if (!CommandMatches(lAll[i], sQuery)) continue;
+lMap.Add(i);
+lst.Items.Add(lAll[i]);
+}
+lst.EndUpdate();
+if (lst.Items.Count > 0) LbcDialog.selectOnly(lst, 0);
+// Licznik i pierwszy wynik - jedyny sygnal, ze pisanie cokolwiek dalo.
+if (lst.Items.Count == 0) Say.sayForced("No matching command");
+else Say.sayForced(lst.Items.Count + " commands, " + lAll[lMap[0]]);
+};
+
+int iResult = -1;
+tbFilter.KeyDown += delegate(object oSender, KeyEventArgs ev) {
+if (ev.KeyData == Keys.Down) {
+// Wejscie do listy.  Focus() sam wystarczy - czytnik oglosi pozycje.
+if (lst.Items.Count == 0) { ev.Handled = true; ev.SuppressKeyPress = true; return; }
+ev.Handled = true; ev.SuppressKeyPress = true;
+lst.Focus();
+return;
+}
+if (ev.KeyData == Keys.Enter) {
+// Enter w polu = uruchom pierwszy wynik, bez schodzenia do listy.
+ev.Handled = true; ev.SuppressKeyPress = true;
+if (lMap.Count == 0) { Say.sayForced("No matching command"); return; }
+iResult = lMap[0];
+dlg.form.DialogResult = DialogResult.OK;
+dlg.form.Close();
+}
+};
+
+lst.KeyDown += delegate(object oSender, KeyEventArgs ev) {
+if (ev.KeyData != Keys.Enter) return;
+ev.Handled = true; ev.SuppressKeyPress = true;
+int i = lst.SelectedIndex;
+if (i < 0 || i >= lMap.Count) return;
+iResult = lMap[i];
+dlg.form.DialogResult = DialogResult.OK;
+dlg.form.Close();
+};
+
+if (dlg.runOkCancel() && iResult < 0) {
+// Wyjscie przyciskiem OK, bez Entera na pozycji.
+int i = lst.SelectedIndex;
+if (i >= 0 && i < lMap.Count) iResult = lMap[i];
+}
+dlg.Dispose();
+return iResult;
+} // PickCommand method
+
+// CommandMatches: pozycja pasuje, gdy zawiera WSZYSTKIE slowa zapytania,
+// w dowolnej kolejnosci.  Kolejnosc slow to rzecz, ktorej nikt nie pamieta,
+// a przy "zapisz jako" i "Save As" i tak sie rozjezdza miedzy jezykami.
+private static bool CommandMatches(string sLabel, string sQuery) {
+string[] aTokens = FoldCommandSearch(sQuery).Split(
+new char[] {' ', '\t'}, StringSplitOptions.RemoveEmptyEntries);
+if (aTokens.Length == 0) return true;
+string sFolded = FoldCommandSearch(sLabel);
+foreach (string sToken in aTokens) {
+if (sFolded.IndexOf(sToken, StringComparison.Ordinal) < 0) return false;
+}
+return true;
+}
+
+// FoldCommandSearch: wielkie litery i BEZ OGONKOW, zeby "zazn" znalazlo
+// "zaznacz", a "lacz" znalazlo "Lacz".  Rozklad Unicode zdejmuje znaki
+// diakrytyczne z a-c-e-n-o-s-z-u; kreslone l trzeba podmienic osobno, bo
+// nie jest litera z akcentem, tylko wlasnym znakiem.
+private static string FoldCommandSearch(string sValue) {
+if (sValue == null) return "";
+StringBuilder sb = new StringBuilder(sValue.Length);
+foreach (char c in sValue.Normalize(NormalizationForm.FormD)) {
+if (CharUnicodeInfo.GetUnicodeCategory(c) == UnicodeCategory.NonSpacingMark) continue;
+if (c == 'ł' || c == 'Ł') { sb.Append('L'); continue; }
+sb.Append(Char.ToUpperInvariant(c));
+}
+return sb.ToString();
+}
+
+// PickBookmark: the Bookmarks list opened by Go to Bookmark (Alt+K),
+// specialized so a bookmark can be dropped without leaving the dialog:
+//   Delete / Backspace - remove the highlighted bookmark
+// Requested by Michal Kasperczak (13.08.2026). Removal rewrites the
+// bookmark list stored for sFile in the INI Favorites section - the same
+// store Clear Bookmark (Control+Shift+K) edits - so the change is
+// permanent as soon as the key is pressed. After a removal the highlight
+// stays at the same list position (which is now the following bookmark);
+// on the last item it moves up. Emptying the list closes the dialog.
+// aValue holds the character indexes (possibly space-padded, as Pick
+// does), aDisplay the line texts.
 public static string PickBookmark(string sTitle, string[] aValue, string[] aDisplay, int iIndex, string sFile) {
 List<string> lVal = new List<string>(aValue);
 List<string> lDisp = new List<string>((aDisplay == null) ? aValue : aDisplay);
@@ -17447,18 +17637,22 @@ LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
 // program.  Odkrywalnosc zostaje: setHelpDetail pokazuje klawisze w pomocy
 // F1 i wymawia je na zadanie przez Shift+F1.
 ListBox lst = dlg.addListBox(lDisp, "", "");
-dlg.setHelpDetail(lst, "Keys: Delete or Backspace removes the bookmark, Left Arrow says the line number, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.");
+dlg.setHelpDetail(lst, "Keys: Delete or Backspace removes the bookmark, Left Arrow previews the bookmarked line, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.");
 LbcDialog.selectOnly(lst, iIndex);
 
 lst.KeyDown += delegate(object oSender, KeyEventArgs ev) {
 ListBox lb = oSender as ListBox;
 if (lb == null) return;
 
-// STRZALKA W LEWO MOWI TE DRUGA INFORMACJE (jego prosba 01.09.2026,
-// spojnie z lista zakladek z nazwa i lista przypisow).  Tu pozycja niesie
-// TRESC wiersza, wiec brakujaca informacja to WSPOLRZEDNA - numer wiersza,
-// liczony od jedynki jak w oknie skoku do wiersza.  Mowa wymuszona, bo
-// fokus nie drgnal i czytnik nie ma z czego sam wywnioskowac zmiany.
+// STRZALKA W LEWO CZYTA TRESC WIERSZA, NIE JEGO NUMER (Kasperczak,
+// 11.09.2026: "Strzalka w lewo nie ma czytac numeru linii z zakladka, tylko
+// tresc wiersza, w ktorej jest zakladka, ale bez wychodzenia z menu.  Taki
+// podglad").  Do 5.0.78 mowila "Line 148" - numer sam nie mowi, gdzie sie
+// jest, a tresc mowi.  Numer wiersza zostaje na koncu, po tresci, bo bywa
+// potrzebny przy skoku - ale juz nie jako jedyna informacja.
+// Pusty wiersz trzeba nazwac, inaczej strzalka w lewo brzmi jak awaria.
+// Fokus nie drgnal, wiec mowa MUSI byc wymuszona - czytnik nie ma z czego
+// sam wywnioskowac zmiany.  Okno zostaje otwarte: to podglad, nie skok.
 if (ev.KeyData == Keys.Left) {
 ev.Handled = true; ev.SuppressKeyPress = true;
 int iSel = lb.SelectedIndex;
@@ -17467,7 +17661,12 @@ int iCharAt;
 if (!Int32.TryParse(lVal[iSel].Trim(), out iCharAt)) return;
 HomerRichTextBox rtbHere = (App.Frame.Child == null) ? null : App.Frame.Child.RTB;
 if (rtbHere == null) return;
-Say.sayForced("Line " + (rtbHere.GetLineFromCharIndex(iCharAt) + 1));
+int iRowHere = rtbHere.GetLineFromCharIndex(iCharAt);
+string[] aLinesHere = rtbHere.Lines;
+string sRowHere = (iRowHere >= 0 && iRowHere < aLinesHere.Length)
+? (aLinesHere[iRowHere] ?? "").Trim() : "";
+if (sRowHere.Length == 0) sRowHere = "Blank line";
+Say.sayForced(sRowHere + ", line " + (iRowHere + 1));
 return;
 }
 
