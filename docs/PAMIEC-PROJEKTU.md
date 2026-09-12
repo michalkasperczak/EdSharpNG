@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-09-12 21:30 (CEST). Wpisow: 29 z 63 w calej pamieci.
+Wygenerowane: 2026-09-12 21:39 (CEST). Wpisow: 29 z 63 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
