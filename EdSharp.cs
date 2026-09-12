@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.88";
+public const string VersionString = "5.0.89";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -7688,6 +7688,15 @@ SpellCheckWord();
 // kazdego pokazuje slowo, jego OTOCZENIE (bez kontekstu nie widac, o ktore
 // miejsce chodzi) i liste podpowiedzi.  Kursor w dokumencie ustawia sie na
 // biezacym bledzie, zeby czytnik ekranu czytal to samo miejsce, ktore widac.
+// Jeden blad w trakcie poprawiania - stan trzymam obok samego bledu, bo
+// lista bledow i lista poprawek musza sie zgadzac az do konca pracy.
+class BladWTrakcie {
+public Pisownia.Blad B;
+public string Nowe = "";      // pusty = jeszcze nie poprawione
+public bool Zrobione = false; // poprawione, pominiete albo dodane do slownika
+public string Los = "";       // co sie z nim stalo - do podsumowania
+}
+
 public void SpellCheckSystem() {
 HomerRichTextBox rtb = this.Child.RTB;
 int iBaza;
@@ -7699,58 +7708,215 @@ if (sText.Length == 0) { AddMessage("No text!"); return; }
 List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sText);
 if (lBledy.Count == 0) { AddMessage("No spelling errors found"); Say.say("No spelling errors found"); return; }
 
-// Poprawki zbieram i nakladam OD KONCA, bo kazda zmienia dlugosc tekstu, a
-// wtedy pozycje kolejnych bledow przestalyby sie zgadzac.
-List<int> lPoz = new List<int>();
-List<int> lDlug = new List<int>();
-List<string> lNowe = new List<string>();
-int iPoprawionych = 0, iDodanych = 0;
+List<BladWTrakcie> lStan = new List<BladWTrakcie>();
+foreach (Pisownia.Blad b in lBledy) { BladWTrakcie w = new BladWTrakcie(); w.B = b; lStan.Add(w); }
+
+int iPoprawionych = 0, iDodanych = 0, iPominietych = 0, iIgnorowanych = 0;
 bool bPrzerwane = false;
 
-for (int i = 0; i < lBledy.Count; i++) {
-Pisownia.Blad b = lBledy[i];
+// LISTA BLEDOW NA WIERZCHU (12.09.2026, zgloszenie Kasperczaka: "Nie
+// powinna ta lista bledow byc na wierzchu i potem dopiero tabem na
+// sugestie").  Powod jest praktyczny, nie kosmetyczny: przy przechodzeniu
+// blad za bledem uzytkownik slyszy JEDNA propozycje i nie wie ani ile
+// bledow zostalo, ani ze wiekszosc z nich to nazwiska i skroty, ktorych
+// poprawiac nie chce.  Z listy widzi calosc i wybiera, czym sie zajac.
+// Przy jednym bledzie listy nie pokazuje - byloby to puste klikniecie.
+bool bLista = lStan.Count > 1;
+int iWybrany = 0;
+
+while (true) {
+if (bLista) {
+int iZostalo = 0;
+foreach (BladWTrakcie w in lStan) if (!w.Zrobione) iZostalo++;
+if (iZostalo == 0) break;
+
+List<string> lWiersze = new List<string>();
+List<int> lMapa = new List<int>();   // wiersz listy -> numer bledu
+for (int i = 0; i < lStan.Count; i++) {
+if (lStan[i].Zrobione) continue;
+lMapa.Add(i);
+lWiersze.Add(String.Format("{0} - {1}", lStan[i].B.Slowo, Otoczenie(sText, lStan[i].B.Start, lStan[i].B.Dlugosc)));
+}
+// Zaznaczenie wraca na blad, przy ktorym uzytkownik ostatnio byl - po
+// poprawieniu jednego nie zaczyna sie od gory listy.
+int iZazn = lMapa.IndexOf(iWybrany);
+if (iZazn < 0) { for (int k = 0; k < lMapa.Count; k++) if (lMapa[k] >= iWybrany) { iZazn = k; break; } }
+if (iZazn < 0) iZazn = lWiersze.Count - 1;
+
+LbcDialog dlgL = new LbcDialog(String.Format("Spelling: {0} of {1} to check", iZostalo, lStan.Count), App.Frame);
+ListBox lstB = dlgL.addListBox("Misspelled words", lWiersze, lWiersze[iZazn]);
+dlgL.setInitialFocus(lstB);
+// Kursor w dokumencie idzie za wyborem z listy, zeby czytnik czytal to
+// samo miejsce, ktore jest zaznaczone w oknie.
+{
+ListBox lstL = lstB; List<int> lMapaL = lMapa; HomerRichTextBox rtbL = rtb; int iBazaL = iBaza; List<BladWTrakcie> lStanL = lStan;
+lstB.SelectedIndexChanged += delegate(object s, EventArgs e) {
+int ix = lstL.SelectedIndex;
+if (ix < 0 || ix >= lMapaL.Count) return;
+Pisownia.Blad bb = lStanL[lMapaL[ix]].B;
+rtbL.Index = iBazaL + bb.Start;
+rtbL.Select(iBazaL + bb.Start, bb.Dlugosc);
+};
+}
+string sBtnL = dlgL.runWithButtons(new string[] {"Correct", "Ignore all", "Finish"});
+int iSel = lstB.SelectedIndex;
+dlgL.Dispose();
+if (sBtnL.Length == 0 || String.Equals(sBtnL, "Finish", StringComparison.OrdinalIgnoreCase)) { bPrzerwane = true; break; }
+if (iSel < 0 || iSel >= lMapa.Count) continue;
+iWybrany = lMapa[iSel];
+
+// "Ignore all" z listy - dla nazwiska, ktore wraca kilkanascie razy, bez
+// wchodzenia w okno poprawiania.
+if (String.Equals(sBtnL, "Ignore all", StringComparison.OrdinalIgnoreCase)) {
+string sSl = lStan[iWybrany].B.Slowo;
+Pisownia.Pomijaj(sSl);
+int iIle = OznaczWszystkie(lStan, sSl, "ignored");
+iIgnorowanych += iIle;
+AddMessage(String.Format("Ignored: {0} ({1})", sSl, iIle));
+continue;
+}
+} else {
+// Bez listy: idziemy po kolei pierwszym niezrobionym.
+iWybrany = -1;
+for (int i = 0; i < lStan.Count; i++) if (!lStan[i].Zrobione) { iWybrany = i; break; }
+if (iWybrany < 0) break;
+}
+
+BladWTrakcie w2 = lStan[iWybrany];
+Pisownia.Blad b = w2.B;
 rtb.Index = iBaza + b.Start;   // czytnik ekranu idzie za kursorem
 rtb.Select(iBaza + b.Start, b.Dlugosc);
 
+int iIleRazy = IleWystapien(lStan, b.Slowo);
 string sOtoczenie = Otoczenie(sText, b.Start, b.Dlugosc);
-LbcDialog dlg = new LbcDialog(String.Format("Spelling {0} of {1}: {2}", i + 1, lBledy.Count, b.Slowo), App.Frame);
+LbcDialog dlg = new LbcDialog(String.Format("Spelling: {0}", b.Slowo), App.Frame);
 dlg.addLabel(String.Format("Not in dictionary: {0}", b.Slowo));
 dlg.addLabel(String.Format("Context: {0}", sOtoczenie));
+if (iIleRazy > 1) dlg.addLabel(String.Format("This word occurs {0} times", iIleRazy));
+
+// KOLEJNOSC: najpierw LISTA PODPOWIEDZI z fokusem, potem pole tekstowe
+// (12.09.2026, zgloszenie Kasperczaka).  Powod: gdy fokus startowal w
+// polu z pierwsza propozycja, uzytkownik slyszal JEDNA wersje i nie
+// wiedzial, ze sa inne - lista byla schowana za polem.  Teraz slyszy
+// "3 podpowiedzi, komputer" i strzalka sprawdza reszte.
 List<string> lWybor = new List<string>(b.Podpowiedzi);
 ListBox lst = null;
-TextBox txt = dlg.addInputBox("Replace with", b.Podpowiedzi.Count > 0 ? b.Podpowiedzi[0] : b.Slowo);
 if (lWybor.Count > 0) lst = dlg.addListBox("Suggestions", lWybor, lWybor[0]);
+TextBox txt = dlg.addInputBox("Replace with", b.Podpowiedzi.Count > 0 ? b.Podpowiedzi[0] : b.Slowo);
 // Wybor z listy przepisuje sie do pola tekstowego, zeby dalo sie i wybrac
 // podpowiedz, i dopisac wlasna wersje - bez przeskakiwania miedzy trybami.
 if (lst != null) {
 ListBox lstL = lst; TextBox txtL = txt;
 lst.SelectedIndexChanged += delegate(object s, EventArgs e) { if (lstL.SelectedItem != null) txtL.Text = lstL.SelectedItem.ToString(); };
+dlg.setInitialFocus(lst);
+} else {
+dlg.setInitialFocus(txt);   // brak podpowiedzi - jedyne, co da sie zrobic, to wpisac wlasna wersje
 }
-string sBtn = dlg.runWithButtons(new string[] {"Replace", "Skip", "Add to dictionary", "Cancel"});
+
+// PRZYCISKI, nie pole kombi (decyzja Kasperczaka 12.09.2026: "Pomin raz i
+// Ignoruj czyli pomin w calym tekscie.  To dwie osobne opcje").  Przycisk
+// robi rzecz od razu i sam mowi, czym jest; kombi wymaga wybrania trybu, a
+// potem zatwierdzenia - dwie czynnosci i trzeba pamietac, co jest wybrane.
+// "Replace all" tylko gdy slowo faktycznie wraca - inaczej byloby to
+// martwym przyciskiem do przetabowania.
+List<string> lPrzyciski = new List<string>();
+lPrzyciski.Add("&Replace");
+if (iIleRazy > 1) lPrzyciski.Add("Replace a&ll");
+lPrzyciski.Add("Ski&p");
+lPrzyciski.Add("&Ignore all");
+lPrzyciski.Add("&Add to dictionary");
+lPrzyciski.Add("Cancel");
+string sBtn = dlg.runWithButtons(lPrzyciski.ToArray());
 string sNowe = txt.Text;
 dlg.Dispose();
 
-if (sBtn.Length == 0 || String.Equals(sBtn, "Cancel", StringComparison.OrdinalIgnoreCase)) { bPrzerwane = true; break; }
+if (sBtn.Length == 0 || String.Equals(sBtn, "Cancel", StringComparison.OrdinalIgnoreCase)) {
+// Anulowanie w oknie jednego bledu wraca DO LISTY, nie konczy calego
+// sprawdzania - inaczej pomylka kosztowalaby cala prace.  Sprawdzanie
+// konczy przycisk Finish na liscie albo Escape na niej.
+if (bLista) continue;
+bPrzerwane = true; break;
+}
 if (String.Equals(sBtn, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
-if (Pisownia.Dodaj(b.Slowo)) { iDodanych++; AddMessage(String.Format("Added: {0}", b.Slowo)); }
+if (Pisownia.Dodaj(b.Slowo)) {
+iDodanych++;
+OznaczWszystkie(lStan, b.Slowo, "added");
+AddMessage(String.Format("Added: {0}", b.Slowo));
+}
 else AddMessage("Could not add word");
 continue;
 }
-if (String.Equals(sBtn, "Skip", StringComparison.OrdinalIgnoreCase)) { Pisownia.Pomijaj(b.Slowo); continue; }
-if (sNowe.Length == 0 || sNowe == b.Slowo) continue;
-lPoz.Add(b.Start); lDlug.Add(b.Dlugosc); lNowe.Add(sNowe);
-iPoprawionych++;
-} // for each error
+if (String.Equals(sBtn, "Ignore all", StringComparison.OrdinalIgnoreCase)) {
+Pisownia.Pomijaj(b.Slowo);
+int iIle = OznaczWszystkie(lStan, b.Slowo, "ignored");
+iIgnorowanych += iIle;
+AddMessage(String.Format("Ignored: {0} ({1})", b.Slowo, iIle));
+continue;
+}
+if (String.Equals(sBtn, "Skip", StringComparison.OrdinalIgnoreCase)) {
+// POMIN RAZ - tylko to jedno wystapienie; kolejne beda pytane znowu.
+w2.Zrobione = true; w2.Los = "skipped"; iPominietych++;
+continue;
+}
+if (sNowe.Length == 0 || sNowe == b.Slowo) { w2.Zrobione = true; w2.Los = "unchanged"; continue; }
 
-for (int i = lPoz.Count - 1; i >= 0; i--) {
-int iOd = iBaza + lPoz[i];
-rtb.ReplaceRange(iOd, iOd + lDlug[i], lNowe[i]);
+if (String.Equals(sBtn, "Replace all", StringComparison.OrdinalIgnoreCase)) {
+int iIle = 0;
+foreach (BladWTrakcie w3 in lStan) {
+if (w3.Zrobione || w3.B.Slowo != b.Slowo) continue;
+w3.Nowe = sNowe; w3.Zrobione = true; w3.Los = "replaced"; iIle++;
+}
+iPoprawionych += iIle;
+AddMessage(String.Format("Replaced {0}: {1} -> {2}", iIle, b.Slowo, sNowe));
+continue;
+}
+
+w2.Nowe = sNowe; w2.Zrobione = true; w2.Los = "replaced"; iPoprawionych++;
+} // while - lista albo kolejne bledy
+
+// Poprawki nakladam OD KONCA, bo kazda zmienia dlugosc tekstu, a wtedy
+// pozycje kolejnych bledow przestalyby sie zgadzac.
+List<BladWTrakcie> lDoZamiany = new List<BladWTrakcie>();
+foreach (BladWTrakcie w in lStan) if (w.Los == "replaced" && w.Nowe.Length > 0) lDoZamiany.Add(w);
+lDoZamiany.Sort(delegate(BladWTrakcie x, BladWTrakcie y) { return y.B.Start.CompareTo(x.B.Start); });
+foreach (BladWTrakcie w in lDoZamiany) {
+int iOd = iBaza + w.B.Start;
+rtb.ReplaceRange(iOd, iOd + w.B.Dlugosc, w.Nowe);
 }
 rtb.Index = iBaza;
-string sPodsumowanie = String.Format("{0} replaced, {1} added to dictionary{2}", iPoprawionych, iDodanych, bPrzerwane ? ", stopped" : "");
+
+// Podsumowanie wymienia tylko to, co faktycznie sie stalo - zerowe liczniki
+// sa halasem, przez ktory trzeba przesluchac cale zdanie.
+List<string> lCzesci = new List<string>();
+if (iPoprawionych > 0) lCzesci.Add(String.Format("{0} replaced", iPoprawionych));
+if (iDodanych > 0) lCzesci.Add(String.Format("{0} added to dictionary", iDodanych));
+if (iIgnorowanych > 0) lCzesci.Add(String.Format("{0} ignored", iIgnorowanych));
+if (iPominietych > 0) lCzesci.Add(String.Format("{0} skipped", iPominietych));
+if (lCzesci.Count == 0) lCzesci.Add("nothing changed");
+string sPodsumowanie = String.Join(", ", lCzesci.ToArray()) + (bPrzerwane ? ", stopped" : "");
 AddMessage(sPodsumowanie);
 Say.say(sPodsumowanie);
 } // SpellCheckSystem method
+
+// Ile razy ten sam wyraz jest jeszcze do sprawdzenia - decyduje o tym, czy
+// pokazac "Replace all" i czy zapowiedziec powtorzenia.
+static int IleWystapien(List<BladWTrakcie> lStan, string sSlowo) {
+int iIle = 0;
+foreach (BladWTrakcie w in lStan) if (!w.Zrobione && w.B.Slowo == sSlowo) iIle++;
+return iIle;
+}
+
+// Oznacza WSZYSTKIE niezrobione wystapienia wyrazu - uzywane przez "Ignore
+// all" i dodanie do slownika; bez tego ten sam wyraz wrocilby w liscie, choc
+// uzytkownik juz o nim zdecydowal.
+static int OznaczWszystkie(List<BladWTrakcie> lStan, string sSlowo, string sLos) {
+int iIle = 0;
+foreach (BladWTrakcie w in lStan) {
+if (w.Zrobione || w.B.Slowo != sSlowo) continue;
+w.Zrobione = true; w.Los = sLos; iIle++;
+}
+return iIle;
+}
 
 // Otoczenie slowa - do przeczytania na glos, zeby bylo wiadomo, o ktore
 // miejsce w tekscie chodzi.  Lamania linii zamieniam na odstepy, bo w jednej
