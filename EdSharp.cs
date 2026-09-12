@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.92";
+public const string VersionString = "5.0.93";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -258,7 +258,22 @@ InitJFW();
 Frame = new MdiFrame();
 Homer.Say.attach(Frame);
 this.MainForm = Frame;
-MdiChild child = new MdiChild(Frame);
+// CIAGLOSC PRACY - katalog danych musi byc gotowy PRZED pierwszym odczytem
+// sesji (zadanie 12, 12.09.2026).
+Sesja.Przygotuj(App.DataDir);
+
+// PUSTY DOKUMENT "NoName" POWSTAJE DOPIERO WTEDY, GDY NIE MA CO PRZYWROCIC.
+//
+// Trzeci punkt zadania 12 brzmial: "NIE otwierac pustego dokumentu noname, gdy
+// jest co przywrocic".  Do 5.0.92 puste okno powstawalo BEZWARUNKOWO, jako
+// pierwsza rzecz - a potem dokladaly sie do niego pliki z poprzedniej sesji.
+// Czlowiek dostawal wiec swoja prace ORAZ pusty dokument, ktory musial osobno
+// zamknac; przy czytniku ekranu to dodatkowe okno na liscie Control+F4 i
+// jeszcze jedno pytanie przy wychodzeniu.
+// Kolejnosc jest wiec teraz taka: najpierw probujemy przywrocic, potem
+// otwieramy pliki z listy [Previous] i z wiersza polecenia, a puste okno
+// powstaje na samym koncu i TYLKO jesli nie ma ani jednego innego.
+Frame.PrzywrocSesje();
 if (App.ReadOption("OpenPrevious", "Y").ToLower().Substring(0, 1) != "n") {
 string[] aFiles = App.ReadSectionKeys("Previous");
 int iCount = 0;
@@ -284,6 +299,14 @@ if (cmdLineArgs.Count > 2) sColumn = cmdLineArgs[2];
 // Frame.OpenOrActivateWindow(sFile, 1, sLine, sColumn);
 App.Frame.OpenOrActivateWindow(sFile, App.Frame.GetViewLevel(sFile), sLine, sColumn);
 }
+// PUSTE OKNO NA KONCU I TYLKO GDY TRZEBA (patrz komentarz wyzej).  Program
+// bez zadnego okna byloby pusta ramka bez miejsca do pisania, wiec gdy nic
+// sie nie otwarlo - ani sesja, ani [Previous], ani plik z wiersza polecenia -
+// tworzymy zwykly nowy dokument, dokladnie jak dotad.
+if (App.Frame.MdiChildren.Length == 0) new MdiChild(App.Frame, App.Frame.GetNoNameTitle());
+// CIAGLOSC PRACY startuje PO otwarciu okien: pierwszy zapis sesji ma zlapac
+// pelny stan, nie program w polowie wstawania.
+App.Frame.StartCiaglosciPracy();
 // SPRAWDZANIE NOWEJ WERSJI PRZY URUCHOMIENIU (zadanie 7 z listy 11.09.2026).
 // Ostatnia rzecz po otwarciu plikow: start ma sie skonczyc, a dopiero potem
 // program moze zagladac do sieci.
@@ -1286,7 +1309,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
-public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMiscAutoSave, menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1679,6 +1702,17 @@ menuMiscSetDefaultFont = CreateMenuItem("Set Default Font and Color ...", "Alt+S
 // wystapienie przecinka w mapie klawiszy to Control+Shift+Oemcomma (Start Tag).
 menuMiscConfigurationOptions = CreateMenuItem("Configuration Options ...", "Control+Oemcomma", menuItem_Click, "frame silent");
 menuMiscManualOptions = CreateMenuItem("Manual Options", "Alt+Shift+M", menuItem_Click, "frame silent");
+// CIAGLOSC PRACY - DWA PRZELACZNIKI W MENU, NIE TYLKO KLUCZE W PLIKU
+// (jego warunek z 12.09.2026: "trzeba bedzie jakos wlaczyc i wylaczyc bo nie
+// kazdy moze sobie czegos takiego zyczyc, tak samo jak auto zapisu").
+// Klucze RestoreSession i AutoSaveSeconds daje sie ustawic w Configuration
+// Options, ale tam sa wsrod trzydziestu innych i nazywaja sie po angielsku
+// jednym slowem - czyli praktycznie niewidoczne.  Te dwie pozycje MOWIA STAN
+// przy kazdym wywolaniu ("Work continuity is off"), wiec czytnik ekranu podaje
+// go bez szukania.  Bez skrotow klawiszowych: to ustawienie wlaczane raz, a nie
+// czynnosc powtarzana - klawisz byloby marnotrawstwem.
+menuMiscWorkContinuity = CreateMenuItem("Restore &Work Continuity", "", menuItem_Click, "frame silent");
+menuMiscAutoSave = CreateMenuItem("A&uto Save", "", menuItem_Click, "frame silent");
 // Moved off Alt+Shift+D0 so file slot 10 can be assigned like every other
 // slot -- Kasperczak authorized this move explicitly (14.08.2026 18:19).
 // This command wipes settings, so it now sits on a chord that is hard to
@@ -2020,7 +2054,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // decyzja o zawartosci repo, nie o zachowaniu programu.
 menuMiscWebDownload = CreateMenuItem("Web Download", "Alt+Shift+W", menuItem_Click, "frame speak");
 menuMiscWebClientUtilities = CreateMenuItem("Web Client Utilities", "Alt+Shift+Space", menuItem_Click, "frame speak");
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscAutoSave, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -6155,6 +6189,44 @@ if (bNumbered) ToggleNumberedListShortcut(child);
 else ToggleBulletListShortcut(child);
 }
 
+if (menuItem == menuMiscWorkContinuity) {
+// PRZELACZNIK MOWI SKUTEK, NIE NAZWE KOMENDY - ta sama zasada, co przy
+// Guard Document: nazwa pozycji menu nie niesie stanu, wiec bez komunikatu
+// niewidomy nie odroznilby wlaczenia od wylaczenia.
+bool bTeraz = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));
+bool bNowe = !bTeraz;
+App.WriteOption(Sesja.OpcjaSesja, bNowe ? "Y" : "N");
+UstawCiaglosc();
+if (bNowe) AddMessage("Work continuity on: open files and cursor positions come back after restart");
+else {
+// Wylaczenie znaczy takze: sprzatamy to, co juz lezy na dysku.  Zostawienie
+// zapisanej sesji i kopii po wylaczeniu funkcji byloby trzymaniem
+// fragmentow dokumentow bez zgody uzytkownika.
+Sesja.Wyczysc();
+try { foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia); }
+catch {}
+AddMessage("Work continuity off");
+}
+}
+
+if (menuItem == menuMiscAutoSave) {
+// Autozapis ma WARTOSC, nie tylko wlaczone/wylaczone, wiec pytamy o liczbe
+// sekund - z podpowiedziana wartoscia biezaca.  Zero wylacza.
+int iTeraz = Sesja.SekundyAutozapisu(App.ReadOption(Sesja.OpcjaAutozapis, "0"));
+string sPodpowiedz = iTeraz > 0 ? iTeraz.ToString() : Sesja.SekundyDomyslne.ToString();
+string sOdpowiedz = Dialog.Input("Auto Save", "Seconds between auto saves (0 turns auto save off).\r\nAuto save keeps a recovery copy in EdSharp's own folder; your file on disk is never written without you.", sPodpowiedz);
+if (sOdpowiedz == null || sOdpowiedz.Trim().Length == 0) return;
+int iNowe = Sesja.SekundyAutozapisu(sOdpowiedz);
+App.WriteOption(Sesja.OpcjaAutozapis, iNowe.ToString());
+UstawCiaglosc();
+if (iNowe > 0) AddMessage("Auto save every " + iNowe + " seconds");
+else {
+try { foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia); }
+catch {}
+AddMessage("Auto save off");
+}
+}
+
 if (menuItem == menuMiscSetDefaultFont) {
 object[] a = Dialog.GetFont(rtb.Font, rtb.ForeColor);
 if (a.Length == 0) return;
@@ -8471,10 +8543,276 @@ else
 Dialog.Show("Report a Problem", "The report could not be sent from EdSharp, and neither your web browser nor an e-mail program answered.\r\n\r\nThe report is saved here, so nothing is lost:\r\n" + sWhere + "\r\n\r\nYou can attach that file to a report at\r\n" + App.ReportIssuesUrl);
 } // ReportProblem method
 
+// CIAGLOSC PRACY: zegar autozapisu i zbieranie sesji (zadanie 12, 12.09.2026).
+//
+// JEDEN ZEGAR NA CALY PROGRAM, w ramce, a nie po jednym na okno.  Dwadziescia
+// otwartych dokumentow to byloby dwadziescia zegarow tykajacych obok siebie i
+// dwadziescia niezaleznych zapisow rozsypanych w czasie.  Ramka wie o
+// wszystkich oknach, wiec jeden przebieg obsluguje cala sesje naraz.
+//
+// Zegar jest z System.Windows.Forms, czyli tyka na WATKU INTERFEJSU.  To
+// swiadome: autozapis czyta tresc kontrolek edycyjnych, a do tych z innego
+// watku dobrac sie nie wolno.  Zapis samego pliku jest krotki (jeden
+// WriteAllText), wiec praca uzytkownika tego nie odczuje.
+private System.Windows.Forms.Timer timerAutozapis = null;
+private int iSekundyAutozapisu = 0;
+private bool bSesjaWlaczona = false;
+// Czy w tej sesji cokolwiek juz zapisalismy - do decyzji o sprzataniu.
+private bool bSesjaZapisana = false;
+
+// Wlaczenie ciaglosci pracy zgodnie z ustawieniami.  Wolane raz, przy starcie,
+// PO otwarciu okien - inaczej pierwszy zapis sesji zlapalby program w polowie
+// wstawania i zapamietal mniej okien, niz jest.
+public void StartCiaglosciPracy() {
+try {
+bSesjaWlaczona = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));
+iSekundyAutozapisu = Sesja.SekundyAutozapisu(App.ReadOption(Sesja.OpcjaAutozapis, "0"));
+// Nic nie wlaczone - nie zakladamy zegara wcale.  Kto nie prosil o
+// ciaglosc pracy, nie ma w programie ani jednego dodatkowego tyknieca.
+if (!bSesjaWlaczona && iSekundyAutozapisu <= 0) return;
+
+// Sprzatanie kopii porzuconych: siedza w katalogu danych i sa fragmentami
+// dokumentow, wiec nie moga tam lezec bez konca.  Czternascie dni to zapas
+// na urlop - kto wroci po tygodniu, jeszcze odzyska swoja prace.
+Sesja.SprzatnijStareOdzyski(14);
+
+timerAutozapis = new System.Windows.Forms.Timer();
+// Zegar tyka co sekunde tylko wtedy, gdy autozapis jest wlaczony; przy samej
+// sesji wystarcza rzadsze zapisy stanu.
+int iSekundy = iSekundyAutozapisu > 0 ? iSekundyAutozapisu : 15;
+timerAutozapis.Interval = iSekundy * 1000;
+timerAutozapis.Tick += delegate(object o, EventArgs e) { TykniecieCiaglosci(); };
+timerAutozapis.Start();
+}
+catch {}
+} // StartCiaglosciPracy method
+
+// Przelaczenie ciaglosci pracy W TRAKCIE dzialania programu, z menu.
+//
+// Osobna metoda, a nie ponowne wolanie StartCiaglosciPracy, bo tam jest
+// sprzatanie starych kopii i jednorazowe wejscie - a tutaj chodzi o zwykla
+// zmiane ustawien: zatrzymac stary zegar, zalozyc nowy o nowym takcie albo
+// nie zakladac zadnego.  Bez tego wlaczenie autozapisu dzialaloby dopiero po
+// ponownym uruchomieniu programu, czego nikt sie nie domysli.
+public void UstawCiaglosc() {
+try {
+bSesjaWlaczona = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));
+iSekundyAutozapisu = Sesja.SekundyAutozapisu(App.ReadOption(Sesja.OpcjaAutozapis, "0"));
+if (timerAutozapis != null) {
+timerAutozapis.Stop();
+timerAutozapis.Dispose();
+timerAutozapis = null;
+}
+if (!bSesjaWlaczona && iSekundyAutozapisu <= 0) return;
+timerAutozapis = new System.Windows.Forms.Timer();
+int iSekundy = iSekundyAutozapisu > 0 ? iSekundyAutozapisu : 15;
+timerAutozapis.Interval = iSekundy * 1000;
+timerAutozapis.Tick += delegate(object o, EventArgs e) { TykniecieCiaglosci(); };
+timerAutozapis.Start();
+}
+catch {}
+} // UstawCiaglosc method
+
+// Jedno tykniecie: kopie odzysku dla zmienionych dokumentow i zapis sesji.
+//
+// Cale w try, i to nie z lenistwa: ten kod chodzi SAM, bez polecenia
+// uzytkownika, wiec jego awaria nie moze przeszkodzic w pisaniu.  Nieudany
+// autozapis jest przykry; okno bledu wyskakujace w polowie zdania i zabierajace
+// fokus jest gorsze.
+private void TykniecieCiaglosci() {
+try {
+List<SesjaOkno> lista = ZbierzSesje(iSekundyAutozapisu > 0);
+if (bSesjaWlaczona) {
+if (Sesja.Zapisz(lista)) bSesjaZapisana = true;
+}
+}
+catch {}
+} // TykniecieCiaglosci method
+
+// Stan wszystkich okien: sciezka, kursor, zakladki i - gdy bKopie - kopia
+// odzysku dla dokumentow z niezapisanymi zmianami.
+//
+// KOPIA POWSTAJE TYLKO DLA DOKUMENTU NAPRAWDE ZMIENIONEGO (rtb.Modified).
+// Przepisywanie na dysk dokumentow, ktorych nikt nie tknal, byloby praca bez
+// zadnego zysku - a przy duzych plikach slyszalna.
+public List<SesjaOkno> ZbierzSesje(bool bKopie) {
+List<SesjaOkno> lista = new List<SesjaOkno>();
+List<MdiChild> listaOkien = new List<MdiChild>();
+foreach (object o in this.MdiChildren) {
+MdiChild child = o as MdiChild;
+if (child != null) listaOkien.Add(child);
+}
+// Kolejnosc OTWIERANIA, nie kolejnosc uaktywnienia - tak jak Control+1..0.
+listaOkien.Sort(delegate(MdiChild a, MdiChild b) { return a.OpenSequence.CompareTo(b.OpenSequence); });
+
+foreach (MdiChild child in listaOkien) {
+try {
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) continue;
+string sFile = child.File ?? "";
+// Plik ustawien pomijamy: przywracanie go przy kazdym starcie zasmiecaloby
+// okna czyms, czego nikt nie otwieral do pracy.
+if (sFile.Length > 0 && Util.Equiv(sFile, App.IniFile)) continue;
+
+SesjaOkno okno = new SesjaOkno();
+okno.Plik = sFile;
+okno.Kursor = rtb.Index;
+okno.Zmieniony = rtb.Modified;
+if (sFile.IndexOf('\\') >= 0) okno.Zakladki = App.ReadValue("Bookmarks", sFile, "");
+
+// Dokument bez zmian nie potrzebuje kopii - jego tresc jest na dysku.
+// Dokument nigdy nie zapisany (NoName) potrzebuje jej ZAWSZE, gdy ma
+// tresc: nie ma go gdzie odzyskac.
+bool bTrzebaKopii = bKopie && (rtb.Modified || (sFile.IndexOf('\\') < 0 && rtb.TextLength > 0));
+if (bTrzebaKopii) {
+string sOdzysk = Path.Combine(Sesja.KatalogOdzysku, Sesja.NazwaOdzysku(sFile, child.OpenSequence));
+// UTF-8 ZE ZNACZNIKIEM: to plik tylko dla nas, ale czlowiek moze go
+// otworzyc recznie z katalogu Odzysk, gdy program nie wstanie - i wtedy
+// znacznik rozstrzyga, ze to polski tekst, a nie stara strona kodowa.
+File.WriteAllText(sOdzysk, rtb.Text, new UTF8Encoding(true));
+okno.Odzysk = sOdzysk;
+}
+lista.Add(okno);
+}
+catch {}
+}
+return lista;
+} // ZbierzSesje method
+
+// Zapis sesji przy wychodzeniu z programu.  Wolane z ExitApp PRZED zamknieciem
+// okien - po zamknieciu nie ma juz czego zapisywac.
+public void ZapiszSesjePrzedWyjsciem() {
+try {
+if (!bSesjaWlaczona) return;
+List<SesjaOkno> lista = ZbierzSesje(iSekundyAutozapisu > 0);
+// Uporzadkowane wyjscie z zerem okien znaczy: nie ma czego przywracac.
+// Zostawienie starej sesji kazaloby programowi przy nastepnym starcie pytac
+// o pliki, ktore czlowiek swiadomie pozamykal.
+if (lista.Count == 0) { Sesja.Wyczysc(); return; }
+Sesja.Zapisz(lista);
+bSesjaZapisana = true;
+}
+catch {}
+} // ZapiszSesjePrzedWyjsciem method
+
+// PRZYWROCENIE SESJI PRZY STARCIE.  Zwraca liczbe otwartych okien.
+//
+// PYTAMY, NIE ROBIMY TEGO SAMI.  Przywracanie jest wlaczane swiadomie, ale
+// nawet wtedy sesja moze byc nie ta, ktorej czlowiek szuka (np. tydzien stara,
+// po awarii).  Pytanie mowi WPROST, ile plikow i z kiedy - patrz Sesja.OpisSesji.
+// Wyjatek: gdy nic nie ma do odzyskania i wszystkie pliki istnieja, otwieramy
+// bez pytania - wtedy pytanie byloby ceremonia bez wyboru.
+public int PrzywrocSesje() {
+int iOtwarte = 0;
+try {
+if (!Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"))) return 0;
+List<SesjaOkno> lista = Sesja.Czytaj();
+if (lista.Count == 0) return 0;
+
+bool bJestOdzysk = false;
+foreach (SesjaOkno okno in lista) if (okno.Zmieniony && (okno.Odzysk ?? "").Length > 0 && File.Exists(okno.Odzysk)) bJestOdzysk = true;
+
+if (bJestOdzysk) {
+string sOpis = Sesja.OpisSesji(lista);
+string sPytanie = "EdSharp did not close normally last time.\r\n\r\n" + sOpis + "\r\n\r\nRestore that session?";
+if (Dialog.Confirm("Restore Session", sPytanie, "Y") != "Y") {
+// Odrzucona sesja znika razem z kopiami - inaczej to samo pytanie
+// wracaloby przy kazdym starcie.
+foreach (SesjaOkno okno in lista) Sesja.UsunOdzysk(okno.Odzysk);
+Sesja.Wyczysc();
+return 0;
+}
+}
+
+foreach (SesjaOkno okno in lista) {
+try {
+string sFile = okno.Plik ?? "";
+bool bMaOdzysk = (okno.Odzysk ?? "").Length > 0 && File.Exists(okno.Odzysk);
+if (sFile.IndexOf('\\') >= 0 && File.Exists(sFile)) {
+OpenOrActivateWindow(sFile, GetViewLevel(sFile));
+iOtwarte++;
+if (bMaOdzysk && okno.Zmieniony) {
+// TRESC Z KOPII WCHODZI NA WIERZCH PLIKU Z DYSKU, ale dokument
+// zostaje OZNACZONY JAKO ZMIENIONY - czyli tak, jak byl przed
+// awaria.  Plik na dysku jest nietkniety; czlowiek sam decyduje,
+// czy odzyskana wersje zapisac.
+string sTresc = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
+if (this.Child != null && this.Child.RTB != null && !Util.Equiv(sTresc, this.Child.RTB.Text)) {
+this.Child.RTB.Text = sTresc;
+this.Child.RTB.Modified = true;
+AddMessage("Recovered unsaved changes in " + Path.GetFileName(sFile));
+}
+}
+}
+else if (bMaOdzysk) {
+// Dokument, ktorego nigdy nie bylo na dysku (NoName), albo plik
+// tymczasem usuniety.  Tresc jest tylko w kopii, wiec otwieramy NOWE
+// okno i wkladamy ja tam - z oznaczeniem zmienionego, bo nie ma pliku,
+// do ktorego by nalezala.
+string sTresc = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
+if (sTresc.Length == 0) continue;
+// UWAGA NA KONSTRUKTOR: MdiChild(frame) NIE buduje okna, tylko wywoluje
+// w swoim wnetrzu MdiChild(frame, tytul) - i to TA druga instancja dostaje
+// kontrolke edycyjna oraz Show.  Obiekt zwrocony przez "new MdiChild(this)"
+// jest wiec pusta skorupa z RTB rownym null.  Dlatego wolamy wariant z
+// tytulem i pracujemy na this.Child, czyli na oknie, ktore naprawde powstalo.
+new MdiChild(this, GetNoNameTitle());
+MdiChild nowe = this.Child;
+if (nowe == null || nowe.RTB == null) continue;
+nowe.RTB.Text = sTresc;
+nowe.RTB.Modified = true;
+int iMaxNowe = nowe.RTB.TextLength;
+nowe.RTB.Index = okno.Kursor > iMaxNowe ? iMaxNowe : (okno.Kursor < 0 ? 0 : okno.Kursor);
+iOtwarte++;
+AddMessage("Recovered " + (sFile.Length > 0 ? Path.GetFileName(sFile) : "an unsaved document"));
+continue;
+}
+else continue;
+
+// Kursor stawiamy PO wczytaniu tresci - inaczej pozycja z sesji trafialaby
+// w tekst, ktorego jeszcze nie ma.
+if (this.Child != null && this.Child.RTB != null && okno.Kursor > 0) {
+int iMax = this.Child.RTB.TextLength;
+this.Child.RTB.Index = okno.Kursor > iMax ? iMax : okno.Kursor;
+}
+// Zakladki wracaja do magazynu zakladek, jesli tam ich nie ma.  Zwykle sa -
+// sekcja Bookmarks przezywa restart sama - ale po wyczyszczeniu ustawien
+// albo przeniesieniu na inny komputer sesja jest jedynym ich sladem.
+if ((okno.Zakladki ?? "").Length > 0 && sFile.IndexOf('\\') >= 0) {
+if (App.ReadValue("Bookmarks", sFile, "").Length == 0) App.WriteValue("Bookmarks", sFile, okno.Zakladki);
+}
+}
+catch {}
+}
+
+// Kopie zuzyte - tresc jest juz w oknach.  Sesja zostaje na dysku i bedzie
+// nadpisywana w trakcie pracy.
+foreach (SesjaOkno okno in lista) Sesja.UsunOdzysk(okno.Odzysk);
+if (iOtwarte > 0) AddMessage("Restored " + iOtwarte + " file" + (iOtwarte == 1 ? "" : "s") + " from the previous session");
+}
+catch {}
+return iOtwarte;
+} // PrzywrocSesje method
+
 public bool ExitApp() {
+// SESJA ZAPISYWANA PRZED ZAMKNIECIEM OKIEN (zadanie 12).  Po petli ponizej
+// okien juz nie ma, wiec zebranie stanu musi pojsc TUTAJ.  Gdy uzytkownik
+// anuluje zapis w ktoryms oknie i wyjscie sie nie uda, plik sesji opisuje
+// stan sprzed sekundy - to nie szkodzi, bo zegar nadpisze go dalej.
+ZapiszSesjePrzedWyjsciem();
 while (this.Child != null) {
 if (!CloseWindow(this.Child, true)) return false;
 }
+// Wyjscie doszlo do konca i wszystkie okna zostaly domkniete uczciwie (kazdy
+// niezapisany dokument przeszedl przez pytanie o zapis).  Nie ma zadnej
+// awarii do odzyskiwania, wiec kopie musza zniknac - inaczej nastepny start
+// pytalby o przywrocenie pracy, ktora zostala zapisana albo swiadomie
+// porzucona.
+try {
+if (timerAutozapis != null) timerAutozapis.Stop();
+foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia);
+}
+catch {}
 Application.Exit();
 return true;
 } // ExitApp method
