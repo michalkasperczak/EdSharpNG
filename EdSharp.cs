@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.81";
+public const string VersionString = "5.0.82";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -981,6 +981,14 @@ else if (sKey == "utf8b" || sKey == "utf8") en = new UTF8Encoding(true);
 else if (sKey == "utf16" || sKey == "utf16le" || sKey == "unicode") en = Encoding.Unicode;
 else if (sKey == "utf16be") en = Encoding.BigEndianUnicode;
 else if (sKey == "ansi" || sKey == "default") en = Encoding.Default;
+// STARE POLSKIE KODOWANIA POD NAZWAMI, KTORE COS ZNACZA (zadanie 9, 12.09.2026).
+// Numer strony kodowej dziala dalej (galaz nizej), ale nikt nie pamieta, ze
+// polski DOS to 852 - a "mazovia", "latin2" i "cp1250" pamieta kazdy, kto ma
+// takie pliki.  Mazovia idzie przez wlasna klase, bo .NET tej strony nie zna;
+// pozostale dwie sa w systemie.
+else if (sKey == "mazovia" || sKey == "cp667" || sKey == "667" || sKey == "maz") en = new MazoviaEncoding();
+else if (sKey == "latin2" || sKey == "latinii" || sKey == "cp852" || sKey == "dos852" || sKey == "852") en = Encoding.GetEncoding(852);
+else if (sKey == "cp1250" || sKey == "windows1250" || sKey == "win1250" || sKey == "1250") en = Encoding.GetEncoding(1250);
 else if (sEncoding.Length > 0 ) {
 try {
 if (Util.IsNumeric(sEncoding)) en = Encoding.GetEncoding(Int32.Parse(sEncoding));
@@ -1039,6 +1047,20 @@ en = Encoding.Unicode;
 this.RTB.Text = Util.File2String(sFile, ref en);
 }
 this.YieldEncoding = en;
+// POWIEDZ, GDY PLIK BYL W STARYM POLSKIM KODOWANIU (zadanie 9, 12.09.2026).
+// Bez tego konwersja dzieje sie po cichu: uzytkownik widzi poprawne polskie
+// litery, ale nie wie, ze plik na dysku jest inny niz to, co ma na ekranie -
+// dowiaduje sie dopiero, gdy zapisze i ktos otworzy plik starym programem.
+// Komunikat idzie w pasek wiadomosci, nie w okno - okno zabiera fokus.
+if (en != null) {
+int iCp = en.CodePage;
+string sOld = null;
+if (iCp == 667) sOld = "Mazovia";
+else if (iCp == 852) sOld = "Latin II (CP852)";
+else if (iCp == 1250) sOld = "Windows-1250";
+if (sOld != null)
+App.Frame.AddMessage("Opened as " + sOld + "; will be saved as UTF-8.");
+}
 }
 //else this.RTB.Text = Util.OldFile2String(sFile);
 //else this.RTB.Text = System.IO.File.ReadAllText(sFile, System.Text.Encoding.UTF8);
@@ -20044,6 +20066,122 @@ public static extern int SHOpenWithDialog(IntPtr hwndParent, ref OpenAsInfo poai
 
 } // Win32 class
 
+// KODOWANIE MAZOVIA (strona kodowa 667), DOLOZONE 12.09.2026.
+// Zadanie 9 z listy Kasperczaka: "Mazovia, Latin II (CP852), Windows-1250.
+// Wczytanie + automatyczna konwersja do UTF-8".
+//
+// DLACZEGO WLASNA KLASA, A NIE Encoding.GetEncoding: .NET NIE ZNA Mazovii.
+// Windows-1250 (strona 1250) i Latin II (strona 852) sa w systemie i wystarczy
+// je zawolac po numerze - Mazovii nie ma tam wcale, wiec tablica musi byc
+// nasza.  To NIE jest zgadywanie: Mazovia to strona 437 z siedemnastoma
+// pozycjami podmienionymi na polskie litery, a pozycje te maja ustalone wartosci
+// (Wikipedia "Mazovia encoding", tablica strony 667; ten sam uklad w justapedia
+// i w opisie konwertera PLC Gryszkalisa).
+//
+// GORNA POLOWA BIERZE SIE ZE STRONY 437 W CZASIE DZIALANIA, nie z przepisanej
+// recznie listy 128 znakow: ramki i znaki matematyczne sa w Mazovii DOKLADNIE
+// takie jak w 437 (to byl caly sens tego kodowania - Norton Commander mial
+// rysowac ramki poprawnie), a przepisywanie ich z palca to 128 okazji na
+// literowke, ktorej nikt nie zauwazy.  Podmieniamy tylko te 17 pozycji, ktore
+// FAKTYCZNIE sie roznia (wszystkie w zakresie 0x86-0xA7).
+//
+// ZAPIS: dokument wczytany jako Mazovia zapisuje sie w UTF-8 - robi to
+// GetSaveEncoding, bo 667 nie jest na liscie kodowan zostawianych w spokoju.
+// O to wlasnie chodzilo w zadaniu: plik raz otwarty w naszym edytorze przestaje
+// byc pulapka na polskie litery.
+public class MazoviaEncoding : Encoding {
+// Znaki dla bajtow 0x80-0xFF.  Indeks 0 to bajt 0x80.
+private static char[] aMap = null;
+private static Dictionary<char, byte> dBack = null;
+
+// Pozycje, w ktorych Mazovia rozni sie od strony kodowej 437.
+// Bajt, potem znak Unicode.
+private static int[] aDiffByte = new int[] {
+0x86, 0x8D, 0x8F, 0x90, 0x91, 0x92, 0x95, 0x98,
+0x9C, 0x9E, 0xA0, 0xA1, 0xA3, 0xA4, 0xA5, 0xA6, 0xA7
+};
+private static char[] aDiffChar = new char[] {
+'\u0105', // 86 a z ogonkiem
+'\u0107', // 8D c z kreska
+'\u0104', // 8F A z ogonkiem
+'\u0118', // 90 E z ogonkiem
+'\u0119', // 91 e z ogonkiem
+'\u0142', // 92 l z kreska
+'\u0106', // 95 C z kreska
+'\u015A', // 98 S z kreska
+'\u0141', // 9C L z kreska
+'\u015B', // 9E s z kreska
+'\u0179', // A0 Z z kreska
+'\u017B', // A1 Z z kropka
+'\u00D3', // A3 O z kreska
+'\u0144', // A4 n z kreska
+'\u0143', // A5 N z kreska
+'\u017A', // A6 z z kreska
+'\u017C'  // A7 z z kropka
+};
+
+private static void build() {
+if (aMap != null) return;
+char[] a = new char[128];
+// Podstawa: strona kodowa 437.  Gdyby jej w systemie nie bylo (co sie nie
+// zdarza na Windowsie, ale kod ma nie wybuchac), zostaja znaki zapytania -
+// polskie litery i tak beda poprawne, bo ida z podmiany ponizej.
+try {
+Encoding en437 = Encoding.GetEncoding(437);
+byte[] aBytes = new byte[128];
+for (int i = 0; i < 128; i++) aBytes[i] = (byte)(128 + i);
+string s = en437.GetString(aBytes);
+for (int i = 0; i < 128 && i < s.Length; i++) a[i] = s[i];
+}
+catch {
+for (int i = 0; i < 128; i++) a[i] = '?';
+}
+for (int i = 0; i < aDiffByte.Length; i++) a[aDiffByte[i] - 128] = aDiffChar[i];
+Dictionary<char, byte> d = new Dictionary<char, byte>();
+for (int i = 0; i < 128; i++) if (!d.ContainsKey(a[i])) d[a[i]] = (byte)(128 + i);
+dBack = d;
+aMap = a;
+} // build method
+
+public MazoviaEncoding() { build(); }
+
+public override int CodePage { get { return 667; } }
+public override string EncodingName { get { return "Polish (Mazovia)"; } }
+public override string WebName { get { return "cp667"; } }
+public override bool IsSingleByte { get { return true; } }
+
+public override int GetByteCount(char[] aChars, int iIndex, int iCount) { return iCount; }
+public override int GetCharCount(byte[] aBytes, int iIndex, int iCount) { return iCount; }
+public override int GetMaxByteCount(int iCharCount) { return iCharCount; }
+public override int GetMaxCharCount(int iByteCount) { return iByteCount; }
+
+public override int GetBytes(char[] aChars, int iCharIndex, int iCharCount, byte[] aBytes, int iByteIndex) {
+build();
+for (int i = 0; i < iCharCount; i++) {
+char c = aChars[iCharIndex + i];
+byte b;
+if (c < 128) b = (byte)c;
+else if (dBack.TryGetValue(c, out b)) {}
+// Znak, ktorego w Mazovii NIE MA, idzie jako pytajnik - tak samo jak w
+// kazdym jednobajtowym kodowaniu .NET-u.  Zapis do Mazovii i tak nie jest
+// nasza droga wyjscia (zapisujemy w UTF-8), ale kodowanie musi dzialac w
+// obie strony, bo .NET wola GetBytes np. przy liczeniu dlugosci.
+else b = (byte)'?';
+aBytes[iByteIndex + i] = b;
+}
+return iCharCount;
+} // GetBytes method
+
+public override int GetChars(byte[] aBytes, int iByteIndex, int iByteCount, char[] aChars, int iCharIndex) {
+build();
+for (int i = 0; i < iByteCount; i++) {
+byte b = aBytes[iByteIndex + i];
+aChars[iCharIndex + i] = (b < 128) ? (char)b : aMap[b - 128];
+}
+return iByteCount;
+} // GetChars method
+} // MazoviaEncoding class
+
 public class Util {
 
 public static string GetPortableExecutableKind() {
@@ -20259,7 +20397,7 @@ string sCharset = charsetDetector.Charset;
 // Plik, ktory JEST poprawnym UTF-8, nadal idzie na utf8b; czysty ASCII
 // takze, bo kazdy bajt ASCII jest poprawnym UTF-8.
 if (String.IsNullOrEmpty(sCharset)) {
-if (!IsStrictUtf8(aBytes)) return Encoding.Default;
+if (!IsStrictUtf8(aBytes)) return PickPolishLegacyEncoding(aBytes);
 return enUtf8b;
 }
 Encoding enDetected = CharsetName2Encoding(sCharset, enUtf8b);
@@ -20284,6 +20422,89 @@ catch { return enUtf8b; }
 return enUtf8b;
 #endif
 } // DetectEncodingNoBom method
+
+// KTORE ZE STARYCH POLSKICH KODOWAN (zadanie 9, 12.09.2026).
+//
+// Wywolywane, gdy o pliku wiemy JEDNO: nie jest poprawnym UTF-8 (a to dowod, a
+// nie domysl - patrz IsStrictUtf8), i detektor Ude nie umial go nazwac.  Do tej
+// pory brano wtedy systemowa strone ANSI, czyli na polskim Windowsie 1250.  To
+// dobra odpowiedz dla pliku z Windowsa i ZLA dla pliku z DOS-u: tekst w Mazovii
+// albo Latin II czytany jako 1250 daje polskie litery zamienione na przypadkowe
+// znaki, a po zapisaniu utrwala to na dysku.
+//
+// CZEMU DA SIE TO ROZSTRZYGNAC, A NIE TYLKO ZGADNAC: te trzy kodowania
+// UMIESZCZAJA polskie litery w ROZNYCH miejscach.  Zliczamy wiec, ile bajtow
+// pliku wypada na pozycje, gdzie dane kodowanie ma polska litere, i ile na
+// pozycje, gdzie ma znak, ktory w polskim tekscie nie ma czego szukac (ramki,
+// znaki matematyczne, litery obcych alfabetow).  Wygrywa kodowanie z najlepszym
+// bilansem.  To ta sama arytmetyka, ktora wyzej odrzuca falszywe UTF-16.
+//
+// REMIS ROZSTRZYGA SIE NA KORZYSC WINDOWS-1250, bo tak bylo do tej pory i tak
+// wyglada wiekszosc plikow, ktore trafiaja do edytora dzisiaj.  Zmiana nie moze
+// pogorszyc przypadku, ktory dzialal.
+//
+// CZEGO TU NIE MA: rozpoznawania po slowach ("czy tekst wyglada po polsku").
+// Kusi, ale plik z jednym polskim slowem na strone byloby wtedy loteria, a
+// bilans bajtow dziala tak samo na kazdej dlugosci.
+public static Encoding PickPolishLegacyEncoding(byte[] aBytes) {
+Encoding enAnsi = Encoding.Default;
+try { enAnsi = Encoding.GetEncoding(1250); } catch {}
+if (aBytes == null || aBytes.Length == 0) return enAnsi;
+
+// Kandydaci: windows-1250, Latin II (DOS 852), Mazovia (667).
+Encoding[] aTry = new Encoding[3];
+aTry[0] = enAnsi;
+try { aTry[1] = Encoding.GetEncoding(852); } catch { aTry[1] = null; }
+aTry[2] = new MazoviaEncoding();
+
+// Litery polskiego alfabetu z ogonkami, male i wielkie.
+string sPolish = "\u0105\u0107\u0119\u0142\u0144\u00F3\u015B\u017A\u017C"
+               + "\u0104\u0106\u0118\u0141\u0143\u00D3\u015A\u0179\u017B";
+// Litery obce, ktore w polskim tekscie zdarzaja sie NAPRAWDE (nazwy wlasne,
+// cytaty): za nie nie karzemy, ale tez nie nagradzamy.
+string sTolerated = "\u00E4\u00F6\u00FC\u00DF\u00E9\u00E8\u00EA\u00E0\u00E2\u00E7\u00F1\u00C4\u00D6\u00DC\u00C9\u00C7";
+
+int iBestScore = Int32.MinValue;
+Encoding enBest = enAnsi;
+// Liczymy na probce - poczatek pliku wystarcza, a duzy plik nie ma zmuszac
+// uzytkownika do czekania na otwarcie.
+int iSample = Math.Min(aBytes.Length, 65536);
+
+for (int iCand = 0; iCand < aTry.Length; iCand++) {
+Encoding en = aTry[iCand];
+if (en == null) continue;
+int iScore = 0;
+for (int i = 0; i < iSample; i++) {
+byte b = aBytes[i];
+if (b < 128) continue;
+string s;
+try { s = en.GetString(new byte[] { b }); }
+catch { continue; }
+if (s.Length == 0) continue;
+char c = s[0];
+if (sPolish.IndexOf(c) >= 0) iScore += 3;
+else if (sTolerated.IndexOf(c) >= 0) {}
+// RAMKI I BLOKI TO SYGNAL DOS-U, NIE BLAD - i to poprawka po pomiarze
+// (testy/pomiar_kodowania_polskie.cs, przypadek "tabelka DOS z ramkami").
+// Poprzednia wersja karala ramki, wiec tabelka DOS-owa - a takie wlasnie sa
+// stare polskie pliki z ramkami - przegrywala z windows-1250, mimo ze w 1250
+// te same bajty dawaly czeskie i wegierskie litery, ktorych w polskim
+// tekscie nie ma.  Ramka jest DOWODEM na strone DOS-owa: windows-1250 nie ma
+// ich w ogole, wiec plik z ramkami nie moze byc w 1250.
+else if (c >= '\u2500' && c <= '\u259F') iScore += 1;
+// Litera lacinska, ktorej w polskim ani w typowych cytatach nie ma (czeskie
+// r z haczkiem, wegierskie o z dwoma kreskami itd.): to najczystszy sygnal
+// zlej strony kodowej, bo wlasnie na te litery rozsypuje sie polski tekst
+// czytany nie tym kodowaniem, ktorym go zapisano.
+else if (Char.IsLetter(c)) iScore -= 2;
+else if (c >= '\u0370' && c <= '\u03FF') iScore -= 2;
+else if (c == '\uFFFD') iScore -= 3;
+}
+// Remis: pierwszy kandydat (windows-1250) zostaje.
+if (iScore > iBestScore) { iBestScore = iScore; enBest = en; }
+}
+return enBest;
+} // PickPolishLegacyEncoding method
 
 public static Encoding CharsetName2Encoding(string sName, Encoding enDefault) {
 // Map a detector charset name to a .NET Encoding. ASCII and BOM-less UTF-8
