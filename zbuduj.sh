@@ -71,12 +71,30 @@ echo "== 3/3 pakuje instalator $WERSJA"
 cp "$BUILD/EdSharpNG.exe" "$REPO/EdSharpNG.exe" || exit 8
 cp "$BUILD/EdSharp.dll" "$REPO/EdSharp.dll" || exit 8
 cd "$REPO" || exit 8
-bash build_installer_garfield.sh "$WERSJA" 2>&1 | tail -8
 
 PACZKA="$REPO/dist/EdSharpNG_Setup_$WERSJA.exe"
+# Stara paczke o tym numerze USUWAM przed pakowaniem.  Zmierzone (12.09.2026):
+# skrypt pakujacy odmawia nadpisania istniejacego pliku ("juz istnieje, podbij
+# wersje"), ale konczy sie kodem 0 - a ten skrypt sprawdzal tylko, czy plik
+# ISTNIEJE, wiec meldowal GOTOWE i podawal sume STAREJ paczki.  Poprawka do tego
+# samego numeru wersji wygladala jak zbudowana, a nie byla.  Falszywy sukces
+# jest grozniejszy niz blad.
+if [ -f "$PACZKA" ]; then
+    echo "   usuwam poprzednia paczke $WERSJA (bede pakowal na nowo)"
+    rm -f "$PACZKA"
+fi
+
+bash build_installer_garfield.sh "$WERSJA" 2>&1 | tail -8
+
 if [ ! -f "$PACZKA" ]; then
     echo "BLAD: nie ma paczki $PACZKA"
     exit 9
+fi
+# Paczka musi byc MLODSZA niz binarka, ktora do niej weszla.  Inaczej wydalbym
+# instalator ze starym programem w srodku.
+if [ "$PACZKA" -ot "$BUILD/EdSharpNG.exe" ]; then
+    echo "BLAD: paczka STARSZA niz EdSharpNG.exe - pakowanie nie doszlo do skutku."
+    exit 10
 fi
 echo "GOTOWE: $PACZKA"
 stat -c '%s B, %y' "$PACZKA"

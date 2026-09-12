@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.84";
+public const string VersionString = "5.0.85";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -288,6 +288,8 @@ App.Frame.OpenOrActivateWindow(sFile, App.Frame.GetViewLevel(sFile), sLine, sCol
 // Ostatnia rzecz po otwarciu plikow: start ma sie skonczyc, a dopiero potem
 // program moze zagladac do sieci.
 CheckForUpdateOnStartup();
+// Skladniki konwersji - osobne sprawdzenie, wlasny watek, wlasny wylacznik.
+CheckComponentsOnStartup();
 };
 
 } // App constructor
@@ -355,6 +357,68 @@ thread.Start();
 }
 catch {}
 } // CheckForUpdateOnStartup method
+
+// SKLADNIKI CONVERT PRZY STARCIE (zadanie 8, 5.0.85).
+//
+// Narzedzia do konwersji (pandoc, tidy, xpdf, liblouis, astyle) NIE sa w
+// instalatorze - to osobne programy obcych autorow, razem ponad 60 MB, i
+// pakowanie ich do naszej paczki oznaczaloby, ze kazda nasza poprawka wazy
+// tyle samo.  Skutek byl jednak taki, ze u uzytkownika po prostu ich nie bylo
+// i konwersje milczaly.  Teraz program dociaga je sam.
+//
+// TE SAME ZASADY, CO PRZY SPRAWDZANIU WERSJI PROGRAMU (5.0.81):
+//
+// 1. ZERO OKIEN I ZERO PYTAN.  Meldunek na pasku wiadomosci, gdy cos
+//    dociagnalem.  Pytanie "czy pobrac pandoca" nie daje uzytkownikowi
+//    zadnego realnego wyboru - bez pandoca konwersja nie zadziala.
+//
+// 2. START SIE NIE OPOZNIA.  Watek w tle, niski priorytet, IsBackground.
+//    Bez internetu program milczy.
+//
+// 3. PRZY STARCIE TYLKO TO, CZEGO BRAKUJE.  Aktualizowanie dzialajacych
+//    narzedzi w tle byloby ryzykiem: mogloby trafic w chwile, gdy uzytkownik
+//    wlasnie z nich korzysta.  Pelne aktualizowanie jest w menu, na zadanie.
+//
+// 4. RAZ NA DOBE.  Klucz ComponentCheckLastDate.  Data zapisywana TYLKO po
+//    udanej probie, zeby jeden dzien bez sieci nie kasowal sprawdzania.
+//
+// RESTARTU NIE MA I NIE JEST POTRZEBNY: te narzedzia sa wolane dopiero w
+// chwili konwersji, nic ich nie trzyma w pamieci, wiec swiezo pobrany pandoc
+// dziala od razu.
+//
+// Wylaczenie: w EdSharpNG.ini w sekcji [Options] wpisac
+// CheckComponentsOnStartup=N.
+public void CheckComponentsOnStartup() {
+try {
+if (App.ReadOption("CheckComponentsOnStartup", "Y").ToLower().StartsWith("n")) return;
+string sToday = DateTime.Now.ToString("yyyy-MM-dd");
+if (App.ReadData("ComponentCheckLastDate", "") == sToday) return;
+
+// Gdy nic nie brakuje, nie ruszam sieci wcale.
+if (Skladniki.Brakujace().Count == 0) return;
+
+System.Threading.Thread thread = new System.Threading.Thread(delegate() {
+try {
+bool bTylkoBrakujace = true;
+string sZrobione = Skladniki.SprawdzIUzupelnij(bTylkoBrakujace);
+App.WriteData("ComponentCheckLastDate", sToday);
+if (sZrobione.Length == 0) return;
+if (App.Frame == null || !App.Frame.IsHandleCreated) return;
+App.Frame.BeginInvoke((MethodInvoker)delegate() {
+try {
+App.Frame.AddMessage("Pobrano brakujace skladniki konwersji: " + sZrobione + ".");
+}
+catch {}
+});
+}
+catch {}
+});
+thread.IsBackground = true;
+thread.Priority = System.Threading.ThreadPriority.BelowNormal;
+thread.Start();
+}
+catch {}
+} // CheckComponentsOnStartup method
 
 protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e) {
 /*
@@ -1195,7 +1259,7 @@ public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQuery
 public ToolStripMenuItem menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
-public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem;
+public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
 public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
 
@@ -1949,6 +2013,11 @@ menuHelpElevateVersion = CreateMenuItem("Elevate Version", "F11", menuItem_Click
 // Skrot Alt+Shift+F1 - jest wolny (sprawdzone na liscie wszystkich skrotow) i
 // stoi obok Alt+F1 (About), gdzie uzytkownik szuka rzeczy o samym programie.
 menuHelpReinstall = CreateMenuItem("Reinstall Current Version", "", menuItem_Click, "frame speak");
+// SKLADNIKI KONWERSJI NA ZADANIE (5.0.85, zadanie 8).  Przy starcie program
+// dociaga tylko to, czego BRAKUJE; ta pozycja aktualizuje takze narzedzia,
+// ktore sa, ale sa przedawnione.  Swiadomie BEZ skrotu klawiszowego: to
+// czynnosc raz na kilka miesiecy, a kazdy nowy skrot to ryzyko kolizji.
+menuHelpUpdateComponents = CreateMenuItem("Update Components", "", menuItem_Click, "frame speak");
 menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", menuItem_Click, "frame silent");
 // PALETA POLECEN JAKO POZYCJA MENU (11.09.2026).  Skrot Control+Shift+X:
 // Control+Shift+P, ktory sam zaproponowalem, jest ZAJETY przez Path List
@@ -1956,7 +2025,7 @@ menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", m
 // wolne w kodzie i w Hotkeys.ini.  Swiadomie NIE Control+Alt+litera: prawy
 // Alt w Windows to Ctrl+Alt, wiec takie skroty zjadaja polskie znaki.
 menuHelpCommandPalette = CreateMenuItem("Command Palette ...", "Control+Shift+X", menuItem_Click, "frame silent");
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpReportProblem, menuHelpCommandPalette});
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem, menuHelpCommandPalette});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuDelete, menuNavigate, menuQuery, menuMisc, menuWindow, menuHelp});
@@ -6927,11 +6996,63 @@ if (menuItem == menuHelpReinstall) {
 ElevateVersion(true);
 }
 
+if (menuItem == menuHelpUpdateComponents) {
+UpdateComponents();
+}
+
 if (menuItem == menuHelpReportProblem) {
 ReportProblem();
 }
 
 } // menuItem_Click handler
+
+// SKLADNIKI NA ZADANIE UZYTKOWNIKA (menu Help, Update Components).
+//
+// Rozni sie od sprawdzania przy starcie w dwoch rzeczach, i to jest celowe:
+// 1. Aktualizuje TAKZE narzedzia, ktore juz sa - przy starcie tylko dociaga
+//    brakujace, zeby nie podmieniac czegos w trakcie uzywania.
+// 2. Zawsze MELDUJE wynik, nawet gdy nie bylo nic do roboty albo gdy nie ma
+//    internetu.  Przy starcie milczenie bylo wlasciwe, bo nikt nie prosil;
+//    tutaj milczenie byloby zignorowaniem polecenia.
+//
+// Pobieranie idzie w tle (ponad 60 MB przy pustym folderze), zeby program nie
+// zamarl.  Meldunek lada na pasku wiadomosci - swiadomie nie w okno, zeby nie
+// porwac fokusu w chwili, gdy uzytkownik zdazyl wrocic do pisania.
+public void UpdateComponents() {
+try {
+App.Frame.AddMessage("Sprawdzam skladniki konwersji...");
+System.Threading.Thread thread = new System.Threading.Thread(delegate() {
+string sWynik;
+try {
+bool bTylkoBrakujace = false;
+string sZrobione = Skladniki.SprawdzIUzupelnij(bTylkoBrakujace);
+System.Collections.Generic.List<string> lBrak = Skladniki.Brakujace();
+if (sZrobione.Length > 0 && lBrak.Count == 0)
+sWynik = "Skladniki gotowe: " + sZrobione + ".";
+else if (sZrobione.Length > 0)
+sWynik = "Pobrano: " + sZrobione + ". Nadal brakuje: " + string.Join(", ", lBrak.ToArray()) + ".";
+else if (lBrak.Count == 0)
+sWynik = "Wszystkie skladniki sa aktualne.";
+else
+sWynik = "Nie udalo sie pobrac: " + string.Join(", ", lBrak.ToArray()) + ". Sprawdz polaczenie z internetem.";
+}
+catch { sWynik = "Sprawdzanie skladnikow nie doszlo do skutku."; }
+
+try {
+if (App.Frame == null || !App.Frame.IsHandleCreated) return;
+string sPrzekaz = sWynik;
+App.Frame.BeginInvoke((MethodInvoker)delegate() {
+try { App.Frame.AddMessage(sPrzekaz); } catch {}
+});
+}
+catch {}
+});
+thread.IsBackground = true;
+thread.Priority = System.Threading.ThreadPriority.BelowNormal;
+thread.Start();
+}
+catch {}
+} // UpdateComponents method
 
 object[] GetChunk() {
 bool bLoop;
@@ -22205,7 +22326,18 @@ sText = "";
 if (File.Exists(sTarget)) sText = Util.File2String(sTarget);
 if (sText.Length == 0) {
 if (File.Exists(sTarget)) File.Delete(sTarget);
-Dialog.Show("Error", "Command line:\n" + sCommand);
+// Do 5.0.84 uzytkownik dostawal tu SAM wiersz polecenia - z niego nie
+// wynikalo, ze konwersja nie doszla, bo BRAKUJE narzedzia.  Teraz
+// najpierw sprawdzam, czy to nie ten wlasnie przypadek, i mowie wprost,
+// czego brakuje oraz co zrobic.
+string sBrak = Skladniki.BrakujaceDlaPolecenia(sCommand);
+if (sBrak.Length > 0) {
+Dialog.Show("Brakuje skladnika", "Konwersja wymaga narzedzia " + sBrak
+  + ", ktorego nie ma w folderze programu.\n\n"
+  + "Program dociaga skladniki sam przy starcie, gdy jest internet. "
+  + "Mozesz tez pobrac je od razu: menu Tools, Update Components.");
+}
+else Dialog.Show("Error", "Command line:\n" + sCommand);
 }
 }
 else {
