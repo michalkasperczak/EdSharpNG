@@ -1212,11 +1212,30 @@ this.RTB.Modified = false;
 this.Text = Path.GetFileName(sFile);
 this.File = sFile;
 }
-catch {
+catch (Exception exOpen) {
+// PRAWDZIWA PRZYCZYNA IDZIE DO DZIENNIKA (13.09.2026).  Ten catch zamienial
+// KAZDY blad otwarcia na jeden komunikat "Cannot open file!", wiec przyczyna
+// przepadala - przy diagnozie trzeba bylo zgadywac po kodzie.
+Util.LogDiagnostic("otwarcie", "nie udalo sie otworzyc " + sFile + ": "
++ exOpen.GetType().Name + ": " + exOpen.Message + " | " + exOpen.StackTrace);
+// BEZ REKURENCJI.  Gdy otwarcie kopii tymczasowej TEZ padnie, stara wersja
+// kasowala kopie i probowala skopiowac ja na sama siebie - stad mylace
+// "Nie mozna odnalezc pliku EdSharp.tmp" zamiast prawdziwego bledu.
+if (String.Equals(sFile, App.TempFile, StringComparison.OrdinalIgnoreCase)) {
+App.Frame.AddMessage("Cannot open file!");
+return;
+}
 App.Frame.AddMessage("Cannot open file!  Opening temporary copy.");
+try {
 if (System.IO.File.Exists(App.TempFile)) System.IO.File.Delete(App.TempFile);
 System.IO.File.Copy(sFile, App.TempFile);
 App.Frame.OpenOrActivateWindow(App.TempFile);
+}
+catch (Exception exTmp) {
+Util.LogDiagnostic("otwarcie", "kopia tymczasowa tez sie nie udala: "
++ exTmp.GetType().Name + ": " + exTmp.Message);
+App.Frame.AddMessage("Cannot open file!");
+}
 }
 //Dialog.Show(this.File);
 // Stop double bookmark at message
@@ -21897,7 +21916,33 @@ public static Encoding DetectEncodingNoBom(string sFile) {
 // it, detection degrades to the utf8b default.
 Encoding enUtf8b = new UTF8Encoding(true);
 #if HAVEUDE
+// WOLANIE UDE SIEDZI W OSOBNEJ METODZIE - to nie kosmetyka.
+//
+// Zmierzone 13.09.2026: gdy Ude.dll nie ma obok programu (instalator jej nie
+// pakowal), .NET rzuca FileNotFoundException przy KOMPILACJI TEJ METODY, czyli
+// PRZED wejsciem w blok try - wiec try/catch wewnatrz metody NIE LAPIE tego
+// wcale.  Objaw byl fatalny i zupelnie mylacy: kazde otwarcie pliku konczylo
+// sie "Cannot open file!", a potem "Nie mozna odnalezc pliku EdSharp.tmp".
+// Odwolanie do obcego typu musi wiec siedziec we WLASNEJ metodzie, ktorej
+// wolanie owijamy w try - wtedy brak biblioteki degraduje sie do domyslnego
+// utf8b, tak jak opisuje komentarz wyzej.
 try {
+Encoding enUde = DetectEncodingUde(sFile, enUtf8b);
+if (enUde != null) return enUde;
+}
+catch (Exception) { return enUtf8b; }
+return enUtf8b;
+#else
+return enUtf8b;
+#endif
+} // DetectEncodingNoBom method
+
+#if HAVEUDE
+// Wykrywanie kodowania przez Ude.  ODDZIELONE od DetectEncodingNoBom, zeby brak
+// Ude.dll dawal wyjatek W MOMENCIE WOLANIA (lapialny), a nie przy kompilacji
+// metody wolajacej.  Zwraca null, gdy detektor nie rozstrzygnal.
+[System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+private static Encoding DetectEncodingUde(string sFile, Encoding enUtf8b) {
 byte[] aBytes = System.IO.File.ReadAllBytes(sFile);
 if (aBytes.Length == 0) return enUtf8b;
 Ude.CharsetDetector charsetDetector = new Ude.CharsetDetector();
@@ -21939,12 +21984,8 @@ for (int i = 0; i < iSample; i++) if (aBytes[i] == 0) { bAnyZero = true; break; 
 if (!bAnyZero) return enUtf8b;
 }
 return enDetected;
-}
-catch { return enUtf8b; }
-#else
-return enUtf8b;
+} // DetectEncodingUde method
 #endif
-} // DetectEncodingNoBom method
 
 // KTORE ZE STARYCH POLSKICH KODOWAN (zadanie 9, 12.09.2026).
 //

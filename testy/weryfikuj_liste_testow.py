@@ -497,8 +497,17 @@ spr("siatka jako osobna kontrolka biblioteki okien",
 spr("helper IsStrictUtf8 istnieje", "public static bool IsStrictUtf8(" in CS_KOD)
 spr("IsStrictUtf8 uzywa STRICT dekodera (rzuca, nie podstawia U+FFFD)",
     "new UTF8Encoding(false, true)" in CS_KOD)
+# WYKRYWANIE KODOWANIA CZYTAMY Z DWOCH METOD RAZEM (od 5.0.95).
+#
+# Wolanie Ude zostalo WYDZIELONE do DetectEncodingUde, bo brak Ude.dll rzucal
+# wyjatek przy KOMPILACJI metody wolajacej - czyli przed jakimkolwiek try, wiec
+# nie dawal sie zlapac i program nie otwieral ZADNEGO pliku.  Asercje pytaja o
+# zachowanie, ktore rozklada sie teraz na obie metody, wiec mierzymy ich sume.
 body_det = CS[CS.find("public static Encoding DetectEncodingNoBom("):]
 body_det = body_det[:body_det.find("} // DetectEncodingNoBom method")]
+_body_ude = CS[CS.find("private static Encoding DetectEncodingUde("):]
+_body_ude = _body_ude[:_body_ude.find("} // DetectEncodingUde method")]
+body_det = body_det + "\n" + _body_ude
 # ZAKTUALIZOWANE 13.09.2026 (5.0.95).  Asercja pytala o "Encoding.Default"
 # (systemowa strona kodowa ANSI).  Kod poszedl PROSCIEJ I DALEJ: bez
 # rozstrzygniecia detektora i przy bajtach niedozwolonych w UTF-8 wola

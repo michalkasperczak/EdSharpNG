@@ -101,6 +101,35 @@ echo "   OK: $(stat -c '%s B, %y' "$BUILD/EdSharpNG.exe")"
 echo "== 3/3 pakuje instalator $WERSJA"
 cp "$BUILD/EdSharpNG.exe" "$REPO/EdSharpNG.exe" || exit 8
 cp "$BUILD/EdSharp.dll" "$REPO/EdSharp.dll" || exit 8
+
+# BIBLIOTEKA Ude.dll MUSI JECHAC Z PACZKA, jesli kompilowalismy Z NIA.
+#
+# Zmierzone 13.09.2026 i to byla awaria zabierajaca cala wersje: binarka byla
+# zbudowana z symbolem HAVEUDE (czyli KOD WOLA Ude), ale Ude.dll lezala tylko
+# w katalogu kompilacji, nie w repo - a instalator pakuje z repo, z flaga
+# "skipifsourcedoesntexist", wiec po cichu ja POMIJAL.  U uzytkownika kazde
+# otwarcie pliku konczylo sie "Cannot open file!", bo .NET nie mial czym
+# rozpoznac kodowania.  Flaga "pomin, gdy nie ma" zamienila brak pliku w cicha
+# awarie dzialajacego programu.
+# Warunek pytamy o BINARKE, nie o skrypt kompilacji: to jedyny pewny dowod, ze
+# kod naprawde wola Ude (grep po BuildEdSharp.cmd trafia takze w KOMENTARZ o
+# HAVEUDE i byl prawdziwy zawsze).
+#
+# WZORZEC TO SAME "CharsetDetector".  Zlaczonej nazwy "Ude.CharsetDetector" w
+# binarce NIE MA - metadane .NET trzymaja przestrzen nazw i nazwe typu w
+# OSOBNYCH napisach, wiec pytanie o nia dawalo zawsze falsz i cala ta bramka
+# byla martwa (zmierzone 13.09.2026).
+if grep -aq 'CharsetDetector' "$BUILD/EdSharpNG.exe" 2>/dev/null; then
+    if [ -f "$BUILD/Ude.dll" ]; then
+        cp "$BUILD/Ude.dll" "$REPO/Ude.dll" || exit 8
+    fi
+    if [ ! -f "$REPO/Ude.dll" ]; then
+        echo "BLAD: binarka jest zbudowana z Ude (HAVEUDE), a Ude.dll nie ma w repo."
+        echo "      Instalator pominalby ja po cichu, a program otwieralby pliki"
+        echo "      bez rozpoznawania kodowania. Pobierz ja: powershell ./FetchUde.ps1"
+        exit 12
+    fi
+fi
 cd "$REPO" || exit 8
 
 PACZKA="$REPO/dist/EdSharpNG_Setup_$WERSJA.exe"
