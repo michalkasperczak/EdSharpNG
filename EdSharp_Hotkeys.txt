@@ -113,7 +113,6 @@ New, Control+N, Open a new editing window
 New from Clipboard, Control+Shift+N, Open a new editing window containing clipboard text
 
 Open, Control+O, Open file
-Open Other Format, Control+Shift+O, Open file in another format and convert it to text
 Open Again, Alt+O, Reload the current file from disk
 
 Properties, Alt+Enter, display Windows properties dialog for current file
@@ -225,8 +224,6 @@ Comment List, (no key assigned), Show the list of internal comments and go to th
 Justify, Alt+Shift+J, Set justification of cursor or selected text
 Style, Alt+Shift+Slash, Set style of cursor or selected text
 Baseline, Alt+Shift+F6, Set vertical alignment of cursor or selected text
-Set Selection Font, Alt+Shift+Dash, Set font of cursor or selected text
-Say Font, Alt+Dash, Say current font and color
 Say Styles, Alt+Slash, Say current justification and styles
 
 Infer Indent, Alt+RightBracket, Infer the indent unit of the current document, or configure EdSharp accordingly if repeated
@@ -278,4 +275,4 @@ Tile Vertical, Control+Shift+F11, Tile open windows vertically
 
 Elevate Version, F11, Download latest EdSharpNG version and run installer (after confirming)
 
-Commands listed: 233
+Commands listed: 230

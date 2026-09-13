@@ -248,7 +248,6 @@ for pole_danych in ['"Year"', '"Month"', '"Week"', '"Day"']:
 for chord, nazwa in [("Alt+Shift+J", "Justify ..."),
                      ("Alt+Shift+OemQuestion", "Style ..."),
                      ("Alt+Shift+F6", "Baseline ..."),
-                     ("Alt+Shift+OemMinus", "Set Selection Font ..."),
                      ("Alt+Shift+OemSemicolon", "Insert Time")]:
     spr("KONTROLA (zostaje): %s -> %r" % (chord, nazwa), MENU.get(nazwa) == chord)
 # Te dwie komendy w MENU nazywaja sie krotko "Styles" i "Font" - dluga nazwa
@@ -256,11 +255,38 @@ for chord, nazwa in [("Alt+Shift+J", "Justify ..."),
 # Moja pierwsza wersja tej asercji pytala o dluga nazwe i slusznie padla.
 spr("KONTROLA (zostaje): Styles pyta o format pod kursorem",
     MENU.get("Styles") == "Alt+OemQuestion")
-spr("KONTROLA (zostaje): Font pyta o krój pisma pod kursorem",
-    MENU.get("Font") == "Alt+OemMinus")
+# Komendy czcionkowe USUNIETE 13.09.2026 na polecenie Kasperczaka ("NVDA czyta
+# czcionki po swojemu NVDA-F").  Kontrola odwrocona: pilnuje, ze nie wrocily
+# zadna z trzech warstw - menu, opis mowiony, handler.
+spr("Font: brak pozycji w menu", "Font" not in MENU)
+spr("Set Selection Font: brak pozycji w menu", "Set Selection Font ..." not in MENU)
+spr("Font: brak handlera", "menuQueryFont" not in CS)
+spr("Set Selection Font: brak handlera", "menuEditSetSelectionFont" not in CS)
+spr("Font: helper GetFontText usuniety", "GetFontText" not in CS)
+spr("Font: okno wyboru czcionki Dialog.GetFont usuniete", "FontDialog" not in CS)
+
+# CONTROL+O JEDYNYM OTWIERANIEM (13.09.2026).  Osobna pozycja "Open Other
+# Format" (Control+Shift+O) usunieta, jej dzialanie wchlonal Control+O.
+spr("Open Other Format: brak pozycji w menu", "Open Other Format ..." not in MENU)
+spr("Open Other Format: brak handlera", "menuFileOpenOtherFormat" not in CS)
+spr("Open Other Format: chord Control+Shift+O wolny",
+    "Control+Shift+O\"" not in CS)
+# Klucz w MENU zawiera znak "&" (klawisz dostepu), stad "&Open ...".
+spr("Control+O: zostaje w menu", MENU.get("&Open ...") == "Control+O")
+# Polityke konwersji bierzemy z GetViewLevel, NIE z obecnosci konwertera w
+# tabeli Import: konwertery istnieja tez dla .md, .rst i .tex, a te formaty maja
+# otwierac sie wprost.  Ta asercja pilnuje wlasnie tego wyboru.
+spr("Control+O: pyta o konwersje przez OfferConversionOnOpen",
+    "OfferConversionOnOpen(sFile)" in CS)
+spr("Control+O: polityka wspolna z otwieraniem z Eksploratora",
+    "if (GetViewLevel(sFile) == 1) return true;" in CS)
+spr("Control+O: odrzucone kryterium HasImportConverter nie wrocilo",
+    "HasImportConverter" not in CS)
+spr("Control+O: HTML dostaje wybor wprost",
+    'sExt == "htm" || sExt == "html" || sExt == "xhtml"' in CS)
 # Ustawiacze formatowania wolaja te same helpery, co usuniete skoki - gdyby
 # helpery poszly razem ze skokami, okna ustawien i pytania o format zamilkly by.
-for helper in ["GetJustifyText", "GetStyleText", "GetBaselineText", "GetFontText"]:
+for helper in ["GetJustifyText", "GetStyleText", "GetBaselineText"]:
     spr("KONTROLA (zostaje): helper %s nadal uzywany" % helper,
         CS.count(helper) >= 2)
 # Util.Month2Num i Util.Day2Num byly uzywane TAKZE poza CalculateDate.

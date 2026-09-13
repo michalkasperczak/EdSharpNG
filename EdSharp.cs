@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.98";
+public const string VersionString = "5.0.99";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1348,11 +1348,11 @@ public static string EOD = LB + DD + LB + "End of Document" + LB;
 
 public static Dictionary<Keys, ToolStripMenuItem> hashKey = new Dictionary<Keys, ToolStripMenuItem>();
 public MenuStrip menuMain;
-public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenOtherFormat, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
-public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline, menuEditSetSelectionFont;
+public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
+public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline;
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
-public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
+public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
 public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
@@ -1371,7 +1371,6 @@ menuFile = CreateMenu("&File");
 menuFileNew = CreateMenuItem("&New", "Control+N", menuItem_Click, "frame speak");
 menuFileNewFromClipboard = CreateMenuItem("New from Clipboard", "Control+Shift+N", menuItem_Click, "frame speak");
 menuFileOpen = CreateMenuItem("&Open ...", "Control+O", menuItem_Click, "frame speak");
-menuFileOpenOtherFormat = CreateMenuItem("Open Other Format ...", "Control+Shift+O", menuItem_Click, "frame speak");
 menuFileOpenAgain = CreateMenuItem("Open Again", "Alt+O", menuItem_Click, "child speak");
 menuFileRecent = CreateMenuItem("Recent Files ...", "Alt+R", menuItem_Click, "frame silent");
 // ULUBIONE PRZESZLY NA LITERE L Z ALTEM (Kasperczak, 31.08.2026, ustalenie
@@ -1438,7 +1437,7 @@ menuFileCloseAllButCurrentWindow = CreateMenuItem("Close All but Current Window"
 // menu item lists them so the feature is discoverable with a screen reader.
 menuFileSlots = CreateMenuItem("Numbered Files ...", "Alt+Shift+F2", menuItem_Click, "frame silent");
 menuFileExit = CreateMenuItem("&E&xit EdSharp", "Alt+F4", menuItem_Click, "frame speak");
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenOtherFormat, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
 //Dialog.Show("File.", menuFile.DropDownItems.Count);
 
 menuEdit = CreateMenu("&Edit");
@@ -1497,8 +1496,7 @@ menuEditStyle = CreateMenuItem("Style ...", "Alt+Shift+OemQuestion", menuItem_Cl
 // slot -- Kasperczak authorized this move explicitly (14.08.2026 18:19).
 // Kept the "6" mnemonic by landing on the matching function key.
 menuEditBaseline = CreateMenuItem("Baseline ...", "Alt+Shift+F6", menuItem_Click, "child silent");
-menuEditSetSelectionFont = CreateMenuItem("Set Selection Font ...", "Alt+Shift+OemMinus", menuItem_Click, "child speak");
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline, menuEditSetSelectionFont});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline});
 //Dialog.Show("Edit.", menuEdit.DropDownItems.Count);
 
 menuDelete = CreateMenu("&Delete");
@@ -1732,8 +1730,7 @@ menuQueryReadAll = CreateMenuItem("Read All", "Alt+F8", menuItem_Click, "child s
 menuQueryClipboard = CreateMenuItem("Clipboard", "Alt+OemQuotes", menuItem_Click, "frame silent");
 menuQueryTime = CreateMenuItem("Time", "Alt+OemSemicolon", menuItem_Click, "frame silent");
 menuQueryStyles = CreateMenuItem("Styles", "Alt+OemQuestion", menuItem_Click, "child silent");
-menuQueryFont = CreateMenuItem("Font", "Alt+OemMinus", menuItem_Click, "child silent");
-menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont});
+menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles});
 //Dialog.Show("Query.", menuQuery.DropDownItems.Count);
 
 menuMisc = CreateMenu("&Misc");
@@ -2698,13 +2695,6 @@ else if (iOffset > 0) sText = "Up";
 return sText;
 } // GetBaselineText method
 
-public string GetFontText(Font font, Color color) {
-string sFont = Util.Font2String(font);
-string sColor = Util.Color2String(color);
-sFont += ", Color=" + sColor;
-return sFont;
-} // GetFontText method
-
 public string[] GetSnippetFiles(out string[] aValues) {
 string sBaseDir = @"Snippets\" + App.ReadData("Compiler", "Default");
 string sDir = Path.Combine(App.DataDir, sBaseDir);
@@ -2914,8 +2904,8 @@ return sDir;
 public int GetViewLevel(string sFile) {
 // Decide whether a file is converted when it is opened from outside the editor
 // (Windows Explorer, "Open with", the command line, or Recent Files).  A return
-// of 0 opens the file raw; 1 converts it through the Import table.  The ordinary
-// Open command, Control+O, always opens raw regardless of this value.
+// of 0 opens the file raw; 1 converts it through the Import table.  The Open command, Control+O,
+// uses this same decision since 5.0.99, so both paths agree.
 // Precedence: an explicit ViewLevels entry wins, so the user can force any
 // extension either way (e.g. "docx:0" to see a Word file raw, or "rst:1" to
 // convert reStructuredText); otherwise binary / document formats convert,
@@ -2936,6 +2926,33 @@ catch (Exception ex) { Dialog.Show("Error", ex.Message); }
 foreach (string sBinaryFormat in sBinaryFormats.Split(' ')) if (sExt == sBinaryFormat) return 1;
 return 0;
 } // GetViewLevel method
+
+// Czy Control+O ma dla tego pliku proponowac konwersje?
+//
+// Control+O jest od 13.09.2026 JEDYNYM otwieraniem, wiec musi samo rozpoznac,
+// kiedy surowa tresc jest nieczytelna.  Pytanie "czy w sekcji Import jest
+// jakikolwiek konwerter" NIE nadaje sie na to kryterium i zostalo odrzucone po
+// przeczytaniu tabeli: konwertery istnieja tez dla .md, .rst i .tex, czyli dla
+// formatow, ktore Kasperczak chce otwierac wprost ("pliki tekstowe otworzy jako
+// pliki tekstowe, tak samo Markdown i podobne").
+//
+// Dlatego polityke bierzemy z GetViewLevel - tego samego miejsca, ktore decyduje
+// o otwieraniu z Eksploratora.  Jedno zrodlo znaczy, ze ten sam plik zachowa sie
+// identycznie niezaleznie od drogi wejscia, i ze wpis ViewLevels uzytkownika
+// dziala takze tutaj.
+//
+// Grupa HTML dochodzi ponad to: GetViewLevel traktuje ja jako tekst (bo znaczniki
+// sa czytelne), ale Kasperczak chce tu wyboru wprost - "przy okazji HTML zapyta,
+// ktory plik".  Ma to sens, bo dla .html tabela oferuje kilka sensownych wyjsc:
+// Markdown, czysty tekst, Tidy.  Jawny wpis ViewLevels nadal wygrywa, wiec
+// "html:0" wylacza to pytanie.
+public bool OfferConversionOnOpen(string sFile) {
+string sExt = Path.GetExtension(sFile).ToLower().TrimStart('.');
+if (sExt.Length == 0) return false;
+if (GetViewLevel(sFile) == 1) return true;
+if (App.ReadOption("ViewLevels", "").ToLower().Contains(sExt + ":0")) return false;
+return sExt == "htm" || sExt == "html" || sExt == "xhtml";
+} // OfferConversionOnOpen method
 
 public string[] GetKeySummary(ToolStripMenuItem item) {
 string sCommand = item.Name;
@@ -3154,35 +3171,29 @@ return;
 if (sRtfChoice == "rich") iConvert = iOpenRichText;
 else if (sRtfChoice == "other") iConvert = 2;
 }
+// CONTROL+O JEST JEDYNYM OTWIERANIEM (decyzja Kasperczaka, 13.09.2026).
+//
+// Do 5.0.98 istnialy DWIE komendy otwarcia: Control+O otwieral plik ZAWSZE
+// surowo, a osobna pozycja "Open Other Format" (Control+Shift+O) puszczala go
+// przez tabele Import.  Dla niewidomego byla to pulapka: Control+O na pliku
+// .docx czy .pdf pokazywal nieczytelne bajty, a droga do czytelnej tresci byla
+// schowana pod drugim, mniej oczywistym skrotem.  Jego slowa: "usunac osobna
+// pozycje i zostawic Control+O jako uniwersalne otwieranie".
+//
+// Zachowanie po zmianie, w kolejnosci sprawdzania:
+//   .rtf                  -> lista wariantow wyzej (bez zmian),
+//   dokument lub HTML     -> tabela Import (przy jednym wariancie bierze go bez
+//                            pytania, przy kilku pyta: .html da Markdown, tekst,
+//                            Tidy; .pdf ma jeden konwerter, wiec nie pyta),
+//   pozostale             -> surowo, natychmiast, bez pytania.
+// Pliki tekstowe, Markdown, reStructuredText i zrodla otwieraja sie tak jak dotad,
+// mimo ze konwertery dla nich istnieja - decyduje polityka, nie obecnosc
+// konwertera.  Patrz komentarz przy OfferConversionOnOpen.
+//
+// iConvert = 2 znaczy "przepusc przez tabele Import".  Sam wybor konwertera
+// robi ConvertFile2String; tu tylko rozstrzygamy, CZY ta droga ma sens.
+if (iConvert == 0 && OfferConversionOnOpen(sFile)) iConvert = 2;
 OpenOrActivateWindow(sFile, iConvert);
-}
-
-if (menuItem == menuFileOpenOtherFormat) {
-sFile = Dialog.OpenFile("", "");
-if (sFile.Length == 0) return;
-
-OpenOrActivateWindow(sFile, 2);
-return;
-/*
-AddMessage("Converting");
-try {
-sText = COM.ConvertFile2String(sFile);
-}
-catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
-return;
-}
-
-if (!IsEmptyWindow()) new MdiChild(this);
-child = this.Child;
-rtb = child.RTB;
-rtb.Text = sText;
-rtb.Index = 0;
-child.Text = Path.GetFileNameWithoutExtension(sFile) + ".txt";
-//rtb.Modified = true;
-rtb.Modified = false;
-//AddMessage("Done");
-*/
 }
 
 if (menuItem == menuFileOpenAgain) {
@@ -4285,21 +4296,6 @@ case "&Up" :
 rtb.SelectionCharOffset = 4;
 break;
 }
-}
-
-if (menuItem == menuEditSetSelectionFont) {
-if (rtb.SelectionLength == 0) {
-AddMessage("Cursor");
-}
-else {
-AddMessage("Selected");
-}
-
-object[] a = Dialog.GetFont(rtb.SelectionFont, rtb.SelectionColor);
-if (a.Length == 0) return;
-
-rtb.SelectionFont = (Font) a[0];
-rtb.SelectionColor = (Color) a[1];
 }
 
 if (menuItem == menuMiscEnvironmentVariables) {
@@ -6015,11 +6011,6 @@ sText = sText.Replace("Regular ", "");
 sText = sText.Replace("Left ", "");
 sText = sText.Replace("Flat ", "");
 if (sText.Trim().Length == 0) sText = "Default";
-AddMessage(sText);
-}
-
-if (menuItem == menuQueryFont) {
-sText = GetFontText(rtb.SelectionFont, rtb.SelectionColor);
 AddMessage(sText);
 }
 
@@ -19992,20 +19983,6 @@ if (sButtonResult != "" && iPicked >= 0 && iPicked < aVal.Length) aResult = new 
 return aResult;
 } // PickAndChoose method
 
-public static object[] GetFont(Font font, Color color) {
-//ColorDialog d = new ColorDialog();
-//d.ShowDialog();
-FontDialog dlg = new FontDialog();
-dlg.FontMustExist = true;
-dlg.ShowColor = true;
-dlg.Font = font;
-dlg.Color = color;
-object[] aReturn = {};
-if(dlg.ShowDialog() == DialogResult.OK) aReturn = new object[] {dlg.Font, dlg.Color};
-dlg.Dispose();
-return aReturn;
-} // GetFont method
-
 public static string OpenFolder(string sTitle, string sLabel, string sValue) {
 string sResult = "";
 
@@ -22995,6 +22972,13 @@ if (oKey == null) return Keys.None;
 return (Keys) oKey;
 } // String2Key method
 
+// Font2String / Color2String NIE MAJA juz zadnego wywolania w programie
+// (zmierzone 13.09.2026 po usunieciu komend czcionkowych).  Zostaja swiadomie
+// jako para do String2Font / String2Color, ktore ZYJA - czytaja czcionke i kolor
+// okna z opcji FontDefault w pliku ustawien uzytkownika.  Kierunek zapisu nie ma
+// dzis wywolania tylko dlatego, ze FontDefault ustawia sie recznie w pliku; gdy
+// to kiedys wejdzie do okna ustawien, droga powrotna musi istniec.  Sa
+// jednolinijkowe i nie ciagna za soba niczego, wiec koszt trzymania jest zerowy.
 public static string Font2String(Font font) {
 return TypeDescriptor.GetConverter(typeof(Font)).ConvertToString(font);
 } // Font2String method

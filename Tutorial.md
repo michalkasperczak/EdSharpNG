@@ -63,8 +63,7 @@ Here is a list of hot keys you will use often. Where EdSharp differs from what y
 
 - Control+N = New file.
 - Control+Shift+N = New file from the current clipboard text.
-- Control+O = Open file. Converts Microsoft Word (`.doc`/`.docx`), Excel, PowerPoint, PDF, Rich Text Format (`.rtf`), and HTML files automatically to plain text.
-- Control+Shift+O = Open Other Format: open a file without conversion (and import `.rtf` with its formatting). Useful for editing HTML source.
+- Control+O = Open file. The only Open command: text, Markdown, and source files open directly, documents (`.doc`/`.docx`, Excel, PowerPoint, PDF, EPUB) are converted to readable text, and `.rtf` or a web page asks how you want it shown.
 - Alt+O = Open Again: reload the current file from disk, discarding unsaved changes.
 - Control+S = Save.
 - Control+Shift+S = Save As.
@@ -151,7 +150,7 @@ This section explains how to create, open, and save files.
 
 **Creating a new file.** When EdSharp first opens, it presents a blank document, ready for typing. To create another new file at any time, press Control+N; New is also the first choice on the File menu, Alt+F. To start a file from whatever is currently on the clipboard, press Control+Shift+N: EdSharp opens a new window, drops in the clipboard text, and places the cursor at the start.
 
-**Opening files.** The simplest way to open a file is Control+O, which presents the standard Windows Open dialog showing the current folder. When you open a file this way, EdSharp converts several formats to plain text automatically: Microsoft Word, Excel, PowerPoint, PDF, Rich Text Format, and HTML. To open a file without conversion, use Control+Shift+O (Open Other Format); this is what you want for editing HTML source or importing an `.rtf` file with its formatting intact.
+**Opening files.** Press Control+O; the standard Windows Open dialog appears, showing the current folder. There is only one Open command, and it works out how the file should be shown. Text, Markdown, and source files open exactly as they are stored. Documents whose raw content is unreadable -- Microsoft Word, Excel, PowerPoint, PDF, EPUB -- are converted to readable text. Rich Text Format and web pages ask first: a short list appears, and for a web page it includes the untouched HTML source, so you can still edit the markup. for editing HTML source or importing an `.rtf` file with its formatting intact.
 
 If you are editing a file and want to return to the version on disk, press Alt+O (Open Again). This only helps if you have not already saved your changes, since saving replaces the disk copy.
 
