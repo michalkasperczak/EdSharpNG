@@ -1201,11 +1201,17 @@ spr("komentarze: cztery pozycje menu zadeklarowane",
 # Pilnujemy teraz tego, czego naprawde chcemy: wstawianie i lista ZOSTAJA w
 # rodzinie F9, skoki sa na Alt+Shift+PageUp/PageDown, a stare chordy skokow
 # nie naleza do NICZEGO.
-spr("komentarze: wstawianie i lista w rodzinie F9, skoki na Alt+Shift+PageUp/PageDown",
-    'CreateMenuItem("Insert Comment ...", "Alt+F9"' in CS
-    and 'CreateMenuItem("Next Comment", "Alt+Shift+PageDown"' in CS
-    and 'CreateMenuItem("Prior Comment", "Alt+Shift+PageUp"' in CS
-    and 'CreateMenuItem("Comment List ...", "Control+Alt+F9"' in CS)
+# ODWROCONA W 5.0.96 na jego slowo: "skoro pod Ctrl Shift F9 i tak dalej ich
+# wlasciwie nie potrzebujemy na razie, to bym usunal te klawisze.  Moze do tego
+# wrocimy."  Wczesniejsza tresc WYMAGALA tych chordow, wiec po zdjeciu klawiszy
+# dawalaby FAIL na kodzie zrobionym zgodnie z jego decyzja - ta sama pulapka, co
+# przy 5.0.63.  Teraz pilnujemy tego, czego chcemy: POLECENIA zostaja (zeby dalo
+# sie wrocic), a KLAWISZY przy nich NIE MA.
+spr("komentarze: polecenia zostaja w menu, bez przypisanych klawiszy",
+    'CreateMenuItem("Insert Comment ...", ""' in CS
+    and 'CreateMenuItem("Next Comment", ""' in CS
+    and 'CreateMenuItem("Prior Comment", ""' in CS
+    and 'CreateMenuItem("Comment List ...", ""' in CS)
 spr("komentarze: stare chordy skokow (Control+Shift+F9, Alt+Shift+F9) nie naleza do zadnej komendy",
     '"Control+Shift+F9"' not in CS and '"Alt+Shift+F9"' not in CS)
 # ODWROCONA W 5.0.63, bo pilnowala zachowania, ktorego on sam sie pozbyl.
@@ -1232,7 +1238,7 @@ spr("F9: nie zostal osierocony helper COM.JFWRunFunction (lekcja z 5.0.44)",
 # KONTROLA WAZNOSCI TEGO FILTRA: gdyby CS_KOD wycinal za duzo, trzy asercje
 # powyzej bylyby zielone zawsze.  Pytamy wiec o linie AKTYWNA, ktora istniec MUSI.
 spr("kontrola waznosci filtra komentarzy: CS_KOD nadal widzi kod aktywny",
-    'menuMiscCommentList = CreateMenuItem("Comment List ...", "Control+Alt+F9"' in CS_KOD)
+    'menuMiscCommentList = CreateMenuItem("Comment List ...", ""' in CS_KOD)
 # ROZLACZNOSC: zdjecie obslugi F9 nie moglo zabrac ANI mowienia przez JAWS-a
 # (COM.JFWSay, zywa droga w rodzinie kanalow mowy), ANI drugiego, niezaleznego
 # czytania calego tekstu, ktore siedzi na Alt+F8 i nie ma z JAWS-em nic wspolnego.
@@ -1262,18 +1268,38 @@ spr("komentarze: lista podaje NUMER WIERSZA, nie numer kolejny",
 spr("KONTROLA: wypowiedz komentarza ma tresc PRZED slowem comment",
     's + ", comment"' in CS)
 spr("KONTROLA: pusty komentarz nazwany osobno", '"empty comment"' in CS)
-spr("KONTROLA: opisy mowione komentarzy w Hotkeys.ini",
-    "Insert Comment=Alt+F9," in HOT and "Comment List=Control+Alt+F9," in HOT)
-spr("KONTROLA: opisy mowione komentarzy w hotkeys.txt",
-    "Insert Comment=Alt+F9," in _HOTTXT and "Comment List=Control+Alt+F9," in _HOTTXT)
+# Po zdjeciu klawiszy (5.0.96) wiersz zostaje, ale zaczyna sie od przecinka -
+# pusty klawisz.  Opis MUSI zostac, bo z niego czyta sie podsumowanie skrotow.
+spr("KONTROLA: opisy mowione komentarzy w Hotkeys.ini, bez klawiszy",
+    "Insert Comment=," in HOT and "Comment List=," in HOT
+    and "internal comment" in HOT)
+# UWAGA na postac: _HOTTXT to plik .txt PRZELICZONY przez _na_zapis_ini na
+# zapis "Nazwa=klawisz,opis", a nie surowa tresc z przecinkami.  Szukanie w nim
+# frazy "(no key assigned)" nie trafia - zmierzone.  Sprawdzamy wiec pusty
+# klawisz w postaci przeliczonej, a fraze dla czlowieka w pliku SUROWYM.
+# UWAGA na postac: _HOTTXT to plik .txt PRZELICZONY przez _na_zapis_ini, ktory
+# zamienia PIERWSZY przecinek na znak rownosci.  Brak klawisza jest w nim
+# napisany dla czlowieka slowami "(no key assigned)", wiec po przeliczeniu
+# wychodzi "Insert Comment=(no key assigned)", a nie "Insert Comment=,".
+# Zmierzone: wzorzec z golym przecinkiem nie trafia.
+spr("KONTROLA: opisy mowione komentarzy w hotkeys.txt, bez klawiszy",
+    "Insert Comment=(no key assigned)" in _HOTTXT
+    and "Comment List=(no key assigned)" in _HOTTXT
+    and "internal comment" in _HOTTXT_SUROWY)
 spr("KONTROLA: podrecznik opisuje komentarze wewnetrzne",
     "Internal comments" in MD)
 # KONTROLA, ze nie zabralem dzialajacej komendy: Control+F9 nalezy do mowienia
 # kompilatora i ma zostac.
 spr("KONTROLA: Control+F9 nadal nalezy do Say Compiler",
     "Say Compiler=Control+F9," in HOT)
-spr("KONTROLA: opisy mowione podaja NOWE chordy komentarzy",
-    "Insert Comment=Alt+F9," in HOT and "Comment List=Control+Alt+F9," in HOT)
+# Zadne z poleceh komentarzy nie moze miec klawisza - to jest cala tresc
+# zadania 5.  Sprawdzane po WIERSZU, nie po samym braku ciagu "Alt+F9" w pliku
+# (Alt+F9 wystepuje w opisach innych komend).
+spr("KONTROLA: zadne polecenie komentarza nie ma klawisza",
+    all((l.split("=",1)[1].split(",")[0].strip() == "")
+        for l in HOT.splitlines()
+        for n in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List")
+        if l.startswith(n + "=")))
 # KONTROLE, ze nie zepsulem funkcji dzielacych z komentarzami ten sam kod.
 spr("KONTROLA: przypisy nadal dzialaja, na Control+Shift+K",
     'CreateMenuItem("Insert Footnote ...", "Control+Shift+K"' in CS)
@@ -1709,6 +1735,96 @@ spr("33.18 mowi wprost, czego u nas NIE sprawdzimy",
 # linkow WLASNIE powstala, wiec zdanie "nigdy nie zostala napisana" tu klamalo by.
 spr("33 NIE powtarza, ze listy linkow nie napisano",
     "nigdy nie została napisana" not in _R33)
+
+# ==========================================================================
+# ZADANIE 5 i 7 z listy Michala (5.0.96, 13.09.2026)
+#
+# 5. "Skoro pod Ctrl Shift F9 i tak dalej ich wlasciwie nie potrzebujemy na
+#    razie, to bym usunal te klawisze.  Moze do tego wrocimy."
+#    Czyli: KLAWISZE precz, POLECENIA ZOSTAJA (zeby dalo sie wrocic).
+# 7. "Tam wszystkie ustawienia maja wartosci do wpisywania w polach
+#    tekstowych.  Chodzi mi o to, zeby to byly normalne opcje w formie
+#    checkbox, pola kombi, takie jak we wszystkich aplikacjach."
+# ==========================================================================
+UST = (REPO / "Ustawienia.cs").read_text(encoding="utf-8", errors="replace")
+UST_KOD = "\n".join(
+    ("" if l.lstrip().startswith("//") else re.sub(r"//.*$", "", l))
+    for l in UST.splitlines()
+)
+
+# --- 5: skroty komentarzy zdjete, polecenia zostaja ---
+# Klawisz idzie do programu z Hotkeys.ini, wiec tam musi byc PUSTO po znaku
+# rownosci.  Sprawdzamy dokladnie te cztery wiersze, a nie samo "nie ma
+# ciagu Alt+F9" - bo Alt+F9 moglby zniknac razem z cala komenda.
+for _nazwa in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List"):
+    _w = [l for l in HOT.splitlines() if l.startswith(_nazwa + "=")]
+    spr("5. wiersz %r jest w Hotkeys.ini" % _nazwa, len(_w) == 1)
+    if _w:
+        _po = _w[0].split("=", 1)[1]
+        spr("5. %r NIE ma przypisanego klawisza" % _nazwa,
+            _po.split(",")[0].strip() == "")
+        spr("5. %r ma dalej opis (polecenie zostaje)" % _nazwa,
+            len(_po.split(",", 1)[1].strip()) > 10 if "," in _po else False)
+
+# Polecenia MUSZA zostac w kodzie - Michal chce moc do nich wrocic.
+for _cmd in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List"):
+    spr("5. polecenie %r nadal istnieje w programie" % _cmd,
+        ('"%s' % _cmd) in CS_KOD)
+
+# Stare klawisze nie moga sterczec nigdzie w kodzie przy komentarzach.
+spr("5. Alt+Shift+PageDown nie jest przypisany do komentarza",
+    "Alt+Shift+PageDown" not in CS_KOD)
+spr("5. Alt+Shift+PageUp nie jest przypisany do komentarza",
+    "Alt+Shift+PageUp" not in CS_KOD)
+# Control+Alt+F9 to byla lista komentarzy.  Uwaga: Michal ma AltGr=Control+Alt,
+# wiec ten skrot i tak zjadal polskie znaki - tym bardziej ma zniknac.
+spr("5. Control+Alt+F9 nie jest przypisany do komentarza",
+    "Control+Alt+F9" not in CS_KOD)
+# Podrecznik nie moze kazac naciskac klawiszy, ktorych nie ma.
+spr("5. podrecznik nie kaze naciskac Alt+F9 przy komentarzach",
+    "Alt+F9 either inserts" not in MD)
+spr("5. podrecznik mowi, ze komentarze sa w menu Navigate",
+    "Navigate menu" in MD or "menu Navigate" in MD)
+
+# --- 7: okno ustawien z pol wyboru ---
+spr("7. jest osobny plik Ustawienia.cs ze spisem ustawien",
+    "class Ustawienia" in UST_KOD)
+spr("7. Control+przecinek otwiera NOWE okno, nie stara liste pol tekstowych",
+    "PokazUstawienia()" in CS_KOD)
+spr("7. stare wolanie MultiInput dla ustawien usuniete",
+    "App.ReadDefaultOptions()" not in CS_KOD)
+# Rodzaje pol: musza byc wszystkie trzy, inaczej to nadal wpisywanie.
+for _rodzaj in ('"przelacznik"', '"lista"', '"liczba"'):
+    spr("7. okno zna rodzaj pola %s" % _rodzaj, _rodzaj in UST_KOD)
+spr("7. przelacznik to CheckBox", "addCheckBox(" in UST_KOD or "addCheckBox(" in CS_KOD)
+spr("7. lista wyboru to ComboBox", "addComboPickBox(" in UST_KOD or "addComboPickBox(" in CS_KOD)
+spr("7. licznik to NumericUpDown", "addNumericUpDown(" in UST_KOD or "addNumericUpDown(" in CS_KOD)
+# Lista wyboru musi byc ZAMKNIETA - czlowiek wybiera, nie wpisuje.
+spr("7. z listy wyboru nie da sie wpisac wlasnej wartosci",
+    "DropDownList" in LBC)
+# Zapis: Y/N, zeby stary plik ustawien dalej dzialal.
+spr("7. wlaczone zapisuje sie jako Y",
+    'return bWlaczone ? "Y" : "N"' in UST_KOD)
+# Rozpoznawanie idzie po pierwszej literze (y/t) plus "1" i "on" - wiec
+# wzorzec musi pytac o TO, a nie o pelne slowa "yes"/"tak", ktorych w kodzie
+# nie ma.  Zachowanie samo jest sprawdzone sonda pomiar_ustawienia_596.cs na
+# wydanej binarce, na 17 roznych zapisach.
+spr("7. czytanie wlaczonego znosi tez y, yes, tak, 1, on",
+    'StartsWith("y")' in UST_KOD and 'StartsWith("t")' in UST_KOD
+    and 's == "1"' in UST_KOD and 's == "on"' in UST_KOD)
+# Ustawienia, ktore maja WLASNE okna, nie moga sie dublowac tutaj.
+for _swoje in ('"RestoreSession"', '"AutoSaveSeconds"', '"FontDefault"'):
+    spr("7. %s ma swoje okno i jest tu pomijane" % _swoje, _swoje in UST_KOD)
+# Wycofane polecenia nie moga wrocic bocznymi drzwiami jako ustawienie.
+spr("7. wycofany ExtraSpeech pomijany", '"ExtraSpeech"' in UST_KOD)
+# Kazde pole musi miec zdanie wyjasniajace - inaczej nazwa typu "JumpPosition"
+# nic nie mowi.
+spr("7. okno ma opisy czytane przy wejsciu w pole", "Podpowiedz" in UST_KOD)
+spr("7. Escape zamyka okno ustawien", "runOkCancel" in CS_KOD)
+# NumericUpDown nie dostaje fokusu sam - nazwa musi zejsc na jego dzieci,
+# inaczej czytnik ekranu mowi sama liczbe.  ZMIERZONE zywym NVDA.
+spr("7. licznik podaje nazwe takze swojemu wewnetrznemu polu",
+    "ctlChild.AccessibleName" in LBC)
 
 ok = sum(1 for w, _ in wyniki if w)
 print("WYNIK: %d/%d PASS" % (ok, len(wyniki)))

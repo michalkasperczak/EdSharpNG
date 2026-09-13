@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.95";
+public const string VersionString = "5.0.96";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2032,10 +2032,19 @@ menuMiscExportFootnotes = CreateMenuItem("Export Footnotes ...", "", menuItem_Cl
 // ZWOLNIONE tym samym ruchem: Control+Shift+F9 i Alt+Shift+F9.  Oba zmierzone
 // jako nienalezace juz do zadnej komendy - chord zwolniony, ktory zostaje w
 // CreateMenuItem, dawal by modalny alert na starcie i po cichu zabijal komende.
-menuMiscInsertComment = CreateMenuItem("Insert Comment ...", "Alt+F9", menuItem_Click, "child silent");
-menuMiscNextComment = CreateMenuItem("Next Comment", "Alt+Shift+PageDown", menuItem_Click, "child silent");
-menuMiscPriorComment = CreateMenuItem("Prior Comment", "Alt+Shift+PageUp", menuItem_Click, "child silent");
-menuMiscCommentList = CreateMenuItem("Comment List ...", "Control+Alt+F9", menuItem_Click, "child silent");
+// KOMENTARZE ZOSTAJA W MENU, ALE BEZ SKROTOW (decyzja Michala 13.09.2026:
+// "skoro pod Ctrl Shift F9 i tak dalej ich wlasciwie nie potrzebujemy na
+// razie, to bym usunal te klawisze. Moze do tego wrocimy").
+//
+// Celowo NIE usuwam komend - ma byc mozliwy powrot, a pozycja w menu i
+// palecie polecen niczego nie kosztuje.  Zwolnione chordy: Alt+F9,
+// Alt+Shift+PageDown, Alt+Shift+PageUp, Control+Alt+F9.
+// Pusty trzeci argument = brak wpisu w hashKey, wiec klawisze sa naprawde
+// wolne (nie tylko niewidoczne).
+menuMiscInsertComment = CreateMenuItem("Insert Comment ...", "", menuItem_Click, "child silent");
+menuMiscNextComment = CreateMenuItem("Next Comment", "", menuItem_Click, "child silent");
+menuMiscPriorComment = CreateMenuItem("Prior Comment", "", menuItem_Click, "child silent");
+menuMiscCommentList = CreateMenuItem("Comment List ...", "", menuItem_Click, "child silent");
 // DWIE KOMENDY WYRAZEN REGULARNYCH POLACZONE W JEDNA (jego decyzja 03.09.2026,
 // wariant B: "Lacze w JEDNA komende, a w okienku wybierasz, co ma zrobic").
 // Yield liczyl trafienia, Extract wypisywal je do nowego okna - obie pytaly o to
@@ -6328,20 +6337,7 @@ else AddMessage("Work continuity off");
 }
 
 if (menuItem == menuMiscConfigurationOptions) {
-aResults = App.ReadDefaultOptions();
-//Array.Sort(aResults);
-aLabels = new string[aResults.Length];
-string[] aDefaults = new string[aResults.Length];
-aValues = new string[aResults.Length];
-for (int i = 0; i < aResults.Length; i++) {
-aLabels[i] = (aResults[i].IndexOf("&") >= 0 ? "" : "&") + aResults[i];
-aDefaults[i] = App.ReadDefaultOption(aResults[i], "");
-aValues[i] = App.ReadOption(aResults[i], aDefaults[i]);
-}
-
-string[] a = Dialog.MultiInput("Configuration Options", aLabels, aValues);
-if (a.Length == 0) return;
-for (int i = 0; i < a.Length; i++) App.WriteOption(aResults[i], a[i]);
+PokazUstawienia();
 }
 
 if (menuItem == menuMiscManualOptions) {
@@ -8604,6 +8600,141 @@ timerAutozapis.Start();
 catch {}
 } // StartCiaglosciPracy method
 
+// OKNO USTAWIEN PROGRAMU (Control+przecinek).  Spis pol i cala wiedza o tym,
+// co ktore ustawienie znaczy, siedzi w Ustawienia.cs; tutaj jest tylko
+// zlozenie okna i zapis.
+//
+// DLACZEGO PRZYCISK "Edit file" JEST TU, A NIE TYLKO W MENU: to okno pokazuje
+// ustawienia, ktore da sie sensownie wyklikac, i swiadomie pomija kilka
+// (patrz Ustawienia.Pomijany).  Czlowiek, ktory szuka czegos, czego tu nie
+// widzi, ma dostac droge dalej w tym samym miejscu, a nie odeslanie do innej
+// komendy, ktorej nazwy jeszcze nie zna.
+//
+// DLACZEGO ZAPIS IDZIE TYLKO PO ZMIENIONYCH: WriteOption przepisuje plik ini.
+// Zapis wszystkich dwudziestu kilku kluczy przy kazdym OK zamienialby recznie
+// wpisane warianty ("yes", "1250") na kanoniczne za samo zajrzenie w okno.
+// Kto nic nie zmienil, ma plik nietkniety.
+public void PokazUstawienia() {
+List<Opcja> lOpcje = Ustawienia.Spis();
+
+LbcDialog dlg = new LbcDialog("Settings", this);
+dlg.addLabel("Settings apply to the whole program.  Changes take effect when you press OK; some of them apply to windows opened afterwards.");
+
+// Kontrolki trzymam w slowniku pod kluczem opcji, zeby odczyt po OK szedl
+// po TEJ SAMEJ liscie co budowanie - bez rownoleglych tablic, w ktorych
+// latwo przestawic indeksy.
+Dictionary<string, Control> dPola = new Dictionary<string, Control>();
+Dictionary<string, string> dPrzed = new Dictionary<string, string>();
+bool bNaglowekZaawansowanych = false;
+
+foreach (Opcja o in lOpcje) {
+if (Ustawienia.Pomijany(o.Klucz)) continue;
+string sTeraz = App.ReadOption(o.Klucz, o.Domyslna);
+dPrzed[o.Klucz] = sTeraz;
+
+if (o.Zaawansowana && !bNaglowekZaawansowanych) {
+dlg.addSeparator();
+dlg.addLabel("For building and running code");
+bNaglowekZaawansowanych = true;
+}
+
+if (o.Rodzaj == "przelacznik") {
+dPola[o.Klucz] = dlg.addCheckBox(o.Etykieta, Ustawienia.CzyWlaczone(sTeraz), o.Podpowiedz);
+}
+else if (o.Rodzaj == "liczba") {
+int iWartosc;
+if (!Int32.TryParse((sTeraz ?? "").Trim().Trim('"'), out iWartosc)) {
+try { iWartosc = Int32.Parse(o.Domyslna); } catch { iWartosc = o.Min; }
+}
+dPola[o.Klucz] = dlg.addNumericUpDown(o.Etykieta, iWartosc, o.Min, o.Max, o.Podpowiedz);
+}
+else if (o.Rodzaj == "lista") {
+// WARTOSC, KTOREJ NIE MA NA LISCIE, NIE MOZE ZNIKNAC.  Kto wpisal w
+// pliku wlasny format daty albo numer strony kodowej, ten po
+// otwarciu tego okna musi zobaczyc SWOJA wartosc jako wybrana
+// pozycje - inaczej samo nacisniecie OK po cichu zamienilo by mu
+// ustawienie na pierwsze z listy.  Dlatego nieznana wartosc trafia
+// na koniec listy, opisana jako wlasna.
+List<string> lNazwy = new List<string>(o.Nazwy);
+List<string> lWartosci = new List<string>(o.Wartosci);
+int iPoz = Ustawienia.PozycjaDlaWartosci(o, sTeraz);
+if (iPoz < 0) {
+lNazwy.Add("Kept from the configuration file: " + sTeraz);
+lWartosci.Add(sTeraz);
+iPoz = lNazwy.Count - 1;
+}
+ComboBox cb = dlg.addComboPickBox(o.Etykieta, lNazwy, lNazwy[iPoz], o.Podpowiedz);
+// Tablica wartosci jedzie w Tag, bo pozycja listy to nie to samo co
+// tekst w pliku, a druga petla musi umiec przetlumaczyc jedno na drugie.
+cb.Tag = lWartosci.ToArray();
+dPola[o.Klucz] = cb;
+}
+else {
+dPola[o.Klucz] = dlg.addInputBox(o.Etykieta, sTeraz ?? "", o.Podpowiedz);
+}
+}
+
+string sPrzycisk = dlg.runWithButtons(new string[] {"OK", "Cancel", "&Restore defaults", "&Edit file"});
+if (sPrzycisk.Length == 0 || string.Equals(sPrzycisk, "Cancel", StringComparison.OrdinalIgnoreCase)) { dlg.Dispose(); return; }
+
+if (sPrzycisk.IndexOf("Edit file", StringComparison.OrdinalIgnoreCase) >= 0) {
+dlg.Dispose();
+// Ta sama droga co Manual Options: glowny plik ustawien w oknie edytora.
+OpenOrActivateWindow(App.IniFile, 0);
+AddMessage("Editing the configuration file; save it and restart EdSharp for changes to apply");
+return;
+}
+
+if (sPrzycisk.IndexOf("Restore defaults", StringComparison.OrdinalIgnoreCase) >= 0) {
+dlg.Dispose();
+if (Dialog.Confirm("Confirm", "Restore every setting in this window to its default?", "N") != "Y") return;
+int iPrzywrocone = 0;
+foreach (Opcja o in lOpcje) {
+if (Ustawienia.Pomijany(o.Klucz)) continue;
+if (App.ReadOption(o.Klucz, o.Domyslna) == o.Domyslna) continue;
+App.WriteOption(o.Klucz, o.Domyslna);
+iPrzywrocone++;
+}
+AddMessage(iPrzywrocone == 0 ? "Every setting was already at its default" : iPrzywrocone + " settings restored to defaults");
+return;
+}
+
+// OK: zapis tylko tego, co czlowiek naprawde zmienil.
+int iZmienione = 0;
+foreach (Opcja o in lOpcje) {
+if (!dPola.ContainsKey(o.Klucz)) continue;
+Control ctl = dPola[o.Klucz];
+string sNowa;
+if (ctl is CheckBox) sNowa = Ustawienia.Kanoniczne(((CheckBox) ctl).Checked);
+else if (ctl is NumericUpDown) sNowa = ((int) ((NumericUpDown) ctl).Value).ToString();
+else if (ctl is ComboBox) {
+ComboBox cb = (ComboBox) ctl;
+string[] aWartosci = cb.Tag as string[];
+int i = cb.SelectedIndex;
+if (aWartosci == null || i < 0 || i >= aWartosci.Length) continue;
+sNowa = aWartosci[i];
+}
+else sNowa = ((TextBox) ctl).Text;
+
+string sStara = dPrzed.ContainsKey(o.Klucz) ? dPrzed[o.Klucz] : null;
+// Przelacznik porownuje sie po ZNACZENIU, nie po tekscie: kto ma w pliku
+// "yes", a w oknie nie ruszyl pola, nie moze dostac zapisu "Y".
+if (ctl is CheckBox) {
+if (Ustawienia.CzyWlaczone(sStara) == ((CheckBox) ctl).Checked) continue;
+}
+else if (sNowa == sStara) continue;
+
+App.WriteOption(o.Klucz, sNowa);
+iZmienione++;
+}
+dlg.Dispose();
+
+// Kilka ustawien program czyta raz, przy starcie okna dokumentu.  Zamiast
+// obiecywac natychmiastowy skutek, mowie wprost, czego dotyczy zmiana.
+if (iZmienione == 0) AddMessage("No settings changed");
+else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved");
+} // PokazUstawienia method
+
 // Przelaczenie ciaglosci pracy W TRAKCIE dzialania programu, z menu.
 //
 // Osobna metoda, a nie ponowne wolanie StartCiaglosciPracy, bo tam jest
@@ -8611,6 +8742,7 @@ catch {}
 // zmiane ustawien: zatrzymac stary zegar, zalozyc nowy o nowym takcie albo
 // nie zakladac zadnego.  Bez tego wlaczenie autozapisu dzialaloby dopiero po
 // ponownym uruchomieniu programu, czego nikt sie nie domysli.
+
 public void UstawCiaglosc() {
 try {
 bSesjaWlaczona = Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"));

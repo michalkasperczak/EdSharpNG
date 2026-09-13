@@ -1755,6 +1755,18 @@ public class LbcDialog : IDisposable
         nud.TabIndex = iTabIndex++;
         nud.Margin = new Padding(0, 0, 0, DefaultRowGap);
         nud.AccessibleName = cleanLabel(sLabel);
+        // NumericUpDown nie dostaje fokusu SAM: fokus siada na jego wewnetrznym
+        // polu edycji (UpDownEdit), ktore ma wlasna nazwe - pusta.  Nazwa
+        // ustawiona wyzej nie jest wtedy przez nic czytana i czytnik ekranu
+        // oglasza sama liczbe, np. "100", bez slowa o co chodzi.
+        // ZMIERZONE zywym NVDA w oknie ustawien: pole liczby plikow w historii
+        // czytalo sie jako "100  pole tekstowe".  Dlatego nazwa idzie takze na
+        // dzieci kontrolki.
+        foreach (Control ctlChild in nud.Controls)
+        {
+            ctlChild.AccessibleName = cleanLabel(sLabel);
+            ctlChild.AccessibleRole = AccessibleRole.SpinButton;
+        }
         nud.GotFocus += handleGotFocus;
         registerWidget(nud, "NumericUpDown", sLabel);
         if (!string.IsNullOrEmpty(sTip)) dFocusTips[nud] = sTip;
