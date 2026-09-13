@@ -86,7 +86,7 @@ public class W {
 
 $exe = "C:\Program Files\EdSharpNG\EdSharpNG.exe"
 $katalog = "C:\Users\Michal\probki_599"
-$probki = @("proba.txt", "proba.md", "proba.rst", "proba.html", "proba.docx", "proba.rtf")
+$probki = @("proba.txt", "proba.md", "proba.rst", "proba.html", "proba.docx", "proba.epub", "proba.rtf")
 
 function Wyslij($s) { [System.Windows.Forms.SendKeys]::SendWait($s); Start-Sleep -Milliseconds 400 }
 

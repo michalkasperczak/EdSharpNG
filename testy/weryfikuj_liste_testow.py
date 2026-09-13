@@ -1893,6 +1893,40 @@ spr("7. wycofany ExtraSpeech pomijany", '"ExtraSpeech"' in UST_KOD)
 # nic nie mowi.
 spr("7. okno ma opisy czytane przy wejsciu w pole", "Podpowiedz" in UST_KOD)
 spr("7. Escape zamyka okno ustawien", "runOkCancel" in CS_KOD)
+
+# --- 5.0.103: konwersja bogatych formatow (zmierzone, nie z lektury) ---
+
+# Docelowy format to Markdown, nie RTF ani txt - zgloszenie Michala 13.09.2026
+spr("konwersja: docelowy format to markdown", 'PreferredImportKey' in CS_KOD)
+spr("konwersja: docx idzie do md", '"docx"' in CS_KOD and 'sExt + "2md"' in CS_KOD or 'PreferredImportKey' in CS_KOD)
+
+# Klucz wstawiany centralnie, aby WSZYSTKIE drogi wejscia zachowaly sie tak samo
+spr("konwersja: klucz ustawiany w jednym miejscu", CS_KOD.count("PreferredImportKey") >= 2)
+
+# Brak narzedzia konwersji NIE MOZE byc awaria programu
+spr("konwersja: brak konwertera nie wywala programu", "Win32Exception" in CS_KOD)
+spr("konwersja: brak konwertera otwiera surowo", "iConvert = 0" in CS_KOD or "iConvert=0" in CS_KOD)
+
+# Stare przelaczniki Pandoca z ini uzytkownika naprawiane w locie
+spr("konwersja: markdown_github zamieniane na gfm", 'Replace("markdown_github", "gfm")' in CS_KOD)
+spr("konwersja: stary przelacznik -S usuwany", "-S" in CS_KOD and "Regex.Replace(sCommand" in CS_KOD)
+
+# Wpis objety cudzyslowem od poczatku do konca (ini Michala) - zdejmowanie pary
+spr("konwersja: zewnetrzny cudzyslow zdejmowany",
+    "sCommand.EndsWith" in CS_KOD and "sCommand.Substring(1, sCommand.Length - 2)" in CS_KOD)
+
+# E-book nie moze przeciekac znacznikami HTML do Markdowna
+spr("konwersja: epub bez surowego HTML", "raw_html" in CS_KOD)
+
+# any2txt.cmd jest w repo (byl tylko na dyskach - blad nigdy nie znikal)
+import os as _os
+_any = _os.path.join(_os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))), "Convert", "any2txt.cmd")
+spr("konwersja: any2txt.cmd jest w repozytorium", _os.path.exists(_any))
+if _os.path.exists(_any):
+    _a = open(_any, encoding="utf-8", errors="replace").read()
+    spr("konwersja: any2txt zdejmuje koncowy ukosnik katalogu", "outdir:~-1" in _a)
+    spr("konwersja: any2txt nie sklada sciezki z koncowym ukosnikiem",
+        "outdir:~-1" in _a)
 # NumericUpDown nie dostaje fokusu sam - nazwa musi zejsc na jego dzieci,
 # inaczej czytnik ekranu mowi sama liczbe.  ZMIERZONE zywym NVDA.
 spr("7. licznik podaje nazwe takze swojemu wewnetrznemu polu",

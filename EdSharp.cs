@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.99";
+public const string VersionString = "5.0.103";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2954,6 +2954,35 @@ if (App.ReadOption("ViewLevels", "").ToLower().Contains(sExt + ":0")) return fal
 return sExt == "htm" || sExt == "html" || sExt == "xhtml";
 } // OfferConversionOnOpen method
 
+// Docelowy format konwersji dla bogatego dokumentu: Markdown, bez pytania.
+//
+// Zgloszenie Kasperczaka (13.09.2026) na wersji 5.0.99: "Import Docx to na MD
+// chyba, a nie RTF prawda?  My wszystko importujemy do MD z bogatych formatow,
+// bo inaczej to by bylo bez sensu."  Mial racje - zmierzone w sekcji [Import]:
+// .docx ma SIEDEM wyjsc (md, html, htm, txt, rst, tex, mediawiki), wiec
+// Control+O pokazywal liste "Import docx to" i kazal wybierac.  Pytanie bez
+// wartosci: odpowiedz zawsze brzmi "markdown", bo to jedyny cel, ktory zachowuje
+// strukture dokumentu (naglowki, listy, tabele) w postaci czytelnej dla czytnika
+// ekranu.  mediawiki i latex sa tu egzotyka, a plain gubi strukture.
+//
+// Zwracamy klucz tabeli Import (np. "docx2md") albo pusty napis, gdy Markdown
+// dla tego rozszerzenia nie istnieje - wtedy decyduje ConvertFile2String jak
+// dotad: przy jednym wariancie bierze go milczkiem (.pdf ma tylko pdf2txt),
+// przy kilku pyta (.xlsx daje csv albo txt - dla arkusza csv bywa lepszy od
+// Markdowna, wiec tego wyboru nie odbieramy).
+//
+// HTML jest SWIADOMIE wyjety: Kasperczak chcial przy nim pytania ("przy okazji
+// HTML zapyta, ktory plik"), bo dla strony sensowne sa i Markdown, i czysty
+// tekst, i Tidy, i samo zrodlo do edycji znacznikow.
+public string PreferredImportKey(string sFile) {
+string sExt = Path.GetExtension(sFile).ToLower().TrimStart('.');
+if (sExt.Length == 0) return "";
+if (sExt == "htm" || sExt == "html" || sExt == "xhtml") return "";
+string sKey = sExt + "2md";
+if (Ini.ReadValue(App.IniFile, "Import", sKey, "").Length == 0) return "";
+return sKey;
+} // PreferredImportKey method
+
 public string[] GetKeySummary(ToolStripMenuItem item) {
 string sCommand = item.Name;
 // KeyMap (Homer) is the single source. The first time a command's summary
@@ -3169,7 +3198,12 @@ OpenOrActivateWindow(sFile, 2, "", "", "rtf2md");
 return;
 }
 if (sRtfChoice == "rich") iConvert = iOpenRichText;
-else if (sRtfChoice == "other") iConvert = 2;
+else if (sRtfChoice == "other") {
+// Ta pozycja istnieje wlasnie po to, by pokazac pelna tabele Import, wiec
+// prosimy o liste WPROST - inaczej domyslny Markdown zabralby wybor.
+OpenOrActivateWindow(sFile, 2, "", "", sAskImport);
+return;
+}
 }
 // CONTROL+O JEST JEDYNYM OTWIERANIEM (decyzja Kasperczaka, 13.09.2026).
 //
@@ -3190,8 +3224,10 @@ else if (sRtfChoice == "other") iConvert = 2;
 // mimo ze konwertery dla nich istnieja - decyduje polityka, nie obecnosc
 // konwertera.  Patrz komentarz przy OfferConversionOnOpen.
 //
-// iConvert = 2 znaczy "przepusc przez tabele Import".  Sam wybor konwertera
-// robi ConvertFile2String; tu tylko rozstrzygamy, CZY ta droga ma sens.
+// iConvert = 2 znaczy "przepusc przez tabele Import".  Domyslny cel konwersji
+// (Markdown dla bogatych dokumentow) wstawia PreferredImportKey wewnatrz
+// OpenOrActivateWindow - wspolnie dla wszystkich drog wejscia, wiec tutaj
+// rozstrzygamy tylko, CZY ta droga ma sens.
 if (iConvert == 0 && OfferConversionOnOpen(sFile)) iConvert = 2;
 OpenOrActivateWindow(sFile, iConvert);
 }
@@ -9226,6 +9262,13 @@ OpenOrActivateWindow(sFile, iConvert, sLine, sColumn);
 // jest widoczna w kodzie pod nazwa, a nie liczba.
 public const int iOpenRichText = -2;
 
+// ZADANIE LISTY FORMATOW WPROST.  Odkad domyslnym celem konwersji jest Markdown
+// (PreferredImportKey), pusty sForceImport znaczy "wybierz domyslnie" - a to
+// zabralo droge pozycji "Other conversion ..." z listy wariantow RTF, ktora ma
+// robic dokladnie odwrotnie: POKAZAC pelna tabele Import.  Ta stala odrozni
+// "nie mam zdania" od "user swiadomie chce wybrac sam".
+public const string sAskImport = "?";
+
 public void OpenOrActivateWindow(string sFile, int iConvert, string sLine, string sColumn) {
 OpenOrActivateWindow(sFile, iConvert, sLine, sColumn, "");
 } // OpenOrActivateWindow method
@@ -9254,13 +9297,29 @@ return;
 string sTargetExt = "txt";
 if (iConvert == 0 || iConvert == iOpenRichText) sText = "";
 else {
+// MARKDOWN JEST DOMYSLNYM CELEM DLA KAZDEJ DROGI WEJSCIA, nie tylko dla
+// Control+O (13.09.2026).  Ten sam plik .docx wchodzi do programu piecioma
+// drogami: Control+O, z Eksploratora (argument wiersza polecen), z listy
+// ostatnich plikow, z ulubionych i przez "Otworz za pomoca".  Gdyby klucz
+// konwertera ustawial tylko handler Control+O, pozostale drogi nadal pytalyby
+// "Import docx to" - czyli ten sam plik zachowywalby sie roznie w zaleznosci
+// od tego, skad go otwarto.  Dlatego domyslny klucz wstawiamy TUTAJ, w jednym
+// przelocie wspolnym dla wszystkich wywolan.
+// Jawny wybor wywolujacego (np. "rtf2md" z listy wariantow RTF) ma pierwszenstwo.
+if (sForceImport == sAskImport) sForceImport = "";
+else if (sForceImport.Length == 0) sForceImport = PreferredImportKey(sFile);
 // Dialog.Show("iConvert " + iConvert, "sTargetExt " + sTargetExt);
 sText = COM.ConvertFile2String(sFile, ref iConvert, ref sTargetExt, false, sForceImport);
 // Dialog.Show("iConvert " + iConvert, "sTargetExt " + sTargetExt);
 
 if (iConvert >= 1 && sText.Trim().Length == 0) {
-AddMessage("No text!");
-return;
+// KONWERSJA SIE NIE UDALA -> OTWIERAMY SUROWO, a nie zostawiamy uzytkownika
+// z niczym (13.09.2026).  Do tej pory bylo tu "No text!" i return, czyli
+// zadnego okna: kto poprosil o otwarcie dokumentu, dostawal sam komunikat.
+// Odkad Control+O jest jedyna droga otwarcia, taki koniec znaczy, ze pliku
+// NIE DA sie otworzyc w ogole - dlatego wracamy do tresci surowej.
+iConvert = 0;
+sText = "";
 }
 // Disable because also speaks after recent files
 // else App.Frame.AddMessage("Done");
@@ -20885,6 +20944,50 @@ string sTempExt = Util.RegExpReplaceCase(sResult, @"^\w+2", "");
 if (sTempExt != sResult) sTargetExt = sTempExt;
 else sResult = sExt;
 string sCommand = Ini.ReadValue(App.IniFile, "Import", sResult, "");
+// STARE WPISY PANDOCA NAPRAWIAMY W LOCIE (13.09.2026).
+//
+// Zmierzone na maszynie Kasperczaka: jego %APPDATA%\EdSharp\EdSharp.ini ma
+// wpisy z czasow Pandoca 1.x, np. "-t markdown_github -s -S".  Dzisiejszy
+// Pandoc odpowiada "--smart/-S has been removed" i NIE tworzy pliku wynikowego,
+// czyli konwersja .epub konczyla sie niczym.  Plik ustawien uzytkownika jest
+// jego wlasnoscia i nie nadpisujemy go, ale wolno nam poprawic POLECENIE, ktore
+// z niego czytamy.  Trzy podmiany odpowiadaja komunikatom samego Pandoca:
+// markdown_github -> gfm (nazwa zmieniona), -S / --smart -> wyciete (funkcja
+// jest dzis rozszerzeniem +smart, domyslnie wlaczonym).
+if (sCommand.Contains("pandoc")) {
+sCommand = sCommand.Replace("markdown_github", "gfm");
+sCommand = System.Text.RegularExpressions.Regex.Replace(sCommand, @"\s-S\b", "");
+sCommand = sCommand.Replace(" --smart", "");
+// E-BOOK PRZECIEKAL ZNACZNIKAMI HTML (13.09.2026).
+//
+// Zmierzone na .epub: "-f epub -t gfm" zostawia w wyniku <span id=...> i
+// <div class="section level1">, bo gfm dopuszcza surowy HTML, a epub to w
+// srodku XHTML.  Czytnik ekranu odczytuje te znaczniki na glos.  Wariant
+// gfm-raw_html daje ten sam tekst bez znacznikow (zmierzone: naglowek, lista
+// i akapit zachowane).  Dla .docx roznicy nie ma - tam surowego HTML nie ma -
+// wiec ruszamy TYLKO zrodla ebookowe i html-opodobne.
+sCommand = System.Text.RegularExpressions.Regex.Replace(sCommand,
+@"(-f\s+(?:epub3?|html)\s+-t\s+gfm)(?!-)", "$1-raw_html");
+}
+// WPIS OBJETY CUDZYSLOWEM OD POCZATKU DO KONCA (13.09.2026).
+//
+// Zmierzone na maszynie Kasperczaka: jego wpisy wygladaja tak
+//   docx2md="%ProgDir%\...\pandoc.exe "%SourceLong%" -f docx -t gfm -o %Target%"
+// czyli CALA wartosc jest w cudzyslowie.  Util.runShell dzieli polecenie na
+// program i argumenty po pierwszej parze cudzyslowow, wiec za nazwe programu
+// brał "pandoc.exe " razem ze spacja, a pierwszy argument tracil cudzyslow
+// otwierajacy i zostawal z domykajacym - Pandoc odpowiadal "withBinaryFile:
+// does not exist".  Skutek: u niego NIE dzialala zadna konwersja Pandokiem,
+// mimo ze narzedzie bylo na dysku.
+//
+// Poprawny wpis konczy sie na %Target% (bez cudzyslowu), wiec rozpoznajemy to
+// jednoznacznie: zaczyna sie i konczy cudzyslowem, a w srodku sa jeszcze inne.
+// Zdejmujemy wtedy sama zewnetrzna pare; wpisow z poprawna pisownia nie ruszamy.
+sCommand = sCommand.Trim();
+if (sCommand.Length > 2 && sCommand.StartsWith("\"") && sCommand.EndsWith("\"")
+&& sCommand.Substring(1, sCommand.Length - 2).Contains("\"")) {
+sCommand = sCommand.Substring(1, sCommand.Length - 2);
+}
 if (sCommand.Length > 0) {
 // Dialog.Show(sTargetExt, "target extension");
 string s = Path.ChangeExtension(sTarget, sTargetExt);
@@ -20902,6 +21005,21 @@ sCommand = Util.ExpandCommandLine(sCommand, sSource, sTarget);
 App.Frame.AddMessage("Converting");
 if (File.Exists(sTarget)) sTarget = Win32.GetShortPath(sTarget);
 if (File.Exists(sTarget)) File.Delete(sTarget);
+// BRAK NARZEDZIA KONWERSJI NIE MOZE BYC AWARIA PROGRAMU (13.09.2026).
+//
+// Zmierzone przy okazji zmiany "Markdown domyslnym celem": na maszynie BEZ
+// katalogu Convert (narzedzia sciaga FetchConvertTools.ps1 w czasie budowania
+// i NIE ma ich w instalatorze) Control+O na .docx konczyl sie okienkiem
+// "Unexpected Event" - Process.Start rzucal Win32Exception "Nie mozna
+// odnalezc okreslonego pliku", bo pandoc.exe nie istnial.  Dla uzytkownika
+// czytnika to najgorszy mozliwy wynik: poprosil o otwarcie dokumentu, dostal
+// komunikat o bledzie wewnetrznym i ZADNEJ tresci.
+//
+// Wyjatek lapiemy tutaj, bo tylko tu wiadomo, KTORE narzedzie zawiodlo i mozna
+// powiedziec to po ludzku.  Po zlapaniu sText zostaje pusty, wiec decyzje
+// przejmuje sciezka ponizej i plik otwiera sie SUROWO - lepiej pokazac
+// znaczniki niz nic.
+try {
 Util.RunHideWait(sCommand);
 if (!File.Exists(sTarget)) {
 //Util.RunHide(sCommand);
@@ -20916,13 +21034,21 @@ iLoop--;
 }
 */
 }
+} // koniec try wokol uruchomienia konwertera
+catch (System.ComponentModel.Win32Exception) {
+// Narzedzia konwersji nie ma na dysku (katalog Convert nie zostal
+// zainstalowany).  Mowimy o tym jednym zdaniem i zwracamy pusty tekst -
+// wywolujacy otworzy plik surowo.  ZADNEGO okna awarii.
+App.Frame.AddMessage("Conversion tool not installed; opening file as is");
+return "";
+}
 // Read the converted target. File2String detects its encoding (byte-order
 // mark first, then content detection) and decodes it correctly, so the old
 // re-encode pass through Convert\EasyEncode\utf8b.exe is no longer needed.
 // Dropping it removes that external tool from the conversion path.
 if (File.Exists(sTarget)) sText = Util.File2String(sTarget);
 
-if (sText.Length == 0) Dialog.Show("Error", "Command line:\n" + sCommand);
+if (sText.Length == 0) App.Frame.AddMessage("Conversion produced no text; opening file as is");
 }
 else {
 if (sTargetExt == sExt) {
