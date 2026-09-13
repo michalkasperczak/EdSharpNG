@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.106";
+public const string VersionString = "5.0.107";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1349,7 +1349,7 @@ public static string EOD = LB + DD + LB + "End of Document" + LB;
 public static Dictionary<Keys, ToolStripMenuItem> hashKey = new Dictionary<Keys, ToolStripMenuItem>();
 public MenuStrip menuMain;
 public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
-public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline;
+public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode;
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
@@ -1490,13 +1490,10 @@ menuEditIndent = CreateMenuItem("Indent", "Tab", menuItem_Click, "child silent")
 menuEditOutdent = CreateMenuItem("Outdent", "Shift+Tab", menuItem_Click, "child silent");
 menuEditAlign = CreateMenuItem("Align", "Alt+Shift+A", menuItem_Click, "child speak");
 menuEditIndentMode = CreateMenuItem("Indent Mode", "Alt+Shift+I", menuItem_Click, "child speak");
-menuEditJustify = CreateMenuItem("Justify ...", "Alt+Shift+J", menuItem_Click, "child silent");
-menuEditStyle = CreateMenuItem("Style ...", "Alt+Shift+OemQuestion", menuItem_Click, "child silent");
 // Moved off Alt+Shift+D6 so file slot 6 can be assigned like every other
 // slot -- Kasperczak authorized this move explicitly (14.08.2026 18:19).
 // Kept the "6" mnemonic by landing on the matching function key.
-menuEditBaseline = CreateMenuItem("Baseline ...", "Alt+Shift+F6", menuItem_Click, "child silent");
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode, menuEditJustify, menuEditStyle, menuEditBaseline});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode});
 //Dialog.Show("Edit.", menuEdit.DropDownItems.Count);
 
 menuDelete = CreateMenu("&Delete");
@@ -2563,11 +2560,32 @@ if (iIndex < rtb.TextLength) c = rtb.Text[iIndex];
 int iNewIndex = rtb.Index;
 int iNewTextLength = rtb.TextLength;
 int iDelta = Math.Abs(iNewIndex - rtb.OldIndex);
-if (!bPageAddress || iDelta != 1 || iNewTextLength != rtb.OldTextLength) {} // Do nothing
+// PUSTY WIERSZ MUSI BYC ZGLOSZONY W OBU KIERUNKACH.  Wczesniej warunek brzmial
+// "iDelta != 1", czyli komunikat padal tylko przy przesunieciu o DOKLADNIE jeden
+// znak.  Idac strzalka w GORE do pustego wiersza przeskok wynosi wlasnie 1, ale
+// idac w DOL przeskok rowna sie dlugosci opuszczanego wiersza - warunek nie
+// wchodzil i program milczal.  Teraz liczy sie ruch o JEDEN WIERSZ w dowolna
+// strone.  ZMIERZONE 13.09.2026 na zgloszenie Michala.
+int iNewRow = rtb.Row;
+int iDeltaRow = Math.Abs(iNewRow - rtb.OldRow);
+bool bRuchPionowy = (rtb.OldRow >= 0 && iDeltaRow == 1);
+bool bZglos = (iDelta == 1 || bRuchPionowy);
+// DRUGA PRZYCZYNA MILCZENIA, zmierzona 13.09.2026: caly ten komunikat wisial
+// pod opcja "HardPageAddress", ktora domyslnie jest na "N".  Ta opcja decyduje
+// tylko o TYM, CZY PASEK STANU pokazuje strone i wiersz, czy procent - z pustym
+// wierszem nie ma nic wspolnego.  Przy domyslnych ustawieniach program nie mowil
+// o pustym wierszu ANI w gore, ANI w dol.  Zdejmuje ten warunek: informacja o
+// pustym wierszu, znaku wysuwu strony i tabulatorze nalezy sie zawsze.
+if (!bZglos || iNewTextLength != rtb.OldTextLength) {} // Do nothing
 else if (c == '\f') Util.Say("FormFeed");
-else if (c == '\n') Util.Say("LineFeed");
+// "LineFeed" to nazwa znaku z dokumentacji technicznej, nie komunikat dla
+// czlowieka.  Program w innych miejscach (lista zakladek, przeglad wierszy)
+// mowi juz "Empty line" - tu bylo inne slowo na to samo.  Zgloszenie Michala
+// 13.09.2026: "Na pustej linii mowi LineFeed".
+else if (c == '\n') Util.Say("Empty line");
 else if (c == '\t') Util.Say("TabChar");
 rtb.OldIndex = iNewIndex;
+rtb.OldRow = iNewRow;
 rtb.OldTextLength = iNewTextLength;
 
 if (sender == null) Util.Say(sText);
@@ -4246,93 +4264,19 @@ else if (!b && rtb.IndentMode) System.IO.File.Create(App.IndentModeFile).Close()
 //return;
 }
 
-if (menuItem == menuEditJustify) {
-if (rtb.SelectionLength == 0) {
-sTitle = "Justify Cursor";
-}
-else {
-sTitle = "Justify Selected";
-}
+// JUSTIFY USUNIETY (zgloszenie Michala 13.09.2026: "Menu edit. Justify, left
+// i inne wyrownania. Do usuniecia").  Wyrownanie akapitu to wlasciwosc pliku
+// RTF; w Markdownie nie ma go czym zapisac, wiec ustawienie przepadalo przy
+// zapisie.  Zwolniony chord: Alt+Shift+J.  Nie przywracac przy scalaniu z
+// upstream, gdzie ta komenda nadal jest.
 
-aValues = new string[] {"&Left", "&Bullet", "&Center", "&Right"};
-int i = 0;
-if (rtb.SelectionBullet) i = 1;
-if (rtb.SelectionAlignment == HorizontalAlignment.Center) i = 2;
-else if (rtb.SelectionAlignment == HorizontalAlignment.Right) i = 3;
-sResult = Dialog.Choose(sTitle, "", aValues, i);
-if (sResult.Length == 0) return;
-
-rtb.SelectionBullet = false;
-switch (sResult) {
-case "&Left" :
-rtb.SelectionAlignment = HorizontalAlignment.Left;
-break;
-case "&Bullet" :
-rtb.SelectionBullet = true;
-break;
-case "&Center" :
-rtb.SelectionAlignment = HorizontalAlignment.Center;
-break;
-case "&Right" :
-rtb.SelectionAlignment = HorizontalAlignment.Right;
-break;
-}
-}
-
-if (menuItem == menuEditStyle) {
-if (rtb.SelectionLength == 0) {
-sTitle = "Style Cursor";
-}
-else {
-sTitle = "Style Selected";
-}
-
-aValues = new string[] {"Bold", "Italic", "Underline"};
-List<int> listSelect = new List<int>();
-if (rtb.SelectionFont.Bold) listSelect.Add(0);
-if (rtb.SelectionFont.Italic) listSelect.Add(1);
-if (rtb.SelectionFont.Underline) listSelect.Add(2);
-int[] aSelect = listSelect.ToArray();
-
-//aResults = Dialog.MultiPick(sTitle, aValues, aSelect, false);
-aResults = Dialog.MultiCheck(sTitle, aValues, aSelect, false, 0);
-if (aResults.Length == 0) return;
-
-if (!listSelect.Contains(0) && Array.IndexOf(aResults, "Bold") >= 0) rtb.SelectionFont = Util.SetBold(rtb.SelectionFont, true);
-if (listSelect.Contains(0) && Array.IndexOf(aResults, "Bold") < 0) rtb.SelectionFont = Util.SetBold(rtb.SelectionFont, false);
-if (!listSelect.Contains(0) && Array.IndexOf(aResults, "Italic") >= 0) rtb.SelectionFont = Util.SetItalic(rtb.SelectionFont, true);
-if (listSelect.Contains(0) && Array.IndexOf(aResults, "Italic") < 0) rtb.SelectionFont = Util.SetItalic(rtb.SelectionFont, false);
-if (!listSelect.Contains(0) && Array.IndexOf(aResults, "Underline") >= 0) rtb.SelectionFont = Util.SetUnderline(rtb.SelectionFont, true);
-if (listSelect.Contains(0) && Array.IndexOf(aResults, "Underline") < 0) rtb.SelectionFont = Util.SetUnderline(rtb.SelectionFont, false);
-}
-
-if (menuItem == menuEditBaseline) {
-if (rtb.SelectionLength == 0) {
-sTitle = "Baseline Cursor";
-}
-else {
-sTitle = "Baseline Selected";
-}
-
-aValues = new string[] {"&Down", "&Flat", "&Up"};
-int i = 1;
-if (rtb.SelectionCharOffset < 0) i = 0;
-else if (rtb.SelectionCharOffset > 0) i = 2;
-sResult = Dialog.Choose(sTitle, "", aValues, i);
-if (sResult.Length == 0) return;
-
-switch (sResult) {
-case "&Down" :
-rtb.SelectionCharOffset = -4;
-break;
-case "&Flat" :
-rtb.SelectionCharOffset = 0;
-break;
-case "&Up" :
-rtb.SelectionCharOffset = 4;
-break;
-}
-}
+// STYLE I BASELINE USUNIETE (zgloszenie Michala 13.09.2026: "testy to do
+// bogatego formatowania, wiec w zwyklych plikach tekstowych one nie maja
+// sensu").  Pogrubienie, kursywa, podkreslenie i indeks gorny/dolny to
+// wlasciwosci pliku RTF.  W Markdownie nacisk zapisuje sie GWIAZDKAMI W
+// TEKSCIE, wiec ustawienie kroju nie mialo czego zapisac i przepadalo przy
+// zapisie pliku.  Zwolnione chordy: Alt+Shift+OemQuestion (Style),
+// Alt+Shift+F6 (Baseline).  Nie przywracac przy scalaniu z upstream.
 
 if (menuItem == menuMiscEnvironmentVariables) {
 string sChoice = Dialog.Choose("Target", "", new string[] {"&Process", "&User", "&Machine"}, 0);
@@ -8814,8 +8758,14 @@ dlg.Dispose();
 
 // Kilka ustawien program czyta raz, przy starcie okna dokumentu.  Zamiast
 // obiecywac natychmiastowy skutek, mowie wprost, czego dotyczy zmiana.
-if (iZmienione == 0) AddMessage("No settings changed");
-else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved");
+//
+// KOMUNIKAT MUSI BYC GLOBALNY.  Util.Say przy bGlobal=false sprawdza
+// IsAppActiveWindow() i milczy, gdy okno programu nie jest aktywne - a tuz po
+// zamknieciu okna ustawien fokus jeszcze do niego nie wrocil, wiec
+// potwierdzenie zapisu przepadalo.  Zgloszenie Michala 13.09.2026: "Settings.
+// Enter zapisuje chyba, ale nie mowi Saved".
+if (iZmienione == 0) AddMessage("No settings changed", true);
+else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved", true);
 } // PokazUstawienia method
 
 // Przelaczenie ciaglosci pracy W TRAKCIE dzialania programu, z menu.
@@ -18190,6 +18140,12 @@ return base.ProcessCmdKey(ref msg, keyData);
 
 public class HomerRichTextBox : RichTextBox {
 public int OldIndex = -1;
+// Ostatni wiersz, w ktorym byl kursor.  Sluzy do rozpoznania RUCHU PIONOWEGO
+// (strzalka gora/dol).  Bez tego pusty wiersz byl zglaszany tylko przy skoku o
+// DOKLADNIE jeden znak - czyli idac w gore - a w dol przeskok jest wiekszy
+// (dlugosc wiersza) i program milczal.  ZMIERZONE 13.09.2026 na zgloszenie
+// Michala: "Jak ide z dolu do gory i jest pusta linia, z gory na dol - nie".
+public int OldRow = -1;
 // Use the MODERN RichEdit window class (RICHEDIT50W from msftedit.dll) instead
 // of the riched20 class WinForms creates by default.  This is a screen reader
 // fix, not cosmetics: the old class gets Polish word boundaries WRONG, and a

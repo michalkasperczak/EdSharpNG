@@ -105,7 +105,8 @@ CHORDY_MENU = [
     # Alt+F9 bylo tylko NASZYM zastepnikiem po tym, jak cyfry poszly na okna.
     ("Alt+Shift+C", "Append from Clipboard"),
     ("Control+F9", "Compiler"),
-    ("Alt+Shift+F6", "Baseline ..."),
+    # Baseline (Alt+Shift+F6) USUNIETY 13.09.2026 razem z Justify i Style -
+    # asercje NIEOBECNOSCI sa nizej, przy kontrolach formatowania.
     ("Alt+Shift+F10", "Reset Configuration"),
     # Next / Prior Baseline USUNIETE 29.08.2026 razem z cala rodzina skokow po
     # bogatym formatowaniu - asercje na te chordy sa nizej, w sekcji 4d, jako
@@ -245,14 +246,29 @@ for pole_danych in ['"Year"', '"Month"', '"Week"', '"Day"']:
     spr("CalculateDate: pole danych %s nie zostalo osierocone" % pole_danych,
         pole_danych not in CS)
 
-# KONTROLE, ZE NIE ZEPSULEM DZIALAJACEGO. Kasperczak nie kazal usuwac ani
-# USTAWIACZY formatowania (program nadal otwiera pliki RTF), ani komend
-# PYTAJACYCH o format pod kursorem, ani wstawiania biezacej daty.
-for chord, nazwa in [("Alt+Shift+J", "Justify ..."),
-                     ("Alt+Shift+OemQuestion", "Style ..."),
-                     ("Alt+Shift+F6", "Baseline ..."),
-                     ("Alt+Shift+OemSemicolon", "Insert Time")]:
+# KONTROLE, ZE NIE ZEPSULEM DZIALAJACEGO.  Kasperczak nie kazal usuwac komend
+# PYTAJACYCH o format pod kursorem ani wstawiania biezacej daty.
+for chord, nazwa in [("Alt+Shift+OemSemicolon", "Insert Time")]:
     spr("KONTROLA (zostaje): %s -> %r" % (chord, nazwa), MENU.get(nazwa) == chord)
+
+# USTAWIACZE FORMATOWANIA USUNIETE 13.09.2026 na polecenie Michala: "testy to do
+# bogatego formatowania, wiec w zwyklych plikach tekstowych one nie maja sensu".
+# Kontrola ODWROCONA (wczesniej pilnowala, ze zostaja): zadna z trzech warstw -
+# menu, opis mowiony, handler - nie moze ich przywrocic.  W Markdownie nacisk to
+# gwiazdki W TEKSCIE, wiec ustawienie kroju nie mialo czego zapisac.
+for nazwa in ["Justify ...", "Style ...", "Baseline ..."]:
+    spr("format: brak pozycji %r w menu" % nazwa, nazwa not in MENU)
+for chord in ["Alt+Shift+J", "Alt+Shift+F6"]:
+    spr("format: chord %s zwolniony" % chord, chord not in MENU.values())
+for symbol in ["menuEditJustify", "menuEditStyle", "menuEditBaseline"]:
+    spr("format: symbol %s usuniety z kodu" % symbol, symbol not in CS)
+spr("format: wyrownanie RTF nie jest juz ustawiane",
+    "SelectionAlignment = HorizontalAlignment.Center" not in CS_KOD)
+spr("format: indeks gorny/dolny nie jest juz ustawiany",
+    "SelectionCharOffset = 4" not in CS_KOD)
+# Align (Alt+Shift+A) to WCIECIE tekstu, nie wyrownanie RTF - zostaje.
+spr("KONTROLA (zostaje): Align to wciecie tekstu, nie format RTF",
+    MENU.get("Align") == "Alt+Shift+A")
 # Te dwie komendy w MENU nazywaja sie krotko "Styles" i "Font" - dluga nazwa
 # "Say Styles" / "Say Font" wystepuje TYLKO w opisach mowionych (Hotkeys.ini).
 # Moja pierwsza wersja tej asercji pytala o dluga nazwe i slusznie padla.
@@ -1974,6 +1990,45 @@ spr("odmowa: sygnal jest zerowany po uzyciu",
 spr("odmowa: rtf i pdf NIE sa blokowane (surowa tresc czytelna)",
     '"rtf"' not in CS_KOD.split("FormatSpakowany")[1].split("return false")[0]
     if "FormatSpakowany" in CS_KOD else False)
+
+# PUSTY WIERSZ W OBU KIERUNKACH (zgloszenie Michala 13.09.2026: "Jak ide z dolu
+# do gory i jest pusta linia, z gory na dol - nie").  Stary warunek "iDelta != 1"
+# lapal tylko przeskok o jeden ZNAK; w dol przeskok rowna sie dlugosci wiersza.
+spr("pusty wiersz: rozpoznawany ruch pionowy, nie tylko o jeden znak",
+    "OldRow" in CS_KOD and "bRuchPionowy" in CS_KOD)
+spr("pusty wiersz: stary warunek o jeden znak nie decyduje sam",
+    "iDelta != 1" not in CS_KOD)
+spr("pusty wiersz: OldRow zapamietywany po kazdym ruchu",
+    "rtb.OldRow = iNewRow" in CS_KOD)
+# DRUGA przyczyna milczenia: komunikat wisial pod opcja HardPageAddress, ktora
+# domyslnie jest "N" i dotyczy tylko wygladu PASKA STANU.  Przy domyslnych
+# ustawieniach program milczal w obu kierunkach.  ZMIERZONE zywym programem.
+spr("pusty wiersz: nie zalezy od opcji adresowania stron",
+    "if (!bZglos || iNewTextLength != rtb.OldTextLength)" in CS_KOD
+    and "!bPageAddress || !bZglos" not in CS_KOD)
+# "LineFeed" to nazwa znaku z dokumentacji, nie komunikat dla czlowieka.
+spr("pusty wiersz: mowi 'Empty line', nie 'LineFeed'",
+    'Util.Say("Empty line")' in CS_KOD and 'Util.Say("LineFeed")' not in CS_KOD)
+
+# SETTINGS: potwierdzenie zapisu musi dojsc do czytnika (zgloszenie Michala
+# 13.09.2026: "Enter zapisuje chyba, ale nie mowi Saved").  Util.Say przy
+# bGlobal=false milczy, gdy okno programu nie jest aktywne - a tuz po zamknieciu
+# okna ustawien fokus jeszcze nie wrocil.
+spr("settings: potwierdzenie zapisu jest globalne",
+    'AddMessage(iZmienione == 1 ? "One setting saved"' in CS_KOD
+    and 'settings saved", true)' in CS_KOD)
+spr("settings: komunikat o braku zmian tez globalny",
+    'AddMessage("No settings changed", true)' in CS_KOD)
+
+# RTF ZDJETY z listy formatow NOWEGO pliku (zgloszenie Michala 13.09.2026:
+# "To RTF do usuniecia").  Sam ODCZYT plikow .rtf zostaje nietkniety.
+_ust = (REPO / "Ustawienia.cs").read_text(encoding="utf-8", errors="replace")
+spr("ustawienia: RTF nie jest formatem nowego pliku",
+    '"Rich text (rtf)"' not in _ust)
+spr("ustawienia: wartosc rtf zdjeta z listy rozszerzen",
+    '{ "md", "txt", "html" }' in _ust)
+spr("ustawienia: Markdown nadal domyslny",
+    'o.Domyslna = "md"' in _ust)
 
 # NumericUpDown nie dostaje fokusu sam - nazwa musi zejsc na jego dzieci,
 # inaczej czytnik ekranu mowi sama liczbe.  ZMIERZONE zywym NVDA.

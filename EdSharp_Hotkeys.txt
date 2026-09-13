@@ -221,9 +221,6 @@ Next Comment, Alt+Shift+PageDown, Go to the next internal comment and read it
 Prior Comment, Alt+Shift+PageUp, Go to the prior internal comment and read it
 Comment List, (no key assigned), Show the list of internal comments and go to the one you choose
 
-Justify, Alt+Shift+J, Set justification of cursor or selected text
-Style, Alt+Shift+Slash, Set style of cursor or selected text
-Baseline, Alt+Shift+F6, Set vertical alignment of cursor or selected text
 Say Styles, Alt+Slash, Say current justification and styles
 
 Infer Indent, Alt+RightBracket, Infer the indent unit of the current document, or configure EdSharp accordingly if repeated
@@ -275,4 +272,4 @@ Tile Vertical, Control+Shift+F11, Tile open windows vertically
 
 Elevate Version, F11, Download latest EdSharpNG version and run installer (after confirming)
 
-Commands listed: 230
+Commands listed: 227

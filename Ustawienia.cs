@@ -141,8 +141,12 @@ public class Ustawienia
         // --- pliki ---
         o = new Opcja("ExtensionDefault", "New files are saved as", "lista",
             "The extension added when you save a new document without typing one.");
-        o.Nazwy = new string[] { "Markdown (md)", "Plain text (txt)", "Rich text (rtf)", "HTML (html)" };
-        o.Wartosci = new string[] { "md", "txt", "rtf", "html" };
+        // RTF ZDJETY z listy (zgloszenie Michala 13.09.2026: "To RTF do
+        // usuniecia").  Bogate formatowanie nie jest droga pracy w tym
+        // edytorze - dokumenty ida do Markdowna.  Sam ODCZYT plikow .rtf
+        // zostaje nietkniety, to tylko lista formatow dla NOWEGO pliku.
+        o.Nazwy = new string[] { "Markdown (md)", "Plain text (txt)", "HTML (html)" };
+        o.Wartosci = new string[] { "md", "txt", "html" };
         o.Domyslna = "md"; l.Add(o);
 
         o = new Opcja("KeepBackup", "&Keep a backup copy of the file being overwritten", "przelacznik",
