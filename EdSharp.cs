@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.96";
+public const string VersionString = "5.0.97";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2037,13 +2037,19 @@ menuMiscExportFootnotes = CreateMenuItem("Export Footnotes ...", "", menuItem_Cl
 // razie, to bym usunal te klawisze. Moze do tego wrocimy").
 //
 // Celowo NIE usuwam komend - ma byc mozliwy powrot, a pozycja w menu i
-// palecie polecen niczego nie kosztuje.  Zwolnione chordy: Alt+F9,
-// Alt+Shift+PageDown, Alt+Shift+PageUp, Control+Alt+F9.
+// palecie polecen niczego nie kosztuje.  Zwolnione chordy: Alt+F9 i
+// Control+Alt+F9 - TYLKO rodzina F9.  Skoki po komentarzach zostaja na
+// Alt+Shift+PageDown/PageUp (poprawka 5.0.97; w 5.0.96 zdjalem je za szeroko).
 // Pusty trzeci argument = brak wpisu w hashKey, wiec klawisze sa naprawde
 // wolne (nie tylko niewidoczne).
 menuMiscInsertComment = CreateMenuItem("Insert Comment ...", "", menuItem_Click, "child silent");
-menuMiscNextComment = CreateMenuItem("Next Comment", "", menuItem_Click, "child silent");
-menuMiscPriorComment = CreateMenuItem("Prior Comment", "", menuItem_Click, "child silent");
+// SKOKI po komentarzach ZOSTAJA na Alt+Shift+PageDown/PageUp.  Michal
+// (13.09.2026) doprecyzowal: kazal zdjac TYLKO klawisze z rodziny F9
+// ("Alt+F9", "Control+Alt+F9"), a NIE nawigacje: "nie mowilem, zebys
+// Alt Shift Page Up Page Down likwidowal, jezeli chodzi o nawigacje po tych
+// komentarzach, czyli nazwanych zakladkach".  W 5.0.96 zdjalem za duzo.
+menuMiscNextComment = CreateMenuItem("Next Comment", "Alt+Shift+PageDown", menuItem_Click, "child silent");
+menuMiscPriorComment = CreateMenuItem("Prior Comment", "Alt+Shift+PageUp", menuItem_Click, "child silent");
 menuMiscCommentList = CreateMenuItem("Comment List ...", "", menuItem_Click, "child silent");
 // DWIE KOMENDY WYRAZEN REGULARNYCH POLACZONE W JEDNA (jego decyzja 03.09.2026,
 // wariant B: "Lacze w JEDNA komende, a w okienku wybierasz, co ma zrobic").
@@ -2264,6 +2270,34 @@ return true;
 } // HandleRedoAliasKey method
 
 public bool ProcessCmdKey_Helper(ref Message msg, Keys keyData) {
+// BEZPIECZNIK PRAWEGO ALTA (jego polecenie 13.09.2026: "zrob taki bezpiecznik,
+// zeby lewy Alt Ctrl zawsze byl mozliwy i nie kolidowal z polskimi literami z
+// prawym Altem").
+//
+// Windows melduje prawy Alt jako Control+Alt, wiec .NET podaje TEN SAM keyData
+// dla dwoch zupelnie roznych rzeczy: dla skrotu wystukanego lewym Control+Alt
+// i dla PISANIA polskiej litery prawym Altem.  Do tej pory program bronil sie
+// tepo - straznik przy przypisywaniu (Util.IsTypingChord) po prostu ZABRANIAL
+// skrotow na Control+Alt+litera, czyli zabieral tez lewy Control+Alt, ktory z
+// pisaniem nie koliduje wcale.
+//
+// Teraz rozstrzygamy to W CHWILI NACISNIECIA, gdzie widac stan klawiatury:
+// jesli PRAWY Alt jest wcisniety, to uzytkownik PISZE - oddajemy klawisz
+// edytorowi i zadna komenda nie wchodzi.  Lewy Control+Alt dziala normalnie.
+// Zmierzone sonda testy/pomiar_prawy_alt.cs (9/9): przy prawym Alcie VK_RMENU
+// sie zglasza, przy lewym Control+Alt nie.
+//
+// Sprawdzane TYLKO dla chordu Control+Alt (z Shiftem lub bez) - inne skroty ta
+// funkcja nawet nie dotyka, wiec nic nie zwalnia i nic nie kosztuje.
+{
+Keys modsAltGr = keyData & (Keys.Control | Keys.Shift | Keys.Alt);
+if (modsAltGr == (Keys.Control | Keys.Alt)
+ || modsAltGr == (Keys.Control | Keys.Alt | Keys.Shift)) {
+bool bPrawyAlt = false;
+try {bPrawyAlt = ((Win32.GetKeyState(Win32.VK_RMENU) & 0x8000) != 0);} catch {bPrawyAlt = false;}
+if (bPrawyAlt) return false;
+}
+}
 string sKey = keyData.ToString();
 int iIndex = -1;
 if (this.Child != null) iIndex = this.Child.RTB.Index;
@@ -2414,9 +2448,24 @@ Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand + ",\nsince alr
 // dowiaduje sie o tym dopiero, gdy nie moze napisac slowa.
 // Pytamy UKLAD (VkKeyScanEx), nie liste liter na sztywno: uklad rozstrzyga i
 // na klawiaturze bez polskich znakow ten straznik nie przeszkadza.
+//
+// ZMIANA 13.09.2026 na jego polecenie: "zrob taki bezpiecznik, zeby lewy Alt
+// Ctrl zawsze byl mozliwy i nie kolidowal z polskimi literami z prawym Altem".
+// Straznik NIE ZABRANIA juz takiego chordu - bo od tej wersji pisanie i skrot
+// rozstrzyga sie w chwili nacisniecia, po STRONIE Alta (bezpiecznik na wejsciu
+// ProcessCmdKey_Helper).  Zostaje OSTRZEZENIE w dzienniku, zeby przy kolejnym
+// takim przypisaniu bylo widac, ze chord dzieli klawisz z polska litera i
+// zadziala tylko z LEWEGO Alta.  Alarmu na ekranie nie ma: program dziala
+// poprawnie, a modalne okno na starcie byloby kara za nic.
 else if (Util.IsTypingChord(keyData)) {
-Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand
-+ ",\nsince this chord types a character on the current keyboard layout.");
+Util.LogDiagnostic("skrot", "Skrot " + sKey + " przy " + sCommand
++ " dzieli klawisz z litera wpisywana prawym Altem; dziala z LEWEGO Control+Alt"
++ " (bezpiecznik prawego Alta w ProcessCmdKey_Helper).");
+string sFriendlyKeyTyping = Util.GetFriendlyKeyName(sKey);
+menuItem.ShortcutKeyDisplayString = sFriendlyKeyTyping;
+menuItem.AccessibleName = sText.Replace("&", "") + "   " + sFriendlyKeyTyping;
+menuItem.Text = sText;
+hashKey.Add(keyData, menuItem);
 }
 else {
 string sFriendlyKey = Util.GetFriendlyKeyName(sKey);
@@ -21357,6 +21406,15 @@ public class Win32 {
 // razem, czyli maska 6, to prawy Alt (AltGr).
 [DllImport("user32.dll", CharSet = CharSet.Unicode)]
 public static extern short VkKeyScanEx(char ch, IntPtr dwhkl);
+
+[DllImport("user32.dll")]
+public static extern short GetKeyState(int nVirtKey);
+
+// Prawy Alt (AltGr) - jedyna droga, zeby odroznic PISANIE polskiej litery od
+// SKROTU na lewym Control+Alt.  Zmierzone sonda testy/pomiar_prawy_alt.cs
+// (13.09.2026, 9/9): przy wcisnietym prawym Alcie VK_RMENU sie zglasza, przy
+// lewym Control+Alt NIE - wiec rozpoznanie strony jest wykonalne.
+public const int VK_RMENU = 0xA5;
 
 [DllImport("user32.dll")]
 public static extern IntPtr GetKeyboardLayout(uint idThread);

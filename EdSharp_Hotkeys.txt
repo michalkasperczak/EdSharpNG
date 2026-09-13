@@ -218,8 +218,8 @@ Prior Footnote, Control+Alt+PageUp, Go to the previous footnote marker in the te
 Footnote List, Alt+K, Show the list of footnotes and go to the one you choose
 Export Footnotes, (no key assigned), Put all footnotes of the document in a new window, either as a numbered list or each one preceded by the sentence that carries it (menu only, no shortcut)
 Insert Comment, (no key assigned), Insert an internal comment at the cursor, or edit the comment the cursor is in; internal comments stay in the Markdown file and are dropped when converting to Word, HTML or plain text
-Next Comment, (no key assigned), Go to the next internal comment and read it
-Prior Comment, (no key assigned), Go to the prior internal comment and read it
+Next Comment, Alt+Shift+PageDown, Go to the next internal comment and read it
+Prior Comment, Alt+Shift+PageUp, Go to the prior internal comment and read it
 Comment List, (no key assigned), Show the list of internal comments and go to the one you choose
 
 Justify, Alt+Shift+J, Set justification of cursor or selected text

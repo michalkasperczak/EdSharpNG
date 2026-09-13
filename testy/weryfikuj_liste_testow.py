@@ -1207,11 +1207,13 @@ spr("komentarze: cztery pozycje menu zadeklarowane",
 # dawalaby FAIL na kodzie zrobionym zgodnie z jego decyzja - ta sama pulapka, co
 # przy 5.0.63.  Teraz pilnujemy tego, czego chcemy: POLECENIA zostaja (zeby dalo
 # sie wrocic), a KLAWISZY przy nich NIE MA.
-spr("komentarze: polecenia zostaja w menu, bez przypisanych klawiszy",
+# Zakres doprecyzowany 13.09.2026: bez klawisza tylko rodzina F9 (wstawianie,
+# lista); skoki maja klawisze Alt+Shift+PageDown/PageUp.
+spr("komentarze: wstawianie i lista bez klawisza, skoki z klawiszem",
     'CreateMenuItem("Insert Comment ...", ""' in CS
-    and 'CreateMenuItem("Next Comment", ""' in CS
-    and 'CreateMenuItem("Prior Comment", ""' in CS
-    and 'CreateMenuItem("Comment List ...", ""' in CS)
+    and 'CreateMenuItem("Comment List ...", ""' in CS
+    and 'CreateMenuItem("Next Comment", "Alt+Shift+PageDown"' in CS
+    and 'CreateMenuItem("Prior Comment", "Alt+Shift+PageUp"' in CS)
 spr("komentarze: stare chordy skokow (Control+Shift+F9, Alt+Shift+F9) nie naleza do zadnej komendy",
     '"Control+Shift+F9"' not in CS and '"Alt+Shift+F9"' not in CS)
 # ODWROCONA W 5.0.63, bo pilnowala zachowania, ktorego on sam sie pozbyl.
@@ -1295,11 +1297,13 @@ spr("KONTROLA: Control+F9 nadal nalezy do Say Compiler",
 # Zadne z poleceh komentarzy nie moze miec klawisza - to jest cala tresc
 # zadania 5.  Sprawdzane po WIERSZU, nie po samym braku ciagu "Alt+F9" w pliku
 # (Alt+F9 wystepuje w opisach innych komend).
-spr("KONTROLA: zadne polecenie komentarza nie ma klawisza",
+spr("KONTROLA: rodzina F9 bez klawisza, skoki z klawiszem",
     all((l.split("=",1)[1].split(",")[0].strip() == "")
         for l in HOT.splitlines()
-        for n in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List")
-        if l.startswith(n + "=")))
+        for n in ("Insert Comment", "Comment List")
+        if l.startswith(n + "="))
+    and any(l.startswith("Next Comment=Alt+Shift+PageDown") for l in HOT.splitlines())
+    and any(l.startswith("Prior Comment=Alt+Shift+PageUp") for l in HOT.splitlines()))
 # KONTROLE, ze nie zepsulem funkcji dzielacych z komentarzami ten sam kod.
 spr("KONTROLA: przypisy nadal dzialaja, na Control+Shift+K",
     'CreateMenuItem("Insert Footnote ...", "Control+Shift+K"' in CS)
@@ -1756,13 +1760,24 @@ UST_KOD = "\n".join(
 # Klawisz idzie do programu z Hotkeys.ini, wiec tam musi byc PUSTO po znaku
 # rownosci.  Sprawdzamy dokladnie te cztery wiersze, a nie samo "nie ma
 # ciagu Alt+F9" - bo Alt+F9 moglby zniknac razem z cala komenda.
-for _nazwa in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List"):
+# ZAKRES DOPRECYZOWANY 13.09.2026.  Michal: "mowilem o zmianie, usunieciu tych
+# klawiszy funkcyjnych F9, okolo F9 do komentarzy, ale nie mowilem, zebys Alt
+# Shift Page Up Page Down likwidowal, jezeli chodzi o nawigacje po tych
+# komentarzach".  Czyli: bez klawisza zostaja WSTAWIANIE i LISTA (rodzina F9),
+# a SKOKI wracaja na Alt+Shift+PageDown/PageUp.
+_bez_klawisza = ("Insert Comment", "Comment List")
+_z_klawiszem = {"Next Comment": "Alt+Shift+PageDown", "Prior Comment": "Alt+Shift+PageUp"}
+for _nazwa in tuple(_bez_klawisza) + tuple(_z_klawiszem):
     _w = [l for l in HOT.splitlines() if l.startswith(_nazwa + "=")]
     spr("5. wiersz %r jest w Hotkeys.ini" % _nazwa, len(_w) == 1)
     if _w:
         _po = _w[0].split("=", 1)[1]
-        spr("5. %r NIE ma przypisanego klawisza" % _nazwa,
-            _po.split(",")[0].strip() == "")
+        _klawisz = _po.split(",")[0].strip()
+        if _nazwa in _bez_klawisza:
+            spr("5. %r NIE ma przypisanego klawisza (rodzina F9)" % _nazwa, _klawisz == "")
+        else:
+            spr("5. %r ma klawisz %s" % (_nazwa, _z_klawiszem[_nazwa]),
+                _klawisz == _z_klawiszem[_nazwa])
         spr("5. %r ma dalej opis (polecenie zostaje)" % _nazwa,
             len(_po.split(",", 1)[1].strip()) > 10 if "," in _po else False)
 
@@ -1771,11 +1786,14 @@ for _cmd in ("Insert Comment", "Next Comment", "Prior Comment", "Comment List"):
     spr("5. polecenie %r nadal istnieje w programie" % _cmd,
         ('"%s' % _cmd) in CS_KOD)
 
-# Stare klawisze nie moga sterczec nigdzie w kodzie przy komentarzach.
-spr("5. Alt+Shift+PageDown nie jest przypisany do komentarza",
-    "Alt+Shift+PageDown" not in CS_KOD)
-spr("5. Alt+Shift+PageUp nie jest przypisany do komentarza",
-    "Alt+Shift+PageUp" not in CS_KOD)
+# Zdjeta jest TYLKO rodzina F9.  Skoki po komentarzach MUSZA byc w kodzie -
+# wersja 5.0.96 zabrala je za szeroko i Michal to zakwestionowal.
+spr("5. Next Comment ma w kodzie Alt+Shift+PageDown",
+    '"Next Comment", "Alt+Shift+PageDown"' in CS_KOD)
+spr("5. Prior Comment ma w kodzie Alt+Shift+PageUp",
+    '"Prior Comment", "Alt+Shift+PageUp"' in CS_KOD)
+spr("5. Alt+F9 nie jest przypisany do komentarza",
+    '"Insert Comment", "Alt+F9"' not in CS_KOD)
 # Control+Alt+F9 to byla lista komentarzy.  Uwaga: Michal ma AltGr=Control+Alt,
 # wiec ten skrot i tak zjadal polskie znaki - tym bardziej ma zniknac.
 spr("5. Control+Alt+F9 nie jest przypisany do komentarza",
@@ -1785,6 +1803,29 @@ spr("5. podrecznik nie kaze naciskac Alt+F9 przy komentarzach",
     "Alt+F9 either inserts" not in MD)
 spr("5. podrecznik mowi, ze komentarze sa w menu Navigate",
     "Navigate menu" in MD or "menu Navigate" in MD)
+# Podrecznik musi mowic o przywroconych klawiszach - rozjechanie sie kodu z
+# podrecznikiem raz juz wypuscilo wersje z klamliwym podsumowaniem skrotow.
+spr("5. podrecznik podaje Alt+Shift+PageDown przy komentarzach",
+    "Alt+Shift+PageDown" in MD)
+spr("5. podrecznik podaje Alt+Shift+PageUp przy komentarzach",
+    "Alt+Shift+PageUp" in MD)
+
+# --- BEZPIECZNIK PRAWEGO ALTA (jego polecenie 13.09.2026) ---
+# "Zeby lewy Alt Ctrl zawsze byl mozliwy i nie kolidowal z polskimi literami z
+# prawym Altem."  Stary straznik bronil sie tepo: ZABRANIAL skrotow na
+# Control+Alt w ogole.  Teraz program pyta o STRONE Alta.
+spr("A. program deklaruje GetKeyState (bez tego nie zna strony Alta)",
+    "GetKeyState" in CS_KOD)
+spr("A. program zna stala prawego Alta VK_RMENU",
+    "VK_RMENU" in CS_KOD)
+spr("A. program pyta o stan prawego Alta przez GetKeyState(VK_RMENU)",
+    "GetKeyState(Win32.VK_RMENU)" in CS_KOD)
+spr("A. bezpiecznik siedzi w obsludze klawiszy okna",
+    "ProcessCmdKey_Helper" in CS_KOD and "bPrawyAlt" in CS_KOD)
+spr("A. straznik przypisywania NIE zabrania juz calego Control+Alt",
+    "Cannot assign" not in CS_KOD.split("IsTypingChord(keyData)")[-1][:400])
+spr("A. zamiast alarmu na ekranie jest wpis do dziennika",
+    "LogDiagnostic" in CS_KOD)
 
 # --- 7: okno ustawien z pol wyboru ---
 spr("7. jest osobny plik Ustawienia.cs ze spisem ustawien",
