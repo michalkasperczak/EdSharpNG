@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.97";
+public const string VersionString = "5.0.98";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2274,30 +2274,22 @@ public bool ProcessCmdKey_Helper(ref Message msg, Keys keyData) {
 // zeby lewy Alt Ctrl zawsze byl mozliwy i nie kolidowal z polskimi literami z
 // prawym Altem").
 //
-// Windows melduje prawy Alt jako Control+Alt, wiec .NET podaje TEN SAM keyData
-// dla dwoch zupelnie roznych rzeczy: dla skrotu wystukanego lewym Control+Alt
-// i dla PISANIA polskiej litery prawym Altem.  Do tej pory program bronil sie
-// tepo - straznik przy przypisywaniu (Util.IsTypingChord) po prostu ZABRANIAL
-// skrotow na Control+Alt+litera, czyli zabieral tez lewy Control+Alt, ktory z
-// pisaniem nie koliduje wcale.
-//
-// Teraz rozstrzygamy to W CHWILI NACISNIECIA, gdzie widac stan klawiatury:
-// jesli PRAWY Alt jest wcisniety, to uzytkownik PISZE - oddajemy klawisz
-// edytorowi i zadna komenda nie wchodzi.  Lewy Control+Alt dziala normalnie.
-// Zmierzone sonda testy/pomiar_prawy_alt.cs (9/9): przy prawym Alcie VK_RMENU
-// sie zglasza, przy lewym Control+Alt nie.
-//
-// Sprawdzane TYLKO dla chordu Control+Alt (z Shiftem lub bez) - inne skroty ta
-// funkcja nawet nie dotyka, wiec nic nie zwalnia i nic nie kosztuje.
-{
-Keys modsAltGr = keyData & (Keys.Control | Keys.Shift | Keys.Alt);
-if (modsAltGr == (Keys.Control | Keys.Alt)
- || modsAltGr == (Keys.Control | Keys.Alt | Keys.Shift)) {
-bool bPrawyAlt = false;
-try {bPrawyAlt = ((Win32.GetKeyState(Win32.VK_RMENU) & 0x8000) != 0);} catch {bPrawyAlt = false;}
-if (bPrawyAlt) return false;
-}
-}
+// DLACZEGO TU NIE MA KODU BLOKUJACEGO PRAWY ALT (wpisane 13.09.2026 po pomiarze).
+// Napisalem tu najpierw bezpiecznik, ktory przy wcisnietym PRAWYM Alcie oddawal
+// klawisz edytorowi, zeby "nie kolidowal z polskimi literami".  Pomiar pokazal,
+// ze bronil czegos, co nie bylo zagrozone, i mogl zepsuc dzialajace skroty:
+//   - polska litera na chordzie Control+Alt powstaje w UKLADZIE klawiatury,
+//     zanim chord dojdzie tutaj - zmierzone, ze przy komendzie przypisanej do
+//     Control+Alt+S litere "s z kreska" wpisuje LEWY Control+Alt tak samo jak
+//     prawy Alt (spor_ctrl_alt_s.ps1).  Litera nigdy nie ginela; bez skutku
+//     zostaje SKROT, a to niczego uzytkownikowi nie odbiera.
+//   - Control+Alt+K, gdzie K nie ma polskiego odpowiednika, dziala jako skrot
+//     normalnie (kontrola_ctrl_alt_k.ps1).
+//   - a blokada uderzalaby w skroty BEZ liter: Control+Alt+PageUp czy
+//     Control+Alt+Up wystukane prawym Altem przestaly by dzialac, choc dzialaja.
+// Michal mowil to wprost ("w EdSharpie to juz dzialalo wczesniej bezblednie,
+// Alt-Ctrl-s nie wchodzilo w konflikt z s") i mial racje.  Zostaje sam wpis w
+// dzienniku przy przypisaniu takiego chordu - patrz CreateMenuItem nizej.
 string sKey = keyData.ToString();
 int iIndex = -1;
 if (this.Child != null) iIndex = this.Child.RTB.Index;
@@ -2440,12 +2432,26 @@ Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand + ",\nsince alr
 // skrotem.  Kasperczak zapytal o to wprost (30.08.2026): "Alt+Ctrl to tez to
 // samo co prawy Alt, a prawy Alt to polska literka".  Na polskim ukladzie
 // a z ogonkiem to Control+Alt+A, c z kreska to Control+Alt+C i tak dla
-// dziewieciu liter - skrot na takim chordzie ZABIERA pisanie.
-// DLACZEGO KOD, A NIE SAMA OSTROZNOSC PRZY WYBORZE KLAWISZA: zmierzone na
-// zywym programie, ze przypisanie komendy do Control+Alt+E odbiera litere
-// e z ogonkiem po cichu.  Build jest zielony, menu wyglada dobrze, alarm o
-// duplikacie NIE pada (bo to nie kolizja z inna komenda), a niewidomy
-// dowiaduje sie o tym dopiero, gdy nie moze napisac slowa.
+// dziewieciu liter - skrot na takim chordzie DZIELI klawisz z pisaniem
+// (kierunek tego dzielenia jest zmierzony nizej: wygrywa PISANIE).
+// SPROSTOWANIE 13.09.2026.  Zdanie, ktore stalo tu wczesniej ("przypisanie
+// komendy do Control+Alt+E odbiera litere e z ogonkiem po cichu"), jest
+// NIEPRAWDZIWE i nigdy nie zostalo porzadnie zmierzone.  Michal powiedzial
+// wprost: "w EdSharpie to juz dzialalo wczesniej bezblednie, Alt-Ctrl-s nie
+// wchodzilo w konflikt z s i tak dalej" - i mial racje.
+// Zmierzone na zywym programie (testy: spor_ctrl_alt_s.ps1 oraz
+// kontrola_ctrl_alt_k.ps1), przy komendzie NAPRAWDE przypisanej do
+// Control+Alt+S:
+//   - prawy Alt+S    wpisuje "s z kreska" (kod 347),
+//   - lewy Control+Alt+S TEZ wpisuje "s z kreska" - to uklad klawiatury
+//     wytwarza znak wczesniej, niz chord dojdzie do komendy,
+//   - lewy Control+Alt+K (K nie ma polskiego odpowiednika) NIE wpisuje znaku
+//     i normalnie uruchamia komende.
+// CZYLI: litera NIGDY nie ginie.  Na chordzie dzielonym z polska litera to
+// SKROT jest bez skutku, a nie pisanie - a to nie odbiera uzytkownikowi
+// niczego.  Dlatego przypisania nie zabraniamy (zabranianie zabieralo tez
+// lewy Control+Alt, ktory dziala) - zostaje wpis w dzienniku, ze taki skrot
+// moze nie zadzialac na literach polskich.
 // Pytamy UKLAD (VkKeyScanEx), nie liste liter na sztywno: uklad rozstrzyga i
 // na klawiaturze bez polskich znakow ten straznik nie przeszkadza.
 //
@@ -2459,8 +2465,9 @@ Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand + ",\nsince alr
 // poprawnie, a modalne okno na starcie byloby kara za nic.
 else if (Util.IsTypingChord(keyData)) {
 Util.LogDiagnostic("skrot", "Skrot " + sKey + " przy " + sCommand
-+ " dzieli klawisz z litera wpisywana prawym Altem; dziala z LEWEGO Control+Alt"
-+ " (bezpiecznik prawego Alta w ProcessCmdKey_Helper).");
++ " dzieli klawisz z litera wpisywana prawym Altem; na polskim ukladzie litere"
++ " wpisze KAZDY Alt, wiec ten skrot moze nie zadzialac (pisanie ma pierwszenstwo)."
++ " Zmierzone: spor_ctrl_alt_s.ps1, kontrola_ctrl_alt_k.ps1.");
 string sFriendlyKeyTyping = Util.GetFriendlyKeyName(sKey);
 menuItem.ShortcutKeyDisplayString = sFriendlyKeyTyping;
 menuItem.AccessibleName = sText.Replace("&", "") + "   " + sFriendlyKeyTyping;

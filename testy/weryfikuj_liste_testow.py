@@ -1810,18 +1810,23 @@ spr("5. podrecznik podaje Alt+Shift+PageDown przy komentarzach",
 spr("5. podrecznik podaje Alt+Shift+PageUp przy komentarzach",
     "Alt+Shift+PageUp" in MD)
 
-# --- BEZPIECZNIK PRAWEGO ALTA (jego polecenie 13.09.2026) ---
-# "Zeby lewy Alt Ctrl zawsze byl mozliwy i nie kolidowal z polskimi literami z
-# prawym Altem."  Stary straznik bronil sie tepo: ZABRANIAL skrotow na
-# Control+Alt w ogole.  Teraz program pyta o STRONE Alta.
-spr("A. program deklaruje GetKeyState (bez tego nie zna strony Alta)",
-    "GetKeyState" in CS_KOD)
-spr("A. program zna stala prawego Alta VK_RMENU",
-    "VK_RMENU" in CS_KOD)
-spr("A. program pyta o stan prawego Alta przez GetKeyState(VK_RMENU)",
-    "GetKeyState(Win32.VK_RMENU)" in CS_KOD)
-spr("A. bezpiecznik siedzi w obsludze klawiszy okna",
-    "ProcessCmdKey_Helper" in CS_KOD and "bPrawyAlt" in CS_KOD)
+# --- CONTROL+ALT A POLSKIE LITERY: co jest zmierzone, a co bylo mitem ---
+# Michal (13.09.2026): "w EdSharpie to juz dzialalo wczesniej bezblednie,
+# Alt-Ctrl-s nie wchodzilo w konflikt z s i tak dalej."  Mial racje.
+# Zmierzone na zywym programie: przy komendzie przypisanej do Control+Alt+S
+# litere "s z kreska" wpisuje LEWY Control+Alt tak samo jak prawy Alt
+# (spor_ctrl_alt_s.ps1), a Control+Alt+K dziala jako skrot (kontrola_ctrl_alt_k.ps1).
+# Czyli litera nigdy nie ginie - bez skutku zostaje SKROT.
+# Dlatego: (1) nie zabraniamy przypisania, (2) NIE MA blokady na prawy Alt, bo
+# uderzalaby w dzialajace Control+Alt+PageUp/Up wystukane prawym Altem.
+spr("A. NIE MA blokady prawego Alta w obsludze klawiszy",
+    "bPrawyAlt" not in CS_KOD)
+spr("A. kod tlumaczy, dlaczego tej blokady nie ma",
+    "DLACZEGO TU NIE MA KODU BLOKUJACEGO PRAWY ALT" in CS)
+spr("A. kod przywoluje pomiar rozstrzygajacy spor",
+    "spor_ctrl_alt_s.ps1" in CS and "kontrola_ctrl_alt_k.ps1" in CS)
+spr("A. kod odwoluje falszywe zdanie o odbieraniu litery",
+    "NIEPRAWDZIWE" in CS and "e z ogonkiem po cichu" in CS)
 spr("A. straznik przypisywania NIE zabrania juz calego Control+Alt",
     "Cannot assign" not in CS_KOD.split("IsTypingChord(keyData)")[-1][:400])
 spr("A. zamiast alarmu na ekranie jest wpis do dziennika",
