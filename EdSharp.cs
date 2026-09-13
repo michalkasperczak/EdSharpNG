@@ -1334,7 +1334,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles, menuQueryFont;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1690,7 +1690,7 @@ menuNavigateLinkList = CreateMenuItem("Link List ...", "Control+F6", menuItem_Cl
 // pokazuje tylko czesc prawdy (lekcja z 5.0.43 i golego F9).
 menuNavigateNextLink = CreateMenuItem("Next Link", "Alt+PageDown", menuItem_Click, "child silent");
 menuNavigatePriorLink = CreateMenuItem("Prior Link", "Alt+PageUp", menuItem_Click, "child silent");
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink, menuNavigateGoToStartOfSelection});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp, menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk, menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink, menuNavigateGoToStartOfSelection});
 //Dialog.Show("Navigate.", menuNavigate.DropDownItems.Count);
 
 menuQuery = CreateMenu("&Query");
@@ -1719,7 +1719,6 @@ menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQuer
 //Dialog.Show("Query.", menuQuery.DropDownItems.Count);
 
 menuMisc = CreateMenu("&Misc");
-menuMiscSetDefaultFont = CreateMenuItem("Set Default Font and Color ...", "Alt+Shift+Oemplus", menuItem_Click, "child speak");
 // Ustawienia programu na Control+przecinek - wybor Kasperczaka (Telegram
 // 27.08.2026: "Ctrl+przecinek uaktywnia ustawienia").  To zwyczaj z wiekszosci
 // dzisiejszych programow, a zwolniony Alt+Shift+C dostaje dopisywanie do
@@ -2077,9 +2076,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMiscWebDownload = CreateMenuItem("Web Download", "Alt+Shift+W", menuItem_Click, "frame speak");
-menuMiscWebClientUtilities = CreateMenuItem("Web Client Utilities", "Alt+Shift+Space", menuItem_Click, "frame speak");
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscSetDefaultFont, menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt, menuMiscWebDownload, menuMiscWebClientUtilities});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -6306,16 +6303,6 @@ else if (iSekundNowe > 0) AddMessage("Recovery copy every " + iSekundNowe + " se
 else AddMessage("Work continuity off");
 }
 
-if (menuItem == menuMiscSetDefaultFont) {
-object[] a = Dialog.GetFont(rtb.Font, rtb.ForeColor);
-if (a.Length == 0) return;
-
-rtb.Font = (Font) a[0];
-rtb.ForeColor = (Color) a[1];
-string sFont = GetFontText(rtb.Font, rtb.ForeColor);
-App.WriteOption("FontDefault", sFont);
-}
-
 if (menuItem == menuMiscConfigurationOptions) {
 aResults = App.ReadDefaultOptions();
 //Array.Sort(aResults);
@@ -7021,107 +7008,6 @@ if (menuItem == menuMiscCommandPrompt) {
 string sDir = GetDirChoice();
 if (sDir.Length == 0) return;
 CommandPrompt(sDir);
-}
-
-if (menuItem == menuMiscWebDownload) {
-string sButton = "Web Page";
-if (App.Frame.Child != null) {
-sButton = Dialog.Choose("Choose Source of URLs", "", new string[] {"&Web Page", "&Current Document"}, 0);
-if (sButton.Length == 0) return;
-} // if
-
-List<string[]> listLinks;
-if (sButton.Replace("&", "") == "Web Page") {
-string sUrl = COM.GetUrl();
-if (sUrl.Length == 0) sUrl = App.ReadData("Url", "");
-sUrl = Dialog.Input("Web Download", "Address", sUrl);
-if (sUrl.Length == 0) return;
-
-AddMessage("Please wait");
-App.WriteData("Url", sUrl);
-listLinks = Homer.Web.getLinks(sUrl);
-}
-else {
-listLinks = new List<string[]>();
-aResults = Util.RegExpExtractCase(App.Frame.Child.RTB.Text, @"\w+\:\/\/[^\s""\'\)]+");
-if (aResults.Length == 0) {
-AddMessage("No URLs found!");
-return;
-}
-
-for (int i = 0; i < aResults.Length; i++) {
-listLinks.Add(new string[] {aResults[i], ""});
-} // for
-}
-
-List<string> listFiles = new List<string>();
-string sRef;
-foreach (string[] aLink in listLinks) {
-sRef = aLink[0];
-sFile = Util.GetFileFromUri(sRef);
-listFiles.Add(sFile);
-}
-
-string[] aFiles = listFiles.ToArray();
-sText = Util.GetExtensions(aFiles);
-sResult = Dialog.Input("Filter", "Extensions", sText).Replace(".", "").Trim().ToLower();
-if (sResult.Length == 0) return;
-
-aResults = Util.GetPathsWithExtensions(aFiles, sResult);
-
-listFiles.Clear();
-List<string> listItems = new List<string>();
-List<string> listRefs = new List<string>();
-foreach (string[] aLink in listLinks) {
-sRef = aLink[0];
-sFile = Util.GetFileFromUri(sRef);
-string sExt = Path.GetExtension(sFile).TrimStart('.').ToLower();
-//if (Array.IndexOf(aResults, sExt) == -1) continue;
-if (Array.IndexOf(aResults, sFile) == -1) continue;
-
-sText = aLink[1];
-if (String.IsNullOrEmpty(sText)) sText = sRef;
-
-listItems.Add(sText + " = " + sFile);
-listFiles.Add(sFile);
-listRefs.Add(sRef);
-}
-
-if (listItems.Count == 0) {
-AddMessage("No items!");
-return;
-}
-
-aValues = listItems.ToArray();
-//aResults = Dialog.MultiPick("Pick Files", aValues, new int[] {}, false);
-aResults = Dialog.MultiCheck("Pick Files", aValues, new int[] {}, false, 0);
-if (aResults.Length == 0) return;
-
-sTitle = "Open Folder";
-string sDir = App.ReadData("DownloadFolder", Directory.GetCurrentDirectory());
-sDir = Dialog.OpenFolder(sTitle, "Name", sDir);
-
-if (sDir.Length == 0) return;
-
-App.WriteData("DownloadFolder", sDir);
-Directory.SetCurrentDirectory(sDir);
-AddMessage("Downloading");
-foreach (string s in aResults) {
-int i = listItems.IndexOf(s);
-sFile = listFiles[i];
-sRef = listRefs[i];
-// Homer.Web.download follows redirects with a real User-Agent and modern TLS,
-// takes the file name from the Content-Disposition header when the server
-// supplies one (otherwise the link's name plus an extension guessed from the
-// content type), and sanitizes and uniquifies the result within sDir.
-string sSaved = Homer.Web.download(sRef, sDir, Path.GetFileName(sFile));
-if (sSaved.Length > 0) AddMessage(Path.GetFileName(sSaved));
-else AddMessage("Could not download " + Path.GetFileName(sFile));
-}
-AddMessage("Done", true);
-}
-if (menuItem == menuMiscWebClientUtilities) {
-App.Frame.WebClientUtilities();
 }
 
 if (menuItem == menuWindowNext) {
@@ -9705,55 +9591,6 @@ Dialog.Show("Error", ex.Message);
 return;
 }
 } // CommandPrompt method
-
-public void WebClientUtilities() {
-
-bool bSort;
-int iCount, iIndex;
-string sCommand, sExe, sDir, sFile, sName, sValue, sBase, sTitle, sInputFile, sOutputFile, sCodeFile;
-
-sDir = Path.Combine(App.ProgramDir, "WebClient");
-string[] aFiles = Directory.GetFiles(sDir, "WebClient_*.py");
-iCount = aFiles.Length;
-HomerList hlNames = new HomerList();
-HomerList hlValues = new HomerList();
-for (int iFile = 0; iFile <iCount; iFile++) {
-sFile = aFiles[iFile];
-sName = Path.GetFileName(sFile);
-sBase = Path.GetFileNameWithoutExtension(sName);
-sBase = sBase.Substring("WebClient_".Length);
-hlNames.Add(sBase);
-sValue = Path.Combine(sDir, sName);
-hlValues.Add(sValue);
-} // for
-
-sBase = App.ReadData("WebClientUtilities", "");
-iIndex = -1;
-if (sBase.Length > 0) {
-iIndex = hlNames.IndexOf(sBase);
-}
-if (iIndex == -1) iIndex = 0;
-sTitle = "Web Client Utilities";
-bSort = false;
-string[] aNames = hlNames.ToArray();
-sName = Dialog.Pick(sTitle, aNames, bSort, iIndex);
-if (sName.Length == 0) return;
-
-App.WriteData("WebClientUtilities", sName);
-iIndex = hlNames.IndexOf(sName);
-sFile = hlValues[iIndex];
-sExe = Path.Combine(sDir, "InPy.exe");
-sExe = Win32.GetShortPath(sExe);
-sInputFile = Path.Combine(App.DataDir, "WebClient.ini");
-sBase = Path.GetFileNameWithoutExtension(sFile);
-sOutputFile = Path.Combine(App.DataDir, sBase + ".txt");
-sCodeFile = sFile;
-sCommand = sExe + " " + Util.Quote(sCodeFile) + " " + Util.Quote(sInputFile) + " " + Util.Quote(sOutputFile);
-if (File.Exists(sOutputFile)) File.Delete(sOutputFile);
-Util.SetClipboardText(sCommand);
-Util.RunWait(sCommand);
-if (File.Exists(sOutputFile))  Process.Start(sOutputFile);
-} // WebClientUtilities method
 
 // BurnToCD i GetPathsFromDocument USUNIETE razem z komenda nagrywania plyt
 // (30.08.2026, jego "ALT+SHIFT+B nagrywanie plikow to na pewno usun").
