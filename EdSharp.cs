@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.103";
+public const string VersionString = "5.0.106";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -9311,6 +9311,16 @@ else if (sForceImport.Length == 0) sForceImport = PreferredImportKey(sFile);
 // Dialog.Show("iConvert " + iConvert, "sTargetExt " + sTargetExt);
 sText = COM.ConvertFile2String(sFile, ref iConvert, ref sTargetExt, false, sForceImport);
 // Dialog.Show("iConvert " + iConvert, "sTargetExt " + sTargetExt);
+
+// ODMOWA OTWARCIA ma pierwszenstwo przed otwarciem surowym.  Gdy konwerter
+// jest potrzebny, a go nie ma (albo uzytkownik odmowil pobrania), a tresc
+// pliku jest spakowana - nie otwieramy NIC.  Komunikat padl juz nizej, w
+// COM.ConvertFile2String, wiec tutaj tylko wychodzimy bez tworzenia okna.
+// Decyzja Kasperczaka 13.09.2026: "Moim zdaniem nie ma otwierac".
+if (COM.OdmowaOtwarcia) {
+COM.OdmowaOtwarcia = false;
+return;
+}
 
 if (iConvert >= 1 && sText.Trim().Length == 0) {
 // KONWERSJA SIE NIE UDALA -> OTWIERAMY SUROWO, a nie zostawiamy uzytkownika
@@ -20895,8 +20905,38 @@ return ConvertFile2String(sSource, ref iConvert, ref sTargetExt, bTextOnly, "");
 // wariantow otwarcia pliku .rtf).  Pusty napis zachowuje dawne zachowanie,
 // czyli pytanie o format tutaj.  Dzieki temu ten sam wybor nie jest zadawany
 // dwa razy pod rzad, co przy czytniku ekranu jest szczegolnie meczace.
+// ODMOWA OTWARCIA.  Ustawiane, gdy pliku NIE WOLNO otworzyc surowo, bo jego
+// tresc jest spakowana (docx, epub, xlsx...) i bez konwertera dalaby smieci.
+// Decyzja Kasperczaka z 13.09.2026: "Moim zdaniem nie ma otwierac".
+// Zmierzone na jego probkach: w pierwszych 400 bajtach docx czytelne jest 42%
+// znakow, epub 50%, xlsx 43% - to nie jest tekst do czytania.  Gorzej:
+// otwarty taki plik mozna odruchowo zapisac Control+S i nadpisac oryginal.
+// Formaty tekstowe (rtf, html, pdf) tej blokadzie NIE podlegaja - tam surowa
+// tresc jest czytelna (pdf dal 99% czytelnych znakow) i lepsza niz nic.
+public static bool OdmowaOtwarcia = false;
+
+// Czy tresc pliku jest spakowana, czyli bez konwertera nieczytelna?
+// Lista celowo krotka i jawna - zgadywanie po zawartosci mylilo by sie na
+// plikach uszkodzonych, a tu chodzi o odmowe otwarcia, wiec pomylka jest
+// kosztowna.
+public static bool FormatSpakowany(string sSource) {
+try {
+string sExt = Path.GetExtension(sSource).ToLower().TrimStart('.');
+switch (sExt) {
+case "docx" : case "docm" :
+case "xlsx" : case "xlsm" :
+case "pptx" : case "pptm" :
+case "epub" : case "epub3" :
+case "odt" : case "ods" : case "odp" :
+return true;
+}
+} catch {}
+return false;
+}
+
 public static string ConvertFile2String(string sSource, ref int iConvert, ref string sTargetExt, bool bTextOnly, string sForceImport) {
 string sText = "";
+OdmowaOtwarcia = false;
 if (iConvert == 0) sText = Util.File2String(sSource);
 else {
 //string sTarget = App.TempFile;
@@ -21036,11 +21076,82 @@ iLoop--;
 }
 } // koniec try wokol uruchomienia konwertera
 catch (System.ComponentModel.Win32Exception) {
-// Narzedzia konwersji nie ma na dysku (katalog Convert nie zostal
-// zainstalowany).  Mowimy o tym jednym zdaniem i zwracamy pusty tekst -
-// wywolujacy otworzy plik surowo.  ZADNEGO okna awarii.
+// Narzedzia konwersji nie ma na dysku.  Nie poprzestajemy na komunikacie:
+// polecenie Kasperczaka (13.09.2026) brzmi "jezeli potrzeba, to powinien
+// sobie zainstalowac konwerter potrzebny do pracy" - czyli program ma
+// ZAPROPONOWAC dociagniecie, a nie zostawiac czlowieka z komunikatem.
+//
+// Skladniki.BrakujaceDlaPolecenia rozpoznaje narzedzie po nazwie pliku exe
+// w wierszu polecenia, wiec komunikat mowi "Pandoc", nie cala komende.
+// Pobieranie idzie ta sama droga, co menu Pomoc > Update Components.
+string sBrak = "";
+try { sBrak = Skladniki.BrakujaceDlaPolecenia(sCommand); } catch {}
+if (sBrak.Length > 0) {
+string sPytanie = "To wymaga narzedzia " + sBrak + ", ktorego nie ma na dysku."
++ "  Pobrac je teraz?";
+if (Dialog.Confirm("Missing Conversion Tool", sPytanie, "Y") == "Y") {
+App.Frame.AddMessage("Downloading " + sBrak);
+string sZrobione = "";
+try { sZrobione = Skladniki.SprawdzIUzupelnij(true); } catch {}
+if (sZrobione.Length > 0) {
+// Udalo sie - probujemy konwersji jeszcze raz, zeby czlowiek dostal to,
+// o co poprosil, bez powtarzania Control+O.
+App.Frame.AddMessage("Downloaded " + sZrobione + "; converting");
+// SCIEZKE TRZEBA PRZELICZYC PONOWNIE.  sCommand zostal zlozony PRZED
+// pobraniem, wiec wskazuje katalog instalacji - a narzedzie wlasnie wyladowalo
+// w profilu uzytkownika.  Bez tej linii druga proba szukala w starym miejscu i
+// plik sie nie otwieral, mimo udanego pobrania (zmierzone 13.09.2026).
+try { sCommand = Skladniki.NaprawSciezkeNarzedzia(sCommand); } catch {}
+try {
+Util.RunHideWait(sCommand);
+}
+catch (System.ComponentModel.Win32Exception) {
+if (FormatSpakowany(sSource)) {
+OdmowaOtwarcia = true;
+App.Frame.AddMessage("Not opened: " + sBrak + " is still missing");
+return "";
+}
+App.Frame.AddMessage("Conversion tool still missing; opening file as is");
+return "";
+}
+}
+else {
+// Najczestsza przyczyna: program stoi w Program Files, a dociaganie
+// pisze do wlasnego katalogu Convert - bez uprawnien administratora
+// zapis jest odrzucany (zmierzone 13.09.2026).  Mowimy, co zrobic.
+string sRada = "; try Help > Update Components as administrator";
+if (FormatSpakowany(sSource)) {
+OdmowaOtwarcia = true;
+App.Frame.AddMessage("Could not download " + sBrak + sRada
++ ".  File not opened - this format cannot be read without it");
+return "";
+}
+App.Frame.AddMessage("Could not download " + sBrak + sRada
++ ".  Opening file as is");
+return "";
+}
+}
+else {
+// Odmowa pobrania.  Przy tresci spakowanej NIE otwieramy nic - surowa
+// zawartosc bylaby smieciem, a dalaby sie zapisac na oryginale.
+if (FormatSpakowany(sSource)) {
+OdmowaOtwarcia = true;
+App.Frame.AddMessage("Not opened: " + sBrak + " is needed to read this format");
+return "";
+}
+App.Frame.AddMessage("Opening file as is, without " + sBrak);
+return "";
+}
+}
+else {
+if (FormatSpakowany(sSource)) {
+OdmowaOtwarcia = true;
+App.Frame.AddMessage("Not opened: a conversion tool is needed to read this format");
+return "";
+}
 App.Frame.AddMessage("Conversion tool not installed; opening file as is");
 return "";
+}
 }
 // Read the converted target. File2String detects its encoding (byte-order
 // mark first, then content detection) and decodes it correctly, so the old
@@ -23868,6 +23979,15 @@ sCommand = sCommand.Replace("%TargetExt%", Path.GetExtension(Win32.GetShortPath(
 
 sCommand = sCommand.Replace("%TempFile%", App.TempFile);
 sCommand = Environment.ExpandEnvironmentVariables(sCommand);
+
+// NARZEDZIE MOZE LEZEC W PROFILU, NIE W KATALOGU PROGRAMU.  Wpisy uzywaja
+// %ProgDir%\Convert\..., ale gdy program stoi w Program Files, dociaganie
+// skladnikow nie ma tam prawa pisac i laduje w profilu uzytkownika
+// (zmierzone 13.09.2026).  Ta jedna linia sprawia, ze wpis z ini trafia w
+// narzedzie niezaleznie od tego, ktore z dwoch miejsc je przechowuje.
+// Podmiana dziala tylko wtedy, gdy sciezka z wpisu NIE istnieje.
+sCommand = Skladniki.NaprawSciezkeNarzedzia(sCommand.Trim());
+
 return sCommand.Trim();
 } // ExpandCommandLine method
 

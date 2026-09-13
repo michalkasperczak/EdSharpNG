@@ -31,6 +31,9 @@ CS_KOD = "\n".join(
     for l in CS.splitlines()
 )
 
+# Skladniki.cs - dociaganie brakujacych narzedzi konwersji (Pandoc itd.)
+SKL = (REPO / "Skladniki.cs").read_text(encoding="utf-8", errors="replace")
+
 # --- komunikaty cytowane w liscie testow (musza byc literalami w kodzie) ---
 KOMUNIKATY = [
     "No headings!", "Last heading!", "First heading!",
@@ -1927,6 +1930,51 @@ if _os.path.exists(_any):
     spr("konwersja: any2txt zdejmuje koncowy ukosnik katalogu", "outdir:~-1" in _a)
     spr("konwersja: any2txt nie sklada sciezki z koncowym ukosnikiem",
         "outdir:~-1" in _a)
+# AUTOINSTALACJA KONWERTERA (decyzja Michala 13.09.2026: "jezeli potrzeba, to
+# powinien sobie zainstalowac sam").  Brak narzedzia ma dawac PYTANIE, nie
+# sam komunikat.
+spr("skladniki: brak narzedzia daje pytanie o pobranie",
+    'Dialog.Confirm("Missing Conversion Tool"' in CS_KOD)
+spr("skladniki: pytanie nazywa brakujace narzedzie",
+    "Skladniki.BrakujaceDlaPolecenia" in CS_KOD)
+spr("skladniki: po zgodzie program pobiera",
+    "Skladniki.SprawdzIUzupelnij(true)" in CS_KOD)
+
+# Zapis do Program Files jest ODRZUCANY (asInvoker) - dociaganie musi miec
+# zapasowy katalog w profilu, inaczej cicho przepada.
+spr("skladniki: jest katalog zapasowy w profilu uzytkownika",
+    "KatalogConvertUzytkownika" in SKL)
+spr("skladniki: prawo zapisu sprawdzane probnym zapisem",
+    "MoznaPisac" in SKL and "File.WriteAllText(sProba" in SKL)
+spr("skladniki: pobieranie idzie do katalogu, gdzie wolno pisac",
+    "KatalogDoZapisu" in SKL)
+spr("skladniki: narzedzie szukane w obu miejscach",
+    "KatalogiSzukania" in SKL)
+
+# Wpis w ini wskazuje %ProgDir%\Convert - po pobraniu do profilu sciezke
+# trzeba przeliczyc, inaczej plik sie nie otwiera mimo udanego pobrania.
+spr("skladniki: sciezka narzedzia naprawiana przed uruchomieniem",
+    "NaprawSciezkeNarzedzia" in SKL and "NaprawSciezkeNarzedzia" in CS_KOD)
+spr("skladniki: sciezka przeliczana ponownie po pobraniu",
+    CS_KOD.count("Skladniki.NaprawSciezkeNarzedzia") >= 2)
+spr("skladniki: instalacja systemowa ma pierwszenstwo",
+    "if (File.Exists(sStara)) return sPolecenie" in SKL)
+
+# ODMOWA OTWARCIA formatow spakowanych (decyzja Michala: "Moim zdaniem nie ma
+# otwierac").  Surowy docx/epub to smiec dla czytnika, a Control+S nadpisalby
+# oryginal.
+spr("odmowa: formaty spakowane rozpoznawane", "FormatSpakowany" in CS_KOD)
+spr("odmowa: docx i epub na liscie spakowanych",
+    '"docx"' in CS_KOD and '"epub"' in CS_KOD and '"xlsx"' in CS_KOD)
+spr("odmowa: jest sygnal zakazu otwarcia", "OdmowaOtwarcia" in CS_KOD)
+spr("odmowa: strona otwierajaca respektuje zakaz",
+    "if (COM.OdmowaOtwarcia)" in CS_KOD)
+spr("odmowa: sygnal jest zerowany po uzyciu",
+    "COM.OdmowaOtwarcia = false" in CS_KOD)
+spr("odmowa: rtf i pdf NIE sa blokowane (surowa tresc czytelna)",
+    '"rtf"' not in CS_KOD.split("FormatSpakowany")[1].split("return false")[0]
+    if "FormatSpakowany" in CS_KOD else False)
+
 # NumericUpDown nie dostaje fokusu sam - nazwa musi zejsc na jego dzieci,
 # inaczej czytnik ekranu mowi sama liczbe.  ZMIERZONE zywym NVDA.
 spr("7. licznik podaje nazwe takze swojemu wewnetrznemu polu",

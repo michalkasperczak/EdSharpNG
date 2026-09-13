@@ -50,7 +50,7 @@ public static class Skladniki {
 // wziac.  Trzymam to w kodzie, a nie w pliku obok programu, bo plik obok
 // uzytkownik moglby stracic przy aktualizacji - a wtedy program przestalby
 // wiedziec, czego mu brakuje.
-class Skladnik {
+public class Skladnik {
 public string Nazwa;
 public string Katalog;
 public string Plik;
@@ -115,18 +115,80 @@ if (string.IsNullOrEmpty(sDir)) sDir = Directory.GetCurrentDirectory();
 return Path.Combine(sDir, "Convert");
 }
 
+// GDZIE WOLNO PISAC.  Zmierzone 13.09.2026: program stoi w Program Files, a
+// manifest ma asInvoker, wiec zapis do wlasnego katalogu Convert jest
+// ODRZUCANY (UnauthorizedAccessException).  Bez tego dociaganie skladnikow
+// cicho przepadalo w bloku catch - narzedzia nie bylo, a program milczal.
+//
+// Dlatego przy braku prawa do wlasnego katalogu piszemy do profilu
+// uzytkownika, gdzie prawo mamy zawsze i bez pytania o administratora.
+// Kolejnosc szukania (KatalogiSzukania) obejmuje oba miejsca, wiec narzedzie
+// dociagniete do profilu jest widziane tak samo jak to z instalacji.
+public static string KatalogConvertUzytkownika() {
+string sBase = "";
+try {
+sBase = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+} catch {}
+if (string.IsNullOrEmpty(sBase)) return KatalogConvert();
+return Path.Combine(Path.Combine(sBase, "EdSharp"), "Convert");
+}
+
+// Czy do podanego katalogu naprawde mozemy pisac?  Nie zgaduje z uprawnien -
+// probuje zapisac plik i sprzatam po sobie.  Prawa NTFS potrafia klamac.
+static bool MoznaPisac(string sDir) {
+try {
+Directory.CreateDirectory(sDir);
+string sProba = Path.Combine(sDir, "proba_" + Guid.NewGuid().ToString("N") + ".tmp");
+File.WriteAllText(sProba, "x");
+File.Delete(sProba);
+return true;
+} catch { return false; }
+}
+
+// Katalog, do ktorego dociagamy: wlasny gdy wolno, inaczej profil.
+public static string KatalogDoZapisu() {
+string sWlasny = KatalogConvert();
+if (MoznaPisac(sWlasny)) return sWlasny;
+return KatalogConvertUzytkownika();
+}
+
+// Oba miejsca, w ktorych szukamy narzedzia - kolejnosc ma znaczenie: to z
+// instalacji wygrywa, bo jest wspolne dla wszystkich uzytkownikow maszyny.
+static string[] KatalogiSzukania() {
+string sWlasny = KatalogConvert();
+string sUzyt = KatalogConvertUzytkownika();
+if (String.Compare(sWlasny, sUzyt, true) == 0) return new string[] { sWlasny };
+return new string[] { sWlasny, sUzyt };
+}
+
 static string PlikWersji() {
-return Path.Combine(KatalogConvert(), "Tools.lock");
+// Plik wersji lezy tam, gdzie naprawde piszemy - inaczej przy instalacji w
+// Program Files nie dalby sie zapisac i program za kazdym startem uwazalby,
+// ze nic nie zostalo pobrane.
+return Path.Combine(KatalogDoZapisu(), "Tools.lock");
 }
 
 // Czy narzedzie w ogole jest?  Szukam w calym drzewie, bo niektore archiwa
-// pakuja exe w podkatalog.
+// pakuja exe w podkatalog.  Sprawdzam OBA miejsca: katalog instalacji i
+// katalog w profilu uzytkownika (tam trafia to, co dociagnelismy bez praw
+// administratora).
 static bool Jest(Skladnik s) {
-string sDir = Path.Combine(KatalogConvert(), s.Katalog);
-if (!Directory.Exists(sDir)) return false;
+return SciezkaExe(s).Length > 0;
+}
+
+// Pelna sciezka do pliku wykonywalnego skladnika albo puste, gdy go nie ma.
+// Potrzebna nie tylko do sprawdzenia - podmieniamy nia sciezke w wierszu
+// polecenia, gdy narzedzie lezy w profilu, a wpis w ini wskazuje instalacje.
+public static string SciezkaExe(Skladnik s) {
+foreach (string sBaza in KatalogiSzukania()) {
+string sDir = Path.Combine(sBaza, s.Katalog);
+if (!Directory.Exists(sDir)) continue;
 try {
-return Directory.GetFiles(sDir, s.Plik, SearchOption.AllDirectories).Length > 0;
-} catch { return false; }
+string[] a = Directory.GetFiles(sDir, s.Plik, SearchOption.AllDirectories);
+if (a.Length > 0) return a[0];
+} catch {}
+}
+return "";
 }
 
 static Dictionary<string,string> CzytajWersje() {
@@ -275,7 +337,7 @@ if (aExe.Length == 0) return false;
 sZrodlo = Path.GetDirectoryName(aExe[0]);
 }
 
-string sCel = Path.Combine(KatalogConvert(), s.Katalog);
+string sCel = Path.Combine(KatalogDoZapisu(), s.Katalog);
 if (Directory.Exists(sCel)) {
 try { Directory.Delete(sCel, true); } catch {}
 }
@@ -350,6 +412,43 @@ foreach (Skladnik s in Lista()) {
 if (sMale.Contains(s.Plik.ToLower()) && !Jest(s)) return s.Nazwa;
 }
 return "";
+}
+
+// PRZEKIEROWANIE SCIEZKI DO PROFILU.  Wpisy w EdSharp.ini wskazuja
+// %ProgDir%\Convert\..., czyli katalog instalacji.  Gdy narzedzie zostalo
+// dociagniete do profilu (bo do Program Files nie wolno pisac), wpis prowadzi
+// w puste miejsce i konwersja pada - mimo ze narzedzie JEST.  Dlatego przed
+// uruchomieniem podmieniamy sciezke na ta, w ktorej plik naprawde lezy.
+//
+// Podmieniam tylko wtedy, gdy sciezka z wpisu NIE istnieje, a nasza istnieje -
+// instalacja systemowa zawsze wygrywa, gdy jest kompletna.
+public static string NaprawSciezkeNarzedzia(string sPolecenie) {
+if (String.IsNullOrEmpty(sPolecenie)) return sPolecenie;
+try {
+string sMale = sPolecenie.ToLower();
+foreach (Skladnik s in Lista()) {
+string sExe = s.Plik.ToLower();
+int i = sMale.IndexOf(sExe);
+if (i < 0) continue;
+
+// Wycinam sciezke do exe z wiersza polecenia: od poczatku (albo od
+// cudzyslowu) do konca nazwy pliku.
+int iKon = i + sExe.Length;
+int iPocz = 0;
+for (int j = i; j >= 0; j--) {
+char c = sPolecenie[j];
+if (c == '"') { iPocz = j + 1; break; }
+}
+string sStara = sPolecenie.Substring(iPocz, iKon - iPocz);
+if (File.Exists(sStara)) return sPolecenie;   // instalacja kompletna
+
+string sNowa = SciezkaExe(s);
+if (sNowa.Length == 0) return sPolecenie;     // nie mamy nic lepszego
+
+return sPolecenie.Substring(0, iPocz) + sNowa + sPolecenie.Substring(iKon);
+}
+} catch {}
+return sPolecenie;
 }
 
 } // class Skladniki
