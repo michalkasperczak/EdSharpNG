@@ -15,7 +15,13 @@ def ile_nazwa(napis):
 
 # "Preferred DropEffect" to nazwa formatu schowka, wiec w programie jest
 # LITERALEM, nie nazwa metody - bez niej czesc powlok PRZENIOSLABY plik.
-nowe_literaly = ["Preferred DropEffect", "File copied", "missing as text only"]
+# UWAGA NA BRZMIENIE KOMUNIKATU.  Szukalismy tu kiedys "File copied", ale
+# 11.09.2026 Michal kazal skrocic ten komunikat do samego "Copied" ("troche
+# mylaco mowi Copied file (...) powinien mowic Copied po prostu") - slowo
+# "file" nazywalo FORMAT schowka, a nie to, co sie stalo.  Test zostal ze starym
+# napisem i od tamtej pory swiecil na czerwono przy POPRAWNYM kodzie.
+# Sprawdzamy wiec to, co program naprawde mowi.
+nowe_literaly = ["Preferred DropEffect", "Copied", "missing as text only"]
 nowe_nazwy = ["SetClipboardFileDrop", "SetFileDropList"]
 # STARY KOMUNIKAT MUSI ZNIKNAC.  Sama obecnosc nowych napisow przeszlaby takze
 # wtedy, gdyby galaz plikowa zostala dopisana OBOK starej i nigdy nie wykonana.

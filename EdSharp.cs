@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.107";
+public const string VersionString = "5.0.108";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2570,6 +2570,20 @@ int iNewRow = rtb.Row;
 int iDeltaRow = Math.Abs(iNewRow - rtb.OldRow);
 bool bRuchPionowy = (rtb.OldRow >= 0 && iDeltaRow == 1);
 bool bZglos = (iDelta == 1 || bRuchPionowy);
+// PUSTY WIERSZ ZGLASZANY RAZ, I TYLKO GDY WIERSZ NAPRAWDE JEST PUSTY.
+// Zgloszenie Michala 15.09.2026: "Teraz ciagle czyta Empty line na pustych
+// liniach".  Dwie przyczyny, obie w warunku wyzej:
+//   1. Znak POD KURSOREM to '\n' rowniez wtedy, gdy kursor stoi na KONCU
+//      dowolnego niepustego wiersza (klawisz End, dojscie strzalka w prawo,
+//      zjechanie w dol na krotszy wiersz).  Warunek "znak pod kursorem ==
+//      '\n'" jest wiec prawdziwy dla wiekszosci wierszy w pliku, nie tylko
+//      dla pustych.  Rozstrzyga TRESC WIERSZA, nie znak pod kursorem.
+//   2. Ten sam wiersz byl zglaszany po KAZDYM zdarzeniu kursora - a przy
+//      ruchu w poziomie w pustym wierszu zdarzen jest wiele.  Komunikat
+//      nalezy sie przy WEJSCIU do wiersza, czyli po zmianie numeru wiersza.
+bool bWierszPusty = false;
+try {bWierszPusty = (rtb.RowText.Length == 0);} catch {}
+bool bZmianaWiersza = (iNewRow != rtb.OldRow);
 // DRUGA PRZYCZYNA MILCZENIA, zmierzona 13.09.2026: caly ten komunikat wisial
 // pod opcja "HardPageAddress", ktora domyslnie jest na "N".  Ta opcja decyduje
 // tylko o TYM, CZY PASEK STANU pokazuje strone i wiersz, czy procent - z pustym
@@ -2582,7 +2596,7 @@ else if (c == '\f') Util.Say("FormFeed");
 // czlowieka.  Program w innych miejscach (lista zakladek, przeglad wierszy)
 // mowi juz "Empty line" - tu bylo inne slowo na to samo.  Zgloszenie Michala
 // 13.09.2026: "Na pustej linii mowi LineFeed".
-else if (c == '\n') Util.Say("Empty line");
+else if (bWierszPusty && bZmianaWiersza) Util.Say("Empty line");
 else if (c == '\t') Util.Say("TabChar");
 rtb.OldIndex = iNewIndex;
 rtb.OldRow = iNewRow;
@@ -17222,11 +17236,32 @@ catch {}
 		string sViewText = MarkdownReview_RenderTextForView(sSource, child.MarkdownReviewInlineLinks, out aSourceToView, out aViewToSource);
 		child.MarkdownReviewSourceToView = aSourceToView;
 		child.MarkdownReviewViewToSource = aViewToSource;
+		// KURSOR ZRODLA NIE MOZE WROCIC NA POCZATEK PLIKU PRZY PRZERYSOWANIU.
+		// Zgloszenie Michala 15.09.2026: "kursor mniej stabilny, preview podglad
+		// tez czesto nie podaza, wraca do poczatku pliku".  PRZYCZYNA: ponizsze
+		// przypisanie Text oraz kilkadziesiat wywolan Select w
+		// MarkdownReview_ApplyViewFormatting wywoluja zdarzenie SelectionChanged
+		// kontrolki podgladu.  Do tego zdarzenia podpiety jest
+		// MarkdownReview_SyncFromView, ktory PRZESTAWIA KURSOR W ZRODLE na
+		// pozycje odczytana z podgladu - a zaraz po ustawieniu Text ta pozycja
+		// wynosi zero.  Kursor w dokumencie ladowal wiec na poczatku pliku, i to
+		// przy kazdej edycji odswiezajacej podglad.  Flaga MarkdownReviewSync
+		// jest w tym module umowionym zamkiem: obie metody synchronizujace
+		// wychodza natychmiast, gdy jest podniesiona.  Wczesniej podnosily ja
+		// tylko one same, a przerysowanie - najhalasliwsza operacja - dzialalo
+		// bez zamka.
+		bool bZamekMoj = !child.MarkdownReviewSync;
+		if (bZamekMoj) child.MarkdownReviewSync = true;
+		try {
 		child.MarkdownReviewView.SuspendLayout();
 		child.MarkdownReviewView.Text = sViewText;
 		MarkdownReview_ApplyViewFormatting(child.MarkdownReviewView, sSource, aSourceToView);
 		child.MarkdownReviewView.ResumeLayout();
 		child.MarkdownReviewViewRevision = iRevision;
+		}
+		finally {
+		if (bZamekMoj) child.MarkdownReviewSync = false;
+		}
 
 		MarkdownReview_SyncViewToEdit(child);
 		} // MarkdownReview_RenderView method
@@ -18129,6 +18164,29 @@ catch {}
 // dispatcher so review-mode shortcuts (Escape to leave, h/l/i/k/t
 // navigation, etc.) work while focus is in the preview.
 public class MarkdownReviewTextBox : RichTextBox {
+
+// TA SAMA KLASA OKNA CO W KONTROLCE EDYCYJNEJ (RICHEDIT50W z msftedit.dll).
+// PRZYCZYNA, nie kosmetyka: zgloszenie Michala 15.09.2026 - "wrocil stary
+// problem, ze gdy jakies slowo obok zaczyna sie od polskiej litery, to podczas
+// nawigacji po slowach jest ono przyklejane do poprzedniego slowa (...)
+// najgorsze, ze teraz jest dobrze, ale w preview faktycznie byl taki problem".
+// Ta uwaga o PODGLADZIE wskazuje wprost, gdzie zostal stary blad: naprawa z
+// 17.08.2026 (opisana szeroko w HomerRichTextBox nizej) siedzi TYLKO w
+// kontrolce edycyjnej.  Podglad Markdown to OSOBNA kontrolka, ktora dziedziczy
+// z RichTextBox bez zmian, wiec WinForms tworzy jej okno na starej klasie
+// riched20 - a to riched20 wyznacza polskie granice slow blednie i czytnik
+// pyta o nie wlasnie kontrolke.  Dlatego w edycji slychac dobrze, a w
+// podgladzie po staremu.  Ustawienie tej samej klasy okna zamyka roznice
+// miedzy trybem edycji a trybem podgladu.
+protected override CreateParams CreateParams {
+get {
+if (hMsftEditPodgladu == IntPtr.Zero) hMsftEditPodgladu = Win32.LoadLibrary("msftedit.dll");
+CreateParams cp = base.CreateParams;
+if (hMsftEditPodgladu != IntPtr.Zero) cp.ClassName = "RICHEDIT50W";
+return cp;
+}
+} // CreateParams property
+private static IntPtr hMsftEditPodgladu = IntPtr.Zero;
 
 protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
 if (App.Frame != null && App.Frame.ProcessCmdKey_Helper(ref msg, keyData)) return true;

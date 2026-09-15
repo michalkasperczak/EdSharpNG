@@ -109,14 +109,22 @@ def main():
     print("\nKONTROLE NEGATYWNE (sonda musi cokolwiek znajdowac):")
     spr("A. pole menuMiscRepeatLine jest w binarce", "menuMiscRepeatLine" in pola)
     spr("B. napis 'Repeat Line' jest w binarce", "Repeat Line" in tekst)
-    spr("C. skrot 'Control+Y' jest w binarce", "Control+Y" in tekst)
+    spr("C. skrot 'Control+Shift+Z' jest w binarce", "Control+Shift+Z" in tekst)
 
     print("\nWLASCIWY POMIAR - Format Code ma NIE ISTNIEC:")
     spr("1. brak pola menuMiscFormatCode", "menuMiscFormatCode" not in pola)
     spr("2. brak napisu 'Format Code'", "Format Code" not in tekst)
     spr("3. brak napisu 'Format code' (komunikat po wykonaniu)", "Format code" not in tekst)
     spr("4. skrot Control+Shift+F6 wolny", "Control+Shift+F6" not in tekst)
-    spr("5. brak wywolania astyle.exe", "astyle" not in tekst.lower())
+    # SLOWO "astyle" ZOSTAJE W BINARCE ZGODNIE Z PRAWDA - i to nie jest usterka.
+    # Skladniki.cs trzyma liste narzedzi DO POBRANIA (pandoc, tidy, xpdf,
+    # liblouis, astyle) wraz z adresami; AStyle jest tam nadal, bo uzytkownik
+    # moze go sobie sciagnac.  Usuniete zostalo POLECENIE "Format Code", ktore
+    # przepuszczalo dokument przez astyle.exe.  Szukanie samego "astyle"
+    # swiecilo wiec na czerwono przy poprawnym kodzie.  Mierzymy nazwe metody,
+    # ktora to polecenie wykonywala.
+    spr("5. brak metody wolajacej astyle na dokumencie",
+        "FormatCode" not in tekst and "RunAStyle" not in tekst)
     spr("6. brak wywolania tidy z modify-in-place",
         "tidy.exe -config" not in tekst)
 

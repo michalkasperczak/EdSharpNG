@@ -146,7 +146,6 @@ Translate Language, Alt+Shift+F7, Translate all or selected text from one natura
 Say Path, Alt+P, Say full path of current file
 Path to Clipboard, Alt+Shift+P, Copy full path of current file to clipboard
 Path List, Control+Shift+P, Generate a list of files in a new editing window
-Command Palette ..., Control+Shift+X, Type to filter all menu commands, then Enter to run one
 
 Special Character, F2, Insert character indirectly by specifying its Unicode value
 Quote, Control+Q, Add prefix sequence to current or selected lines
@@ -272,4 +271,4 @@ Tile Vertical, Control+Shift+F11, Tile open windows vertically
 
 Elevate Version, F11, Download latest EdSharpNG version and run installer (after confirming)
 
-Commands listed: 227
+Commands listed: 226

@@ -26,9 +26,13 @@ niż za mało - te komendy Kasperczak zaliczył w testach i używają tej samej
 stałej Form Feed):
   Section Break          Control+Enter
   Topic                  Alt+T
-  Search for Topic       Control+F6
-  Search for Topic Again Alt+F6
 Każda MUSI nadal być w binarce - jako pole i jako napis.
+
+UWAGA NA DATY: Search for Topic (Control+F6) i Search for Topic Again (Alt+F6)
+były tu wymagane, ale 27.08.2026 Michał zgodził się je usunąć - należały do
+starego modelu Form Feed. Podobnie Alt+Shift+T i Shift+F6 zostały tego dnia
+przypisane do NOWYCH komend (Table of Contents, kontekstowy skok do spisu).
+Test aktualizowano 16.09.2026, żeby mierzył stan po tych decyzjach.
 
 KONTROLE NEGATYWNE (bez nich zielony wynik nic nie dowodzi - sonda, która
 niczego nie znajduje, może być po prostu zepsuta):
@@ -44,6 +48,12 @@ Uruchomienie:
 PUŁAPKA: starą binarkę do kontroli D trzeba skopiować do katalogu projektu.
 Podanie ścieżki w /tmp kończy się "PermissionError: Permission denied" -
 sonda jest programem Windows i nie wykona pliku z systemu plików WSL.
+
+DRUGA PUŁAPKA: kontrola D wymaga binarki SPRZED 26.08.2026, czyli takiej,
+która te komendy jeszcze MA. Podanie dowolnej nowszej wersji (np. 5.0.107)
+daje cztery czerwone linie, a to nie jest usterka - w tej wersji komendy są już
+usunięte, dokładnie jak być powinno. Bez takiej archiwalnej binarki po prostu
+nie podawaj drugiego argumentu.
 """
 
 import subprocess
@@ -68,12 +78,15 @@ return 0;
 }
 '''
 
-USUWANE_POLA = ["menuNavigateGoToSection", "menuNavigateGoToContents",
-                "menuMiscTextContents"]
-USUWANE_NAPISY = ["Go to Section", "Go to Contents", "Text Contents"]
-ZOSTAJA_POLA = ["menuMiscSectionBreak", "menuQueryTopic",
-                "menuNavigateSearchForTopic", "menuNavigateSearchForTopicAgain"]
-ZOSTAJA_NAPISY = ["Section Break", "Search for Topic", "Search for Topic Again"]
+# UWAGA: "Go to Contents" WROCILO 27.08.2026 jako komenda kontekstowa pod
+# Shift+F6 - inna niz usunieta, oparta na spisie Markdown, a nie na Form Feed.
+# Nie ma jej wiec na liscie usuwanych, mimo tej samej nazwy.
+USUWANE_POLA = ["menuNavigateGoToSection", "menuMiscTextContents"]
+USUWANE_NAPISY = ["Go to Section", "Text Contents"]
+# Search for Topic i Search for Topic Again ZESZLY z tej listy 27.08.2026 -
+# Michal zgodzil sie je usunac ("Tak. Mozna podmienic ten klawisz.").
+ZOSTAJA_POLA = ["menuMiscSectionBreak", "menuQueryTopic"]
+ZOSTAJA_NAPISY = ["Section Break"]
 
 
 def napisy_w_binarce(sciezka):
@@ -136,7 +149,10 @@ def main():
     print("\nKONTROLE NEGATYWNE (sonda musi cokolwiek znajdowac):")
     spr("A. pole menuMiscRepeatLine jest w binarce", "menuMiscRepeatLine" in pola)
     spr("B. napis 'Repeat Line' jest w binarce", "Repeat Line" in tekst)
-    spr("C. skrot 'Control+Y' jest w binarce", "Control+Y" in tekst)
+    # Control+Y przestal byc osobnym skrotem (Redo to Control+Shift+Z, a
+    # Control+Y robi to samo przez obsluge kontrolki) - stara kontrola swiecila
+    # na czerwono przy poprawnej binarce.
+    spr("C. skrot 'Control+Shift+Z' jest w binarce", "Control+Shift+Z" in tekst)
 
     print("\nWLASCIWY POMIAR - trzy komendy maja NIE ISTNIEC:")
     for p in USUWANE_POLA:
@@ -144,19 +160,20 @@ def main():
     for n in USUWANE_NAPISY:
         spr("brak napisu '%s'" % n, n not in tekst)
     spr("skrot Control+Shift+F12 wolny", "Control+Shift+F12" not in tekst)
-    spr("skrot Alt+Shift+T wolny", "Alt+Shift+T" not in tekst)
-    # "Shift+F6" jest podciągiem "Alt+Shift+F6" (Search for Topic Again),
-    # więc dokładne przypisanie rozpoznajemy po tym, że każde wystąpienie
-    # "Shift+F6" jest poprzedzone przez Alt+ albo Control+.
-    luzne = 0
-    i = tekst.find("Shift+F6")
-    while i != -1:
-        poprz = tekst[max(0, i - 8):i]
-        if not (poprz.endswith("Alt+") or poprz.endswith("Control+")):
-            luzne += 1
-        i = tekst.find("Shift+F6", i + 1)
-    spr("skrot Shift+F6 wolny (zarezerwowany na przyszly spis tresci)",
-        luzne == 0, "luznych wystapien: %d" % luzne)
+    # ALT+SHIFT+T JUZ NIE JEST WOLNY - I TAK MA BYC.  Skrot zostal zwolniony
+    # 26.08.2026 po usunieciu "Text Contents", a 27.08.2026 Michal przypisal do
+    # niego NOWA komende "Table of Contents" (spis tresci Markdown z linkami).
+    # Test pilnowal wiec stanu z jednego dnia i od 27.08 klamal.
+    spr("Alt+Shift+T zajety przez NOWA komende Table of Contents",
+        "Alt+Shift+T" in tekst and "Table of Contents" in tekst)
+    # SHIFT+F6 WROCILO 27.08.2026 I TO NIE JEST USTERKA.  Michal sam wskazal
+    # ten skrot i chcial go kontekstowego w obie strony ("Shift-F6 kontekstowo
+    # w obie strony to dobre rozwiazanie"): z tresci skacze do pozycji spisu,
+    # z pozycji spisu do rozdzialu.  Usuniete 26.08 "Go to Contents" oparte na
+    # znaku Form Feed to BYLA INNA komenda o tej samej nazwie.  Sprawdzamy wiec,
+    # ze skrot jest przypisany do komendy nawigacyjnej.
+    spr("Shift+F6 przypisany do kontekstowego skoku do spisu tresci",
+        "Shift+F6" in tekst and "Go to Contents" in tekst)
 
     print("\nKONTROLA, ZE NIE USUNIETO ZA DUZO (te komendy Kasperczak zaliczyl):")
     for p in ZOSTAJA_POLA:
@@ -165,10 +182,16 @@ def main():
         spr("napis '%s' NADAL jest" % n, n in tekst)
     spr("skrot Control+Enter (Section Break) NADAL jest", "Control+Enter" in tekst)
     spr("skrot Alt+T (Topic) NADAL jest", "Alt+T" in tekst)
-    spr("skrot Control+F6 (Search for Topic) NADAL jest", "Control+F6" in tekst)
-    spr("skrot Alt+F6 (Search for Topic Again) NADAL jest", "Alt+F6" in tekst)
-    spr("komunikat 'No topic to search for again!' NADAL jest (test 1.10)",
-        "No topic to search for again!" in tekst)
+    # SEARCH FOR TOPIC I SEARCH FOR TOPIC AGAIN ZOSTALY USUNIETE 27.08.2026
+    # na wyrazna zgode Michala ("Tak. Mozna podmienic ten klawisz.").  Nalezaly
+    # do oryginalnego modelu tekstu strukturalnego i szukaly wzorca ze znakiem
+    # Form Feed, ktorego w plikach Markdown nie ma ani jednego.  Test pisany
+    # 26.08 wymagal ich obecnosci - dzien pozniej stal sie nieprawdziwy.
+    # Zamiast tego pilnujemy, zeby NIE WROCILY przy scalaniu z upstreamem.
+    spr("Search for Topic usuniete (27.08.2026)",
+        "menuNavigateSearchForTopic" not in pola)
+    spr("komunikat 'No topic to search for again!' usuniety",
+        "No topic to search for again!" not in tekst)
 
     if stary:
         print("\nKONTROLA D - ta sama sonda na binarce SPRZED zmiany (%s):" % stary)

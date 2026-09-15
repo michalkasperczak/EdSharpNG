@@ -20,7 +20,17 @@ import sys
 
 KATALOG = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ZRODLO = os.path.join(KATALOG, "EdSharp.cs")
-OPISY = [os.path.join(KATALOG, "Hotkeys.ini"), os.path.join(KATALOG, "hotkeys.txt")]
+# PLIKI OPISOW: bierzemy tylko te, ktore ISTNIEJA.  Do 5.0.94 obok Hotkeys.ini
+# lezal pisany recznie hotkeys.txt; od 5.0.95 podsumowanie nazywa sie
+# EdSharp_Hotkeys.txt i jest GENEROWANE przy kazdym budowaniu
+# (testy/generuj_podsumowanie_skrotow.py), wiec nie moze sie rozjechac.
+# Sonda wolala stara nazwe i przy kazdym uruchomieniu padala na
+# FileNotFoundError - czyli audyt skrotow nie dzialal wcale, cicho, od zmiany
+# nazwy.  Brak pliku NIE moze wywracac audytu pozostalych.
+_KANDYDACI = [os.path.join(KATALOG, "Hotkeys.ini"),
+              os.path.join(KATALOG, "hotkeys.txt"),
+              os.path.join(KATALOG, "EdSharp_Hotkeys.txt")]
+OPISY = [p for p in _KANDYDACI if os.path.isfile(p)]
 
 # Nazwy klawiszy w kodzie to nazwy z System.Windows.Forms.Keys, a w opisach
 # ludzkie. Bez tej normalizacji audyt zwraca kilkadziesiat falszywek.
