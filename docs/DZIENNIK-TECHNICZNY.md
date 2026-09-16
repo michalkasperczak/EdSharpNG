@@ -25,8 +25,15 @@ komentarzami musimy zrobic obsluge Checklisty markdown. To nie jest trudne,
 zaproponuj jak."
 
     dist/EdSharpNG_Setup_5.0.112.exe
-    3 510 222 B
-    sha256 b1705cb406184f23e71ef2782ebfb4686ccf8246f9cd652a553cfcbe5e5f5ffc
+    3 513 738 B
+    sha256 e3720ac50af60bb11c8dcb7330ca8060e95ba7307e1171c6abdf3e2e39e652e8
+
+PULAPKA PAKOWANIA (znowu, jak przy 5.0.111): build_installer_garfield.sh robi
+staging z listy `git ls-files`, wiec NOWY plik zrodlowy niedodany jeszcze do
+gita wypada z paczki PO CICHU - krok [4/6] go nie zglasza, bo sprawdza tylko
+pliki wymienione w .iss z flaga bez skipifsourcedoesntexist. Zadania.cs trafil
+do instalatora dopiero po `git add`. Kolejnosc jest wiec: commit, POTEM
+instalator, a nie odwrotnie.
 
 Nowy plik Zadania.cs (funkcje czyste: rozpoznanie skladni GFM "- [ ]" / "- [x]",
 przelaczanie stanu, tworzenie i zdejmowanie pola, postep, podpisy dla czytnika).
