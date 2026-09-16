@@ -2007,8 +2007,16 @@ spr("pusty wiersz: nie zalezy od opcji adresowania stron",
     "if (!bZglos || iNewTextLength != rtb.OldTextLength)" in CS_KOD
     and "!bPageAddress || !bZglos" not in CS_KOD)
 # "LineFeed" to nazwa znaku z dokumentacji, nie komunikat dla czlowieka.
-spr("pusty wiersz: mowi 'Empty line', nie 'LineFeed'",
-    'Util.Say("Empty line")' in CS_KOD and 'Util.Say("LineFeed")' not in CS_KOD)
+# PUSTY WIERSZ: PROGRAM MILCZY, GLOS NALEZY DO CZYTNIKA.  Zgloszenie Michala
+# 16.09.2026: "Puste empty line.  Empty line niepotrzebne."  NVDA oglasza pusty
+# wiersz SAM, wiec nasz komunikat byl drugim glosem na to samo.  Ten test
+# wczesniej BRONIL zlego zachowania - pilnowal brzmienia komunikatu, ktory nie
+# powinien istniec.  Teraz pilnuje ciszy w NAWIGACJI.
+# UWAGA: "Empty line" ZOSTAJE w listach (zakladki, przypisy, przeglad wiersza),
+# gdzie program czyta wskazany wiersz na zadanie i czytnik go nie przeczyta -
+# dlatego test patrzy na Util.Say, nie na Say.sayForced.
+spr("pusty wiersz w nawigacji: program MILCZY (czytnik mowi sam)",
+    'Util.Say("Empty line")' not in CS_KOD and 'Util.Say("LineFeed")' not in CS_KOD)
 
 # SETTINGS: potwierdzenie zapisu musi dojsc do czytnika (zgloszenie Michala
 # 13.09.2026: "Enter zapisuje chyba, ale nie mowi Saved").  Util.Say przy

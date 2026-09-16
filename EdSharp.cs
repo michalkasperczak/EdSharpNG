@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.108";
+public const string VersionString = "5.0.109";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -2581,9 +2581,14 @@ bool bZglos = (iDelta == 1 || bRuchPionowy);
 //   2. Ten sam wiersz byl zglaszany po KAZDYM zdarzeniu kursora - a przy
 //      ruchu w poziomie w pustym wierszu zdarzen jest wiele.  Komunikat
 //      nalezy sie przy WEJSCIU do wiersza, czyli po zmianie numeru wiersza.
-bool bWierszPusty = false;
-try {bWierszPusty = (rtb.RowText.Length == 0);} catch {}
-bool bZmianaWiersza = (iNewRow != rtb.OldRow);
+// USUNIETE 16.09.2026.  Zgloszenie Michala: "Puste empty line.  Empty line
+// niepotrzebne."  NVDA na pustym wierszu MOWI JUZ SAM ("puste" / "blank") -
+// nasz komunikat byl DRUGIM glosem na to samo zjawisko, wiec user slyszal
+// pusty wiersz dwa razy.  Zwezanie warunku (13.09 kierunek ruchu, 15.09 raz
+// na wiersz) nie moglo pomoc, bo problemem nie byla CZESTOSC komunikatu,
+// tylko jego ISTNIENIE.  Tu obowiazuje ta sama zasada, co przy slowach i
+// zdaniach: gdy czytnik mowi jednostke sam, my MILCZYMY.  Zostaje tylko
+// FormFeed i TabChar - znaki, ktorych czytnik nie oglasza.
 // DRUGA PRZYCZYNA MILCZENIA, zmierzona 13.09.2026: caly ten komunikat wisial
 // pod opcja "HardPageAddress", ktora domyslnie jest na "N".  Ta opcja decyduje
 // tylko o TYM, CZY PASEK STANU pokazuje strone i wiersz, czy procent - z pustym
@@ -2592,11 +2597,6 @@ bool bZmianaWiersza = (iNewRow != rtb.OldRow);
 // pustym wierszu, znaku wysuwu strony i tabulatorze nalezy sie zawsze.
 if (!bZglos || iNewTextLength != rtb.OldTextLength) {} // Do nothing
 else if (c == '\f') Util.Say("FormFeed");
-// "LineFeed" to nazwa znaku z dokumentacji technicznej, nie komunikat dla
-// czlowieka.  Program w innych miejscach (lista zakladek, przeglad wierszy)
-// mowi juz "Empty line" - tu bylo inne slowo na to samo.  Zgloszenie Michala
-// 13.09.2026: "Na pustej linii mowi LineFeed".
-else if (bWierszPusty && bZmianaWiersza) Util.Say("Empty line");
 else if (c == '\t') Util.Say("TabChar");
 rtb.OldIndex = iNewIndex;
 rtb.OldRow = iNewRow;

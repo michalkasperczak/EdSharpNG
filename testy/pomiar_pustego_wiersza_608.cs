@@ -1,17 +1,27 @@
-// pomiar_pustego_wiersza_608.cs -- CZY "Empty line" PADA TYLKO NA PUSTYM WIERSZU.
+// pomiar_pustego_wiersza_608.cs -- CZY PROGRAM MILCZY NA PUSTYM WIERSZU.
 //
-// ZGLOSZENIE MICHALA 15.09.2026: "Teraz ciagle czyta Empty line na pustych
-// liniach."  Slowo "ciagle" znaczy tu: bez przerwy, takze tam, gdzie nie
-// powinno.  Pomiar ma to rozstrzygnac liczbami, nie wrazeniem.
+// ZGLOSZENIE MICHALA 16.09.2026: "Puste empty line.  Empty line niepotrzebne."
+// NVDA na pustym wierszu MOWI JUZ SAM ("puste" / "blank").  Nasz komunikat byl
+// DRUGIM glosem na to samo, wiec user slyszal pusty wiersz dwa razy.
 //
-// CO MIERZY: przejazd strzalka w dol przez plik, w ktorym WIADOMO, ktore
-// wiersze sa puste, a potem porownanie liczby komunikatow "Empty line" w
-// Speech.log z liczba pustych wierszy w pliku.
+// HISTORIA POMYLKI, ZEBY SIE NIE POWTORZYLA: ta sonda w pierwszej wersji
+// sprawdzala, czy liczba komunikatow ROWNA SIE liczbie pustych wierszy - i dala
+// PASS na binarce, ktora Michal slyszal jako zepsuta.  Byla GLUCHA nie
+// technicznie, ale POJECIOWO: mierzyla CZESTOSC komunikatu, gdy problemem bylo
+// jego ISTNIENIE.  Zanim napiszesz pomiar, ustal, CZY funkcja ma sie odezwac -
+// nie tylko JAK CZESTO.
 //
-// KONTROLA POZYTYWNA (bez niej wynik nic nie dowodzi): plik zawiera 3 puste
-// wiersze, wiec poprawny wynik to DOKLADNIE 3 komunikaty.  Zero komunikatow
-// znaczy, ze sonda jest glucha (np. mowa nie idzie do logu), a nie ze naprawa
-// dziala.
+// CO MIERZY: przejazd strzalka w dol przez plik o znanej tresci, potem liczy w
+// Speech.log komunikaty "Empty line" (i stare brzmienie "LineFeed").
+// POPRAWNY WYNIK: ZERO.
+//
+// KONTROLA, ZE SONDA SLYSZY (bez niej zero nic nie dowodzi): plik zawiera
+// wiersz z samym TABULATOREM, ktorego czytnik nie oglasza, wiec "TabChar" MUSI
+// byc w logu.  Zero "Empty line" PRZY zerze "TabChar" znaczy, ze mowa nie
+// trafia do logu - wynik niewazny, a nie "naprawione".
+//
+// KONTROLA NA STAREJ BINARCE: uruchom z 5.0.108 w argumencie - MUSI dac FAIL.
+// Pomiar, ktory nie zapala sie na wersji z bledem, nie mierzy niczego.
 //
 // URUCHOMIENIE: testy/uruchamiacze/pomiar_puste_wiersze.cmd
 
@@ -30,8 +40,8 @@ class PomiarPustegoWiersza
     }
 
     // Wiersze pliku probnego.  Pierwszy i ostatni NIEpuste, zeby przejazd
-    // zaczynal sie i konczyl na tresci.  Wiersz 5 to sam tabulator - NIE jest
-    // pusty, wiec nie moze dac "Empty line" (tam nalezy sie "TabChar").
+    // zaczynal sie i konczyl na tresci.  Wiersz 5 to sam tabulator - to nasza
+    // kontrola, ze mowa w ogole dochodzi do logu.
     static string[] Wiersze()
     {
         return new string[] {
@@ -62,7 +72,7 @@ class PomiarPustegoWiersza
 
         File.WriteAllText(sProba, string.Join("\r\n", Wiersze()) + "\r\n", new UTF8Encoding(false));
         Console.WriteLine("Plik probny: " + sProba);
-        Console.WriteLine("Pustych wierszy w pliku: " + PustychWierszy());
+        Console.WriteLine("Pustych wierszy w pliku: " + PustychWierszy() + " (program ma o nich MILCZEC)");
 
         // Mowa do pliku.  Ampersand jest CZESCIA nazwy klucza.
         string sKopia = sIni + ".pomiar";
@@ -76,6 +86,7 @@ class PomiarPustegoWiersza
         Console.WriteLine("Mowa przekierowana do Speech.log");
 
         string sExe = args.Length > 0 ? args[0] : @"C:\EdSharpBuild\EdSharpNG.exe";
+        Console.WriteLine("Mierzona binarka: " + sExe);
         Process p = Process.Start(sExe, "\"" + sProba + "\"");
         Thread.Sleep(9000);
 
@@ -104,6 +115,15 @@ class PomiarPustegoWiersza
                 SendKeys("{DOWN}");
                 Thread.Sleep(900);
             }
+            // Ruch W BOK w pustym wierszu: dawniej mnozyl komunikaty.  Wracam na
+            // pusty wiersz i przesuwam sie w nim, zeby wylapac takze te
+            // powtorzenia, a nie tylko jedno wejscie do wiersza.
+            SendKeys("^{HOME}");
+            Thread.Sleep(900);
+            SendKeys("{DOWN}");
+            Thread.Sleep(900);
+            for (int i = 0; i < 4; i++) { SendKeys("{RIGHT}"); Thread.Sleep(500); }
+            for (int i = 0; i < 4; i++) { SendKeys("{LEFT}"); Thread.Sleep(500); }
             Thread.Sleep(1500);
 
             string sPo = "";
@@ -116,24 +136,23 @@ class PomiarPustegoWiersza
             int iEmpty = 0, iTab = 0;
             foreach (string s in sPo.Split('\n'))
             {
-                if (s.Contains("Empty line")) iEmpty++;
+                // Stare brzmienie tez lapie - zamiana slowa nie jest naprawa.
+                if (s.Contains("Empty line") || s.Contains("LineFeed")) iEmpty++;
                 if (s.Contains("TabChar")) iTab++;
             }
 
             Console.WriteLine("--- co program powiedzial w czasie przejazdu ---");
             Console.WriteLine(sPo.Trim());
             Console.WriteLine("--- wynik ---");
-            Console.WriteLine("\"Empty line\": " + iEmpty + " (nalezy sie " + PustychWierszy() + ")");
-            Console.WriteLine("\"TabChar\": " + iTab + " (nalezy sie 1)");
+            Console.WriteLine("\"Empty line\"/\"LineFeed\": " + iEmpty + " (nalezy sie 0)");
+            Console.WriteLine("\"TabChar\": " + iTab + " (nalezy sie co najmniej 1 - kontrola slyszenia)");
 
-            if (iEmpty == 0)
-                Console.WriteLine("SONDA GLUCHA: zero komunikatow - mowa nie trafia do logu, wynik nic nie dowodzi.");
-            else if (iEmpty == PustychWierszy())
-                Console.WriteLine("PASS: pusty wiersz zglaszany raz, tylko gdy jest pusty.");
-            else if (iEmpty > PustychWierszy())
-                Console.WriteLine("FAIL: komunikatow WIECEJ niz pustych wierszy - to jest zgloszenie Michala.");
+            if (iTab == 0)
+                Console.WriteLine("SONDA GLUCHA: brak \"TabChar\" - mowa nie trafia do logu, wynik NIC nie dowodzi.");
+            else if (iEmpty == 0)
+                Console.WriteLine("PASS: program milczy na pustym wierszu, glos oddany czytnikowi.");
             else
-                Console.WriteLine("FAIL: komunikatow MNIEJ niz pustych wierszy - program milczy tam, gdzie ma mowic.");
+                Console.WriteLine("FAIL: program nadal oglasza pusty wiersz " + iEmpty + " raz(y) - to jest zgloszenie Michala.");
         }
         finally
         {
