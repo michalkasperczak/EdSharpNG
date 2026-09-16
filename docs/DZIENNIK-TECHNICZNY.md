@@ -18,6 +18,39 @@ odczytem. Nie wlaczac z powrotem.
 
 ## Wydania
 
+### 5.0.111 - 16.09.2026
+
+Wykonanie decyzji z docs/CO-USUWAMY.md i docs/OPCJE-USTAWIEN.md.
+
+    dist/EdSharpNG_Setup_5.0.111.exe
+    3 500 492 B (rozmiar zalacznika wydania odczytany przez gh)
+
+Zmiana architektury: warstwa skryptow JScript .NET USUNIETA. Znikly EdSharp.dll,
+EdSharp.js, krok jsc.exe w BuildEdSharp.cmd i late binding przez
+Assembly.LoadFrom. Liczenie wyrazen i rozwijanie sekwencji z backslashem
+przeniesione do nowego pliku Wyrazenia.cs (432 wiersze, wlasny parser).
+
+PULAPKI ZMIERZONE PRZY TEJ ZMIANIE (bez nich build padal cicho):
+- build_installer_garfield.sh mial TRZY miejsca z EdSharp.dll/EdSharp.js:
+  warunek swiezosci binarki (-nt EdSharp.js), kontrola [[ -s EdSharp.dll ]]
+  i cp do stagingu. Kazde z nich przerywalo pakowanie PO udanej kompilacji,
+  komunikatem mowiacym o czyms innym ("build nie utworzyl EdSharpNG.exe"),
+- zbuduj.sh kopiowal EdSharp.dll do repo bezwarunkowo (exit 8),
+- EdSharp_Setup.iss pakowal EdSharp.js z flaga ignoreversion (bez
+  skipifsourcedoesntexist), czyli brak pliku = blad Inno Setup. Wpis w
+  [UninstallDelete] dla EdSharp.dll ZOSTAJE celowo, zeby plik z poprzednich
+  instalacji zniknal przy odinstalowaniu.
+- do .iss dopisane brakujace zrodla: Sesja.cs, Ustawienia.cs, Wyrazenia.cs
+  (paczka wozi zrodla, zeby program dal sie przekompilowac u uzytkownika).
+
+### 5.0.110 - numer PRZESKOCZONY
+
+Numer 5.0.110 nie zostal wydany. Dwie sesje (Telegram i BlindPilot) pracowaly
+rownolegle w tym samym repozytorium: jedna podniosla wersje na 5.0.110, druga
+w tym samym czasie na 5.0.111 i to ona doszla do wydania. LEKCJA: przed
+podniesieniem numeru wersji sprawdzic, czy w repo nie pracuje druga sesja
+(ps -eo cmd | grep zbuduj.sh oraz git log -1).
+
 ### 5.0.86 - 12.09.2026
 
 Program sam zamyka sie przed aktualizacja.

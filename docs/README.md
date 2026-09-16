@@ -9,6 +9,7 @@ której akurat trwa praca.
 | Plik | Co zawiera | Kto pisze |
 |---|---|---|
 | [ARCHITEKTURA.md](ARCHITEKTURA.md) | Budowa programu: pliki źródłowe, co za co odpowiada, jak to się kompiluje | ręcznie |
+| [ROZNICE-WOBEC-ORYGINALU.md](ROZNICE-WOBEC-ORYGINALU.md) | **Do pokazywania ludziom**: co EdSharpNG ma inaczej niż EdSharp Jamala Mazrui — nowe funkcje, usunięte polecenia, zmierzone liczby | ręcznie |
 | [DECYZJE.md](DECYZJE.md) | Rozstrzygnięcia projektowe wraz z uzasadnieniem i datą | ręcznie |
 | [BUDOWANIE.md](BUDOWANIE.md) | Jak zbudować program i wydać wersję, z pułapkami | ręcznie |
 | [POMIARY.md](POMIARY.md) | Zasady testowania i spis testów automatycznych | ręcznie |

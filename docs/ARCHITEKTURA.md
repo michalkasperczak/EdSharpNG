@@ -1,6 +1,6 @@
 # Architektura EdSharpNG
 
-Stan na wersję 5.0.94 (12.09.2026). Liczby wierszy zmierzone `wc -l`, nie
+Stan na wersję 5.0.111 (16.09.2026). Liczby wierszy zmierzone `wc -l`, nie
 przepisane z pamięci.
 
 ## Skąd to pochodzi
@@ -17,16 +17,18 @@ nie do niego.
 
 ## Pliki źródłowe
 
-Cały program to 11 plików C#, razem około 30 100 wierszy. Kompiluje się jednym
+Cały program to 12 plików C#, razem 30 792 wiersze. Kompiluje się jednym
 wywołaniem `csc`, bez menedżera pakietów i bez żadnej zewnętrznej biblioteki
-poza .NET Framework. To ograniczenie jest świadome — patrz `DECYZJE.md`.
+poza .NET Framework. Od 5.0.111 **bez drugiego kompilatora**: krok `jsc.exe`
+i biblioteka `EdSharp.dll` (host JScript .NET) zniknęły razem z warstwą
+skryptów. To ograniczenie jest świadome — patrz `DECYZJE.md`.
 
 ### Rdzeń odziedziczony
 
 | Plik | Wiersze | Za co odpowiada |
 |---|---|---|
-| `EdSharp.cs` | 24 207 | Prawie cały program: klasy `MdiFrame` (okno główne), `MdiChild` (okno dokumentu), `App` (stan globalny), menu, obsługa plików, konwersje, skróty klawiszowe |
-| `Lbc.cs` | 2 876 | Okna dialogowe budowane kodem: `LbcDialog`, `LbcForm`, `LbcTextBox`, `HelpDialog`. Tu powstają wszystkie okna z polami |
+| `EdSharp.cs` | 24 140 | Prawie cały program: klasy `MdiFrame` (okno główne), `MdiChild` (okno dokumentu), `App` (stan globalny), menu, obsługa plików, konwersje, skróty klawiszowe |
+| `Lbc.cs` | 2 887 | Okna dialogowe budowane kodem: `LbcDialog`, `LbcForm`, `LbcTextBox`, `HelpDialog`. Tu powstają wszystkie okna z polami |
 | `Say.cs` | 764 | Mowa: JAWS przez COM, NVDA przez bibliotekę sterującą, w ostateczności powiadomienie UIA |
 | `Inix.cs` | 505 | Czytanie i zapisywanie plików `.ini` z zachowaniem kolejności wpisów |
 | `KeyMap.cs` | 147 | Jedna tablica: kontekst, nazwa polecenia, opis, skrót. Czytają z niej menu, menu alternatywne (Alt+F10), opisywacz klawiszy (Ctrl+F1) i paleta poleceń |
@@ -45,6 +47,8 @@ projektami przez skopiowanie pliku.
 | `Sesja.cs` | 349 | Ciągłość pracy: sesja robocza i autozapis kopii ratunkowych | 5.0.93 |
 | `Csv.cs` | 257 | Czytnik i zapisywacz CSV wg RFC 4180, bez zewnętrznych bibliotek | 5.0.87 |
 | `Pisownia.cs` | 229 | Sprawdzanie pisowni przez Windows Spell Checking API, bez Worda | 5.0.84 |
+| `Ustawienia.cs` | 267 | Okno ustawień: pola wyboru i listy zamiast wpisywania wartości tekstem | 5.0.96 |
+| `Wyrazenia.cs` | 432 | Kalkulator wyrażeń i rozwijanie sekwencji z odwrotnym ukośnikiem — następca silnika JScript .NET | 5.0.111 |
 
 Każdy z tych plików zaczyna się komentarzem, który podaje: numer zadania,
 cytat zgłoszenia, co było wcześniej i dlaczego nie wystarczało. To celowo — po
