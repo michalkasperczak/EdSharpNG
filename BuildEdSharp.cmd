@@ -2,15 +2,17 @@
 rem ====================================================================
 rem BuildEdSharp.cmd - x64 build for EdSharp.exe (v5 modernization).
 rem
-rem   1. EdSharp.dll -- JScript .NET scripting host, from EdSharp.js by
-rem      jsc.exe. Loaded at run time by reflection (Assembly.LoadFrom),
-rem      so csc.exe does NOT /reference it (same base name as the exe).
-rem   2. EdSharpNG.exe -- the WinForms app, from EdSharp.cs by csc.exe,
-rem      x64, with the manifest and (if present) icon.
+rem   EdSharpNG.exe -- the WinForms app, from EdSharp.cs by csc.exe,
+rem   x64, with the manifest and (if present) icon.
 rem
-rem Bare compilers, no MSBuild/NuGet: jsc.exe and csc.exe both ship with
-rem the .NET Framework; csc is also available, newer, from VS Build
-rem Tools. Mirrors the DbDo build model.
+rem EdSharp.dll (JScript .NET host built from EdSharp.js by jsc.exe) is NO
+rem LONGER BUILT: the whole scripting layer was removed on 16.09.2026
+rem (docs/CO-USUWAMY.md 2.2).  With it went the jsc.exe step, the reflection
+rem load (Assembly.LoadFrom) and one file from the installer.  Expression
+rem evaluation and backslash-escape expansion now live in Wyrazenia.cs.
+rem
+rem Bare compiler, no MSBuild/NuGet: csc.exe ships with the .NET Framework
+rem and is also available, newer, from VS Build Tools.
 rem ====================================================================
 setlocal enableextensions enabledelayedexpansion
 pushd "%~dp0"
@@ -24,7 +26,7 @@ if not exist "Lbc.cs" echo ERROR: Lbc.cs not found.& popd & exit /b 1
 if not exist "Say.cs" echo ERROR: Say.cs not found.& popd & exit /b 1
 if not exist "Inix.cs" echo ERROR: Inix.cs not found.& popd & exit /b 1
 if not exist "KeyMap.cs" echo ERROR: KeyMap.cs not found.& popd & exit /b 1
-if not exist "EdSharp.js" echo ERROR: EdSharp.js not found.& popd & exit /b 1
+if not exist "Wyrazenia.cs" echo ERROR: Wyrazenia.cs not found.& popd & exit /b 1
 if not exist "EdSharp.manifest" echo ERROR: EdSharp.manifest not found.& popd & exit /b 1
 
 rem ---- locate csc.exe: prefer Roslyn (latest C#), fall back to Framework ----
@@ -42,13 +44,6 @@ for %%p in (
 ) do (if not defined csc if exist %%p set "csc=%%~p")
 if not defined csc echo ERROR: No csc.exe found. Install VS Build Tools or repair .NET Framework.& popd & exit /b 1
 echo C# compiler: !csc! >> "!log!"
-
-rem ---- locate jsc.exe (Framework only; no Roslyn JScript) ----
-set "jsc="
-if exist "%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\jsc.exe" set "jsc=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\jsc.exe"
-if not defined jsc if exist "%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\jsc.exe" set "jsc=%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\jsc.exe"
-if not defined jsc echo ERROR: No jsc.exe found (repair .NET Framework).& popd & exit /b 1
-echo JScript compiler: !jsc! >> "!log!"
 
 rem ---- locate UIA reference assemblies (for the UIA-notification work) ----
 rem Not referenced by this minimal baseline yet, but probed here so the
@@ -76,12 +71,10 @@ rem EdSharp.exe; get it from the NVDA controllerClient package at
 rem https://www.nvaccess.org/ (Developer downloads).
 if exist "nvdaControllerClient.dll" (echo NVDA controller client present.) else (echo NVDA controller client absent ^(optional, runtime only^).)
 
-rem ---- compile EdSharp.js -> EdSharp.dll (JScript .NET) ----
-echo Compiling EdSharp.js -^> EdSharp.dll ...
+rem ---- EdSharp.dll (JScript .NET) NIE JEST JUZ BUDOWANA ----
+rem Stara kopia zostawiona w katalogu budowania mylila: instalator dostawal
+rem plik, ktorego program juz nie wola.  Kasujemy ja, jesli lezy.
 if exist EdSharp.dll del /f /q EdSharp.dll
-"!jsc!" /nologo /target:library /platform:anycpu /out:EdSharp.dll EdSharp.js >> "!log!" 2>&1
-if errorlevel 1 goto failed
-echo   EdSharp.dll built.
 
 rem ---- best-effort: fetch the encoding-detection library (Ude.dll) ----
 rem Referenced by csc at build time and loaded beside EdSharp.exe at run time.
@@ -103,7 +96,7 @@ echo Compiling EdSharp.cs -^> EdSharpNG.exe ...
 if exist EdSharpNG.exe del /f /q EdSharpNG.exe
 set "icon="
 if exist EdSharp.ico set "icon=/win32icon:EdSharp.ico"
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs >> "!log!" 2>&1
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs Wyrazenia.cs >> "!log!" 2>&1
 if errorlevel 1 goto failed
 
 rem ---- native pre-JIT (ngen) is handled by the INSTALLER, not here ----
@@ -141,9 +134,8 @@ if exist "ConvertHelpers\brl2txt.bat" (
 echo.
 echo Build complete:
 echo   EdSharpNG.exe  -- the application (x64)
-echo   EdSharp.dll  -- JScript .NET scripting host
 echo. >> "!log!"
-echo BUILD COMPLETE: EdSharpNG.exe and EdSharp.dll built successfully. >> "!log!"
+echo BUILD COMPLETE: EdSharpNG.exe built successfully. >> "!log!"
 echo Finished %DATE% %TIME% >> "!log!"
 popd & endlocal & exit /b 0
 

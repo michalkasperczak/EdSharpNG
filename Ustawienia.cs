@@ -40,12 +40,14 @@
 // pomijamy -- ale nazwy kluczy porownujemy po zdjeciu ampersandu, zeby zaden
 // inny klucz nie wpadl w te sama pulapke w przyszlosci.
 //
-// TRZECIA PULAPKA: opcje sa TAKZE per-kompilator (sekcja [Options] w
-// <Kompilator>.ini).  Stare okno pisalo zawsze do glownego pliku i tak
-// zostaje: to okno jest o ustawieniach programu.  Manual Options (Alt+Shift+M)
-// dalej otwiera plik do recznej edycji i jest jedyna droga do rzeczy, ktorych
-// tu nie ma -- dlatego przycisk "Edit file" w tym oknie prowadzi wprost tam,
-// zamiast kazac szukac osobnej komendy w menu.
+// TRZECIA PULAPKA JUZ NIE ISTNIEJE: opcje byly TAKZE per-kompilator (sekcja
+// [Options] w <Kompilator>.ini) i stare okno musialo pilnowac, do ktorego pliku
+// pisze.  Caly mechanizm plikow per-kompilator zniknal 16.09.2026 razem
+// z poleceniami budowania kodu (docs/CO-USUWAMY.md 2.3), wiec jest teraz JEDEN
+// plik ustawien.  Manual Options (Alt+Shift+M) dalej otwiera go do recznej
+// edycji i jest jedyna droga do kluczy, ktorych to okno nie pokazuje --
+// dlatego przycisk "Edit file" prowadzi wprost tam, zamiast kazac szukac
+// osobnej komendy w menu.
 
 using System;
 using System.Collections.Generic;
@@ -124,9 +126,14 @@ public class Ustawienia
             "A long line is shown broken across the screen instead of running off to the right.  Alt+W changes it for the window you are in.");
         o.Domyslna = "Y"; l.Add(o);
 
+        // FABRYCZNIE WLACZONE od 16.09.2026 (docs/OPCJE-USTAWIEN.md: "MK. Lepiej,
+        // zeby domyslnie bylo wlaczone chyba.").  Osoba czytajaca ekranem nie
+        // ustawia okien mysza - male okno na starcie to tylko mniej tekstu na
+        // raz.  Wartosc domyslna MUSI byc taka sama tutaj i w App.ReadOption
+        // w EdSharp.cs, inaczej okno pokazuje inny stan niz program stosuje.
         o = new Opcja("MaximizeWindow", "Start with the window ma&ximized", "przelacznik",
             "The EdSharp window fills the screen when the program starts.");
-        o.Domyslna = "N"; l.Add(o);
+        o.Domyslna = "Y"; l.Add(o);
 
         o = new Opcja("UseIndentModeDefault", "Turn &indent mode on in new windows", "przelacznik",
             "A new line keeps the indent of the line above it.  Alt+Shift+I changes it for the window you are in.");
@@ -149,10 +156,6 @@ public class Ustawienia
         o.Wartosci = new string[] { "md", "txt", "html" };
         o.Domyslna = "md"; l.Add(o);
 
-        o = new Opcja("KeepBackup", "&Keep a backup copy of the file being overwritten", "przelacznik",
-            "The previous content is kept next to your file with .bak added to the name.");
-        o.Domyslna = "N"; l.Add(o);
-
         o = new Opcja("OpenPrevious", "Open the files from the &previous session on startup", "przelacznik",
             "Files that were open when you last left are opened again.  Work Continuity, in this same menu, also brings back the cursor positions.");
         o.Domyslna = "N"; l.Add(o);
@@ -169,10 +172,6 @@ public class Ustawienia
         o.Domyslna = ""; l.Add(o);
 
         // --- czytanie i mowa ---
-        o = new Opcja("HardPageAddress", "Position command says the page num&ber", "przelacznik",
-            "Alt+A says a page number counted from page break characters instead of a percentage of the document.  Pressing Alt+A twice gives the other kind either way.");
-        o.Domyslna = "N"; l.Add(o);
-
         o = new Opcja("DateFormat", "Date is written as", "lista",
             "The form used by Insert Date and Time and by the %Date% token.");
         o.Nazwy = new string[] { "Long, as Windows writes it", "Short, as Windows writes it", "Year-month-day (2026-09-13)",
@@ -196,8 +195,16 @@ public class Ustawienia
         // --- porownywanie i sortowanie list ---
         o = new Opcja("LimitItem", "When comparing or sorting, one item is", "lista",
             "What the item commands treat as a single item: a line, a paragraph, or a section.");
-        o.Nazwy = new string[] { "One line", "One paragraph (blank line between)", "One section (up to a page break)" };
-        o.Wartosci = new string[] { "\\n", "\\n\\n", "\\f" };
+        // POZYCJA "One section (up to a page break)" ZDJETA 16.09.2026
+        // (docs/OPCJE-USTAWIEN.md: "MK. Znak nowej strony nie ma u nas
+        // znaczenia, wiec chyba ta opcja jedna musi zniknac.").  Znak wysuwu
+        // strony nie wystepuje w Markdownie ani w zwyklym tekscie, ktore ten
+        // edytor pisze - element "do wysuwu strony" znaczyl w praktyce "caly
+        // plik jako jeden element".  Kto ma taka wartosc w pliku, temu ona
+        // DZIALA dalej (Regex.Split w EdSharp.cs czyta klucz bez ograniczen);
+        // znika tylko z listy do wyboru, wiec nikt jej nowo nie ustawi.
+        o.Nazwy = new string[] { "One line", "One paragraph (blank line between)" };
+        o.Wartosci = new string[] { "\\n", "\\n\\n" };
         o.Domyslna = "\\n"; l.Add(o);
 
         // --- zaawansowane: kompilator i wzorce ---
@@ -207,10 +214,6 @@ public class Ustawienia
         o.Wartosci = new string[] { "{}", "()", "[]", "<>" };
         o.Domyslna = "{}"; o.Zaawansowana = true; l.Add(o);
 
-        o = new Opcja("CompileCommand", "&Command that builds the current file", "tekst",
-            "Left empty, C# and Python files still build with the compiler found on this machine.  %File% stands for the file being built.");
-        o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
-
         o = new Opcja("PromptCommand", "Command run by Pro&mpt Command", "tekst",
             "The program started by the Prompt Command item in the Miscellaneous menu.");
         o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
@@ -219,21 +222,9 @@ public class Ustawienia
             "The interpreter opened by Go To Environment, for example python.");
         o.Domyslna = "python"; o.Zaawansowana = true; l.Add(o);
 
-        o = new Opcja("JumpPosition", "Pattern that finds an error position in build output", "tekst",
-            "A regular expression.  Left empty, the pattern built into EdSharp is used, which reads the output of the usual compilers.");
-        o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
-
-        o = new Opcja("AbbreviateOutput", "Pattern that shortens build output", "tekst",
-            "A regular expression.  What it matches is dropped from the message, so the part that matters is said first.");
-        o.Domyslna = "\\r"; o.Zaawansowana = true; l.Add(o);
-
         o = new Opcja("ViewLevels", "Formats to open converted or raw", "tekst",
             "Pairs such as docx:0 rst:1, separated by spaces.  Zero opens that kind of file as it is stored, one converts it to text.");
         o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
-
-        o = new Opcja("SectionBreak", "Text inserted as a section break", "tekst",
-            "Written with backslash n for a line break and backslash f for a page break, as in the configuration file.");
-        o.Domyslna = "\\n----------\\n\\f\\n"; o.Zaawansowana = true; l.Add(o);
 
         return l;
     }
@@ -255,6 +246,22 @@ public class Ustawienia
         // gdzie stoja razem i gdzie liczba sekund ma granice.
         if (string.Equals(s, "RestoreSession", StringComparison.OrdinalIgnoreCase)) return true;
         if (string.Equals(s, "AutoSaveSeconds", StringComparison.OrdinalIgnoreCase)) return true;
+        // KLUCZE PO FUNKCJACH USUNIETYCH 16.09.2026 (docs/CO-USUWAMY.md 2.3,
+        // docs/OPCJE-USTAWIEN.md).  Zostaja w starych plikach ustawien na
+        // dyskach i MUSZA byc tu wymienione, inaczej sprawdzenie pokrycia
+        // ("kluczy w pliku, ktorych okno NIE zna") zglasza je jako braki, a nie
+        // jako swiadome pominiecia:
+        //   CompileCommand, JumpPosition, AbbreviateOutput -- budowanie kodu,
+        //     polecenia Compile, Pick Compiler i Review Output juz nie istnieja;
+        //   SectionBreak -- podzial sekcji wstawial znak wysuwu strony;
+        //   HardPageAddress -- numer strony liczony z wysuwow strony;
+        //   KeepBackup -- kopia .bak nadpisywanego pliku.
+        if (string.Equals(s, "CompileCommand", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(s, "JumpPosition", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(s, "AbbreviateOutput", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(s, "SectionBreak", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(s, "HardPageAddress", StringComparison.OrdinalIgnoreCase)) return true;
+        if (string.Equals(s, "KeepBackup", StringComparison.OrdinalIgnoreCase)) return true;
         return false;
     }
 } // Ustawienia class

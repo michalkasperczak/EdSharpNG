@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.109";
+public const string VersionString = "5.0.111";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -77,7 +77,6 @@ public static string IndentModeFile;
 public static string TempFile;
 public static List<string> TempFiles = new List<string>();
 //public static object Word = null;
-public static object Boo = null;
 public static object JAWS = null;
 public static object Wineyes = null;
 public static bool WordCreated = false;
@@ -198,7 +197,6 @@ if (App.WordCreated) {
 Util.Say("Exiting Microsoft Word");
 COM.WordExit();
 }
-if (App.Boo != null) COM.Release(ref App.Boo);
 if (App.JAWS != null) COM.Release(ref App.JAWS);
 if (App.Wineyes != null) COM.Release(ref App.Wineyes);
 
@@ -1243,14 +1241,14 @@ App.Frame.AddMessage("Cannot open file!");
 } // LoadTextFile method
 
 public void SaveTextOrRtfFile(string sFile) {
-if (System.IO.File.Exists(sFile)) {
-string sKeepBackup = App.ReadOption("KeepBackup", "N").Trim().ToLower();
-if (sKeepBackup == "y" || sKeepBackup == "yes") {
-string sBak = sFile + ".bak";
-if (System.IO.File.Exists(sBak)) System.IO.File.Delete(sBak);
-System.IO.File.Copy(sFile, sBak);
-}
-}
+// KOPIA .bak NADPISYWANEGO PLIKU USUNIETA 16.09.2026
+// (docs/OPCJE-USTAWIEN.md: "MK. Proponuje te opcje usunac.").  Opcja
+// KeepBackup byla fabrycznie wylaczona, wiec wlaczal ja tylko ten, kto
+// szukal jej w pliku ustawien.  Zostawiala obok kazdego dokumentu drugi
+// plik "<nazwa>.bak", ktory potem wchodzil na liste ostatnich plikow
+// i mylil sie z wlasciwym dokumentem przy czytaniu ekranem.  Zabezpiecze-
+// niem przed utrata pracy jest Work Continuity (autozapis sesji), nie
+// mnozenie kopii w katalogu z dokumentami.
 
 // ZAPIS RICH TEXT TYLKO DLA DOKUMENTU, KTORY RICH TEXTEM JEST.
 //
@@ -1343,17 +1341,26 @@ public static string LineBreak = Environment.NewLine;
 public static string FF = "\f";
 public static string SB = FF + LB;
 public static string DD = "----------";
+// SEPARATOR WEWNETRZNY, JUZ NIE USTAWIENIE.  Do 16.09.2026 ten tekst dawal sie
+// nadpisac kluczem "SectionBreak" w pliku ustawien; opcja zostala usunieta
+// (docs/OPCJE-USTAWIEN.md: "MK. Do usuniecia chyba"), bo zawierala znak wysuwu
+// strony, ktorego edytor Markdowna nie uzywa, a polecenie Control+Enter od
+// 14.08.2026 wstawia NAGLOWEK Markdown, nie ten separator.  Sama stala ZOSTAJE:
+// rozdziela nia wyniki wyszukiwania wrzucane do nowego okna oraz sekcje
+// dokumentu importowanego z Worda.  Nie czytamy jej z pliku, zeby nikt nie
+// zepsul tych dwoch rzeczy wpisem, ktorego nie da sie juz zobaczyc w oknie
+// ustawien.
 public static string SectionBreak = LB + DD + LB + SB;
 public static string EOD = LB + DD + LB + "End of Document" + LB;
 
 public static Dictionary<Keys, ToolStripMenuItem> hashKey = new Dictionary<Keys, ToolStripMenuItem>();
 public MenuStrip menuMain;
-public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
+public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
 public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode;
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
-public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
+public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1361,7 +1368,6 @@ public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
 
 public MdiFrame() {
-SectionBreak = Util.Literalize(App.ReadOption("SectionBreak", SectionBreak));
 this.SuspendLayout();
 this.IsMdiContainer = true;
 menuMain = CreateMainMenu();
@@ -1413,11 +1419,6 @@ menuFileProperties = CreateMenuItem("Properties", "Alt+Enter", menuItem_Click, "
 menuFileMailBody = CreateMenuItem("&Mail Body ...", "Control+M", menuItem_Click, "child speak");
 menuFileMailAttach = CreateMenuItem("Mail Attachment ...", "Control+Shift+M", menuItem_Click, "child speak");
 menuFilePrint = CreateMenuItem("&Print", "Control+P", menuItem_Click, "child silent");
-// Run has no chord any more: F5 now opens the Markdown preview in the web
-// browser, which is Kasperczak's decision of 20 August 2026 -- EdSharpNG is
-// to be a Markdown editor rather than a programming one. The command stays
-// in the File menu and in the Alternate Menu, so nothing is lost.
-menuFileRun = CreateMenuItem("Run", "", menuItem_Click, "child speak");
 menuFileCurrentWindows = CreateMenuItem("Current Windows ...", "F4", menuItem_Click, "frame silent");
 menuFileClose = CreateMenuItem("&Close Window", "Control+F4", menuItem_Click, "child speak");
 // Control+W is an ADDITIONAL chord for Close Window (Kasperczak, 13.08.2026);
@@ -1435,9 +1436,19 @@ menuFileCloseAllButCurrentWindow = CreateMenuItem("Close All but Current Window"
 // Numbered Files: Alt+digit opens the file remembered under that digit,
 // Alt+Shift+digit assigns the current file to it (see HandleFileSlotKey).  This
 // menu item lists them so the feature is discoverable with a screen reader.
-menuFileSlots = CreateMenuItem("Numbered Files ...", "Alt+Shift+F2", menuItem_Click, "frame silent");
+// LISTA STOI OD 16.09.2026 NA ALT+0, nie na Alt+Shift+F2 (polecenie Michala,
+// docs/CO-USUWAMY.md 2.5: "alt-cyfra uzywam, alt-Shift-F2 zamienic na liste
+// numerowanych alt-0.").  Alt+0 lezy PALCEM OBOK Alt+1..Alt+9, ktore otwieraja
+// poszczegolne pliki, wiec cala rodzina polecen jest w jednym miejscu
+// klawiatury - a klawisz funkcyjny z dwoma modyfikatorami odchodzi.
+// SKUTEK UBOCZNY, ZAMIERZONY: dziesiatego slotu nie da sie juz OTWORZYC
+// z klawiatury, bo Alt+0 zajmuje teraz lista.  Dlatego HandleFileSlotKey
+// obsluguje slots 1..9, a przypisanie na Alt+Shift+0 tez zniknelo - inaczej
+// dalo by sie zapisac plik pod cyfra, ktorej nikt nie otworzy.  Dziesiaty
+// plik zawsze byl dostepny przez te liste, i tak zostaje.
+menuFileSlots = CreateMenuItem("Numbered Files ...", "Alt+D0", menuItem_Click, "frame silent");
 menuFileExit = CreateMenuItem("&E&xit EdSharp", "Alt+F4", menuItem_Click, "frame speak");
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileRun, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
 //Dialog.Show("File.", menuFile.DropDownItems.Count);
 
 menuEdit = CreateMenu("&Edit");
@@ -1714,8 +1725,8 @@ menuQueryPath = CreateMenuItem("Path", "Alt+P", menuItem_Click, "child silent");
 menuQueryTopic = CreateMenuItem("Topic", "Alt+T", menuItem_Click, "child speak");
 menuQueryYield = CreateMenuItem("Yield", "Alt+Y", menuItem_Click, "child speak");
 menuQueryStatus = CreateMenuItem("Status", "Alt+Z", menuItem_Click, "child silent");
-// Alt+D0 was freed for the File Slot commands (Alt+0 opens file slot 10).
-menuQueryCompiler = CreateMenuItem("Compiler", "Control+F9", menuItem_Click, "frame silent");
+// Alt+D0 was freed for the File Slot commands; since 16.09.2026 it opens the
+// LIST of numbered files (menu File, "Numbered Files"), not slot 10.
 menuQuerySelected = CreateMenuItem("Selected", "Shift+Space", menuItem_Click, "child silent");
 menuQueryChunk = CreateMenuItem("Chunk", "Shift+Back", menuItem_Click, "child silent");
 menuQueryReadAll = CreateMenuItem("Read All", "Alt+F8", menuItem_Click, "child speak");
@@ -1727,7 +1738,7 @@ menuQueryReadAll = CreateMenuItem("Read All", "Alt+F8", menuItem_Click, "child s
 menuQueryClipboard = CreateMenuItem("Clipboard", "Alt+OemQuotes", menuItem_Click, "frame silent");
 menuQueryTime = CreateMenuItem("Time", "Alt+OemSemicolon", menuItem_Click, "frame silent");
 menuQueryStyles = CreateMenuItem("Styles", "Alt+OemQuestion", menuItem_Click, "child silent");
-menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQueryCompiler, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles});
+menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles});
 //Dialog.Show("Query.", menuQuery.DropDownItems.Count);
 
 menuMisc = CreateMenu("&Misc");
@@ -1820,8 +1831,12 @@ menuMiscTranslateLanguage = CreateMenuItem("Translate Language", "Alt+Shift+F7",
 // pasku stanu (zostaje do wzroku i dla czytnika na zadanie), a mowa idzie
 // JEDNA droga, przez AddMessage ze skutkiem.
 menuMiscGuardDocument = CreateMenuItem("Guard Document", "Control+F7", menuItem_Click, "child silent");
-menuMiscPyBrace = CreateMenuItem("PyBrace", "Alt+Shift+OemOpenBrackets", menuItem_Click, "child speak");
-menuMiscPyDent = CreateMenuItem("PyDent", "Alt+OemOpenBrackets", menuItem_Click, "child speak");
+// PyBrace i PyDent USUNIETE 16.09.2026 (decyzja Michala w docs/CO-USUWAMY.md,
+// punkt 2.1: "Usuwamy").  Przerabialy kod Pythona z formatu nawiasowego na
+// wcieciowy i odwrotnie - narzedzie z czasow, gdy czytnik nie mowil poziomu
+// wciecia.  Dzis mowi, a EdSharpNG ma na to wlasne Alt+I.  Infer Indent
+// (Alt+prawy nawias) ZOSTAJE na jego wyrazne zyczenie: rozpoznaje krok wciecia
+// cudzego pliku tekstowego, nie tylko kodu.
 menuMiscInferIndent = CreateMenuItem("Infer Indent", "Alt+OemCloseBrackets", menuItem_Click, "child silent");
 // Format Code (originally Control+4, later Control+Shift+F6 here) has been
 // REMOVED from this fork on Kasperczak's decision (Telegram 26.08.2026:
@@ -1876,7 +1891,6 @@ menuMiscPreviewMarkdownBrowser = CreateMenuItem("Preview Markdown in Web Browser
 // Klawisz funkcyjny ale to zupelnie kiedys indziej".  Puste sKey daje
 // Keys.None, czyli brak wpisu w hashKey i brak wyswietlanego skrotu - ten
 // sam wzorzec co Word Wrap i Unwrap w 5.0.34.
-menuMiscTextCombine = CreateMenuItem("Text Combine", "", menuItem_Click, "child speak");
 menuMiscInsertTable = CreateMenuItem("Insert Table ...", "Control+Shift+T", menuItem_Click, "child silent");
 // CSV JAKO TABELA NA ZADANIE (zadanie 10, 5.0.87). Bez skrotu klawiszowego -
 // przy otwieraniu pliku .csv program pyta sam, a to jest droga dla pliku
@@ -2053,7 +2067,6 @@ menuMiscCommentList = CreateMenuItem("Comment List ...", "", menuItem_Click, "ch
 // wzorzec.  Extract with Regular Expression zniklo calkiem: pole klasy, pozycja
 // menu, wpis w AddRange, obsluga i opisy mowione w trzech plikach.
 menuMiscRegExpTool = CreateMenuItem("Regular Expression Tool ...", "Control+Shift+Y", menuItem_Click, "child silent");
-menuMiscRunAtCursor = CreateMenuItem("Run at Cursor ...", "Shift+F5", menuItem_Click, "child silent");
 menuMiscSpecialCharacter = CreateMenuItem("Special Character ...", "F2", menuItem_Click, "child silent");
 menuMiscEvaluateExpression = CreateMenuItem("Evaluate Expression", "Control+Oemplus", menuItem_Click, "child speak");
 menuMiscReplaceTokens = CreateMenuItem("Replace Tokens", "Control+Shift+Oemplus", menuItem_Click, "child silent");
@@ -2064,10 +2077,7 @@ menuMiscTransformFiles = CreateMenuItem("Transform Files", "Alt+Oemplus", menuIt
 // ale kierunek jest jednoznaczny i dotyczy SKROTU, nie funkcji.  Uruchomienie
 // srodowiska kompilatora zostaje wiec dostepne z menu.
 menuMiscGoToEnvironment = CreateMenuItem("Go to Environment", "", menuItem_Click, "frame speak");
-menuMiscCompile = CreateMenuItem("Compile", "Control+F5", menuItem_Click, "child speak");
-menuMiscPickCompiler = CreateMenuItem("Pick Compiler", "Control+Shift+F5", menuItem_Click, "frame silent");
 menuMiscPromptCommand = CreateMenuItem("Prompt Command", "Alt+F5", menuItem_Click, "child silent");
-menuMiscReviewOutput = CreateMenuItem("Review Output", "Alt+Shift+F5", menuItem_Click, "child speak");
 menuMiscSaveSnippet = CreateMenuItem("Save Snippet", "Alt+S", menuItem_Click, "child speak");
 menuMiscInvokeSnippet = CreateMenuItem("Invoke Snippet", "Alt+V", menuItem_Click, "child speak");
 menuMiscViewSnippet = CreateMenuItem("View Snippet", "Alt+Shift+V", menuItem_Click, "frame speak");
@@ -2103,7 +2113,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscPyBrace, menuMiscPyDent, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscTextCombine, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscRunAtCursor, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscCompile, menuMiscPickCompiler, menuMiscPromptCommand, menuMiscReviewOutput, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 // KOLEJNOSC MA ZNACZENIE: to AddRange stoi PONIZEJ tworzenia pozycji przypisow
 // i komentarzy (dawne menuMisc*), bo od 5.0.95 nawigacja po nich wisi wlasnie
 // tutaj.  Gdy AddRange bylo wyzej (linia ~1693), pozycje jeszcze NIE ISTNIALY
@@ -2186,7 +2196,11 @@ FocusChildEditControl();
 menuMain.MenuDeactivate += delegate(object o, EventArgs e) {
 FocusChildEditControl();
 };
-string s = App.ReadOption("MaximizeWindow", "N").Trim().ToUpper();
+// WARTOSC DOMYSLNA "Y": okno na caly ekran, jesli nikt nie ustawil inaczej
+// (16.09.2026, docs/OPCJE-USTAWIEN.md).  Ta sama domyslna stoi w Ustawienia.cs
+// i obie musza byc rowne, inaczej okno ustawien pokazuje inny stan niz ten,
+// ktory program stosuje na starcie.
+string s = App.ReadOption("MaximizeWindow", "Y").Trim().ToUpper();
 if (s == "Y" || s == "YES") this.Shown += delegate(object o, EventArgs e) {
 this.WindowState = FormWindowState.Maximized;
 this.Activate();
@@ -2197,7 +2211,10 @@ Util.ActivateTitle(this.Text);
 };
 
 string sDir = Directory.GetCurrentDirectory();
-string sFile = Path.Combine(App.DataDir, App.ReadData("Compiler", "Default") + ".ini");
+// Katalog roboczy pamietany jest w pliku Default.ini w katalogu danych.
+// Nazwa jest STALA od 16.09.2026: wczesniej brala sie z biezacego
+// kompilatora, a mechanizm per-kompilator zostal usuniety.
+string sFile = Path.Combine(App.DataDir, "Default.ini");
 s = Ini.ReadValue(sFile, "Data", "Directory", "");
 if (Directory.Exists(s) && !Util.Equiv(sDir, s)) {
 //Dialog.Show(sDir, s);
@@ -2523,19 +2540,14 @@ public string GetPercentAddress(HomerRichTextBox rtb) {
 return String.Format("Line {0}   Column {1}   Percent{2}", rtb.Line, rtb.Column, rtb.Percent);
 } // GetPercentAddress method
 
-public string GetPageAddress(HomerRichTextBox rtb) {
-string sText = rtb.Text;
-int iIndex = rtb.Index;
-sText = sText.Substring(0, iIndex);
-int iPage = sText.Length - sText.Replace("\f", "").Length + 1;
-iIndex = sText.LastIndexOf("\f");
-if (iIndex >= 0) sText = sText.Substring(iIndex);
-if (sText.StartsWith("\f")) sText = sText.Remove(0, 1);
-int iLine = sText.Length - sText.Replace("\n", "").Length + 1;
-iIndex = sText.LastIndexOf("\n");
-int iColumn = sText.Length - iIndex;
-return String.Format("Page {0}   Line {1}   Column {2}", iPage, iLine, iColumn);
-} // GetPageAddress method
+// ADRES LICZONY OD ZNAKOW WYSUWU STRONY (GetPageAddress) USUNIETY 16.09.2026
+// razem z opcja HardPageAddress (docs/OPCJE-USTAWIEN.md: "MK. Do usuniecia
+// chyba, bo my stron nie mamy.").  Metoda liczyla "Page N Line N Column N",
+// gdzie strona to liczba znakow '\f' przed kursorem.  W Markdownie i w zwyklym
+// tekscie znaku wysuwu strony nie ma, wiec kazdy dokument mial dokladnie jedna
+// strone i komunikat zawsze mowil "Page 1" - informacja pusta, a przy czytaniu
+// ekranem dodatkowo dluzsza od tej wlasciwej.  Zostaje GetPercentAddress:
+// wiersz, kolumna i procent dokumentu.
 
 public void SetStatusAddress(object sender, EventArgs e) {
 if (sender != null && !this.bCommandComplete) return;
@@ -2548,10 +2560,10 @@ HomerRichTextBox rtb = this.Child.RTB;
 //string sText = String.Format("Line {0}\tColumn {1}\tPercent{2}", rtb.Line, rtb.Column, rtb.Percent);
 string sText = "";
 int iIndex = -1;
-bool bPageAddress = true;
-if (App.ReadOption("HardPageAddress", "N").ToLower().Substring(0, 1) != "y") bPageAddress = false;
-if (bPageAddress) sText = GetPageAddress(rtb);
-else  sText = GetPercentAddress(rtb);
+// PASEK STANU POKAZUJE ZAWSZE WIERSZ, KOLUMNE I PROCENT (16.09.2026).  Wybor
+// miedzy tym i adresem stronowym staral opcja HardPageAddress, ktora zniknela
+// razem z liczeniem stron - patrz komentarz przy usunietym GetPageAddress.
+sText = GetPercentAddress(rtb);
 
 iIndex = rtb.Index;
 char c = ' ';
@@ -2728,7 +2740,11 @@ return sText;
 } // GetBaselineText method
 
 public string[] GetSnippetFiles(out string[] aValues) {
-string sBaseDir = @"Snippets\" + App.ReadData("Compiler", "Default");
+// Katalog snippetow ma w sciezce czlon "Default" po nieistniejacym juz
+// biezacym kompilatorze (Pick Compiler usuniety 16.09.2026).  Nazwa zostaje
+// STALA i doslowna, bo w Snippets\\Default leza pliki, ktore uzytkownik juz
+// ma - zmiana sciezki schowalaby mu je bez sladu.
+string sBaseDir = @"Snippets\Default";
 string sDir = Path.Combine(App.DataDir, sBaseDir);
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
 string[] aResults = Directory.GetFiles(sDir);
@@ -2768,7 +2784,13 @@ string s = App.ReadValue("Tokens", sToken, "");
 string sFile = GetSnippetDir() + @"\" + s;
 if (File.Exists(sFile)) s = Util.File2String(sFile);
 //Dialog.Show(sFile, s);
-string sResult = Script.run(s);
+// TOKEN TO TERAZ CZYSTY TEKST (16.09.2026).  Dawniej wartosc tokenu (albo
+// tresc wskazanego pliku) szla do Script.run, czyli do JScriptu .NET - token
+// mogl byc kawalkiem programu.  Warstwa skryptow usunieta na decyzje Michala
+// (docs/CO-USUWAMY.md 2.2), wiec token wstawia sie doslownie; rozwijane sa
+// tylko sekwencje z odwrotnym ukosnikiem (\n, \t), zeby wielowierszowe
+// tokeny pisane w jednej linii pliku ustawien dalej dzialaly.
+string sResult = Wyrazenia.Rozwin(s);
 if (sResult == null) sResult = "";
 sText = sText.Replace("%" + sToken + "%",sResult);
 }
@@ -2899,7 +2921,11 @@ App.CaptureOutput = false;
 } // TransForm files method
 
 public static string GetSnippetDir() {
-string sBaseDir = @"Snippets\" + App.ReadData("Compiler", "Default");
+// Katalog snippetow ma w sciezce czlon "Default" po nieistniejacym juz
+// biezacym kompilatorze (Pick Compiler usuniety 16.09.2026).  Nazwa zostaje
+// STALA i doslowna, bo w Snippets\\Default leza pliki, ktore uzytkownik juz
+// ma - zmiana sciezki schowalaby mu je bez sladu.
+string sBaseDir = @"Snippets\Default";
 string sDir = Path.Combine(App.DataDir, sBaseDir);
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
 return sDir;
@@ -2922,7 +2948,7 @@ case "&Data" :
 sDir = App.DataDir;
 break;
 case "&Snippet" :
-sDir = App.DataDir + @"\Snippets\" + App.ReadData("Compiler", "Default");
+sDir = App.DataDir + @"\Snippets\Default";   // patrz GetSnippetDir: nazwa stala po usunieciu kompilatorow
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
 break;
 case "&Other" :
@@ -3570,16 +3596,11 @@ return;
 //Mail(true);
 }
 
-if (menuItem == menuFileRun) {
-sFile = child.File;
-if (!sFile.Contains(@"\") || rtb.Modified) {
-sFile = Path.Combine(Path.GetTempPath(), Path.GetFileName(sFile));
-sText = rtb.Text;
-Util.String2File(sText, sFile);
-}
-
-Process.Start(sFile);
-}
+// "RUN" Z MENU FILE USUNIETE 16.09.2026 (docs/CO-USUWAMY.md 2.4: "MK.
+// Usunac.").  Komenda uruchamiala BIEZACY PLIK jako program - przy pliku .md
+// nie robila nic sensownego, a przy pliku wykonywalnym robila rzecz, ktorej
+// edytor tekstu robic nie musi.  Skrot straciła 20.08.2026 (F5 to podglad
+// Markdowna); teraz odchodzi cala.
 
 if (menuItem == menuFilePrint) {
 sFile = child.File;
@@ -4456,71 +4477,6 @@ SaveGuardFlag(child.File, !bWasGuarded);
 AddMessage(bWasGuarded ? "Guard off" : "Guard on");
 }
 
-if (menuItem == menuMiscPyBrace) {
-if (rtb.SelectionLength == 0) {
-AddMessage("All");
-iStart = 0;
-iEnd = rtb.TextLength;
-sFile = Path.GetFileNameWithoutExtension(child.Text);
-if (Path.GetExtension(child.Text).ToLower() == ".boo") sFile += ".bob";
-else sFile += ".pyb";
-}
-else {
-AddMessage("Selected");
-iStart = rtb.SelectionStart;
-iEnd = iStart + rtb.SelectionLength;
-sFile = "";
-}
-sText = rtb.GetRange(iStart, iEnd);
-sText = PyDent2Brace(sText);
-
-if (sFile.Length == 0) {
-rtb.ReplaceRange(iStart, iEnd, sText);
-rtb.Index = iStart;
-}
-else {
-child = new MdiChild(App.Frame, sFile);
-Child.RTB.Text = sText;
-child.RTB.Modified = true;
-}
-AddMessage("Done");
-}
-
-if (menuItem == menuMiscPyDent) {
-sFile = child.File;
-string sExt = Path.GetExtension(sFile).ToLower();
-sFile = Path.GetFileNameWithoutExtension(sFile);
-if (sExt == ".bob") sFile += ".boo";
-else sFile += ".py";
-
-if (rtb.SelectionLength == 0) {
-AddMessage("All");
-iStart = 0;
-iEnd = rtb.TextLength;
-}
-else {
-AddMessage("Selected");
-iStart = rtb.SelectionStart;
-iEnd = iStart + rtb.SelectionLength;
-sFile = "";
-}
-sText = rtb.GetRange(iStart, iEnd);
-
-//if (sExt != ".bob" && sExt != ".pyb") sText = PyDent2Brace(sText);
-if (sExt == ".boo" || sExt == ".py") sText = PyDent2Brace(sText);
-sText = PyBrace2Dent(sText);
-
-if (sFile.Length == 0) {
-rtb.ReplaceRange(iStart, iEnd, sText);
-rtb.Index = iStart;
-}
-else {
-child = new MdiChild(App.Frame, sFile);
-Child.RTB.Text = sText;
-child.RTB.Modified = true;
-}
-AddMessage("Done");
-}
 
 if (menuItem == menuMiscInferIndent) {
 sText = rtb.Text;
@@ -4683,34 +4639,12 @@ rtb.Index = 0;
 }
 }
 
-if (menuItem == menuMiscRunAtCursor) {
-if (rtb.SelectionLength == 0) {
-sTitle = "Run Chunk at Cursor";
-object[] a = GetChunk();
-sText = (string) a[1];
-}
-else {
-sTitle = "Run Selected at Cursor";
-sText = rtb.SelectedText;
-}
-
-sLabel = "Path";
-sReplace = "";
-sMatch = "(\r|\n)";
-sText = Util.RegExpReplaceCase(sText, sMatch, sReplace);
-sMatch = "^(\\<| )+";
-sText = Util.RegExpReplaceCase(sText, sMatch, sReplace);
-sMatch = "(\\>| |\\.)+$";
-sText = Util.RegExpReplaceCase(sText, sMatch, sReplace);
-
-if (sText.Contains("://")) sText = sText.Trim(); //do nothing
-else if (sText.ToLower().StartsWith("www.")) sText = "http://" + sText;
-else if (sText.Contains("@") && !sText.ToLower().StartsWith("mailto")) sText = "MailTo:" + sText;
-
-sResult = Dialog.Input(sTitle, sLabel, sText).Trim();
-if (sResult.Length == 0) return;
-Process.Start(sResult);
-}
+// RUN AT CURSOR (Shift+F5) USUNIETY 16.09.2026 (docs/CO-USUWAMY.md 2.2 i
+// 2.3).  Komenda brala fragment pod kursorem, obcinala z niego znaki konca
+// wiersza i nawiasy trojkatne, dopisywala "http://" albo "MailTo:" i oddawala
+// wynik do Process.Start - czyli "uruchom to, co tu napisane".  Otwieranie
+// adresu z tekstu robi teraz nawigacja po odnosnikach, a uruchamianie
+// programow nie jest zadaniem edytora tekstu.
 
 if (menuItem == menuMiscSpecialCharacter) {
 string sCode = App.ReadData("Code", "");
@@ -5813,8 +5747,11 @@ GoToMarkdownLink(rtb, menuItem == menuNavigateNextLink);
 }
 
 if (menuItem == menuQueryAddress) {
+// ALT+A MOWI POZYCJE; DRUGIE NACISNIECIE POWTARZA JA Z PASKA STANU.
+// Wczesniej drugie naciskniecie dawalo DRUGI RODZAJ adresu (strona zamiast
+// procentu), sterowany opcja HardPageAddress - a ta zniknela 16.09.2026
+// razem z liczeniem stron ze znakow wysuwu strony.
 if (this.KeyRepeat % 2 == 0) SetStatusAddress(null, null);
-else if (App.ReadOption("HardPageAddress", "N").ToLower().Substring(0, 1) != "y") AddMessage(GetPageAddress(rtb));
 else AddMessage(GetPercentAddress(rtb));
 }
 
@@ -5935,10 +5872,9 @@ sText += ", line breaks " + child.FileLineBreakKind;
 AddMessage(sText);
 }
 
-if (menuItem == menuQueryCompiler) {
-AddMessage("Compiler " + App.ReadData("Compiler", "Default"));
-AddMessage("Folder " + Path.GetFileName(Directory.GetCurrentDirectory()));
-}
+// "Compiler" (Control+F9) USUNIETY 16.09.2026 razem z kompilowaniem.
+// Mowil nazwe biezacego kompilatora i nazwe katalogu roboczego; pierwsza
+// rzecz przestala istniec, druga jest w "Path" (Alt+P).
 
 if (menuItem == menuQuerySelected) {
 sText = rtb.SelectedText;
@@ -6042,85 +5978,12 @@ AddMessage("Could not open the preview: " + exPreview.Message);
 return;
 }
 
-if (menuItem == menuMiscTextCombine) {
-List<string> list = new List<string>();
-aResults = rtb.Lines;
-string sDir = Directory.GetCurrentDirectory();
-string sTempDir = "";
-for (int i = 0; i < aResults.Length; i++) {
-string s = aResults[i].Trim();
-if (s.Length == 0) continue;
-// PRZYCZYNA "Unexpected Event", ktore zglosil Kasperczak 29.08.2026 01:24.
-// Ta petla traktuje KAZDY wiersz dokumentu jako sciezke pliku, a
-// Path.GetDirectoryName RZUCA ArgumentException na tresci, ktora sciezka
-// nie jest.  Zmierzone: zdanie z cudzyslowem ("On powiedzial "tak"") oraz
-// WIERSZ TABELI MARKDOWN ("| Imie | Wiek |") wywalaja te metode - czyli
-// komenda przewracala sie na dokumencie, ktory sami uczymy go tworzyc
-// kreatorem tabeli.
-// Wiersz, ktory nie jest sciezka, po prostu POMIJAMY: to lista plikow, a
-// nie tekst, wiec zdanie w niej i tak nie ma sensu.  Komenda konczy sie
-// wtedy komunikatem "No files found!", zamiast rzucac okno bledu.
-// Bramka zostaje TAKZE po calkowitym usunieciu Text Convert (30.08.2026):
-// ten sam kod obsluguje Text Combine, ktora w menu ZOSTAJE na jego zyczenie,
-// a wiersz niebedacy sciezka wywracal ja dokladnie tak samo.
-try {sTempDir = Path.GetDirectoryName(s);}
-catch {continue;}
-if (sTempDir == null) continue;
-if (sTempDir.Length == 0) s = Path.Combine(sDir, s);
-else if (Directory.Exists(sTempDir)) sDir = sTempDir;
-try {if (File.Exists(s)) list.Add(s);}
-catch {continue;}
-}
-
-aResults = list.ToArray();
-if (aResults.Length == 0) {
-AddMessage("No files found!");
-return;
-}
-
-sText = Util.GetExtensions(aResults);
-sResult = Dialog.Input("Filter", "Extensions", sText).Trim();
-if (sResult.Length == 0) return;
-
-aResults = Util.GetPathsWithExtensions(aResults, sResult);
-if (aResults.Length == 0) {
-AddMessage("No files!");
-return;
-}
-
-StringBuilder sb = new StringBuilder();
-iCount = 0;
-AddMessage("Converting");
-for (int i = 0; i < aResults.Length; i++) {
-string sSource = aResults[i];
-string sName = Path.GetFileName(sSource);
-AddMessage(sName);
-//sText = COM.WordFile2String(sSource);
-//sText = COM.ConvertFile2String(sSource);
-int iConvert = 2;
-string sTargetExt = "txt";
-bool bTextOnly = true;
-sText = COM.ConvertFile2String(sSource, ref iConvert, ref sTargetExt, bTextOnly);
-if (sText.Length == 0) {
-AddMessage("Error!");
-continue;
-}
-
-iCount++;
-if (iCount == 1) sb.Append(sName + LB + LB + sText);
-else sb.Append(SectionBreak + sName + LB + LB + sText);
-}
-
-AddMessage("Converted " + Util.Pluralize(iCount, "file"), true);
-if (iCount == 0) return;
-
-if (!IsEmptyWindow()) new MdiChild(this);
-sText = sb.ToString();
-sText += EOD;
-rtb = this.Child.RTB;
-rtb.Text = sText;
-rtb.Modified = false;
-}
+// TEXT COMBINE USUNIETE 16.09.2026 (docs/CO-USUWAMY.md 2.4: "MK.Usunac.").
+// Komenda czytala biezacy dokument jako LISTE SCIEZEK i zlewala tresc tych
+// plikow w jedno nowe okno.  Skrot straciła 13.09.2026 i od tego czasu wisiala
+// w menu "na zyczenie"; Michal rozstrzygnal, ze odchodzi.
+// Laczenie plikow i wyodrebnianie rozdzialow ma kiedys wrocic jako osobno
+// opracowana funkcja - to jego zapowiedz z 29.08.2026, nie ta komenda.
 
 if (menuItem == menuMiscTableOfContents) {
 if (child == null) return;
@@ -6382,16 +6245,11 @@ PokazUstawienia();
 }
 
 if (menuItem == menuMiscManualOptions) {
-//OpenOrActivateWindow(App.IniFile, 0);
-string sCompiler = App.ReadData("Compiler", "Default");
-//sText = sCompiler + " Compiler";
-//sResult = Dialog.Choose("Manual Options", "", new string[] {"&Main", "&" + sText}, 0);
-sResult = Dialog.Choose("Manual Options", "", new string[] {"&Main", "&" + sCompiler}, 0);
-if (sResult.Length == 0) return;
-
-if (sResult == "&Main") sFile = App.IniFile;
-else sFile = Path.Combine(App.DataDir, sCompiler + ".ini");
-OpenOrActivateWindow(sFile, 0);
+// JEDEN PLIK USTAWIEN, WIEC BEZ PYTANIA (16.09.2026).  Pytalo tu okienko
+// "Main czy <Kompilator>" - drugi plik znikl razem z mechanizmem
+// per-kompilator (docs/CO-USUWAMY.md 2.3), wiec komenda otwiera od razu
+// plik ustawien programu.
+OpenOrActivateWindow(App.IniFile, 0);
 }
 
 if (menuItem == menuMiscResetConfiguration) {
@@ -6401,46 +6259,18 @@ System.IO.File.Delete(App.IniFile);
 App.SetConfigurationValues();
 */
 
-string sCompiler = App.ReadData("Compiler", "Default");
-//sText = sCompiler + " Compiler";
-//sResult = Dialog.Choose("Manual Options", "", new string[] {"&Main", "&" + sText}, 0);
-sResult = Dialog.Choose("Reset Configuration", "", new string[] {"&Main", "&" + sCompiler, "&Both", "&New"}, 0);
-if (sResult.Length == 0) return;
-
-if (sResult == "&Main" || sResult == "&Both") {
+// RESET USTAWIEN BEZ KOMPILATOROW (16.09.2026).  Okno pytalo wczesniej o
+// cztery rzeczy: glowny plik ustawien, plik biezacego kompilatora, oba,
+// albo utworzenie NOWEGO zestawu ustawien kompilatora.  Mechanizm plikow
+// <Kompilator>.ini zostal usuniety (docs/CO-USUWAMY.md 2.3), wiec zostaje
+// jedno pytanie potwierdzajace o jedyny plik ustawien, jaki jest.
+// Przy okazji znikl jedyny konsument martwego klucza NavigatePart - jego
+// pozycja w tablicy wyznaczala INDEKS w spakowanej tyldami wartosci, i to
+// ona blokowala sprzatniecie tego klucza; teraz blokady nie ma, a sam klucz
+// zostaje w pliku ustawien dla zgodnosci ze starym EdSharpem.
+if (Dialog.Confirm("Reset Configuration", "Reset all options to default?", "N") != "Y") return;
 if (System.IO.File.Exists(App.IniFile)) System.IO.File.Delete(App.IniFile);
 System.IO.File.Copy(App.DefaultIniFile, App.IniFile);
-}
-
-if (sResult == sCompiler || sResult == "&Both") {
-sFile = Path.Combine(App.DataDir, App.ReadData("Compiler", "Default") + ".ini");
-if (System.IO.File.Exists(sFile)) System.IO.File.Delete(sFile);
-}
-
-// MARTWE POLE USTAWIEN "NavigatePart" (zmierzone 28.08.2026).  Kasperczak
-// zapytal, czy nawigacja po czesciach na pewno zniknela: "A moze jest, ale nie
-// w menu w klawiszach, a tylko w programie".  Mial racje.  Komendy Go to Part,
-// Next Part i Prior Part sa usuniete z menu, z klawiszy, z Hotkeys.ini i z
-// binarki (zmierzone sonda na .exe, z kontrola pozytywna), ALE to pole nadal
-// pyta uzytkownika o wzorzec i zapisuje go do sekcji Options - a nikt go juz
-// nie czyta.  NIE USUWAM go tutaj samodzielnie z dwoch powodow: pozycja w tej
-// tablicy wyznacza INDEKS w spakowanej tyldami wartosci ustawien kompilatora
-// (nizej: a[3]), wiec skrocenie listy przesunelo by QuotePrefix i pozostale
-// pola w konfiguracji, ktora uzytkownik JUZ ma na dysku.  Sprzatniecie nalezy
-// do punktu 5 mapy drogowej (uporzadkowanie programu) i wymaga jego decyzji
-// oraz przepisania istniejacych wpisow, a nie samego skrocenia tablicy.
-if (sResult == "&New") {
-aLabels = new string[] {"&Name", "&CompileCommand", "&JumpPosition", "&AbbreviateOutput", "&NavigatePart", "&QuotePrefix", "&ExtensionDefault", "&GoToEnvironment"};
-aValues = new string[] {"", "", "", "", "", "", "", ""};
-aResults = Dialog.MultiInput("Create Compiler setting", aLabels, aValues);
-if (aResults.Length == 0) return;
-
-sCompiler = aResults[0];
-HomerList hl = new HomerList(aResults);
-hl.RemoveAt(0);
-string sSetting = hl.GetSegments('~');
-App.WriteValue("Compilers", sCompiler, sSetting);
-}
 AddMessage("Done");
 return;
 }
@@ -6547,7 +6377,18 @@ sText = rtb.SelectedText;
 iIndex = rtb.SelectionStart + sText.Length;
 }
 
-sText = Script.run(sText);
+// KALKULATOR BEZ JSCRIPTU (16.09.2026).  Dawniej tresc wiersza szla do
+// Script.run, czyli do interpretera JScript .NET w EdSharp.dll.  Warstwa
+// skryptow zostala usunieta na decyzje Michala (docs/CO-USUWAMY.md 2.2), a
+// SAMA komenda ZOSTAJE na jego decyzje ("to kalkulator, jest tani").
+// Liczy teraz wlasny parser z Wyrazenia.cs: liczby, cztery dzialania,
+// potega, reszta, procent, nawiasy i funkcje matematyczne - bez jezyka
+// programowania w edytorze tekstu.
+sText = Wyrazenia.Policz(sText);
+if (sText.StartsWith("!")) {
+AddMessage(sText.Substring(1));
+return;
+}
 if (sText.Length == 0) return;
 
 sText = LB + sText;
@@ -6623,48 +6464,14 @@ if (menuItem == menuMiscTransformFiles) {
 TransFormFiles();
 }
 
-if (menuItem == menuMiscPickCompiler) {
-aResults = Ini.ReadSectionKeys(App.IniFile, "Compilers");
-//Array.Sort(aResults);
-sResult = App.ReadData("Compiler", "Default");
-//Dialog.Show(sResult, String.Join("\n", aResults));
-int i = Array.IndexOf(aResults, sResult);
-//Dialog.Show(i);
-if (i == -1) i = 0;
-sResult = Dialog.Pick("Pick Compiler", aResults, false, i);
-if (sResult.Length == 0) return;
-
-sFile = Path.Combine(App.DataDir, App.ReadData("Compiler", "Default") + ".ini");
-string sDir = Directory.GetCurrentDirectory();
-Ini.WriteValue(sFile, "Data", "Directory", sDir);
-App.WriteData("Compiler", sResult);
-sFile = Path.Combine(App.DataDir, sResult + ".ini");
-string s = Ini.ReadValue(sFile, "Data", "Directory", "");
-if (Directory.Exists(s) && !Util.Equiv(sDir, s)) {
-AddMessage("Folder " + Path.GetFileName(s));
-Directory.SetCurrentDirectory(s);
-}
-
-sValue = Ini.ReadValue(App.IniFile, "Compilers", sResult, "");
-string[] a = sValue.Split('~');
-Ini.WriteQuote(App.IniFile, "Options", "CompileCommand", a[0]);
-if (a.Length > 1) Ini.WriteQuote(App.IniFile, "Options", "JumpPosition", a[1]);
-if (a.Length > 2) Ini.WriteQuote(App.IniFile, "Options", "AbbreviateOutput", a[2]);
-if (a.Length > 3) Ini.WriteQuote(App.IniFile, "Options", "NavigatePart", a[3]);
-if (a.Length > 4) Ini.WriteQuote(App.IniFile, "Options", "QuotePrefix", a[4]);
-if (a.Length > 5) Ini.WriteQuote(App.IniFile, "Options", "ExtensionDefault", a[5]);
-if (a.Length > 6) Ini.WriteQuote(App.IniFile, "Options", "GoToEnvironment", a[6]);
-// More robust alternative to the tilde-packed value: if a section named
-// "Compiler <name>" exists (most naturally in EdSharp.inix, which keeps each
-// value verbatim), its named keys override the unpacked fields. This avoids any
-// collision with the ~ delimiter and makes regex settings easy to read and edit.
-string sSection = "Compiler " + sResult;
-string[] aKeys = new string[] {"CompileCommand", "JumpPosition", "AbbreviateOutput", "NavigatePart", "QuotePrefix", "ExtensionDefault", "GoToEnvironment"};
-foreach (string sKey in aKeys) {
-string sVal = Ini.ReadValue(App.IniFile, sSection, sKey, "\0");
-if (sVal != "\0") Ini.WriteQuote(App.IniFile, "Options", sKey, sVal);
-}
-}
+// PICK COMPILER USUNIETY 16.09.2026 razem z calym mechanizmem plikow
+// <Kompilator>.ini (decyzja Michala, docs/CO-USUWAMY.md 2.3).  Ta komenda
+// przelaczala "biezacy kompilator": zapisywala katalog roboczy do jego pliku,
+// a potem ROZPAKOWYWALA spakowana tyldami wartosc z sekcji [Compilers] do
+// sekcji [Options] - czyli jedno menu POTAJEMNIE nadpisywalo ustawienia
+// programu, w tym QuotePrefix i ExtensionDefault, ktore z kompilowaniem nie
+// maja nic wspolnego.  To bylo zrodlo "trzeciej pulapki" opisanej w
+// Ustawienia.cs.  Zniknelo razem z Compile i Review Output.
 
 if (menuItem == menuMiscGoToEnvironment) {
 string sCommand = @"%ProgDir%\ijs.exe";
@@ -6677,49 +6484,24 @@ string sProcess = Path.GetFileNameWithoutExtension(sCommand);
 if (!Util.ActivateProcess(sProcess)) Util.Run(sCommand);
 }
 
-if (menuItem == menuMiscCompile|| menuItem == menuMiscPromptCommand) {
-string sCommand;
-string sDefaultJump = "";
-string sDefaultAbbreviate = "";
-if (menuItem == menuMiscCompile) {
-sCommand = App.ReadOption("CompileCommand", "");
-// Built-in default: with no compiler configured, compile a C# (.cs) file with
-// the latest available .NET Framework C# compiler (Roslyn csc if present, else
-// the framework csc that always ships with .NET). This makes Control+F5 work on
-// a .cs file out of the box, jumping to the first csc error position.
-if (sCommand.Trim().Length == 0 && child.File.ToLower().EndsWith(".cs")) {
-string sCsc = Util.FindCscPath();
-if (sCsc.Length > 0) {
-sCommand = "\"" + sCsc + "\" /nologo \"%SourceLong%\" 2>&1";
-sDefaultJump = @"\(\d+,\d+\)";
-}
-}
-// The same courtesy for Python, taken from the author's tree (his 5.0.30):
-// with no compiler configured, a .py or .pyw file runs with a real Python,
-// jumping to the traceback's line number. Picking a compiler with
-// Control+Shift+F5 still overrides this default.
-if (sCommand.Trim().Length == 0 && (child.File.ToLower().EndsWith(".py") || child.File.ToLower().EndsWith(".pyw"))) {
-string sPythonExe = Util.FindPythonPath();
-sCommand = ((sPythonExe.Length > 0) ? "\"" + sPythonExe + "\"" : "python") + " \"%SourceLong%\" 2>&1";
-sDefaultJump = @"line \d+";
-// Python names the file in every traceback frame -- File "C:\long\path
-// \script.py", line 4 -- and hearing your own path read out before the
-// error wastes the moment that matters. Drop the file prefix and the
-// traceback banner, so speech starts at "line 4" and reaches the
-// message itself immediately.
-sDefaultAbbreviate = @"(^[ \t]*File "".*?"", )|(^Traceback \(most recent call last\):[ \t]*\r?\n)";
-}
-if (sCommand.Trim().Length == 0) {
-AddMessage("No compiler configured. Press Control+Shift+F5 to pick one.");
-return;
-}
-}
-else {
-sCommand = App.ReadOption("PromptCommand", "");
+// KOMPILATOR USUNIETY, ZOSTAJE SAM "PROMPT COMMAND" (16.09.2026).
+// Ten blok obslugiwal dawniej DWIE komendy naraz: Compile (Control+F5) i
+// Prompt Command (Alt+F5).  Michal zdecydowal (docs/CO-USUWAMY.md 2.3):
+// "Tak, ussuwamy" o poleceniach budowania kodu i osobno "MK. Tak." o tym, ze
+// Prompt Command oraz Go to Environment ZOSTAJA - to zwykle "otworz mi
+// wiersz polecen tutaj", przydatne bez kompilowania.
+// Razem z Compile odeszly: wbudowane domyslne polecenia dla plikow .cs i .py,
+// szukanie kompilatora na maszynie, wzorzec JumpPosition skaczacy do pozycji
+// bledu i wzorzec AbbreviateOutput skracajacy wynik.  Wynik polecenia nadal
+// WYNIK JEST TERAZ MOWIONY OD RAZU.  Dawniej ladowal do pliku tymczasowego,
+// a czytalo go osobne polecenie "Review Output" - usuniete razem z
+// kompilatorem.  Bez tej zmiany wynik polecenia bylby zapisywany w miejsce,
+// do ktorego nic juz nie zaglada, czyli po cichu przepadal.
+if (menuItem == menuMiscPromptCommand) {
+string sCommand = App.ReadOption("PromptCommand", "");
 sCommand = Dialog.Input("Prompt", "Command", sCommand).Trim();
 if (sCommand.Length == 0) return;
 App.WriteOption("PromptCommand", sCommand);
-}
 
 sFile = child.File;
 if (!sFile.Contains(@"\")) sFile = "";
@@ -6763,62 +6545,13 @@ Dialog.Show(sOutput);
 
 if (sDir != Directory.GetCurrentDirectory()) Directory.SetCurrentDirectory(sDir);
 
-if (menuItem == menuMiscCompile) {
-string sJumpPosition = App.ReadOption("JumpPosition", "");
-if (sJumpPosition.Trim().Length == 0) sJumpPosition = sDefaultJump;
-object[] a = Util.RegExpContainsCase(sOutput, sJumpPosition);
-iIndex = (int) a[0];
-if (iIndex >= 0) {
-sText = (string) a[1];
-a = Util.RegExpContainsCase(sText, @"\d+");
-iIndex = (int) a[0];
-if (iIndex >= 0) {
-sLine = (string) a[1];
-iIndex += sLine.Length;
-sText = sText.Substring(iIndex);
-a = Util.RegExpContainsCase(sText, @"\d+");
-iIndex = (int) a[0];
-string sColumn;
-if (iIndex == -1) sColumn = "1";
-else sColumn = (string) a[1];
-// An indentation error is about the whitespace at the START of the
-// line, whatever the tool's marker points at -- Python puts its caret
-// at the end of the line, which is the least useful place to land when
-// the fix belongs at the beginning. The cursor goes to column 1, ready
-// for the edit. Taken from the author's tree.
-if (sOutput.IndexOf("IndentationError", StringComparison.OrdinalIgnoreCase) >= 0 || sOutput.IndexOf("TabError", StringComparison.OrdinalIgnoreCase) >= 0) sColumn = "1";
-string s = sLine + ", " + sColumn;
-// Dialog.Show("s", s);
-App.WriteData("Line", s);
-
-try {
-rtb.Line = Int32.Parse(sLine);
-rtb.Column = Int32.Parse(sColumn);
-}
-catch {}
-}
+sOutput = sOutput.Trim();
+AddMessage((sOutput.Length == 0) ? "Done" : sOutput);
 }
 
-string sAbbreviateOutput = App.ReadOption("AbbreviateOutput", "\r");
-// A per-language default applies only when the user has not set one: the
-// stored value is still the shipped backslash-r or is empty. Anything the
-// user chose in Configuration Options wins, as before.
-if (sDefaultAbbreviate.Length > 0 && (sAbbreviateOutput == "\\r" || sAbbreviateOutput == "\r" || sAbbreviateOutput.Trim().Length == 0)) sAbbreviateOutput = sDefaultAbbreviate;
-sOutput = Util.RegExpReplaceEquiv(sOutput, sAbbreviateOutput, "\n").Trim();
-if (sOutput.Length == 0) sOutput = "Done";
-AddMessage(sOutput);
-}
-Util.String2File(sOutput, App.TempFile);
-}
-
-if (menuItem == menuMiscReviewOutput) {
-sFile = App.TempFile;
-if (!File.Exists(sFile)) {
-AddMessage("No output file found!");
-return;
-}
-OpenOrActivateWindow(sFile, 0);
-}
+// REVIEW OUTPUT (Alt+Shift+F5) USUNIETE 16.09.2026 (docs/CO-USUWAMY.md 2.3).
+// Otwieralo plik z wynikiem BUDOWANIA, ktorego juz nikt nie tworzy - jedynym
+// pisarzem tego pliku byla komenda Compile.
 
 if (menuItem == menuMiscSaveSnippet) {
 if (rtb.SelectionLength == 0) {
@@ -6833,7 +6566,7 @@ iEnd = iStart + rtb.SelectionLength;
 }
 sText = rtb.GetRange(iStart, iEnd);
 
-string sDir = @"Snippets\" + App.ReadData("Compiler", "Default");
+string sDir = @"Snippets\Default";   // patrz GetSnippetDir
 sDir = Path.Combine(App.DataDir, sDir);
 if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
 sFile = Path.Combine(sDir, Path.GetFileName(child.File));
@@ -7292,19 +7025,14 @@ string[] aLabels, aValues, aResults;
 int iIndex;
 HomerRichTextBox rtb = this.Child.RTB;
 string sLabel, sValue, sMatch;
-string sExt = Path.GetExtension(sSnippet).ToLower().TrimStart('.');
 string sBody = Util.File2String(sSnippet);
 sBody = Util.Convert2UnixLineBreak(sBody);
-if (sExt == "js") {
-Script.run(sBody);
-return;
-}
-else if (sExt == "boo") {
-if (App.Boo == null) App.Boo = COM.CreateObject("Iron.COM");
-sSnippet = (string) COM.CallMethod(App.Boo, "Eval", new string[] {sBody, "", "", "", ""});
-//Dialog.Show(sSnippet);
-return;
-}
+// SNIPPET TO TYLKO TEKST (16.09.2026).  Byly tu dwie galezie wykonania:
+// plik .js szedl do JScriptu .NET, plik .boo do obiektu COM "Iron.COM".
+// Obie usuniete na decyzje Michala (docs/CO-USUWAMY.md 2.2: "tak usuwamy,
+// Invokesnippet zostawiamy") - snippet wklejamy jako tekst, tak samo jak
+// kazdy inny.  Plik .js albo .boo w katalogu snippetow wklei sie teraz
+// doslownie, zamiast sie wykonac; to zamierzone.
 
 aResults = sBody.Split('\n');
 
@@ -7433,250 +7161,9 @@ rtb.Index = iIndex;
 Util.Say(rtb.RowText);
 } // InvokeSnippet method
 
-public string PyDent2Brace(string sText) {
-sText = Util.RegExpReplaceCase(sText, @"^\t*\# end \w+$", "");
-string sOld = sText;
-while (true) {
-sText = Util.RegExpReplaceCase(sText, @"^(\t*) ", "$1\t");
-if (sText == sOld) break;
-else sOld = sText;
-}
-
-// does not work
-/*
-sText = Util.RegExpReplaceCase(sText, @"^\t*\#", "#");
-sText = Util.RegExpReplaceCase(sText, @"^\#([^ ])", "# $1");
-string[] aIndent = Util.RegExpExtractCase(sText, @"^\t+");
-int iMax = 0;
-int iMin = 1000;
-foreach (string s in aIndent) {
-iLength = s.Length;
-if (iLength > iMax) iMax = iLength;
-if (iLength < iMin) iMin = iLength;
-}
-
-if (iMin > 0) {
-string sMin = "\t".PadRight(iMin, '\t');
-string sAbbrev = "\t".PadRight(iMin - 1, '\t');
-for (int n = 1; n <= iMax / iMin; n++) {
-sText = Util.RegExpReplaceCase(sText, @"^" + sMin, sAbbrev);
-}
-}
-*/
-
-HomerList hl = new HomerList(sText.Split('\n'));
-int i = 0;
-int iOldLevel = 0;
-int iCount = 0;
-char[] a = {' ', ':'};
-HomerList hlCode = new HomerList();
-HomerList hlLevel = new HomerList();
-bool bTripleQuote = false;
-int iBrace = 0;
-int iBracket = 0;
-int iParen = 0;
-int iTripleQuote = 0;
-int iDoubleQuote = 0;
-int iSingleQuote = 0;
-bool bQuote = false;
-
-while ( i < hl.Count) {
-string sLine = hl[i];
-string sTrim = sLine.TrimEnd();
-string sPack = sTrim.TrimStart();
-int iTrim = sTrim.Length;
-int iPack = sPack.Length;
-
-if (!bTripleQuote && (iPack == 0 || sPack.StartsWith("#"))) hl[i] = sPack;
-else {
-iParen = 0;
-iBracket = 0;
-iBrace = 0;
-iSingleQuote = 0;
-iDoubleQuote = 0;
-while (true) {
-int iCharCount = iPack;
-int iChar = 0;
-while (iChar < iCharCount) {
-switch (sPack[iChar]) {
-case '"' :
-if (iChar > 0 && sPack[iChar - 1] == '\\') break;
-if ((iChar + 2 < iCharCount) && sPack[iChar + 1] == '"' && sPack[iChar + 2] == '"') {
-if (bTripleQuote && iTripleQuote > 0) {
-bTripleQuote = false;
-bQuote = false;
-iTripleQuote--;
-iSingleQuote = 0;
-iDoubleQuote = 0;
-}
-else if (!bQuote && !bTripleQuote && iTripleQuote == 0) {
-bTripleQuote = true;
-bQuote = true;
-iTripleQuote++;
-iSingleQuote = 0;
-iDoubleQuote = 0;
-}
-iChar += 2;
-}
-else if (bQuote && iDoubleQuote > 0) {
-bQuote = false;
-iDoubleQuote--;
-}
-else if (!bQuote && iDoubleQuote == 0) {
-bQuote = true;
-iDoubleQuote++;
-}
-break;
-case '\'' :
-if (iChar > 0 && sPack[iChar - 1] == '\\') break;
-if (bQuote && iSingleQuote > 0) {
-bQuote = false;
-iSingleQuote--;
-}
-else if (!bQuote && iSingleQuote == 0) {
-bQuote = true;
-iSingleQuote++;
-}
-break;
-case '(' :
-if (!bQuote) iParen++;
-break;
-case ')' :
-if (!bQuote) iParen--;
-break;
-case '[' :
-if (!bQuote) iBracket++;
-break;
-case ']' :
-if (!bQuote) iBracket--;
-break;
-case '{' :
-if (!bQuote) iBrace++;
-break;
-case '}' :
-if (!bQuote) iBrace--;
-break;
-}
-iChar++;
-}
-
-if ((iParen + iBracket + iBrace == 0) || bTripleQuote) break;
-hl[i] = sPack + @" \";
-
-do  i++;
-while (i < hl.Count && (hl[i].Trim().Length == 0 || hl[i].TrimStart().StartsWith("#")));
-if (i == hl.Count) break;
-
-sLine = hl[i];
-sTrim = sLine.TrimEnd();
-iTrim = sTrim.Length;
-sPack = sTrim.TrimStart();
-iPack = sPack.Length;
-}
-
-if (i == hl.Count) break;
-
-if (bTripleQuote) {
-hl[i] = sTrim;
-}
-else {
-int iNewLevel = iTrim - iPack;
-//if (i == 75 || i == 76) Dialog.Show(iNewLevel, hl[i]);
-int iDelta = iOldLevel - iNewLevel;
-
-int k = i - 1;
-while (k >= 0 && hl[k].StartsWith("#")) k--;
-k++;
-
-while (hlCode.Count > 0 && iDelta > 0 && Int32.Parse(hlLevel[hlLevel.Max]) >= iNewLevel) {
-hl.Insert(k, "} end " + hlCode.Pop());
-hlLevel.Pop();
-iCount--;
-i++;
-k++;
-iDelta--;
-}
-
-if (iOldLevel > iNewLevel) {
-hl.Insert(k, "");
-i++;
-}
-iOldLevel = iNewLevel;
-
-if (sPack.EndsWith(":")) {
-sPack = sPack.TrimEnd(a) + " {";
-iCount++;
-string[] aCode = sPack.Split(' ');
-hlCode.Add(aCode[0].TrimEnd('{'));
-hlLevel.Add(iNewLevel.ToString());
-}
-else if (sPack.EndsWith(@"\")) {
-hl[i] = sPack;
-i++;
-if (i == iCount) break;
-sPack = hl[i].Trim();
-}
-hl[i] = sPack;
-
-}
-}
-i++;
-}
-
-while (iCount > 0) {
-hl.Add("} end " + hlCode.Pop());
-iCount--;
-}
-
-sText = String.Join("\n", hl.ToArray()).Trim() + "\n";;
-sText = Util.RegExpReplaceCase(sText, @"\n\n+", "\n\n");
-sText = Util.RegExpReplaceCase(sText, @"\n+\n\}", "\n}");
-sText = Util.RegExpReplaceCase(sText, @"\n+el", "\nel");
-return sText;
-} // PyDent2Brace method
-
-public string PyBrace2Dent(string sText) {
-sText = Util.RegExpReplaceCase(sText, @"^\t*\# end \w+$", "");
-//sText = Util.RegExpReplaceCase(sText, @"^\t*\#", "#");
-//sText = Util.RegExpReplaceCase(sText, @"^\#([^ ])", "# $1");
-
-HomerList hl = new HomerList(sText.Split('\n'));
-int i = 0;
-int iCount = 0;
-char[] a = {' ', '{'};
-HomerList hlCode = new HomerList();
-string sIndent = App.ReadOption("IndentUnit", "  ");
-sIndent = Util.Literalize(sIndent);
-
-while ( i < hl.Count) {
-string sPack = hl[i].Trim();
-//if (iCount > 0) sLine = "\t".PadLeft(iCount, '\t') + sPack;
-string sLine;
-if (iCount > 0) sLine = Util.Replicate(sIndent, iCount) + sPack;
-else sLine = sPack;
-
-if (sPack.EndsWith("{")) {
-sLine = sLine.TrimEnd(a) + ":";
-iCount++;
-string[] aCode = sPack.Split(' ');
-hlCode.Add(aCode[0].TrimEnd('{'));
-}
-else if (sPack.StartsWith("}")) {
-sLine = "# end " + hlCode.Pop();
-//if (iCount > 1) sLine = "\t".PadLeft(iCount - 1, '\t') + sLine;
-if (iCount > 1) sLine = Util.Replicate(sIndent, iCount - 1) + sLine;
-iCount--;
-}
-hl[i] = sLine;
-i++;
-}
-
-sText = String.Join("\n", hl.ToArray()).Trim() + "\n";;
-sText = Util.RegExpReplaceCase(sText, @"\n+\n", "\n\n");
-//sText = Util.RegExpReplaceCase(sText, @"\n+(\t*)el", "\n$1el");
-sText = Util.RegExpReplaceCase(sText, @"\n+(" + sIndent + ")el", "\n$1el");
-return sText;
-} // PyBrace2Dent method
+// METODY PyDent2Brace i PyBrace2Dent USUNIETE 16.09.2026 razem z komendami
+// PyBrace i PyDent (decyzja Michala, docs/CO-USUWAMY.md 2.1).  Byly wolane
+// TYLKO z tych dwoch komend - sprawdzone licznikiem wystapien przed usunieciem.
 
 public void HardLineBreak() {
 bool bLoop;
@@ -9072,7 +8559,7 @@ else sTime += "|" + (GetUserGuard(this.Child) ? "G" : "M") + "|" + Util.If(this.
 App.WriteValue("Recent", sFile, sTime);
 string sDir = Path.GetDirectoryName(sFile);
 if (Directory.Exists(sDir)) Directory.SetCurrentDirectory(sDir);
-sFile = Path.Combine(App.DataDir, App.ReadData("Compiler", "Default") + ".ini");
+sFile = Path.Combine(App.DataDir, "Default.ini");   // patrz wyzej: nazwa stala
 Ini.WriteValue(sFile, "Data", "Directory", sDir);
 } // SetRecent method
 
@@ -11195,7 +10682,9 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 		// Alt+Shift+digit assigns the current file to it.  Requested by
 		// Kasperczak as a regression from EdSharp 4 (Telegram 13.08.2026).
 		// Slots live in the INI section "FileSlots" under keys 1..10, so they
-		// survive restarts.  Digit 0 is slot 10 (the keyboard order 1..9,0).
+		// survive restarts.  From 16.09.2026 the keyboard reaches slots 1..9 only:
+		// Alt+0 opens the LIST of numbered files instead (see menu File).  Slot 10
+		// can still hold a file from an older configuration and the list opens it.
 		// Both the top-row digits and the numeric keypad are accepted.
 		// NOTE: Alt+7 / Alt+0 / Alt+Shift+0 previously belonged to other
 		// commands; those were moved to free chords on his explicit
@@ -11328,12 +10817,16 @@ private bool HandleFileSlotKey(Keys keyData) {
 
 		Keys keyCode = keyData & Keys.KeyCode;
 		int iDigit = -1;
-		if (keyCode >= Keys.D0 && keyCode <= Keys.D9) iDigit = (int) keyCode - (int) Keys.D0;
-		else if (keyCode >= Keys.NumPad0 && keyCode <= Keys.NumPad9) iDigit = (int) keyCode - (int) Keys.NumPad0;
+		// CYFRY 1..9 TYLKO.  Cyfra 0 stala sie 16.09.2026 skrotem LISTY plikow
+		// numerowanych (Alt+0, menu File), wiec nie moze byc jednoczesnie slotem
+		// numer dziesiec: pierwsze wcisniecie i tak trafialo by w komende z menu,
+		// bo ta stoi w tablicy hashKey.  Zeby nie dalo sie zapisac pliku pod
+		// cyfra, ktorej nikt nie otworzy, Alt+Shift+0 tez tu nie wchodzi.
+		if (keyCode >= Keys.D1 && keyCode <= Keys.D9) iDigit = (int) keyCode - (int) Keys.D0;
+		else if (keyCode >= Keys.NumPad1 && keyCode <= Keys.NumPad9) iDigit = (int) keyCode - (int) Keys.NumPad0;
 		else return false;
 
-		// Keyboard order: 1..9 are slots 1..9, and 0 is slot 10.
-		int iSlot = (iDigit == 0) ? 10 : iDigit;
+		int iSlot = iDigit;
 
 		// Yield to any command still holding this chord, so we never silently
 		// shadow an existing hotkey.  As of 5.0.8 the whole Alt+digit and
@@ -18249,6 +17742,15 @@ public static string LineBreak = Environment.NewLine;
 public static string FF = "\f";
 public static string SB = FF + LB;
 public static string DD = "----------";
+// SEPARATOR WEWNETRZNY, JUZ NIE USTAWIENIE.  Do 16.09.2026 ten tekst dawal sie
+// nadpisac kluczem "SectionBreak" w pliku ustawien; opcja zostala usunieta
+// (docs/OPCJE-USTAWIEN.md: "MK. Do usuniecia chyba"), bo zawierala znak wysuwu
+// strony, ktorego edytor Markdowna nie uzywa, a polecenie Control+Enter od
+// 14.08.2026 wstawia NAGLOWEK Markdown, nie ten separator.  Sama stala ZOSTAJE:
+// rozdziela nia wyniki wyszukiwania wrzucane do nowego okna oraz sekcje
+// dokumentu importowanego z Worda.  Nie czytamy jej z pliku, zeby nikt nie
+// zepsul tych dwoch rzeczy wpisem, ktorego nie da sie juz zobaczyc w oknie
+// ustawien.
 public static string SectionBreak = LB + DD + LB + SB;
 public static string EOD = LB + DD + LB + "End of Document" + LB;
 
@@ -18594,7 +18096,6 @@ this.HideSelection = false;
 // bylo by tym samym bledem, ktory tu naprawiam.
 string sOpoznienie = App.ReadOption("CaretMoveDelayMs", "0").Trim();
 if (!Int32.TryParse(sOpoznienie, out iCaretMoveDelayMs) || iCaretMoveDelayMs < 0) iCaretMoveDelayMs = 0;
-SectionBreak = App.ReadOption("SectionBreak", SectionBreak);
 string s = App.ReadOption("UseIndentModeDefault", "N").Trim().ToUpper();
 if (s == "Y" || s == "YES") this.IndentMode = true;
 Ini.WriteValue(App.IniFile, "Data", "IndentMode", (this.IndentMode ? "1" : "0"), false);
@@ -19029,9 +18530,9 @@ if (!Directory.Exists(sDir)) sDir = Directory.GetCurrentDirectory();
 dlg.InitialDirectory = sDir;
 
 string sFilter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|Rich Text Format files (*.rtf)|*.rtf";
-string sCompiler = App.ReadData("Compiler", "Default");
-string sExtensionDefault = App.ReadOption("ExtensionDefault", "");
-if (sCompiler != "Default") sFilter = sCompiler + " files (*." + sExtensionDefault + ")|*." + sExtensionDefault + "|" + sFilter;
+// FILTR "pliki biezacego kompilatora" USUNIETY 16.09.2026: bral nazwe z
+// ustawienia Compiler, ktore mogl zmienic tylko usuniety Pick Compiler, wiec
+// warunek byl od tej pory zawsze falszywy - martwy kod.
 dlg.Filter = sFilter;
 dlg.FilterIndex = 1;
 dlg.ValidateNames = true;
@@ -19057,9 +18558,9 @@ sDir = Path.GetDirectoryName(sPath);
 if (Directory.Exists(sDir)) dlg.InitialDirectory = sDir;
 
 string sFilter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|Rich Text Format files (*.rtf)|*.rtf";
-string sCompiler = App.ReadData("Compiler", "Default");
-string sExtensionDefault = App.ReadOption("ExtensionDefault", "");
-if (sCompiler != "Default") sFilter = sCompiler + " files (*." + sExtensionDefault + ")|*." + sExtensionDefault + "|" + sFilter;
+// FILTR "pliki biezacego kompilatora" USUNIETY 16.09.2026: bral nazwe z
+// ustawienia Compiler, ktore mogl zmienic tylko usuniety Pick Compiler, wiec
+// warunek byl od tej pory zawsze falszywy - martwy kod.
 dlg.Filter = sFilter;
 dlg.FilterIndex = 1;
 dlg.CheckPathExists = true;
@@ -20279,11 +19780,6 @@ return aResults;
 
 } // Dialog class
 
-// Script: late-bound bridge to EdSharp.dll, the JScript .NET host built
-// from EdSharp.js. Loaded by path (not /reference) so the exe and the
-// same-named dll do not collide at load time. The MethodInfo is cached
-// after first use. run returns the script result string, or text that
-// begins "ERROR: " on a compile or runtime fault in the snippet.
 // PickItem: carries a display string together with the index of the value
 // it represents, so a sorted pick-list can map the selected row back to the
 // original value array. Replaces the former VB6 ListBox ItemData shim.
@@ -20689,28 +20185,14 @@ return listLinks;
 } // GetLinks method
 } // VB class
 
-public class Script {
-private static MethodInfo miRun;
-
-private static MethodInfo GetRunMethod() {
-if (miRun != null) return miRun;
-string sDir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-string sDll = Path.Combine(sDir, "EdSharp.dll");
-Assembly asmHost = Assembly.LoadFrom(sDll);
-Type typeJs = asmHost.GetType("EdSharp.JS");
-miRun = typeJs.GetMethod("runScript", new Type[] {typeof(string), typeof(object), typeof(object)});
-return miRun;
-} // GetRunMethod method
-
-// run: evaluate sCode with the active editor window as frm and its
-// RichTextBox as rtb, both visible to the snippet. Either may be null
-// for host-internal expressions that need no document context.
-public static string run(string sCode) {
-object frm = (App.Frame != null) ? App.Frame.Child : null;
-object rtb = (App.Frame != null && App.Frame.Child != null) ? (object) App.Frame.Child.RTB : null;
-return (string) GetRunMethod().Invoke(null, new object[] {sCode, frm, rtb});
-} // run method
-} // Script class
+// KLASA Script USUNIETA 16.09.2026.  Byl to mostek pozno wiazany do
+// EdSharp.dll - hosta JScript .NET zbudowanego z EdSharp.js.  Cala warstwa
+// skryptow poszla na decyzje Michala (docs/CO-USUWAMY.md 2.2).  Razem z nia
+// z paczki znika PLIK EdSharp.dll i jedyne w programie miejsce, gdzie metoda
+// byla szukana przez refleksje (Assembly.LoadFrom + GetMethod + Invoke),
+// czyli klasa bledow niewidoczna dla kompilatora.
+// Nastepcy: kalkulator wyrazen i rozwijanie sekwencji z odwrotnym ukosnikiem
+// zyja teraz we WLASNYM kodzie, w pliku Wyrazenia.cs.
 
 public class COM {
 public static object CreateObject(string sProgID) {
@@ -21516,7 +20998,7 @@ public static string RedirectFile(string sFile, string sSection) {
 // Bez tego wpisu zakladki wyladowalyby w EdSharp.ini, a ulubione i przypisy
 // zostalyby w <kompilator>.ini - dwa magazyny o roznym zasiegu, czyli
 // zakladki "gubilyby sie" po przelaczeniu kompilatora.
-if(Util.Equiv(sFile, App.IniFile) && (Util.Equiv(sSection, "Favorites") || Util.Equiv(sSection, "Bookmarks") || Util.Equiv(sSection, "Recent") || Util.Equiv(sFile, "Tokens"))) sFile = Path.Combine(App.DataDir, App.ReadData("Compiler", "Default") + ".ini");
+if(Util.Equiv(sFile, App.IniFile) && (Util.Equiv(sSection, "Favorites") || Util.Equiv(sSection, "Bookmarks") || Util.Equiv(sSection, "Recent") || Util.Equiv(sFile, "Tokens"))) sFile = Path.Combine(App.DataDir, "Default.ini");   // patrz wyzej: nazwa stala
 return sFile;
 } // RedirectFile method
 
@@ -22742,66 +22224,13 @@ data.SetData(DataFormats.Text, sText);
 return SetClipboardData(data);
 } // SetClipboardFileDrop method
 
-public static string FindPythonPath() {
-// Locate a real Python interpreter. Windows puts a stub named python.exe on
-// the PATH (in WindowsApps) that does not run anything: it opens the
-// Microsoft Store advertisement instead. Hearing an advertisement when you
-// expected either your program's output or an error message is baffling, so
-// that folder is skipped and the search continues. Returns "" when nothing
-// is found, and the caller then falls back to the bare name "python".
-try {
-string sPath = Environment.GetEnvironmentVariable("PATH");
-if (sPath != null) {
-foreach (string sDir in sPath.Split(';')) {
-if (sDir.Trim().Length == 0) continue;
-if (sDir.IndexOf(@"\WindowsApps", StringComparison.OrdinalIgnoreCase) >= 0) continue;
-string sTry = Path.Combine(sDir.Trim(), "python.exe");
-if (File.Exists(sTry)) return sTry;
-}
-}
-List<string> lsRoots = new List<string>();
-lsRoots.Add(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles));
-lsRoots.Add(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), @"Programs\Python"));
-// The python.org installer's own default for an all-users install is a
-// folder straight off the drive root, such as C:\Python314.
-lsRoots.Add(Path.GetPathRoot(Environment.GetFolderPath(Environment.SpecialFolder.System)));
-List<string> lsFound = new List<string>();
-foreach (string sRoot in lsRoots) {
-if (sRoot == null || !Directory.Exists(sRoot)) continue;
-foreach (string sDir in Directory.GetDirectories(sRoot, "Python3*")) {
-string sTry = Path.Combine(sDir, "python.exe");
-if (File.Exists(sTry)) lsFound.Add(sTry);
-}
-}
-lsFound.Sort();
-lsFound.Reverse();
-if (lsFound.Count > 0) return lsFound[0];
-}
-catch (Exception) {}
-return "";
-} // FindPythonPath method
-
-public static string FindCscPath() {
-// Locate a C# compiler: prefer the newest Roslyn csc (from VS Build Tools, for
-// the latest C# language version), then fall back to the csc.exe that ships
-// with the running .NET Framework, which is always present. Returns "" if none.
-string sWin = Environment.GetFolderPath(Environment.SpecialFolder.Windows);
-string[] aCandidates = new string[] {
-@"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe",
-@"C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe",
-@"C:\Program Files (x86)\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe",
-@"C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Current\Bin\Roslyn\csc.exe",
-@"C:\Program Files (x86)\Microsoft Visual Studio\2022\Professional\MSBuild\Current\Bin\Roslyn\csc.exe",
-@"C:\Program Files (x86)\Microsoft Visual Studio\2022\Enterprise\MSBuild\Current\Bin\Roslyn\csc.exe",
-Path.Combine(System.Runtime.InteropServices.RuntimeEnvironment.GetRuntimeDirectory(), "csc.exe"),
-Path.Combine(sWin, @"Microsoft.NET\Framework64\v4.0.30319\csc.exe"),
-Path.Combine(sWin, @"Microsoft.NET\Framework\v4.0.30319\csc.exe")
-};
-foreach (string s in aCandidates) {
-try { if (File.Exists(s)) return s; } catch {}
-}
-return "";
-} // FindCscPath method
+// SZUKANIE KOMPILATOROW USUNIETE 16.09.2026.  Byly tu dwie metody:
+// FindPythonPath (szukala prawdziwego interpretera Pythona, omijajac zaslepke
+// z WindowsApps, ktora zamiast programu otwiera reklame sklepu) i FindCscPath
+// (szukala kompilatora C#: najpierw Roslyn z Build Tools, potem csc.exe z
+// .NET Framework).  Wolala je TYLKO komenda Compile, usunieta na decyzje
+// Michala (docs/CO-USUWAMY.md 2.3: "Kto koduje, ten uzywa Visual Studio albo
+// Codexa").  Zostawienie ich byloby zostawieniem kodu bez wywolania.
 
 public static void GetGoogleLanguages(out string[] aLanguageNames, out string[] aLanguageAbbreviations) {
 List<string[]> lLanguages = new List<string[]>();
@@ -24104,9 +23533,15 @@ if (bCheckPrefix) {
 if (sText.StartsWith("@")) return sText.Substring(1);
 else if (sText.StartsWith(@"\@")) sText = sText.Substring(1);
 }
+// ROZWIJANIE \n, \t, \uXXXX BEZ JSCRIPTU (16.09.2026).  Dawniej tekst szedl
+// do Script.run owiniety w cudzyslowy, zeby JScript .NET rozwinal sekwencje
+// z odwrotnym ukosnikiem.  Warstwa skryptow usunieta (docs/CO-USUWAMY.md
+// 2.2), wiec robi to Wyrazenia.Rozwin.  WAZNE: nieznana sekwencja zostaje
+// NIETKNIETA, bo w pliku ustawien uzytkownika siedza sciezki typu C:\dane -
+// Regex.Unescape rzucilby na nich wyjatkiem.
 string sReturn = null;
 try {
-sReturn = Script.run("\"" + sText + "\"");
+sReturn = Wyrazenia.Rozwin(sText);
 }
 catch {}
 

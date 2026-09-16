@@ -65,7 +65,9 @@ Source: "EdSharpNG.exe";        DestDir: "{app}"; Flags: ignoreversion
 ; sit next to EdSharpNG.exe, and ignoreversion ensures it is always refreshed so
 ; it stays in sync with the executable.
 Source: "EdSharpNG.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "EdSharp.dll";        DestDir: "{app}"; Flags: ignoreversion
+; EdSharp.dll (host JScript .NET) NIE JEST JUZ PAKOWANA - warstwa skryptow
+; usunieta 16.09.2026 (docs/CO-USUWAMY.md 2.2).  Wpis w [UninstallDelete]
+; ZOSTAJE, zeby plik z poprzednich instalacji zniknal przy odinstalowaniu.
 Source: "nvdaControllerClient.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Source and build inputs (shipped so users can recompile, EdSharp-style).
 Source: "EdSharp.cs";         DestDir: "{app}"; Flags: ignoreversion
@@ -77,8 +79,15 @@ Source: "Web.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "Pisownia.cs";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Skladniki.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Csv.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Sesja.cs";           DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+; Wyrazenia.cs -- wlasny kalkulator wyrazen, nastepca warstwy JScript .NET
+; (16.09.2026, docs/CO-USUWAMY.md 2.2).  Zrodla jada z paczka, zeby program dal
+; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
+Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "EdSharp.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "EdSharp.js";         DestDir: "{app}"; Flags: ignoreversion
+; EdSharp.js (zrodlo hosta JScript .NET) NIE JEST JUZ PAKOWANY - warstwa
+; skryptow usunieta 16.09.2026 razem z EdSharp.dll (docs/CO-USUWAMY.md 2.2).
 Source: "EdSharp.manifest";   DestDir: "{app}"; Flags: ignoreversion
 Source: "BuildEdSharp.cmd";   DestDir: "{app}"; Flags: ignoreversion
 Source: "FetchConvertTools.ps1";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

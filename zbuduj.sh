@@ -100,7 +100,10 @@ echo "   OK: $(stat -c '%s B, %y' "$BUILD/EdSharpNG.exe")"
 # gdzie dziala; tutaj tylko przynosimy wynik.
 echo "== 3/3 pakuje instalator $WERSJA"
 cp "$BUILD/EdSharpNG.exe" "$REPO/EdSharpNG.exe" || exit 8
-cp "$BUILD/EdSharp.dll" "$REPO/EdSharp.dll" || exit 8
+# EdSharp.dll NIE JEST JUZ PRZENOSZONA: warstwa skryptow JScript .NET zostala
+# usunieta 16.09.2026 (docs/CO-USUWAMY.md 2.2), wiec kompilacja jej nie tworzy,
+# a instalator jej nie pakuje.  Wczesniej "cp" tego pliku konczylo sie tu
+# bledem i przerywalo caly skrypt przed spakowaniem paczki.
 
 # BIBLIOTEKA Ude.dll MUSI JECHAC Z PACZKA, jesli kompilowalismy Z NIA.
 #

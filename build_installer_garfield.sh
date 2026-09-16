@@ -50,7 +50,7 @@ if [[ ! -x "$ISCC" ]]; then
 fi
 
 cd "$ROOT"
-echo "[1/6] Budowa EdSharpNG.exe i EdSharp.dll..."
+echo "[1/6] Budowa EdSharpNG.exe..."
 # INTEROP WSL->cmd.exe PADA NIEZALEZNIE OD BUILDU (zmierzone 28.08 i 31.08.2026):
 # polecenie zwraca kod 1 z "UtilAcceptVsock: accept4 failed 110", a kompilacja
 # albo sie wykonala, albo w ogole nie wystartowala.  Kod wyjscia nie rozstrzyga
@@ -59,7 +59,7 @@ echo "[1/6] Budowa EdSharpNG.exe i EdSharp.dll..."
 # Do trzech prob; binarka swiezsza od EdSharp.cs przerywa petle od razu, wiec
 # gotowy build z tej samej sesji nie jest budowany po raz drugi.
 for proba in 1 2 3; do
-    if [[ EdSharpNG.exe -nt EdSharp.cs && EdSharpNG.exe -nt EdSharp.js ]]; then
+    if [[ EdSharpNG.exe -nt EdSharp.cs ]]; then
         echo "  binarka jest swiezsza niz zrodla - nie buduje ponownie"
         break
     fi
@@ -76,8 +76,8 @@ if grep -aEq 'error (CS|JS)[0-9]+' "$LOG_BUILD"; then
     grep -aE 'error (CS|JS)[0-9]+' "$LOG_BUILD" >&2 || true
     exit 1
 fi
-[[ -s EdSharpNG.exe && -s EdSharp.dll ]] || {
-    echo "BLAD: build nie utworzyl EdSharpNG.exe/EdSharp.dll" >&2
+[[ -s EdSharpNG.exe ]] || {
+    echo "BLAD: build nie utworzyl EdSharpNG.exe" >&2
     exit 1
 }
 
@@ -132,7 +132,7 @@ while IFS= read -r -d '' rel; do
     cp -a "$src" "$dst"
 done < <(git ls-files -z)
 # Artefakty buildu sa ignorowane, ale wymagane przez instalator.
-cp -a EdSharpNG.exe EdSharp.dll EdSharpNG-spellcheck.nvda-addon "$STAGE/"
+cp -a EdSharpNG.exe EdSharpNG-spellcheck.nvda-addon "$STAGE/"
 # Zasoby pobrane best-effort przez BuildEdSharp.cmd (ignorowane przez git).
 for rel in Ude.dll Convert; do
     [[ -e "$ROOT/$rel" ]] && cp -a "$ROOT/$rel" "$STAGE/"
