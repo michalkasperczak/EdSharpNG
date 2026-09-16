@@ -15,8 +15,8 @@ History of Changes, Shift+F1, Display list of fixes and improvements
 Key Describer, Control+F1, Toggle a mode in which pressing a key describes its action
 Alternate Menu, Alt+F10, Present all commands in a single, alphabetized list
 Work Continuity, (no key assigned), Turn on restoring open files after restart and auto saving recovery copies
-Command Palette, Control+Shift+X, Type to filter commands and run one without walking the menus
-Tutorial, Control+Shift+F1, Open the tutorial
+Command Palette, Control+Shift+F1, Type to filter commands and run one without walking the menus
+Tutorial, Control+Alt+F1, Open the tutorial
 Report a Problem, Alt+Shift+F1, Report a problem with the program
 Context Menu, Shift+F10, Pick a command from those available to Windows Explorer for the current file extension
 SendTo Menu, Control+F10, Pick a command from those available as Windows "Send To" options
@@ -201,6 +201,10 @@ Insert Link, Control+K, Insert a link: type the text and the address, or pick an
 Insert Table, Control+Shift+T, Open the table wizard: on a table it opens that table for editing, elsewhere it starts a new one, and Control+Enter puts it into the document
 Bulleted List, Control+L, Turn the current line or the selected lines into a bulleted list; on a list that is already bulleted it turns the lines back into plain text
 Numbered List, Control+Shift+L, Turn the current line or the selected lines into a numbered list; on a list that is already numbered it turns the lines back into plain text
+Toggle Task Done, Control+Shift+X, Mark the task on the current line as done or not done; with lines selected it marks all of them, and the program says the new state because a screen reader cannot see the change
+Task List, Control+Shift+F2, Turn the current line or the selected lines into a task list with check boxes; on lines that are already a task list it turns them back into plain text
+Task List Window, Control+Shift+F7, Open a list of every task in the document; Space marks a task done or not done without leaving the list, and Enter goes to the task in the text
+Task Progress, Alt+Shift+F2, Say how many tasks in the document are done; with lines selected it counts only those lines
 Table of Contents, Alt+Shift+T, Write or refresh a Markdown table of contents with links at the top of the document
 Insert Footnote, Control+Shift+K, Insert a Markdown footnote: type its text and choose whether it lands at the end of the document or the end of the current chapter
 Go to Footnote, Control+Alt+K, Jump between the footnote marker in the sentence and its text at the end of the document
@@ -262,4 +266,4 @@ Tile Vertical, Control+Shift+F11, Tile open windows vertically
 
 Elevate Version, F11, Download latest EdSharpNG version and run installer (after confirming)
 
-Commands listed: 217
+Commands listed: 221

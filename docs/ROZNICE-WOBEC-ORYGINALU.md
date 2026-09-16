@@ -133,11 +133,48 @@ Pełny spis wszystkich opcji z opisem, co każda robi: `docs/OPCJE-USTAWIEN.md`.
 
 Pięć nowych poleceń w `Hotkeys.ini` i kilka mechanizmów bez własnego klawisza.
 
-### 3.1. Paleta poleceń (Ctrl+Shift+X), 5.0.79
+### 3.1. Paleta poleceń (Ctrl+Shift+F1), 5.0.79
 
 Lista wszystkich poleceń z wyszukiwaniem po nazwie. Czyta nazwę polecenia
-przed nazwą menu i mówi skrót po ludzku („Control plus Shift plus X"),
+przed nazwą menu i mówi skrót po ludzku („Control plus Shift plus F1"),
 a skrót bierze **z kodu**, nie z osobnej listy, żeby nie mógł się rozjechać.
+
+Do 5.0.111 paleta siedziała na Ctrl+Shift+X; w 5.0.112 oddała ten klawisz
+listom zadań, a samouczek zszedł z Ctrl+Shift+F1 na Ctrl+Alt+F1.
+
+### 3.1a. Listy zadań, czyli checklisty (5.0.112)
+
+Trzeci rodzaj listy obok punktowanej i numerowanej, w składni, którą rozumie
+GitHub i większość edytorów Markdown:
+
+    - [ ] jeszcze niezrobione
+    - [x] zrobione
+
+Cztery klawisze:
+
+- **Ctrl+Shift+X** — przełącza pozycję zrobione/niezrobione i mówi nowy stan.
+  Na kilku zaznaczonych wierszach ustawia je wszystkie jednakowo (według
+  pierwszej pozycji), żeby zaznaczenie nie kończyło się mieszanką.
+- **Ctrl+Shift+F2** — zamienia wiersze w listę zadań, a na gotowej liście
+  zdejmuje pola i zostawia czysty tekst.
+- **Ctrl+Shift+F7** — okno „Task List": wszystkie zadania z dokumentu, spacja
+  przełącza stan **bez wychodzenia z okna**, Enter skacze do zadania w tekście.
+  Tytuł okna niesie postęp, więc czytnik podaje go przy wejściu.
+- **Alt+Shift+F2** — mówi postęp („3 of 12 done, 25 percent").
+
+Pola wyboru rozumieją też funkcje, które istniały wcześniej: Enter kontynuuje
+listę zadań (nowa pozycja jest **zawsze niezrobiona**, nawet po Enterze na
+odhaczonej), Ctrl+L i Ctrl+Shift+L zdejmują pole razem ze znacznikiem, a nie
+zostawiają w tekście gołego `[ ]`, kopiowanie do Worda i nazwy sekcji też.
+
+W eksporcie do HTML powstaje **prawdziwe pole wyboru** (`<input
+type="checkbox" disabled>`) z etykietą powiązaną przez `for`, więc czytnik
+czyta „pole wyboru zaznaczone, zapłacić rachunek", a nie nawiasy. Pole jest
+wyłączone do klikania, bo strona nie ma gdzie zapisać zmiany.
+
+Dlaczego klawisze funkcyjne, a nie Ctrl+Alt+X: **X ma polski odpowiednik pod
+prawym Altem**, a na takim klawiszu układ klawiatury wytwarza literę, zanim
+skrót dojdzie do programu — komenda po prostu by nie zadziałała.
 
 ### 3.2. Ciągłość pracy (5.0.93–5.0.94)
 

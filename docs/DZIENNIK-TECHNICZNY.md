@@ -18,6 +18,71 @@ odczytem. Nie wlaczac z powrotem.
 
 ## Wydania
 
+### 5.0.112 - 17.09.2026
+
+Listy zadan (checklisty Markdown) - zlecenie MK z 16.09.2026: "Przed
+komentarzami musimy zrobic obsluge Checklisty markdown. To nie jest trudne,
+zaproponuj jak."
+
+    dist/EdSharpNG_Setup_5.0.112.exe
+    3 510 222 B
+    sha256 b1705cb406184f23e71ef2782ebfb4686ccf8246f9cd652a553cfcbe5e5f5ffc
+
+Nowy plik Zadania.cs (funkcje czyste: rozpoznanie skladni GFM "- [ ]" / "- [x]",
+przelaczanie stanu, tworzenie i zdejmowanie pola, postep, podpisy dla czytnika).
+Dopisany do listy zrodel w BuildEdSharp.cmd.
+
+Cztery komendy: Control+Shift+X przelacza zrobione/niezrobione, Control+Shift+F2
+robi z wierszy checkliste i z powrotem, Control+Shift+F7 otwiera okno listy
+zadan (spacja przelacza stan bez wychodzenia), Alt+Shift+F2 mowi postep.
+
+RELOKACJE SKROTOW wymuszone tym wydaniem:
+- paleta polecen: Control+Shift+X -> Control+Shift+F1 (decyzja MK "Paleta
+  CTRL-Shift-F1"),
+- samouczek: Control+Shift+F1 -> Control+Alt+F1 (zwalnia miejsce palecie).
+
+ODRZUCONA PROPOZYCJA MK: Control+Alt+X i Control+Alt+Shift+X na pozostale dwie
+komendy. X ma na polskim ukladzie odpowiednik pod prawym Altem, a zmierzone
+13.09.2026 (spor_ctrl_alt_s.ps1) - na chordzie dzielonym z polska litera wygrywa
+PISANIE, wiec skrot bylby bez skutku. Stad klawisze funkcyjne, ktore wariantu z
+ogonkiem nie maja.
+
+SZESC ISTNIEJACYCH MIEJSC POPRAWIONYCH, bo kazda pozycja checklisty pasuje
+TAKZE do wzorca zwyklego punktora (pytac trzeba NAJPIERW o checkliste):
+- Enter kontynuujacy liste: dopisuje "- [ ] ", nowa pozycja zawsze niezrobiona
+  (nie dziedziczy [x]),
+- Control+L i Control+Shift+L: zdejmuja pole razem ze znacznikiem, inaczej w
+  tekscie zostawalby goly "[ ] tresc",
+- kopiowanie do Worda: to samo,
+- podglad Markdown: pole zamienione na SLOWO "[done]"/"[to do]", nie usuniete w
+  cisze (podglad jest kontrolka tekstowa, prawdziwego pola wyboru tam nie ma),
+- nazwa sekcji: pole zdejmowane przed punktorem,
+- eksport HTML: prawdziwe <input type="checkbox" disabled> z <label for> i
+  wlasnym id, zamiast nawiasow w tresci.
+
+POMIARY:
+- testy/pomiar_zadania_611.cs - 64/64 OK (funkcje czyste, goly csc, bez Windows),
+- testy/pomiar_zadania_zywe.ps1 - 6/6 OK na zywym programie: brak alarmu
+  kolizji klawiszy, Control+Shift+X zmienia PLIK na dysku, drugie nacisniecie
+  wraca (nie jest komenda jednokierunkowa), kontrola: na wierszu bez zadania
+  plik sie NIE zmienia,
+- testy/pomiar_zadania_enter_html.ps1 - 3/3 OK: Enter dopisuje pozycje
+  niezrobiona, nie dziedziczy stanu, kontrola: zwykle punktory dzialaja dalej,
+- testy/pomiar_html_checklisty.ps1 - 6/6 OK (refleksja na binarce, bez GUI),
+- zywy NVDA przez mostek MCP: okno czyta "to do: kupic chleb", tytul niesie
+  "Task List - 1 of 3 done, 33 percent", po spacji "done: kupic chleb", zmiana
+  zapisana do pliku.
+
+PULAPKA SOND KLAWIATUROWYCH (kosztowala trzy falszywe wyniki w tej sesji):
+- SendKeys idzie do okna AKTYWNEGO, a program uruchomiony z WSL nim nie jest;
+  samo SetForegroundWindow NIE WYSTARCZA - trzeba AttachThreadInput, jak w
+  testy/na_wierzch.ps1. Dlatego kazda taka sonda ma teraz KONTROLE POZYTYWNA
+  (wpisz znak, sprawdz, ze wszedl) i przerywa, gdy klawisze nie dochodza -
+  bez niej sonda pokazywala "komenda nie dziala" przy dzialajacym kodzie,
+- Control+End laduje na PUSTYM wierszu za tekstem, nie na ostatnim wierszu z
+  trescia. Dwie asercje mierzyly przez to pusty wiersz i falszywie oskarzyly
+  program o zepsute listy.
+
 ### 5.0.111 - 16.09.2026
 
 Wykonanie decyzji z docs/CO-USUWAMY.md i docs/OPCJE-USTAWIEN.md.

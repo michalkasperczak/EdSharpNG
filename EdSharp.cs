@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.111";
+public const string VersionString = "5.0.112";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1360,7 +1360,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1909,6 +1909,24 @@ menuMiscCsvTable = CreateMenuItem("Edit CSV as Table ...", "", menuItem_Click, "
 // (edsharpng-58) - "ta pierwsza opcja bedzie lepsza".
 menuMiscBulletList = CreateMenuItem("Bulleted List", "Control+L", menuItem_Click, "child silent");
 menuMiscNumberedList = CreateMenuItem("Numbered List", "Control+Shift+L", menuItem_Click, "child silent");
+// LISTY ZADAN (checklisty Markdown) - zlecenie Kasperczaka 16.09.2026 "przed
+// komentarzami musimy zrobic obsluge Checklisty markdown".  Skladnia GFM:
+// "- [ ] zadanie" i "- [x] zrobione".  Cztery komendy, bo cztery rozne
+// czynnosci:
+//   Control+Shift+X    przelacza zrobione/niezrobione - rzecz codzienna, wiec
+//                      najkrotszy klawisz; zwolnila go paleta polecen,
+//   Control+Shift+F2   robi z wierszy checkliste i z powrotem,
+//   Control+Shift+F7   otwiera okno listy zadan,
+//   Alt+Shift+F2       mowi postep ("7 of 12 done").
+// DLACZEGO KLAWISZE FUNKCYJNE, a nie Control+Alt+X i Control+Alt+Shift+X, o
+// ktore pytal: X ma na polskim ukladzie odpowiednik pod prawym Altem (z z
+// kropka), a zmierzone 13.09.2026 - na takim chordzie wygrywa PISANIE, wiec
+// skrot nie zadziala.  F2 i F7 wariantu z ogonkiem nie maja.  Wszystkie cztery
+// chordy sprawdzone jako wolne w EdSharp.cs i w Hotkeys.ini przed przypisaniem.
+menuMiscTaskToggle = CreateMenuItem("Toggle Task Done", "Control+Shift+X", menuItem_Click, "child silent");
+menuMiscTaskList = CreateMenuItem("Task List", "Control+Shift+F2", menuItem_Click, "child silent");
+menuMiscTaskListWindow = CreateMenuItem("Task List Window ...", "Control+Shift+F7", menuItem_Click, "child silent");
+menuMiscTaskProgress = CreateMenuItem("Task Progress", "Alt+Shift+F2", menuItem_Click, "child silent");
 // WSTAWIANIE LINKU (Control+K) - ustalenie edsharpng-9, zlecenie
 // 1788041000816-5.  Control+K zwolnily ZAKLADKI, ktore przeszly na Control+B.
 // Okno pyta o tresc, adres i RODZAJ linku: zwykly, graficzny albo wewnetrzny
@@ -2113,7 +2131,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 // KOLEJNOSC MA ZNACZENIE: to AddRange stoi PONIZEJ tworzenia pozycji przypisow
 // i komentarzy (dawne menuMisc*), bo od 5.0.95 nawigacja po nich wisi wlasnie
 // tutaj.  Gdy AddRange bylo wyzej (linia ~1693), pozycje jeszcze NIE ISTNIALY
@@ -2135,7 +2153,14 @@ menuWindow.DropDownItems.AddRange(new ToolStripMenuItem[] {menuWindowNext, menuW
 menuHelp = CreateMenu("&Help");
 menuHelpAbout = CreateMenuItem("&About ...", "Alt+F1", menuItem_Click, "frame silent");
 menuHelpDocumentation = CreateMenuItem("Documentation", "F1", menuItem_Click, "frame speak");
-menuHelpTutorial = CreateMenuItem("Tutorial", "Control+Shift+F1", menuItem_Click, "frame speak");
+// SAMOUCZEK ZESZEDL Z Control+Shift+F1 NA Control+Alt+F1 (16.09.2026, decyzja
+// Kasperczaka).  Powod: paleta polecen oddaje Control+Shift+X listom zadan, a
+// on chcial ja miec w rodzinie F1 ("F1 pomoc, Control+F1 opisy klawiszy, z
+// Shiftem paleta").  Control+Shift+F1 bylo JEDNAK zajete wlasnie przez
+// samouczek - zmierzone w kodzie, nie zalozone - wiec samouczek dostaje wolne
+// Control+Alt+F1.  Control+Alt na klawiszu FUNKCYJNYM jest bezpieczne: prawy
+// Alt wytwarza polska litere tylko na literach, a F1 wariantu z ogonkiem nie ma.
+menuHelpTutorial = CreateMenuItem("Tutorial", "Control+Alt+F1", menuItem_Click, "frame speak");
 menuHelpHistoryOfChanges = CreateMenuItem("History of Changes", "Shift+F1", menuItem_Click, "frame speak");
 menuHelpKeyDescriber = CreateMenuItem("Key Describer", "Control+F1", menuItem_Click, "frame silent");
 menuHelpHotKeySummary = CreateMenuItem("Hotkey Summary", "Alt+Shift+H", menuItem_Click, "frame speak");
@@ -2160,7 +2185,12 @@ menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", m
 // (EdSharp.cs oraz Hotkeys.ini) - sprawdzone przed przypisaniem.  X jest
 // wolne w kodzie i w Hotkeys.ini.  Swiadomie NIE Control+Alt+litera: prawy
 // Alt w Windows to Ctrl+Alt, wiec takie skroty zjadaja polskie znaki.
-menuHelpCommandPalette = CreateMenuItem("Command Palette ...", "Control+Shift+X", menuItem_Click, "frame silent");
+// PALETA PRZESZLA Z Control+Shift+X NA Control+Shift+F1 (16.09.2026, jego
+// decyzja: "Paleta CTRL-Shift-F1").  Powod: Control+Shift+X dostalo
+// przelaczanie zadan w checkliscie - rzecz codzienna, wiec nalezy jej sie
+// krotszy klawisz, a paleta wchodzi do rodziny F1 razem z pozostala pomoca.
+// Zwolnione Control+Shift+F1 zajmowal samouczek, ktory zeszedl na Control+Alt+F1.
+menuHelpCommandPalette = CreateMenuItem("Command Palette ...", "Control+Shift+F1", menuItem_Click, "frame silent");
 menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem, menuHelpCommandPalette});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
@@ -6182,6 +6212,42 @@ if (bNumbered) ToggleNumberedListShortcut(child);
 else ToggleBulletListShortcut(child);
 }
 
+// LISTY ZADAN.  Cztery komendy dziela jedna bramke, bo warunki wejscia sa te
+// same, co przy listach punktowanych: plik Markdown, podglad zamkniety, dokument
+// nie chroniony, kursor nie w bloku kodu.  POSTEP i OKNO tylko CZYTAJA, wiec
+// bramka o zapis ich nie dotyczy - stad drugi warunek nizej.
+if (menuItem == menuMiscTaskToggle || menuItem == menuMiscTaskList
+|| menuItem == menuMiscTaskListWindow || menuItem == menuMiscTaskProgress) {
+if (child == null) return;
+bool bTylkoCzyta = (menuItem == menuMiscTaskListWindow || menuItem == menuMiscTaskProgress);
+if (!MarkdownReview_IsMarkdownFile(child.File)) {
+AddMessage("Task lists work only on Markdown files!");
+return;
+}
+if (child.MarkdownReviewMode && !bTylkoCzyta) {
+AddMessage("Close the preview first!");
+return;
+}
+if (rtb.ReadOnly && !bTylkoCzyta) {
+AddMessage("Document is guarded!");
+return;
+}
+if (!bTylkoCzyta) {
+string sFenceTask = rtb.Text;
+int iCurTask = rtb.Index;
+if (iCurTask < 0) iCurTask = 0;
+if (iCurTask > sFenceTask.Length) iCurTask = sFenceTask.Length;
+if (IsMarkdownIndexInFence(MarkdownReview_FindFenceRanges(sFenceTask), iCurTask)) {
+AddMessage("Cannot change a task list inside a code block!");
+return;
+}
+}
+if (menuItem == menuMiscTaskToggle) ToggleTaskDoneShortcut(child);
+else if (menuItem == menuMiscTaskList) ToggleTaskListShortcut(child);
+else if (menuItem == menuMiscTaskListWindow) ShowTaskListWindow(child);
+else SpeakTaskProgress(child);
+}
+
 if (menuItem == menuMiscWorkContinuity) {
 // PRAWDZIWE OKNO USTAWIEN, NIE PLIK ANI PYTANIE O LICZBE.
 //
@@ -9992,7 +10058,11 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 
 			Match mBullet = MarkdownBulletPrefixRegex.Match(sLine);
 			Match mNumber = MarkdownNumberPrefixRegex.Match(sLine);
-			Match m = mBullet.Success ? mBullet : mNumber;
+			// CHECKLISTA PYTANA NAJPIERW.  Kazda pozycja "- [ ] tresc" pasuje TAKZE do
+			// wzorca punktora, wiec bez tego pytania Enter dopisywalby zwykle "- " i
+			// checklista rwalaby sie po pierwszym wierszu.  Kolejnosc jest tu cala rzecza.
+			Match mTask = Zadania.PrefiksRegex.Match(sLine);
+			Match m = mTask.Success ? mTask : (mBullet.Success ? mBullet : mNumber);
 			if (!m.Success) return false;
 
 			int iRowStart = rtb.RowStart;
@@ -10011,7 +10081,14 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 			// Continue list on Enter.
 			string sIndent = m.Groups["indent"].Value;
 			string sInsert;
-			if (mBullet.Success) {
+			// NOWA POZYCJA JEST ZAWSZE NIEZROBIONA, tez po Enterze na pozycji "- [x]".
+			// Odziedziczenie stanu dopisywaloby zadania juz odhaczone - czego nikt nie
+			// chce, a przy czytniku nie bylo by widac.
+			if (mTask.Success) {
+			string sMarkerTask = mTask.Groups["marker"].Value;
+			sInsert = "\n" + sIndent + sMarkerTask + " [ ] ";
+			}
+			else if (mBullet.Success) {
 			string sMarker = mBullet.Groups["marker"].Value;
 			sInsert = "\n" + sIndent + sMarker + " ";
 			}
@@ -10237,6 +10314,10 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 
 			string[] aLines = sSource.Replace("\r\n", "\n").Replace("\r", "\n").Split('\n');
 			string sOpenList = "";
+			// Licznik identyfikatorow pol wyboru w checklistach.  Kazde pole potrzebuje
+			// WLASNEGO id, zeby <label for> wiazalo etykiete z wlasciwym polem; dwa te
+			// same id znaczylyby, ze czytnik czyta jedna etykiete przy dwoch zadaniach.
+			int iTaskHtmlCounter = 1;
 			bool bInFence = false;
 			List<string> tableRows = new List<string>();
 			List<string> paragraph = new List<string>();
@@ -10313,6 +10394,24 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 					}
 					Match mUsed = mBullet.Success ? mBullet : mNumber;
 					string sItem = sLine.Substring(mUsed.Index + mUsed.Length);
+					// POZYCJA CHECKLISTY IDZIE JAKO PRAWDZIWE POLE WYBORU, nie jako
+					// nawiasy w tresci.  Bez tego czytnik w wyeksportowanej stronie
+					// czytalby "lewy nawias kwadratowy x prawy nawias" zamiast slowa
+					// "zaznaczone" - a to jest cala informacja o stanie zadania.
+					// disabled, bo strona jest DOKUMENTEM: klikanie w niej niczego nie
+					// zapisze, wiec pole klikalne obiecywaloby cos, czego nie ma.
+					// Etykieta <label> wiaze tekst z polem, zeby czytnik podal je razem.
+					Match mTaskHtml = Zadania.PrefiksRegex.Match(sLine);
+					if (mTaskHtml.Success) {
+						bool bDoneHtml = Zadania.CzyZrobione(sLine);
+						string sTaskText = sLine.Substring(mTaskHtml.Index + mTaskHtml.Length);
+						string sIdTask = "task" + iTaskHtmlCounter.ToString();
+						iTaskHtmlCounter++;
+						sb.Append("<li class=\"task-list-item\"><input type=\"checkbox\" id=\"" + sIdTask + "\" disabled"
+						+ (bDoneHtml ? " checked" : "") + " /> <label for=\"" + sIdTask + "\">"
+						+ MarkdownInlineToHtml(sTaskText.Trim()) + "</label></li>\r\n");
+						continue;
+					}
 					sb.Append("<li>" + MarkdownInlineToHtml(sItem.Trim()) + "</li>\r\n");
 					continue;
 				}
@@ -14600,6 +14699,9 @@ return sLine;
 			if (s.Length == 0) continue;
 			s = MarkdownHeadingPrefixRegex.Replace(s, "");
 			s = MarkdownHeadingSuffixRegex.Replace(s, "");
+			// Pole stanu zdejmowane PRZED punktorem: nazwa sekcji ma byc trescia
+			// zadania, a nie "nawias x nawias tresc".
+			s = Zadania.PrefiksRegex.Replace(s, "");
 			s = MarkdownBulletPrefixRegex.Replace(s, "");
 			s = MarkdownNumberPrefixRegex.Replace(s, "");
 			s = Regex.Replace(s, @"\s+", " ").Trim();
@@ -15063,6 +15165,15 @@ return sLine;
 			sLine = MarkdownHeadingPrefixRegex.Replace(sLine, "");
 			sLine = MarkdownHeadingSuffixRegex.Replace(sLine, "");
 			sLine = Util.RegExpReplaceCase(sLine, @"^\s*>+\s?", "");
+			// PODGLAD: pole stanu zamieniamy na SLOWO, nie usuwamy w cisze.  Podglad jest
+			// zwykla kontrolka tekstowa, wiec prawdziwego pola wyboru tam nie ma - gdyby
+			// znacznik po prostu zniknal, czytnik nie mialby skad wiedziec, ktore zadanie
+			// jest zrobione, a to jedyna rzecz, po ktora czlowiek do checklisty zaglada.
+			if (Zadania.CzyZadanie(sLine)) {
+			Match mTaskPrev = Zadania.PrefiksRegex.Match(sLine);
+			sLine = mTaskPrev.Groups["indent"].Value + Zadania.ZnacznikDoPodgladu(Zadania.CzyZrobione(sLine))
+			+ sLine.Substring(mTaskPrev.Index + mTaskPrev.Length);
+			}
 			sLine = MarkdownBulletPrefixRegex.Replace(sLine, "${indent}", 1);
 			sLine = MarkdownNumberPrefixRegex.Replace(sLine, "${indent}", 1);
 
@@ -15161,6 +15272,10 @@ return sLine;
 			continue;
 			}
 
+			// CHECKLISTA ZDEJMOWANA CALA, RAZEM Z POLEM STANU.  Bez tego Control+L na
+			// pozycji "- [ ] kupic chleb" usunelby sam punktor i zostawil w tekscie goly
+			// "[ ] kupic chleb" - nawiasy weszlyby w tresc dokumentu jako zwykle znaki.
+			if (Zadania.CzyZadanie(sLine)) sLine = Zadania.ZdejmijPole(sLine);
 			if (bAllBulleted) {
 			// Remove bullet marker, keep indentation.
 			aLines[i] = MarkdownBulletPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
@@ -15182,6 +15297,210 @@ return sLine;
 			rtb.ReplaceRange(iStart, iEnd, sNewText);
 			AddMessage(bAllBulleted ? "Bulleted list off" : "Bulleted list on");
 			} // ToggleBulletListShortcut method
+
+// ===================== LISTY ZADAN (checklisty Markdown) =====================
+// Praca na tekscie siedzi w Zadania.cs jako funkcje czyste (zmierzone:
+// testy/pomiar_zadania_611.cs, 64 asercje).  Tutaj zostaje to, czego zmierzyc
+// bez Windows nie da sie: kontrolka edycyjna, kursor i MOWA.
+
+// PRZELACZENIE ZROBIONE/NIEZROBIONE (Control+Shift+X).
+// Bez zaznaczenia dziala na wierszu z kursorem, z zaznaczeniem na calym
+// zakresie.  MOWA JEST TU OBOWIAZKOWA: zmiana to jeden znak w srodku wiersza,
+// wiec czytnik sam z siebie nie powie nic - czlowiek nacisnalby klawisz i nie
+// wiedzial, czy cokolwiek sie stalo.
+private void ToggleTaskDoneShortcut(MdiChild child) {
+if (child == null) return;
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) return;
+
+int iStart, iEnd;
+GetSelectedLineSpan(rtb, out iStart, out iEnd);
+if (iEnd <= iStart) return;
+string sText = rtb.GetRange(iStart, iEnd);
+string[] aLines = sText.Split('\n');
+
+// POJEDYNCZY WIERSZ - osobna sciezka, bo komunikat ma byc o TEJ pozycji, a nie
+// zbiorczy; przy jednym zadaniu "1 item marked done" brzmialoby jak raport.
+if (aLines.Length == 1) {
+bool bDone;
+string sNowy = Zadania.PrzelaczWiersz(aLines[0], out bDone);
+if (sNowy == null) {
+AddMessage("Not a task list item!");
+return;
+}
+int iCursor = rtb.Index;
+rtb.ReplaceRange(iStart, iEnd, sNowy);
+// Kursor wraca tam, gdzie stal: dlugosc wiersza sie nie zmienia (jeden znak w
+// polu zamieniony na inny), wiec nie ma czego przeliczac.
+if (iCursor >= 0 && iCursor <= (rtb.Text ?? "").Length) rtb.Index = iCursor;
+string sTresc = Zadania.TrescZadania(sNowy);
+AddMessage((bDone ? "Done: " : "To do: ") + (sTresc.Length == 0 ? "(empty)" : sTresc));
+return;
+}
+
+bool bDoneAll;
+int iChanged;
+string[] aNowe = Zadania.PrzelaczStanZakresu(aLines, out bDoneAll, out iChanged);
+if (aNowe == null) {
+AddMessage("No task list items in the selection!");
+return;
+}
+rtb.ReplaceRange(iStart, iEnd, String.Join("\n", aNowe));
+// Liczba MOWIONA, bo przy zaznaczeniu wielu wierszy czlowiek nie ma jak
+// sprawdzic, ile pozycji rzeczywiscie zmienilo stan.
+AddMessage(iChanged.ToString() + (iChanged == 1 ? " item marked " : " items marked ")
++ (bDoneAll ? "done" : "not done"));
+} // ToggleTaskDoneShortcut method
+
+// ZROBIENIE CHECKLISTY Z WIERSZY I POWROT (Control+Shift+F2).
+// Zachowanie jak przy Control+L: gdy wszystkie wiersze sa juz checklista,
+// komenda pola ZDEJMUJE, a powrot idzie do TEKSTU ZWYKLEGO, nie do punktora.
+private void ToggleTaskListShortcut(MdiChild child) {
+if (child == null) return;
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) return;
+
+int iStart, iEnd;
+GetSelectedLineSpan(rtb, out iStart, out iEnd);
+if (iEnd <= iStart) return;
+string[] aLines = rtb.GetRange(iStart, iEnd).Split('\n');
+
+bool bRemoved;
+string[] aNowe = Zadania.PrzelaczZakres(aLines, out bRemoved);
+if (aNowe == null) return;
+rtb.ReplaceRange(iStart, iEnd, String.Join("\n", aNowe));
+AddMessage(bRemoved ? "Task list off" : "Task list on");
+} // ToggleTaskListShortcut method
+
+// POSTEP (Alt+Shift+F2).  Liczy pozycje CALEGO dokumentu, ale z zaznaczeniem -
+// tylko zaznaczone, zeby dalo sie sprawdzic jedna liste w pliku, w ktorym jest
+// ich kilka.  Bloki kodu pomijamy: "- [ ]" w przykladzie kodu nie jest zadaniem
+// czlowieka, a doliczone psuloby licznik bez sladu.
+private void SpeakTaskProgress(MdiChild child) {
+if (child == null) return;
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) return;
+
+string sAll = rtb.Text ?? "";
+int iStart = 0;
+int iEnd = sAll.Length;
+bool bSelection = (rtb.SelectionLength > 0);
+if (bSelection) GetSelectedLineSpan(rtb, out iStart, out iEnd);
+
+List<int[]> fences = MarkdownReview_FindFenceRanges(sAll);
+string[] aLines = sAll.Substring(iStart, Math.Max(0, iEnd - iStart)).Split('\n');
+int iPos = iStart;
+int iDone = 0;
+int iAll = 0;
+for (int i = 0; i < aLines.Length; i++) {
+string sLine = aLines[i];
+if (!IsMarkdownIndexInFence(fences, iPos) && Zadania.CzyZadanie(sLine)) {
+iAll++;
+if (Zadania.CzyZrobione(sLine)) iDone++;
+}
+iPos += sLine.Length + 1;
+}
+AddMessage(Zadania.OpisPostepu(iDone, iAll));
+} // SpeakTaskProgress method
+
+// OKNO LISTY ZADAN (Control+Shift+F7).
+// Wzor: lista przypisow.  Roznica jest jedna, ale wazna - SPACJA przelacza stan
+// BEZ WYCHODZENIA z okna, bo przy dluzszej liscie zamykanie okna po kazdej
+// pozycji byloby karą.  Stan idzie NA POCZATEK pozycji ("done: ...", "to do:
+// ..."), zeby czytnik podal go od razu, a nie po calej tresci zadania.
+private void ShowTaskListWindow(MdiChild child) {
+if (child == null) return;
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) return;
+
+string sText = rtb.Text ?? "";
+List<int[]> fences = MarkdownReview_FindFenceRanges(sText);
+string[] aLines = sText.Split('\n');
+List<int> liStart = new List<int>();
+List<int> liLine = new List<int>();
+int iPos = 0;
+for (int i = 0; i < aLines.Length; i++) {
+if (!IsMarkdownIndexInFence(fences, iPos) && Zadania.CzyZadanie(aLines[i])) {
+liStart.Add(iPos);
+liLine.Add(i);
+}
+iPos += aLines[i].Length + 1;
+}
+if (liStart.Count == 0) {
+AddMessage("No task list items!");
+return;
+}
+
+List<string> lsShow = new List<string>();
+for (int i = 0; i < liLine.Count; i++) lsShow.Add(Zadania.PozycjaDoOkna(aLines[liLine[i]]));
+
+// Tytul niesie POSTEP, bo czytnik czyta tytul okna przy otwarciu - liczba
+// trafia do czlowieka bez zadnego dodatkowego klawisza.
+int iDoneNow, iAllNow;
+Zadania.Postep(aLines, out iDoneNow, out iAllNow);
+LbcDialog dlgTask = new LbcDialog("Task List - " + Zadania.OpisPostepu(iDoneNow, iAllNow), this);
+ListBox lstTask = dlgTask.addListBox(lsShow, "", "");
+dlgTask.setHelpDetail(lstTask, "Keys: Space toggles done or not done without leaving the list, Enter goes to the item in the text, Escape closes the list.");
+LbcDialog.selectOnly(lstTask, 0);
+
+// Pozycje zmienione w oknie trzymamy OSOBNO i zapisujemy do dokumentu az na
+// wyjsciu.  Pisanie do kontrolki przy kazdej spacji przesuwaloby indeksy pod
+// reszta listy, a przy Escape nie dalo by sie z tego wycofac.
+Dictionary<int, string> dictZmiany = new Dictionary<int, string>();
+int[] aLineIdx = liLine.ToArray();
+
+lstTask.KeyDown += delegate(object oSender, KeyEventArgs ev) {
+if (ev.KeyData != Keys.Space) return;
+ListBox lb = oSender as ListBox;
+if (lb == null) return;
+ev.Handled = true; ev.SuppressKeyPress = true;
+int iSel = lb.SelectedIndex;
+if (iSel < 0 || iSel >= aLineIdx.Length) return;
+int iLine = aLineIdx[iSel];
+string sCur = dictZmiany.ContainsKey(iLine) ? dictZmiany[iLine] : aLines[iLine];
+bool bDone;
+string sNowy = Zadania.PrzelaczWiersz(sCur, out bDone);
+if (sNowy == null) return;
+dictZmiany[iLine] = sNowy;
+lb.Items[iSel] = Zadania.PozycjaDoOkna(sNowy);
+LbcDialog.selectOnly(lb, iSel);
+// Samo slowo stanu, nie cala pozycja: tresc czlowiek wlasnie slyszal,
+// zanim nacisnal spacje.
+Say.sayForced(bDone ? "done" : "not done");
+};
+
+bool bOk = dlgTask.runOkCancel();
+int iPicked = lstTask.SelectedIndex;
+dlgTask.Dispose();
+
+// ZAPIS ZMIAN ZE SPACJI.  Idziemy od KONCA dokumentu, zeby wczesniejsze
+// podmiany nie przesuwaly pozycji tych pozniejszych.
+if (dictZmiany.Count > 0) {
+if (rtb.ReadOnly) AddMessage("Document is guarded!");
+else {
+List<int> liKeys = new List<int>(dictZmiany.Keys);
+liKeys.Sort();
+for (int i = liKeys.Count - 1; i >= 0; i--) {
+int iLine = liKeys[i];
+int iIdxInList = liLine.IndexOf(iLine);
+if (iIdxInList < 0) continue;
+int iLineStart = liStart[iIdxInList];
+rtb.ReplaceRange(iLineStart, iLineStart + aLines[iLine].Length, dictZmiany[iLine]);
+}
+}
+}
+
+if (!bOk) return;
+if (iPicked < 0 || iPicked >= liStart.Count) return;
+// Kursor laduje na TRESCI zadania, nie na znaczniku - ta sama zasada, ktora
+// podglad Markdown stosuje przy zwyklych listach.
+int iGo = liStart[iPicked] + Zadania.DlugoscPrefiksu(aLines[liLine[iPicked]]);
+if (iGo > (rtb.Text ?? "").Length) iGo = (rtb.Text ?? "").Length;
+rtb.Index = iGo;
+string sGoLine = dictZmiany.ContainsKey(liLine[iPicked]) ? dictZmiany[liLine[iPicked]] : aLines[liLine[iPicked]];
+Util.Say(Zadania.PozycjaDoOkna(sGoLine));
+} // ShowTaskListWindow method
+
 
 			private void ToggleNumberedListShortcut(MdiChild child) {
 			if (child == null) return;
@@ -15238,7 +15557,11 @@ return sLine;
 			string sLine = rtb.GetRowText(iRow);
 			if (sLine.Trim().Length == 0) continue;
 
-			Match mPrefix = MarkdownBulletPrefixRegex.Match(sLine);
+			// CHECKLISTA PYTANA NAJPIERW, bo pasuje takze do wzorca punktora - gdyby
+			// zdjac sam punktor, w wierszu zostalby goly "[ ]" i trafil do dokumentu
+			// Worda jako nawiasy zamiast zniknac razem ze znacznikiem.
+			Match mPrefix = Zadania.PrefiksRegex.Match(sLine);
+			if (!mPrefix.Success) mPrefix = MarkdownBulletPrefixRegex.Match(sLine);
 			if (!mPrefix.Success) mPrefix = MarkdownNumberPrefixRegex.Match(sLine);
 			if (mPrefix.Success) {
 			string sIndent = mPrefix.Groups["indent"].Value;
@@ -15290,6 +15613,9 @@ return sLine;
 			continue;
 			}
 
+			// Jak przy Control+L: pole stanu schodzi razem ze znacznikiem, zeby nawiasy
+			// nie zostaly w tresci wiersza.
+			if (Zadania.CzyZadanie(sLine)) sLine = Zadania.ZdejmijPole(sLine);
 			if (bAllNumbered2) {
 			aLines[i] = MarkdownNumberPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
 			}

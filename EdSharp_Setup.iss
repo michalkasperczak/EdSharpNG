@@ -85,6 +85,8 @@ Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; (16.09.2026, docs/CO-USUWAMY.md 2.2).  Zrodla jada z paczka, zeby program dal
 ; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
 Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+; Zadania.cs -- listy zadan (checklisty Markdown), funkcje czyste
+Source: "Zadania.cs";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "EdSharp.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; EdSharp.js (zrodlo hosta JScript .NET) NIE JEST JUZ PAKOWANY - warstwa
 ; skryptow usunieta 16.09.2026 razem z EdSharp.dll (docs/CO-USUWAMY.md 2.2).
