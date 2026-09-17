@@ -146,13 +146,49 @@ z paczka. Alternatywa bez zadnej biblioteki: wywolywac zwykly program git,
 jesli jest na komputerze - mniej zaleznosci, ale wymaga, zeby uzytkownik mial
 gita zainstalowanego.
 
-### 3.3. Czego to NIE bedzie
+### 3.3. Czego to NIE bedzie TERAZ
 
 Nie bedzie pisania w tym samym pliku jednoczesnie, na zywo, jak w Dokumentach
 Google. To wymaga serwera i stalego polaczenia, a przy czytniku ekranu tekst
 zmieniajacy sie pod kursorem, gdy sam nic nie robisz, jest nie do czytania.
 Model "ja pracuje u siebie, potem wymieniamy sie zmianami" jest tu nie tylko
 tanszy, ale po prostu lepszy.
+
+### 3.4. Praca na zywo - kierunek na pozniej (decyzja MK 17.09.2026)
+
+Michal: praca grupowa w czasie rzeczywistym ma byc "gdzies z tylu glowy" -
+nie teraz, ale tak, zeby nie zamurowac sobie drogi. I nie wlasnym protokolem,
+a w oparciu o istniejacy standard (wymienil Etherpada, pozniej Dokumenty
+Google).
+
+Co to znaczy praktycznie DZIS - jedna zasada projektowa, zero dodatkowej pracy:
+zmiane zapisywac jako OPERACJE na tekscie (w tym miejscu wstawiono to, w tym
+usunieto tyle znakow), a nie tylko jako gotowy wynik. Wszystkie mechanizmy
+pracy na zywo tak licza. Jesli okno "Zmiany" bedzie od poczatku stalo na
+liscie operacji, podlaczenie zywego zrodla to podmiana dostawcy tych operacji,
+nie przepisywanie funkcji.
+
+ZMIERZONE U ZRODLA 17.09.2026, dwie drogi, obie realne:
+
+1. Etherpad (serwer, ktory mozna postawic u siebie): ma HTTP API z metodami
+   getText(padID, [rev]) i setText(padID, text) - czyli EdSharp moglby czytac
+   i zapisywac tresc pada zwyklym zapytaniem HTTP, bez zadnej biblioteki.
+   To najtansze wejscie: "otworz pad" i "wyslij moja wersje do pada", a inni
+   siedza w przegladarce. Nie jest to jeszcze pisanie na zywo, ale jest to
+   wspolny dokument na standardzie.
+2. Yjs (biblioteka, na ktorej stoi wiekszosc dzisiejszej pracy na zywo) ma
+   oficjalny port na .NET: github.com/yjs/ycs, licencja MIT, cel kompilacji
+   netstandard2.0 i 2.1. Netstandard2.0 daje sie uzywac z .NET Framework 4.8,
+   czyli z naszego programu - PASUJE. Zastrzezenia uczciwie: obsluguje
+   Y.Array, Y.Map, Y.Text, nie obsluguje typow Y.Xml; ostatni commit z 2023
+   roku, czyli projekt jest w praktyce zamrozony; wymaga Newtonsoft.Json,
+   a my kompilujemy jednym csc bez menedzera pakietow - trzeba by dowiezc
+   dwa pliki z paczka.
+
+Dokumenty Google to trzecia sprawa i najdalsza: nie ma tam pisania na zywo
+z zewnetrznego programu przez API - API pozwala czytac i zapisywac dokument,
+nie siedziec w sesji edycji. Realne jest wiec "wez tekst z Dokumentow / odloz
+tekst do Dokumentow", nie wspolny kursor.
 
 ---
 
@@ -167,14 +203,23 @@ tanszy, ale po prostu lepszy.
 
 ---
 
-## 5. Pytania, na ktore potrzebuje Twojej odpowiedzi, zanim zaczne
+## 5. Pytania i odpowiedzi Michala (17.09.2026)
+
+3. **Druga strona: tez EdSharp.** ODPOWIEDZIANE. Michal: zgodnosc z Wordem
+   "jezeli da sie" - dobrze, ale realnie raczej nie wyjdzie, wiec zakladamy,
+   ze druga osoba tez ma EdSharpa. SKUTEK DLA PLANU: eksport do sledzenia
+   zmian Worda ZOSTAJE na koncu jako "jesli sie uda", nie jest warunkiem.
+   Nasza wlasna skladnia znacznikow (punkt 2.1) wystarcza, bo obie strony
+   czytaja ja tym samym programem. Ma to tez zalete: pliki zostaja czystym
+   Markdownem, bez zaleznosci od Worda i bez Pandoca, ktory tego i tak
+   nie umie.
+
+Pozostaja otwarte (odpowiedz, gdy bedziesz mial zdanie - nie blokuja punktu 1
+z kolejnosci pracy):
 
 1. Czy sledzenie zmian ma Ci sluzyc do PRACY Z KIMS (recenzja artykulu do Tyflo
    Swiata na przyklad), czy raczej do WLASNEJ historii pliku?
 2. Czy znaczniki maja byc widoczne w tekscie podczas pisania, czy dokument ma
    brzmiec czysto, a zmiany byc tylko w osobnym oknie?
-3. Czy druga strona wspolpracy to tez EdSharp, czy ktos w Wordzie? Jesli Word,
-   to eksport ze sledzeniem zmian Worda staje sie najwazniejszym punktem, a nie
-   ostatnim.
 4. Czy wymiana plikow ma isc przez folder w chmurze, ktory juz masz, czy przez
    GitHuba?
