@@ -1,7 +1,8 @@
 # Sledzenie zmian i wspolna praca na dwoch EdSharpach - propozycja
 
-Dokument roboczy, 17.09.2026. Nic z tego jeszcze nie jest zrobione. To jest
-projekt do Twojej decyzji, nie opis dzialajacej funkcji.
+Dokument roboczy, 17.09.2026, uzupelniony tego samego dnia odpowiedziami
+Michala (rozdzial 5 - wszystkie cztery pytania rozstrzygniete, kolejnosc pracy
+w rozdziale 4 poprawiona pod te odpowiedzi). Kodu jeszcze nie ma.
 
 Zlecenie: "jak mozna by zrobic sledzenie zmian i wspolna prace na dwoch
 EdSharpach".
@@ -194,12 +195,25 @@ tekst do Dokumentow", nie wspolny kursor.
 
 ## 4. Co proponuje zrobic w jakiej kolejnosci
 
-1. Znaczniki zmian w pliku plus okno "Zmiany" plus skoki plus przyjmij/odrzuc.
-   Uzyteczne od razu, samo w sobie, bez zadnej wspolpracy.
-2. Porownanie dwoch plikow jako zmiany do przyjecia.
-3. Historia wlasnego pliku (poziom 1).
-4. Folder wspolny dla dwoch osob (poziom 2).
-5. Git za kulisami (poziom 3) - tylko jesli poprzednie punkty okaza sie za male.
+Kolejnosc PO odpowiedziach Michala z 17.09.2026 (rozdzial 5). Rdzeniem jest
+okno "Zmiany" i lista zmian - wszystko inne tylko ja zasila.
+
+1. **Rdzen: lista zmian, okno "Zmiany", skoki, przyjmij/odrzuc.**
+   Dokument czyta sie czysto (znaczniki ukryte), opcja pokazania surowych
+   znacznikow fabrycznie wylaczona. Lista trzymana jako OPERACJE na tekscie
+   (patrz 3.4), nie jako gotowy wynik.
+2. **Wpisywanie poprawek jako recenzent** - dopisz jako zmiana, skasuj jako
+   zmiana, komentarz recenzenta. To zasila liste z punktu 1.
+3. **Porownanie dwoch plikow jako zmiany do przyjecia** - drugi dostawca tej
+   samej listy. Od tego momentu i recenzja, i historia dzialaja tym samym
+   oknem.
+4. **Historia wlasnego pliku (poziom 1)** - na autozapisie z Ciaglosci Pracy,
+   otwierana przez porownanie z punktu 3.
+5. **Folder wspolny dla dwoch osob (poziom 2)** - pierwszy dostawca wymiany
+   plikow, pisany za interfejsem, ktory da sie podmienic.
+6. **Git za kulisami (poziom 3)** - drugi dostawca wymiany, ten sam interfejs.
+   Zaplanowany cel, nie warunkowy dodatek.
+7. **Cokolwiek z Wordem** - na koniec, "jesli sie uda".
 
 ---
 
@@ -214,12 +228,34 @@ tekst do Dokumentow", nie wspolny kursor.
    Markdownem, bez zaleznosci od Worda i bez Pandoca, ktory tego i tak
    nie umie.
 
-Pozostaja otwarte (odpowiedz, gdy bedziesz mial zdanie - nie blokuja punktu 1
-z kolejnosci pracy):
+1. **Do czego ma sluzyc: DO OBU RZECZY.** ODPOWIEDZIANE. Michal: "oba warianty,
+   recenzji redagowania i historii zmian, bylyby wskazane". SKUTEK DLA PLANU:
+   nie wybieramy jednego zrodla zmian. Rdzeniem jest lista zmian z okna
+   "Zmiany", a recenzja i historia sa dwoma DOSTAWCAMI tej samej listy. Robimy
+   je po kolei, nie zamiast siebie.
 
-1. Czy sledzenie zmian ma Ci sluzyc do PRACY Z KIMS (recenzja artykulu do Tyflo
-   Swiata na przyklad), czy raczej do WLASNEJ historii pliku?
-2. Czy znaczniki maja byc widoczne w tekscie podczas pisania, czy dokument ma
-   brzmiec czysto, a zmiany byc tylko w osobnym oknie?
-4. Czy wymiana plikow ma isc przez folder w chmurze, ktory juz masz, czy przez
-   GitHuba?
+2. **Znaczniki w tekscie: DOMYSLNIE NIEWIDOCZNE, opcja do wlaczenia.**
+   ODPOWIEDZIANE. Michal: "raczej nie wyobrazam sobie, zeby te nawiasy byly
+   widoczne w tresci, ale opcjonalnie mozna by to wlaczyc". SKUTEK DLA PLANU:
+   dokument brzmi CZYSTO (tak, jakby zmiany byly przyjete), a zmiany dostepne
+   sa przez okno "Zmiany" i przez skoki. Opcja w ustawieniach do pokazania
+   surowych znacznikow - fabrycznie WYLACZONA.
+   To jest ta sama zasada, ktora Michal postawil przy Ciaglosci Pracy
+   i autozapisie (12.09.2026): funkcja, ktorej nie kazdy sobie zyczy,
+   ma wlacznik i startuje wylaczona.
+   UWAGA TECHNICZNA: to jest najdrozsza decyzja w calej funkcji. Znaczniki
+   SA w pliku, ale NIE moga byc w tym, co czyta czytnik - czyli tresc w oknie
+   edytora to tekst po ukryciu znacznikow, a pozycje zmian trzymamy osobno
+   i przeliczamy przy kazdej edycji. Nie da sie tego zrobic "potem" - musi byc
+   tak zaprojektowane od pierwszej linii kodu.
+
+4. **Wymiana plikow: CHMURA teraz, GIT docelowo.** ODPOWIEDZIANE. Michal:
+   "nie mam doswiadczenia, no ale docelowo pewnie taki git to moglaby byc tez
+   ciekawa opcja. Nie mowie, ze od razu to wszystko musimy zrobic."
+   SKUTEK DLA PLANU: kolejnosc z rozdzialu 4 zostaje bez zmian - folder wspolny
+   (poziom 2) przed gitem (poziom 3) - ale git NIE jest juz warunkowy
+   ("tylko jesli poprzednie okaza sie za male"), jest zaplanowanym celem.
+   Warunek projektowy: wymiana plikow ma byc DOSTAWCA, ktorego mozna podmienic.
+   Ten sam mechanizm "sciagnij cudza wersje i pokaz jako zmiany do przyjecia"
+   musi dzialac i dla folderu w chmurze, i dla gita - inaczej poziom 3
+   oznacza pisanie wszystkiego od nowa.
