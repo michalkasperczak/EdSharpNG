@@ -215,6 +215,41 @@ okno "Zmiany" i lista zmian - wszystko inne tylko ja zasila.
    Zaplanowany cel, nie warunkowy dodatek.
 7. **Cokolwiek z Wordem** - na koniec, "jesli sie uda".
 
+### 4.1. Punkt 1 podzielony na male kroki (na zyczenie MK 17.09.2026)
+
+MK: "I robisz to stopniowo?" - TAK. Punkt 1 z listy wyzej to nie jedno duze
+wydanie, a cztery kroki. Kazdy krok konczy sie DZIALAJACA i sprawdzalna
+funkcja, kazdy da sie przetestowac osobno, i po kazdym mozna sie zatrzymac
+albo zawrocic.
+
+**Krok 1a: samo rozpoznawanie zmian, nic nie ukrywamy.**
+Nowy plik Zmiany.cs z funkcjami czystymi: rozpoznaj znaczniki w tekscie,
+zwroc liste zmian (rodzaj, miejsce, stara tresc, nowa tresc), przelicz tekst
+po przyjeciu wszystkiego i po odrzuceniu wszystkiego. Zero zmian w interfejsie.
+Do sprawdzenia pomiarem na golym kompilatorze, bez uruchamiania programu.
+Wzor: tak samo zaczynalismy Zadania.cs przy listach zadan i to sie sprawdzilo.
+
+**Krok 1b: okno "Zmiany" i skoki, znaczniki JESZCZE widoczne.**
+Okno wzorowane na oknie listy zadan: lista zmian czytana zdaniami, Enter
+skacze, spacja czyta pelna tresc. Plus para klawiszy do skakania po zmianach
+w dokumencie. Plus przyjmij i odrzuc na pozycji kursora oraz przyjmij/odrzuc
+wszystko. Na tym etapie znaczniki sa w tekscie widoczne i slyszalne - halasliwe,
+ale wszystko inne mozna juz przetestowac zywym NVDA.
+
+**Krok 1c: ukrywanie znacznikow.**
+Ten najdrozszy fragment osobno, dopiero
+gdy 1b dziala: tresc w edytorze bez znacznikow, pozycje zmian trzymane osobno
+i przeliczane przy edycji. Opcja w ustawieniach do pokazania surowych
+znacznikow - fabrycznie wylaczona, czyli po tym kroku dokument brzmi czysto.
+Gdyby ten krok okazal sie za trudny, 1b i tak zostaje uzyteczne - dlatego jest
+przed nim, a nie po.
+
+**Krok 1d: zapis i odczyt pliku ze zmianami.**
+Zeby plik ze zmianami przezyl zamkniecie programu i dal sie komus przeslac:
+zapis znacznikow do pliku, wczytanie z powrotem, kopia .bak przed nadpisaniem.
+
+Dopiero po 1d ma sens punkt 2 z listy (wpisywanie poprawek jako recenzent).
+
 ---
 
 ## 5. Pytania i odpowiedzi Michala (17.09.2026)
