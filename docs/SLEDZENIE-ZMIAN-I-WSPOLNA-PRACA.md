@@ -294,3 +294,74 @@ Dopiero po 1d ma sens punkt 2 z listy (wpisywanie poprawek jako recenzent).
    Ten sam mechanizm "sciagnij cudza wersje i pokaz jako zmiany do przyjecia"
    musi dzialac i dla folderu w chmurze, i dla gita - inaczej poziom 3
    oznacza pisanie wszystkiego od nowa.
+
+## 6. Propozycja klawiszy do kroku 1b (do zatwierdzenia przez MK)
+
+MK 17.09.2026: "Dobrac liste i zaproponowac."  Ponizej propozycja, NIE decyzja -
+nic z tego nie jest jeszcze w kodzie.
+
+### 6.1. Jak sprawdzilem, ze te chordy sa wolne
+
+Sprawdzone W TRZECH miejscach, bo sam spis skrotow pokazuje tylko czesc prawdy
+(lekcja 5.0.43 z golego F9, MAPA-DROGOWA rozdzial o kolizji "ktorej nie bylo
+widac w spisie"):
+
+1. EdSharp_Hotkeys.txt - 269 wierszy, rodzina F9 ma ZERO wystapien.
+2. EdSharp.cs i KeyMap.cs - grep po Keys.F9 nie zwraca ani jednego warunku,
+   same komentarze historyczne.
+3. Historia decyzji: Alt+F9 i Control+Alt+F9 zdjete 13.09.2026 (CO-USUWAMY 1.3),
+   Control+Shift+F9 i Alt+Shift+F9 zwolnione tym samym ruchem (EdSharp.cs 2058),
+   goly F9 i Shift+F9 zwolnione 03.09.2026 wraz z warstwa skryptow JAWS
+   (EdSharp.cs 2369, jego slowa: "z tego klawisza F dziewiec i skryptu raczej
+   rezygnujemy").
+
+Zadna z liter w propozycji nie tworzy polskiego znaku pod prawym Altem, ale to
+i tak NIE jest argument, na ktorym opieram bezpieczenstwo: straznik
+Util.IsTypingChord pyta uklad klawiatury przy budowie menu i odmawia postawienia
+komendy na chordzie, ktory WPISUJE znak.  Propozycja trzyma sie rodziny F9
+wlasnie dlatego, ze klawisz funkcyjny zadnego znaku nie wpisuje.
+
+### 6.2. Proponowany uklad
+
+Rodzina F9 w calosci na sledzenie zmian.  Jeden klawisz, jedna rodzina, jedno
+skojarzenie - tak jak F9 w Wordzie nie ma nic wspolnego ze zmianami, ale tu MK
+sam te rodzine zwolnil i jest pusta.
+
+- Control+Shift+F9 - nastepna zmiana, mowi rodzaj, tresc i numer wiersza
+- Alt+Shift+F9 - poprzednia zmiana, to samo
+- Control+Alt+F9 - okno "Zmiany" z lista wszystkich zmian w dokumencie
+- Alt+F9 - przyjmij zmiane pod kursorem
+- Shift+F9 - odrzuc zmiane pod kursorem
+
+DLACZEGO TAK, a nie inaczej:
+
+Skoki na Control+Shift+F9 i Alt+Shift+F9 to DOKLADNIE ten uklad, ktory
+komentarze mialy przed przeniesieniem (EdSharp.cs 2058) - palec juz go zna.
+
+Okno na Control+Alt+F9 - bo wszystkie okna list w EdSharpie siedza na
+trzyklawiszowych chordach, a Control+Alt+F9 juz raz bylo oknem listy
+(komentarzy), wiec skojarzenie "trzy klawisze plus F9 rowna sie okno" zostaje.
+
+Przyjmij na Alt+F9 i odrzuc na Shift+F9 - te dwa sa NAJKROTSZE celowo, bo przy
+przegladaniu recenzji naciska sie je najczesciej: skok, przyjmij, skok,
+przyjmij.  Alt+F9 to tez dawny "wstaw komentarz", czyli chord, ktory JUZ pisal
+do dokumentu - a przyjmij tez pisze do dokumentu.
+
+RYZYKO, ktore widze i zglaszam wprost: Shift+F9 jest krotkie, a odrzucenie
+zmiany USUWA czyjas prace.  Dlatego odrzucenie ma MOWIC co zrobilo ("odrzucone:
+dopisanie, taka tresc") i ma sie cofac zwyklym Control+Z jak kazda inna zmiana
+tekstu.  Jesli MK uzna to za zbyt lekkie, odrzucenie moze zejsc na chord
+trzyklawiszowy - to jedna linia roznicy.
+
+### 6.3. Czego w tej liscie NIE MA i dlaczego
+
+Przyjmij wszystkie i odrzuc wszystkie - bez klawisza, tylko w palecie polecen
+i w menu.  To operacja na calym dokumencie, robi sie ja raz na koniec pracy,
+a kazdy klawisz przy niej to ryzyko przypadkowego naciecia.
+
+Wstawianie zmiany jako recenzent (zapisz swoja poprawke jako zmiane do
+przyjecia) - to krok 1d, nie 1b.  Na razie zmiany powstaja z porownania dwoch
+wersji pliku, nie z pisania.
+
+Wlacznik widocznosci znacznikow - krok 1c, i to raczej pozycja w ustawieniach
+niz klawisz, bo przelacza sie go raz.
