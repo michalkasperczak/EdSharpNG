@@ -3,32 +3,57 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
-## Bieżące zlecenie MK — 18.09.2026: formatowanie i zapis
+## Stan na 18.09.2026 — przerwa w pracach po wydaniu 5.0.114
+
+Michał potwierdził w wiadomości z 18.09.2026, że zaktualizował i zainstalował
+EdSharpNG u siebie. O Control+Shift+C napisał: „super zadziałało”. To jest
+potwierdzenie użytkownika z praktyki, osobne od wcześniejszych testów technicznych.
+
+Plik z opisem nowości ocenił jako czytelny i sensowny.
+
+Pozostałych funkcji nie sprawdził jeszcze w praktyce. Komunikaty, śledzenie
+zmian i inne elementy sprawdzi później. Nie oznaczać ich jako zaakceptowanych
+przez użytkownika tylko dlatego, że przeszły pomiary techniczne.
+
+Decyzja: przez dłuższy czas nie rozwijamy edytora. Nie wyznaczono terminu
+powrotu. Nie rozpoczynać kolejnego etapu ani nowego wydania bez nowego
+zlecenia Michała; po powrocie najpierw zebrać jego wyniki i uwagi.
+
+Do późniejszego powrotu pozostają nierozstrzygnięte uwagi z
+`UWAGI-MK-18.09.2026.md` oraz dalsze etapy z
+`SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md`, w tym krok 1c — ukrywanie znaczników.
+Nie są one częścią wydania 5.0.114 ani zadaniami do wykonywania teraz.
+
+Opis wydania: `WYDANIE-5.0.114.txt`. Zakres pomiarów i ich ograniczenia:
+`WERYFIKACJA-5.0.114.md`. Potwierdzenie publikacji i dostawy:
+`../testy/wyniki/delivery-5114.json`.
+
+## Zamknięte zlecenie z 18.09.2026: formatowanie i zapis
 
 Źródło uwag: `docs/UWAGI-MK-18.09.2026.md`, zwłaszcza końcowy opis
 kopiowania całego zaznaczenia i zapisu pliku po imporcie z Worda.
 
 Zakres uzgodniony: EdSharp, bez dalszych prac nad AMC w tym wątku.
 
-Koordynacja: to samo zlecenie wpłynęło w dwóch tematach Telegrama. Aktywne
-wdrożenie prowadzi sesja `20260918_002328_08637004` (temat `33010`).
+Koordynacja historyczna: to samo zlecenie wpłynęło w dwóch tematach Telegrama.
+Zakończone wdrożenie prowadziła sesja `20260918_002328_08637004` (temat `33010`).
 Sesja z tematu `32113` zatrzymała swoje zdublowane zadania po potwierdzeniu
 równoległych zmian w kodzie. Nie cofać pracy drugiej sesji. Nie budować dwóch
 różnych instalatorów pod numerem 5.0.114. Nowa kopia robocza
 `edsharp-rich-copy` powstała w zdublowanym zadaniu; nie scalać jej automatycznie.
 
-- W trakcie: Control+Shift+C dla całego mieszanego zaznaczenia Markdown.
-  Nagłówki, odsyłacze, listy i wyróżnienia mają zachować znaczenie w bogatym
-  schowku; format do ponownego wklejenia Markdown w EdSharp pozostaje.
-- W trakcie: Control+Shift+S z rzeczywistą konwersją do DOCX, EPUB, PDF,
+- Wydane w 5.0.114: Control+Shift+C dla całego mieszanego zaznaczenia Markdown.
+  Bogaty schowek obejmuje nagłówki, odsyłacze, listy i wyróżnienia;
+  format do ponownego wklejenia Markdown w EdSharp pozostaje.
+- Wydane w 5.0.114: Control+Shift+S z rzeczywistą konwersją do DOCX, EPUB, PDF,
   HTML, RTF oraz zapisem Markdown i tekstu. Błąd konwersji nie może uszkodzić
   poprzedniego pliku ani oznaczyć niezapisanych zmian jako zapisanych.
-- Do weryfikacji przed wydaniem: pomiary wyników schowka i plików,
-  obsługa nowego okna zapisu żywym NVDA, próba instalacji.
-- Do dostarczenia: nowy numer wersji, wydanie GitHub z instalatorem i ZIP,
-  kopia instalatora w folderze Michała oraz krótka instrukcja testu.
-- Poprawki checklist i drobnych komend są już zapisane lokalnie w commicie
-  `57a9919`; przed wydaniem wymagają uwzględnienia w kontroli regresji.
+- Wykonane przed wydaniem: pomiary schowka i plików, obsługi okna zapisu
+  żywym NVDA oraz próbna instalacja na Hermesie. Szczegóły w raporcie weryfikacji.
+- Dostarczone: wydanie v5.0.114 na GitHubie z instalatorem i ZIP-em,
+  kopia instalatora i opis zmian na głównym komputerze Michała.
+- Poprawki checklist i drobnych komend uwzględniono w wydaniu oraz
+  kontroli regresji; nie czekają już na publikację.
 
 ### Zatwierdzona opcja: Control+S zapisuje do formatu źródłowego
 
@@ -38,7 +63,7 @@ otwartego oryginału. Opcja domyślnie wyłączona; bez niej działa dotychczaso
 Użytkownik świadomie akceptuje utratę czcionek i innych cech wyglądu, bo celem
 jest redakcja treści i struktury do prostej publikacji, np. WordPressa.
 
-Wdrożone w kandydacie, jeszcze bez wydania: powiązanie importu z oryginalnym
+Wydane w 5.0.114: powiązanie importu z oryginalnym
 plikiem, Control+S, kopie poprzednich wersji, wykrywanie zewnętrznych zmian,
 odzysk powiązania w sesji, natychmiastowe wyłączenie opcji i odłączenie po zapisie
 roboczego Markdowna. Sprawdzone dla DOCX, EPUB, HTML i RTF (nie obiecujemy ODT,
@@ -52,7 +77,8 @@ do oryginału. Rozszerzony zestaw integracji: 107/107. Wydano v5.0.114 na GitHub
 (instalator i ZIP), instalator i opis zmian są na głównym komputerze w
 D:\Projekty Codex\Hermes. Starsze 5.0.112 i 5.0.113 przeniesiono do
 kosz-2026-09-18. Próba instalacji i uruchomienia wykonana na Hermesie;
-na głównym komputerze w tej sesji nie uruchamiano instalatora.
+instalatora na głównym komputerze nie uruchamiał agent. Michał później
+potwierdził, że sam zaktualizował i zainstalował program.
 Nie obiecywać bezstratnej edycji dowolnego DOCX.
 
 Próba Pandoca zachowała tekst i nagłówek, lecz utraciła kolor, rozmiar czcionki
@@ -62,6 +88,13 @@ Pozostałe uwagi (m.in. sporadyczny skok podglądu i komunikaty ustawień) nie s
 jeszcze oznaczone jako naprawione. Nie rozszerzamy wydania na nowe funkcje
 śledzenia zmian ani nie zmieniamy kolejnych skrótów bez osobnego ustalenia.
 
+
+## Historyczna lista z 11.09.2026
+
+Poniższe wpisy zachowują treść i statusy z wcześniejszych etapów. Nie są
+bieżącą kolejką do automatycznego wykonania. Przy powrocie należy sprawdzić
+wybrany punkt w aktualnym kodzie i późniejszych decyzjach. Aktualny stan
+wydania i decyzja o przerwie znajdują się na początku tego dokumentu.
 
 ## 1. Alt+F4 zamyka caly program (BLAD, potwierdzony w kodzie)
 

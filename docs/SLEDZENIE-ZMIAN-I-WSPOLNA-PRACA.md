@@ -1,8 +1,22 @@
 # Sledzenie zmian i wspolna praca na dwoch EdSharpach - propozycja
 
-Dokument roboczy, 17.09.2026, uzupelniony tego samego dnia odpowiedziami
-Michala (rozdzial 5 - wszystkie cztery pytania rozstrzygniete, kolejnosc pracy
-w rozdziale 4 poprawiona pod te odpowiedzi). Kodu jeszcze nie ma.
+## Stan na 18.09.2026 — dalsze prace wstrzymane
+
+Kroki 1a i 1b są już wdrożone; opis układu F9 i wcześniejszych pomiarów jest
+w rozdziale 6. Stwierdzenie „kodu jeszcze nie ma” dotyczyło pierwotnej propozycji,
+nie obecnej wersji programu.
+
+Michał potwierdził instalację 5.0.114 i praktyczne działanie Control+Shift+C.
+Śledzenia zmian i komunikatów jeszcze nie sprawdził w praktyce — wróci do nich
+później. Nie traktować potwierdzenia kopiowania jako zatwierdzenia śledzenia zmian.
+
+Na jego prośbę dalszy rozwój edytora jest wstrzymany na dłuższą przerwę,
+bez terminu wznowienia. Krok 1c (ukrywanie znaczników) i następne etapy pozostają
+planem na przyszłość, nie zleceniem do rozpoczęcia teraz. Bieżący zapis stanu:
+`ZADANIA-2026-09.md`.
+
+Poniżej zachowano propozycję z 17.09.2026, uzgodnienia i późniejszy opis kroków.
+Cele planu nie oznaczają, że wszystkie opisane funkcje są już wdrożone.
 
 Zlecenie: "jak mozna by zrobic sledzenie zmian i wspolna prace na dwoch
 EdSharpach".

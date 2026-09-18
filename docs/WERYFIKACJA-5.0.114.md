@@ -4,7 +4,22 @@ Status: opublikowano v5.0.114 z instalatorem i ZIP-em. Instalator i opis zmian
 dostarczono na główny komputer. Sprawdzono sumy zgłoszone przez GitHub API
 oraz ponowny odczyt instalatora u odbiorcy. Oba pliki pobrane z GitHuba mają
 identyczne SHA-256 i rozmiary jak lokalne; ZIP przeszedł kontrolę CRC.
-Nie instalowano na głównym komputerze.
+Agent nie uruchamiał instalatora na głównym komputerze. Michał później
+potwierdził, że sam zaktualizował i zainstalował program.
+
+## Potwierdzenie użytkownika i przerwa w pracach — 18.09.2026
+
+Michał zgłosił, że Control+Shift+C „super zadziałało” w praktyce.
+
+Plik z opisem nowości ocenił jako czytelny i sensowny.
+
+Pozostałych funkcji jeszcze nie testował. Komunikaty, śledzenie zmian
+oraz inne elementy sprawdzi później. Wyniki techniczne opisane poniżej
+nie są równoznaczne z jego akceptacją tych funkcji.
+
+Dalsze prace nad edytorem zostały wstrzymane na dłuższą przerwę,
+bez ustalonego terminu powrotu. W tej aktualizacji zmieniono wyłącznie
+dokumentację; wersja programu i pliki wydania 5.0.114 pozostają bez zmian.
 
 ## Kopiowanie całego zaznaczenia
 
