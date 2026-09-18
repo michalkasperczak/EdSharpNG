@@ -229,12 +229,17 @@ po przyjeciu wszystkiego i po odrzuceniu wszystkiego. Zero zmian w interfejsie.
 Do sprawdzenia pomiarem na golym kompilatorze, bez uruchamiania programu.
 Wzor: tak samo zaczynalismy Zadania.cs przy listach zadan i to sie sprawdzilo.
 
-**Krok 1b: okno "Zmiany" i skoki, znaczniki JESZCZE widoczne.**
+**Krok 1b: okno "Zmiany" i skoki, znaczniki JESZCZE widoczne. — ZROBIONE 18.09.2026**
 Okno wzorowane na oknie listy zadan: lista zmian czytana zdaniami, Enter
-skacze, spacja czyta pelna tresc. Plus para klawiszy do skakania po zmianach
+skacze. Plus para klawiszy do skakania po zmianach
 w dokumencie. Plus przyjmij i odrzuc na pozycji kursora oraz przyjmij/odrzuc
 wszystko. Na tym etapie znaczniki sa w tekscie widoczne i slyszalne - halasliwe,
 ale wszystko inne mozna juz przetestowac zywym NVDA.
+Klawisze: rozdzial 6. Pomiar: `testy/pomiar_zmiany_1b.ps1`, 10/10 na zywym
+programie. SPACJA W OKNIE NIC NIE PRZELACZA (inaczej niz w liscie zadan):
+przyjecie zmiany nie jest odwracalne tym samym klawiszem, bo po przyjeciu
+znacznika juz nie ma. Przyjmowanie zostaje przy kursorze w dokumencie, gdzie
+czlowiek slyszy kontekst zdania.
 
 **Krok 1c: ukrywanie znacznikow.**
 Ten najdrozszy fragment osobno, dopiero
@@ -295,12 +300,67 @@ Dopiero po 1d ma sens punkt 2 z listy (wpisywanie poprawek jako recenzent).
    musi dzialac i dla folderu w chmurze, i dla gita - inaczej poziom 3
    oznacza pisanie wszystkiego od nowa.
 
-## 6. Propozycja klawiszy do kroku 1b (do zatwierdzenia przez MK)
+## 6. Klawisze kroku 1b - UKLAD ZATWIERDZONY PRZEZ MK 18.09.2026
 
-MK 17.09.2026: "Dobrac liste i zaproponowac."  Ponizej propozycja, NIE decyzja -
-nic z tego nie jest jeszcze w kodzie.
+MK 17.09.2026: "Dobrac liste i zaproponowac."  Propozycja z 17.09 (rozdzial 6.2
+nizej, zachowany dla historii) NIE zostala przyjeta bez zmian - MK ja ODWROCIL
+18.09.2026 i to jego uklad siedzi w kodzie:
 
-### 6.1. Jak sprawdzilem, ze te chordy sa wolne
+- **F9** - nastepna zmiana, mowi rodzaj, tresc i numer wiersza
+- **Shift+F9** - poprzednia zmiana, to samo
+- **Alt+F9** - przyjmij zmiane pod kursorem
+- **Alt+Shift+F9** - odrzuc zmiane pod kursorem
+- **Control+F9** - okno "Zmiany" z lista wszystkich
+
+Jego slowa: "F dziewiec shift F dziewiec nastepna poprzednia zmiana, alt F
+dziewiec przyjmij, alt shift F dziewiec odrzuc, kontrol F dziewiec lista".
+Potem doprecyzowal na pytanie: "Tak, na Alt F9, a Alt Shift F9 nieprzyjmowanie."
+
+DLACZEGO JEGO UKLAD JEST LEPSZY OD MOJEJ PROPOZYCJI - dwie rzeczy, obie
+merytoryczne, nie kurtuazja:
+
+Pierwsza: skoki robi sie NAJCZESCIEJ.  Przez recenzje przechodzi sie zmiana po
+zmianie, a przyjmuje tylko czesc - wiec najkrotszy klawisz nalezy sie skokom, nie
+przyjmowaniu.  Moja propozycja stawiala skoki na trzyklawiszowych chordach.
+
+Druga, wazniejsza: ODRZUCENIE KASUJE CZYJAS PRACE, a u MK wymaga DWOCH
+modyfikatorow.  W mojej propozycji siedzialo na samym Shift+F9 i sam zglaszalem
+to jako ryzyko przypadkowego naciecia (rozdzial 6.2, akapit "RYZYKO").  Uklad MK
+to ryzyko znosi ukladem klawiszy, bez zadnej dodatkowej ostroznosci w kodzie.
+
+Control+F9 na okno bylo wolne, bo "Say Compiler" zostalo usuniete 16.09.2026
+razem z kompilowaniem (EdSharp.cs 5905).
+
+### 6.0. Wolnosc chordow zmierzona przed przypisaniem (18.09.2026)
+
+Powtorzone tuz przed wpisaniem do kodu, w trzech miejscach:
+
+1. `EdSharp_Hotkeys.txt` - zero wystapien "F9".
+2. `Hotkeys.ini` - zero wystapien "F9".
+3. `grep Keys.F9` po wszystkich plikach `.cs` - zero warunkow, same komentarze
+   historyczne.
+
+### 6.05. Pomiar kroku 1b na ZYWYM programie
+
+`testy/pomiar_zmiany_1b.ps1` - **10 asercji, 10 OK, 0 ZLE** (18.09.2026, na
+binarce zbudowanej z tej zmiany).
+
+Krok 1a byl mierzony golym kompilatorem (90/90 na czystych funkcjach z
+Zmiany.cs) i tego ten pomiar NIE powtarza.  Mierzy dokladnie to, czego tamten
+nie mogl dotknac: czy klawisze dochodza do komend w zywym oknie i czy zapisany
+plik wyglada tak, jak powinien.
+
+Zmierzone: przyjecie i odrzucenie dopisania, usuniecia i podmiany (szesc
+wariantow, bo dla kazdego rodzaju przyjecie i odrzucenie daja INNY wynik),
+drugi skok F9, powrot Shift+F9, zniknienie komentarza recenzenta.
+
+Co czyni ten pomiar roznicujacym: kazdy wariant ma KONTROLE POZYTYWNA
+KLAWIATURY (wpisanie litery i zapis przed wlasciwym pomiarem) - bez niej "plik
+sie nie zmienil" znaczylo by to samo przy dzialajacej komendzie i przy
+klawiszach, ktore w ogole nie dochodza do okna.  Osobno mierzony jest przypadek
+NEGATYWNY: Alt+F9 na pliku `.txt` nie ma prawa nic zrobic i nie robi.
+
+### 6.1. Jak sprawdzilem, ze te chordy sa wolne (zapis z 17.09.2026)
 
 Sprawdzone W TRZECH miejscach, bo sam spis skrotow pokazuje tylko czesc prawdy
 (lekcja 5.0.43 z golego F9, MAPA-DROGOWA rozdzial o kolizji "ktorej nie bylo
@@ -321,7 +381,7 @@ Util.IsTypingChord pyta uklad klawiatury przy budowie menu i odmawia postawienia
 komendy na chordzie, ktory WPISUJE znak.  Propozycja trzyma sie rodziny F9
 wlasnie dlatego, ze klawisz funkcyjny zadnego znaku nie wpisuje.
 
-### 6.2. Proponowany uklad
+### 6.2. Propozycja z 17.09.2026 - NIE PRZYJETA, zachowana dla historii
 
 Rodzina F9 w calosci na sledzenie zmian.  Jeden klawisz, jedna rodzina, jedno
 skojarzenie - tak jak F9 w Wordzie nie ma nic wspolnego ze zmianami, ale tu MK

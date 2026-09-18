@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.112";
+public const string VersionString = "5.0.113";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1360,7 +1360,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeList, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1927,6 +1927,41 @@ menuMiscTaskToggle = CreateMenuItem("Toggle Task Done", "Control+Shift+X", menuI
 menuMiscTaskList = CreateMenuItem("Task List", "Control+Shift+F2", menuItem_Click, "child silent");
 menuMiscTaskListWindow = CreateMenuItem("Task List Window ...", "Control+Shift+F7", menuItem_Click, "child silent");
 menuMiscTaskProgress = CreateMenuItem("Task Progress", "Alt+Shift+F2", menuItem_Click, "child silent");
+// SLEDZENIE ZMIAN (krok 1b projektu docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md).
+// RODZINA F9 W CALOSCI - i to jest UKLAD KASPERCZAKA, nie moj.  Propozycja z
+// rozdzialu 6 projektu dawala skoki na trzyklawiszowych chordach, a przyjmij i
+// odrzuc na krotkich.  MK odwrocil to 18.09.2026: "F dziewiec shift F dziewiec
+// nastepna poprzednia zmiana, alt F dziewiec przyjmij, alt shift F dziewiec
+// odrzuc, kontrol F dziewiec lista".
+//   F9              nastepna zmiana
+//   Shift+F9        poprzednia zmiana
+//   Alt+F9          przyjmij zmiane pod kursorem
+//   Alt+Shift+F9    odrzuc zmiane pod kursorem
+//   Control+F9      okno "Zmiany" z lista wszystkich
+// DLACZEGO TAK JEST LEPIEJ NIZ BYLO W PROPOZYCJI.  Po pierwsze, skoki robi sie
+// najczesciej (przez zmiany przechodzi sie po kolei, a przyjmuje tylko
+// niektore), wiec najkrotszy klawisz nalezy sie skokom.  Po drugie - i to jest
+// wazniejsze - ODRZUCENIE KASUJE CZYJAS PRACE, a tu wymaga DWOCH modyfikatorow.
+// W propozycji siedzialo na samym Shift+F9 i sam zglaszalem to jako ryzyko
+// przypadkowego naciecia; uklad MK to ryzyko znosi bez zadnej dodatkowej
+// ostroznosci w kodzie.
+// WOLNOSC CHORDOW ZMIERZONA, NIE ZALOZONA (18.09.2026, przed przypisaniem):
+// EdSharp_Hotkeys.txt - zero wystapien "F9"; Hotkeys.ini - zero; grep Keys.F9
+// po wszystkich plikach .cs - zero warunkow.  Control+F9 bylo "Say Compiler" i
+// zostalo zwolnione 16.09.2026 razem z kompilowaniem (EdSharp.cs 5905).  Goly
+// F9 i Shift+F9 zwolnione 03.09.2026 z warstwa skryptow JAWS, Alt+F9 i
+// Alt+Shift+F9 - 13.09.2026 przy zdejmowaniu komentarzy z rodziny F9.
+// Klawisz funkcyjny nie wpisuje zadnego znaku, wiec straznik pisania (spor o
+// Control+Alt i polskie litery, 13.09.2026) tej rodziny nie dotyczy.
+// PRZYJMIJ WSZYSTKIE i ODRZUC WSZYSTKIE bez klawisza, tylko w menu i w palecie:
+// to operacja na calym dokumencie i kazdy klawisz przy niej jest ryzykiem.
+menuMiscChangeNext = CreateMenuItem("Next Change", "F9", menuItem_Click, "child silent");
+menuMiscChangePrior = CreateMenuItem("Prior Change", "Shift+F9", menuItem_Click, "child silent");
+menuMiscChangeAccept = CreateMenuItem("Accept Change", "Alt+F9", menuItem_Click, "child silent");
+menuMiscChangeReject = CreateMenuItem("Reject Change", "Alt+Shift+F9", menuItem_Click, "child silent");
+menuMiscChangeList = CreateMenuItem("Change List ...", "Control+F9", menuItem_Click, "child silent");
+menuMiscChangeAcceptAll = CreateMenuItem("Accept All Changes", "", menuItem_Click, "child silent");
+menuMiscChangeRejectAll = CreateMenuItem("Reject All Changes", "", menuItem_Click, "child silent");
 // WSTAWIANIE LINKU (Control+K) - ustalenie edsharpng-9, zlecenie
 // 1788041000816-5.  Control+K zwolnily ZAKLADKI, ktore przeszly na Control+B.
 // Okno pyta o tresc, adres i RODZAJ linku: zwykly, graficzny albo wewnetrzny
@@ -2131,13 +2166,13 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 // KOLEJNOSC MA ZNACZENIE: to AddRange stoi PONIZEJ tworzenia pozycji przypisow
 // i komentarzy (dawne menuMisc*), bo od 5.0.95 nawigacja po nich wisi wlasnie
 // tutaj.  Gdy AddRange bylo wyzej (linia ~1693), pozycje jeszcze NIE ISTNIALY
 // i program wywalal sie przy starcie na ArgumentNullException w
 // ToolStripItemCollection.Add - okno w ogole sie nie otwieralo.
-menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp, menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk, menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink, menuNavigateGoToStartOfSelection});
+menuNavigate.DropDownItems.AddRange(new ToolStripItem[] {menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp, menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeList, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk, menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink, menuNavigateGoToStartOfSelection});
 //Dialog.Show("Misc.", menuMisc.DropDownItems.Count);
 
 menuWindow = CreateMenu("&Window");
@@ -6109,6 +6144,44 @@ InsertOrEditMarkdownComment(rtb);
 else if (menuItem == menuMiscNextComment) GoToMarkdownComment(rtb, true);
 else if (menuItem == menuMiscPriorComment) GoToMarkdownComment(rtb, false);
 else ShowMarkdownCommentList(rtb);
+}
+
+// SLEDZENIE ZMIAN - siedem komend dzieli jedna bramke, bo warunki wejscia sa te
+// same, co przy listach zadan i komentarzach: plik Markdown, podglad zamkniety,
+// dokument nie chroniony.  SKOKI I OKNO TYLKO CZYTAJA, wiec bramka o zapis ich
+// nie dotyczy - stad bReadOnlyChange, dokladnie jak przy listach zadan wyzej.
+// BLOKU KODU TU NIE PYTAMY.  Przy listach zadan pytamy, bo znacznik "[ ]"
+// wewnatrz bloku kodu jest trescia bloku, nie zadaniem.  Znacznik CriticMarkup w
+// bloku kodu to inny przypadek: Zmiany.Znajdz i tak go znajdzie, a program ma
+// pokazac czlowiekowi WSZYSTKO, co w pliku wyglada jak zmiana - inaczej
+// recenzja po cichu pomijalaby poprawki w przykladach kodu, a to jest gorsze od
+// przyjecia jednej zmiany za duzo.
+if (menuItem == menuMiscChangeNext || menuItem == menuMiscChangePrior
+|| menuItem == menuMiscChangeAccept || menuItem == menuMiscChangeReject
+|| menuItem == menuMiscChangeList || menuItem == menuMiscChangeAcceptAll
+|| menuItem == menuMiscChangeRejectAll) {
+if (child == null) return;
+bool bReadOnlyChange = (menuItem == menuMiscChangeNext || menuItem == menuMiscChangePrior
+|| menuItem == menuMiscChangeList);
+if (!MarkdownReview_IsMarkdownFile(child.File)) {
+AddMessage("Tracked changes work only on Markdown files!");
+return;
+}
+if (child.MarkdownReviewMode && !bReadOnlyChange) {
+AddMessage("Close the preview first!");
+return;
+}
+if (rtb.ReadOnly && !bReadOnlyChange) {
+AddMessage("Document is guarded!");
+return;
+}
+if (menuItem == menuMiscChangeNext) GoToChange(rtb, true);
+else if (menuItem == menuMiscChangePrior) GoToChange(rtb, false);
+else if (menuItem == menuMiscChangeAccept) ApplyChangeAtCursor(rtb, true);
+else if (menuItem == menuMiscChangeReject) ApplyChangeAtCursor(rtb, false);
+else if (menuItem == menuMiscChangeList) ShowChangeList(child);
+else if (menuItem == menuMiscChangeAcceptAll) ApplyAllChanges(rtb, true);
+else ApplyAllChanges(rtb, false);
 }
 
 if (menuItem == menuMiscInsertLink) {
@@ -15501,6 +15574,138 @@ string sGoLine = dictZmiany.ContainsKey(liLine[iPicked]) ? dictZmiany[liLine[iPi
 Util.Say(Zadania.PozycjaDoOkna(sGoLine));
 } // ShowTaskListWindow method
 
+// ====================================================== SLEDZENIE ZMIAN (1b)
+//
+// Cala praca na tekscie siedzi w Zmiany.cs jako funkcje czyste - tutaj jest
+// tylko kontrolka, mowa i okno.  Ta sama granica, co przy Zadania.cs.
+
+// SKOK DO NASTEPNEJ ALBO POPRZEDNIEJ ZMIANY.  Kursor laduje na POCZATKU tresci
+// zmiany, nie na znaczniku: czytnik ma powiedziec tresc, a nie nawiasy klamrowe.
+private void GoToChange(HomerRichTextBox rtb, bool bNext) {
+if (rtb == null) return;
+string sText = rtb.Text ?? "";
+int iCur = rtb.Index;
+if (iCur < 0) iCur = 0;
+Zmiana z = bNext ? Zmiany.Nastepna(sText, iCur) : Zmiany.Poprzednia(sText, iCur);
+if (z == null) {
+// CISZA JEST GORSZA OD NICZEGO.  Rozdzielamy dwa przypadki, bo znacza cos
+// innego: "nie ma zmian w ogole" i "jestes na ostatniej".
+if (!Zmiany.CzyMaZmiany(sText)) AddMessage("No changes!");
+else AddMessage(bNext ? "No next change!" : "No prior change!");
+if (Zmiany.CzyNiedomkniete(sText)) AddMessage("Warning: unclosed change marker in document!");
+return;
+}
+rtb.Index = z.Start;
+// RODZAJ NA POCZATEK, tak jak w oknie: czlowiek ma uslyszec, co to za zmiana,
+// zanim usciska tresc.
+Util.Say(Zmiany.OpisDoOkna(z, sText));
+} // GoToChange method
+
+// PRZYJMIJ ALBO ODRZUC ZMIANE POD KURSOREM.  Podmieniamy TYLKO zakres jednej
+// zmiany przez ReplaceRange, a nie caly tekst kontrolki: podmiana calego tekstu
+// gubi historie cofania (Control+Z), a przy odrzuceniu - czyli skasowaniu czyjejs
+// pracy - cofanie jest jedynym ratunkiem uzytkownika.
+private void ApplyChangeAtCursor(HomerRichTextBox rtb, bool bAccept) {
+if (rtb == null) return;
+string sText = rtb.Text ?? "";
+int iCur = rtb.Index;
+if (iCur < 0) iCur = 0;
+Zmiana z = Zmiany.WMiejscu(sText, iCur);
+if (z == null) {
+if (!Zmiany.CzyMaZmiany(sText)) AddMessage("No changes!");
+else AddMessage("No change at the cursor!");
+return;
+}
+string sKeep = bAccept ? Zmiany.TrescPoPrzyjeciu(z) : Zmiany.TrescPoOdrzuceniu(z);
+string sWhat = Zmiany.NazwaRodzaju(z.Rodzaj);
+rtb.ReplaceRange(z.Start, z.Koniec, sKeep);
+// Kursor na POCZATKU tresci, ktora zostala - stamtad czlowiek czyta dalej.
+int iGo = z.Start;
+int iLen = (rtb.Text ?? "").Length;
+if (iGo > iLen) iGo = iLen;
+rtb.Index = iGo;
+// LICZNIK W KOMUNIKACIE, bo po przyjeciu czlowiek chce wiedziec, ile zostalo -
+// inaczej musialby otwierac okno tylko po to jedno.
+AddMessage((bAccept ? "Accepted " : "Rejected ") + sWhat + ", " + Zmiany.OpisLiczby(rtb.Text ?? "") + " left");
+} // ApplyChangeAtCursor method
+
+// PRZYJMIJ ALBO ODRZUC WSZYSTKIE.  Bez klawisza, tylko z menu i palety - to
+// operacja na calym dokumencie.  PYTAMY O POTWIERDZENIE, bo cofniecie tego
+// jednym Control+Z nie zawsze wyjdzie, a przy odrzuceniu wszystkiego znika
+// cala praca recenzenta.
+private void ApplyAllChanges(HomerRichTextBox rtb, bool bAccept) {
+if (rtb == null) return;
+string sText = rtb.Text ?? "";
+if (!Zmiany.CzyMaZmiany(sText)) {
+AddMessage("No changes!");
+return;
+}
+string sCount = Zmiany.OpisLiczby(sText);
+string sQuestion = (bAccept ? "Accept all " : "Reject all ") + sCount + " in this document?";
+if (Dialog.Confirm("Tracked Changes", sQuestion, "N") != "Y") {
+AddMessage("Cancelled");
+return;
+}
+string sNew = bAccept ? Zmiany.TekstPoPrzyjeciu(sText) : Zmiany.TekstPoOdrzuceniu(sText);
+if (sNew == null || sNew == sText) {
+AddMessage("Nothing changed");
+return;
+}
+// Tu podmieniamy caly tekst - inaczej niz przy jednej zmianie, bo zakresow jest
+// wiele i kazdy przesuwa nastepne.  Kursor zostaje tam, gdzie byl, na ile
+// dlugosc tekstu pozwala.
+int iCur = rtb.Index;
+rtb.Text = sNew;
+if (iCur > sNew.Length) iCur = sNew.Length;
+if (iCur < 0) iCur = 0;
+rtb.Index = iCur;
+AddMessage((bAccept ? "Accepted " : "Rejected ") + sCount);
+} // ApplyAllChanges method
+
+// OKNO "ZMIANY" - lista wszystkich zmian w dokumencie.  Zbudowane tak samo jak
+// okno listy zadan: tytul niesie licznik (czytnik czyta tytul przy otwarciu,
+// wiec liczba trafia do czlowieka bez zadnego klawisza), Enter skacze do zmiany
+// w tekscie, Escape zamyka.
+//
+// SPACJA TU NIE PRZELACZA NICZEGO - i to jest rozstrzygniecie, nie przeoczenie.
+// W liscie zadan spacja odznacza zadanie, bo to operacja odwracalna tym samym
+// klawiszem.  Przyjecie zmiany odwracalne NIE JEST: po przyjeciu znacznik znika
+// i nie ma czego przelaczyc z powrotem.  Przyjmowanie zostaje wiec przy
+// kursorze w dokumencie (Alt+F9), gdzie czlowiek widzi kontekst zdania.
+private void ShowChangeList(MdiChild child) {
+if (child == null) return;
+HomerRichTextBox rtb = child.RTB;
+if (rtb == null) return;
+
+string sText = rtb.Text ?? "";
+List<Zmiana> lista = Zmiany.Znajdz(sText);
+if (lista.Count == 0) {
+AddMessage("No changes!");
+if (Zmiany.CzyNiedomkniete(sText)) AddMessage("Warning: unclosed change marker in document!");
+return;
+}
+
+List<string> lsShow = new List<string>();
+for (int i = 0; i < lista.Count; i++) lsShow.Add(Zmiany.OpisDoOkna(lista[i], sText));
+
+LbcDialog dlgChange = new LbcDialog("Changes - " + Zmiany.OpisLiczby(sText), this);
+ListBox lstChange = dlgChange.addListBox(lsShow, "", "");
+dlgChange.setHelpDetail(lstChange, "Keys: Enter goes to the change in the text, Escape closes the list.  Accept with Alt+F9 and reject with Alt+Shift+F9 at the cursor.");
+LbcDialog.selectOnly(lstChange, 0);
+
+bool bOk = dlgChange.runOkCancel();
+int iPicked = lstChange.SelectedIndex;
+dlgChange.Dispose();
+
+if (!bOk) return;
+if (iPicked < 0 || iPicked >= lista.Count) return;
+int iGo = lista[iPicked].Start;
+int iLen = (rtb.Text ?? "").Length;
+if (iGo > iLen) iGo = iLen;
+rtb.Index = iGo;
+Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
+} // ShowChangeList method
+
 
 			private void ToggleNumberedListShortcut(MdiChild child) {
 			if (child == null) return;
@@ -15560,6 +15765,12 @@ Util.Say(Zadania.PozycjaDoOkna(sGoLine));
 			// CHECKLISTA PYTANA NAJPIERW, bo pasuje takze do wzorca punktora - gdyby
 			// zdjac sam punktor, w wierszu zostalby goly "[ ]" i trafil do dokumentu
 			// Worda jako nawiasy zamiast zniknac razem ze znacznikiem.
+			//
+			// PrefiksRegex OBEJMUJE POLE STANU (zmierzone: testy/pomiar_ctrl_l_bez_zaznaczenia.ps1,
+			// wariant B dawal "1. alfa" zamiast "1. [ ] alfa" tylko dlatego, ze caly
+			// prefiks razem z polem schodzil jednym cieciem).  Kolejnosc prob jest
+			// istotna: gdyby najpierw trafil wzorzec punktora, ciecie skonczyloby sie
+			// przed "[ ]" i nawiasy zostalyby w tresci.
 			Match mPrefix = Zadania.PrefiksRegex.Match(sLine);
 			if (!mPrefix.Success) mPrefix = MarkdownBulletPrefixRegex.Match(sLine);
 			if (!mPrefix.Success) mPrefix = MarkdownNumberPrefixRegex.Match(sLine);
