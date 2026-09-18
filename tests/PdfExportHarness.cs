@@ -84,7 +84,7 @@ string sWhoami = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolde
 if (File.Exists(sWhoami)) {
 bool bR4 = PdfExport.Render(HTML_PROBKA, sObcy, sWhoami, out sErr);
 Ok(!bR4, "Render odmawia, gdy uruchomiony program nie tworzy PDF");
-Ok(sErr.IndexOf("nie utworzyla pliku PDF") >= 0, "komunikat mowi o braku pliku: [" + Skrot(sErr) + "]");
+Ok(sErr.IndexOf("exit code: 1") >= 0, "failed process reports its exit code: [" + Skrot(sErr) + "]");
 Ok(!File.Exists(sObcy), "po nieudanej probie nie zostaje plik wynikowy");
 }
 else Console.WriteLine("POMINIETE: brak whoami.exe");
@@ -103,6 +103,16 @@ Ok(sErr.IndexOf("nie jest dokumentem PDF") >= 0, "komunikat mowi, ze to nie PDF:
 Ok(!File.Exists(sSmiec), "nie-PDF zostal usuniety");
 File.Delete(sBat);
 }
+
+// Valid output does not override a failed process exit status.
+string sPartial = Path.Combine(sStaging, "nonzero-" + Guid.NewGuid().ToString("N") + ".pdf");
+string sFailEngine = Path.Combine(sStaging, "nonzero-" + Guid.NewGuid().ToString("N") + ".cmd");
+File.WriteAllText(sFailEngine, "@echo off\r\ncopy /b \"" + sPdf + "\" \"" + sPartial + "\" >nul\r\nexit /b 3\r\n", Encoding.ASCII);
+bool bNonzero = PdfExport.Render(HTML_PROBKA, sPartial, sFailEngine, out sErr);
+Ok(!bNonzero, "valid PDF plus nonzero exit is rejected");
+Ok(sErr.Contains("exit code: 3"), "nonzero exit reason is preserved");
+Ok(!File.Exists(sPartial), "failed engine output cleaned");
+File.Delete(sFailEngine);
 
 // 7. Puste wejscia.
 Ok(!PdfExport.Render("", Path.Combine(sStaging, "x.pdf"), out sErr) && sErr != "",

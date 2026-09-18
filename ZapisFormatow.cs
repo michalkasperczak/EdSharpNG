@@ -49,6 +49,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.IO.Compression;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
 using System.Text;
 
 namespace EdSharp {
@@ -258,7 +261,7 @@ if (bJest) return sCommand;
 
 // Wycinamy przelacznik wraz z argumentem i porzadkujemy odstepy.
 string sBez = sCommand.Remove(m.Index, m.Length);
-return System.Text.RegularExpressions.Regex.Replace(sBez, @"\s{2,}", " ").Trim();
+return sBez.Trim();
 }
 
 // -------------------------------------------------------------------- PDF ---
@@ -367,7 +370,7 @@ return w;
 }
 
 // Urywek zamiast dokumentu - poprawka wpisu w locie (patrz DopiszStandalone).
-sCmdWzor = DopiszStandalone(sCmdWzor, sTargetExt);
+sCmdWzor = DopiszStandalone(NormalizujPolecenie(sCmdWzor), sTargetExt);
 
 // KATALOG CELU MUSI BYC ZAPISYWALNY, I TO SPRAWDZAMY PRZED KONWERSJA.
 // Inaczej konwerter dziala kilka sekund, a dopiero na koncu okazuje sie,
@@ -425,7 +428,8 @@ w.Polecenie = sCmd;
 // bloku uzytkownik dostawal okno "Unexpected Event" zamiast zdania o tym,
 // czego brakuje.
 try {
-fnUruchom(sCmd);
+int exitCode = fnUruchom(sCmd);
+if (exitCode != 0) throw new IOException("Converter exit code: " + exitCode.ToString());
 }
 catch (System.ComponentModel.Win32Exception) {
 w.Powod = "Nie moge uruchomic konwertera.";
@@ -444,8 +448,8 @@ return w;
 // sukces, a dokument bylby pusty.  Zmierzone przy braku silnika PDF.
 long iLen = -1;
 try { if (File.Exists(sTemp)) iLen = new FileInfo(sTemp).Length; } catch {}
-if (iLen <= 0) {
-w.Powod = "Konwerter nie utworzyl pliku.";
+if (iLen <= 0 || !PoprawnyPlik(sTemp, sTargetExt)) {
+w.Powod = "The converter did not create a valid " + sTargetExt.ToUpper() + " file.";
 try { if (fnBrakujace != null) w.BrakujaceNarzedzie = fnBrakujace(sCmd); } catch {}
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
@@ -454,8 +458,7 @@ return w;
 // DOPIERO TERAZ RUSZAMY PLIK UZYTKOWNIKA.  Do tej chwili cel jest nietkniety,
 // wiec KAZDE wyjscie powyzej zostawia stara wersje na miejscu.
 try {
-if (File.Exists(sTargetFile)) File.Delete(sTargetFile);
-File.Move(sTemp, sTargetFile);
+PodmienPlik(sTemp, sTargetFile);
 }
 catch (Exception ex) {
 w.Powod = "Nie moge zapisac pliku docelowego: " + ex.Message;
@@ -468,6 +471,95 @@ w.Udane = File.Exists(sTargetFile);
 if (!w.Udane) w.Powod = "Plik docelowy nie powstal.";
 return w;
 } // Konwertuj
+
+// Normalize legacy whole-command quotes without breaking a quoted executable.
+public static string NormalizujPolecenie(string command) {
+if (String.IsNullOrEmpty(command)) return "";
+string s = command.Trim();
+if (s.StartsWith("\"") && s.EndsWith("\"") && Regex.IsMatch(s, "^\"[^\"]+\\.exe\\s", RegexOptions.IgnoreCase))
+s = s.Substring(1, s.Length - 2).Trim();
+if (s.IndexOf("pandoc.exe", StringComparison.OrdinalIgnoreCase) >= 0) {
+s = s.Replace("markdown_github", "gfm");
+s = Regex.Replace(s, @"(?<=\s)(?:-S|--smart)(?=\s|$)", "");
+}
+// A new destination has no 8.3 alias yet. Its long path must be quoted even
+// when the old template asks for %Target% instead of %TargetLong%.
+s = Regex.Replace(s, "(?<!\")%(?:Source|Target)(?:Long)?%(?!\")",
+delegate(Match m) {return "\"" + m.Value + "\"";});
+return s;
+}
+
+// A resolved executable can be in Program Files even when the template used
+// an unquoted short-path placeholder. Quote only the executable, not arguments.
+public static string CytujProgram(string command) {
+if (String.IsNullOrEmpty(command)) return "";
+string s = command.Trim();
+if (s.StartsWith("\"")) return s;
+Match m = Regex.Match(s, @"^(.+?\.exe)(?=\s|$)", RegexOptions.IgnoreCase);
+if (!m.Success) return s;
+return "\"" + m.Value + "\"" + s.Substring(m.Length);
+}
+
+// Unlike Util.RunHideWait, this returns an EXIT CODE, not a process identifier.
+public static int UruchomKonwerter(string command) {
+string s = CytujProgram(command), exe, args;
+if (s.StartsWith("\"")) {
+int end = s.IndexOf('"', 1);
+if (end < 0) throw new IOException("Invalid converter command.");
+exe = s.Substring(1, end - 1); args = s.Substring(end + 1).Trim();
+} else {
+int end = s.IndexOf(' ');
+exe = end < 0 ? s : s.Substring(0, end);
+args = end < 0 ? "" : s.Substring(end + 1);
+}
+ProcessStartInfo start = new ProcessStartInfo(exe, args);
+start.UseShellExecute = false; start.CreateNoWindow = true;
+start.RedirectStandardError = true; start.RedirectStandardOutput = true;
+StringBuilder errors = new StringBuilder();
+using (Process process = new Process()) {
+process.StartInfo = start;
+process.ErrorDataReceived += delegate(object sender, DataReceivedEventArgs e) {
+if (e.Data == null) return;
+lock (errors) { if (errors.Length < 4000) errors.AppendLine(e.Data); }
+};
+process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs e) {};
+process.Start(); process.BeginErrorReadLine(); process.BeginOutputReadLine();
+if (!process.WaitForExit(120000)) {try {process.Kill(); process.WaitForExit(5000);} catch {} throw new IOException("Conversion timed out.");}
+process.WaitForExit();
+if (process.ExitCode != 0) throw new IOException("Converter failed (" + process.ExitCode.ToString() + "). " + errors.ToString().Trim());
+return process.ExitCode;
+}
+}
+
+public static bool PoprawnyPlik(string path, string ext) {
+try {
+if (!File.Exists(path) || new FileInfo(path).Length == 0) return false;
+if (ext == "docx" || ext == "odt" || ext == "epub" || ext == "epub3") {
+using (ZipArchive zip = ZipFile.OpenRead(path)) {
+if (ext == "docx") return zip.GetEntry("[Content_Types].xml") != null && zip.GetEntry("word/document.xml") != null;
+ZipArchiveEntry mime = zip.GetEntry("mimetype");
+if (mime == null) return false;
+using (StreamReader reader = new StreamReader(mime.Open())) {
+string expected = ext == "odt" ? "application/vnd.oasis.opendocument.text" : "application/epub+zip";
+return reader.ReadToEnd().Trim() == expected && zip.GetEntry(ext == "odt" ? "content.xml" : "META-INF/container.xml") != null;
+}
+}
+}
+if (ext == "pdf" || ext == "rtf") {
+using (FileStream stream = File.OpenRead(path)) {
+byte[] header = new byte[5]; int count = stream.Read(header, 0, header.Length);
+return count == 5 && Encoding.ASCII.GetString(header) == (ext == "pdf" ? "%PDF-" : "{\\rtf");
+}
+}
+return true;
+} catch {return false;}
+}
+
+// Never delete the previous destination before installing the completed output.
+public static void PodmienPlik(string temporary, string destination) {
+if (File.Exists(destination)) File.Replace(temporary, destination, null);
+else File.Move(temporary, destination);
+}
 
 static void Sprzataj(string sFile) {
 try { if (!String.IsNullOrEmpty(sFile) && File.Exists(sFile)) File.Delete(sFile); } catch {}

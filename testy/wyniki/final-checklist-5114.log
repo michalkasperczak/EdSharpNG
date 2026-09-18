@@ -1,0 +1,13 @@
+PASS - [a](https://example.org)
+PASS - [x](https://example.org)
+PASS - [x][target]
+PASS - [x] (https://example.org)
+PASS - [x] [target]
+PASS - [a] ordinary text
+PASS - [] ordinary text
+PASS - [x]: note
+PASS - [ ]chleb
+PASS - [-] chleb
+PASS 1. [ ] chleb
+PASS   - [X] chleb
+RESULT: 12 PASS / 0 FAIL

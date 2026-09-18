@@ -1,0 +1,125 @@
+== KONTROLA SONDY: czy Pandoc w ogole jest ==
+PASS: pandoc.exe jest na miejscu (C:\EdSharpRegressionTest\formats\Convert\Pandoc\pandoc.exe)
+
+== 0. KONTROLA NEGATYWNA: STARE zachowanie Control+Shift+S ==
+PASS: stara droga utworzyla plik o nazwie .docx
+PASS: KONTROLA NEGATYWNA: stary plik .docx NIE jest archiwum ZIP, czyli NIE jest dokumentem Worda
+PASS: KONTROLA NEGATYWNA: w pliku .docx siedzi surowy Markdown ze znacznikiem #
+
+== 1. NOWA DROGA: md -> docx, odt, epub, html, rtf ==
+PASS: docx: konwersja zameldowala sukces
+PASS: docx: plik nie jest pusty (10967 B)
+PASS: docx: plik JEST archiwum ZIP, czyli prawdziwym dokumentem (naglowek PK)
+PASS: docx: w pliku NIE MA surowego Markdowna - tresc zostala przekonwertowana
+PASS: odt: konwersja zameldowala sukces
+PASS: odt: plik nie jest pusty (7620 B)
+PASS: odt: plik JEST archiwum ZIP, czyli prawdziwym dokumentem (naglowek PK)
+PASS: odt: w pliku NIE MA surowego Markdowna - tresc zostala przekonwertowana
+PASS: epub: konwersja zameldowala sukces
+PASS: epub: plik nie jest pusty (5640 B)
+PASS: epub: plik JEST archiwum ZIP, czyli prawdziwym dokumentem (naglowek PK)
+PASS: epub: w pliku NIE MA surowego Markdowna - tresc zostala przekonwertowana
+PASS: html: konwersja zameldowala sukces
+PASS: html: plik nie jest pusty (4298 B)
+PASS: html: znacznik Markdowna '#' zniknal - tresc przeszla przez konwerter
+PASS: html: naglowek <h1> i lista <li> sa w pliku
+PASS: html: plik jest KOMPLETNY (<html> + deklaracja kodowania), a nie urywkiem
+PASS: rtf: konwersja zameldowala sukces
+PASS: rtf: plik nie jest pusty (1116 B)
+PASS: rtf: znacznik Markdowna '#' zniknal - tresc przeszla przez konwerter
+PASS: rtf: plik zaczyna sie od {\rtf
+PASS: rtf: plik ma tablice czcionek, czyli jest dokumentem dla Worda
+
+== 2. BUFOR EDYCJI ZOSTAJE PRZY MARKDOWNIE ==
+PASS: zapis do docx udal sie
+PASS: plik .md nadal istnieje
+PASS: plik .md NIE zostal dotkniety przez konwersje
+PASS: tresc Markdowna w pliku .md jest nietknieta
+
+== 3. NIEUDANA KONWERSJA NIE KASUJE ISTNIEJACEGO PLIKU ==
+PASS: brak narzedzia zameldowany jako PORAZKA, nie jako sukces
+PASS: porazka ma powod do powiedzenia: "Nie moge uruchomic konwertera."
+PASS: ISTNIEJACY plik uzytkownika PRZETRWAL nieudana konwersje
+PASS: tresc istniejacego pliku jest nietknieta (29 B)
+PASS: stara tresc jest dokladnie ta sama
+
+== 4. PO NIEUDANEJ KONWERSJI NIE ZOSTAJA SMIECI ==
+PASS: zero plikow tymczasowych po wszystkich probach (znaleziono 0)
+
+== 5. PDF: UCZCIWY KOMUNIKAT ZAMIAST CICHEJ PORAZKI ==
+   silnik PDF znaleziony: (zaden)
+PASS: bez silnika PDF konwersja meldouje PORAZKE (a nie falszywy sukces)
+PASS: zaden plik .pdf nie zostal po sobie zostawiony
+PASS: komunikat o braku silnika wymienia konkretne programy do zainstalowania
+PASS: komunikat podaje obejscie tu i teraz (zapisz jako DOCX/ODT/HTML)
+
+== 6. FILTR OKNA ZAPISU MOWI, CO PROGRAM POTRAFI ==
+   filtr md: Markdown files (*.md)|*.md|Text files (*.txt)|*.txt|Word document (*.docx)|*.docx|OpenDocument text (*.odt)|*.odt|EPUB e-book (*.epub)|*.epub|Web page (*.html)|*.html|Rich Text Format (*.rtf)|*.rtf|PDF document (*.pdf)|*.pdf|All files (*.*)|*.*
+PASS: Markdown jest PIERWSZA pozycja, czyli domyslna
+PASS: filtr oferuje docx (zgloszenie MK: 'nie wiem czy jest MD')
+PASS: filtr oferuje epub
+PASS: filtr oferuje pdf
+PASS: filtr oferuje md
+PASS: nazwy sa mowione slowem, nie samym rozszerzeniem
+   filtr txt: Markdown files (*.md)|*.md|Text files (*.txt)|*.txt|Rich Text Format files (*.rtf)|*.rtf|All files (*.*)|*.*
+PASS: dla .txt NIE obiecujemy docx (nie ma wpisu txt2docx)
+PASS: dla .txt zostaje stara pozycja rtf
+PASS: filtr zawsze ma 'All files'
+
+== 7. BRAMKA: KTORY ZAPIS IDZIE PRZEZ KONWERTER ==
+PASS: md -> docx: przez konwerter
+PASS: md -> epub: przez konwerter
+PASS: md -> md: PO STAREMU (to nie konwersja)
+PASS: md -> txt: PO STAREMU (txt nie jest formatem bogatym)
+PASS: txt -> docx: PO STAREMU (brak wpisu txt2docx)
+PASS: txt -> rtf: PO STAREMU, czyli ostrzezenie o zapisie tekstem zostaje
+PASS: gdy w ustawieniach NIE MA wpisu, konwersji nie obiecujemy
+PASS: rozszerzenie .markdown mapuje sie na klucz md2*
+
+== 8. NADPISANIE ISTNIEJACEGO PLIKU UDANA KONWERSJA ==
+PASS: nadpisanie udalo sie
+PASS: po nadpisaniu plik JEST prawdziwym docx (PK), a nie stara trescia
+PASS: stara tresc zostala zastapiona
+
+== 9. POLSKIE LITERY PRZECHODZA PRZEZ KONWERSJE ==
+PASS: konwersja do html udala sie
+PASS: tekst z polskimi literami jest w pliku poprawnie (UTF-8)
+
+== 10. WPIS BEZ '-s' DAWAL URYWEK, NIE DOKUMENT (poprawka w locie) ==
+PASS: KONTROLA NEGATYWNA: surowy wpis md2rtf z ini daje plik BEZ naglowka {\rtf
+PASS: KONTROLA NEGATYWNA: surowy wpis md2rtf nie daje tablicy czcionek - to urywek
+PASS: do wpisu md2rtf dopisany zostal przelacznik -s
+PASS: przelacznik -s stoi PRZED -o, czyli w miejscu na argumenty
+PASS: drugie wywolanie NIE dopisuje -s po raz drugi
+PASS: wpis md2html tez dostaje -s
+PASS: wpisu md2docx NIE ruszamy (docx jest standalone z definicji)
+PASS: wpisu md2epub NIE ruszamy
+PASS: wpis z --standalone zostaje nietkniety
+PASS: polecenia innego narzedzia niz Pandoc nie ruszamy
+
+== 11. BRAKUJACY reference.docx NIE MOZE WYWRACAC ZAPISU DO WORDA ==
+PASS: warunek pomiaru: wzorca reference.docx faktycznie NIE MA
+PASS: KONTROLA NEGATYWNA: surowy wpis md2docx z brakujacym wzorcem NIE daje dokumentu
+PASS: warunek pomiaru: rozwiniete polecenie ma --reference-doc
+PASS: brakujacy wzorzec zostal WYCIETY z polecenia
+PASS: sciezka wzorca tez zniknela, nie zostala jako blad skladni
+PASS: reszta polecenia jest nietknieta
+PASS: ISTNIEJACY wzorzec zostaje w poleceniu bez zmian
+PASS: zapis do docx PRAWDZIWYM wpisem z ini udal sie
+PASS: i wyszedl prawdziwy dokument Worda (naglowek PK)
+
+== 12. FILTR ZBUDOWANY Z PRAWDZIWEGO EdSharp.ini ==
+   wpisow w sekcji [Export]: 53
+   filtr md z prawdziwego ini: Markdown files (*.md)|*.md|Text files (*.txt)|*.txt|Word document (*.docx)|*.docx|EPUB e-book (*.epub)|*.epub|Web page (*.html)|*.html|Rich Text Format (*.rtf)|*.rtf|PDF document (*.pdf)|*.pdf|All files (*.*)|*.*
+PASS: prawdziwe ini daje docx (wpis md2docx istnieje)
+PASS: prawdziwe ini daje epub
+PASS: prawdziwe ini daje html
+PASS: prawdziwe ini daje rtf
+PASS: prawdziwe ini daje pdf
+PASS: warunek pomiaru: w ini faktycznie NIE MA wpisu md2odt
+PASS: filtr NIE obiecuje odt, bo nie ma czym go zrobic
+PASS: Markdown nadal pierwszy, czyli domyslny
+
+==================================================
+PASS: 89   FAIL: 0
+==================================================

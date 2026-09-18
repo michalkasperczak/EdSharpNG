@@ -45,7 +45,7 @@ Say Time, Alt+Semi-colon, Say current time and date
 Insert Time, Alt+Shift+Semicolon, Insert current time and date
 
 Configuration Options, Control+Comma, Adjust configuration options through a dialog
-Manual Options, (menu only), Adjust options by directly editing the main configuration file
+Manual Options, (no key assigned), Adjust options by directly editing the main configuration file
 Reset Configuration, Alt+Shift+F10, Revert to default options, or define a new compiler configuration
 
 Copy, Control+C, Copy selected text to clipboard, or copy current line if no selection

@@ -1,0 +1,24 @@
+{
+  "source": "/mnt/c/EdSharpBuild/QA original live/Live.docx",
+  "before_sha256": "c73807267186f6af7cfcb4fef374e1eb32a5a28865f6d51c545118857040be44",
+  "nvda_checkbox_name": "Control+S saves imported documents in their original format",
+  "nvda_role": 5,
+  "nvda_before_checked": false,
+  "nvda_after_checked": true,
+  "nvda_title_after_settings": "EdSharpNG - [Live.docx (Markdown)]",
+  "after_sha256": "ba9f6855c535b2b47c3bb4b6fd7c1feb073426bf295af342a2a8a440764f3778",
+  "docx_paragraph_texts": [
+    "Żółty nagłówek",
+    "Test nowej opcji zapisu. x"
+  ],
+  "backup_preserved": true,
+  "passed": true,
+  "expected_paragraph_texts": [
+    "Żółty nagłówek",
+    "Test nowej opcji zapisu. x"
+  ],
+  "nvda_speech_log": [
+    "IO - speech.speech.speak (17:23:12.029) - MainThread (7576):",
+    "Speaking ['Saved Live.docx. Previous version in .edsharp-backups.']"
+  ]
+}

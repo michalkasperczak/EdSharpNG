@@ -1,0 +1,45 @@
+{
+  "before": {
+    "headings": [],
+    "links": [],
+    "lists": 0,
+    "text": "Żółty nagłówek\n\n\nAkapit z pogrubieniem i łączem.\n\n\npierwszy\ndrugi\n\n\nDrugi poziom\n\n\nKoniec dokumentu.\n\n",
+    "html": "<div>Żółty nagłówek</div><div><br></div><div>Akapit z pogrubieniem i łączem.</div><div><br></div><div>pierwszy</div><div>drugi</div><div><br></div><div>Drugi poziom</div><div><br></div><div>Koniec dokumentu.</div><div><br></div>"
+  },
+  "html_before_encoding_fix": {
+    "headings": [
+      [
+        "H1",
+        "�ó�ty nag�ówek"
+      ],
+      [
+        "H2",
+        "Drugi poziom"
+      ]
+    ],
+    "links": [
+      "https://example.org/test?q=1&x=2"
+    ],
+    "lists": 1,
+    "text": "�ó�ty nag�ówek\n\nAkapit z pogrubieniem i ��czem.\n\npierwszy\ndrugi\nDrugi poziom\n\nKoniec dokumentu.",
+    "html": "<h1>�ó�ty nag�ówek</h1>\n<p>Akapit z <strong>pogrubieniem</strong> i <a href=\"https://example.org/test?q=1&amp;x=2\">��czem</a>.</p>\n<ul>\n<li>pierwszy</li>\n<li>drugi</li>\n</ul>\n<h2>Drugi poziom</h2>\n<p>Koniec dokumentu.</p>"
+  },
+  "after": {
+    "headings": [
+      [
+        "H1",
+        "Żółty nagłówek"
+      ],
+      [
+        "H2",
+        "Drugi poziom"
+      ]
+    ],
+    "links": [
+      "https://example.org/test?q=1&x=2"
+    ],
+    "lists": 1,
+    "text": "Żółty nagłówek\n\nAkapit z pogrubieniem i łączem.\n\npierwszy\ndrugi\nDrugi poziom\n\nKoniec dokumentu.",
+    "html": "<h1>Żółty nagłówek</h1>\n<p>Akapit z <strong>pogrubieniem</strong> i <a href=\"https://example.org/test?q=1&amp;x=2\">łączem</a>.</p>\n<ul>\n<li>pierwszy</li>\n<li>drugi</li>\n</ul>\n<h2>Drugi poziom</h2>\n<p>Koniec dokumentu.</p>"
+  }
+}

@@ -1,0 +1,59 @@
+mierzona binarka: C:\EdSharpBuild\EdSharpNG.exe
+rozmiar: 534016 B
+
+PASS  pogrubienie daje sterownik \b
+PASS  pogrubienie jest ZAMYKANE (\b0)
+PASS  pochylenie daje sterownik \i
+PASS  pochylenie jest ZAMYKANE (\i0)
+PASS  GWIAZDKI ZNIKLY z wyniku
+PASS  tresc obu wyroznien zostala
+PASS  tekst wokol wyroznien zostal
+PASS  KONTROLA: czysty tekst NIE dostaje wyroznien
+PASS  podkreslniki dzialaja jak gwiazdki
+PASS  podkreslniki znikly z wyniku
+PASS  przekreslenie daje \strike
+PASS  tresc kodu zostala
+PASS  grawisy znikly z wyniku
+PASS  wiersz z pojedyncza gwiazdka nie ginie
+PASS  niedomkniety znacznik jest ZAMKNIETY na koncu
+PASS  odsylacz daje pole HYPERLINK Worda
+PASS  adres jest w polu
+PASS  tytul odsylacza jest widoczna trescia
+PASS  nawiasy skladni odsylacza znikly
+PASS  tekst PO odsylaczu nie zostal zgubiony
+PASS  naglowek poziomu 1 dostaje duzy stopien pisma
+PASS  naglowek jest pogrubiony
+PASS  tresc naglowka zostala
+PASS  KRATKI znikly z wyniku
+PASS  naglowek poziomu 3 ma INNY stopien niz poziom 1
+PASS  KONTROLA: poziom 3 nie udaje poziomu 1
+PASS  RTF ma tablice list
+PASS  pozycje wiaza sie z lista punktowana
+PASS  pozycje maja styl List Paragraph
+PASS  wszystkie pozycje sa w wyniku
+PASS  myslnik punktora NIE zostal jako tekst
+PASS  lista numerowana ma WLASNA definicje listy
+PASS  pierwsza pozycja ma numer 1
+PASS  trzecia pozycja ma numer 3
+PASS  KONTROLA: punktowana i numerowana to NIE ten sam RTF
+PASS  lista numerowana nie ma punktora w pozycjach
+PASS  KONTROLA: lista punktowana punktor w pozycjach MA
+PASS  numeracja liczona od nowa, nie przepisana ze zrodla
+PASS  blok kodu NIE dostaje wyroznien
+PASS  gwiazdki w kodzie ZOSTAJA doslownie
+PASS  KONTROLA: ten sam wiersz poza kodem JEST przetwarzany
+PASS  czysty tekst NIE trafia do naszej sciezki
+PASS  jedna pozycja listy WYSTARCZA, zeby przejac
+PASS  naglowek wystarcza, zeby przejac
+PASS  pogrubienie wystarcza, zeby przejac
+PASS  polskie litery ida jako sekwencje \uN
+PASS  pogrubienie na polskim slowie dziala
+PASS  wynik zaczyna sie naglowkiem RTF
+PASS  wynik jest domkniety klamra
+PASS  klamry RTF sa zbalansowane
+PASS  mieszany blok zachowal tresc wszystkich rodzajow wierszy
+PASS  puste wejscie daje pusty wynik
+PASS  pusty wiersz daje pusty wynik
+PASS  wiersz null nie wywala generatora
+
+WYNIK: 54 PASS / 0 FAIL

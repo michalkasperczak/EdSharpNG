@@ -1,0 +1,12 @@
+PASS actual executable exports to path with spaces/Polish: docx 
+PASS source unchanged: docx
+PASS actual executable exports to path with spaces/Polish: epub 
+PASS source unchanged: epub
+PASS actual executable exports to path with spaces/Polish: html 
+PASS source unchanged: html
+PASS actual executable exports to path with spaces/Polish: rtf 
+PASS source unchanged: rtf
+PASS actual executable exports to path with spaces/Polish: pdf 
+PASS source unchanged: pdf
+PASS actual executable uses user's legacy INI through real Ini reader: 
+RESULT: 11 PASS / 0 FAIL

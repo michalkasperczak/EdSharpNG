@@ -1,0 +1,15 @@
+{
+  "same_text": true,
+  "before": {
+    "heading1": true,
+    "red_text": true,
+    "font_size_24pt": true,
+    "right_alignment": true
+  },
+  "after": {
+    "heading1": true,
+    "red_text": false,
+    "font_size_24pt": false,
+    "right_alignment": false
+  }
+}

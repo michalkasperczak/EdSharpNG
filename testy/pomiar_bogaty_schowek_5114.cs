@@ -5,9 +5,31 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Runtime.InteropServices;
 using System.Windows.Forms;
 class RichCopyProbe {
 static Type frame; static int pass, fail;
+[DllImport("user32.dll")] static extern bool OpenClipboard(IntPtr h);
+[DllImport("user32.dll")] static extern bool CloseClipboard();
+[DllImport("user32.dll",CharSet=CharSet.Unicode)] static extern uint RegisterClipboardFormat(string s);
+[DllImport("user32.dll")] static extern IntPtr GetClipboardData(uint format);
+[DllImport("kernel32.dll")] static extern IntPtr GlobalLock(IntPtr h);
+[DllImport("kernel32.dll")] static extern bool GlobalUnlock(IntPtr h);
+[DllImport("kernel32.dll")] static extern UIntPtr GlobalSize(IntPtr h);
+static string NativeHtml() {
+bool opened=false;
+for(int i=0;i<15;i++){if(OpenClipboard(IntPtr.Zero)){opened=true;break;}Thread.Sleep(80);}
+if(!opened)throw new Exception("Cannot inspect native clipboard");
+try {IntPtr h=GetClipboardData(RegisterClipboardFormat("HTML Format"));
+if(h==IntPtr.Zero)throw new Exception("Native HTML clipboard flavor missing");
+IntPtr ptr=GlobalLock(h);
+if(ptr==IntPtr.Zero)throw new Exception("Cannot lock native HTML data");
+try {int size=checked((int)GlobalSize(h).ToUInt64());byte[] bytes=new byte[size];Marshal.Copy(ptr,bytes,0,size);
+int end=Array.IndexOf(bytes,(byte)0);if(end<0)end=size;
+return new UTF8Encoding(false,true).GetString(bytes,0,end);
+}finally{GlobalUnlock(h);}
+}finally{CloseClipboard();}
+}
 static object Call(string name, params object[] args) {return frame.GetMethod(name,BindingFlags.Static|BindingFlags.Public|BindingFlags.NonPublic).Invoke(null,args);}
 static void Check(bool b,string name) {Console.WriteLine((b ? "PASS " : "FAIL ")+name); if(b)pass++;else fail++;}
 static DataObject Make(string text) {return (DataObject)Call("BuildMarkdownSelectionClipboardData",text);}
@@ -23,7 +45,7 @@ using(RichTextBox box=new RichTextBox()) {box.Rtf=rtf; Check(box.Text.Contains("
 Check(html.Contains("<h1>") && html.Contains("<h2>") && html.Contains("<ul>"),"HTML headings and list");
 byte[] b=Encoding.UTF8.GetBytes(html); int start=Int32.Parse(Regex.Match(html,@"StartFragment:(\d+)").Groups[1].Value), end=Int32.Parse(Regex.Match(html,@"EndFragment:(\d+)").Groups[1].Value);
 string frag=Encoding.UTF8.GetString(b,start,end-start);
-Check(System.Net.WebUtility.HtmlDecode(frag).Contains("Żółty nagłówek") && frag.Contains("łączem") && Encoding.UTF8.GetString(b,end,18)=="<!--EndFragment-->","UTF-8 byte offsets");
+Check(System.Net.WebUtility.HtmlDecode(frag).Contains("Żółty nagłówek") && System.Net.WebUtility.HtmlDecode(frag).Contains("łączem") && Encoding.UTF8.GetString(b,end,18)=="<!--EndFragment-->","UTF-8 byte offsets");
 File.WriteAllText(Path.Combine(Path.GetDirectoryName(exe),"rich-after.rtf"),rtf,Encoding.ASCII);
 File.WriteAllText(Path.Combine(Path.GetDirectoryName(exe),"rich-after.html"),"<!doctype html><html><meta charset=\"utf-8\"><body>"+frag+"</body></html>",new UTF8Encoding(false));
 DataObject auto=Make("Address <https://example.org/auto> and https://example.org/bare.");
@@ -39,6 +61,11 @@ Check((string)part.GetData(DataFormats.UnicodeText)=="sele" && (string)part.GetD
 Clipboard.SetDataObject(d,true,10,80);
 IDataObject back=Clipboard.GetDataObject();
 Check(back.GetDataPresent(DataFormats.Html) && back.GetDataPresent(DataFormats.Rtf),"both rich flavors read back from Windows clipboard");
+string native = System.Net.WebUtility.HtmlDecode(NativeHtml());
+Check(native.Contains("Żółty nagłówek") && native.Contains("łączem"),"native CF_HTML bytes preserve Polish under strict UTF-8 decoding");
+DataObject emoji = Make("# Łódź 😀\n");
+string emojiHtml = (string)emoji.GetData(DataFormats.Html);
+Check(System.Net.WebUtility.HtmlDecode(emojiHtml).Contains("Łódź") && emojiHtml.Contains("&#" + Char.ConvertToUtf32("😀", 0).ToString() + ";"),"supplementary Unicode is serialized as one valid scalar entity");
 using(Form form=new Form()) using(WebBrowser web=new WebBrowser()) {
 form.Controls.Add(web); web.Dock=DockStyle.Fill; form.Show();
 web.DocumentText="<html><body><div id='target' contenteditable='true'></div></body></html>";

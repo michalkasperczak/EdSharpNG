@@ -1,0 +1,32 @@
+FindBrowser: C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe
+OK   FindBrowser zwraca istniejacy msedge.exe
+Render: True w 1,5 s, blad=[]
+OK   Render konczy sie sukcesem
+OK   przy sukcesie komunikat bledu jest pusty
+OK   plik PDF powstal
+Dlugosc PDF: 48393
+OK   plik PDF nie jest pusty
+OK   plik zaczyna sie od %PDF-
+PDF-DO-SPRAWDZENIA: C:\EdSharpRegressionTest\pdf\wyniki\harness-3598936e.pdf
+OK   Render odmawia, gdy plik wynikowy istnieje
+OK   komunikat mowi, ze plik juz istnieje: [Plik wynikowy juz istnieje: C:\EdSharpRegressionTest\pdf\wyniki\zajety-4bf7cea2.pdf]
+OK   istniejacy plik zostal nietkniety
+OK   Render odmawia przy braku przegladarki
+OK   komunikat nazywa brakujacy program: [Zapis do PDF wymaga przegladarki Microsoft Edge, ktorej nie widze na tym komputerze.  Edge...]
+OK   przy braku przegladarki nie zostaje zaden plik wynikowy
+OK   Render odmawia, gdy uruchomiony program nie tworzy PDF
+OK   failed process reports its exit code: [PDF conversion failed, browser exit code: 1 Przegladarka zglosila: ERROR: Invalid argument...]
+OK   po nieudanej probie nie zostaje plik wynikowy
+OK   Render odmawia, gdy wynik nie jest PDF-em
+OK   komunikat mowi, ze to nie PDF: [Plik nie jest dokumentem PDF.]
+OK   nie-PDF zostal usuniety
+OK   valid PDF plus nonzero exit is rejected
+OK   nonzero exit reason is preserved
+OK   failed engine output cleaned
+OK   pusty HTML jest odrzucony z komunikatem
+OK   pusta nazwa pliku jest odrzucona z komunikatem
+OK   brak katalogu celu jest odrzucony z komunikatem
+Katalogi edsharp-pdf-* w TEMP: przed=0 po=0
+OK   po testach nie zostaja katalogi robocze edsharp-pdf-*
+---
+Testow: 25, bledow: 0

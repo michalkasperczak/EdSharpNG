@@ -15,7 +15,7 @@
 //   mkdir -p /mnt/c/EdSharpOriginalSaveTest
 //   cp OriginalFormatSave.cs ZapisFormatow.cs testy/harness_zapis_oryginalu.cs /mnt/c/EdSharpOriginalSaveTest/
 //   cd /mnt/c/EdSharpOriginalSaveTest
-//   csc.exe /nologo /out:harness.exe harness_zapis_oryginalu.cs OriginalFormatSave.cs ZapisFormatow.cs
+//   csc.exe /nologo /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /out:harness.exe harness_zapis_oryginalu.cs OriginalFormatSave.cs ZapisFormatow.cs
 //   ./harness.exe
 using System;
 using System.Collections.Generic;
@@ -501,6 +501,41 @@ if (sSzczegol == "") sSzczegol = "iteracja " + iter + ": zadna kopia nie trzyma 
 Sprawdz(iUdaneRazem > 0, "rownolegle zapisy naprawde doszly do skutku (udanych: " + iUdaneRazem + ")");
 Sprawdz(bBezNadpisan, "kazdy udany zapis zostawil WLASNA kopie - zadna nie zostala nadpisana" + (bBezNadpisan ? "" : "  [" + sSzczegol + "]"));
 Sprawdz(bWersjaZerowaZyje, "pierwotna wersja dokumentu przetrwala w kopiach" + (bWersjaZerowaZyje ? "" : "  [" + sSzczegol + "]"));
+}
+
+// Lock failure must fail closed, and a waiter must revalidate inside the lock.
+{
+string dir = NowyKatalog("mutex-conflict");
+string orig = ZrobZrodlo(dir, "source.docx", "old");
+OriginalDocumentLink link = OriginalFormatSave.Capture(orig);
+string name = (string)typeof(OriginalFormatSave).GetMethod("NazwaMuteksu", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).Invoke(null, new object[] {orig});
+using (EventWaitHandle collision = new EventWaitHandle(false, EventResetMode.ManualReset, name)) {
+string err, backup;
+bool ok = OriginalFormatSave.TrySave(link, MD, delegate(string md, string stage) {return Konwertuj(stage,"new",md);}, out err, out backup);
+Sprawdz(!ok, "mutex unavailable rejects save instead of dropping protection");
+Sprawdz(Tresc(orig).Contains("old") && Kopie(dir).Length == 0, "mutex failure leaves original and backups intact");
+}
+}
+{
+string dir = NowyKatalog("mutex-waiter");
+string orig = ZrobZrodlo(dir, "source.docx", "old");
+OriginalDocumentLink link = OriginalFormatSave.Capture(orig);
+string name = (string)typeof(OriginalFormatSave).GetMethod("NazwaMuteksu", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static).Invoke(null, new object[] {orig});
+using (Mutex owner = new Mutex(true,name)) using(ManualResetEvent converted = new ManualResetEvent(false)) {
+bool ok = false; string err = "", backup = "";
+Thread worker = new Thread(delegate() {
+ok = OriginalFormatSave.TrySave(link, MD, delegate(string md,string stage) {WynikZapisu w=Konwertuj(stage,"local",md); converted.Set(); return w;},out err,out backup);
+});
+worker.IsBackground=true;worker.Start();
+bool ready=converted.WaitOne(5000);DateTime end=DateTime.UtcNow.AddSeconds(5);
+while(ready && (worker.ThreadState & ThreadState.WaitSleepJoin)==0 && DateTime.UtcNow<end)Thread.Sleep(1);
+bool waiting=ready && (worker.ThreadState & ThreadState.WaitSleepJoin)!=0;
+Sprawdz(waiting,"precondition: second writer waits for document lock");
+File.WriteAllBytes(orig,Dokument("external-winner"));
+owner.ReleaseMutex();worker.Join(10000);
+Sprawdz(!ok && err.Length>0,"waiter rejects source changed while awaiting lock");
+Sprawdz(Tresc(orig).Contains("external-winner") && Kopie(dir).Length==0,"waiter never overwrites winning external edit");
+}
 }
 
 // --------------------------------------------------------------- punkt 14 ---

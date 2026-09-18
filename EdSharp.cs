@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.113";
+public const string VersionString = "5.0.114";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -845,6 +845,7 @@ public string LastClipboardText = "";
 	// reading position within one editing session, like a scroll position.
 	// -1 means "never opened in this window".
 	public int DocumentNavigationLastOffset = -1;
+public OriginalDocumentLink OriginalDocument = null;
 private string sFile = "";
 public string File {
 get {
@@ -852,6 +853,7 @@ return sFile;
 }
 set {
 sFile = value;
+OriginalDocument = null;
 }
 } // File property
 
@@ -2395,32 +2397,14 @@ this.KeyIndex = iIndex;
 //Clipboard.SetText(Clipboard.GetText() + keyData.ToString() + "\r\n");
 // Util.Say("Repeat " + this.KeyRepeat);
 
-// WOLNY ALT+ZNAK NIE MOZE WPADAC W MENU (18.09.2026, MK: "Walt-[ i chyba
-// alt-( wyskakuje menu File i to znowu tak, jak juz kiedys mowilismy ze po tym
-// to menu trudno zamknac.  Naciskasz ESCAPE menu znika niby jestes w tekscie
-// ale pod strzalkami masz dalej elementy menu").
-//
-// PRZYCZYNA: Infer Indent siedzi na Alt+PRAWY nawias, a Alt+LEWY nawias
-// zostal wolny po usunieciu PyDent (5.0.111).  Windows traktuje wolny
-// Alt+znak jako wejscie do paska menu i zostawia fokus w stanie, z ktorego
-// Escape nie wyprowadza - dla czytnika ekranu to pulapka, bo program brzmi
-// jakby byl w tekscie, a strzalki chodza po menu.
-//
-// ZJADAMY TYLKO NAWIAS KWADRATOWY, nie caly Alt: kazdy inny Alt+znak albo ma
-// komende, albo jest swiadomie wolny i ma prawo otwierac menu.  Zjadanie
-// calego Alta zabraloby Alt+F (menu File) i Alt+litere w oknach.
-//
-// ALT+9 TU NIE WCHODZI, choc MK wspomnial "alt-(": Alt+9 OTWIERA DZIEWIATY
-// PLIK NUMEROWANY (HandleFileSlotKey ponizej), wiec zjedzenie go zabraloby
-// dzialajaca funkcje.  Nawias okragly to Alt+SHIFT+9 - inny chord, ktorego ten
-// warunek nie dotyczy, bo wymaga braku Shifta.  Gdyby Alt+Shift+9 tez
-// wpadal w menu, trzeba to zmierzyc OSOBNO, a nie domyslic sie tutaj.
-{
-Keys kBezMod = keyData & Keys.KeyCode;
-bool bSamAlt = (keyData & (Keys.Control | Keys.Shift)) == 0 && (keyData & Keys.Alt) == Keys.Alt;
-if (bSamAlt && kBezMod == Keys.OemOpenBrackets) return true;
-}
 if (HandleFileSlotKey(keyData)) return true;
+// Former PyDent/PyBrace keys must not activate a stuck menu. A real binding
+// always wins; keyboard help still reports an unbound key.
+if ((keyData == (Keys.Alt | Keys.OemOpenBrackets)
+|| keyData == (Keys.Alt | Keys.Shift | Keys.OemOpenBrackets)) && !hashKey.ContainsKey(keyData)) {
+if (this.KeyDescriber) AddMessage("No command assigned");
+return true;
+}
 if (HandleSpellingWordMenuKey(keyData)) return true;
 if (HandleWindowNumberKey(keyData)) return true;
 if (HandleCloseWindowKey(keyData)) return true;
@@ -3262,10 +3246,111 @@ catch {}
 // profilu uzytkownika.  Bez tej poprawki konwersja pada mimo obecnego Pandoca
 // (Skladniki.cs, wiersz 417).
 private static string CzytajWpisEksportu(string sKlucz) {
+if (sKlucz == "md2pdf" || sKlucz == "markdown2pdf") return "internal:pdf";
 string sCmd = App.ReadValue("Export", sKlucz, "");
 if (sCmd.Length == 0) return "";
-return Skladniki.NaprawSciezkeNarzedzia(sCmd);
+return ZapisFormatow.CytujProgram(Skladniki.NaprawSciezkeNarzedzia(ZapisFormatow.NormalizujPolecenie(sCmd)));
 } // CzytajWpisEksportu method
+
+// Read the option on every save: toggling it must not require reopening files.
+private static bool SaveImportedOriginalEnabled() {
+return Ustawienia.CzyWlaczone(App.ReadOption("SaveImportedOriginalFormat", "N"));
+}
+
+private static bool OriginalFormatSupported(string path) {
+string ext = ZapisFormatow.Rozszerzenie(path);
+return ext == "docx" || ext == "epub" || ext == "epub3" || ext == "odt"
+|| ext == "html" || ext == "htm" || ext == "rtf";
+}
+
+public void RefreshOriginalDocumentTitles() {
+foreach (MdiChild child in this.MdiChildren) {
+if (child.OriginalDocument != null)
+child.Text = SaveImportedOriginalEnabled()
+? Path.GetFileName(child.OriginalDocument.Path) + " (Markdown)" : Path.GetFileName(child.File);
+}
+}
+
+// true means the original-format path handled the request, including failure.
+// A failed original save MUST NOT fall through to a raw write or clear Modified.
+public bool TrySaveOriginalDocument(MdiChild child, out string error) {
+error = "";
+if (child == null || child.OriginalDocument == null || !SaveImportedOriginalEnabled()) return false;
+OriginalDocumentLink link = child.OriginalDocument;
+if (!OriginalFormatSupported(link.Path) || child.IsRichTextDocument
+|| !ZapisFormatow.WymagaKonwersji("md", ZapisFormatow.Rozszerzenie(link.Path), CzytajWpisEksportu)) {
+error = "No converter is configured for the original format. Use Save As to save your work as Markdown. The original has not been changed.";
+return true;
+}
+string backup;
+if (!OriginalFormatSave.TrySave(link, child.RTB.Text,
+delegate(string text, string target) { return KonwertujDoPliku(text, "md", target, child.File); },
+out error, out backup)) {
+if (!String.IsNullOrEmpty(backup)) error += Environment.NewLine + "Previous version: " + backup;
+error += Environment.NewLine + "Use Control+Shift+S (Save As) to save your current work under a new name, or as Markdown.";
+return true;
+}
+child.RTB.Modified = false;
+RefreshOriginalDocumentTitles();
+AddMessage("Saved " + Path.GetFileName(link.Path) + ". Previous version in .edsharp-backups.", true);
+return true;
+}
+
+// Explicit Save As/Export to the linked original must use the same backup and conflict protection.
+private static WynikZapisu KonwertujDokumentDoPliku(MdiChild child, string text, string sourceExt, string target) {
+if (child.OriginalDocument != null && String.Equals(Path.GetFullPath(target), child.OriginalDocument.Path, StringComparison.OrdinalIgnoreCase)) {
+WynikZapisu result = new WynikZapisu();
+string error, backup;
+result.Udane = OriginalFormatSave.TrySave(child.OriginalDocument, text,
+delegate(string md, string stage) { return KonwertujDoPliku(md, sourceExt, stage, child.File); }, out error, out backup);
+result.Powod = error;
+result.PlikWynikowy = target;
+if (result.Udane && SaveImportedOriginalEnabled() && text == child.RTB.Text) child.RTB.Modified = false;
+return result;
+}
+return KonwertujDoPliku(text, sourceExt, target, child.File);
+}
+
+private static WynikZapisu KonwertujDoPliku(string text, string sourceExt, string target, string sourceFile) {
+if ((sourceExt == "md" || sourceExt == "markdown") && ZapisFormatow.Rozszerzenie(target) == "pdf") {
+WynikZapisu result = new WynikZapisu();
+result.PlikWynikowy = target;
+string temporary = "";
+try {
+string directory = Path.GetDirectoryName(Path.GetFullPath(target));
+temporary = Path.Combine(directory, ".edsharp-" + Guid.NewGuid().ToString("N") + ".pdf");
+string html = MarkdownDocumentToHtml(text, Path.GetFileNameWithoutExtension(sourceFile));
+html = html.Replace("<html lang=\"en\">", "<html lang=\"" + CultureInfo.CurrentCulture.Name + "\">");
+string error;
+if (!PdfExport.Render(html, temporary, out error)) {result.Powod = error; return result;}
+ZapisFormatow.PodmienPlik(temporary, target);
+result.Udane = true;
+} catch (Exception ex) {result.Powod = "Cannot save PDF: " + ex.Message;}
+finally {try {if (temporary.Length > 0 && File.Exists(temporary)) File.Delete(temporary);} catch {}}
+return result;
+}
+return ZapisFormatow.Konwertuj(text, sourceExt, target, CzytajWpisEksportu,
+Util.ExpandCommandLine, ZapisFormatow.UruchomKonwerter, Skladniki.BrakujaceDlaPolecenia);
+} // KonwertujDoPliku method
+
+private static bool CanEditCsvDocument(MdiChild child) {
+return child != null && child.OriginalDocument == null && !String.IsNullOrEmpty(child.File)
+&& Path.IsPathRooted(child.File) && File.Exists(child.File);
+}
+
+private static bool SaveSnippetFile(MdiChild child, string text, string target, bool wholeDocument) {
+// Saving a reusable snippet is a copy, never a change of the imported document identity.
+if (child.OriginalDocument != null) {
+if (String.Equals(Path.GetFullPath(target), child.OriginalDocument.Path, StringComparison.OrdinalIgnoreCase)) {
+App.Frame.AddMessage("Use Save As to write to the original document, not Save Snippet.", true);
+return false;
+}
+Util.String2File(text, target);
+}
+else if (wholeDocument) child.SaveTextOrRtfFile(target);
+else Util.String2File(text, target);
+return true;
+}
 
 public void menuItem_Click(object sender, EventArgs e) {
 //Util.Beep();
@@ -3486,6 +3571,11 @@ this.SetRecent(sFile);
 }
 
 if ((menuItem == menuFileSave) || (menuItem == menuFileSaveAs)) {
+string originalError;
+if (menuItem == menuFileSave && TrySaveOriginalDocument(child, out originalError)) {
+if (originalError.Length > 0) Dialog.Show("Save original document", originalError);
+return;
+}
 sFile = child.File;
 if ((menuItem == menuFileSave) && sFile.Contains(@"\")) sText = "";//AddMessage("Save");
 else {
@@ -3501,6 +3591,7 @@ else {
 // drodze NIE ma naglowka PK i zawiera surowe "# Naglowek".
 string sFilter = "";
 string sExtZrodla = Path.GetExtension(child.File).ToLower().TrimStart('.');
+if (sExtZrodla.Length == 0 && !child.IsRichTextDocument) sExtZrodla = "md";
 if (!Util.Equiv(Path.GetExtension(child.File), ".rtf"))
 sFilter = ZapisFormatow.BudujFiltr(sExtZrodla, CzytajWpisEksportu);
 sFile = Dialog.SaveFile("", sFile, sFilter);
@@ -3511,12 +3602,7 @@ if (sFile.Length == 0) return;
 // co do bajta - dodatek nie ma prawa zepsuc zapisu, ktory dzialal.
 string sExtCelu = Path.GetExtension(sFile).ToLower().TrimStart('.');
 if (ZapisFormatow.WymagaKonwersji(sExtZrodla, sExtCelu, CzytajWpisEksportu)) {
-WynikZapisu wyn = ZapisFormatow.Konwertuj(
-rtb.Text, sExtZrodla, sFile,
-CzytajWpisEksportu,
-Util.ExpandCommandLine,
-Util.RunHideWait,
-Skladniki.BrakujaceDlaPolecenia);
+WynikZapisu wyn = KonwertujDokumentDoPliku(child, rtb.Text, sExtZrodla, sFile);
 
 if (!wyn.Udane) {
 // NIE MELDUJEMY SUKCESU, KTOREGO NIE BYLO, I NIE RUSZAMY BUFORA.
@@ -3530,7 +3616,12 @@ return;
 // redagujemy Markdowna - gdybysmy przestawili child.File na .docx, to
 // nastepne Control+S nadpisaloby dokument Worda trescia kontrolki,
 // czyli dokladnie tym bledem, ktory tu naprawiamy.
-AddMessage("Saved as " + sExtCelu.ToUpper());
+AddMessage(ZapisFormatow.KomunikatSukcesu(sExtCelu, Path.GetFileName(child.File)));
+return;
+}
+if (ZapisFormatow.FormatBogaty(sExtCelu) && sExtCelu != sExtZrodla
+&& (sExtCelu != "rtf" || ZapisFormatow.FormatZrodlowy(sExtZrodla))) {
+Dialog.Show("Save As", "No converter is configured for this format. The destination has not been changed.");
 return;
 }
 }
@@ -3653,6 +3744,12 @@ default :
 string s = Path.GetExtension(child.File);
 if (Util.Equiv(s, ".rtf")) sText = rtb.Rtf;
 else sText = rtb.Text;
+if (sExt.IndexOf('2') > 0) {
+WynikZapisu exportResult = KonwertujDokumentDoPliku(child, sText, s.TrimStart('.'), sFile);
+if (!exportResult.Udane) Dialog.Show("Export Format", exportResult.Powod);
+else AddMessage(ZapisFormatow.KomunikatSukcesu(Path.GetExtension(sFile).TrimStart('.'), Path.GetFileName(child.File)));
+return;
+}
 Util.ConvertString2FileFormat(sText, s, sFile, sExt);
 break;
 }
@@ -6308,8 +6405,8 @@ InsertMarkdownLink(rtb);
 // najpierw, inaczej tabela pokazalaby stara tresc.
 if (menuItem == menuMiscCsvTable) {
 if (child == null) return;
-if (child.File == null || child.File.Length == 0) {
-AddMessage("Save this file first, then it can be edited as a table.");
+if (!CanEditCsvDocument(child)) {
+AddMessage("Use Save As to create a separate CSV file first, then open that file as a table.");
 return;
 }
 if (rtb != null && rtb.Modified) {
@@ -6823,9 +6920,7 @@ if (Path.GetExtension(sFile).Length == 0) sFile += ".txt";
 sFile = Dialog.SaveFile("", sFile);
 if (sFile.Length == 0) return;
 
-if (rtb.SelectionLength == 0) child.SaveTextOrRtfFile(sFile);
-else Util.String2File(sText, sFile);
-AddMessage("Done");
+if (SaveSnippetFile(child, sText, sFile, rtb.SelectionLength == 0)) AddMessage("Done");
 }
 
 if (menuItem == menuMiscInvokeSnippet) {
@@ -8471,6 +8566,7 @@ if (App.ReadOption(o.Klucz, o.Domyslna) == o.Domyslna) continue;
 App.WriteOption(o.Klucz, o.Domyslna);
 iPrzywrocone++;
 }
+RefreshOriginalDocumentTitles();
 AddMessage(iPrzywrocone == 0 ? "Every setting was already at its default" : iPrzywrocone + " settings restored to defaults");
 return;
 }
@@ -8513,6 +8609,7 @@ dlg.Dispose();
 // zamknieciu okna ustawien fokus jeszcze do niego nie wrocil, wiec
 // potwierdzenie zapisu przepadalo.  Zgloszenie Michala 13.09.2026: "Settings.
 // Enter zapisuje chyba, ale nie mowi Saved".
+RefreshOriginalDocumentTitles();
 if (iZmienione == 0) AddMessage("No settings changed", true);
 else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved", true);
 } // PokazUstawienia method
@@ -8587,6 +8684,11 @@ if (sFile.Length > 0 && Util.Equiv(sFile, App.IniFile)) continue;
 
 SesjaOkno okno = new SesjaOkno();
 okno.Plik = sFile;
+if (child.OriginalDocument != null) {
+okno.Plik = child.OriginalDocument.Path;
+okno.OriginalFormatFile = child.OriginalDocument.Path;
+okno.OriginalFormatHash = child.OriginalDocument.Fingerprint;
+}
 okno.Kursor = rtb.Index;
 okno.Zmieniony = rtb.Modified;
 if (sFile.IndexOf('\\') >= 0) okno.Zakladki = App.ReadValue("Bookmarks", sFile, "");
@@ -8596,7 +8698,7 @@ if (sFile.IndexOf('\\') >= 0) okno.Zakladki = App.ReadValue("Bookmarks", sFile, 
 // tresc: nie ma go gdzie odzyskac.
 bool bTrzebaKopii = bKopie && (rtb.Modified || (sFile.IndexOf('\\') < 0 && rtb.TextLength > 0));
 if (bTrzebaKopii) {
-string sOdzysk = Path.Combine(Sesja.KatalogOdzysku, Sesja.NazwaOdzysku(sFile, child.OpenSequence));
+string sOdzysk = Path.Combine(Sesja.KatalogOdzysku, Sesja.NazwaOdzysku(okno.Plik, child.OpenSequence));
 // UTF-8 ZE ZNACZNIKIEM: to plik tylko dla nas, ale czlowiek moze go
 // otworzyc recznie z katalogu Odzysk, gdy program nie wstanie - i wtedy
 // znacznik rozstrzyga, ze to polski tekst, a nie stara strona kodowa.
@@ -8607,6 +8709,7 @@ lista.Add(okno);
 }
 catch {}
 }
+lista.AddRange(pendingSessionRecovery);
 return lista;
 } // ZbierzSesje method
 
@@ -8633,95 +8736,81 @@ catch {}
 // po awarii).  Pytanie mowi WPROST, ile plikow i z kiedy - patrz Sesja.OpisSesji.
 // Wyjatek: gdy nic nie ma do odzyskania i wszystkie pliki istnieja, otwieramy
 // bez pytania - wtedy pytanie byloby ceremonia bez wyboru.
+private List<SesjaOkno> pendingSessionRecovery = new List<SesjaOkno>();
+
 public int PrzywrocSesje() {
 int iOtwarte = 0;
 try {
 if (!Sesja.SesjaWlaczona(App.ReadOption(Sesja.OpcjaSesja, "N"))) return 0;
 List<SesjaOkno> lista = Sesja.Czytaj();
 if (lista.Count == 0) return 0;
-
 bool bJestOdzysk = false;
-foreach (SesjaOkno okno in lista) if (okno.Zmieniony && (okno.Odzysk ?? "").Length > 0 && File.Exists(okno.Odzysk)) bJestOdzysk = true;
-
-if (bJestOdzysk) {
-string sOpis = Sesja.OpisSesji(lista);
-string sPytanie = "EdSharp did not close normally last time.\r\n\r\n" + sOpis + "\r\n\r\nRestore that session?";
-if (Dialog.Confirm("Restore Session", sPytanie, "Y") != "Y") {
-// Odrzucona sesja znika razem z kopiami - inaczej to samo pytanie
-// wracaloby przy kazdym starcie.
+foreach (SesjaOkno okno in lista)
+if (okno.Zmieniony && !String.IsNullOrEmpty(okno.Odzysk) && File.Exists(okno.Odzysk)) bJestOdzysk = true;
+if (bJestOdzysk && Dialog.Confirm("Restore Session",
+"EdSharp did not close normally last time." + Environment.NewLine + Environment.NewLine + Sesja.OpisSesji(lista) + Environment.NewLine + Environment.NewLine + "Restore that session?", "Y") != "Y") {
 foreach (SesjaOkno okno in lista) Sesja.UsunOdzysk(okno.Odzysk);
+pendingSessionRecovery.Clear();
 Sesja.Wyczysc();
 return 0;
 }
-}
-
+List<SesjaOkno> failed = new List<SesjaOkno>();
 foreach (SesjaOkno okno in lista) {
+MdiChild restored = null;
 try {
 string sFile = okno.Plik ?? "";
-bool bMaOdzysk = (okno.Odzysk ?? "").Length > 0 && File.Exists(okno.Odzysk);
-if (sFile.IndexOf('\\') >= 0 && File.Exists(sFile)) {
-OpenOrActivateWindow(sFile, GetViewLevel(sFile));
-iOtwarte++;
-if (bMaOdzysk && okno.Zmieniony) {
-// TRESC Z KOPII WCHODZI NA WIERZCH PLIKU Z DYSKU, ale dokument
-// zostaje OZNACZONY JAKO ZMIENIONY - czyli tak, jak byl przed
-// awaria.  Plik na dysku jest nietkniety; czlowiek sam decyduje,
-// czy odzyskana wersje zapisac.
-string sTresc = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
-if (this.Child != null && this.Child.RTB != null && !Util.Equiv(sTresc, this.Child.RTB.Text)) {
-this.Child.RTB.Text = sTresc;
-this.Child.RTB.Modified = true;
+bool hasFile = sFile.IndexOf('\\') >= 0 && File.Exists(sFile);
+bool hasRecovery = !String.IsNullOrEmpty(okno.Odzysk) && File.Exists(okno.Odzysk);
+bool linked = !String.IsNullOrEmpty(okno.OriginalFormatFile);
+if (hasRecovery && (okno.Zmieniony || !hasFile)) {
+// Recovery is already Markdown/plain text. It must NOT depend on reimporting
+// the original or borrow whichever unrelated child was active after failure.
+string recoveredText = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
+new MdiChild(this, GetNoNameTitle());
+restored = this.Child;
+if (restored == null || restored.RTB == null) throw new IOException("Cannot create a recovery window.");
+if (linked) {
+restored.File = Path.GetFileNameWithoutExtension(okno.OriginalFormatFile) + ".md";
+restored.OriginalDocument = new OriginalDocumentLink {Path = okno.OriginalFormatFile, Fingerprint = okno.OriginalFormatHash};
+}
+else if (hasFile) { restored.File = sFile; restored.Text = Path.GetFileName(sFile); }
+restored.RTB.Text = recoveredText;
+restored.IsRichTextDocument = false;
+restored.RTB.Modified = true;
 AddMessage("Recovered unsaved changes in " + Path.GetFileName(sFile));
 }
+else if (hasFile) {
+if (linked && OriginalFormatSupported(sFile)) OpenOrActivateWindow(sFile, 2, "", "", ZapisFormatow.Rozszerzenie(sFile) + "2md");
+else OpenOrActivateWindow(sFile, GetViewLevel(sFile));
+// Find the actual matching document. OpenOrActivateWindow can return without
+// creating anything; Child is NOT proof of success and may belong to another file.
+foreach (MdiChild candidate in this.MdiChildren) {
+if (linked ? (candidate.OriginalDocument != null && Util.Equiv(candidate.OriginalDocument.Path, sFile)) : Util.Equiv(candidate.File, sFile)) {
+restored = candidate; break;
 }
 }
-else if (bMaOdzysk) {
-// Dokument, ktorego nigdy nie bylo na dysku (NoName), albo plik
-// tymczasem usuniety.  Tresc jest tylko w kopii, wiec otwieramy NOWE
-// okno i wkladamy ja tam - z oznaczeniem zmienionego, bo nie ma pliku,
-// do ktorego by nalezala.
-string sTresc = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
-if (sTresc.Length == 0) continue;
-// UWAGA NA KONSTRUKTOR: MdiChild(frame) NIE buduje okna, tylko wywoluje
-// w swoim wnetrzu MdiChild(frame, tytul) - i to TA druga instancja dostaje
-// kontrolke edycyjna oraz Show.  Obiekt zwrocony przez "new MdiChild(this)"
-// jest wiec pusta skorupa z RTB rownym null.  Dlatego wolamy wariant z
-// tytulem i pracujemy na this.Child, czyli na oknie, ktore naprawde powstalo.
-new MdiChild(this, GetNoNameTitle());
-MdiChild nowe = this.Child;
-if (nowe == null || nowe.RTB == null) continue;
-nowe.RTB.Text = sTresc;
-nowe.RTB.Modified = true;
-int iMaxNowe = nowe.RTB.TextLength;
-nowe.RTB.Index = okno.Kursor > iMaxNowe ? iMaxNowe : (okno.Kursor < 0 ? 0 : okno.Kursor);
+if (restored == null || restored.RTB == null) throw new IOException("The document could not be opened.");
+}
+else throw new IOException("The document and its recovery copy are unavailable.");
+int max = restored.RTB.TextLength;
+restored.RTB.Index = Math.Max(0, Math.Min(max, okno.Kursor));
+if (!String.IsNullOrEmpty(okno.Zakladki) && sFile.IndexOf('\\') >= 0 && App.ReadValue("Bookmarks", sFile, "").Length == 0)
+App.WriteValue("Bookmarks", sFile, okno.Zakladki);
 iOtwarte++;
-AddMessage("Recovered " + (sFile.Length > 0 ? Path.GetFileName(sFile) : "an unsaved document"));
-continue;
+// Only a consumed copy can be deleted. A failed read stays on disk AND in the
+// next session snapshot, including after a normal program exit.
+if (hasRecovery) Sesja.UsunOdzysk(okno.Odzysk);
 }
-else continue;
-
-// Kursor stawiamy PO wczytaniu tresci - inaczej pozycja z sesji trafialaby
-// w tekst, ktorego jeszcze nie ma.
-if (this.Child != null && this.Child.RTB != null && okno.Kursor > 0) {
-int iMax = this.Child.RTB.TextLength;
-this.Child.RTB.Index = okno.Kursor > iMax ? iMax : okno.Kursor;
-}
-// Zakladki wracaja do magazynu zakladek, jesli tam ich nie ma.  Zwykle sa -
-// sekcja Bookmarks przezywa restart sama - ale po wyczyszczeniu ustawien
-// albo przeniesieniu na inny komputer sesja jest jedynym ich sladem.
-if ((okno.Zakladki ?? "").Length > 0 && sFile.IndexOf('\\') >= 0) {
-if (App.ReadValue("Bookmarks", sFile, "").Length == 0) App.WriteValue("Bookmarks", sFile, okno.Zakladki);
+catch (Exception ex) {
+failed.Add(okno);
+AddMessage("Could not restore " + Path.GetFileName(okno.Plik) + ". Recovery copy kept for another attempt. " + ex.Message, true);
 }
 }
-catch {}
-}
-
-// Kopie zuzyte - tresc jest juz w oknach.  Sesja zostaje na dysku i bedzie
-// nadpisywana w trakcie pracy.
-foreach (SesjaOkno okno in lista) Sesja.UsunOdzysk(okno.Odzysk);
+pendingSessionRecovery = failed;
+RefreshOriginalDocumentTitles();
 if (iOtwarte > 0) AddMessage("Restored " + iOtwarte + " file" + (iOtwarte == 1 ? "" : "s") + " from the previous session");
 }
-catch {}
+catch (Exception ex) { AddMessage("Could not restore the session: " + ex.Message, true); }
 return iOtwarte;
 } // PrzywrocSesje method
 
@@ -8741,7 +8830,9 @@ if (!CloseWindow(this.Child, true)) return false;
 // porzucona.
 try {
 if (timerAutozapis != null) timerAutozapis.Stop();
-foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) Sesja.UsunOdzysk(sKopia);
+foreach (string sKopia in Directory.GetFiles(Sesja.KatalogOdzysku, "*.odzysk")) {
+if (!pendingSessionRecovery.Exists(delegate(SesjaOkno w) { return Util.Equiv(w.Odzysk, sKopia); })) Sesja.UsunOdzysk(sKopia);
+}
 }
 catch {}
 Application.Exit();
@@ -8985,7 +9076,7 @@ sFile = Util.GetLfn(sFile);
 // SetRecent(sFile);
 object[] children = this.MdiChildren;
 foreach (MdiChild child in children) {
-if (Util.Equiv(child.File, sFile)) {
+if (Util.Equiv(child.File, sFile) || (child.OriginalDocument != null && Util.Equiv(child.OriginalDocument.Path, sFile))) {
 Util.Say("returning");
 child.Activate();
 SetCursorPosition(child.RTB, sLine, sColumn);
@@ -8993,6 +9084,11 @@ return;
 }
 }
 
+OriginalDocumentLink originalLink = null;
+if (iConvert > 0 && OriginalFormatSupported(sFile)) {
+try { originalLink = OriginalFormatSave.Capture(sFile); }
+catch (Exception ex) { AddMessage("Cannot safely read original document: " + ex.Message, true); return; }
+}
 string sTargetExt = "txt";
 if (iConvert == 0 || iConvert == iOpenRichText) sText = "";
 else {
@@ -9034,11 +9130,20 @@ sText = "";
 // else App.Frame.AddMessage("Done");
 }
 
+if (originalLink != null && iConvert > 0) {
+try {
+if (OriginalFormatSave.SumaKontrolna(sFile) != originalLink.Fingerprint) {
+AddMessage("The original changed while importing. Please open it again.", true); return;
+}
+} catch (Exception ex) { AddMessage("Cannot verify original document: " + ex.Message, true); return; }
+}
+
 // Did so above
 // SetRecent(sFile);
 //if (!IsEmptyWindow()) new MdiChild(this);
 //if (!IsEmptyWindow()) new MdiChild(this, "");
 if (!IsEmptyWindow()) new MdiChild(this, sFile);
+this.Child.OriginalDocument = null;
 if (iConvert <= 0) {
 this.Child.LoadTextOrRtfFile(sFile, (iConvert == 0 ? true : false));
 //Dialog.Show(sFile);
@@ -9062,6 +9167,10 @@ this.Child.IsRichTextDocument = false;
 }
 this.Child.Text = Path.GetFileNameWithoutExtension(sFile) + "." + sTargetExt;
 this.Child.File = this.Child.Text;
+if (originalLink != null && (sTargetExt == "md" || sTargetExt == "markdown") && !this.Child.IsRichTextDocument) {
+this.Child.OriginalDocument = originalLink;
+RefreshOriginalDocumentTitles();
+}
 this.Child.RTB.Modified = false;
 
 }
@@ -9619,7 +9728,7 @@ return;
 items[iChoice].PerformClick();
 } // AlternateMenu method
 
-// PALETA POLECEN (Control+Shift+X) - jego zlecenie 11.09.2026: "Paleta
+// PALETA POLECEN (Control+Shift+F1) - jego zlecenie 11.09.2026: "Paleta
 // polecen.  Trzeba ja wprowadzic, jak w AMC.  Zaproponuj skrot klawiszowy",
 // a nastepnie: "Paleta w AMC jezeli chodzi o filtrowanie i to co czyta NVDA,
 // jest dobrze zrobiona.  Mozesz sie jakos tam wzorowac".
@@ -9644,15 +9753,7 @@ foreach (object o in menu.DropDownItems) {
 ToolStripMenuItem item = o as ToolStripMenuItem;
 if (item == null) continue;
 if (item == menuHelpAlternateMenu) continue;
-// SAMA PALETA ZOSTAJE NA LISCIE (18.09.2026).  Do dzis byla pomijana jako
-// "po co wypisywac siebie" - i to wlasnie wywolalo zgloszenie MK o Enterze,
-// ktory "nic nie robi": czytal punkt o DWOCH przeniesionych skrotach (paleta
-// i samouczek) i szukal w palecie obu.  Samouczek znalazl, palety nie bylo,
-// a program nie powiedzial ani slowa - wiec wygladalo to jak zepsute
-// wykonywanie polecen, nie jak brak pozycji.
-// Pozycja jest uzyteczna takze sama w sobie: to jedyne miejsce, gdzie da sie
-// SPRAWDZIC aktualny skrot palety, gdy sie go zapomnialo.  Klikniecie jej
-// otwiera palete na nowo, co jest zachowaniem nieszkodliwym.
+// Keep the palette itself visible so its current shortcut can be found.
 if (item.IsMdiWindowListEntry) continue;
 if (!item.Enabled) continue;
 string[] aSummary = GetKeySummary(item);
@@ -9912,6 +10013,22 @@ private static readonly Regex MarkdownCommentRegex = new Regex(@"<!--(?<body>.*?
 				private static string BuildHtmlClipboardFragment(string sFragment) {
 				if (String.IsNullOrEmpty(sFragment)) return "";
 				try {
+// .NET Framework's CF_HTML string transfer can use the Windows ANSI page.
+// ASCII character references survive that transfer and decode identically in
+// Word and Chromium. Count offsets only after this serialization step.
+StringBuilder asciiHtml = new StringBuilder();
+for (int i = 0; i < sFragment.Length; i++) {
+char c = sFragment[i];
+if (c <= 127) asciiHtml.Append(c);
+else {
+int codePoint = c;
+if (Char.IsHighSurrogate(c) && i + 1 < sFragment.Length && Char.IsLowSurrogate(sFragment[i + 1])) {
+codePoint = Char.ConvertToUtf32(c, sFragment[++i]);
+}
+asciiHtml.Append("&#" + codePoint.ToString(CultureInfo.InvariantCulture) + ";");
+}
+}
+sFragment = asciiHtml.ToString();
 				string sStart = "<html><body><!--StartFragment-->";
 				string sEnd = "<!--EndFragment--></body></html>";
 				string sTemplate = "Version:0.9\r\nStartHTML:{0:D10}\r\nEndHTML:{1:D10}\r\nStartFragment:{2:D10}\r\nEndFragment:{3:D10}\r\n";
@@ -15482,16 +15599,9 @@ return sLine;
 			continue;
 			}
 
-			// CHECKLISTA ZDEJMOWANA CALA, RAZEM Z POLEM STANU.  Bez tego Control+L na
-			// pozycji "- [ ] kupic chleb" usunelby sam punktor i zostawil w tekscie goly
-			// "[ ] kupic chleb" - nawiasy weszlyby w tresc dokumentu jako zwykle znaki.
-			//
-			// WZORZEC LUZNY, NIE CzyZadanie (18.09.2026, zgloszenie MK).  CzyZadanie
-			// odpowiada na pytanie "czy to zadanie do przelaczania i liczenia postepu" i
-			// slusznie odrzuca "- [-] tekst", "- [ ]tekst" oraz "1. [ ] tekst".  Tutaj
-			// pytanie jest inne: "czy zostanie goly nawias, gdy zdejme znacznik" - i na
-			// tych trzech wejsciach zostawal (zmierzone: pomiar_ctrl_l_warianty.ps1).
-			sLine = Zadania.ZdejmijPoleLuzne(sLine);
+			// Turning a list off removes its marker and checkbox.
+			// Changing the list type must preserve the checkbox and its state.
+			if (bAllBulleted) sLine = Zadania.ZdejmijPoleLuzne(sLine);
 			if (bAllBulleted) {
 			// Remove bullet marker, keep indentation.
 			aLines[i] = MarkdownBulletPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
@@ -15967,10 +16077,9 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 			continue;
 			}
 
-			// Jak przy Control+L: pole stanu schodzi razem ze znacznikiem, zeby nawiasy
-			// nie zostaly w tresci wiersza - wzorcem LUZNYM, z tego samego powodu
-			// (opis przy ToggleBulletListShortcut).
-			sLine = Zadania.ZdejmijPoleLuzne(sLine);
+			// Turning a list off removes its marker and checkbox.
+			// Changing the list type must preserve the checkbox and its state.
+			if (bAllNumbered2) sLine = Zadania.ZdejmijPoleLuzne(sLine);
 			if (bAllNumbered2) {
 			aLines[i] = MarkdownNumberPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
 			}

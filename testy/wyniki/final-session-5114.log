@@ -1,0 +1,93 @@
+== 1. Wartosci ustawien wpisywane recznie ==
+OK   Y wlacza
+OK   y wlacza
+OK   Yes wlacza
+OK   Tak wlacza
+OK   T wlacza
+OK   1 wlacza
+OK   on wlacza
+OK   wartosc w cudzyslowach wlacza
+OK   N nie wlacza
+OK   Nie nie wlacza
+OK   0 nie wlacza
+OK   pusta nie wlacza
+OK   null nie wlacza
+OK   bzdura nie wlacza
+
+== 2. Sekundy autozapisu ==
+OK   0 wylacza
+OK   N wylacza
+OK   puste wylacza
+OK   null wylacza
+OK   liczba ujemna wylacza
+OK   bzdura wylacza
+OK   Y daje domyslne
+OK   Tak daje domyslne
+OK   60 daje 60
+OK   wartosc w cudzyslowach
+OK   1 podnoszone do minimum
+OK   2 podnoszone do minimum
+OK   minimum nie wieksze od domyslnego
+
+== 3. Zapis i odczyt sesji w kolko ==
+OK   zapis sie udal
+OK   plik sesji istnieje
+OK   plik sesji BEZ znacznika BOM
+OK   wrocily dwa okna
+OK   sciezka z polskimi znakami cala
+OK   kursor pierwszego okna
+OK   zakladki pierwszego okna
+OK   pierwsze okno niezmienione
+OK   nowy dokument bez sciezki
+OK   kursor drugiego okna
+OK   drugie okno zmienione
+OK   sciezka kopii odzysku
+OK   data zapisu wrocila
+
+== 4. Dluga lista zakladek (stary odczyt ucinal na 260 znakach) ==
+OK   lista zakladek dluzsza niz 260 znakow
+OK   jedno okno
+OK   dlugosc listy zakladek zachowana
+OK   tresc listy zakladek zachowana
+
+== 5. Plik sesji uszkodzony ==
+OK   uciety plik nie wywala odczytu
+OK   uciety plik daje zero okien
+OK   smieci daja zero okien
+OK   okno bez sciezki i bez kopii pomijane
+OK   kursor ujemny podnoszony do zera
+OK   kursor nieliczbowy daje zero
+
+== 6. Nazwy kopii odzysku ==
+OK   ta sama sciezka daje ta sama nazwe niezaleznie od numeru okna
+OK   ta sama nazwa pliku w dwoch folderach daje ROZNE kopie
+OK   nazwa zawiera nazwe pliku
+OK   nazwa konczy sie .odzysk
+OK   nazwa legalna jako nazwa pliku Windows
+OK   dwa nowe dokumenty daja rozne kopie
+OK   skrot powtarzalny
+OK   skrot rozny dla roznych tekstow
+OK   skrot dziala dla polskich znakow
+
+== 7. Sprzatanie ==
+OK   stara kopia usunieta, nowa zostaje
+OK   stara kopia nie istnieje
+OK   nowa kopia istnieje
+OK   UsunOdzysk usuwa
+OK   usuniecie nieistniejacej kopii nie wywala
+OK   Wyczysc usuwa plik sesji
+OK   po wyczyszczeniu zero okien
+
+== 8. Zdanie w oknie pytania ==
+OK   opis mowi o dwoch plikach
+OK   opis podaje date
+OK   opis wspomina o odzyskanych zmianach
+OK   pusta lista daje pusty opis
+OK   null daje pusty opis
+OK   liczba pojedyncza przy jednym pliku
+
+== 9. Brak pliku sesji ==
+OK   brak pliku daje zero okien
+OK   brak pliku nie wywala
+
+WYNIK: 74 OK, 0 BLAD

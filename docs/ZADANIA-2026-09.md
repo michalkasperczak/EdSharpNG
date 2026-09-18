@@ -3,6 +3,62 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
+## Bieżące zlecenie MK — 18.09.2026: formatowanie i zapis
+
+Źródło uwag: `docs/UWAGI-MK-18.09.2026.md`, zwłaszcza końcowy opis
+kopiowania całego zaznaczenia i zapisu pliku po imporcie z Worda.
+
+Zakres uzgodniony: EdSharp, bez dalszych prac nad AMC w tym wątku.
+
+Koordynacja: to samo zlecenie wpłynęło w dwóch tematach Telegrama. Aktywne
+wdrożenie prowadzi sesja `20260918_002328_08637004` (temat `33010`).
+Sesja z tematu `32113` zatrzymała swoje zdublowane zadania po potwierdzeniu
+równoległych zmian w kodzie. Nie cofać pracy drugiej sesji. Nie budować dwóch
+różnych instalatorów pod numerem 5.0.114. Nowa kopia robocza
+`edsharp-rich-copy` powstała w zdublowanym zadaniu; nie scalać jej automatycznie.
+
+- W trakcie: Control+Shift+C dla całego mieszanego zaznaczenia Markdown.
+  Nagłówki, odsyłacze, listy i wyróżnienia mają zachować znaczenie w bogatym
+  schowku; format do ponownego wklejenia Markdown w EdSharp pozostaje.
+- W trakcie: Control+Shift+S z rzeczywistą konwersją do DOCX, EPUB, PDF,
+  HTML, RTF oraz zapisem Markdown i tekstu. Błąd konwersji nie może uszkodzić
+  poprzedniego pliku ani oznaczyć niezapisanych zmian jako zapisanych.
+- Do weryfikacji przed wydaniem: pomiary wyników schowka i plików,
+  obsługa nowego okna zapisu żywym NVDA, próba instalacji.
+- Do dostarczenia: nowy numer wersji, wydanie GitHub z instalatorem i ZIP,
+  kopia instalatora w folderze Michała oraz krótka instrukcja testu.
+- Poprawki checklist i drobnych komend są już zapisane lokalnie w commicie
+  `57a9919`; przed wydaniem wymagają uwzględnienia w kontroli regresji.
+
+### Zatwierdzona opcja: Control+S zapisuje do formatu źródłowego
+
+MK zatwierdził widoczny przełącznik w normalnym oknie ustawień: opcjonalny zapis
+zaimportowanego DOCX, EPUB i innych wspieranych dokumentów z powrotem w formacie
+otwartego oryginału. Opcja domyślnie wyłączona; bez niej działa dotychczasowy zapis MD.
+Użytkownik świadomie akceptuje utratę czcionek i innych cech wyglądu, bo celem
+jest redakcja treści i struktury do prostej publikacji, np. WordPressa.
+
+Wdrożone w kandydacie, jeszcze bez wydania: powiązanie importu z oryginalnym
+plikiem, Control+S, kopie poprzednich wersji, wykrywanie zewnętrznych zmian,
+odzysk powiązania w sesji, natychmiastowe wyłączenie opcji i odłączenie po zapisie
+roboczego Markdowna. Sprawdzone dla DOCX, EPUB, HTML i RTF (nie obiecujemy ODT,
+PDF ani starego DOC bez osobnej obsługi). 84 sprawdzenia integracyjne bez błędu;
+żywy NVDA potwierdził nazwę i stan checkboxa oraz zapis do DOCX po Control+S.
+Dowody: `testy/wyniki/original-integration-5114.log`,
+`testy/wyniki/original-live-nvda-5114.json`.
+Przegląd domknięty: naprawiono izolację okien odzysku i zachowanie nieodczytanych
+kopii (5 kontroli przed poprawką zawodziło), zapis snippetu i stan po zapisie
+do oryginału. Rozszerzony zestaw integracji: 107/107. Trwa końcowy build wydania.
+Nie obiecywać bezstratnej edycji dowolnego DOCX.
+
+Próba Pandoca zachowała tekst i nagłówek, lecz utraciła kolor, rozmiar czcionki
+i wyrównanie. Wynik: `testy/wyniki/roundtrip-docx-decyzja.json`.
+
+Pozostałe uwagi (m.in. sporadyczny skok podglądu i komunikaty ustawień) nie są
+jeszcze oznaczone jako naprawione. Nie rozszerzamy wydania na nowe funkcje
+śledzenia zmian ani nie zmieniamy kolejnych skrótów bez osobnego ustalenia.
+
+
 ## 1. Alt+F4 zamyka caly program (BLAD, potwierdzony w kodzie)
 
 PRZYCZYNA ZNALEZIONA: EdSharp.cs linia 1165

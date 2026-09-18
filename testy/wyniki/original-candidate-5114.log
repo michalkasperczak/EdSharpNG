@@ -1,0 +1,100 @@
+NVDA controller client present.
+Compiling EdSharp.cs -> EdSharpNG.exe ...
+
+Build complete:
+  EdSharpNG.exe  -- the application (x64)
+PASS original-format save option is present exactly once
+PASS setting is a checkbox, not an INI-only switch
+PASS factory default is OFF
+PASS label names the changed key
+PASS help explains conversion and backups
+PASS session can retain source identity and fingerprint
+PASS session written
+PASS source path and fingerprint roundtrip without truncation
+PASS legacy sessions have no invented original association
+RESULT: 9 PASS / 0 FAIL
+PASS fixture real docx
+PASS actual import docx
+PASS import retains original identity docx
+PASS Ctrl+S updates original docx
+PASS successful original save clears dirty flag docx
+PASS buffer identity stays Markdown, never binary docx
+PASS backup contains previous original docx
+PASS frame session retains association docx
+PASS clean imported session restores without recovery copy docx
+PASS reopened original contains actual edited content docx
+PASS restored document remains linked docx
+PASS opening linked original again activates same buffer docx
+PASS repeat save uses refreshed fingerprint docx
+PASS external edit stops original route, no fallback docx
+PASS failed original save preserves external bytes and unsaved flag docx
+PASS Save As and Export share original safety route docx
+PASS explicit export cannot bypass external-change guard docx
+PASS crash recovery keeps local edits docx
+PASS crash recovery does not adopt changed source fingerprint docx
+PASS toggle OFF immediately bypasses original save docx
+PASS explicit Markdown save detaches original docx
+PASS fixture real epub
+PASS actual import epub
+PASS import retains original identity epub
+PASS Ctrl+S updates original epub
+PASS successful original save clears dirty flag epub
+PASS buffer identity stays Markdown, never binary epub
+PASS backup contains previous original epub
+PASS frame session retains association epub
+PASS clean imported session restores without recovery copy epub
+PASS reopened original contains actual edited content epub
+PASS restored document remains linked epub
+PASS opening linked original again activates same buffer epub
+PASS repeat save uses refreshed fingerprint epub
+PASS external edit stops original route, no fallback epub
+PASS failed original save preserves external bytes and unsaved flag epub
+PASS Save As and Export share original safety route epub
+PASS explicit export cannot bypass external-change guard epub
+PASS crash recovery keeps local edits epub
+PASS crash recovery does not adopt changed source fingerprint epub
+PASS toggle OFF immediately bypasses original save epub
+PASS explicit Markdown save detaches original epub
+PASS fixture real html
+PASS actual import html
+PASS import retains original identity html
+PASS Ctrl+S updates original html
+PASS successful original save clears dirty flag html
+PASS buffer identity stays Markdown, never binary html
+PASS backup contains previous original html
+PASS frame session retains association html
+PASS clean imported session restores without recovery copy html
+PASS reopened original contains actual edited content html
+PASS restored document remains linked html
+PASS opening linked original again activates same buffer html
+PASS repeat save uses refreshed fingerprint html
+PASS external edit stops original route, no fallback html
+PASS failed original save preserves external bytes and unsaved flag html
+PASS Save As and Export share original safety route html
+PASS explicit export cannot bypass external-change guard html
+PASS crash recovery keeps local edits html
+PASS crash recovery does not adopt changed source fingerprint html
+PASS toggle OFF immediately bypasses original save html
+PASS explicit Markdown save detaches original html
+PASS fixture real rtf
+PASS actual import rtf
+PASS import retains original identity rtf
+PASS Ctrl+S updates original rtf
+PASS successful original save clears dirty flag rtf
+PASS buffer identity stays Markdown, never binary rtf
+PASS backup contains previous original rtf
+PASS frame session retains association rtf
+PASS clean imported session restores without recovery copy rtf
+PASS reopened original contains actual edited content rtf
+PASS restored document remains linked rtf
+PASS opening linked original again activates same buffer rtf
+PASS repeat save uses refreshed fingerprint rtf
+PASS external edit stops original route, no fallback rtf
+PASS failed original save preserves external bytes and unsaved flag rtf
+PASS Save As and Export share original safety route rtf
+PASS explicit export cannot bypass external-change guard rtf
+PASS crash recovery keeps local edits rtf
+PASS crash recovery does not adopt changed source fingerprint rtf
+PASS toggle OFF immediately bypasses original save rtf
+PASS explicit Markdown save detaches original rtf
+RESULT: 84 PASS / 0 FAIL

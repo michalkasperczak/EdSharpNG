@@ -13,7 +13,7 @@
 // URUCHOMIENIE (z WSL):
 //   cp ZapisFormatow.cs testy/harness_zapis_formatow.cs /mnt/c/EdSharpSaveTest/
 //   cd /mnt/c/EdSharpSaveTest
-//   csc.exe /nologo /out:harness.exe harness_zapis_formatow.cs ZapisFormatow.cs
+//   csc.exe /nologo /reference:System.IO.Compression.dll /reference:System.IO.Compression.FileSystem.dll /out:harness.exe harness_zapis_formatow.cs ZapisFormatow.cs
 //   ./harness.exe
 using System;
 using System.Collections.Generic;
@@ -33,7 +33,7 @@ if (b) { iPass++; W("PASS: " + s); } else { iFail++; W("FAIL: " + s); }
 
 const string MD =
 "# Naglowek pierwszy\r\n\r\nAkapit z **pogrubieniem** i [linkiem](https://example.com).\r\n\r\n"
-+ "- punkt jeden\r\n- punkt dwa\r\n\r\n## Naglowek drugi\r\n\r\nPolskie litery: zazolc gesla jazn.\r\n";
++ "- punkt jeden\r\n- punkt dwa\r\n\r\n## Naglowek drugi\r\n\r\nPolskie litery: zażółć gęślą jaźń.\r\n";
 
 static string sKat = @"C:\EdSharpSaveTest";
 static string sPandoc = Path.Combine(sKat, @"Convert\Pandoc\pandoc.exe");
@@ -63,7 +63,7 @@ static string Rozwin(string sCmd, string sSource, string sTarget) {
 sCmd = sCmd.Replace("%SourceLong%", sSource);
 sCmd = sCmd.Replace("%Source%", sSource);
 sCmd = sCmd.Replace("%TargetLong%", sTarget);
-sCmd = sCmd.Replace("%Target%", "\"" + sTarget + "\"");
+sCmd = sCmd.Replace("%Target%", sTarget);
 // Tak jak Util.ExpandCommandLine (EdSharp.cs 24063) - inaczej nie da sie
 // zmierzyc przypadku brakujacego wzorca dokumentu.
 sCmd = sCmd.Replace("%DataDir%", sKat);
@@ -93,7 +93,7 @@ psi.CreateNoWindow = true;
 psi.WindowStyle = ProcessWindowStyle.Hidden;
 Process p = Process.Start(psi);
 if (p != null) p.WaitForExit();
-return (p != null) ? p.Id : 0;
+return (p != null) ? p.ExitCode : -1;
 }
 
 static string BrakujaceNic(string sCmd) { return ""; }
@@ -276,7 +276,7 @@ WynikZapisu w9 = ZapisFormatow.Konwertuj(MD, "md", sPl, CzytajWpis, Rozwin, Uruc
 Sprawdz(w9.Udane, "konwersja do html udala sie");
 if (w9.Udane) {
 string sTresc = File.ReadAllText(sPl, new UTF8Encoding(false));
-Sprawdz(sTresc.Contains("zazolc gesla jazn"), "tekst z polskimi literami jest w pliku poprawnie (UTF-8)");
+Sprawdz(sTresc.Contains("zażółć gęślą jaźń"), "tekst z polskimi literami jest w pliku poprawnie (UTF-8)");
 }
 
 // --------------------------------------------------------------- punkt 10 ---

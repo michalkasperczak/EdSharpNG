@@ -1,0 +1,134 @@
+== HARNESS ZAPISU DO FORMATU ZRODLOWEGO ==
+katalog pomiaru: C:\EdSharpOriginalSaveTest\praca-172602-f88fb4
+
+== 0. KONTROLA NEGATYWNA: naiwny zapis niszczy dokument ==
+PASS: warunek pomiaru: plik wyjsciowy jest dokumentem (naglowek PK)
+PASS: naiwne Control+S zamienia dokument na Markdown - sonda to widzi
+PASS: i nie zostawia po starej wersji ZADNEGO sladu
+
+== 1. ZAPIS NORMALNY, POWTORZONY TRZY RAZY ==
+PASS: Capture daje odcisk SHA-256 (64 znaki): 09d0ef5237cc...
+PASS: Capture zapamietuje pelna sciezke
+PASS: zapis nr 1 udal sie
+PASS: oryginal ma teraz tresc z zapisu nr 1
+PASS: oryginal nadal jest dokumentem, nie Markdownem (zapis nr 1)
+PASS: zapis nr 1 zwrocil istniejaca kopie zapasowa: raport-001.docx
+PASS: kopia nr 1 trzyma DOKLADNIE poprzednia wersje (wersja-0)
+PASS: po zapisie nr 1 brak plikow przejsciowych w katalogu
+PASS: zapis nr 2 udal sie
+PASS: oryginal ma teraz tresc z zapisu nr 2
+PASS: oryginal nadal jest dokumentem, nie Markdownem (zapis nr 2)
+PASS: zapis nr 2 zwrocil istniejaca kopie zapasowa: raport-002.docx
+PASS: kopia nr 2 trzyma DOKLADNIE poprzednia wersje (wersja-1)
+PASS: po zapisie nr 2 brak plikow przejsciowych w katalogu
+PASS: zapis nr 3 udal sie
+PASS: oryginal ma teraz tresc z zapisu nr 3
+PASS: oryginal nadal jest dokumentem, nie Markdownem (zapis nr 3)
+PASS: zapis nr 3 zwrocil istniejaca kopie zapasowa: raport-003.docx
+PASS: kopia nr 3 trzyma DOKLADNIE poprzednia wersje (wersja-2)
+PASS: po zapisie nr 3 brak plikow przejsciowych w katalogu
+PASS: trzy zapisy daly trzy ROZNE kopie (stara wersja nigdy nie jest nadpisana)
+PASS: w .edsharp-backups leza wszystkie trzy kopie
+PASS: odcisk w skojarzeniu zostal odswiezony po zapisie
+PASS: i zgadza sie z plikiem, ktory naprawde lezy na dysku
+
+== 2. KONWERTER ZGLASZA BLAD, ZOSTAWIAJAC URYWEK PLIKU ==
+PASS: zapis nie udal sie
+PASS: powod od konwertera wraca do wolajacego doslownie: Brak narzedzia pandoc.
+PASS: ORYGINAL NIETKNIETY
+PASS: odcisk w skojarzeniu NIE zmienil sie
+PASS: nie powstala zadna kopia zapasowa (nie bylo czego zapisywac)
+PASS: urywek pliku przejsciowego zostal usuniety
+PASS: katalog kopii nie zostal zasmiecony
+
+== 3. KONWERTER RZUCA WYJATEK ==
+PASS: wyjatek w wywolaniu zwrotnym NIE wychodzi na zewnatrz - jest bledem, nie awaria programu
+PASS: komunikat wyjatku trafia do powodu: Konwersja nie doszla do skutku: konwerter sie wywrocil
+PASS: ORYGINAL NIETKNIETY
+PASS: brak plikow przejsciowych po wyjatku
+
+== 4. KONWERTER MELDUJE SUKCES, A PLIKU NIE MA ALBO JEST PUSTY ==
+PASS: SUKCES konwertera + plik zerowy = BLAD (nie wierzymy deklaracji)
+PASS: powod nazywa rzecz po imieniu: Konwerter nie utworzyl pliku.
+PASS: ORYGINAL NIETKNIETY po pustym wyniku
+PASS: pusty plik przejsciowy usuniety
+PASS: SUKCES konwertera + BRAK pliku = BLAD
+PASS: ORYGINAL NIETKNIETY po braku wyniku
+PASS: przez caly punkt nie powstala zadna kopia
+
+== 5. CUDZA EDYCJA ORYGINALU **PRZED** KONWERSJA ==
+PASS: zapis wstrzymany
+PASS: konwerter NIE zostal nawet uruchomiony (sprawdzamy odcisk PRZED konwersja)
+PASS: powod mowi o zmianie z zewnatrz: Plik zrodlowy zmienil sie poza edytorem - zapis wstrzymany.
+PASS: CUDZA PRACA NIETKNIETA
+PASS: brak plikow przejsciowych
+
+== 6. CUDZA EDYCJA ORYGINALU **W TRAKCIE** KONWERSJI ==
+PASS: zapis wstrzymany mimo UDANEJ konwersji
+PASS: powod wskazuje moment: Plik zrodlowy zmienil sie podczas konwersji - zapis wstrzymany.
+PASS: CUDZA PRACA NIETKNIETA
+PASS: gotowy, ale nieuzyty wynik konwersji zostal usuniety
+PASS: nie powstala kopia zapasowa cudzej wersji (nic nie podmienialismy)
+
+== 7. PLIK ZRODLOWY NIE ISTNIEJE ALBO NIE DA SIE GO PRZECZYTAC ==
+PASS: Capture na brakujacym pliku RZUCA wyjatek (nie udaje, ze skojarzenia nie ma)
+PASS: zapis do usunietego oryginalu pada BEZ uruchamiania konwertera
+PASS: powod: Plik zrodlowy nie istnieje: C:\EdSharpOriginalSaveTest\praca-172602-f88fb4\brak-zrodla\raport.docx
+PASS: i nie tworzymy pliku od nowa w cudzym miejscu
+PASS: plik otwarty na wylacznosc: zapis pada przed konwersja
+PASS: powod mowi o odczycie, nie o formacie: Nie moge przeczytac pliku zrodlowego: Proces nie mo�e uzyska� dost�pu do pliku "C:\EdSharpOriginalSaveTest\praca-172602-f88fb4\brak-zrodla\zajety.docx", poniewa� jest on u�ywany przez inny proces.
+PASS: zablokowany oryginal NIETKNIETY
+PASS: brak plikow przejsciowych w calym punkcie 7
+
+== 8. CEL ZABLOKOWANY DO ZAPISU W CHWILI PODMIANY ==
+PASS: podmiana zablokowanego pliku pada
+PASS: powod: Nie moge podmienic pliku zrodlowego: Proces nie mo�e uzyska� dost�pu do pliku, poniewa� jest on u�ywany przez inny proces.
+PASS: ORYGINAL ZACHOWANY bajt w bajt
+PASS: i jego odcisk sie nie zmienil
+PASS: odcisk w skojarzeniu tez zostal stary
+PASS: nieuzyty wynik konwersji usuniety
+
+== 9. NAZWY ZE SPACJAMI I ZNAKAMI NIEANGIELSKIMI ==
+PASS: plik przejsciowy ma DOCELOWE rozszerzenie (konwertery ida po rozszerzeniu): Zazolc gesla jazn - raport (2026).edsharp-orig-cb751e91.docx
+PASS: i lezy w katalogu oryginalu (podmiana w obrebie wolumenu)
+PASS: konwerter dostaje nazwe WOLNA, nie istniejacy plik
+PASS: zapis pliku ze spacjami i polskimi literami udal sie
+PASS: oryginal podmieniony
+PASS: kopia zachowala nazwe i numer: Zazolc gesla jazn - raport (2026)-001.docx
+PASS: brak plikow przejsciowych
+
+== 10. SKOJARZENIE PUSTE ALBO BEZ ODCISKU ==
+PASS: brak skojarzenia = blad z powodem: Brak skojarzenia z plikiem zrodlowym.
+PASS: PUSTY odcisk nie moze zdac egzaminu na 'plik sie nie zmienil'
+PASS: powod: Brak odcisku pliku zrodlowego.
+PASS: ORYGINAL NIETKNIETY
+PASS: brak wywolania zwrotnego = blad z powodem: Brak obslugi konwersji.
+
+== 11. ODCISK OPISUJE TRESC, KTORA SAMI ZAPISALISMY ==
+PASS: zapis udal sie
+PASS: odcisk == SHA-256 WYJSCIA KONWERTERA policzonego niezaleznie
+PASS: kopia trzyma wersje sprzed podmiany
+PASS: brak plikow przejsciowych
+
+== 12. PODMIANA DOKONANA: NAWET GDY POTEM COS PADNIE, KOPIA JEST ZGLOSZONA ==
+PASS: warunek pomiaru: podmiana doszla do skutku
+PASS: po dokonanej podmianie sciezka kopii JEST zwrocona (zwrot=True)
+PASS: po dokonanej podmianie odcisk NIE zostaje stary (brak falszywego alarmu przy nastepnym zapisie)
+PASS: kopia jest jedna i trzyma poprzednia wersje
+
+== 13. DWA ROWNOLEGLE ZAPISY TEGO SAMEGO PLIKU NIE NADPISUJA KOPII ==
+PASS: rownolegle zapisy naprawde doszly do skutku (udanych: 25)
+PASS: kazdy udany zapis zostawil WLASNA kopie - zadna nie zostala nadpisana
+PASS: pierwotna wersja dokumentu przetrwala w kopiach
+PASS: mutex unavailable rejects save instead of dropping protection
+PASS: mutex failure leaves original and backups intact
+PASS: precondition: second writer waits for document lock
+PASS: waiter rejects source changed while awaiting lock
+PASS: waiter never overwrites winning external edit
+
+== 14. CALY KATALOG PO POMIARZE: ZERO SMIECI ==
+PASS: w calym drzewie pomiaru nie ma ANI JEDNEGO pliku przejsciowego
+
+==================================================
+PASS: 98   FAIL: 0
+==================================================

@@ -156,6 +156,10 @@ public class Ustawienia
         o.Wartosci = new string[] { "md", "txt", "html" };
         o.Domyslna = "md"; l.Add(o);
 
+        o = new Opcja("SaveImportedOriginalFormat", "Control+S saves imported documents in their original format", "przelacznik",
+            "Off: keep working and saving in Markdown. On: rebuild imported DOCX, EPUB, HTML or RTF documents from Markdown when saving. Typography and unsupported document features may be lost. Previous versions are kept in .edsharp-backups next to the original. External changes block the save.");
+        o.Domyslna = "N"; l.Add(o);
+
         o = new Opcja("OpenPrevious", "Open the files from the &previous session on startup", "przelacznik",
             "Files that were open when you last left are opened again.  Work Continuity, in this same menu, also brings back the cursor positions.");
         o.Domyslna = "N"; l.Add(o);

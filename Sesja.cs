@@ -55,6 +55,8 @@ namespace EdSharp {
 // Jedno okno w zapisanej sesji.
 public class SesjaOkno {
 public string Plik = "";
+public string OriginalFormatFile = "";
+public string OriginalFormatHash = "";
 public int Kursor = 0;
 public string Zakladki = "";
 // Sciezka kopii autozapisu, gdy okno mialo niezapisane zmiany.
@@ -190,6 +192,8 @@ SesjaOkno okno = listaOkien[i];
 if (okno == null) continue;
 sb.Append("\r\n[Okno" + (i + 1).ToString() + "]\r\n");
 sb.Append("Plik=\"" + (okno.Plik ?? "") + "\"\r\n");
+sb.Append("OriginalFormatFile=\"" + (okno.OriginalFormatFile ?? "") + "\"\r\n");
+sb.Append("OriginalFormatHash=\"" + (okno.OriginalFormatHash ?? "") + "\"\r\n");
 sb.Append("Kursor=\"" + okno.Kursor.ToString() + "\"\r\n");
 sb.Append("Zakladki=\"" + (okno.Zakladki ?? "") + "\"\r\n");
 sb.Append("Odzysk=\"" + (okno.Odzysk ?? "") + "\"\r\n");
@@ -247,6 +251,8 @@ if (Util.Equiv(sKlucz, "Zapisano")) sKiedyZapisano = sWartosc;
 continue;
 }
 if (Util.Equiv(sKlucz, "Plik")) okno.Plik = sWartosc;
+else if (Util.Equiv(sKlucz, "OriginalFormatFile")) okno.OriginalFormatFile = sWartosc;
+else if (Util.Equiv(sKlucz, "OriginalFormatHash")) okno.OriginalFormatHash = sWartosc;
 else if (Util.Equiv(sKlucz, "Kursor")) {
 int iKursor = 0;
 Int32.TryParse(sWartosc, out iKursor);

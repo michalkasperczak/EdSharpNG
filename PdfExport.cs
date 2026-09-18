@@ -171,10 +171,10 @@ StringBuilder sbOut = new StringBuilder();
 // ASYNCHRONICZNE CZYTANIE.  Synchroniczne ReadToEnd przed WaitForExit
 // zakleszcza sie, gdy drugi strumien zapelni bufor potoku.
 p.ErrorDataReceived += delegate(object o, DataReceivedEventArgs e) {
-if (e.Data != null) lock (sbErr) sbErr.AppendLine(e.Data);
+if (e.Data != null) lock (sbErr) {if (sbErr.Length < 8000) sbErr.AppendLine(e.Data);}
 };
 p.OutputDataReceived += delegate(object o, DataReceivedEventArgs e) {
-if (e.Data != null) lock (sbOut) sbOut.AppendLine(e.Data);
+if (e.Data != null) lock (sbOut) {if (sbOut.Length < 8000) sbOut.AppendLine(e.Data);}
 };
 p.Start();
 p.BeginErrorReadLine();
@@ -212,6 +212,11 @@ if (bTimeout) {
 sError = "Przegladarka nie skonczyla skladania pliku w " + (TIMEOUT_MS / 1000) + " s.";
 UsunNieudany(sOut);
 return false;
+}
+
+if (iKod != 0) {
+sError = "PDF conversion failed, browser exit code: " + iKod.ToString() + SkrotBledu(sStdErr);
+UsunNieudany(sOut); return false;
 }
 
 string sPowod = "";

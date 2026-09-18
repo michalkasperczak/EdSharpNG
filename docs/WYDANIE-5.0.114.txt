@@ -1,0 +1,37 @@
+EdSharpNG 5.0.114
+
+Kopiowanie z formatowaniem
+
+Control+Shift+C kopiuje całe zaznaczenie z nagłówkami, pogrubieniem, listami i odnośnikami. Schowek zawiera HTML, RTF oraz tekst. Poprawiono zachowanie polskich liter i znaków spoza podstawowego alfabetu.
+
+Sprawdzone przez wklejenie do edytora w Edge oraz odczyt w Wordzie. Wklejanie jako zwykły tekst nadal usuwa formatowanie. Nie badano konkretnej instalacji WordPressa.
+
+Zapisz jako i PDF
+
+Control+Shift+S udostępnia między innymi Word, EPUB, HTML, RTF i PDF. Powstaje dokument wybranego formatu, a nie plik z samym zmienionym rozszerzeniem.
+
+Nieudana konwersja nie zastępuje istniejącego pliku. Poprawiono obsługę starszych ustawień Pandoca, ścieżek ze spacjami i brakującego opcjonalnego szablonu Worda.
+
+PDF jest tworzony przez zainstalowany Microsoft Edge, bez dodatkowego silnika LaTeX. W próbkach zachowane zostały polski tekst, nagłówki, listy, odnośniki i tagi struktury. Nie jest to gwarancja zgodności każdego dokumentu z PDF/UA.
+
+Nowa, opcjonalna praca w formacie oryginału
+
+W Settings (Control+przecinek) dodano pole „Control+S saves imported documents in their original format”. Domyślnie jest wyłączone.
+
+Po włączeniu Control+S zapisuje zaimportowany DOCX, EPUB, HTML lub RTF ponownie do jego oryginalnego pliku. Tekst w edytorze pozostaje Markdownem. Opcja działa od razu, również dla dokumentów zaimportowanych w bieżącej sesji.
+
+Poprzednie wersje dokumentu trafiają do folderu .edsharp-backups obok oryginału. Zmiana pliku przez inny program zatrzymuje zapis. Jawny zapis roboczego pliku jako Markdown odłącza go od oryginału.
+
+Konwersja nie jest bezstratną edycją dokumentu Worda: czcionki, układ i elementy nieobsługiwane przez Markdown mogą zostać utracone. Funkcja służy przede wszystkim do redagowania treści i struktury. Nie dotyczy importowanych PDF ani starszych plików DOC.
+
+Listy i pozostałe poprawki
+
+Zmiana listy punktowanej na numerowaną i z powrotem zachowuje pola checklisty oraz ich stan. Całkowite wyłączenie listy usuwa też pole zadania, nie niszcząc zwykłych odnośników w nawiasach kwadratowych.
+
+Nawigacja między listami wraca na Alt+minus i Alt+Shift+minus. Zwolniono Alt+Shift+M; ręczna edycja ustawień pozostaje w menu.
+
+Kalkulator informuje, gdy nie ma czego obliczyć. Poprawiono obsługę Alt+nawias oraz uwzględniono samą paletę poleceń na jej liście.
+
+Weryfikacja
+
+Sprawdzono rzeczywiste konwersje i pliki wynikowe, schowek Windows, obsługę błędów zapisu, ochronę przed konfliktami i przywracanie sesji. Żywy NVDA potwierdził odczyt nowej opcji, zmianę jej stanu oraz zapis dokumentu po Control+S.

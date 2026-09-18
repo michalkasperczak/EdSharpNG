@@ -1,0 +1,19 @@
+stron: 1
+OK   tekst zrodlowy obecny: 'Zazolc gesla jazn'
+OK   tekst zrodlowy obecny: 'odnosnikiem testowym'
+OK   tekst zrodlowy obecny: 'ąćęłńóśźż'
+OK   tekst zrodlowy obecny: 'Pierwszy punkt listy'
+OK   tekst zrodlowy obecny: 'Drugi punkt listy'
+OK   /MarkInfo /Marked = True
+OK   /StructTreeRoot obecny
+typy struktur: Document, H1, H2, L, LI, Lbl, Link, NonStruct, P
+OK   struktura H1 obecna
+OK   struktura H2 obecna
+OK   struktura L obecna
+OK   struktura LI obecna
+OK   struktura Link obecna
+OK   struktura P obecna
+adresy linkow: ['https://example.org/sciezka']
+OK   odnosnik zachowal adres
+---
+wszystko sie zgadza

@@ -11,7 +11,7 @@
 // 1. NIE RUSZAMY ORYGINALU, DOPOKI NIE MAMY GOTOWEGO ZASTEPNIKA.  Konwerter
 //    pisze do pliku przejsciowego W KATALOGU ORYGINALU (ten sam wolumen, to
 //    samo rozszerzenie - Pandoc rozpoznaje format wyjsciowy po rozszerzeniu).
-//    Kazde wyjscie bledem zostawia oryginal bajt w bajt taki, jaki byl.
+//    Blad PRZED File.Replace zostawia oryginal bajt w bajt taki, jaki byl.
 //
 // 2. SUKCES WYWOLANIA ZWROTNEGO NIE JEST DOWODEM, ZE PLIK POWSTAL.  Zmierzone
 //    na Pandocu: przy bledzie zostawia plik zerowej dlugosci.  Dlatego po
@@ -106,8 +106,8 @@ return link;
 //
 // true  -> oryginal podmieniony, sBackupPath wskazuje zachowana stara wersje,
 //          link.Fingerprint odswiezony.
-// false -> sBlad mowi dlaczego, PLIKI NA DYSKU SA NIETKNIETE (poza usunieciem
-//          wlasnego pliku przejsciowego).
+// false -> sBlad mowi dlaczego. Przed podmiana oryginal jest nietkniety;
+//          po podmianie komunikat ostrzega, a sBackupPath podaje dostepna kopie.
 public static bool TrySave(
 OriginalDocumentLink link, string sMarkdown,
 Func<string, string, WynikZapisu> fnKonwertuj,
@@ -221,7 +221,28 @@ mtx = new Mutex(false, NazwaMuteksu(sOrig));
 try { bMam = mtx.WaitOne(30000); }
 catch (AbandonedMutexException) { bMam = true; }   // poprzednik padl - wchodzimy
 }
-catch (Exception) { mtx = null; bMam = false; }     // brak muteksu nie moze blokowac zapisu
+catch (Exception ex) {
+Sprzataj(sStage);
+sBlad = "Cannot lock the original document for saving: " + ex.Message;
+return false;
+}
+if (!bMam) {
+Sprzataj(sStage);
+sBlad = "Another save is still using this document. Please try again.";
+return false;
+}
+// A writer may have waited behind another save. Recheck AFTER acquiring ownership.
+try {
+if (SumaKontrolna(sOrig) != link.Fingerprint) {
+Sprzataj(sStage);
+sBlad = "The original changed while waiting to save. Save stopped.";
+return false;
+}
+} catch (Exception ex) {
+Sprzataj(sStage);
+sBlad = "Cannot verify the original before replacement: " + ex.Message;
+return false;
+}
 
 sKopia = WolnaNazwaKopii(sKopie, sBase, sExt);
 if (String.IsNullOrEmpty(sKopia)) {

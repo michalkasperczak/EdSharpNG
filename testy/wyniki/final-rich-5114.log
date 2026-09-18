@@ -1,0 +1,57 @@
+PASS exact Markdown roundtrip
+PASS heading style applied to paragraphs, not just declared
+PASS RTF actual hyperlink
+PASS RTF parsed by native RichEdit without text loss
+PASS HTML headings and list
+PASS UTF-8 byte offsets
+PASS HTML automatic link
+PASS RTF bare URL without final punctuation
+PASS inline code is not a hyperlink
+PASS inline code is not a RTF field
+PASS single-line selection has HTML link
+PASS partial line does not expand to item
+PASS both rich flavors read back from Windows clipboard
+PASS native CF_HTML bytes preserve Polish under strict UTF-8 decoding
+PASS supplementary Unicode is serialized as one valid scalar entity
+PASS independent MSHTML paste retains heading
+PASS independent MSHTML paste retains link destination
+PASS independent MSHTML paste retains list
+RESULT: 18 PASS / 0 FAIL
+PASS exact Markdown roundtrip
+PASS heading style applied to paragraphs, not just declared
+PASS RTF actual hyperlink
+PASS RTF parsed by native RichEdit without text loss
+PASS HTML headings and list
+PASS UTF-8 byte offsets
+PASS HTML automatic link
+PASS RTF bare URL without final punctuation
+PASS inline code is not a hyperlink
+PASS inline code is not a RTF field
+PASS single-line selection has HTML link
+PASS partial line does not expand to item
+PASS both rich flavors read back from Windows clipboard
+PASS native CF_HTML bytes preserve Polish under strict UTF-8 decoding
+PASS supplementary Unicode is serialized as one valid scalar entity
+PASS independent MSHTML paste retains heading
+PASS independent MSHTML paste retains link destination
+PASS independent MSHTML paste retains list
+RESULT: 18 PASS / 0 FAIL
+PASS exact Markdown roundtrip
+PASS heading style applied to paragraphs, not just declared
+PASS RTF actual hyperlink
+PASS RTF parsed by native RichEdit without text loss
+PASS HTML headings and list
+PASS UTF-8 byte offsets
+PASS HTML automatic link
+PASS RTF bare URL without final punctuation
+PASS inline code is not a hyperlink
+PASS inline code is not a RTF field
+PASS single-line selection has HTML link
+PASS partial line does not expand to item
+PASS both rich flavors read back from Windows clipboard
+PASS native CF_HTML bytes preserve Polish under strict UTF-8 decoding
+PASS supplementary Unicode is serialized as one valid scalar entity
+PASS independent MSHTML paste retains heading
+PASS independent MSHTML paste retains link destination
+PASS independent MSHTML paste retains list
+RESULT: 18 PASS / 0 FAIL

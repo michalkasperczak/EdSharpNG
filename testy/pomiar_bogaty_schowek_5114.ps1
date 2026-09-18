@@ -23,7 +23,7 @@ $frag=[Text.Encoding]::UTF8.GetString($bytes,$start,$end-$start)
 Check ($frag -match '<h1>.*?</h1>' -and $frag -match '<h2>.*?</h2>') 'HTML semantic headings'
 Check ($frag.Contains('href="https://example.org/test?q=1&amp;x=2"')) 'HTML hyperlink destination'
 Check ($frag.Contains('<ul>') -and ([regex]::Matches($frag,'<li>').Count -eq 2)) 'HTML list has two real items'
-Check ([Net.WebUtility]::HtmlDecode($frag).Contains('Żółty nagłówek') -and $frag.Contains('łączem') -and [Text.Encoding]::UTF8.GetString($bytes,$end,18) -eq '<!--EndFragment-->') 'UTF-8 clipboard byte offsets preserve Polish'
+Check ([Net.WebUtility]::HtmlDecode($frag).Contains('Żółty nagłówek') -and [Net.WebUtility]::HtmlDecode($frag).Contains('łączem') -and [Text.Encoding]::UTF8.GetString($bytes,$end,18) -eq '<!--EndFragment-->') 'UTF-8 clipboard byte offsets preserve Polish'
 [IO.File]::WriteAllText("C:\EdSharpBuild\rich-$Label-fragment.html",$frag,[Text.UTF8Encoding]::new($false))
 }
 "RESULT $Label : $pass PASS / $fail FAIL"

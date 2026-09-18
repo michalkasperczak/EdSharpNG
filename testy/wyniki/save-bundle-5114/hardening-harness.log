@@ -1,0 +1,9 @@
+PASS nonzero exit rejects even a nonempty valid document
+PASS failed process leaves destination intact
+PASS invalid DOCX content is rejected
+PASS invalid output leaves destination intact
+PASS real user's legacy quoted Pandoc export command works
+PASS actual Polish letters survive conversion
+PASS missing reference fix preserves spaces inside paths
+PASS temporary conversion files cleaned
+RESULT: 8 PASS / 0 FAIL

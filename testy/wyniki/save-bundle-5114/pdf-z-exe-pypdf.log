@@ -1,0 +1,19 @@
+plik: /mnt/c/EdSharpRegressionTest/build/QA formats Żółty/wynik Żółty raport.pdf
+stron: 1
+OK   tekst obecny: 'Żółty nagłówek'
+OK   tekst obecny: 'Zażółć gęślą jaźń'
+OK   tekst obecny: 'chleb'
+OK   tekst obecny: 'mleko'
+OK   /MarkInfo /Marked = True
+OK   /StructTreeRoot obecny
+typy struktur: Document, H1, L, LI, Lbl, Link, NonStruct, P
+OK   struktura H1 obecna
+OK   struktura L obecna
+OK   struktura LI obecna
+OK   struktura Link obecna
+OK   struktura P obecna
+adresy linkow: ['https://example.org/']
+OK   odnosnik zachowal adres
+jezyk dokumentu /Lang: 'pl-PL'
+---
+wszystko sie zgadza
