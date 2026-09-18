@@ -3251,6 +3251,22 @@ mExit.Invoke(null, null);
 catch {}
 } // ExitMenuKeyboardMode method
 
+// WPIS KONWERSJI Z USTAWIEN, GOTOWY DO URUCHOMIENIA.
+//
+// Czyta sekcje [Export] z EdSharp.ini - te same klucze, z ktorych korzysta
+// Export Format (Alt+Shift+E), wiec Zapisz jako i Eksport nie rozjada sie po
+// jakiejs przyszlej zmianie wpisu.
+//
+// NaprawSciezkeNarzedzia JEST TU OBOWIAZKOWE: wpisy wskazuja
+// %ProgDir%\Convert\..., a przy instalacji w Program Files narzedzia leza w
+// profilu uzytkownika.  Bez tej poprawki konwersja pada mimo obecnego Pandoca
+// (Skladniki.cs, wiersz 417).
+private static string CzytajWpisEksportu(string sKlucz) {
+string sCmd = App.ReadValue("Export", sKlucz, "");
+if (sCmd.Length == 0) return "";
+return Skladniki.NaprawSciezkeNarzedzia(sCmd);
+} // CzytajWpisEksportu method
+
 public void menuItem_Click(object sender, EventArgs e) {
 //Util.Beep();
 HomerRichTextBox rtb = null;
@@ -3473,8 +3489,50 @@ if ((menuItem == menuFileSave) || (menuItem == menuFileSaveAs)) {
 sFile = child.File;
 if ((menuItem == menuFileSave) && sFile.Contains(@"\")) sText = "";//AddMessage("Save");
 else {
-sFile = Dialog.SaveFile("", sFile);
+// ZAPISZ JAKO MA NAPRAWDE ZMIENIAC FORMAT, A NIE SAMA NAZWE.
+//
+// Zgloszenie MK 18.09.2026 (docs/UWAGI-MK-18.09.2026.md, wiersz 273):
+// "Mam otwarty jakis plik, naciskam Control+Shift+S (...) i mam do wyboru
+// rozne formaty".  Do tej pory Zapisz jako bralo nazwe z okna i wolalo
+// child.SaveTextOrRtfFile, czyli wpisywalo TRESC KONTROLKI bajt w bajt.
+// Nazwanie pliku "artykul.docx" dawalo plik z Markdownem w srodku - Word
+// takiego pliku nie otwiera, bo prawdziwy .docx to archiwum ZIP.
+// Zmierzone (testy/harness_zapis_formatow.cs, punkt 0): plik po starej
+// drodze NIE ma naglowka PK i zawiera surowe "# Naglowek".
+string sFilter = "";
+string sExtZrodla = Path.GetExtension(child.File).ToLower().TrimStart('.');
+if (!Util.Equiv(Path.GetExtension(child.File), ".rtf"))
+sFilter = ZapisFormatow.BudujFiltr(sExtZrodla, CzytajWpisEksportu);
+sFile = Dialog.SaveFile("", sFile, sFilter);
 if (sFile.Length == 0) return;
+
+// KONWERSJA TYLKO WTEDY, GDY UZYTKOWNIK NAPRAWDE WYBRAL INNY FORMAT I
+// GDY MAMY CZYM KONWERTOWAC.  W kazdym innym przypadku idzie stara droga,
+// co do bajta - dodatek nie ma prawa zepsuc zapisu, ktory dzialal.
+string sExtCelu = Path.GetExtension(sFile).ToLower().TrimStart('.');
+if (ZapisFormatow.WymagaKonwersji(sExtZrodla, sExtCelu, CzytajWpisEksportu)) {
+WynikZapisu wyn = ZapisFormatow.Konwertuj(
+rtb.Text, sExtZrodla, sFile,
+CzytajWpisEksportu,
+Util.ExpandCommandLine,
+Util.RunHideWait,
+Skladniki.BrakujaceDlaPolecenia);
+
+if (!wyn.Udane) {
+// NIE MELDUJEMY SUKCESU, KTOREGO NIE BYLO, I NIE RUSZAMY BUFORA.
+// Plik na dysku zostal taki, jaki byl (harness punkt 3), a dokument
+// w oknie dalej jest tym Markdownem, ktory uzytkownik pisal.
+Dialog.Show("Save As", wyn.Powod);
+return;
+}
+
+// BUFOR EDYCJI ZOSTAJE PRZY ZRODLE.  Po wyeksportowaniu do .docx dalej
+// redagujemy Markdowna - gdybysmy przestawili child.File na .docx, to
+// nastepne Control+S nadpisaloby dokument Worda trescia kontrolki,
+// czyli dokladnie tym bledem, ktory tu naprawiamy.
+AddMessage("Saved as " + sExtCelu.ToUpper());
+return;
+}
 }
 
 //Dialog.Show(sFile);
@@ -19177,6 +19235,15 @@ return sReturn;
 } // OpenFile method
 
 public static string SaveFile(string sTitle, string sPath) {
+return SaveFile(sTitle, sPath, "");
+} // SaveFile method
+
+// PRZECIAZENIE Z WLASNYM FILTREM.  Stare wywolania (dwa argumenty) ida dalej
+// dokladnie ta sama droga co przedtem - filtr pusty znaczy "filtr jak byl".
+// Dzieki temu nowy Zapisz jako moze pokazac liste formatow, ktore program
+// UMIE przekonwertowac, nie ruszajac zadnego z pozostalych miejsc, ktore
+// wolaja Dialog.SaveFile (jest ich kilkanascie).
+public static string SaveFile(string sTitle, string sPath, string sFilterOverride) {
 string sReturn = "";
 string sDir;
 
@@ -19194,6 +19261,7 @@ string sFilter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|Rich Text Format 
 // FILTR "pliki biezacego kompilatora" USUNIETY 16.09.2026: bral nazwe z
 // ustawienia Compiler, ktore mogl zmienic tylko usuniety Pick Compiler, wiec
 // warunek byl od tej pory zawsze falszywy - martwy kod.
+if (sFilterOverride != null && sFilterOverride.Length > 0) sFilter = sFilterOverride;
 dlg.Filter = sFilter;
 dlg.FilterIndex = 1;
 dlg.CheckPathExists = true;
