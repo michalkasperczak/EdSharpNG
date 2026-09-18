@@ -1,0 +1,42 @@
+{
+  "release_id": 391602227,
+  "url": "https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.114",
+  "tag": "v5.0.114",
+  "draft": false,
+  "prerelease": false,
+  "assets": [
+    {
+      "name": "EdSharpNG_5.0.114.zip",
+      "bytes": 2086299,
+      "digest": "sha256:1b48c23f84397b66d5c480a2ecc3f7afbfe13f98a625f48c5aba6ac917ff44b3",
+      "id": 572951453
+    },
+    {
+      "name": "EdSharpNG_Setup_5.0.114.exe",
+      "bytes": 3549443,
+      "digest": "sha256:87d8b63ab19f70313104f946f96b8f6fab4726d9ef926e3da4e9bd47640b34a4",
+      "id": 572951459
+    }
+  ],
+  "delivered_installer": "D:\\Projekty Codex\\Hermes\\EdSharpNG_Setup_5.0.114.exe",
+  "remote_readback_sha256": "87D8B63AB19F70313104F946F96B8F6FAB4726D9EF926E3DA4E9BD47640B34A4",
+  "archived_installers": [
+    "EdSharpNG_Setup_5.0.112.exe",
+    "EdSharpNG_Setup_5.0.113.exe"
+  ],
+  "installed_on_user_main_computer_by_this_session": false,
+  "downloaded_from_github": [
+    {
+      "name": "EdSharpNG_Setup_5.0.114.exe",
+      "bytes": 3549443,
+      "sha256": "87D8B63AB19F70313104F946F96B8F6FAB4726D9EF926E3DA4E9BD47640B34A4",
+      "matches_local_and_release": true
+    },
+    {
+      "name": "EdSharpNG_5.0.114.zip",
+      "bytes": 2086299,
+      "sha256": "1B48C23F84397B66D5C480A2ECC3F7AFBFE13F98A625F48C5ABA6AC917FF44B3",
+      "matches_local_and_release": true
+    }
+  ]
+}

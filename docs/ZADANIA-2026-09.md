@@ -48,7 +48,11 @@ Dowody: `testy/wyniki/original-integration-5114.log`,
 `testy/wyniki/original-live-nvda-5114.json`.
 Przegląd domknięty: naprawiono izolację okien odzysku i zachowanie nieodczytanych
 kopii (5 kontroli przed poprawką zawodziło), zapis snippetu i stan po zapisie
-do oryginału. Rozszerzony zestaw integracji: 107/107. Trwa końcowy build wydania.
+do oryginału. Rozszerzony zestaw integracji: 107/107. Wydano v5.0.114 na GitHubie
+(instalator i ZIP), instalator i opis zmian są na głównym komputerze w
+D:\Projekty Codex\Hermes. Starsze 5.0.112 i 5.0.113 przeniesiono do
+kosz-2026-09-18. Próba instalacji i uruchomienia wykonana na Hermesie;
+na głównym komputerze w tej sesji nie uruchamiano instalatora.
 Nie obiecywać bezstratnej edycji dowolnego DOCX.
 
 Próba Pandoca zachowała tekst i nagłówek, lecz utraciła kolor, rozmiar czcionki

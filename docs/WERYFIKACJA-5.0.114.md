@@ -1,6 +1,10 @@
 # Weryfikacja poprawek 5.0.114 — 18.09.2026
 
-Status: kandydat do wydania, jeszcze nie opublikowany.
+Status: opublikowano v5.0.114 z instalatorem i ZIP-em. Instalator i opis zmian
+dostarczono na główny komputer. Sprawdzono sumy zgłoszone przez GitHub API
+oraz ponowny odczyt instalatora u odbiorcy. Oba pliki pobrane z GitHuba mają
+identyczne SHA-256 i rozmiary jak lokalne; ZIP przeszedł kontrolę CRC.
+Nie instalowano na głównym komputerze.
 
 ## Kopiowanie całego zaznaczenia
 
