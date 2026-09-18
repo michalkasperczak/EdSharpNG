@@ -1696,8 +1696,18 @@ menuNavigateGoToStartOfSelection = CreateMenuItem("Go to Start of Selection", "A
 // sprawdzone w CreateMenuItem ORAZ w handlerach, bo sam Hotkeys.ini klamie.
 menuNavigateNextEmphasis = CreateMenuItem("Next Emphasis", "Control+OemQuestion", menuItem_Click, "child silent");
 menuNavigatePriorEmphasis = CreateMenuItem("Prior Emphasis", "Control+Shift+OemQuestion", menuItem_Click, "child silent");
-menuNavigateNextList = CreateMenuItem("Next List", "Control+OemMinus", menuItem_Click, "child silent");
-menuNavigatePriorList = CreateMenuItem("Prior List", "Control+Shift+OemMinus", menuItem_Click, "child silent");
+// SKOK PO LISTACH NA ALT+MYSLNIK (18.09.2026, zgloszenie MK: "I jeszcze zniklo
+// Alt-minus alt-shift-minus nawigacja po listach").  Komenda NIE zniknela -
+// siedziala na CONTROL+mysl niku, bo tak ja tu kiedys wpisalem, nie mowiac mu o
+// zmianie modyfikatora.  Skoro pamiec uzytkownika mowi Alt, to Alt jest
+// wlasciwym miejscem: on tych klawiszy uzywa, ja tylko o nich pisze.
+//
+// Alt+myslnik BYL wolny, mimo wpisu "Font=Alt+OemMinus" w sekcji [Keys] pliku
+// EdSharp.ini: ta sekcja NIE JEST JUZ CZYTANA (przypisania siedza w kodzie,
+// zmierzone przy pomiarze Control+Alt+X 13.09.2026), a komendy "Font" w kodzie
+// nie ma wcale.  Wpis w ini to martwy opis, nie zajety klawisz.
+menuNavigateNextList = CreateMenuItem("Next List", "Alt+OemMinus", menuItem_Click, "child silent");
+menuNavigatePriorList = CreateMenuItem("Prior List", "Alt+Shift+OemMinus", menuItem_Click, "child silent");
 menuNavigateLinkList = CreateMenuItem("Link List ...", "Control+F6", menuItem_Click, "child silent");
 // SKOK PO ODNOSNIKACH (ustalenie edsharpng-36, jego decyzja z 30.08.2026):
 // "Skok po linkach na Alt+PageUp i Alt+PageDown, skok po komentarzach na
@@ -1748,7 +1758,12 @@ menuMisc = CreateMenu("&Misc");
 // schowka, ktore o ten wlasnie chord poprosil.  Chord byl wolny: jedyne
 // wystapienie przecinka w mapie klawiszy to Control+Shift+Oemcomma (Start Tag).
 menuMiscConfigurationOptions = CreateMenuItem("Configuration Options ...", "Control+Oemcomma", menuItem_Click, "frame silent");
-menuMiscManualOptions = CreateMenuItem("Manual Options", "Alt+Shift+M", menuItem_Click, "frame silent");
+// ALT+SHIFT+M ZWOLNIONY (18.09.2026, MK: "Tylko z menu. alt-Shift-m niech
+// zostanie wolny.").  Komenda ZOSTAJE - znika sam klawisz.  Reczna edycja
+// pliku ustawien to czynnosc robiona raz na miesiac, a klawisz z dwoma
+// modyfikatorami na literze jest zasobem rzadkim; MK woli go miec wolnego.
+// Do tego samego miejsca prowadzi przycisk "Edit file" w oknie ustawien.
+menuMiscManualOptions = CreateMenuItem("Manual Options", "", menuItem_Click, "frame silent");
 // CIAGLOSC PRACY - WLASNE OKNO USTAWIEN OBOK Configuration Options.
 //
 // Jego polecenie z 12.09.2026: "Ja w ogole nie chcialbym zeby cokolwiek tam
@@ -2380,6 +2395,31 @@ this.KeyIndex = iIndex;
 //Clipboard.SetText(Clipboard.GetText() + keyData.ToString() + "\r\n");
 // Util.Say("Repeat " + this.KeyRepeat);
 
+// WOLNY ALT+ZNAK NIE MOZE WPADAC W MENU (18.09.2026, MK: "Walt-[ i chyba
+// alt-( wyskakuje menu File i to znowu tak, jak juz kiedys mowilismy ze po tym
+// to menu trudno zamknac.  Naciskasz ESCAPE menu znika niby jestes w tekscie
+// ale pod strzalkami masz dalej elementy menu").
+//
+// PRZYCZYNA: Infer Indent siedzi na Alt+PRAWY nawias, a Alt+LEWY nawias
+// zostal wolny po usunieciu PyDent (5.0.111).  Windows traktuje wolny
+// Alt+znak jako wejscie do paska menu i zostawia fokus w stanie, z ktorego
+// Escape nie wyprowadza - dla czytnika ekranu to pulapka, bo program brzmi
+// jakby byl w tekscie, a strzalki chodza po menu.
+//
+// ZJADAMY TYLKO NAWIAS KWADRATOWY, nie caly Alt: kazdy inny Alt+znak albo ma
+// komende, albo jest swiadomie wolny i ma prawo otwierac menu.  Zjadanie
+// calego Alta zabraloby Alt+F (menu File) i Alt+litere w oknach.
+//
+// ALT+9 TU NIE WCHODZI, choc MK wspomnial "alt-(": Alt+9 OTWIERA DZIEWIATY
+// PLIK NUMEROWANY (HandleFileSlotKey ponizej), wiec zjedzenie go zabraloby
+// dzialajaca funkcje.  Nawias okragly to Alt+SHIFT+9 - inny chord, ktorego ten
+// warunek nie dotyczy, bo wymaga braku Shifta.  Gdyby Alt+Shift+9 tez
+// wpadal w menu, trzeba to zmierzyc OSOBNO, a nie domyslic sie tutaj.
+{
+Keys kBezMod = keyData & Keys.KeyCode;
+bool bSamAlt = (keyData & (Keys.Control | Keys.Shift)) == 0 && (keyData & Keys.Alt) == Keys.Alt;
+if (bSamAlt && kBezMod == Keys.OemOpenBrackets) return true;
+}
 if (HandleFileSlotKey(keyData)) return true;
 if (HandleSpellingWordMenuKey(keyData)) return true;
 if (HandleWindowNumberKey(keyData)) return true;
@@ -6506,7 +6546,11 @@ ExplorerFolder(sDir);
 
 if (menuItem == menuMiscEvaluateExpression) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+// SLOWO "Line" USUNIETE (18.09.2026, MK: "Tylko czyta Evaluate Line
+// Expression. Chyba bez sensu to.").  Liczenie biezacego wiersza to
+// przypadek DOMYSLNY - nazywanie go za kazdym razem opoznia wynik, po ktory
+// sie te komende wywoluje.  Slowo "Selected" przy zaznaczeniu ZOSTAJE, bo
+// tam niesie informacje: liczony jest fragment, nie caly wiersz.
 sText = rtb.RowText;
 iIndex = rtb.RowStart + sText.Length;
 }
@@ -6528,7 +6572,14 @@ if (sText.StartsWith("!")) {
 AddMessage(sText.Substring(1));
 return;
 }
-if (sText.Length == 0) return;
+// PUSTY WYNIK NIE MOZE BYC CISZA (18.09.2026, MK: "Kalkulator jesli jest a
+// nuie teksty, to powinien mowic, ze wpisz liczbe albo cos.").  Wiersz bez
+// liczb dawal milczenie, czyli to samo, co komenda nieistniejaca albo klawisz
+// nie dochodzacy do okna - uzytkownik niewidomy nie ma jak tego rozroznic.
+if (sText.Length == 0) {
+AddMessage("Nothing to calculate, type an expression like 2+2 in the line first");
+return;
+}
 
 sText = LB + sText;
 rtb.ReplaceRange(iIndex, iIndex, sText);
@@ -9535,7 +9586,15 @@ foreach (object o in menu.DropDownItems) {
 ToolStripMenuItem item = o as ToolStripMenuItem;
 if (item == null) continue;
 if (item == menuHelpAlternateMenu) continue;
-if (item == menuHelpCommandPalette) continue;   // nie wypisuj samej palety
+// SAMA PALETA ZOSTAJE NA LISCIE (18.09.2026).  Do dzis byla pomijana jako
+// "po co wypisywac siebie" - i to wlasnie wywolalo zgloszenie MK o Enterze,
+// ktory "nic nie robi": czytal punkt o DWOCH przeniesionych skrotach (paleta
+// i samouczek) i szukal w palecie obu.  Samouczek znalazl, palety nie bylo,
+// a program nie powiedzial ani slowa - wiec wygladalo to jak zepsute
+// wykonywanie polecen, nie jak brak pozycji.
+// Pozycja jest uzyteczna takze sama w sobie: to jedyne miejsce, gdzie da sie
+// SPRAWDZIC aktualny skrot palety, gdy sie go zapomnialo.  Klikniecie jej
+// otwiera palete na nowo, co jest zachowaniem nieszkodliwym.
 if (item.IsMdiWindowListEntry) continue;
 if (!item.Enabled) continue;
 string[] aSummary = GetKeySummary(item);
@@ -15348,7 +15407,13 @@ return sLine;
 			// CHECKLISTA ZDEJMOWANA CALA, RAZEM Z POLEM STANU.  Bez tego Control+L na
 			// pozycji "- [ ] kupic chleb" usunelby sam punktor i zostawil w tekscie goly
 			// "[ ] kupic chleb" - nawiasy weszlyby w tresc dokumentu jako zwykle znaki.
-			if (Zadania.CzyZadanie(sLine)) sLine = Zadania.ZdejmijPole(sLine);
+			//
+			// WZORZEC LUZNY, NIE CzyZadanie (18.09.2026, zgloszenie MK).  CzyZadanie
+			// odpowiada na pytanie "czy to zadanie do przelaczania i liczenia postepu" i
+			// slusznie odrzuca "- [-] tekst", "- [ ]tekst" oraz "1. [ ] tekst".  Tutaj
+			// pytanie jest inne: "czy zostanie goly nawias, gdy zdejme znacznik" - i na
+			// tych trzech wejsciach zostawal (zmierzone: pomiar_ctrl_l_warianty.ps1).
+			sLine = Zadania.ZdejmijPoleLuzne(sLine);
 			if (bAllBulleted) {
 			// Remove bullet marker, keep indentation.
 			aLines[i] = MarkdownBulletPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
@@ -15825,8 +15890,9 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 			}
 
 			// Jak przy Control+L: pole stanu schodzi razem ze znacznikiem, zeby nawiasy
-			// nie zostaly w tresci wiersza.
-			if (Zadania.CzyZadanie(sLine)) sLine = Zadania.ZdejmijPole(sLine);
+			// nie zostaly w tresci wiersza - wzorcem LUZNYM, z tego samego powodu
+			// (opis przy ToggleBulletListShortcut).
+			sLine = Zadania.ZdejmijPoleLuzne(sLine);
 			if (bAllNumbered2) {
 			aLines[i] = MarkdownNumberPrefixRegex.Replace(sLine, "${indent}", 1) + (bCR ? "\r" : "");
 			}
@@ -19294,7 +19360,14 @@ lst.KeyDown += delegate(object oSender, KeyEventArgs ev) {
 if (ev.KeyData != Keys.Enter) return;
 ev.Handled = true; ev.SuppressKeyPress = true;
 int i = lst.SelectedIndex;
-if (i < 0 || i >= lMap.Count) return;
+// CISZA PO ENTERZE JEST NIE DO ODROZNIENIA OD ZEPSUTEJ PALETY (18.09.2026).
+// MK zglosil "jak nacisniesz enter, nie wykonuje sie nic, jak by paleta do
+// nich nie doszla" - pomiar pokazal, ze paleta URUCHAMIA polecenia (testy/
+// pomiar_paleta_enter.ps1 3/3, pomiar_paleta_okna.ps1 2/2).  Zawodzil
+// przypadek, w ktorym nie ma czego uruchomic: program milczal, a uzytkownik
+// niewidomy nie ma jak odgadnac, czy polecenie sie wykonalo bez efektu, czy
+// wcale go nie ma na liscie.
+if (i < 0 || i >= lMap.Count) { Say.sayForced("Nothing selected"); return; }
 iResult = lMap[i];
 dlg.form.DialogResult = DialogResult.OK;
 dlg.form.Close();

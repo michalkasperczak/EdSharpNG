@@ -39,6 +39,30 @@ public static readonly Regex PrefiksRegex = new Regex(
 	@"^(?<indent>[ \t]*)(?<marker>[-*+])[ \t]+\[(?<state>[ xX])\](?:[ \t]+|(?=$))",
 	RegexOptions.CultureInvariant);
 
+// POLE WYBORU ROZPOZNAWANE LUZNO - DO ZDEJMOWANIA LISTY (Control+L,
+// Control+Shift+L).  Osobny wzorzec od PrefiksRegex i tak ma zostac.
+//
+// DLACZEGO OSOBNY, a nie poszerzony PrefiksRegex: tamten mowi, co program
+// UWAZA ZA ZADANIE - przelacza stan, liczy postep, wypisuje w oknie zadan.
+// Tam waskosc jest zaleta: "[-]" nie jest ani zrobione, ani niezrobione, a
+// "1. [ ]" nie jest checklista Markdown.  Tu pytanie jest INNE i slabsze:
+// "czy w tym wierszu jest cos, co po zdjeciu punktora zostanie golym
+// nawiasem w tresci".  Na to trzeba odpowiadac szerzej.
+//
+// ZMIERZONE (testy/pomiar_ctrl_l_warianty.ps1, 5.0.113) - zgloszenie MK
+// 18.09.2026 "usuwa wtedy nawiasy kwadratowe pozostawiajac znaki - i cyfry z
+// listy" NIE odtwarzalo sie na "- [ ] tekst", ale odtworzylo sie na trzech
+// wejsciach pokrewnych, ktore wypadaly z waskiego wzorca:
+//   "- [-] kupic chleb"   -> zostawalo "[-] kupic chleb"
+//   "- [ ]kupic chleb"    -> zostawalo "[ ]kupic chleb"
+//   "1. [ ] kupic chleb"  -> zostawalo "- [ ] kupic chleb"
+// Roznice: znak stanu inny niz spacja/x/X, brak spacji po nawiasie,
+// znacznik numerowany zamiast punktora.  Dlatego tu: znacznik ALBO punktor
+// ALBO numer, znak stanu DOWOLNY (takze zaden), spacja po nawiasie NIEobowiazkowa.
+public static readonly Regex PoleLuzneRegex = new Regex(
+	@"^(?<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+\[[^\]\r\n]?\][ \t]*",
+	RegexOptions.CultureInvariant);
+
 // Zwykly punktor - taki sam wzorzec, jaki ma EdSharp.cs.  Powtorzony tutaj,
 // zeby ten plik dawal sie skompilowac i zmierzyc SAM.
 private static readonly Regex PunktorRegex = new Regex(@"^(?<indent>[ \t]*)(?<marker>[-*+])[ \t]+", RegexOptions.CultureInvariant);
@@ -145,6 +169,20 @@ public static string DodajPole(string sLine) {
 // ZDJECIE POLA.  Wraca do TEKSTU ZWYKLEGO, nie do punktora - taka sama
 // zasada, jaka Kasperczak ustalil 31.08.2026 dla Control+L: powrot idzie do
 // zwyklego tekstu, a zamiana rodzaju listy to dwa nacisniecia.
+// ZDJECIE ZNACZNIKA RAZEM Z POLEM, WERSJA LUZNA - uzywana przez Control+L i
+// Control+Shift+L.  Gdy wiersz nie ma pola wyboru, wraca bez zmian i decyzje
+// podejmuje dalej sam kod listy.
+public static string ZdejmijPoleLuzne(string sLine) {
+	if (sLine == null) return null;
+	bool bCr = sLine.EndsWith("\r");
+	string s = bCr ? sLine.Substring(0, sLine.Length - 1) : sLine;
+
+	Match m = PoleLuzneRegex.Match(s);
+	if (!m.Success) return sLine;
+	string sNowy = m.Groups["indent"].Value + s.Substring(m.Index + m.Length);
+	return bCr ? sNowy + "\r" : sNowy;
+} // ZdejmijPoleLuzne method
+
 public static string ZdejmijPole(string sLine) {
 	if (sLine == null) return null;
 	bool bCr = sLine.EndsWith("\r");
