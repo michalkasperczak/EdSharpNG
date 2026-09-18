@@ -30,6 +30,24 @@
 // Dlatego podmiana idzie przez File.Replace z KOPIA ZAPASOWA: plik, ktory
 // naprawde zostal zastapiony, laduje w .edsharp-backups i jest odzyskiwalny.
 //
+// GDZIE JEST PUNKT BEZ POWROTU.  File.Replace jest granica: PRZED nia kazde
+// wyjscie bledem zostawia dysk nietkniety, PO niej dokument jest juz
+// podmieniony i wycofac sie nie da.  Dlatego zaraz po udanym File.Replace
+// oddajemy sciezke kopii i odswiezamy odcisk, JESZCZE PRZED koncowymi
+// sprawdzeniami - one moga tylko dodac ostrzezenie (zwrot false z powodem), ale
+// nigdy nie udaja, ze zapisu nie bylo.  Inaczej uzytkownik nie mialby jak
+// wrocic do poprzedniej wersji, a stary odcisk blokowalby mu nastepny zapis
+// falszywym "plik zmienil sie poza edytorem".
+//
+// ODCISK NOWEJ TRESCI POCHODZI Z PLIKU PRZEJSCIOWEGO, nie z oryginalu po
+// podmianie: czytanie po File.Replace przyjeloby za nasza tresc cudzy zapis,
+// ktory wszedl w te szpare, i przy nastepnym Control+S cicho nadpisalibysmy
+// cudza prace.
+//
+// NAZWA KOPII JEST REZERWOWANA ATOMOWO (FileMode.CreateNew), bo samo
+// sprawdzenie File.Exists pozwalaloby dwom rownoleglym zapisom wybrac to samo
+// "-001" - drugi File.Replace skasowalby kopie pierwszego.
+//
 // ZALEZNOSCI.  Zaden odnosnik do App, Util, Ini, Dialog ani WinForms - stad
 // mierzalne osobnym programem (testy/harness_zapis_oryginalu.cs).
 
@@ -38,6 +56,7 @@ using System.Globalization;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
+using System.Threading;
 
 namespace EdSharp {
 
@@ -146,6 +165,20 @@ sBlad = "Konwerter nie utworzyl pliku.";
 return false;
 }
 
+// ODCISK NOWEJ TRESCI LICZYMY TERAZ, Z PLIKU PRZEJSCIOWEGO - NIE PO PODMIANIE.
+// Gdybysmy czytali go z oryginalu po File.Replace, w szpare miedzy podmiana a
+// odczytem moglby wejsc cudzy zapis i przyjelibysmy JEGO bajty za wlasne; przy
+// nastepnym Control+S straz "plik zmienil sie poza edytorem" juz by nie
+// zadzialala i cicho nadpisalibysmy cudza prace.  Tresc pliku przejsciowego to
+// dokladnie to, co za chwile znajdzie sie w oryginale.
+string sNowyOdcisk;
+try { sNowyOdcisk = SumaKontrolna(sStage); }
+catch (Exception ex) {
+Sprzataj(sStage);
+sBlad = "Nie moge odczytac wyniku konwersji: " + ex.Message;
+return false;
+}
+
 // KONTROLA PO KONWERSJI.  Konwerter dziala sekundy - w tym czasie plik mogl
 // zostac zmieniony.  Wtedy oryginalu NIE RUSZAMY.
 try {
@@ -171,7 +204,26 @@ Sprzataj(sStage);
 sBlad = "Nie moge utworzyc katalogu kopii zapasowych: " + ex.Message;
 return false;
 }
-string sKopia = WolnaNazwaKopii(sKopie, sBase, sExt);
+
+// WYBOR NAZWY KOPII I PODMIANA MUSZA BYC JEDNA CALOSCIA, WYLACZNA W SKALI
+// SYSTEMU.  Zmierzone sonda na File.Replace: dwa rownolegle Replace na tym
+// samym oryginale potrafia OBA zglosic sukces, a mimo to jedna z kopii
+// zapasowych zostaje skasowana - ginie wersja dokumentu, dla ktorej robimy
+// kopie.  Sama rezerwacja nazwy tego nie zamyka (wyscig jest w systemie
+// plikow, nie w wyborze nazwy), dlatego bierzemy nazwany muteks - dziala tez
+// miedzy DWOMA INSTANCJAMI edytora, nie tylko miedzy watkami.
+string sKopia = "";
+Mutex mtx = null;
+bool bMam = false;
+try {
+try {
+mtx = new Mutex(false, NazwaMuteksu(sOrig));
+try { bMam = mtx.WaitOne(30000); }
+catch (AbandonedMutexException) { bMam = true; }   // poprzednik padl - wchodzimy
+}
+catch (Exception) { mtx = null; bMam = false; }     // brak muteksu nie moze blokowac zapisu
+
+sKopia = WolnaNazwaKopii(sKopie, sBase, sExt);
 if (String.IsNullOrEmpty(sKopia)) {
 Sprzataj(sStage);
 sBlad = "Nie moge wybrac nazwy kopii zapasowej.";
@@ -185,33 +237,75 @@ File.Replace(sStage, sOrig, sKopia, true);
 }
 catch (Exception ex) {
 Sprzataj(sStage);
+Sprzataj(sKopia);              // zwalniamy zarezerwowana nazwe - podmiany nie bylo
 sBlad = "Nie moge podmienic pliku zrodlowego: " + ex.Message;
 return false;
 }
 
-// Po podmianie oryginal musi istniec i miec tresc, a kopia musi byc na dysku.
+// SPRAWDZENIE POD MUTEKSEM: kopia MUSI istniec i miec tresc.  Zmierzone: przy
+// rownoleglym Replace kopia potrafi zniknac, choc Replace zglosil sukces.
+long iKopia = -1;
+try { if (File.Exists(sKopia)) iKopia = new FileInfo(sKopia).Length; } catch {}
+if (iKopia <= 0) {
+sBackupPath = "";
+link.Fingerprint = sNowyOdcisk;      // dokument JEST podmieniony - odcisk musi to opisywac
+Sprzataj(sStage);
+sBlad = "Plik zostal podmieniony, ale kopia zapasowa nie powstala - rownolegly zapis tego samego pliku.";
+return false;
+}
+}
+finally {
+if (mtx != null) { try { if (bMam) mtx.ReleaseMutex(); } catch {} try { mtx.Close(); } catch {} }
+}
+
+// OD TEJ LINII PODMIANA JEST FAKTEM: oryginal ma nowa tresc, a stara lezy w
+// kopii.  Dlatego od tego miejsca NIE WOLNO zwracac "nie zapisano" bez oddania
+// sciezki kopii i bez odswiezenia odcisku - inaczej wolajacy nie wie, ze
+// dokument juz sie zmienil, nie ma jak wrocic do poprzedniej wersji, a stary
+// odcisk kazalby przy nastepnym zapisie skłamać, ze "ktos zmienil plik poza
+// edytorem", i zablokowalby zapis WLASNEJ pracy uzytkownika.
+sBackupPath = sKopia;
+link.Fingerprint = sNowyOdcisk;
+Sprzataj(sStage);              // File.Replace zwykle je usuwa; na wszelki wypadek
+
+// Sprawdzenia po podmianie sa OSTRZEZENIEM, nie wycofaniem - wycofac sie juz
+// nie da.  Zwracamy false tylko po to, zeby wolajacy powiedzial o klopocie;
+// sBackupPath i odcisk sa juz ustawione powyzej.
 long iNowy = -1;
 try { if (File.Exists(sOrig)) iNowy = new FileInfo(sOrig).Length; } catch {}
-if (iNowy <= 0) { sBlad = "Po podmianie plik zrodlowy jest pusty."; return false; }
-if (!File.Exists(sKopia)) { sBlad = "Kopia zapasowa nie powstala."; return false; }
+if (iNowy <= 0) { sBlad = "Po podmianie plik zrodlowy jest pusty. Poprzednia wersja jest w kopii zapasowej."; return false; }
 
-// ODCISK ODSWIEZAMY DOPIERO TERAZ.  Wczesniejsza aktualizacja przy nieudanym
-// zapisie kazalaby nam uwierzyc, ze znamy plik, ktorego nie zapisalismy.
-try { link.Fingerprint = SumaKontrolna(sOrig); }
-catch (Exception ex) { sBlad = "Zapis udal sie, ale nie moge odczytac nowego odcisku: " + ex.Message; return false; }
-
-Sprzataj(sStage);              // File.Replace zwykle je usuwa; na wszelki wypadek
-sBackupPath = sKopia;
 return true;
 }
 
-// Kolejna wolna nazwa kopii: "raport-001.docx".  Rozszerzenie zostaje, zeby
-// kopie dalo sie otworzyc dwuklikiem, a numer rosnie - stara wersja nigdy nie
-// jest nadpisywana przez nowsza.
+// Nazwa muteksu wspolna dla WSZYSTKICH procesow piszacych ten sam plik.
+// Sciezka jest nieporownywalna wielkoscia liter na Windows, wiec normalizujemy;
+// znaki niedozwolone w nazwie obiektu jadra zastepuje odcisk sciezki.
+static string NazwaMuteksu(string sOrig) {
+string sKlucz = sOrig.ToLowerInvariant();
+StringBuilder sb = new StringBuilder("Local\\EdSharpOriginalSave-");
+using (SHA256 alg = SHA256.Create()) {
+byte[] a = alg.ComputeHash(Encoding.UTF8.GetBytes(sKlucz));
+for (int i = 0; i < 16; i++) sb.Append(a[i].ToString("x2", CultureInfo.InvariantCulture));
+}
+return sb.ToString();
+}
+
+// Rezerwacja nazwy kopii: nazwa jest nie tylko WOLNA, ale od razu ZAJETA
+// pustym plikiem utworzonym atomowo (CreateNew).  Bez tego dwa rownolegle
+// zapisy tego samego dokumentu (dwie instancje edytora) wybieraja to samo
+// "-001", a drugi File.Replace KASUJE kopie pierwszego - ginie dokladnie ta
+// wersja, dla ktorej kopie robimy.  File.Replace nadpisuje ten pusty plik
+// stara trescia oryginalu.
 static string WolnaNazwaKopii(string sKatalog, string sBase, string sExt) {
 for (int i = 1; i <= 9999; i++) {
 string s = Path.Combine(sKatalog, sBase + "-" + i.ToString("000", CultureInfo.InvariantCulture) + sExt);
-if (!File.Exists(s)) return s;
+try {
+using (new FileStream(s, FileMode.CreateNew, FileAccess.Write, FileShare.None)) {}
+return s;
+}
+catch (IOException) { continue; }          // ktos wlasnie zajal te nazwe
+catch (UnauthorizedAccessException) { return ""; }
 }
 return "";
 }

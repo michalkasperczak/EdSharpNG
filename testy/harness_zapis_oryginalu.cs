@@ -92,7 +92,12 @@ return s;
 }
 
 public static int Main() {
-sPraca = Path.Combine(sKat, "praca-" + DateTime.Now.ToString("HHmmss"));
+// KATALOG POMIARU MUSI BYC UNIKALNY.  Sam znacznik HHmmss nie wystarcza: dwa
+// przebiegi sondy w tej samej sekundzie trafialyby do tego samego katalogu i
+// dziedziczyly kopie zapasowe z poprzedniego przebiegu - punkty liczace kopie
+// (1, 9, 12, 13) padalyby "losowo", choc kod jest bez zmian.  To bylby blad
+// POMIARU podszywajacy sie pod blad programu.
+sPraca = Path.Combine(sKat, "praca-" + DateTime.Now.ToString("HHmmss") + "-" + Guid.NewGuid().ToString("N").Substring(0, 6));
 Directory.CreateDirectory(sPraca);
 W("== HARNESS ZAPISU DO FORMATU ZRODLOWEGO ==");
 W("katalog pomiaru: " + sPraca);
@@ -386,7 +391,121 @@ Sprawdz(!b3 && sBlad.Contains("Brak obslugi konwersji"), "brak wywolania zwrotne
 
 // --------------------------------------------------------------- punkt 11 ---
 W("");
-W("== 11. CALY KATALOG PO POMIARZE: ZERO SMIECI ==");
+W("== 11. ODCISK OPISUJE TRESC, KTORA SAMI ZAPISALISMY ==");
+// Odcisk NIE MOZE byc czytany z dysku po podmianie: miedzy File.Replace a takim
+// odczytem cudzy program moze zapisac swoje bajty i wtedy przyjelibysmy je za
+// wlasne - kolejny Control+S nadpisalby cudza prace bez ostrzezenia.  Odcisk ma
+// pochodzic z tresci, ktora POSZLA NA DYSK Z NASZEJ RECI.
+//
+// UCZCIWIE O SILE TEGO PUNKTU: w spokojnym przebiegu obie implementacje daja
+// ten sam wynik, wiec ten punkt jest STRAZNIKIEM REGRESJI, nie dowodem bledu.
+// Samego wyscigu nie da sie wygrac z zewnatrz (okno to mikrosekundy - proba
+// odtworzenia go watkiem pilnujacym pliku dala 0 trafien na 30 przebiegow).
+// Dlatego dodatkowo mierzymy to, co JEST deterministyczne: ze odcisk zgadza sie
+// bajt w bajt z wyjsciem konwertera, policzonym NIEZALEZNIE, obok transakcji.
+{
+string sDir = NowyKatalog("odcisk-z-naszej-tresci");
+string sOrig = ZrobZrodlo(sDir, "raport.docx", "wersja-0");
+OriginalDocumentLink link = OriginalFormatSave.Capture(sOrig);
+byte[] aNasze = Dokument("tresc-od-konwertera");
+string sOdciskWzorca = OriginalFormatSave.SumaKontrolna(Pomocniczy(sDir, aNasze));
+string sBlad, sKopia;
+bool b = OriginalFormatSave.TrySave(link, MD,
+delegate(string sMd, string sStage) {
+File.WriteAllBytes(sStage, aNasze);
+WynikZapisu w = new WynikZapisu(); w.Udane = true; return w;
+},
+out sBlad, out sKopia);
+Sprawdz(b, "zapis udal sie" + (b ? "" : "  [" + sBlad + "]"));
+Sprawdz(link.Fingerprint == sOdciskWzorca, "odcisk == SHA-256 WYJSCIA KONWERTERA policzonego niezaleznie");
+Sprawdz(!String.IsNullOrEmpty(sKopia) && Tresc(sKopia).Contains("wersja-0"), "kopia trzyma wersje sprzed podmiany");
+Sprawdz(Smieci(sDir) == 0, "brak plikow przejsciowych");
+}
+
+// --------------------------------------------------------------- punkt 12 ---
+W("");
+W("== 12. PODMIANA DOKONANA: NAWET GDY POTEM COS PADNIE, KOPIA JEST ZGLOSZONA ==");
+// Gdy File.Replace SIE UDAL, dokument uzytkownika jest juz nadpisany.  Jesli
+// pozniejsze sprawdzenie padnie (cudzy uchwyt na pliku), nie wolno zwrocic
+// samego "nie zapisano" bez sciezki kopii - uzytkownik nie mialby jak wrocic do
+// poprzedniej wersji, a stary odcisk w skojarzeniu kazalby przy nastepnym
+// zapisie skłamać, ze "ktos zmienil plik poza edytorem".
+//
+// Warunek deterministyczny: sprawdzamy, ze po UDANEJ podmianie sciezka kopii
+// jest zawsze wypelniona, a odcisk zawsze odswiezony - bez wzgledu na to, ktore
+// z koncowych sprawdzen przeszlo.  Wyscigu nie udajemy, ze go zmierzylismy.
+{
+string sDir = NowyKatalog("kopia-zawsze-zgloszona");
+string sOrig = ZrobZrodlo(sDir, "raport.docx", "wersja-0");
+OriginalDocumentLink link = OriginalFormatSave.Capture(sOrig);
+string sOdciskStary = link.Fingerprint;
+string sBlad, sKopia;
+bool b = OriginalFormatSave.TrySave(link, MD,
+delegate(string sMd, string sStage) {
+File.WriteAllBytes(sStage, Dokument("nowa"));
+WynikZapisu w = new WynikZapisu(); w.Udane = true; return w;
+},
+out sBlad, out sKopia);
+bool bPodmieniony = Tresc(sOrig).Contains("nowa");
+Sprawdz(bPodmieniony, "warunek pomiaru: podmiana doszla do skutku");
+Sprawdz(!String.IsNullOrEmpty(sKopia), "po dokonanej podmianie sciezka kopii JEST zwrocona (zwrot=" + b + ")");
+Sprawdz(link.Fingerprint != sOdciskStary, "po dokonanej podmianie odcisk NIE zostaje stary (brak falszywego alarmu przy nastepnym zapisie)");
+Sprawdz(Kopie(sDir).Length == 1 && Tresc(sKopia).Contains("wersja-0"), "kopia jest jedna i trzyma poprzednia wersje");
+}
+
+// --------------------------------------------------------------- punkt 13 ---
+W("");
+W("== 13. DWA ROWNOLEGLE ZAPISY TEGO SAMEGO PLIKU NIE NADPISUJA KOPII ==");
+// Nazwa kopii jest wybierana przez File.Exists, a UZYWANA dopiero w
+// File.Replace.  Dwa zapisy tego samego dokumentu (dwie instancje edytora, dwa
+// watki) wybieraja to samo "-001" i drugi KASUJE kopie pierwszego - ginie
+// dokladnie ta wersja, dla ktorej kopie robimy.
+{
+bool bBezNadpisan = true, bWersjaZerowaZyje = true;
+string sSzczegol = "";
+int iUdaneRazem = 0;
+for (int iter = 0; iter < 25; iter++) {
+string sDir = NowyKatalog("rownolegle-" + iter.ToString("00"));
+string sOrig = ZrobZrodlo(sDir, "raport.docx", "wersja-0");
+Barrier bar = new Barrier(2);
+Zapisywacz z1 = new Zapisywacz(OriginalFormatSave.Capture(sOrig), "A", bar);
+Zapisywacz z2 = new Zapisywacz(OriginalFormatSave.Capture(sOrig), "B", bar);
+Thread t1 = new Thread(z1.Uruchom); Thread t2 = new Thread(z2.Uruchom);
+t1.IsBackground = true; t2.IsBackground = true;
+t1.Start(); t2.Start(); t1.Join(15000); t2.Join(15000);
+
+int iUdane = (z1.bOk ? 1 : 0) + (z2.bOk ? 1 : 0);
+iUdaneRazem += iUdane;
+string[] aK = Kopie(sDir);
+if (aK.Length != iUdane) {
+bBezNadpisan = false;
+if (sSzczegol == "") {
+StringBuilder sbD = new StringBuilder();
+sbD.Append("iteracja " + iter + ": udanych zapisow " + iUdane + ", a kopii " + aK.Length);
+sbD.Append("; A: ok=" + z1.bOk + " kopia=" + (z1.sKopia == "" ? "-" : Path.GetFileName(z1.sKopia)) + " kopiaByla=" + z1.bKopiaByla + " blad=" + z1.sBlad);
+sbD.Append("; B: ok=" + z2.bOk + " kopia=" + (z2.sKopia == "" ? "-" : Path.GetFileName(z2.sKopia)) + " kopiaByla=" + z2.bKopiaByla + " blad=" + z2.sBlad);
+sbD.Append("; na dysku:");
+foreach (string k in aK) sbD.Append(" " + Path.GetFileName(k) + "(" + Tresc(k) + ")");
+sSzczegol = sbD.ToString();
+}
+}
+if (iUdane > 0) {
+bool bMa = false;
+foreach (string k in aK) if (Tresc(k).Contains("wersja-0")) bMa = true;
+if (!bMa) {
+bWersjaZerowaZyje = false;
+if (sSzczegol == "") sSzczegol = "iteracja " + iter + ": zadna kopia nie trzyma juz pierwotnej wersji-0";
+}
+}
+}
+Sprawdz(iUdaneRazem > 0, "rownolegle zapisy naprawde doszly do skutku (udanych: " + iUdaneRazem + ")");
+Sprawdz(bBezNadpisan, "kazdy udany zapis zostawil WLASNA kopie - zadna nie zostala nadpisana" + (bBezNadpisan ? "" : "  [" + sSzczegol + "]"));
+Sprawdz(bWersjaZerowaZyje, "pierwotna wersja dokumentu przetrwala w kopiach" + (bWersjaZerowaZyje ? "" : "  [" + sSzczegol + "]"));
+}
+
+// --------------------------------------------------------------- punkt 14 ---
+W("");
+W("== 14. CALY KATALOG PO POMIARZE: ZERO SMIECI ==");
 {
 int iSmieci = 0;
 List<string> aZnalezione = new List<string>();
@@ -411,5 +530,37 @@ WynikZapisu w = new WynikZapisu();
 w.Udane = true;
 w.PlikWynikowy = sStage;
 return w;
+}
+
+// Plik pomocniczy do policzenia odcisku ZNANEJ tresci (porownanie z odciskiem,
+// ktory transakcja zapisala w skojarzeniu).
+static string Pomocniczy(string sDir, byte[] a) {
+string s = Path.Combine(sDir, "wzorzec-" + Guid.NewGuid().ToString("N").Substring(0, 6) + ".bin");
+File.WriteAllBytes(s, a);
+return s;
+}
+
+// Jeden z dwoch rownoleglych zapisow tego samego dokumentu (dwie instancje
+// edytora).  Bariera zrownuje start, zeby oba trafily w to samo okno.
+public class Zapisywacz {
+OriginalDocumentLink link; string sZnacznik; Barrier bar;
+public volatile bool bOk = false;
+public volatile bool bKopiaByla = false;      // czy MOJA kopia istniala zaraz po MOIM zapisie
+public string sBlad = "", sKopia = "";
+public Zapisywacz(OriginalDocumentLink l, string s, Barrier b) { link = l; sZnacznik = s; bar = b; }
+public void Uruchom() {
+try { bar.SignalAndWait(5000); } catch {}
+string sB, sK;
+bool b = OriginalFormatSave.TrySave(link, MD + sZnacznik,
+delegate(string sMd, string sStage) {
+File.WriteAllBytes(sStage, Dokument("zapis-" + sZnacznik));
+WynikZapisu w = new WynikZapisu(); w.Udane = true; return w;
+},
+out sB, out sK);
+// Pomiar NATYCHMIAST po powrocie: odroznia "kopia nigdy nie powstala" od
+// "kopia powstala, a potem skasowal ja drugi watek".
+try { bKopiaByla = !String.IsNullOrEmpty(sK) && File.Exists(sK); } catch {}
+bOk = b; sBlad = sB; sKopia = sK;
+}
 }
 }
