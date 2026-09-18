@@ -39,29 +39,12 @@ public static readonly Regex PrefiksRegex = new Regex(
 	@"^(?<indent>[ \t]*)(?<marker>[-*+])[ \t]+\[(?<state>[ xX])\](?:[ \t]+|(?=$))",
 	RegexOptions.CultureInvariant);
 
-// POLE WYBORU ROZPOZNAWANE LUZNO - DO ZDEJMOWANIA LISTY (Control+L,
-// Control+Shift+L).  Osobny wzorzec od PrefiksRegex i tak ma zostac.
-//
-// DLACZEGO OSOBNY, a nie poszerzony PrefiksRegex: tamten mowi, co program
-// UWAZA ZA ZADANIE - przelacza stan, liczy postep, wypisuje w oknie zadan.
-// Tam waskosc jest zaleta: "[-]" nie jest ani zrobione, ani niezrobione, a
-// "1. [ ]" nie jest checklista Markdown.  Tu pytanie jest INNE i slabsze:
-// "czy w tym wierszu jest cos, co po zdjeciu punktora zostanie golym
-// nawiasem w tresci".  Na to trzeba odpowiadac szerzej.
-//
-// ZMIERZONE (testy/pomiar_ctrl_l_warianty.ps1, 5.0.113) - zgloszenie MK
-// 18.09.2026 "usuwa wtedy nawiasy kwadratowe pozostawiajac znaki - i cyfry z
-// listy" NIE odtwarzalo sie na "- [ ] tekst", ale odtworzylo sie na trzech
-// wejsciach pokrewnych, ktore wypadaly z waskiego wzorca:
-//   "- [-] kupic chleb"   -> zostawalo "[-] kupic chleb"
-//   "- [ ]kupic chleb"    -> zostawalo "[ ]kupic chleb"
-//   "1. [ ] kupic chleb"  -> zostawalo "- [ ] kupic chleb"
-// Roznice: znak stanu inny niz spacja/x/X, brak spacji po nawiasie,
-// znacznik numerowany zamiast punktora.  Dlatego tu: znacznik ALBO punktor
-// ALBO numer, znak stanu DOWOLNY (takze zaden), spacja po nawiasie NIEobowiazkowa.
+// Tolerant removal is only for checkbox-like prefixes. Never consume a
+// single-letter link label, an empty label, or a reference-link/definition.
+// The progress/toggle parser above deliberately remains strict.
 public static readonly Regex PoleLuzneRegex = new Regex(
-	@"^(?<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+\[[^\]\r\n]?\][ \t]*",
-	RegexOptions.CultureInvariant);
+    @"^(?<indent>[ \t]*)(?:[-*+]|\d+[.)])[ \t]+\[[ xX-]\](?![ \t]*[(:\[])[ \t]*",
+    RegexOptions.CultureInvariant);
 
 // Zwykly punktor - taki sam wzorzec, jaki ma EdSharp.cs.  Powtorzony tutaj,
 // zeby ten plik dawal sie skompilowac i zmierzyc SAM.

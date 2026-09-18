@@ -1,0 +1,88 @@
+{
+    "ok":  true,
+    "results":  [
+                    {
+                        "headings":  [
+
+                                     ],
+                        "links":  [
+                                      {
+                                          "text":  "łączem",
+                                          "url":  "https://example.org/test?q=1\u0026x=2"
+                                      }
+                                  ],
+                        "file":  "before.rtf",
+                        "text":  "Żółty nagłówek\r\rAkapit z pogrubieniem i łączem.\r\rpierwszy\rdrugi\r\rDrugi poziom\r\rKoniec dokumentu.\r\r",
+                        "listItems":  [
+                                          {
+                                              "text":  "pierwszy",
+                                              "type":  2
+                                          },
+                                          {
+                                              "text":  "drugi",
+                                              "type":  2
+                                          }
+                                      ]
+                    },
+                    {
+                        "headings":  [
+                                         {
+                                             "text":  "Żółty nagłówek",
+                                             "level":  1
+                                         },
+                                         {
+                                             "text":  "Drugi poziom",
+                                             "level":  2
+                                         }
+                                     ],
+                        "links":  [
+                                      {
+                                          "text":  "łączem",
+                                          "url":  "https://example.org/test?q=1\u0026x=2"
+                                      }
+                                  ],
+                        "file":  "after.rtf",
+                        "text":  "Żółty nagłówek\r\rAkapit z pogrubieniem i łączem.\r\rpierwszy\rdrugi\r\rDrugi poziom\r\rKoniec dokumentu.\r\r",
+                        "listItems":  [
+                                          {
+                                              "text":  "pierwszy",
+                                              "type":  2
+                                          },
+                                          {
+                                              "text":  "drugi",
+                                              "type":  2
+                                          }
+                                      ]
+                    },
+                    {
+                        "headings":  [
+                                         {
+                                             "text":  "Żółty nagłówek",
+                                             "level":  1
+                                         },
+                                         {
+                                             "text":  "Drugi poziom",
+                                             "level":  2
+                                         }
+                                     ],
+                        "links":  [
+                                      {
+                                          "text":  "łączem",
+                                          "url":  "https://example.org/test?q=1\u0026x=2"
+                                      }
+                                  ],
+                        "file":  "after.html",
+                        "text":  "Żółty nagłówek\rAkapit z pogrubieniem i łączem.\rpierwszy\rdrugi\rDrugi poziom\rKoniec dokumentu.\r",
+                        "listItems":  [
+                                          {
+                                              "text":  "pierwszy",
+                                              "type":  4
+                                          },
+                                          {
+                                              "text":  "drugi",
+                                              "type":  4
+                                          }
+                                      ]
+                    }
+                ]
+}

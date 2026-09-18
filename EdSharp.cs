@@ -10355,16 +10355,36 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 					return s;
 					} // MarkdownInlineTextToHtml method
 
+private static List<MarkdownLink> GetMarkdownClipboardLinks(string sText) {
+List<MarkdownLink> result = new List<MarkdownLink>();
+// Inline code is literal, including URLs that the document link list can find.
+MatchCollection code = Regex.Matches(sText, @"(?<!`)(`+)(?!`)[\s\S]*?(?<!`)\1(?!`)");
+foreach (MarkdownLink link in GetMarkdownLinks(sText)) {
+bool inCode = false;
+foreach (Match span in code) {
+if (link.Start >= span.Index && link.Start < span.Index + span.Length) {inCode = true; break;}
+}
+if (inCode) continue;
+string url = MarkdownReview_NormalizeUrl(link.Url);
+if (url.Length == 0 && link.Url.StartsWith("#", StringComparison.Ordinal)) url = link.Url;
+if (url.Length == 0) continue;
+link.Url = url;
+if (!link.Inline) link.Title = url;
+result.Add(link);
+}
+return result;
+} // GetMarkdownClipboardLinks method
+
 				private static string MarkdownInlineToHtml(string sText) {
 				if (String.IsNullOrEmpty(sText)) return "";
 				StringBuilder sb = new StringBuilder();
 				int iPos = 0;
 				try {
-				foreach (Match m in MarkdownInlineLinkRegex.Matches(sText)) {
-				if (m == null || !m.Success || m.Index < iPos) continue;
-					sb.Append(MarkdownInlineTextToHtml(sText.Substring(iPos, m.Index - iPos)));
-					string sTitle = StripMarkdownFormatting(m.Groups["text"].Value);
-				string sUrl = MarkdownReview_NormalizeUrl(m.Groups["url"].Value);
+				foreach (MarkdownLink link in GetMarkdownClipboardLinks(sText)) {
+				if (link.Start < iPos) continue;
+					sb.Append(MarkdownInlineTextToHtml(sText.Substring(iPos, link.Start - iPos)));
+					string sTitle = StripMarkdownFormatting(link.Title);
+				string sUrl = link.Url;
 				if (sUrl.Length > 0) {
 				sb.Append("<a href=\"");
 				sb.Append(System.Net.WebUtility.HtmlEncode(sUrl));
@@ -10373,7 +10393,7 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 				sb.Append("</a>");
 				}
 				else sb.Append(System.Net.WebUtility.HtmlEncode(sTitle));
-				iPos = m.Index + m.Length;
+				iPos = link.End;
 				}
 				}
 				catch {}
@@ -16025,13 +16045,8 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				// pozycji listy prawdziwa lista Worda, reszta akapitem z pogrubieniem
 				// i pochyleniem.
 				//
-				// Zwraca false, gdy zaznaczenia nie ma albo miesci sie w jednym
-				// wierszu - wtedy pracuje dotychczasowa sciezka, ktora umie wiecej
-				// (rozpoznaje odsylacz DOKLADNIE pod kursorem).  Zwraca false takze w
-				// pliku RTF, gdzie formatowanie jest prawdziwe i rtb.Copy() niesie je
-				// samo, oraz gdy w zaznaczeniu nie ma ANI JEDNEGO znacznika Markdown -
-				// przepuszczanie zwyklego tekstu przez nasz generator nic by nie
-				// dawalo, a odbieraloby oryginalne zachowanie kontrolki.
+				// Nonempty selections never fall through to the item under the cursor.
+				// Native RTF documents keep the control's own rich copy implementation.
 				private bool TryCopyMarkdownSelection(MdiChild child) {
 				if (child == null || child.RTB == null) return false;
 				if (IsRichTextFile(child)) return false;
@@ -16042,30 +16057,37 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				try {sSelected = rtb.GetRange(rtb.SelectionStart, rtb.SelectionStart + rtb.SelectionLength);} catch {return false;}
 				if (String.IsNullOrEmpty(sSelected)) return false;
 
-				string[] aLines = SplitTextLines(sSelected);
-				if (aLines.Length < 2) return false;
-				if (!SelectionHasMarkdownMarkup(aLines)) return false;
-
-				string sRtf = BuildRtfFromMarkdownLines(aLines);
-				if (sRtf.Length == 0) return false;
-
-				string sPlain = StripMarkdownFormatting(String.Join("\n", aLines));
-				sPlain = Util.Convert2WinLineBreak(sPlain);
-
-				DataObject data = new DataObject();
-				data.SetData(DataFormats.UnicodeText, sPlain);
-				data.SetData(DataFormats.Text, sPlain);
-				data.SetData(DataFormats.Rtf, sRtf);
-				// Swiadomie BEZ CF_HTML: przy liscie Word wybiera sciezke HTML i nie
-				// robi z niej prawdziwej listy (ta sama decyzja co w
-				// TryCopyMarkdownList).
-				// Wlasny format: wklejenie w EdSharpie odtwarza CALE zaznaczenie ze
-				// skladnia, a nie tekst pozbawiony znacznikow.
-				data.SetData(EdSharpMarkdownFormat, Util.Convert2WinLineBreak(String.Join("\n", aLines)));
-				if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, selection not copied!"); return false;}
+				// A selection owns the command, including a single-line fragment.
+				// Falling through could copy a whole link or list outside that selection.
+				if (!SelectionHasMarkdownMarkup(SplitTextLines(sSelected))) {rtb.Copy(); return true;}
+				DataObject data = BuildMarkdownSelectionClipboardData(sSelected);
+				if (data == null) {AddMessage("Cannot prepare the selected text for copying!"); return true;}
+				if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, selection not copied!"); return true;}
 				AddMessage("Selection copied");
 				return true;
 				} // TryCopyMarkdownSelection method
+
+private static DataObject BuildMarkdownSelectionClipboardData(string sSelected) {
+if (String.IsNullOrEmpty(sSelected)) return null;
+string[] aLines = SplitTextLines(sSelected);
+string sRtf = BuildRtfFromMarkdownLines(aLines);
+string sHtml = MarkdownDocumentToHtml(sSelected, "");
+int iBody = sHtml.IndexOf("<body>", StringComparison.Ordinal);
+int iEndBody = sHtml.LastIndexOf("</body>", StringComparison.Ordinal);
+if (sRtf.Length == 0 || iBody < 0 || iEndBody < iBody + 6) return null;
+string sFragment = sHtml.Substring(iBody + 6, iEndBody - iBody - 6);
+string sClipboardHtml = BuildHtmlClipboardFragment(sFragment);
+if (sClipboardHtml.Length == 0) return null;
+DataObject data = new DataObject();
+string sPlain = Util.Convert2WinLineBreak(StripMarkdownFormatting(sSelected));
+data.SetData(DataFormats.UnicodeText, sPlain);
+data.SetData(DataFormats.Text, sPlain);
+data.SetData(DataFormats.Rtf, sRtf);
+// Browser and mail editors consume HTML, whereas RTF-only consumers keep RTF.
+data.SetData(DataFormats.Html, sClipboardHtml);
+data.SetData(EdSharpMarkdownFormat, sSelected);
+return data;
+} // BuildMarkdownSelectionClipboardData method
 
 				// Podzial na wiersze niezalezny od rodzaju koncow wiersza.
 				private static string[] SplitTextLines(string sText) {
@@ -16087,6 +16109,7 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				if (MarkdownReview_IsHeadingLine(sLine, out iLevel, out sHeading)) return true;
 				if (MarkdownReview_IsListItemLine(sLine)) return true;
 				if (MarkdownLineHasRichInlineMarkup(sLine)) return true;
+if (GetMarkdownClipboardLinks(sLine).Count > 0) return true;
 				}
 				return false;
 				} // SelectionHasMarkdownMarkup method
@@ -16100,7 +16123,13 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				try {
 				StringBuilder sb = new StringBuilder();
 				sb.Append(@"{\rtf1\ansi\ansicpg1250\deff0\uc1{\fonttbl{\f0\fnil Calibri;}{\f1\fnil\fcharset2 Symbol;}}");
-				sb.Append(@"{\stylesheet{\s1\fi-360\li720\sa0\jclisttab\tx720 List Paragraph;}}");
+				sb.Append(@"{\stylesheet{\s0\fs22 Normal;}{\s1\fi-360\li720\sa0\jclisttab\tx720 List Paragraph;}");
+for (int h = 1; h <= 6; h++) {
+sb.Append(@"{\s" + (h + 1).ToString(CultureInfo.InvariantCulture)
++ @"\sbasedon0\snext0\outlinelevel" + (h - 1).ToString(CultureInfo.InvariantCulture)
++ " heading " + h.ToString(CultureInfo.InvariantCulture) + ";}");
+}
+sb.Append("}");
 				sb.Append(@"{\*\listtable{\list\listtemplateid1\listsimple");
 				sb.Append(@"{\listlevel\levelnfc23\leveljc0\levelfollow0\levelstartat1{\leveltext\leveltemplateid1\'01\'b7;}{\levelnumbers;}\f1\fi-360\li720 }");
 				sb.Append(@"\listid1}");
@@ -16143,7 +16172,8 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				if (iLevel == 1) iHalfPoints = 36;
 				else if (iLevel == 2) iHalfPoints = 32;
 				else if (iLevel == 3) iHalfPoints = 28;
-				sb.Append(@"\pard\plain\f0\b\fs");
+				sb.Append(@"\pard\plain\s" + (iLevel + 1).ToString(CultureInfo.InvariantCulture)
++ @"\outlinelevel" + (iLevel - 1).ToString(CultureInfo.InvariantCulture) + @"\f0\b\fs");
 				sb.Append(iHalfPoints.ToString(CultureInfo.InvariantCulture));
 				sb.Append(" ");
 				sb.Append(RtfEncodeMarkdownInline(sHeading));
@@ -16193,11 +16223,11 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				StringBuilder sb = new StringBuilder();
 				int iPos = 0;
 				try {
-				foreach (Match m in MarkdownInlineLinkRegex.Matches(sText)) {
-				if (m == null || !m.Success || m.Index < iPos) continue;
-				sb.Append(RtfEncodeMarkdownSpan(sText.Substring(iPos, m.Index - iPos)));
-				string sTitle = StripMarkdownFormatting(m.Groups["text"].Value).Trim();
-				string sUrl = MarkdownReview_NormalizeUrl(m.Groups["url"].Value);
+				foreach (MarkdownLink link in GetMarkdownClipboardLinks(sText)) {
+				if (link.Start < iPos) continue;
+				sb.Append(RtfEncodeMarkdownSpan(sText.Substring(iPos, link.Start - iPos)));
+				string sTitle = StripMarkdownFormatting(link.Title).Trim();
+				string sUrl = link.Url;
 				if (sUrl.Length > 0) {
 				sb.Append(@"{\field{\*\fldinst{");
 				sb.Append(RtfEncodeInline("HYPERLINK \"" + sUrl + "\""));
@@ -16206,7 +16236,7 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				sb.Append(@"}}}");
 				}
 				else sb.Append(RtfEncodeInline(sTitle));
-				iPos = m.Index + m.Length;
+				iPos = link.End;
 				}
 				}
 				catch {}
