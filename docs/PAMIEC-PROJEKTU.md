@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-09-12 21:39 (CEST). Wpisow: 29 z 63 w calej pamieci.
+Wygenerowane: 2026-09-20 11:00 (CEST). Wpisow: 94 z 246 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
@@ -47,6 +47,71 @@ tutaj, bo pokazuje, co i dlaczego zmienilo sie w ustaleniach.
 - 2026-09-12 20:33 - EdSharpNG 5.0.93 - CIAGLOSC PRACY (zadanie 12 z listy 11.09.2026) ZROBIONE I ZMIERZONE [NIEAKTUALNY]
 - 2026-09-12 20:38 - EdSharpNG 5.0.94 - CIAGLOSC PRACY Z WLASNYM OKNEM USTAWIEN (zadanie 12 domkniete)
 - 2026-09-12 21:27 - PODSUMOWANIE SESJI 2026-09-12 wieczor (EdSharpNG 5.0.93 -> 5.0.94: ciaglosc pracy, zadanie 12 - OSTATNIE z lis
+- 2026-09-12 21:43 - USTALENIE 12.09.2026 - dokumentacja EdSharpNG trwale w repozytorium michalkasperczak/EdSharpNG.
+- 2026-09-12 22:12 - PODSUMOWANIE AMC wersja 352 (2026-09-13) - naprawa kompilacji projektu Windows + testy przestaja ukrywac awari
+- 2026-09-12 23:35 - USTALENIE STALE (13.09.2026, polecenie Michala): dostepnosc KAZDEJ tworzonej aplikacji i KAZDEGO projektu z in
+- 2026-09-13 00:03 - USTALENIE 2026-09-13 (lista zadan AMC z pliku Michala + stan wtyczki NVDA)
+- 2026-09-13 00:13 - ZGODA STALA 2026-09-13 (Michal, ogolna): moge instalowac aplikacje Michala - EdSharp/EdSharpNG i AMC - TAKZE N
+- 2026-09-13 01:09 - PODSUMOWANIE AMC 0.1.0-alpha.354 - WYDANE, ZMIERZONE I URUCHOMIONE U MICHALA (2026-09-13, ~01:15).
+- 2026-09-13 01:56 - PODSUMOWANIE EdSharpNG 5.0.95 (13.09.2026), commit 923fbc0 na origin/master (UWAGA: galaz to master, nie main  [NIEAKTUALNY]
+- 2026-09-13 02:14 - EdSharpNG 5.0.95 - DRUGA CZESC (13.09.2026), commit 5cd6d35 na origin/master. Instalator u Michala: D:\Projekt
+- 2026-09-13 02:51 - LEKCJA (13.09.2026, EdSharpNG 5.0.95): DWIE AWARIE, KTORE PRZESZLY PRZEZ WSZYSTKIE SONDY I TRAFILY DO MICHALA.
+- 2026-09-13 13:13 - PODSUMOWANIE EdSharpNG 5.0.96 (13.09.2026), commit 125d017 na origin/master (galaz master).
+- 2026-09-13 14:20 - LEKCJA (13.09.2026, EdSharp 5.0.98): Control+Alt+litera NIE odbiera polskich znakow - moj wczesniejszy "bezpie
+- 2026-09-13 14:20 - USTALENIE (13.09.2026, polecenie Michala): "To tworz zawsze" - KAZDA wersja EdSharpNG (i analogicznie AMC) mus [NIEAKTUALNY]
+- 2026-09-13 15:47 - LEKCJA (13.09.2026, EdSharpNG 5.0.99): pomiar zywego GUI przez SendKeys jest bezwartosciowy bez POTWIERDZONEGO
+- 2026-09-13 15:48 - USTALENIE (13.09.2026, EdSharpNG 5.0.99): Control+O jest JEDYNYM otwieraniem plikow. Michal: "Usunac osobna po
+- 2026-09-13 15:48 - USTALENIE NADAL OBOWIAZUJACE (potwierdzone 13.09.2026): KAZDA wersja EdSharpNG dostaje WYDANIE (release) na Gi
+- 2026-09-13 17:15 - LEKCJA (13.09.2026, EdSharpNG 5.0.103): PLIK USTAWIEN UZYTKOWNIKA MOZE ZAWIERAC ZEPSUTE WPISY, KTORYCH NIGDY N
+- 2026-09-13 18:00 - LEKCJA (13.09.2026, EdSharpNG 5.0.106): DWA BLEDY, KTORE SPRAWIAJA, ZE "UDANE POBRANIE" NIE OTWIERA PLIKU - i  [NIEAKTUALNY]
+- 2026-09-13 19:08 - LEKCJA (EdSharp 5.0.107, 13.09.2026): gdy komunikat mowiony "nie dziala w jednym kierunku", szukaj DWOCH przyc
+- 2026-09-13 20:26 - PODSUMOWANIE SESJI 13.09.2026 (koniec) - EdSharpNG 5.0.107 WYDANA I DOSTARCZONA
+- 2026-09-14 01:52 - USTALENIE 14.09.2026 - lista zadan AMC pod data 14.09 z pliku Michala.
+- 2026-09-14 02:41 - USTALENIE 14.09.2026 - AMC, realizacja pozycji "Aktualizacje w tle z cicha instalacja" + "Zglos blad do repozy [NIEAKTUALNY]
+- 2026-09-14 02:49 - PODSUMOWANIE AMC wersja 0.1.0-alpha.355 (14.09.2026) - aktualizacje aplikacji w tle + okno zgloszenia bledu (p
+- 2026-09-14 03:19 - POMIAR AMC 0.1.0-alpha.356 (14.09.2026): instalator Inno Setup dziala. Zbudowany na glownym komputerze: D:\Pro
+- 2026-09-14 04:07 - POMIAR AMC 14.09.2026: PELNA DROGA AKTUALIZACJI POTWIERDZONA NA ZYWYM PROGRAMIE (Hermes, uzytkownik Michal). Z
+- 2026-09-14 05:19 - PODSUMOWANIE AMC 0.1.0-alpha.362 (14.09.2026) - USTAWIENIA ODTWARZANIA DLA CALEJ SESJI (pozycja 3 z listy 14.0
+- 2026-09-14 16:13 - AMC 0.1.0-alpha.363 (14.09.2026): dwie poprawki zbudowane i zmierzone. [NIEAKTUALNY]
+- 2026-09-14 16:33 - POSWIADCZENIA GITHUB - stan po wyrownaniu 14.09.2026 (dotyczy KAZDEGO projektu, nie tylko AMC).
+- 2026-09-14 19:31 - LEKCJA AMC 2026-09-14 (instalator NIE podmienial programu - kazda aktualizacja od dawna): build.ps1 -Publish n
+- 2026-09-14 23:40 - WYDANIE AMC 0.1.0-alpha.366 ZAMKNIETE 15.09.2026 - domknieta zaleglosc z 14.09. Commit c3597491844a75335586033
+- 2026-09-15 00:45 - USTALENIE 15.09.2026 - STAN LISTY 15.09 W PLIKU "Do zrobienia.md" I CO ZOSTALO DO ZROBIENIA W AMC.
+- 2026-09-15 01:03 - USTALENIE STALE 15.09.2026 - ZASADA PRACY Z PLIKIEM "Do zrobienia.md" (D:\Projekty Codex\Hermes\Do zrobienia.m
+- 2026-09-15 01:54 - PODSUMOWANIE AMC 0.1.0-alpha.368 (15.09.2026) - WYDANE I POTWIERDZONE U ZRODLA.
+- 2026-09-15 16:38 - LEKCJA + NAPRAWA 15.09.2026 (AMC, instalator Inno Setup) - PRAWDZIWA przyczyna tego, ze kazda cicha aktualizac
+- 2026-09-15 21:52 - PODSUMOWANIE AMC 0.1.0-alpha.375 (15.09.2026) - WYDANE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+- 2026-09-15 22:51 - PODSUMOWANIE AMC 0.1.0-alpha.376 (15.09.2026) - WYDANE, ZAINSTALOWANE, URUCHOMIONE (PID 34128).
+- 2026-09-16 01:42 - PODSUMOWANIE EdSharpNG 5.0.108 (16.09.2026) - WYDANE, ZMIERZONE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+- 2026-09-16 01:42 - PODSUMOWANIE EdSharpNG 5.0.108 (16.09.2026) - WYDANE, ZMIERZONE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+- 2026-09-16 19:56 - USTALENIE 16.09.2026 - DECYZJE MICHALA (podpisane "MK.") w pliku D:\Projekty Codex\Hermes\Nowe\CO-USUWAMY.md -
+- 2026-09-16 23:16 - PODSUMOWANIE AMC 0.1.0-alpha.383 (16.09.2026) - Ctrl+Shift+E/R/T przy oryginalnym TIDALu mowia SAM CZAS.
+- 2026-09-16 23:28 - PODSUMOWANIE 16.09.2026 (EdSharpNG - DOKUMENTACJA ROZNIC WOBEC ORYGINALU, do pokazywania ludziom)
+- 2026-09-17 00:25 - PODSUMOWANIE EdSharpNG 5.0.111 (16.09.2026) - WYKONANIE DECYZJI MK z plikow D:\Projekty Codex\Hermes\Nowe\CO-U
+- 2026-09-17 00:38 - USTALENIE 17.09.2026 (EdSharpNG, porzadki w plikach): Michal przeniosl na glownym komputerze folder ze STARYMI
+- 2026-09-17 00:39 - PODSUMOWANIE EdSharpNG 5.0.112 (17.09.2026) - LISTY ZADAN (checklisty Markdown). Commity efc02ef i poprzedni n
+- 2026-09-17 00:40 - LEKCJA (17.09.2026, EdSharpNG 5.0.112) - TRZY PULAPKI, KAZDA DALA FALSZYWY WYNIK ZANIM JA ZLAPALEM.
+- 2026-09-17 00:51 - PODSUMOWANIE 17.09.2026 (EdSharpNG - dokumenty dla Michala: lista testowa i projekt sledzenia zmian)
+- 2026-09-17 02:03 - USTALENIE 17.09.2026 (EdSharpNG - sledzenie zmian i wspolna praca, ODPOWIEDZI MICHALA na pytania z docs/SLEDZE [NIEAKTUALNY]
+- 2026-09-17 12:57 - USTALENIE 17.09.2026 (EdSharpNG - SLEDZENIE ZMIAN: WSZYSTKIE CZTERY PYTANIA ROZSTRZYGNIETE PRZEZ MICHALA, proj
+- 2026-09-17 14:27 - PODSUMOWANIE AMC 0.1.0-alpha.384 (17.09.2026) - WSTRZYMYWANIE PO WYJSCIU Z ODTWARZACZA OSOBNO DLA KAZDEJ SESJI
+- 2026-09-17 15:24 - PODSUMOWANIE AMC 0.1.0-alpha.385 (17.09.2026) - WYDANE, ZAINSTALOWANE, POTWIERDZONE U ZRODLA.
+- 2026-09-17 15:48 - LEKCJA 17.09.2026 (AMC, dodatek NVDA) - GEST NVDA ZAPISANY JAKO "insert+..." JEST PO CICHU IGNOROWANY.
+- 2026-09-17 16:26 - PODSUMOWANIE AMC 0.1.0-alpha.387 (17.09.2026) - WYDANE I POTWIERDZONE U ZRODLA. [NIEAKTUALNY]
+- 2026-09-17 16:39 - KONTEKST AMC - MAPA KODU (2026-09-17, wersja 0.1.0-alpha.387, commit d7ee353). Powstal plik MAPA_KODU_PL.md w 
+- 2026-09-17 17:10 - PODSUMOWANIE 17.09.2026 (EdSharpNG - SLEDZENIE ZMIAN, KROK 1a ZROBIONY I ZMIERZONY)
+- 2026-09-17 17:29 - USTALENIE 17.09.2026 (EdSharpNG - PROPOZYCJA KLAWISZY DO SLEDZENIA ZMIAN, krok 1b; CZEKA NA ZATWIERDZENIE MK) [NIEAKTUALNY]
+- 2026-09-18 00:39 - USTALENIE 18.09.2026 - ZASADY PISANIA MICHALA ODTWORZONE Z EKSPORTU GPT. Michal zazadal, zebym uzywal jego "pa
+- 2026-09-18 05:40 - PODSUMOWANIE 18.09.2026 (EdSharpNG 5.0.113 - SLEDZENIE ZMIAN KROK 1b ZROBIONY, ZMIERZONY I WYDANY)
+- 2026-09-18 13:04 - USTALENIE 18.09.2026 (EdSharp - ROZBIOR UWAG MK Z TESTOW 5.0.112, ZMIERZONE U ZRODLA)
+- 2026-09-18 13:54 - LEKCJA (EdSharp, pomiary na zywym programie przez SendKeys, 18.09.2026)
+- 2026-09-18 14:41 - USTALENIE 18.09.2026 - POPRAWKI PAMIECI I MODELU HERMESA. Na polecenie Michala Dziwisza wdrozono: trwala lokal
+- 2026-09-18 15:07 - USTALENIE 18.09.2026: identyczne polecenie MK 'Bogate formatowanie, zapisywanie, potem GitHub i do mnie' dotar
+- 2026-09-18 16:29 - POMIAR 18.09.2026 - DOCX -> Markdown GFM -> DOCX dla rozważanego zapisu Ctrl+S do formatu zrodlowego. MK pyta  [NIEAKTUALNY]
+- 2026-09-18 16:41 - USTALENIE MK 18.09.2026 - ZATWIERDZONA NOWA OPCJA USTAWIEN EdSharp: Control+S ma opcjonalnie zapisywac zaimpor
+- 2026-09-18 18:05 - PODSUMOWANIE EdSharpNG 5.0.114 - WYDANE I DOSTARCZONE 18.09.2026. Repo /home/michal/projekty/edsharp master: k [NIEAKTUALNY]
+- 2026-09-18 19:01 - PODSUMOWANIE SESJI 18.09.2026 - EdSharpNG 5.0.114 ZAINSTALOWANY U MK, CTRL-SHIFT-C POTWIERDZONE, PRZERWA W PRA
+- 2026-09-19 00:20 - USTALENIE - aktualna lista AMC z sekcji 18.09.2026 w D:\Projekty Codex\Hermes\Do zrobienia.md, kopia przeslana
 
 ## Wpisy
 
@@ -300,7 +365,7 @@ CO ZROBIONE (z listy 11 zadan z 11.09.2026):
 3. ZAKLADKI (Alt+K), strzalka w lewo w Dialog.PickBookmark: czyta SAMA TRESC wiersza. W 5.0.79 dopisywalem numer linii na koncu z wlasnej inicjatywy - Michal sprostowal ("ma mowic tresc linii ma czytac ten wiersz po prostu a nie jakis numer linii 138"), usuniete w 5.0.80. Pusty wiersz mowi "Empty line" - to samo slowo co lista zakladek NAZWANYCH (ta juz wczesniej czytala tresc). Okno zostaje otwarte: podglad, nie skok.
 11. PALETA POLECEN - nowe Dialog.PickCommand + metoda CommandPalette() + menuHelpCommandPalette w menu Pomoc ("Command Palette ..."). Zwraca INDEKS, nie tekst. Fokus startuje w polu filtra (NVDA sam czyta znaki), po kazdej zmianie filtra sayForced mowi liczbe wynikow i pierwszy z nich (bez tego pisze sie w prozni - fokus zostaje w polu, lista zmienia sie bezglosnie). Enter W POLU uruchamia pierwszy wynik, strzalka w dol wchodzi do listy. Filtrowanie wzorowane na AMC CommandPaletteSearch (jego wskazanie): slowa w DOWOLNEJ kolejnosci, wszystkie musza pasowac, bez wielkosci liter i BEZ OGONKOW (FoldCommandSearch: NormalizationForm.FormD + osobna podmiana l kreslonego, bo to nie litera z akcentem). Paleta nie wypisuje samej siebie.
 
-SKROT PALETY = CONTROL+SHIFT+F1 (od 5.0.112; do 5.0.111 bylo CONTROL+SHIFT+X, oddane listom zadan decyzja MK - samouczek zszedl wtedy z Ctrl+Shift+F1 na Ctrl+Alt+F1). LEKCJA: zaproponowalem najpierw Ctrl+Shift+P jako "wolny" BEZ SPRAWDZENIA - jest zajety przez "Path List". Ctrl+P tez zajety (Print). ZAWSZE grepowac kandydata w EdSharp.cs I Hotkeys.ini przed przypisaniem. Nie uzywac Ctrl+Alt+litera dla liter majacych polski odpowiednik pod prawym Altem (a c e l n o s x z) - zmierzone 13.09.2026: litere wytwarza UKLAD, wiec bez skutku zostaje SKROT, komenda sie nie uruchomi. Ctrl+Alt+klawisz funkcyjny jest bezpieczny (brak wariantu z ogonkiem).
+SKROT PALETY = CONTROL+SHIFT+X. LEKCJA: zaproponowalem najpierw Ctrl+Shift+P jako "wolny" BEZ SPRAWDZENIA - jest zajety przez "Path List". Ctrl+P tez zajety (Print). Michal potwierdzil: zostaje Ctrl+Shift+X, listy sciezek nie ruszamy. ZAWSZE grepowac '"Control+Shift+X"' w EdSharp.cs I Hotkeys.ini przed przypisaniem. Nie uzywac Ctrl+Alt+litera (prawy Alt zjada polskie znaki).
 
 LEKCJA TECHNICZNA: LbcDialog NIE jest Formem - zamkniecie programowe przez dlg.form.DialogResult i dlg.form.Close() (publiczna wlasciwosc form). Build failowal na dlg.Close().
 zbuduj.sh wymaga, by VersionString w EdSharp.cs BYL JUZ podniesiony do budowanej wersji - inaczej przerywa z bledem.
@@ -864,3 +929,1482 @@ OTWARTE WATKI (bez zmian z poprzednich sesji)
 - Slownik bliskoznaczny, matematyka NVDA - odlozone.
 - Katalog ~/projekty/edsharp_kopia_przed_czyszczeniem - zachowac, nie usuwac.
 - Cron sprawdzania oryginalu Jamala: co niedziele 10:00, przetestowany, dziala po stronie Hermesa.
+
+
+### 1789242197 - 2026-09-12 21:43
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 12.09.2026 - dokumentacja EdSharpNG trwale w repozytorium michalkasperczak/EdSharpNG.
+
+Katalog docs/ w repo (wypchniete, sprawdzone przez gh api):
+- README.md - przewodnik po dokumentacji + ZASADY PISANIA + tabela "w jakim jezyku co jest pisane"
+- ARCHITEKTURA.md - podzial na pliki, co odziedziczone po Jamalu, co nasze, liczby wierszy zmierzone wc -l
+- DECYZJE.md - rozstrzygniecia z uzasadnieniem i data (dlaczego wazniejsze od co)
+- BUDOWANIE.md - zbuduj.sh / wydaj.sh, przejscie WSL -> /mnt/c/EdSharpBuild, pulapki
+- POMIARY.md - testy pomiar_*.cs, zasada "to dziala bez wyniku uruchomienia = hipoteza"
+- PAMIEC-PROJEKTU.md - eksport 29 wpisow z HyperspaceDB (98 kB)
+- DZIENNIK-TECHNICZNY.md, MAPA-DROGOWA.md, ZADANIA-2026-09.md - przeniesione z katalogu glownego
+
+JEZYKI - docelowo OBA (ustalenie Michala 12.09.2026): dokumentacja techniczna po polsku (bo decyzje uzasadniane po polsku), podrecznik EdSharp.md i Tutorial.md po angielsku (bo interfejs programu jest angielski i podrecznik musi cytowac doslownie to, co uslyszy czytnik). Zasada: JEDEN PLIK, JEDEN JEZYK - mieszanie zmusza czytnik do czytania polskich slow angielska wymowa. Gdy powstanie polski interfejs: EdSharp-pl.md jako osobny plik + docs/en/ jako skrot angielski.
+
+PODRECZNIK EdSharp.md rozszerzony: Work Continuity, Command Palette (Ctrl+Shift+X), CSV as Table, kodowania Mazovia/Latin II/Windows-1250. Poprawiono NIEPRAWDE: podrecznik twierdzil, ze pisownia wymaga Microsoft Word - od 5.0.89 uzywa wbudowanego w Windows ISpellChecker, Word nie jest potrzebny.
+
+CRON eksportu pamieci: job_id 018cb7451487, "every sunday 11am", no_agent=true, deliver=local, skrypt ~/.hermes/scripts/eksport_pamieci_cron.sh. MILCZY gdy nie ma nowej wiedzy - porownanie POMIJA wiersz "Wygenerowane:", inaczej sam znacznik czasu dawalby commit co tydzien. Dodaje TYLKO docs/PAMIEC-PROJEKTU.md, nigdy git add -A (praca w toku nie moze wpasc do commita).
+
+PULAPKA NAPRAWIONA: eksport_pamieci_edsharp.py zwracal zero wpisow, bo get_node z HyperspaceDB zwraca SLOWNIK, a skrypt czytal getattr(node,"metadata") - to dawalo cicho None. Poprawnie: node.get("metadata"). Klucz listy id w state.json to id_map.
+
+PULAPKA NAPRAWIONA: uruchamiacze testow pomiar_*.cmd istnialy TYLKO w /mnt/c/EdSharpBuild, czyli poza kontrola wersji - skopiowane do testy/uruchamiacze/ i zbuduj.sh je stamtad kopiuje.
+
+Commity: a0c26d0 (dokumentacja), e86a61d (pamiec projektu).
+
+
+### 1789243951 - 2026-09-12 22:12
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC wersja 352 (2026-09-13) - naprawa kompilacji projektu Windows + testy przestaja ukrywac awarie
+
+WYPCHNIETE: commit 28bea56 na github.com/michalkasperczak/AMC main, 4 pliki, wersja 0.1.0-alpha.352.
+Sprawdzone U ZRODLA przez gh api: commit 28bea56 i <Version>0.1.0-alpha.352 w Directory.Build.props na GitHubie.
+Glowny komputer podciagniety fast-forward 11816b7..28bea56, drzewo czyste.
+
+=== SPRAWA 1: KOMPILACJA PADALA NIEZALEZNIE OD KODU (najwazniejsze) ===
+Objaw: dotnet build projektu Windows konczyl sie
+  error BG1002: Nie mozna odnalezc pliku "**/*.xaml"
+  error BG1003: Plik projektu zawiera nieprawidlowa wartosc wlasciwosci
+mimo ze WSZYSTKIE 35 plikow XAML lezalo na miejscu (zmierzone: 35 plikow, 238584 bajtow).
+
+PRZYCZYNA (zmierzona, nie zgadnieta): katalog
+  src/AccessibleMediaController.Windows/TidalPlayerHost/node_modules
+zawiera zlacza katalogow (junction) zalozone przez pnpm - np. esbuild ->
+node_modules/.pnpm/esbuild@0.25.9/node_modules/esbuild. Windows ODMAWIA wejscia w to
+zlacze z komunikatem "Nie mozna przejsc do tej sciezki, poniewaz zawiera ona niezaufany
+punkt instalacji" (IOException). Wyszukiwanie **/*.xaml przechodzi CALE drzewo projektu,
+przewracalo sie na tym zlaczu i konczylo bez ANI JEDNEGO pliku XAML. Komunikat mowil
+"nie mozna odnalezc plikow XAML", a faktyczna przyczyna byla ODMOWA DOSTEPU do obcego
+katalogu. Klasyczny falszywy tropi: komunikat wskazywal na brak plikow.
+
+NAPRAWA w AccessibleMediaController.Windows.csproj, PropertyGroup:
+  <DefaultItemExcludes>$(DefaultItemExcludes);TidalPlayerHost\node_modules\**</DefaultItemExcludes>
+
+CO NIE POMAGA (sprawdzone, nie powtarzac): usuniecie obj/bin - blad wraca.
+Blad wystepowal TAKZE na czystym drzewie 351 po git stash - czyli NIE byl regresja
+zadnego commita ani skutkiem moich zmian. Zawsze sprawdzac to przed szukaniem winy w kodzie.
+Pierwszy trop dostalem przypadkiem: PowerShell Get-ChildItem -Recurse zglosil ten sam
+IOException na node_modules\esbuild. Sygnal z jednego narzedzia wskazal przyczyne w drugim.
+
+=== SPRAWA 2: PIERWSZA AWARIA ZASLANIALA POZOSTALE TESTY ===
+Zalecenie audytu z 11.09.2026 (AUDYT_HERMES_2026-09-11_PL.md), niezrobione do teraz.
+89 testow Windows stalo w JEDNYM wspolnym bloku try w Program.cs. Pierwsza awaria
+przerywala caly przebieg - o pozostalych kilkudziesieciu testach nie dowiadywalismy sie
+niczego, wiec jedna usterka ukrywala dowolna liczbe nastepnych.
+
+NAPRAWA: tabela var tests = new (string Name, Action Test)[] + osobny try na kazdy test,
+dokladnie jak w zestawie Core. Na koncu pelna lista awarii i licznik "nie przeszlo N z M".
+Testy zywe (argumenty --radio-url= itd.) wydzielone do funkcji RunLiveTest(mediaPath),
+tez z wlasnym blokiem bledow.
+Stale FixtureBase64 i LiveStreamSampleOffset przemianowane na Vorbis* i PRZEKAZYWANE
+PARAMETRAMI do TestNormalizedVorbisTimeline - w C# stale z Program.cs (top-level statements)
+NIE sa widoczne w statycznych funkcjach lokalnych (error CS0103 + CS8422).
+
+DOWOD ZE DZIALA (test negatywny, nie zalozenie): wstawilem DWIE celowe awarie -
+pierwsza i ostatnia pozycja listy. Wynik: przebieg doszedl do konca, zglosil
+"PODSUMOWANIE: nie przeszlo 2 z 91", kod wyjscia 1. Potem przywrocona czysta wersja:
+"WSZYSTKIE TESTY OK: 89".
+
+DOSTEPNOSC KOMUNIKATOW: testy same wypisuja wlasne opisowe "OK: ...", wiec petla ich
+NIE powtarza - inaczej czytnik ekranu czytal kazdy test dwa razy (raz opis, raz nazwe
+techniczna). Na liste awarii idzie krotki exception.Message, pelny slad stosu osobno
+do stderr - zeby nie brnac przez slad stosu w poszukiwaniu nazwy testu.
+
+=== JAK BUDOWAC AMC (potwierdzone) ===
+Repozytorium na glownym: D:\Projekty Codex\Accessible Multimedia Controller
+  (NIE "D:\Projekty Codex\AMC" - takiej sciezki nie ma, sprawdzalem).
+Moja kopia: ~/projekty/AMC (sklonowana na nowo 13.09 - poprzednia NIE byla repozytorium
+git, stad falszywa "rozbieznosc 349 vs 351"; stara lezy jako ~/projekty/AMC_niegit_20260913).
+Budowac WYLACZNIE przez .\build.ps1 (robi restore --runtime win-x64, NuGetAudit=false,
+disable-build-servers, potem oba zestawy testow). Samo "dotnet build" projektu testow
+pomija te ustawienia.
+Polecenie: ssh michal-glowny 'powershell -NoProfile -ExecutionPolicy Bypass -Command
+"cd \"D:\Projekty Codex\Accessible Multimedia Controller\"; .\build.ps1"'
+Wyjscie przez SSH z Windows ma bajty zerowe - filtrowac przez tr -d '\000', inaczej
+grep uznaje strumien za plik binarny i milczy ("binary file matches").
+Swiezy klon nie ma tozsamosci git - ustawic user.name michalkasperczak,
+user.email michalkasperczak@gmail.com (zgodnie z historia repozytorium).
+
+=== STAN OTWARTY ===
+Alt+F4 podczas nagrywania zamyka program - zgloszone, NIEROZWIAZANE.
+Ustawienia na poziomie sesji (wznawianie, predkosc, wyrownanie glosnosci dla calego
+TIDALa/radia) - brak, plus brak jawnej kolejnosci waznosci plik-folder-sesja-ogolne.
+Ctrl+Windows+strzalki - Michal pamieta z WiiM, w AMC nigdy nie bylo; do decyzji.
+Cicha aktualizacja z GitHub Releases - do przeniesienia z EdSharpNG.
+Na glownym zostal schowek git stash@{0} "Kopia bezpieczenstwa zmian uzytkownika przed
+synchronizacja alpha.13" - NIE MOJ, nie ruszac. Nieodlozony plik TIDAL_MAIL_DO_POMOCY_EN.md.
+
+
+### 1789248955 - 2026-09-12 23:35
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE STALE (13.09.2026, polecenie Michala): dostepnosc KAZDEJ tworzonej aplikacji i KAZDEGO projektu z interfejsem sprawdzam ZAWSZE takze zywym czytnikiem NVDA przez mostek MCP (narzedzia mcp__nvda__*), nie tylko testami w kodzie. Dotyczy AMC, EdSharpNG i wszystkich nowych projektow. Minimum: nvda_bridge_health, nvda_get_window_title, nvda_get_current_focus na zmienionym elemencie, a przy nowym skrocie nvda_send_keys + ponowny pomiar. Gdy mostek milczy albo okna nie ma - mowie WPROST, ze pomiaru zywym czytnikiem nie bylo; nie wolno pisac "sprawdzone z NVDA" na podstawie samych testow w kodzie. Zweryfikowane 13.09.2026: mostek odpowiada i czyta fokus na glownym komputerze Michala. Zapisane w skillach nvda-mcp-bridge-live-screenreader, edsharp-development, amc-accessible-multimedia-controller-development.
+
+DRUGIE USTALENIE: zadania i tematy Michal pisze w pliku na swoim glownym komputerze: D:\Projekty Codex\Hermes\Do zrobienia.md (pobieranie: scp z aliasu michal-glowny). Tam sa zadania i dla AMC, i dla EdSharpa. Czytam ten plik, gdy zamykam watek i szukam nastepnego tematu. Kolejnosc uzgodniona: najpierw domknac AMC (testy TIDAL nowym sposobem), zapisac wszystko na GitHub i u siebie, potem wrocic do EdSharpa.
+
+
+### 1789250621 - 2026-09-13 00:03
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE 2026-09-13 (lista zadan AMC z pliku Michala + stan wtyczki NVDA)
+
+ZRODLO: D:\Projekty Codex\Hermes\Do zrobienia.md na glownym komputerze (kopia /tmp/do_zrobienia_nowe.md, 3412 B, data w pliku 12.09.2026). Michal dopisal sekcje AMC.
+
+NOWE ZADANIA AMC (kolejka, jeszcze nie ruszone):
+1. Sesje i ich ustawienia (przebudowa).
+2. Aktualizacje w tle z menu Pomoc oraz przy starcie - program I komponenty; cicha instalacja, pobieranie.
+3. Okno i komunikaty jak w EdSharp - prawidlowe odczytywanie przez czytnik (ustalone 12.09.2026).
+4. "Zglos blad" jak w EdSharp - zgloszenia do repozytorium Michala; Hermes potem monitoruje i naprawia.
+5. TIDAL innymi sposobami niz w tle - przegladarka albo inaczej, sterowanie z AMC. USTALONE I ZMIERZONE: TIDAL w tle NIC NIE DAJE, ta droga zamknieta.
+6. Apple Music - na ile sie da.
+7. Spotify - z wewnetrzna obsluga.
+
+ZADANIA EDSHARP z tego pliku (bez zmian): paleta polecen czyta niepotrzebnie nazwe menu przed poleceniem; kursor uwieziony w menu po Alt (Escape nie pomaga, tylko Alt+Tab); przebudowa Configuration Ctrl+, na checkboxy/pola kombi (Work Continuity wchodzi do Settings jako grupa); Manual Options do wyjasnienia; usunac Default Fonts i opcje RTF; usunac Web Download (Alt+Shift+W) i Web Client Utilities (Alt+Shift+Space); nawigacje po zakladkach/komentarzach/przypisach przeniesc z Misc do Navigate; usunac stare skroty F9 przy komentarzach; SPRAWDZIC czy komentarze to tylko zakladki z nazwami, czy tez komentarze importowane z Worda - jesli z Worda, zostaja. Kazda zmiana ma trafic do palety polecen, pomocy Ctrl+F1, podrecznika, dokumentacji i na GitHub.
+
+WTYCZKA NVDA - PRZELACZANIE SESJI (zrobione w kodzie, 354):
+Michal potwierdzil dzialanie i wybral Ctrl+Windows+Shift+Lewo/Prawo na przelaczanie sesji. Dodane jako DRUGI gest obok historycznego Ctrl+Windows+Shift+Tab (pamiec miesniowa zostaje). NVDA przyjmuje liste gestow przez gestures=[...] zamiast gesture= - potwierdzone w zrodle nvaccess/nvda source/scriptHandler.py, nie zgadniete.
+
+LEKCJA - test wtyczki wylapal PRAWDZIWY blad: komenda refreshPodcastLibrary (Ctrl+Windows+F5, odswiezanie podcastow) NIE byla wpisana do COMMANDS w transport.py, wiec nacisniecie byloby po cichu odrzucane - skrot nie dzialalby wcale. Dopisane do COMMANDS, ale SWIADOMIE POZA FOREGROUND_COMMANDS, zeby odswiezanie nie wyrywalo fokusu z aplikacji, w ktorej user pracuje. Test nvda-addon/tests/test_controller.py rozszerzony: obsluguje teraz kilka gestow na jedna komende (gesture= i gestures=), pilnuje ze nie ma obu naraz, licznik gestow 65 -> 68.
+
+LEKCJA - NVDA nadpisuje nvda.ini przy WYJSCIU (saveConfigurationOnExit = True). Dopisanie enableScratchpadDir = True przy DZIALAJACYM NVDA jest kasowane po jego restarcie. Trzeba: dopisac wpis, potem taskkill /F /IM nvda.exe (twardo, bez zapisu konfiguracji), potem uruchomic nvda.exe ponownie. Skrypt: C:\Users\Michal\restart_nvda_scratchpad.ps1 na maszynie Hermes.
+
+MASZYNA HERMES MA WLASNE NVDA 2026.2.0.57664 (C:\Program Files\NVDA), user Windows to "Michal" (NIE "micha" jak na glownym!). Dodatki: tylko nvdaMcpBridge. Dzieki temu wtyczke AMC mozna testowac LOKALNIE, nie ruszajac komputera Michala. Katalog testowy: C:\Users\Michal\AppData\Roaming\nvda\scratchpad\globalPlugins\amcController.
+UWAGA STAN NIEDOMKNIETY: po restarcie NVDA z wlaczonym scratchpadem log NIE pokazuje wzmianki o amcController ani zadnego bledu - wczytanie wtyczki NIEPOTWIERDZONE, wymaga dalszej diagnozy (mozliwe ze scratchpad wymaga tez wpisu w Ustawieniach/Zaawansowane albo potwierdzenia dialogiem).
+
+BLAD AUDIO AMC ROZWIAZANY - NIE BYL TO BLAD AMC: Windows trzyma wlasne przypisanie urzadzenia audio per aplikacja w HKCU:\Software\Microsoft\Internet Explorer\LowRegistry\Audio\PolicyConfig\PropertyStore i ma ono PIERWSZENSTWO nad wyborem w programie. Bylo tam 183 wpisow dla roznych wersji AMC (kazda wersja = inny plik = nowy wpis), 33 wskazywaly Denon PMA-1700NE; wpis dla wersji 353 wskazywal Denon, dlatego sesja Lokalne z wybranym Realtekiem grala z Denona. Ustawienia AMC byly CALY CZAS POPRAWNE. Usunieto wszystkie 183 wpisy, kopia zapasowa: C:\Users\micha\amc_audio_perapp_backup.reg na glownym. Wymaga restartu AMC - NIEZROBIONE, bo Michal nagrywa.
+
+
+### 1789251197 - 2026-09-13 00:13
+
+(rodzaj: ustalenie; projekt: amc)
+
+ZGODA STALA 2026-09-13 (Michal, ogolna): moge instalowac aplikacje Michala - EdSharp/EdSharpNG i AMC - TAKZE NA MASZYNIE HERMES, u siebie, jesli tak mi wygodniej pracowac i testowac. Nie musze pytac za kazdym razem.
+
+PO CO TO WAZNE: maszyna Hermes ma WLASNE NVDA 2026.2.0.57664 (C:\Program Files\NVDA, user Windows "Michal", NIE "micha" jak na glownym), a mostek MCP (mcp__nvda__*) steruje NVDA WLASNIE TUTAJ, nie na glownym komputerze. Dzieki temu pelny cykl - build, instalacja, pomiar zywym czytnikiem, restart NVDA, restart apki - da sie zrobic lokalnie, BEZ zabierania Michalowi komputera i bez przerywania mu nagrywania. Restart NVDA u siebie: mcp__nvda__nvda_restart_nvda albo taskkill /F /IM nvda.exe + start.
+
+KOREKTA WCZESNIEJSZEGO BLEDNEGO ZAPISU: w pamieci bylo, ze mostek MCP "czyta fokus na glownym komputerze" - TO NIEPRAWDA, Michal to sprostowal ("Na tak w Hermes caly czas"). Mostek = NVDA na Hermesie. Poprawione w MEMORY.
+
+INSTALACJA DODATKU NVDA BEZ GUI (dziala, sprawdzone): rozpakowac paczke .nvda-addon (to zwykly zip) do %APPDATA%\nvda\addons\<nazwa>\ i dopisac obok plik <nazwa>.json z {"pendingRemove": false}, potem restart NVDA. NIE trzeba klikac w okno dodatkow.
+NIE UZYWAC scratchpada do testow: NVDA zapisuje nvda.ini przy WYJSCIU (saveConfigurationOnExit = True) i kasuje dopisane recznie enableScratchpadDir = True. Instalacja jako normalny dodatek omija ten problem calkowicie.
+
+
+### 1789254574 - 2026-09-13 01:09
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.354 - WYDANE, ZMIERZONE I URUCHOMIONE U MICHALA (2026-09-13, ~01:15).
+
+WYPCHNIETE: commit 75a9b57 na github.com/michalkasperczak/AMC main (poprzedni b982bd1 = 353), 17 plikow, 486 dodanych / 30 usunietych linii. Sprawdzone U ZRODLA przez gh api repos/.../commits/main -> 75a9b57. Directory.Build.props <Version>0.1.0-alpha.354.
+
+POMIAR: kompilacja 0 bledow 0 ostrzezen; WSZYSTKIE TESTY OK: 90 (bylo 89, nowy test nakladania plikow dolozyl jeden).
+
+PACZKA: D:\\Projekty Codex\\Hermes\\AMC-354\\AccessibleMediaController-0.1.0-alpha.354.exe (167 286 464 B). Zbudowana przez build.ps1 -Publish -KeepPreviousPackages (bez -Publish skrypt SAMEJ PACZKI NIE ROBI - tylko kompiluje i testuje; pierwszy raz przegapilem ten przelacznik).
+
+URUCHOMIONE u Michala i potwierdzone w tasklist (proces AccessibleMediaController, sesja Console 1, user micha).
+
+TRESC 354: (1) pliki przestaja nachodzic na siebie przy szybkim przechodzeniu - patrz wpis 1789253017; (2) 237 zrodel RSS mialo odstep odswiezania 0 min - domyslnie 60 min dla RSS i YouTube z naprawa istniejacych wpisow, odstepy i RefreshBatchSize w Ustawieniach; (3) wtyczka NVDA 0.2.2 - przelaczanie sesji Ctrl+Windows+Shift+Lewo/Prawo, refreshPodcastLibrary na liscie ALLOWED_COMMANDS, lastTestedNVDAVersion 2026.2.0.
+
+DZWIEK DENON/REALTEK - SPRAWA ZAMKNIETA. Restart do 354 domknal usuniecie 183 wpisow per-app z rejestru. Sprawdzone po uruchomieniu: reg query HKCU\\...\\PolicyConfig\\PropertyStore /s /f "alpha.354" -> BRAK wpisu dla wersji 354, czyli Windows niczego nie narzuca i decyduje wybor w AMC. (Samych wpisow w galezi jest znowu 292 linii wyjscia, ale to inne programy - nie AMC.)
+
+NOWE LEKCJE TECHNICZNE (SSH do glownego, wazne na przyszlosc):
+1. Aplikacji GUI NIE URUCHOMISZ przez ssh + Start-Process - proces nie wstaje, brak sesji pulpitu (potwierdzone: tasklist pusty, log sie nie zalozyl). DZIALA: schtasks /create /tn NAZWA /tr "'<pelna sciezka exe>'" /sc once /st 23:59 /it /f, potem schtasks /run /tn NAZWA, na koniec schtasks /delete /tn NAZWA /f. Kluczowe /it (interactive) - zadanie startuje w sesji zalogowanego uzytkownika. Cudzyslowy: sciezka ze spacjami w /tr musi byc w apostrofach WEWNATRZ cudzyslowow.
+2. 'cd "D:\\..."' w komendzie SSH nie zmienia dysku w cmd.exe - podawac pelne sciezki do plikow projektu.
+3. Long-running SSH (build, publish) Hermes wrzuca w tlo - przekierowac do pliku w /tmp i odpytywac w petli; petla czekania w execute_code max ~4.5 min, bo cell ma limit 300 s.
+4. Pelnego builda NIE zrobisz, gdy AMC dziala - CS2012 "plik jest uzywany przez inny proces" na AccessibleMediaController.dll.
+
+POLECENIE MICHALA 2026-09-13 (msg 1496), ZASADA NA PRZYSZLOSC: gdy nowa wersja SIE NIE SKOMPILUJE, mam URUCHOMIC STARSZA DZIALAJACA WERSJE, zeby Michal mial czym nagrywac, i dopiero potem pracowac nad nowa. Nigdy nie zostawiac go bez dzialajacego AMC.
+
+GOTOWE.MD zaktualizowany (D:\\Projekty Codex\\Hermes\\Gotowe.md, 5207 znakow, sprawdzony po odczycie): wpis o wydaniu 354 na gorze, opis naprawy nakladania plikow, blok "zostalo do zrobienia: restart AMC" zamieniony na informacje, ze restart sie odbyl.
+
+OTWARTE WATKI: EdSharp Ctrl+C = nazwa pliku / Ctrl+Shift+C = pelna sciezka (niezaimplementowane, PickFileCopySelection w EdSharp.cs L19255-19480); nowe zadania AMC z Do zrobienia.md (sesje i ustawienia, aktualizacje w tle, okno i komunikaty jak EdSharp, Zglos blad, TIDAL przez przegladarke, Apple Music, Spotify); zywy test 354 NVDA przez mostek na Hermesie.
+
+
+### 1789257366 - 2026-09-13 01:56
+
+(rodzaj: podsumowanie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789258441)
+
+PODSUMOWANIE EdSharpNG 5.0.95 (13.09.2026), commit 923fbc0 na origin/master (UWAGA: galaz to master, nie main - push origin HEAD dziala, git log origin/main nie istnieje).
+
+ZROBIONE Z LISTY MICHALA:
+1. Kopiowanie na listach plikow (Alt+L Ulubione, Alt+R Ostatnie): Ctrl+C = sama NAZWA pliku, Ctrl+Shift+C = pelna SCIEZKA + CF_HDROP (wkleja sie w Eksploratorze). To ODWROCENIE decyzji z 11.09.2026 ("zgodzilem sie na 1 skrot, to byl jednak blad"). PickFileCopySelection ma teraz parametr string sMode ("names"/"paths") zamiast bool bPaths. Komunikat nazywa to, co poszlo: "name"/"names" vs "path"/"paths".
+2. Paleta polecen (Ctrl+Shift+X - NIE Ctrl+Shift+P, komentarz w kodzie klamal): nazwa polecenia PIERWSZA, menu na koncu w nawiasie " (Menu)". Filtrowanie po nazwie menu nadal dziala.
+3. Wyjscie z menu (Alt): FocusChildEditControl wola najpierw wygaszenie trybu klawiatury menu przez refleksje na wewnetrznej klasie WinForms ToolStripManager.ModalMenuFilter.ExitMenuMode() (ZMIERZONE ze istnieje i wywolanie przechodzi), potem ustawia fokus. Poprzednia poprawka ustawiala TYLKO fokus i dlatego nie dzialala - strzalki dalej czytaly menu.
+4. Logi diagnostyczne: NIE BYLO ZADNYCH (Speech.log to mowa, kasowany przy starcie). Dodane: App.ErrorLog = DataDir/EdSharpNG-diagnostyka.log, App.ErrorLogMaxBytes = 512 KB, Util.LogDiagnostic(rodzaj, tresc) - nigdy nie rzuca, nigdy nie mowi, przycina zostawiajac OGON. Wpis "start" przy uruchomieniu, wpis "awaria" w UnhandledException PRZED pokazaniem okna. W oknie Zglos blad checkbox "Attach the diagnostic &log" (domyslnie wlaczony, pokazywany TYLKO gdy log istnieje) dokleja OSTATNIE 200 wierszy.
+
+NAPRAWIONE PO DRODZE (prawdziwe usterki, nie z listy):
+- Alt+Shift+H (Podsumowanie skrotow) otwieralo NIEISTNIEJACY plik: kod wolal Path.Combine(ProgramDir,"HotKeys.txt"), a w repo/katalogu od 5.0.73 lezy EdSharp_Hotkeys.txt. Instalator stagowal to samo zle imie z flaga skipifsourcedoesntexist, wiec cicho nie kopiowal nic. Naprawione w EdSharp.cs i EdSharp_Setup.iss.
+- EdSharp_Hotkeys.txt byl RECZNA kopia nieaktualna od 5.0.45 (brak palety polecen, calej rodziny komentarzy, Text Combine). TERAZ GENEROWANY: testy/generuj_podsumowanie_skrotow.py czyta Hotkeys.ini i pisze txt; wpiety w zbuduj.sh krok 1/3; tryb --sprawdz do kontroli. Literowka "EdSharpapplication" poprawiona u zrodla w Hotkeys.ini.
+- AlternateMenu (Alt+F10): iChoice zostawal -1 gdy zadna pozycja nie pasowala, potem items[-1] => wyjatek. Dodany warunek.
+
+POMIARY: testy/pomiar_595.cs - 17 asercji na ZBUDOWANEJ binarce, wszystkie zielone na 5.0.95, 6 OBLEWA na 5.0.94 (kontrola negatywna, stara binarka odtworzona z git w /mnt/c/EdSharpStara94). testy/weryfikuj_liste_testow.py: 612/612. testy/pomiar_570.cs: 28 asercji zielone, 4 oblewaja na 5.0.94.
+
+NAPRAWIONE SONDY (byly gluche):
+- weryfikuj_liste_testow.py mial ZASZYTA sciezke /mnt/d/projekty/edsharp-pr (nie istnieje na tej maszynie) => wywalal sie wyjatkiem zamiast mierzyc. Teraz korzen z __file__ + zmienna EDSHARP_REPO.
+- ten sam plik czytal "hotkeys.txt" (nie istnieje od 5.0.73).
+- porownanie ini/txt: dodana normalizacja formatu (ini "Nazwa=Skrot, opis" vs txt "Nazwa, Skrot, opis").
+- pomiar_595.cs pierwsza wersja miala GLUCHA asercje palety: szukala napisu KODU ZRODLOWEGO w binarce => przechodzila na obu wersjach. Naprawione na czytanie literalow z CIALA METODY przez opcode ldstr 0x72 + Module.ResolveString - to dobry wzorzec na pytanie "jaki format napisu sklada TA metoda".
+- odwrocone 3 przestarzale asercje pilnujace decyzji, ktore Michal sam zmienil: "File copied", "not found", oraz "strzalka w lewo mowi numer wiersza" na liscie zakladek.
+- zaktualizowana asercja detektora kodowania: kod uzywa PickPolishLegacyEncoding (windows-1250/CP852), nie Encoding.Default.
+
+USTALENIA ZMIERZONE, CZEKAJA NA DECYZJE MICHALA (zadanie "komentarze"):
+- Komentarze w EdSharpie to komentarze MARKDOWN <!-- tresc --> (InsertOrEditMarkdownComment, MarkdownCommentRegex), NIE zakladki z nazwami i NIE komentarze z Worda.
+- ZMIERZONE pandoc-em na wlasnorecznie zrobionym docx z komentarzem recenzenta: przy zwyklym imporcie komentarz Worda GINIE calkowicie; z --track-changes=all wychodzi jako [tekst]{.comment-start id="1" author="..."}, czyli w formacie ktorego MarkdownCommentRegex NIE ROZPOZNAJE. Czyli komentarze z Worda dzis nie dzialaja w ogole.
+- Michal twierdzil, ze komentarze maja "stare skroty F9" do usuniecia - SPRAWDZONE, w kodzie i Hotkeys.ini NIE MA zadnego F9 przy komentarzach; rodzina komentarzy ma Ctrl+Shift+K/Alt+K itd. Falszywa przeslanka.
+- Wolne skroty na te maszyne (sprawdzone w EdSharp.cs + Hotkeys.ini + KeyMap.cs): Control+Shift+H, Alt+M, Alt+N, Alt+Q, Alt+W. Wszystko inne zajete.
+
+NIEZROBIONE Z LISTY (kolejka): przebudowa Configuration Ctrl+, (checkboxy/pola kombi/Work Continuity jako grupa), Manual Options, usuniecie Default Fonts + opcji RTF, usuniecie Web Download i Web Client Utilities z Misc, przeniesienie nawigacji po zakladkach/komentarzach/przypisach do Navigate, testy zywym NVDA, dokumentacja. Potem cala lista AMC (sesje i ustawienia, aktualizacje w tle, okno i komunikaty jak EdSharp, Zglos blad, TIDAL/Apple Music/Spotify).
+
+Instalator wyslany: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.95.exe (SHA-256 potwierdzony po obu stronach: 52b5c56c55f3f07f5689001fbeb805465989df6137d27219f44ca945478b9091). Gotowe.md zaktualizowany.
+
+
+### 1789258441 - 2026-09-13 02:14
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+EdSharpNG 5.0.95 - DRUGA CZESC (13.09.2026), commit 5cd6d35 na origin/master. Instalator u Michala: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.95.exe, sha256 ae573d91...0b (zgodny po SCP, sprawdzony Get-FileHash).
+
+ZROBIONE (ponad to, co w poprzednim wpisie o 5.0.95):
+- ZADANIE 9 z listy: usuniete 3 komendy (menuMiscSetDefaultFont, menuMiscWebDownload Alt+Shift+W, menuMiscWebClientUtilities Alt+Shift+Space) + osierocona metoda WebClientUtilities. Warstwy: pola, CreateMenuItem, AddRange, handlery, Hotkeys.ini, EdSharp.md (lista I PROZA - dwa miejsca!). ODCZYT FontDefault ZOSTAWIONY swiadomie (usunelismy tylko komende USTAWIAJACA - inaczej komu wyglad sie zapisal, temu program by go zmienil). GetFontText ZOSTAL, bo uzywa go Say Font.
+- Nawigacja przypisow/komentarzy PRZENIESIONA z Misc do Navigate (GoToFootnote, Next/PriorFootnote, FootnoteList, Next/PriorComment, CommentList). Wstawianie przypisu/komentarza i eksport ZOSTAJA w Misc. Zakladki byly w Navigate od dawna.
+- Naprawione NIEZGLOSZONE: Alternate Menu (Alt+F10) mogl rzucic ArgumentOutOfRange gdy wybranej pozycji nie da sie dopasowac (iChoice = -1 szlo do items[iChoice]); komentarz w kodzie mowil Control+Shift+P przy palecie, a kod ma Control+Shift+X.
+
+POMIARY: pomiar_570.cs 28/28 (na 5.0.94: 4 ZLE), pomiar_595.cs 12/12 (na 5.0.94: 6 ZLE), pomiar_usuniec_595.cs 20/20 (na 5.0.94: 10 ZLE), weryfikuj_liste_testow.py 612/612.
+
+NOWE PULAPKI (w skillu, references/sondy-gluche-i-pliki-zasobow.md):
+1. MenuPozycji z IL - mapa pole->menu musi czytac TEZ KONSTRUKTORY (GetConstructors), bo menu buduje sie w konstruktorze MdiFrame. Sonda z samym GetMethods dala "(nie znaleziono)" dla wszystkiego = falszywa regresja.
+2. Sonda czytajaca plik zasobu OBOK BINARKI mierzy STARA KOPIE z katalogu buildu (/mnt/c/EdSharpBuild/Hotkeys.ini byl z 11.09). Sciezke pliku opisow podawaj ARGUMENTEM z repo.
+3. Ciecie EdSharp.md po bajtach (b.find/b.replace na blokach) zepsulo plik - do usuwania wierszy dziel po "\n" i usuwaj INDEKSY OD KONCA. git checkout przywrocil (moje wczesniejsze zmiany byly juz w commicie).
+
+STAN KOLEJKI EdSharp: zadania 1,2,3,4,6,9 z listy ZROBIONE. CZEKAJA NA DECYZJE MICHALA: zadanie 5 (komentarze - falszywa przeslanka, nie ma zadnego F9 przy komentarzach; to komentarze markdown <!-- -->, NIE z Worda - zmierzone: pandoc gubi komentarze Worda przy imporcie, z --track-changes=all daja [tekst]{.comment-start}), zadanie 7 (Configuration Ctrl+, przebudowa) i 8 (Manual Options) - te dwa to ten sam obszar, robic razem. Potem zadanie 10 (testy zywym NVDA + dokumentacja) i cala kolejka AMC (7 pozycji, pierwsza: sesje i ustawienia).
+
+
+### 1789260679 - 2026-09-13 02:51
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (13.09.2026, EdSharpNG 5.0.95): DWIE AWARIE, KTORE PRZESZLY PRZEZ WSZYSTKIE SONDY I TRAFILY DO MICHALA.
+
+Wydalem paczke po 612/612 PASS w weryfikatorze i po zielonych sondach na binarce - a program u uzytkownika NIE URUCHAMIAL SIE, a po naprawie startu NIE OTWIERAL ZADNEGO PLIKU. Zadna sonda tego nie zlapala, bo wszystkie mierzyly STRUKTURE KODU, a nie DZIALAJACY PROGRAM.
+
+AWARIA 1 - kolejnosc budowania menu. Przenioslem pozycje przypisow/komentarzy z Misc do Navigate, ale menuNavigate.DropDownItems.AddRange stalo w linii ~1693, a te pozycje powstaja w ~1954. Do menu szly null-e, konstruktor MdiFrame wywalal sie na ArgumentNullException w ToolStripItemCollection.Add. AddRange MUSI stac PONIZEJ tworzenia wszystkich swoich pozycji.
+
+AWARIA 2 - brak Ude.dll. Binarka zbudowana z HAVEUDE (kod WOLA Ude), ale Ude.dll lezala tylko w /mnt/c/EdSharpBuild, nie w repo - a instalator pakuje Z REPO z flaga skipifsourcedoesntexist, wiec pominal ja PO CICHU. Kazde otwarcie pliku dawalo "Cannot open file!". KLUCZOWE: .NET rzuca FileNotFoundException przy JIT-owaniu CALEJ METODY, czyli PRZED wejsciem w jej try - wiec try/catch w DetectEncodingNoBom NIE LAPAL tego wcale. Naprawa: wolanie Ude wydzielone do osobnej metody DetectEncodingUde z [MethodImpl(NoInlining)], try owija JEJ WOLANIE. Plus bramka w zbuduj.sh (kopiuje Ude.dll z BUILD, exit 12 gdy brak).
+
+CO TO ZMIENIA W MOJEJ PRACY: po kazdej zmianie dotykajacej STARTU albo WCZYTYWANIA PLIKU muszę URUCHOMIC program i otworzyc plik, zanim wysle paczke. Instalacja u siebie na Hermesie: cp paczki do /mnt/c/tmp/, cmd.exe /c "cd /d C:\tmp && inst.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART", laduje w C:\Program Files\EdSharpNG\. Start przez powershell Start-Process (NIE przez cmd start - UNC paths). Potwierdzenie: tasklist /FI "IMAGENAME eq EdSharpNG.exe" + tytul okna przez Get-Process .MainWindowTitle.
+
+DZIENNIK DIAGNOSTYCZNY UDOWODNIL SWOJA WARTOSC W DNIU DODANIA - wskazal obie przyczyny z pelnym sladem stosu w jednej probie. Lezy w C:\Users\<user>\AppData\Roaming\EdSharp\EdSharpNG-diagnostyka.log. Przy okazji: catch w LoadTextOrRtfFile zamienial KAZDY blad na jeden komunikat i wchodzil w rekurencje na kopii tymczasowej (stad mylace "nie ma EdSharp.tmp" zamiast prawdziwej przyczyny) - naprawione.
+
+PULAPKA WZORCA: "Ude.CharsetDetector" NIE WYSTEPUJE w binarce .NET - przestrzen nazw i nazwa typu sa w OSOBNYCH napisach. Pytaj o samo "CharsetDetector". Ten zly wzorzec zrobil bramke w zbuduj.sh martwa na jeden build.
+
+MOSTEK NVDA: fokus okna nie daje sie przelaczyc z mojej sesji (SetForegroundWindow zwraca False, alt+tab nie zmienia okna); mcp__nvda__ czytal caly czas moj terminal. Pomiar palety/menu ZYWYM NVDA NIEZROBIONY - trzeba powiedziec to Michalowi wprost.
+
+
+### 1789298034 - 2026-09-13 13:13
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG 5.0.96 (13.09.2026), commit 125d017 na origin/master (galaz master).
+
+ZADANIE 7 (ustawienia Ctrl+przecinek): stare okno bylo MultiInput z 27 polami tekstowymi (App.ReadDefaultOptions). Nowy plik Ustawienia.cs = SPIS ustawien (klucz, etykieta po ludzku z &klawiszem dostepu, rodzaj: przelacznik/lista/liczba/tekst, dozwolone wartosci + nazwy dla czlowieka, podpowiedz czytana przy wejsciu w pole). Metoda PokazUstawienia() w EdSharp.cs sklada okno przez LbcDialog (addCheckBox / addComboPickBox / addNumericUpDown / addInputBox), runOkCancel. Zmierzone zywym NVDA: 6 pol wyboru, 8 list ZAMKNIETYCH (DropDownList), 1 licznik, 7 pol tekstowych (polecenia kompilatora i wzorce - tam wartosci nie da sie wyliczyc), 5 przyciskow. Czytanie wartosci tolerancyjne (CzyWlaczone: y/t/1/on po Trim i zdjeciu cudzyslowow), zapis ZAWSZE kanoniczny Y/N. Pomijane: RestoreSession, AutoSaveSeconds, FontDefault (maja WLASNE okna) oraz wycofany E&xtraSpeech (ampersand W NAZWIE klucza - porownanie nazw po zdjeciu ampersandu).
+
+ZADANIE 5 (komentarze): decyzja Michala - "skoro pod Ctrl Shift F9 i tak dalej ich wlasciwie nie potrzebujemy na razie, to bym usunal te klawisze. Moze do tego wrocimy". Zrobione: 4 polecenia (Insert/Next/Prior Comment, Comment List) ZOSTAJA w menu Navigate, ale CreateMenuItem z pustym skrotem; Hotkeys.ini "Insert Comment=," (pusty klawisz, opis zostaje); EdSharp_Hotkeys.txt "(no key assigned)"; podrecznik EdSharp.md przepisany, zeby nie kazal naciskac nieistniejacych klawiszy. Sprawdzone na zywo: Alt+F9, Alt+Shift+PageUp/PageDown, Control+Alt+F9 nic nie robia; kontrola negatywna Control+przecinek poprawnie wykryty jako dzialajacy.
+
+NAPRAWIONE NIEZGLOSZONE: NumericUpDown czytal sie jako sama liczba ("100"). Fokus NIE siada na NumericUpDown, tylko na jego wewnetrznym UpDownEdit, ktory ma wlasna PUSTA nazwe - AccessibleName na kontrolce nadrzednej jest wtedy przez nic nie czytany. Poprawka w Lbc.cs addNumericUpDown: petla po nud.Controls ustawia ctlChild.AccessibleName i AccessibleRole.SpinButton. Dotyczy KAZDEGO licznika w programie.
+
+POMIARY: weryfikuj_liste_testow.py 652/652; nowa sonda testy/pomiar_ustawienia_596.cs 29/29 (kontrola negatywna: na binarce 5.0.94 oblewa na braku typu Ustawienia); pomiar_570 28/28, pomiar_595 17/17, pomiar_usuniec_595 20/20, pomiar_ude_595 4/4.
+
+PACZKA: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.96.exe, SHA256 pierwsze 24 = 634f21e961de28c9bc5ee960, zgodne na obu koncach. Gotowe.md zaktualizowane.
+
+ZOSTAJE OTWARTE: (a) Manual Options - Michal nadal nie zdecydowal ("nie wiem co i jak z tego chcemy"); (b) w jego pliku zadan przy zadaniu 7 jest DRUGA czesc, ktorej NIE zrobilem: "wtedy Work Continuity nie osobna opcja w menu tylko w Settings grupa" - czyli ciaglosc pracy ma wjechac do okna Settings jako grupa, a nie stac osobno w menu.
+
+
+### 1789302002 - 2026-09-13 14:20
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (13.09.2026, EdSharp 5.0.98): Control+Alt+litera NIE odbiera polskich znakow - moj wczesniejszy "bezpiecznik prawego Alta" bronil czegos, co nie bylo zagrozone.
+
+CO ZMIERZONE (przy komendzie NAPRAWDE przypisanej do Control+Alt+S, sondy testy/spor_ctrl_alt_s.ps1 i testy/kontrola_ctrl_alt_k.ps1):
+- prawy Alt+S wpisuje "s z kreska" (kod 347),
+- LEWY Control+Alt+S TEZ wpisuje 347 - znak wytwarza UKLAD klawiatury, zanim chord dojdzie do ProcessCmdKey,
+- lewy Control+Alt+K (K bez polskiego odpowiednika) NIE wpisuje znaku i uruchamia komende.
+WNIOSEK: litera nigdy nie ginie. Na chordzie dzielonym z polska litera bez skutku zostaje SKROT, a to nie odbiera uzytkownikowi niczego. Michal mowil to wprost ("Alt-Ctrl-s nie wchodzilo w konflikt z s") i mial racje.
+
+BLAD, KTORY POPELNILEM: dolozylem do ProcessCmdKey_Helper blokade (GetKeyState(VK_RMENU) -> return false przy wcisnietym prawym Alcie) na podstawie komentarza w kodzie z 30.08.2026, ktory twierdzil, ze "przypisanie komendy do Control+Alt+E odbiera litere e z ogonkiem po cichu". Tego zdania NIKT nie zmierzyl. Blokada nic nie ratowala, a psula dzialajace skroty BEZ liter (Control+Alt+PageUp, Control+Alt+Up wystukane prawym Altem). Wycofana w 5.0.98, komentarz sprostowany w kodzie.
+
+ZASADA NA PRZYSZLOSC: komentarz w kodzie mowiacy "zmierzone" NIE jest pomiarem. Przed dolozeniem kodu obronnego powtorz pomiar, i to z KONTROLA POZYTYWNA (litera bez polskiego odpowiednika, np. K) - bez niej nie odroznisz "skrot zjada litere" od "litera zjada skrot".
+
+
+### 1789302028 - 2026-09-13 14:20
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789307291)
+
+USTALENIE (13.09.2026, polecenie Michala): "To tworz zawsze" - KAZDA wersja EdSharpNG (i analogicznie AMC) musi dostac WYDANIE na GitHubie z plikiem instalatora do pobrania. Michal pobiera programy z GitHuba i przez F11 w programie; brak wydania = nie ma jak pobrac.
+
+WYKRYTA ZALEGLOSC: na GitHubie najnowsze wydanie bylo v5.0.94, a wypchniete commity szly do 5.0.96. Tagi 5.0.95/96/97 nie istnialy. Nadrobione: v5.0.95, v5.0.96, v5.0.97, v5.0.98 - kazde z plikiem EXE i suma SHA-256 w opisie.
+
+SUMA SHA-256 W OPISIE JEST OBOWIAZKOWA: program przy aktualizacji (F11) liczy sume pobranego pliku i porownuje z 64 znakami szesnastkowymi znalezionymi w opisie wydania. Gdy sumy nie ma, pokazuje uzytkownikowi pytanie "Release vX does not publish a checksum... Run it anyway?".
+
+UZYWAJ GOTOWEGO SKRYPTU, NIE RECZNEGO gh release create:
+  bash ~/projekty/edsharp/wydaj.sh 5.0.98 "opis zmian"
+Robi: commit + push, wydanie (albo poprawia istniejace), liczy sume Z PLIKU, WERYFIKUJE ze suma jest w opisie (i odmawia wydania, gdy jej nie widzi), scp paczki do "D:\Projekty Codex\Hermes\" i sprawdza sume na komputerze Michala. Ja tego skryptu najpierw nie uzylem i dlatego trzy wydania powstaly bez sum - trzeba bylo dopisywac je pozniej.
+
+
+### 1789307259 - 2026-09-13 15:47
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (13.09.2026, EdSharpNG 5.0.99): pomiar zywego GUI przez SendKeys jest bezwartosciowy bez POTWIERDZONEGO fokusu. Pierwsza wersja sondy zywe_ctrl_o.ps1 wyslala klawisze "do tego, co na wierzchu" i wszystkie 6 probek dalo IDENTYCZNY wynik, bo na pulpicie wisial instalator poprzedniej wersji (EdSharpNG_Setup_5.0.98.tmp, podwyzszone prawa, taskkill z WSL odmawial - trzeba bylo Start-Process -Verb RunAs). Sonda "przechodzila" i klamala.
+TRZY OSOBNE PULAPKI, kazda dawala falszywy wynik:
+1) SetForegroundWindow SAMO NIE DZIALA z procesu w tle - Windows odrzuca. Trzeba AttachThreadInput do watku okna aktywnego na czas wywolania.
+2) Process.MainWindowHandle dla EdSharpa zwraca 0 przez pierwsze sekundy (formularz MDI). NIE czekac na slepo 3 s - petla do 15 s, do pierwszego prawdziwego uchwytu; fallback EnumWindows po numerze procesu.
+3) Tytul okien SYSTEMOWYCH jest w jezyku Windowsa: dialog otwarcia to "Otwieranie", nie "Open". Warunek na angielskie slowo odrzucal kazdy pomiar. Rozstrzygac po KLASIE okna (#32770), jezyk tylko pomocniczo.
+ZASADA: sonda musi UMIEC ODMOWIC pomiaru ("POMIAR NIEWAZNY") zamiast zwracac wynik przy niepewnym stanie. To wlasnie ta odmowa wykryla wiszacy instalator.
+Pomocnik: testy/na_wierzch.ps1 (uruchamiac PRZED pytaniem zywego NVDA o fokus - inaczej NVDA czyta cudze okno; zmierzone: czytalo przycisk OK obcego dialogu).
+
+
+### 1789307291 - 2026-09-13 15:48
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE (13.09.2026, EdSharpNG 5.0.99): Control+O jest JEDYNYM otwieraniem plikow. Michal: "Usunac osobna pozycje i zostawic Control+O jako uniwersalne otwieranie. Wiadomo, ze pliki tekstowe otworzy jako pliki tekstowe, tak samo Markdown i podobne, ale juz przy okazji HTML zapyta, ktory plik, a przy okazji innych formatow bedzie konwertowac na postac mozliwie czytelna."
+USUNIETE TRZY POZYCJE: Open Other Format (Control+Shift+O), Font (Alt+minus), Set Selection Font (Alt+Shift+minus).
+WAZNE - MOJ BLAD DO ZAPAMIETANIA: opisalem Michalowi Open Other Format jako "pozycje bez funkcji, konwersja wylaczona w kodzie". BYLO TO NIEPRAWDA i sam to wycofalem przed implementacja. Zakomentowany blok, ktory zobaczylem, byl STARA wersja funkcji, zastapiona nowszym wywolaniem OpenOrActivateWindow tuz nad nim. Konwersja zyla. Lekcja: zakomentowany kod obok dzialajacego wywolania nie dowodzi, ze funkcja jest martwa - szukac aktualnej sciezki wykonania, nie pierwszego pasujacego fragmentu.
+DRUGIE ODRZUCONE KRYTERIUM: chcialem pytac "czy w sekcji Import jest konwerter dla tego rozszerzenia" (metoda HasImportConverter). ZLE - tabela Import ma konwertery TAKZE dla md, rst, tex, wiec Markdown zaczalby pytac, wbrew wytycznej Michala. Polityke bierze sie z GetViewLevel (metoda OfferConversionOnOpen), czyli z tego samego miejsca, ktore decyduje o otwieraniu z Eksploratora - jedno zrodlo, plik zachowuje sie tak samo niezaleznie od drogi wejscia, a wpis ViewLevels uzytkownika dziala teraz takze dla Control+O. Grupa HTML dochodzi ponad to jawnie.
+ZMIERZONE w zywym programie: .txt/.md/.rst otwieraja sie od razu; .html -> okno "Import html to"; .docx -> "Import docx to"; .rtf -> "Open RTF File As". Zywy NVDA w menu Plik: po "Open ... Control+O" od razu "Open Again Alt+O". Testy 672/672.
+Wydanie v5.0.99 na GitHubie z exe i SHA-256; paczka w D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.99.exe. Commity dcfb18c i 876f752.
+
+
+### 1789307320 - 2026-09-13 15:48
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE NADAL OBOWIAZUJACE (potwierdzone 13.09.2026): KAZDA wersja EdSharpNG dostaje WYDANIE (release) na GitHubie z plikiem .exe i suma SHA-256 w opisie. Slowa Michala: "To tworz zawsze". Skrypt wydaj.sh w repo robi to automatycznie i wymaga DWOCH argumentow: bash wydaj.sh 5.0.99 "opis zmian" - sam numer konczy sie bledem uzycia. Skrypt sprawdza tez, czy suma naprawde trafila do opisu wydania, i kopiuje paczke do D:\Projekty Codex\Hermes na glownym komputerze.
+UWAGA PORZADKOWA: wpis id 1789302028 z ta sama trescia oznaczylem omylkowo jako zastapiony przy zapisie ustalenia o Control+O (1789307291) - to byl MOJ blad, tamte wpisy nie sa ze soba powiazane. Zasada o wydaniach jest AKTUALNA i ten wpis jest jej biezaca wersja.
+Przy okazji zmierzone: zbuduj.sh tez wymaga numeru wersji (bash zbuduj.sh 5.0.99), a numer musi sie zgadzac z VersionString w EdSharp.cs. Skryptow NIE uruchamiac przez ./nazwa.sh (brak prawa wykonywania) ani z workdir ustawionym na katalog repo przy uzyciu 'cd' w tresci polecenia - wolac: bash /home/michal/projekty/edsharp/zbuduj.sh <wersja>.
+
+
+### 1789312552 - 2026-09-13 17:15
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (13.09.2026, EdSharpNG 5.0.103): PLIK USTAWIEN UZYTKOWNIKA MOZE ZAWIERAC ZEPSUTE WPISY, KTORYCH NIGDY NIE ZOBACZYSZ W REPOZYTORIUM.
+
+Michal zglosil drobiazg ("Import Docx to na MD, nie RTF"). Sprawdzenie u zrodla odkrylo, ze na JEGO komputerze nie dzialala ZADNA konwersja Pandokiem, mimo ze narzedzie bylo na dysku. Powody:
+1. Jego %APPDATA%\EdSharp\EdSharp.ini ma wpisy objete cudzyslowem OD POCZATKU DO KONCA: docx2md="...pandoc.exe "%SourceLong%" -f docx -t gfm -o %Target%". Util.runShell dzieli po pierwszej parze cudzyslowow, wiec za nazwe programu bral "pandoc.exe " ze spacja. Pandoc: "withBinaryFile: does not exist". Zmierzone: 0 z 12 wpisow dzialalo.
+2. Te wpisy maja stare przelaczniki Pandoca 1.x: markdown_github i -S. Dzisiejszy Pandoc odrzuca oba.
+3. any2txt.cmd (Convert/) byl zepsuty na OBU maszynach - sciezka katalogu z koncowym ukosnikiem zjadala domykajacy cudzyslow. Psulo .doc .ppt .pptx .xls .xlsx .hlp. PLIK NIE BYL W GICIE, istnial tylko na dyskach, wiec blad nie znikal przy zadnej aktualizacji.
+
+WNIOSKI OGOLNE:
+- Plik ustawien uzytkownika ma PIERWSZENSTWO nad plikiem programu. Poprawka wpisu w repo NIE dociera do uzytkownika, ktory juz ma swoj ini. Naprawiaj W LOCIE w kodzie, nie w pliku ini.
+- Zanim uwierzysz, ze funkcja dziala, uruchom KAZDY wpis konfiguracji na prawdziwej probce. Lektura kodu tego nie wykryje.
+- Sprawdzaj, czy pliki pomocnicze (skrypty .cmd w Convert) sa w gicie. Jesli nie ma - blad jest wieczny.
+- Brak narzedzia zewnetrznego NIE MOZE byc awaria programu (Win32Exception z RunHideWait). Lap wyjatek, powiedz czego brakuje, otworz surowo.
+- Pandoc do gfm zostawia surowy HTML z epub/html (span, div). Uzywaj gfm-raw_html dla zrodel ebookowych i html; dla docx roznicy nie ma.
+
+
+### 1789315209 - 2026-09-13 18:00
+
+(rodzaj: lekcja; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789323960)
+
+LEKCJA (13.09.2026, EdSharpNG 5.0.106): DWA BLEDY, KTORE SPRAWIAJA, ZE "UDANE POBRANIE" NIE OTWIERA PLIKU - i jak je zmierzyc.
+
+1. ZAPIS DO Program Files JEST ODRZUCANY. Program z manifestem asInvoker nie moze pisac do wlasnego katalogu instalacji. Pomiar: ZAPISU-ODMOWA: MethodInvocationException; administrator: False. Mechanizm dociagania narzedzi istnial od 5.0.85, ale CICHO PRZEPADAL, bo catch zjadal blad uprawnien. Naprawa: KatalogDoZapisu() -> %APPDATA%\EdSharp\Convert, sprawdzane probnym zapisem (MoznaPisac), szukanie narzedzia w OBU katalogach.
+
+2. SCIEZKA POLICZONA PRZED POBRANIEM ZOSTAJE STARA. Wpis w ini wskazuje %ProgDir%\Convert\Pandoc\pandoc.exe. Polecenie skladane jest PRZED pobraniem, wiec po sciagnieciu narzedzia do profilu druga proba szuka w starym miejscu. OBJAW BARDZO MYLACY: pobranie konczy sie sukcesem (223 MB w profilu), a plik sie NIE otwiera - okno zostaje "NoName1". Naprawa: Skladniki.NaprawSciezkeNarzedzia(sCommand) wywolane PONOWNIE po pobraniu.
+
+METODA NACISKANIA PRZYCISKOW W CUDZYM OKNIE (po dwoch nieudanych probach): klik mysza po wspolrzednych NIE DZIALA, gdy okno nie jest na wierzchu (SetForegroundWindow zawodzi przy oknie modalnym z innej sesji). FindWindow po tytule tez zawodzi. DZIALA: znalezc przycisk przez UIA (po nazwie Yes/No), wziac jego okno przez NativeWindowHandle i poslac BM_CLICK przez SendMessage. Zmierzone: "BM_CLICK poslany do: Yes; okno zamkniete: True".
+
+DECYZJA MICHALA - ODMOWA POBRANIA: formaty SPAKOWANE (docx, epub, xlsx) NIE otwieraja sie wcale. Verbatim: "Moim zdaniem nie ma otwierac". Uzasadnienie zmierzone: surowo czytelne tylko 42% (docx), 50% (epub), 43% (xlsx) bajtow, a Control+S nadpisalby oryginal zepsuta trescia. RTF, HTML, PDF nadal otwierane surowo (PDF 99% czytelnych znakow). Implementacja: COM.FormatSpakowany() + flaga COM.OdmowaOtwarcia respektowana przez strone otwierajaca i zerowana po uzyciu.
+
+STAN: 5.0.106 zbudowana, scommitowana (d0cb1e7), wydana jako v5.0.106 na GitHubie z exe, paczka w D:\Projekty Codex\Hermes\ (3497127 bajtow), SHA256 e9941f9cd8491892c6b21d94ba061089f88baa750bbf5b3442d2849212285c12. Testy 700/700 (16 nowych). Gotowe.md zaktualizowane (383 linie). ZMIERZONE END-TO-END na zywym programie: brak Pandoca -> pytanie -> Yes -> pobranie -> proba.md z trescia "# Naglowek"; odmowa -> okno puste, plik nietkniety.
+
+
+### 1789319331 - 2026-09-13 19:08
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (EdSharp 5.0.107, 13.09.2026): gdy komunikat mowiony "nie dziala w jednym kierunku", szukaj DWOCH przyczyn, nie jednej. Pusty wiersz w EdSharpie milczal, bo (1) warunek "iDelta != 1" lapal przeskok o jeden ZNAK - w gore przeskok to 1, w dol rowna sie dlugosci opuszczanego wiersza; naprawa: liczyc ruch o JEDEN WIERSZ (rtb.Row, pole OldRow); (2) caly blok wisial pod opcja HardPageAddress (domyslnie "N"), ktora dotyczy tylko wygladu PASKA STANU - wiec przy domyslnych ustawieniach program milczal w OBIE strony. Pierwsza poprawka sama niczego nie dala.
+
+POMIAR MOWY EdSharpa bez czytnika: ustaw w %APPDATA%\EdSharp\EdSharp.ini w sekcji [Options] klucz E&xtraSpeech="N" (UWAGA: ampersand w nazwie klucza, ReadOption("E&xtraSpeech")). Wtedy Util.Say pisze KAZDY komunikat do %APPDATA%\EdSharp\Speech.log zamiast mowic. Po pomiarze przywroc "Y".
+
+PULAPKA: SendKeys przez AppActivate NIE trafia do pola tekstowego EdSharpa - kursor stoi, log pusty, wyglada jak "poprawka nie dziala". Najpierw uruchom C:\EdSharpBuild\na_wierzch.ps1 (UIA SetFocus), potem klawisze. Weryfikuj RUCH KURSORA przez UIA TextPattern GetSelection + ExpandToEnclosingUnit(Line) (skrypt C:\EdSharpBuild\wiersz_kursora.ps1), zanim uznasz brak komunikatu za wynik. EdSharp nie ma paska stanu jako UIA StatusBar - to nie zadziala.
+
+Util.Say(text) bez drugiego argumentu MILCZY, gdy okno programu nie jest aktywne (IsAppActiveWindow). Tuz po zamknieciu okna dialogowego fokus jeszcze nie wrocil - dlatego "Settings saved" przepadalo. Komunikaty po zamknieciu dialogu musza byc Util.Say(text, true) / AddMessage(text, true).
+
+wydaj.sh WYMAGA drugiego argumentu z opisem zmian: bash wydaj.sh 5.0.107 "opis". Bez niego konczy sie "BLAD: uzycie".
+
+SCP na glowny: sciezka Windows z backslashami NIE dziala ("No such file or directory") i "/d/..." tez nie. Dziala forma 'michal-glowny:D:/Projekty Codex/Hermes/plik.exe'. Odczyt/zapis plikow tekstowych na glownym: przez base64 + powershell, ale UWAGA - dlugi base64 w linii polecen daje "The command line is too long"; wtedy zapisz lokalnie i wyslij przez scp.
+
+USTALENIE Michala 13.09.2026: ustawiacze bogatego formatowania (Justify Alt+Shift+J, Style Alt+ukosnik, Baseline Alt+Shift+F6) USUNIETE - "to do bogatego formatowania, wiec w zwyklych plikach tekstowych one nie maja sensu". Zostaja: odczyt formatu pod kursorem (Alt+OemQuestion "Styles") i Align (Alt+Shift+A), bo Align to WCIECIE tekstu, nie wyrownanie RTF. RTF zdjety z listy formatow NOWEGO pliku w Ustawienia.cs; odczyt/zapis istniejacych .rtf nietkniety.
+
+SPRAWDZONE u zrodla: wydanie Jamala v5.0.41 z 8.09.2026 (commit d7780c2 "Foix") NIE zawiera poprawek matematyki. Zmiany 5.0.38->5.0.41: porzadki w repo, przyklady Mermaid, w kodzie checkMermaidDiagram, FillSnippetForm/Variables, CompilerSettingKeys, ApplyCompilerSettings, HomerEncoding, String2FileHomer oraz kreator formularzy LbcBandLayout w Lbc.cs (2286->3526 linii). Nic z tego u nas nie ma i Michal o to nie prosil. Klon do porownan: git clone --filter=blob:none --no-checkout https://github.com/JamalMazrui/EdSharp.git (gh api compare urywa liste na 300 plikach - nie ufaj jej).
+
+
+### 1789323960 - 2026-09-13 20:26
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE SESJI 13.09.2026 (koniec) - EdSharpNG 5.0.107 WYDANA I DOSTARCZONA
+
+STAN KONCOWY:
+- EdSharpNG 5.0.107: zbudowana, przetestowana (717/717 PASS), zacommitowana, wydanie GitHub v5.0.107 z plikiem EdSharpNG_Setup_5.0.107.exe i suma SHA-256 (9F7BD2D484D1D8FECD6613A848B929D526136264375CB8DE198618B99B978217). Paczka na glownym: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.107.exe (3496466 bajtow, potwierdzone u zrodla).
+- Zainstalowana i zmierzona zywym programem na maszynie Hermes.
+- Gotowe.md na glownym uzupelnione (301 linii, wpis 5.0.107 na gorze). Do zrobienia.md: cala sekcja z 13.09 usunieta - wszystkie 5 pozycji zamknietych; zostaly starsze sekcje (12.09 i dalsze).
+- AMC: 0.1.0-alpha.354, bez zmian w tej sesji.
+- Log mowy przywrocony do normy (E&xtraSpeech="Y"), EdSharp na Hermesie zamkniety.
+
+CO WESZLO W 5.0.107 (5 zadan z Do zrobienia.md):
+1. Pusty wiersz mowiony w OBU kierunkach jako "Empty line" (bylo "LineFeed", i tylko w gore). Dwie przyczyny - patrz lekcja 1789319331.
+2. Ustawienia (Ctrl+przecinek): potwierdzenie zapisu slyszalne - Util.Say z bGlobal=true. Zmierzone: po Enter bez zmian mowi "No settings changed".
+3. RTF zdjety z listy formatow NOWEGO pliku (Ustawienia.cs); zostaja md, txt, html. Odczyt/zapis istniejacych .rtf nietkniety.
+4. Usuniete ustawiacze bogatego formatowania: Justify (Alt+Shift+J), Style (Alt+ukosnik), Baseline (Alt+Shift+F6). Zostawione: odczyt formatu pod kursorem i Align (Alt+Shift+A = WCIECIE, nie wyrownanie RTF). Skroty zdjete tez z Hotkeys.ini, EdSharp_Hotkeys.txt i EdSharp.md.
+5. Sprawdzone wydanie Jamala v5.0.41 z 8.09.2026 (commit d7780c2 "Foix"): ZERO poprawek matematyki i zero bledow dotyczacych nas. Jego zmiany: porzadki w repo, przyklady Mermaid, checkMermaidDiagram, FillSnippetForm/Variables, CompilerSettingKeys, ApplyCompilerSettings, kreator formularzy LbcBandLayout w Lbc.cs. Niczego nam nie brakuje.
+
+ZAMKNIETE POPRZEDNIE BLOKADY:
+- "Strzalka w dol nie przesuwa kursora" - to byl artefakt pomiaru, nie blad programu. SendKeys nie trafial do pola, bo brakowalo UIA SetFocus (skrypt C:\EdSharpBuild\na_wierzch.ps1) przed wysylka klawiszy.
+- Upstream Jamala - rozstrzygniete przez lokalny klon (/tmp/upstream_edsharp), bo gh api compare urywa liste na 300 plikach.
+- SCP z backslashem - rozwiazane: dziala forma 'michal-glowny:D:/Projekty Codex/Hermes/plik'.
+
+WIEDZA ZAPISANA: lekcja 1789319331; skill edsharp-development dostal references/pomiar-mowy.md i references/pliki-na-glownym-komputerze.md (SKILL.md byl przy limicie 100 tys. znakow - nowa wiedza idzie do references, nie do SKILL.md).
+
+NASTEPNY TEMAT: starsze pozycje w D:\Projekty Codex\Hermes\Do zrobienia.md (sekcja 12.09 i dalsze) - przeczytac na starcie kolejnej sesji. Odlozona decyzja: osobne boty Telegram (po zakonczeniu EdSharpa).
+
+
+### 1789343544 - 2026-09-14 01:52
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE 14.09.2026 - lista zadan AMC pod data 14.09 z pliku Michala.
+
+ZRODLO: D:\Projekty Codex\Hermes\Do zrobienia.md na glownym komputerze (kopia /tmp/do_zrobienia_1409.md, 5392 B). Sekcja "## 14.09.2026", podsekcja AMC ma 6 pozycji:
+
+1. Sesje i ich ustawienia - brakuje poziomu SESJI (caly TIDAL, cale radio) w kolejnosci waznosci ustawien odtwarzania. Pelna kolejnosc ma byc: plik -> folder -> sesja -> ustawienie ogolne.
+2. Aktualizacje w tle z menu Pomoc oraz przy starcie - program I komponenty, cicha instalacja i pobieranie bez kreatora.
+3. Okno i komunikaty jak w EdSharp - Michal ustalil 14.09, zeby TEZ w AMC wprowadzic prawidlowe odczytywanie.
+4. Zglos blad - okno jak w EdSharp, zgloszenia do repozytorium Michala; Hermes ma potem monitorowac i naprawiac.
+5. TIDAL na inne sposoby na cale utwory - przegladarka albo inaczej, sterowanie z AMC. USTALONE JUZ: TIDAL w tle nic nie daje, ta droga zamknieta.
+6. Apple Music na ile sie da; Spotify z wewnetrzna obsluga.
+
+WAZNE OGRANICZENIE KONTEKSTU (polecenie Michala 14.09): NIE RUSZAMY EdSharpa w tej sesji, choc plik ma dla niego dluga liste zadan (Empty line na pustych liniach, przyklejanie slow z polskimi literami przy nawigacji po slowach, niestabilny kursor i podglad po ostatnich wersjach, paleta polecen czytajaca nazwe menu, kursor zostajacy w menu po Alt, przebudowa Configuration Ctrl+przecinek, Ctrl+C nazwa pliku a Ctrl+Shift+C pelna sciezka). To zostaje na osobna sesje, zeby nie mieszac kontekstu.
+
+
+### 1789346483 - 2026-09-14 02:41
+
+(rodzaj: ustalenie; projekt: amc; NIEAKTUALNY, zastapiony przez 1789346992)
+
+USTALENIE 14.09.2026 - AMC, realizacja pozycji "Aktualizacje w tle z cicha instalacja" + "Zglos blad do repozytorium" (pozycje 2 i 4 z listy 14.09).
+
+STAN WEJSCIOWY: repo D:\Projekty Codex\Accessible Multimedia Controller czyste, zgodne z origin/main na 75a9b57 (v0.1.0-alpha.354). Kopia zapasowa C:\amc_kopia_2026-09-14.
+
+KLUCZOWE ODKRYCIE: AMC NIE MA INSTALATORA. Dystrybucja to ZIP z GitHub Releases (sprawdzone: gh release list, wydania alpha.342 itd. maja assety .zip). Dlatego "cicha instalacja" NIE MOZE polegac na uruchomieniu setup.exe z przelacznikiem /S jak w EdSharpie. Zamiast tego: pobranie + weryfikacja SHA256 + rozpakowanie do %LOCALAPPDATA%\AccessibleMediaController\updates\gotowe, a PODMIANA PLIKOW przez osobny proces powershell.exe URUCHAMIANY PRZY ZAMYKANIU (wlasny .exe nie da sie nadpisac, dopoki dziala).
+
+DRUGIE ODKRYCIE: AppSettings.UpdateSettings JUZ ISTNIALO (CheckAutomatically=true, DownloadAutomatically=true, InstallOnExit=true, Channel="stable"), ale NIC tego nie uzywalo - grep pokazal zero odwolan. Channel domyslnie "stable", a AMC wydaje TYLKO alfy, wiec domyslnie aktualizacja nigdy nic nie znajdzie. Regula decyzyjna mowi o tym wprost komunikatem (PrereleaseBlockedByChannel), zeby nie bylo cichego "brak aktualizacji". Kanal dopuszczajacy alfy = "beta".
+
+NOWE PLIKI:
+- src/Core/Updates/ApplicationVersion.cs - wlasne porownywanie semver. KONIECZNE, bo System.Version nie zna czlonu przedwydawniczego: "0.1.0-alpha.354" i "0.1.0-alpha.342" byly by dla niego ROWNE. Czlon liczbowy alfy porownywany LICZBOWO (tekstowo "9" > "354").
+- src/Core/Updates/ApplicationUpdatePolicy.cs - regula decyzyjna bez sieci (UpToDate / UpdateAvailable / LocalIsNewer / PrereleaseBlockedByChannel / NotUnderstood). Suma kontrolna: ReadChecksumFor(notes, packageName) NAJPIERW (dopasowanie do nazwy pliku), ReadChecksum() jako zapas i TYLKO gdy w opisie jest DOKLADNIE JEDNA suma - wydania AMC publikuja tez dodatek NVDA, wiec zgadywanie ktora suma jest czyja odrzucalo by poprawny plik.
+- src/Core/Updates/ProblemReportComposer.cs - tresc zgloszenia. Kolejnosc: opis czlowieka -> slad bledu -> dane techniczne -> dziennik (200 ostatnich wierszy). Adres issues ma limit ~5000 znakow tresci (GitHub oddaje 414), przyciecie MOWI o tym i wskazuje plik z pelna wersja.
+- src/Windows/Services/ApplicationUpdateManager.cs - pobieranie z api.github.com/repos/michalkasperczak/AMC/releases (UA obowiazkowy, inaczej odmowa), ExtractSafely z kontrola ".." w nazwach wpisow, skrypt instaluj.ps1 czekajacy 30 s na zniknięcie procesu, robiacy kopie poprzedniej wersji i przywracajacy ja gdy po kopiowaniu brakuje .exe. NIE usuwa katalogu docelowego (mogly by tam byc pliki uzytkownika).
+- src/Windows/ProblemReportWindow.xaml(.cs) - okno zgloszenia: rodzaj, temat, opis, e-mail nieobowiazkowy, checkbox dziennika. KOPIA NA DYSK ZAWSZE przed proba wyslania (%LOCALAPPDATA%\AccessibleMediaController\zgloszenia\zgloszenie-DATA.txt) - przy zglaszaniu awarii jest najwieksza szansa, ze i wysylka nie zadziala.
+
+ZMIANY: MainWindow.xaml - menu Pomoc: "Sprawdz aktualizacje AMC" + "Zglos blad lub uwage...". MainWindow.xaml.cs - pole _installUpdateOnExit, ApplicationUpdate_Click, ReportProblem_Click, ShowProblemReport(exceptionTrace, prefilledSubject) do pozniejszego podpiecia pod globalna obsluge wyjatkow, CheckApplicationUpdateInBackgroundAsync (opoznienie 20 s, komunikat TYLKO gdy jest co instalowac - "brak aktualizacji" przy kazdym starcie zamienialo by czytnik w budzik). Instalacja wolana w Window_Closing PO koncowym zapisie stanu (odwrotna kolejnosc mogla by uszkodzic zapis ustawien).
+
+TESTY: tests/.../ApplicationUpdateTests.cs, 14 przypadkow, wpisane do Program.cs jako "Aktualizacja aplikacji i tresc zgloszenia bledu" - PRZECHODZI. Uwaga: pliki testow w tym projekcie NIE maja deklaracji namespace (wywolanie jest przez sama nazwe klasy).
+
+POMIAR: Core buduje sie bez ostrzezen, zestaw testow OK. 4 bledy w zestawie sa ZASTANE (te same przed moimi zmianami, sprawdzone przez git stash): PKCE TIDAL, kategorie wykonawcy TIDAL, odkrywanie lokalnych plikow audio, bezpieczna zmiana nazwy - wygladaja na zalezne od Windows, uruchamiane na Linuksie.
+
+SRODOWISKO: dotnet NIE jest w PATH na maszynie Hermes. Lezy w /home/michal/dotnet/dotnet (8.0.425). Trzeba: export PATH="$HOME/dotnet:$PATH" DOTNET_ROOT="$HOME/dotnet". Projekt Windows (WPF) buduje sie TYLKO na glownym komputerze. Transfer zmian: tar czf + scp na C:\ + tar xzf w katalogu repo (dziala, bez problemu z polskimi znakami).
+
+DO ZROBIENIA: podpiac ShowProblemReport pod globalna obsluge wyjatkow (App.xaml.cs nie ma DispatcherUnhandledException - sprawdzone), dodac sekcje aktualizacji do SettingsWindow (UpdateSettings nie ma tam zadnej kontrolki), weryfikacja zywym NVDA.
+
+
+### 1789346992 - 2026-09-14 02:49
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC wersja 0.1.0-alpha.355 (14.09.2026) - aktualizacje aplikacji w tle + okno zgloszenia bledu (pozycje 2 i 4 z listy 14.09).
+
+WYPCHNIETE: commit 39d71d5 na github.com/michalkasperczak/AMC main. SPRAWDZONE U ZRODLA przez gh api: sha 39d71d5, <Version>0.1.0-alpha.355 w Directory.Build.props, 13 plikow w commicie. Poprzedni stan: 75a9b57 / alpha.354.
+
+NOWE PLIKI: Core/Updates/ApplicationVersion.cs (porownywanie wersji semver z przedpremiera), Core/Updates/ApplicationUpdatePolicy.cs (decyzja aktualizatora + wyciaganie SHA-256 z opisu wydania), Core/Updates/ProblemReportComposer.cs (tresc zgloszenia), Windows/Services/ApplicationUpdateManager.cs (577 linii, pobieranie i podmiana), Windows/ProblemReportWindow.xaml(.cs), tests/ApplicationUpdateTests.cs (14 testow, przechodza).
+
+KLUCZOWE USTALENIE ARCHITEKTURY: AMC NIE MA INSTALATORA - dystrybucja to ZIP z GitHub Releases (sprawdzone: gh release view alpha.342, aktywa to zip + dodatek NVDA). Dlatego "cicha instalacja" NIE MOZE dzialac jak w EdSharpie (tam /VERYSILENT do instalatora). Rozwiazanie: pobranie i weryfikacja w tle, podmiana plikow DOPIERO przy zamykaniu programu (w OnClosing PO Flush stanu), bo Windows nie nadpisze dzialajacego exe. Poprzednia wersja odkladana obok, brak pliku exe po kopiowaniu = automatyczne wycofanie.
+
+PULAPKA ZASTANA: klasa UpdateSettings w AppSettings.cs ISTNIALA od dawna, ale NIC jej nie uzywalo - pola byly martwe, a zakladka Aktualizacje w SettingsWindow.xaml miala IsEnabled=False i napis "planowane". Zapis/odczyt ustawien byl juz podpiety (linie 202-206 i 311-315 SettingsWindow.xaml.cs), wiec wystarczylo zdjac IsEnabled=False.
+
+PULAPKA WAZNA: domyslny Channel w UpdateSettings to "stable", a AMC wydaje WYLACZNIE alfy - przy domyslnych ustawieniach aktualizacja NIGDY nic nie znajdzie. Nie ukrywac tego pod "brak aktualizacji": ApplicationUpdatePolicy zwraca osobna decyzje BlockedByChannel z komunikatem, ze nowsza wersja jest, ale kanal ja blokuje.
+
+PULAPKA SUMY KONTROLNEJ: wydania AMC publikuja sumy DWOCH aktywow (zip AMC + dodatek NVDA). Szukac najpierw sumy przypisanej do NAZWY paczki, dopiero potem jedynej sumy w opisie - odwrotna kolejnosc brala sume dodatku NVDA za sume AMC.
+
+BLAD KOMPILACJI Z ZGADYWANIA: napisalem choice.Name w AudioOutputDeviceChoice - tam jest pole Label (record z Id, Label, IsAvailable). Zgadlem nazwe zamiast sprawdzic u zrodla. Po poprawce: kompilacja powiodla sie, 0 ostrzezen, 0 bledow.
+
+PULAPKA SSH+POWERSHELL: budowanie przez ssh z zagniezdzonymi cudzyslowami ("dotnet build ... | Select-String -Pattern \"error\"") LAMIE SIE - cmd zjada cudzyslowy i zwraca "'Build' is not recognized as an internal or external command". Rozwiazanie: napisac skrypt .ps1, scp na C:, uruchomic przez powershell -ExecutionPolicy Bypass -File. Skrypt zostal jako C:\amc_build.ps1 i C:\amc_publish.ps1.
+
+PULAPKA LOKALIZACJI: dotnet na komputerze Michala mowi PO POLSKU - grep po "Build succeeded" nie zlapie niczego, jest "Kompilacja powiodla sie", "Ostrzezenia:", "Liczba bledow:". Nie wnioskowac z pustego podsumowania, ze build padl - czytac ogon logu.
+
+DOTNET NA MASZYNIE HERMES: jest w /home/michal/dotnet/dotnet (NIE w PATH, NIE w /usr/share). Uruchamiac: export PATH="$HOME/dotnet:$PATH" DOTNET_ROOT="$HOME/dotnet". Buduje Core i testy smoke. WPF NIE zbuduje sie tutaj (Linux) - tylko na glownym komputerze.
+
+TESTY SMOKE - 4 BLEDY SA ZASTANE, NIE MOJE: "Bezpieczne ustawienia i PKCE TIDAL", "Kategorie wykonawcy TIDAL" (oba: Odrzucono nieprawidlowy adres kolejnej strony), "Odkrywanie lokalnych plikow audio" (Oczekiwano Placeholder, otrzymano Local), "Bezpieczna zmiana nazwy lokalnego pliku" (Nazwa nie moze zawierac sciezki). Sprawdzone przez git stash: wywalaja sie identycznie BEZ moich zmian. Wygladaja na testy wymagajace Windows, uruchamiane na Linuksie. Testy w tym projekcie NIE deklaruja namespace - dopisujac nowy plik testowy nie dawac namespace, bo Program.cs ich nie znajdzie.
+
+NIE ZWERYFIKOWANE ZYWYM NVDA: maszyna Hermes NIE MA runtime WPF (brak /mnt/c/Program Files/dotnet i Microsoft.WindowsDesktop.App), wiec AMC nie da sie tu uruchomic. Mostek MCP NVDA steruje NVDA NA MASZYNIE HERMES, nie na glownym komputerze Michala. Oba nowe okna (zgloszenie bledu, zakladka Aktualizacje) czekaja na sprawdzenie czytnikiem u Michala.
+
+ZOSTAJE DO ZROBIENIA: sprawdzic oba okna zywym NVDA; wysylka zgloszenia na GitHub nie jest podpieta do API (okno zapisuje kopie na dysk i otwiera przegladarke); pozycje 1, 3, 5, 6 z listy 14.09 (sesje i ich ustawienia, okno i komunikaty jak w EdSharp, TIDAL na cale utwory inna droga, Apple Music i Spotify); zamarzanie UI przy dodawaniu folderu z tysiacami plikow (opcja 4 - naprawic bez zmiany logiki).
+
+
+### 1789348777 - 2026-09-14 03:19
+
+(rodzaj: pomiar; projekt: amc)
+
+POMIAR AMC 0.1.0-alpha.356 (14.09.2026): instalator Inno Setup dziala. Zbudowany na glownym komputerze: D:\Projekty Codex\Hermes\AMC-Setup-0.1.0-alpha.356.exe, 4.5 MB, SHA256 65A1318DF6846C3F89F51F6FDD03C499682C9E6926DBCBBA46DF58DDBB68C89D. Commity: 9b2430a (instalator + aktualizacja przez instalator), 26aff82 (poprawka stalej sciezki). Zainstalowany NA MASZYNIE HERMES bez uprawnien administratora, kod wyjscia 0, 49 plikow w C:\Users\Michal\AppData\Local\Programs\AMC, skrot w menu Start, program wstaje i dziala.
+
+USTALENIA TECHNICZNE:
+- Inno Setup NIE MA stalej {userprofile} - trzeba {%USERPROFILE}. Blad objawia sie jako "Runtime error (at 7:539): Unknown constant" i kod wyjscia 1 przy /VERYSILENT. ZAWSZE czytac /LOG, bo /SUPPRESSMSGBOXES chowa komunikat.
+- AppId musi byc poprawnym GUID (hex), "AMC0PLAYER01" nie przechodzi.
+- Aktualny Inno Setup to 7.1.0 i lezy na GitHubie jrsoftware/issrc (tag is-7_1_0). Adresy files.jrsoftware.org/is/6/innosetup-*.exe daja 404. ISCC po instalacji: %LOCALAPPDATA%\Programs\Inno Setup 7\ISCC.exe (zainstalowany na GLOWNYM komputerze).
+- Aktualizacja AMC idzie teraz instalatorem, nie podmiana plikow: ApplicationUpdatePolicy.ChoosePackageName wybiera .exe przed .zip (ZIP zostaje dla wydan sprzed 356), PendingUpdate.InstallerPath, uruchomienie /VERYSILENT /CLOSEAPPLICATIONS /RESTARTAPPLICATIONS.
+- Skladniki (ffmpeg, yt-dlp) JUZ aktualizuja sie same co 24h przy starcie (App.xaml.cs StartComponentUpdates) i leza w %LOCALAPPDATA%, wiec instalator ich nie deptaje - nic tu nie trzeba bylo dopisywac.
+- Testy Core: 96 OK, 4 bledy ZASTANE (Windows-only, uruchamiane na Linuksie) - nie od tych zmian.
+
+NIESPRAWDZONE: okna aktualizacji i zgloszenia bledu zywym NVDA. AMC na Hermesie dziala, ale nie udalo sie przejac fokusu przez AppActivate z WSL (fokus wraca do wsl.exe), a tytul okna raportowal sie jako "AccessibleMediaController.exe". Kanal aktualizacji domyslnie "stable" (PrereleaseChannel = "beta") - trzeba przestawic raz recznie, inaczej alfy nie znajdzie. Nie ma jeszcze WYDANIA 356 na GitHubie, wiec aktualizacja nie ma czego znalezc.
+
+
+### 1789351634 - 2026-09-14 04:07
+
+(rodzaj: pomiar; projekt: amc)
+
+POMIAR AMC 14.09.2026: PELNA DROGA AKTUALIZACJI POTWIERDZONA NA ZYWYM PROGRAMIE (Hermes, uzytkownik Michal). Zainstalowany 0.1.0-alpha.356 sam znalazl wydanie 357 na GitHubie, pobral instalator, sprawdzil sume SHA-256 (zgodna: 395198d0...), uruchomil instalator po zamknieciu programu i podmienil sie. Wersja pliku PRZED: 0.1.0-alpha.356, PO: 0.1.0-alpha.357; program wstal (tytul okna zawiera "AMC 0.1.0-alpha.357"). Wpisy w dzienniku C:\Users\Michal\AppData\Local\AccessibleMediaController\logs\amc.log, kategoria [aktualizacja-amc].
+
+SKLADNIKI POTWIERDZONE: przy starcie same doszly - FFmpeg n9.0.1-29-gad500d59cb-20260913 i yt-dlp 2026.08.19 ("Zainstalowano i zweryfikowano"). Instalator ich nie dotyka.
+
+WAZNE USTALENIA:
+1. Kanal aktualizacji w kodzie nazywa sie "beta", NIE "prerelease" (ApplicationUpdatePolicy.PrereleaseChannel = "beta"). Domyslnie "stable", wiec alfy sa blokowane az uzytkownik przestawi kanal.
+2. Ustawienia AMC to %APPDATA%\AccessibleMediaController\state.json (Roaming!), klucz settings.updates.channel. Dzienniki w %LOCALAPPDATA%\AccessibleMediaController\logs. Katalog programu: %LOCALAPPDATA%\Programs\AMC.
+3. Instalator .NET 8 Desktop Runtime INSTALUJE SIE BEZ UPRAWNIEN ADMINA (zmierzone: IsInRole(Administrator)=False, kod wyjscia 0, runtime wylandowal w C:\Program Files\dotnet). Czyli dociaganie runtime z instalatora AMC ma sens.
+
+BLAD ZNALEZIONY I NAPRAWIONY (commit 0e868df): funkcja MaRuntime8 w AMC_Setup.iss sprawdzala %USERPROFILE%\.dotnet - .NET tam NIE zaglada bez zmiennej DOTNET_ROOT. Skutek: instalator uznawal runtime za obecny, nic nie dociagal, a AMC pokazywal okno "You must install .NET Desktop Runtime" (klasa okna #32770) zamiast startowac. Teraz sprawdzane sa tylko {commonpf64} i {commonpf32}\dotnet\shared\Microsoft.WindowsDesktop.App.
+
+BLAD ZNALEZIONY I NAPRAWIONY (commit e03c0a0): aktualizator bral PIERWSZE wydanie z listy GitHuba jako najnowsze. GitHub nie obiecuje kolejnosci - zmierzone: na szczycie stalo alpha.335, starsze o 5 dni od najnowszego (kolejnosc idzie po created_at, a poprawiane wydanie ma starsza date). Teraz newestOverall liczone po numerze wersji. Uwaga: /releases/latest zwraca 404 dla AMC, bo wszystkie wydania to alfy - aktualizator slusznie uzywa /releases?per_page=15.
+
+WYDANIA: v0.1.0-alpha.356 (instalator SHA256 FF76EE1A..., ZIP 760F9562...), v0.1.0-alpha.357 (instalator SHA256 395198D0..., ZIP 32AC0787...). Oba na GitHubie jako prerelease, oba z dwoma plikami i sumami w opisie.
+
+TESTY: 96 OK, zero niepowodzen (dolozony TestRealRelease356IsReadCorrectly na PRAWDZIWYM opisie wydania - sprawdza, ze ReadChecksumFor przypisuje wlasciwa sume do wlasciwego pliku, gdy w opisie sa dwie).
+
+NIE UDALO SIE: zywy NVDA przez mostek MCP nie odczytal okien AMC - fokus nie da sie przelaczyc z konsoli WSL na okno Windows (AppActivate nie dziala, Windows blokuje wywolanie okna na wierzch przez proces w tle). Struktura okna czytana przez UIA (PowerShell + UIAutomationClient) dziala i tak wykryto komunikat o braku runtime. Do odczytu AMC zywym NVDA potrzebny inny sposob ustawienia fokusu.
+
+BUDOWANIE: ISCC nie ma na Hermesie, jest na michal-glowny: C:\Users\micha\AppData\Local\Programs\Inno Setup 7\ISCC.exe. Wywolanie wymaga /DWyjscie, inaczej wynik ladowal w C:\amc_setup (naprawione: domyslna wartosc w AMC_Setup.iss to teraz D:\Projekty Codex\Hermes).
+
+
+### 1789355974 - 2026-09-14 05:19
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.362 (14.09.2026) - USTAWIENIA ODTWARZANIA DLA CALEJ SESJI (pozycja 3 z listy 14.09, czesc "jak w EdSharp")
+
+WYDANE: https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.362 (sprawdzone gh release view: tag, prerelease=true, dwa pliki - instalator EXE i ZIP). Commity: e4207a8, ab0f44d, f7a777e, 97744c0, d34e301, 70067d1 na main.
+
+CO ZROBIONE: nowy poziom SESJI w ustawieniach odtwarzania. Kolejnosc rozstrzygania: plik -> folder -> SESJA -> ustawienie ogolne. Dotyczy: cisza miedzy nagraniami, lagodne przejscia, normalizacja glosnosci, predkosc, pozycja odtwarzania. Okno "Opcje odtwarzania sesji" pod Ctrl+Alt+Enter i w menu Odtwarzanie.
+
+WAZNE - ZAKRES: Michal najpierw powiedzial ze sesja NIE jest potrzebna ("to nie chodzilo o sesje"), potem potwierdzil "a to akurat dobrze". Ostatecznie poziom sesji ZOSTAJE. Michal mylnie podal skrot Shift+Enter - opcje ELEMENTU sa pod Alt+Shift+Enter (Shift+Enter dodaje do kolejki).
+
+PLIKI: AppSettings.cs (Audio.OverridesBySession, klasa SessionPlaybackAudioOverrides), LocalPlaybackAudioSettingsResolver.cs (enum LocalPlaybackAudioSettingSource: Global/Session/Folder/Item, 4 poziomy), LocalPlaybackAudioSettingsPresentation.cs ("ustawienie sesji"), ItemPlaybackOptionsWindow.xaml.cs (cel Session), MainWindow.xaml.cs (ShowSessionPlaybackOptions ok. 4320), CommandIds/CommandRouter/CommandPaletteSearch, CommandCatalog.
+
+TRZY MOJE BLEDY ZNALEZIONE DOPIERO POMIAREM (nie z lektury kodu):
+1. Wpisalem polecenie na liste "wymaga zaznaczonego utworu" w CommandRouter (ok. linia 578) - opcje CALEJ sesji nie moga tego wymagac, skrot nie robil nic.
+2. Skrot wpialem w TryResolveKeyboardHelpCommand (ok. 18915-19318) - ta metoda TYLKO OPISUJE skroty na potrzeby pomocy klawiatury, NIE wykonuje ich. Prawdziwa obsluga klawiszy jest ok. linii 18761 (obok Ctrl+przecinek OpenSettings). PULAPKA NA PRZYSZLOSC.
+3. Wymyslilem metode TrySaveSettings() ktora nie istnieje - poprawna to QueueStateSave(announceFailure: true), ok. linii 7380.
+
+TRZY BLEDY OPISOW WYKRYTE ZYWYM NVDA (niewidoczne w kodzie):
+- Predkosc miala wartosc "Wedlug predkosci sesji" w oknie SESJI - odsylala sama do siebie. Fix: "Bez zmiany predkosci".
+- Normalizacja i lagodne przejscia obiecywaly "moze dziedziczyc ustawienie folderu" - sesja dziedziczy TYLKO globalne.
+- Cisza mowila "po zakonczeniu tego pliku" zamiast o nagraniach w sesji.
+Opisy pol sa w ItemPlaybackOptionsWindow.xaml (HelpText), nadpisywane w kodzie przez AutomationProperties.SetHelpText dla celu Session.
+
+BLAD INSTALATORA: ISCC wywalal sie na linii 149 AMC_Setup.iss - w KOMENTARZU bylo {%USERPROFILE} i Inno Setup rozwija stale nawet w komentarzach. Fix: usuniete nawiasy klamrowe.
+
+POMIARY (nie na slowo):
+- 96 testow Core OK, 4 bledy - te same 4 sa na czystym HEAD przed zmiana (sprawdzone git stash + porownanie), wiec NIE moje.
+- Test kolejnosci: celowo odwrocilem folder/sesja w resolverze -> test zlapal ("Oczekiwano True, otrzymano False"). Dowod ze test naprawde mierzy.
+- Zywy NVDA: wszystkie 5 pol czyta nazwe, wartosc i opis poprawnie.
+- Zapis potwierdzony U ZRODLA w state.json: settings.audio.overridesBySession.tidal.interTrackSilenceMillisecondsOverride = 500. Przezyl restart programu (sprawdzone ponownym odczytem NVDA po restarcie).
+
+UWAGA SRODOWISKOWA: gh na GLOWNYM komputerze NIE jest zalogowany ("gh auth login"). Wydanie robie z Hermesa (tam gh dziala jako michalkasperczak). Repo na glownym: D:\Projekty Codex\Accessible Multimedia Controller (NIE "AMC"). Zdalna powloka przez ssh michal-glowny to cmd - polecenia owijac w powershell -NoProfile -Command.
+
+SMOKE TESTY: tests/AccessibleMediaController.Core.SmokeTests to zwykly program konsolowy (OutputType Exe), NIE projekt testowy - uruchamiac dotnet run, nie dotnet test.
+
+ZOSTAJE OTWARTE z listy 14.09: 1. Sesje i ich ustawienia (czesciowo ruszone), 5. TIDAL na cale utwory inna droga, 6. Apple Music i Spotify, oraz odlozone skojarzenia plikow/menu kontekstowe.
+
+
+### 1789395236 - 2026-09-14 16:13
+
+(rodzaj: ustalenie; projekt: amc; NIEAKTUALNY, zastapiony przez 1789396004)
+
+AMC 0.1.0-alpha.363 (14.09.2026): dwie poprawki zbudowane i zmierzone.
+
+1. POBIERANIE Z YOUTUBE - WinError 448. Przyczyna: obcy program cua-driver wpisal sie do PATH systemu katalogiem C:\Users\micha\AppData\Local\Programs\Cua\cua-driver\bin, ktory Windows uznaje za niezaufany punkt ponownej analizy. yt-dlp przechodzi po katalogach z PATH przy starcie i padal PRZED pobraniem czegokolwiek. Nie wina YouTube ani instalatora AMC.
+Poprawka: nowy plik src/AccessibleMediaController.Windows/Services/ExternalToolProcess.cs - ApplySafeEnvironment() buduje skladnikom (yt-dlp, ffmpeg) wlasne minimalne srodowisko (Environment.Clear + tylko katalog skladnika w PATH, PATHEXT domyslny, SystemRoot/TEMP/USERPROFILE itd.). Skladniki dostaja pelna sciezke do exe, wiec PATH systemu jest im niepotrzebny. Wpiete w 13 plikow uslug.
+DOWOD zmierzony na michal-glowny: PATH dziedziczony z cua-driver => yt-dlp kod 1; PATH oczyszczony => kod 0 i odczytany tytul "Rick Astley - Never Gonna Give You Up".
+
+2. ZGLASZANIE BLEDU - falszywy komunikat. Okno mowilo "Zgloszenie zapisane na dysku" takze gdy zgloszenie poszlo do przegladarki i gdy uzytkownik zamknal okno Escape. Kopia na dysku zapisuje sie ZAWSZE, wiec jej obecnosc nic nie mowila o losie zgloszenia. Dodany enum ProblemReportOutcome (OpenedInBrowser / SavedToDiskOnly / NothingSaved / Cancelled), komunikaty rozdzielone, Escape przy wypelnionym opisie pyta o potwierdzenie (ochrona przed utrata tekstu), przycisk przemianowany na "Otworz formularz i wyslij" (nie obiecuje wysylki, ktorej nie robi).
+
+3. WZOR QUILL (sprawdzony u zrodla, repo Community-Access/quill, ich wlasne dokumenty projektowe docs/superpowers/specs/2026-07-06-bundled-feedback-token-design.md i docs/design/2026-08-26-feedback-redesign-for-freescout.md): Quill NIE wysyla przez GitHub - ma wbudowany token i wysyla do wlasnego backendu (FreeScout), uzytkownik nie potrzebuje konta.
+
+4. TEST: nowy ExternalToolEnvironmentTests.cs (4 przypadki) wpiety do Program.cs zestawu Windows. Naprawiony tez cudzy test padajacy od poprzedniego commita 70067d1 - oczekiwal etykiety "Wedlug folderu lub ustawienia globalnego", a kod ma teraz "Wedlug folderu, sesji lub ustawienia globalnego". Sprawdzone worktree na HEAD: padal 1 z 90 PRZED moimi zmianami. Po naprawie: WSZYSTKIE TESTY OK 91.
+
+Commity: 170aefc (poprawki), 8b47889 (test etykiety). Paczka: D:\Projekty Codex\Hermes\AMC-363 (exe 159.6 MB + bass.dll, WebView2, SoundTouch).
+
+OTWARTE: git push do https://github.com/michalkasperczak/AMC.git WISI (main ahead 2). git ls-remote dziala, wiec odczyt OK - blokuje uwierzytelnienie zapisu. credential.helper = helper-selector, prawdopodobnie chce otworzyc okno GUI, ktorego nie ma w sesji SSH. LEKCJA: push do AMC z sesji SSH wymaga poswiadczen - trzeba pushnac z pulpitu albo ustawic token.
+
+
+### 1789396380 - 2026-09-14 16:33
+
+(rodzaj: ustalenie)
+
+POSWIADCZENIA GITHUB - stan po wyrownaniu 14.09.2026 (dotyczy KAZDEGO projektu, nie tylko AMC).
+
+TOKEN JEST PO OBU STRONACH:
+- Hermes (ta maszyna): ~/.config/gh/hosts.yml, konto michalkasperczak, zakresy gist/read:org/repo/workflow. `gh auth token` zwraca token.
+- michal-glowny (glowny komputer Michala): `gh auth login --with-token` wykonane, hosts.yml w C:\Users\micha\AppData\Roaming\GitHub CLI\, GH_TOKEN ustawiony NA STALE w zmiennych srodowiskowych uzytkownika, credential.https://github.com.helper = "!gh auth git-credential" w zakresie global.
+
+ALE: zwykly `git push` na michal-glowny przez SSH WISI BEZ KONCA I BEZ KOMUNIKATU (git ls-remote i fetch dzialaja, wiec wyglada na sprawne). Przyczyna: credential.helper = "helper-selector" w zakresie SYSTEM (w --global i --local GO NIE MA - pusty wynik zmyli). Ten helper chce otworzyc okno GUI logowania, ktorego w sesji SSH nie ma. GH_TOKEN, gh auth login ani helper w --global tego NIE naprawiaja.
+
+DZIALAJACY SPOSOB PUSHU Z GLOWNEGO (zmierzony, przeszlo):
+  git -c credential.helper= push https://x-access-token:<TOKEN>@github.com/<user>/<repo>.git main
+Puste `-c credential.helper=` jest konieczne - kasuje systemowy helper dla tego wywolania. Token brac z Hermesa przez `gh auth token`.
+Push uruchamiac przez Start-Job z Wait-Job -Timeout (nie wprost - zjada limit 420 s narzedzia terminal i nie wiadomo, czy poszlo). Wyjscie filtrowac `-replace 'gh[opsu]_[A-Za-z0-9]+','[TOKEN]'`. Po pushu potwierdzac U ZRODLA: gh api repos/<user>/<repo>/commits/main --jq .sha
+
+KIERUNEK MA ZNACZENIE: projekty zyjace na HERMESIE (EdSharp/EdSharpNG w ~/projekty/edsharp, remote github.com/michalkasperczak/EdSharpNG) pushuje sie stad ZWYKLYM `git push` - sprawdzone: na Hermesie NIE MA systemowego credential.helpera, wiec ta pulapka ich nie dotyczy. Problem jest wylacznie z repozytoriami na glownym komputerze (np. AMC w D:\Projekty Codex\Accessible Multimedia Controller).
+
+Zapisane tez w skillach: dostep-do-glownego-komputera (sekcja "git push z SSH wisi na glownym") i amc-accessible-multimedia-controller-development.
+
+
+### 1789407103 - 2026-09-14 19:31
+
+(rodzaj: lekcja; projekt: amc)
+
+LEKCJA AMC 2026-09-14 (instalator NIE podmienial programu - kazda aktualizacja od dawna): build.ps1 -Publish nazywa plik w paczce "AccessibleMediaController-<wersja>.exe", a installer/AMC_Setup.iss uruchamia "{app}\AccessibleMediaController.exe" (Icons, Run, App Paths, Type: files). Efekt: instalator wgrywal nowy plik obok starego, skroty odpalaly STARY - rejestr pokazywal nowa wersje, a program byl na starej. Objaw: "zainstalowane", a poprawki nie dzialaja. NAPRAWA: przed ISCC skopiowac paczke do C:\amc_publish i ZMIENIC NAZWE na AccessibleMediaController.exe. Sprawdzenie u zrodla: Get-Item exe .VersionInfo.ProductVersion ORAZ szukanie napisow z nowego kodu w bajtach exe (program jest samowystarczalny PublishSingleFile, wiec napisy sa spakowane - brak trafienia NIE dowodzi starej wersji, wiec ufaj ProductVersion + rozmiarowi 159 MB). Dodatkowo: po instalacji zostaja luzne DLL ze starych wersji (AccessibleMediaController.dll/.Core.dll/.deps.json/.runtimeconfig.json) - nieszkodliwe, bo 365 jest samowystarczalny, ale mylace przy diagnozie; odlozone do podkatalogu stare-364.
+ISCC: Inno Setup 7 stoi w C:\Users\micha\AppData\Local\Programs\Inno Setup 7\ISCC.exe (NIE w Program Files - skrypty szukajace tam mowia falszywie "brak Inno"). Wywolanie: ISCC.exe /DZrodlo=C:\amc_publish /DWersja=0.1.0-alpha.NNN installer\AMC_Setup.iss - BEZ /DWersja powstaje AMC-Setup-0.0.0.exe. Wynik ladzie w D:\Projekty Codex\Hermes (nie w C:\amc_setup). Instalatory 4,5 MB z wydan 357-364 byly budowane ze starej/niepelnej paczki; poprawny ma ~49 MB.
+git push z michal-glowny: "git -c credential.helper=store --file=..." WIESZA sie na okienku GCM (timeout). DZIALA: git -c credential.helper= -c credential.interactive=false push "https://michalkasperczak:$tok@github.com/michalkasperczak/AMC.git" main:main, przy GIT_TERMINAL_PROMPT=0 i GCM_INTERACTIVE=never. Token: GH_TOKEN jako User env var, 40 znakow, sprawdzony przez api.github.com/user.
+Testy AMC to NIE dotnet test (zwraca EXIT 0 nic nie robiac, brak .trx) - to programy konsolowe: dotnet run --project tests/AccessibleMediaController.Core.SmokeTests oraz .Windows.SmokeTests; koniec wypisuje "WSZYSTKIE TESTY OK: N".
+
+
+### 1789422014 - 2026-09-14 23:40
+
+(rodzaj: podsumowanie; projekt: amc)
+
+WYDANIE AMC 0.1.0-alpha.366 ZAMKNIETE 15.09.2026 - domknieta zaleglosc z 14.09. Commit c3597491844a75335586033f0f5d8ec76c3bacda na main (potwierdzony gh api commits/main), release https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.366 (prerelease) z dwoma zalacznikami w stanie uploaded: AMC-Setup-0.1.0-alpha.366.exe 51759042 B, AMC-366.zip 68902155 B. UWAGA - rozmiary sa INNE niz zapisane we wpisie 1789420022 (tam 49,4 MB i 65,7 MB); wiazace sa te z release.
+
+RAPORT MICHALA Z UZYWANIA 366 (TIDAL, 15.09.2026): odtwarzanie z oryginalnego TIDALa dziala prawidlowo, przy pierwszym uruchomieniu AMC uaktywnia okno TIDALa (potem juz nie). STEROWANIE z AMC nie dziala w zaden sposob - tylko w samym oryginalnym TIDALu. Michal AKCEPTUJE ten stan ("da sie z tym zyc"), bo najwazniejsze jest wybieranie kolejnych pozycji z listy AMC. Nie traktuj tego jako bledu do naprawy, chyba ze poprosi.
+
+POPRAWKI DO WCZESNIEJSZYCH USTALEN (zmierzone dzisiaj):
+1) Repozytorium AMC na glownym to D:\Projekty Codex\Accessible Multimedia Controller (NIE "\AMC" - taka sciezka nie istnieje). Zdalne: github.com/michalkasperczak/AMC.
+2) Skrypt C:\Windows\Temp\amc_push.ps1 NIE DZIALA: Start-Job -FilePath odpada (ExecutionPolicy: "running scripts is disabled"), a jego helper z echo username/password daje "Invalid username or token". Dzialajaca droga (zmierzona): git -c credential.helper= push https://x-access-token:<TOKEN>@github.com/michalkasperczak/AMC.git main, gdzie TOKEN z `gh auth token` na Hermesie. Bez Start-Job - wystarczy -EncodedCommand.
+3) Polecenia PowerShell przez ssh skladaj w pliku .sh i uruchamiaj `bash plik.sh` z workdir /home/michal. Wolanie ssh wprost z pola command czesto konczy sie "cd: /tmp/esXX: No such file or directory" (exit 126). Trudne cytowanie -> -EncodedCommand z UTF-16LE zbudowane python3-em w tym samym skrypcie.
+4) Plik zadan Michala: D:\Projekty Codex\Hermes\Do zrobienia.md (katalogu D:\Projekty Codex\Hermes\Nowe NIE MA). Zawiera sekcje AMC (15.09, 14.09 + ODLOZONE) i EdSharp.
+
+
+### 1789425901 - 2026-09-15 00:45
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE 15.09.2026 - STAN LISTY 15.09 W PLIKU "Do zrobienia.md" I CO ZOSTALO DO ZROBIENIA W AMC.
+
+Plik: D:\Projekty Codex\Hermes\Do zrobienia.md (UTF-8 Z BOM, CRLF, 123 linie, 11473 B po edycji). Kopia zapasowa przed edycja: D:\Projekty Codex\Hermes\Do zrobienia_kopia_2026-09-15.md
+
+Dopisalem znacznik " [ZROBIONE 15.09.2026, wersja 0.1.0-alpha.367]" na koncu trzech linii (NIC nie usuwalem): linia 7 (glosnosc/wtyczka NVDA), linia 15 (Alt+Ctrl+lewo-prawo przeskok), linia 22 (Otworz w folderze). Sprawdzone u zrodla: ZNACZNIKOW=3.
+
+WYDANE: v0.1.0-alpha.367, https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.367 (prerelease), commit e6d9d75. Assety potwierdzone przez gh release view: AMC-367.zip 68903943 B uploaded, AMC-Setup-0.1.0-alpha.367.exe 51754545 B uploaded. Paczki lezą też w D:\Projekty Codex\Hermes\.
+
+ZOSTAJE DO ZROBIENIA z listy 15.09 (piec pozycji, kolejnosc jak w pliku):
+- linia 10-11: ustawienia sesji (Alt+Ctrl+Enter) tez jako globalne + pole "Wstrzymuj odtwarzanie po wyjsciu z odtwarzacza" PER SESJA. UWAGA: wersja GLOBALNA tego pola JUZ ISTNIEJE (zmierzone zywym NVDA w 367), brakuje wylacznie ustawienia osobno dla kazdej sesji.
+- linia 13: TimeShift - znaczne zwiekszenie czasu bufora z ostrzezeniem o pamieci i dysku (10 min domyslnie zostaje) + regulacja predkosci podczas przewijania.
+- linia 18: Shift+F1 kontekstowa pomoc skrotow w klikalnym widoku HTML (jak lista pod znakiem zapytania, Enter uaktywnia, Escape wychodzi) + w odtwarzaczu Insert+strzalka w gore czyta nazwe stacji i utwor (wzor: odtwarzacz Vim).
+- linia 19-20: lista nagranych plikow - historia nagrywania i niepowodzen nagrywania; Enter na nagraniu dodaje je do biblioteki.
+- linia 24-25: podcasty - strzalka w prawo rozwija opis w okienku z nawigacja HTML (zamiast wolnego Alt+D, ma dzialac szybciej, NVDA ma chodzic po linkach klawiszem K) + Ctrl+I (skrzynka podcastowa) dostepne z KAZDEJ sesji, nie tylko z sesji podcasty.
+- linia 27: szybkie sprawdzenie autora tekstu i muzyki utworu (kazdy serwis inaczej, takze biblioteka lokalna) - pomysl na skrot typu Ctrl+strzalka. To pozycja NAJMNIEJ dopracowana, Michal sam pisze, ze to nie jest proste.
+
+W pliku sa tez sekcje EdSharp (linie 29-41 z 15.09, 74-90 z 12.09, 93-99) oraz sekcja "## Do zrobienia" (linie 101-121) z zadaniami EdSharpa: paleta polecen czyta zbedne menu zrodlowe, kursor po wyjsciu z menu, przebudowa Configuration Ctrl+przecinek, Manual Options, usuniecie Default Fonts/RTF, usuniecie Web Download i Web Client Utilities z Misc, nawigacja po zakladkach i komentarzach do Navigate, stare skroty komentarzy z F9, testy z NVDA MCP, ujecie zmian w palecie polecen, Ctrl+F1, podreczniku i dokumentacji.
+
+
+### 1789427005 - 2026-09-15 01:03
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE STALE 15.09.2026 - ZASADA PRACY Z PLIKIEM "Do zrobienia.md" (D:\Projekty Codex\Hermes\Do zrobienia.md).
+
+MICHAL POWIEDZIAL WPROST: "pracujemy tak, ze to co pod najnowsza data idzie do pracy". Czyli zakres roboczy to WYLACZNIE sekcje pod NAJNOWSZA data w pliku. Starsze daty sa historia - NIE wciagaj ich do planu, nie proponuj ich jako "zostalo do zrobienia", nawet gdy pozycje wygladaja na nieodhaczone.
+
+Sekcja "12.09.2026" (linia 74) zostala 15.09.2026 uznana przez Michala za ZROBIONA i odhaczona znacznikiem " [ZROBIONE - odhaczone 15.09.2026]". Dotyczy to WSZYSTKICH pozycji tamtej sekcji (zakladki Alt+B i Alt+Shift+B z podgladem tresci wiersza, polski slownik z EdSharp 5, zamrazanie kursora po Alt+Tab, cichy instalator, sprawdzanie nowej wersji przy uruchomieniu, aktualizacje komponentow, stare polskie kodowania Mazovia/Latin II/Windows-1250, CSV jako tabela, paleta polecen).
+
+ZAKRES PRACY DLA EDSHARPA (sekcja "## Edsharp" pod data 15.09.2026, linie 31-41 pliku) - PIEC pozycji, w tej kolejnosci:
+1. (linia 31) Ciagle czyta "Empty line" na pustych liniach.
+2. (linie 33-35) Wrocil stary problem: gdy slowo obok zaczyna sie od POLSKIEJ litery, przy nawigacji po slowach jest przyklejane do poprzedniego slowa ("Michala Sledzinskiego", "Wszystkich swietych"). Michal dodaje, ze teraz bywa dobrze, a w PREVIEW (podgladzie) problem faktycznie byl - moze wystepowac tylko czasami.
+3. (linie 36-37) Po ostatnich wersjach kursor MNIEJ STABILNY, preview czesto nie podaza i wraca do poczatku pliku. Jest gorzej niz bylo niedawno. Polecenie: "Przeanalizuj to doglebnie."
+4. (linia 39) Przeanalizowac, CO USUWAMY z EdSharpa - wypisac do osobnego pliku w folderze projektu.
+5. (linia 41) Opisac, CO ROBIA poszczegolne opcje w ustawieniach - tez do pliku; dodatkowo odpowiedziec, czy opcje z pliku konfiguracyjnego sa juz w GUI.
+
+Michal potwierdzil zakres slowami: "Czyli puste linie az do no usuwamy i co znacza opcje" - czyli od pozycji 1 (Empty line) do pozycji 5 (opis opcji) wlacznie.
+
+STAN PLIKU po edycjach 15.09: UTF-8 Z BOM, CRLF, 11507 B, 3 znaczniki "wersja 0.1.0-alpha.367" (zadania AMC 1, 4, 7) + 1 znacznik "odhaczone 15.09.2026" (sekcja 12.09). Sprawdzone u zrodla. Kopia zapasowa: D:\Projekty Codex\Hermes\Do zrobienia_kopia_2026-09-15.md
+
+
+### 1789430084 - 2026-09-15 01:54
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.368 (15.09.2026) - WYDANE I POTWIERDZONE U ZRODLA.
+
+WYPCHNIETE: commit b95402e9b4d82f48322b46d80bb3e9ab7c46547b na github.com/michalkasperczak/AMC main (poprzedni e6d9d75 = 367), potwierdzone gh api commits/main. Wczesniejszy commit 46d522a (suma + widoczny instalator) wchodzil w ten sam push.
+
+RELEASE: https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.368 (prerelease), dwa zalaczniki w stanie uploaded:
+- AMC-368.zip 68904207 B, SHA-256 b1deb58afd8cda38eb1f5ec4b0b0e723f3280195980662235f84b91d7adf87a1
+- AMC-Setup-0.1.0-alpha.368.exe 51752388 B, SHA-256 30f194fa74e9cf03a0fe3c1f4128d5118d32fef00c549766ed22637bc708b160
+Kopie u Michala: D:\Projekty Codex\Hermes\. Budowa: 0 bledow, 196 testow OK.
+
+CO WESZLO (zgloszenia Michala z 15.09, POZA lista 8 zadan):
+1. MENU WYCISZENIA. Bylo: pozycja IsCheckable z nazwa "Wycisz lub przywroc dzwiek biezacej sesji" + doklejony skrot w AutomationProperties.Name. NVDA czytal oba kierunki naraz, stan "nieoznaczone" i skrot DWA RAZY. Michal: "powinno byc jedno albo drugie, bo tak to nie wiadomo o co chodzi". Teraz: BEZ IsCheckable, nazwa zalezna od stanu przez MuteMenuLabels (Core/Presentation) - "Wycisz biezaca sesje" / "Przywroc dzwiek biezacej sesji", analogicznie dla wszystkich sesji AMC. Skrot USUNIETY z Name, zostaje w AcceleratorKey.
+2. AKTUALIZACJA W TRAKCIE NAGRYWANIA. Instalator zamyka AMC przez /CLOSEAPPLICATIONS, wiec OMIJAL pytanie o nagrania z Window_Closing - nagranie urwaloby sie bez slowa. Teraz pyta jak przy zamykaniu, z liczba nagran; odmowa ustawia InstallOnExit, wiec aktualizacja nie ginie.
+3. TryStartPendingInstall(bool visible): visible=true -> UseShellExecute=true, WindowStyle=Normal, bez /VERYSILENT (instalator od razu na wierzchu, wzor EdSharp). visible=false -> stary tryb cichy przy zamykaniu.
+4. SUMY KONTROLNE. Wydanie 367 nie mialo sum, wiec aktualizator mowil "zgodnosc pliku nie zostala sprawdzona". Do 367 sumy dopisane recznie; format dwuwierszowy (nazwa pliku, w nastepnym wierszu sam hash) czytany przez ApplicationUpdatePolicy.ReadChecksumFor.
+
+NOWE NARZEDZIE: scripts/wydaj.sh <wersja> <katalog> [opis.md] - liczy SHA-256 wszystkich .exe/.zip, wkleja do opisu w formacie czytanym przez aktualizator, publikuje przez gh i ODMAWIA (exit 1), gdy suma nie trafila do OPUBLIKOWANEGO opisu. Powstal, bo recznie o sumach sie zapomina - i zapomnialo sie przy 367.
+
+TESTY: 196 (bylo 93 przy 367; wzrost to nowe przypadki, nie zmiana licznika). Nowy ReleaseNotesChecksumTests. MuteMenuLabels zmierzone czterema przypadkami w Program.cs. Nazwa POLECENIA w palecie i spisie skrotow zostaje dwukierunkowa CELOWO (tam stan wyciszenia nie jest znany) - test pilnuje obu brzmien osobno.
+
+LEKCJE TECHNICZNE:
+- INNO SETUP u Michala stoi W PROFILU: C:\Users\micha\AppData\Local\Programs\Inno Setup 7\ISCC.exe. NIE ma go w Program Files - skrypt szukajacy tylko tam cicho nie zbuduje instalatora (ZIP powstaje, EXE nie).
+- build.ps1 -Publish NIE robi ani ZIP-a, ani instalatora - tylko katalog publish\AccessibleMediaController-<wersja>. Paczki trzeba zlozyc osobno (Compress-Archive + ISCC z /DZrodlo /DWersja /DWyjscie).
+- TOKEN GITHUB NIE PRZECHODZI przez $env: ustawiane w cudzyslowiach przez ssh->powershell (na Windows dochodzil pusty, push konczyl sie "Invalid username or token"). Dziala: gh auth token > plik, scp na Windows, skrypt .ps1 czyta Get-Content -Raw i usuwa plik po pushu.
+- ZAGNIEZDZONE CUDZYSLOWIA w ssh michal-glowny 'powershell -Command "..."' gubia sciezki ze spacjami i zwracaja PUSTE wyjscie zamiast bledu. Kazde nietrywialne polecenie: napisz .ps1, scp, uruchom przez -File.
+- LOGI Z build.ps1 sa w UTF-16-LE - grep ich nie widzi; czytac przez Pythona z encoding="utf-16-le".
+
+STAN LISTY 8 ZADAN Z 15.09: zrobione 3 (1 komunikat glosnosci, 4 przeskok Alt+Ctrl+strzalki, 7 "Pokaz w folderze"). OTWARTE 5: (2) ustawienia sesji jako globalne + "Wstrzymuj po wyjsciu z odtwarzacza" per sesja, (3) TimeShift dluzszy bufor i regulacja predkosci, (5) Shift+F1 kontekstowa pomoc skrotow + Insert+strzalka w gore, (6) lista nagranych plikow z Enterem dodajacym do biblioteki, (8) podcasty - strzalka w prawo pokazuje opis, Ctrl+I z kazdej sesji. Michal zapytany, czym zajac sie nastepnie; typowal zadanie 6 (lista nagran) i 8 (opis pod strzalka).
+
+PO AMC: 5 zadan EdSharpa z 15.09 (Empty line na pustych wierszach, przyklejanie slow od polskiej litery, mniej stabilny kursor i podglad, analiza co usuwamy, opis opcji ustawien). Sekcja 12.09 w Do zrobienia.md odhaczona na polecenie Michala.
+
+
+### 1789483126 - 2026-09-15 16:38
+
+(rodzaj: lekcja; projekt: amc)
+
+LEKCJA + NAPRAWA 15.09.2026 (AMC, instalator Inno Setup) - PRAWDZIWA przyczyna tego, ze kazda cicha aktualizacja "udawala sie" i nie zmieniala NICZEGO, co uzytkownik slyszy.
+
+OBJAW: Michal po kolejnych wydaniach (368, 370) nadal slyszal wersje 367 i nie dzialaly nowe skroty. Dziennik instalatora konczyl sie "Installation process succeeded", kod wyjscia 0.
+
+BLEDNA DIAGNOZA (moja, weszla na main commitem 0b0351e - SPROSTOWANA commitem 541a06a): uznalem, ze winny jest AppMutex i kolejnosc zamykania - instalator startowal z wnetrza zamykania okna, gdy proces AMC jeszcze zyl, pytal o zamkniecie aplikacji i w trybie cichym sam sobie odpowiadal "Anuluj". W dzienniku z 15:23 faktycznie taki przebieg byl, wiec przeslanka nie byla wyssana z palca - ale to NIE byla przyczyna glowna. Twierdzilem tez, ze AMC nie tworzy wlasnego mutexu: FALSZ, App.xaml.cs ln 15 ma InstanceMutexName = @"Local\AccessibleMultimediaController.SingleInstance" i nazwa zgadza sie z AppMutex w .iss. Pomylilem sie przy pierwszym grepie.
+
+PRAWDZIWA PRZYCZYNA (zmierzona): build.ps1 nazywa gotowy program numerem wersji - publish/AccessibleMediaController-<wersja>/AccessibleMediaController-<wersja>.exe. Skrot na pulpicie, menu Start, wpis App Paths i aktualizacja w tle uruchamiaja STALA nazwe AccessibleMediaController.exe. Sekcja [Files] miala tylko wzorzec zbiorczy Source: "*", wiec instalator kopiowal nowa wersje OBOK, pod nazwa z numerem, a stary AccessibleMediaController.exe zostawal nietkniety.
+
+DOWOD: w C:\Users\micha\AppData\Local\Programs\AMC lezaly obok siebie AccessibleMediaController-0.1.0-alpha.368.exe, -370.exe oraz AccessibleMediaController.exe z 15.09 00:29 o ProductVersion 0.1.0-alpha.367. Dziennik instalatora nie mial ANI JEDNEGO wiersza o kopiowaniu AccessibleMediaController.exe - grep po tej nazwie zwracal tylko wpisy rejestru App Paths i skrotow.
+
+POPRAWKA w installer/AMC_Setup.iss:
+  Source: "AccessibleMediaController-{#Wersja}.exe"; DestDir: "{app}"; DestName: "AccessibleMediaController.exe"; Flags: ignoreversion
+  wzorzec zbiorczy dostal Excludes ... ,AccessibleMediaController-*.exe
+  [InstallDelete] Type: files; Name: "{app}\AccessibleMediaController-*.exe" - kazda dotychczasowa aktualizacja dokladala 160 MB martwego pliku.
+
+ZMIERZONE PO POPRAWCE: cicha instalacja 371, katalog programu ma juz tylko AccessibleMediaController.exe o ProductVersion 0.1.0-alpha.371, uruchomione PID 7020.
+
+LEKCJA OGOLNA, WAZNIEJSZA OD SAMEJ POPRAWKI: "instalator zwrocil kod 0" NIE znaczy "nowa wersja jest zainstalowana". Po KAZDEJ cichej instalacji sprawdzaj ProductVersion pliku, ktory sie faktycznie uruchamia (Get-Item <exe>).VersionInfo.ProductVersion - a nie sam kod wyjscia i nie obecnosc plikow w katalogu. Ta wada siedziala w projekcie co najmniej od wydania 367 i zjadla kilka "udanych" aktualizacji.
+
+LEKCJA 2: build.ps1 w tym repo pakuje paczke DOPIERO z przelacznikiem -Publish; bez niego robi tylko restore, build i oba zestawy testow. Uruchomienie go bez -Publish i szukanie paczek to strata przebiegu.
+
+LEKCJA 3: uruchamiaj build.ps1 z repo, nie wlasne dotnet run. Wlasne polecenia odpalily tylko zestaw Core (104 testy) i przepuscily blad w zestawie Windows: NvdaBridgeSmokeTests tworzyl MediaItemRow przez refleksje z 10 wartosciami pozycyjnie, a klasa ma 11 parametrow od commita 7f51a9f (wpis historii nagrywania) - MissingMethodException. Blad wszedl na main niezauwazony. Skrypt z repo odpala oba zestawy.
+
+
+### 1789501934 - 2026-09-15 21:52
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.375 (15.09.2026) - WYDANE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+
+WYPCHNIETE: commit 1ccd145 na github.com/michalkasperczak/AMC main (poprzedni 91ae03d = v374), 29 plikow, 2335 dodanych / 84 usunietych linii. Potwierdzone u zrodla przez gh api repos/.../commits/main.
+
+WYDANIE: https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.375 jako prerelease, dwa zalaczniki (AMC-Setup-0.1.0-alpha.375.exe 4764474 B, AccessibleMediaController-0.1.0-alpha.375-win-x64.zip 4068988 B), sumy SHA-256 w opisie potwierdzone skryptem scripts/wydaj.sh.
+
+ZAINSTALOWANE: C:\Users\micha\AppData\Local\Programs\AMC\AccessibleMediaController.exe, ProductVersion 0.1.0-alpha.375, brak starych EXE obok. Uruchomione, proces zyje (PID 11416), wersja procesu potwierdzona.
+
+ZAKRES v375: bufor TimeShift RAM->dysk (TimeshiftRingStorage, limit 1 min - 12 h, domyslnie 10 min, koniec urwania po ~24 min); regulacja predkosci w buforze (SoundTouch); ustawienia bufora w SettingsWindow; Shift+F1 skroty kontekstowe; NVDA+strzalka w gore = biezaca audycja/utwor; Hermanice naprawione (SelectAudio fallback na muxed); Alt+Shift+Enter opcje strumienia stacji (BackupStreamUrl + RecordingFolder); strzalka w prawo = pelny opis podcastu; okno informacji w trybie przegladania (WebView2 + InformationDocument.cs, Escape przez AcceleratorKeyPressed, fallback do TextBox). Testy: 103 smoke Windows + pelny Core.
+
+LEKCJA - DWIE KOPIE REPO ROZJECHANE: repo na glownym (D:\Projekty Codex\Accessible Multimedia Controller) NIE znalo commita 91ae03d (v374), ktory byl juz na GitHubie - jego HEAD byl e010b84. Commit zrobiony tam (6349c3c) NIE dalby sie wypchnac. Push z glownego wisial bez konca (najpierw na hasle, potem tez z tokenem z gh auth token) i konczyl sie timeoutem SSH. ROZWIAZANIE: wypchnac z maszyny Hermes (/home/michal/projekty/AMC), gdzie historia jest zgodna z GitHubem - git push origin main przeszedl od razu (91ae03d..1ccd145). Zawartosc plikow byla na obu maszynach IDENTYCZNA (267 plikow, roznica tylko Directory.Build.props = numer wersji i AMC_Setup.iss = BOM/kodowanie polskich znakow).
+
+LEKCJA - POROWNANIE SUM MIEDZY WINDOWS I LINUX: pierwsza proba porownania (PowerShell Get-Content -Raw + zamiana CRLF na LF, MD5 z UTF8.GetBytes) dala 193 FALSZYWE roznice na 267 plikow. Przyczyna: Get-Content -Raw dekoduje plik wedlug kodowania systemowego i psuje bajty. POPRAWNIE: [IO.File]::ReadAllBytes i usuniecie bajtu 13, liczenie MD5 z surowych bajtow - wtedy zgodnosc z linuksowym `tr -d '\r' | md5sum`. Zanim uwierzysz w setki roznic, zweryfikuj metode na JEDNYM pliku sciagnietym przez scp.
+
+LEKCJA - INSTALATOR CHCE EXE Z NUMEREM WERSJI: installer/AMC_Setup.iss ma Source: "AccessibleMediaController-{#Wersja}.exe" (kopiuje potem pod stala nazwa), a dotnet publish daje AccessibleMediaController.exe. Przed ISCC trzeba zmienic nazwe (Move-Item, nie Copy-Item - kopia dalaby dwa wpisy na to samo miejsce). Bez tego ISCC konczy sie "Source file ... does not exist".
+
+USTALENIE MICHALA 15.09.2026 (stale, kazdy projekt): po instalacji ZAWSZE uruchamiac program i wznawiac to, co gralo, jesli mozliwe. Zapisane w skillu amc-... i w pamieci stalej.
+
+STAN TIDAL (relacja Michala): sterowanie generalnie dziala, ale przekazuje tylko pojedyncze nagranie - nastepny/poprzedni nie dzialaja, bo AMC tylko wywoluje Tidala i sesja nie ma go w playerze. Do tego wracamy osobno.
+
+OTWARTE: slowa/tekst utworu dla plikow lokalnych pod strzalka w prawo w sesji lokalnej (menu) - Michal odlozyl do nastepnego podejscia, zrodlo (znacznik w pliku / .lrc / internet) NIEUSTALONE. Sprzatanie plikow bufora TimeShift przy starcie programu - nadal nie zrobione.
+
+
+### 1789505490 - 2026-09-15 22:51
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.376 (15.09.2026) - WYDANE, ZAINSTALOWANE, URUCHOMIONE (PID 34128).
+
+Commit bcccbe3 na github.com/michalkasperczak/AMC main (poprzedni 1ccd145 = v376 kod v375). Wydanie: https://github.com/michalkasperczak/AMC/releases/tag/v0.1.0-alpha.376 z ZIP + AMC-Setup i sumami SHA-256.
+
+NAPRAWIONE 3 BLEDY ZGLOSZONE PRZEZ MICHALA PO v375:
+
+1. Okno opisu podcastu - DUBLOWANIE LACZY. InformationDocument.Build wypisywalo sekcje "Lacza" z adresami, ktore LinkifyAndEscape juz zamienil na lacza w tresci. Fix: nowa metoda ZawieraAdres(information, uri) (porownanie OrdinalIgnoreCase, TrimEnd '/'), sekcja dostaje tylko adresy nieobecne w tresci.
+
+2. Okno opisu - ZABLOKOWANY KURSOR CZYTNIKA. Przyczyna: InformationBrowser.Focus() wolane ZANIM dokument sie wczytal - czytnik nie mial czego czytac. Fix w InformationWindow.xaml.cs: TaskCompletionSource + CoreWebView2.NavigationCompleted, Task.WhenAny z Task.Delay(5000), dopiero potem Focus() + ExecuteScriptAsync ustawiajacy tabindex=-1 i focus() na <main>. Dodatkowo AreBrowserAcceleratorKeysEnabled zmienione z false na TRUE (Ctrl+F, nawigacja). Timeout przywraca InformationHost + LinksList.
+
+3. Shift+F1 POMOC KONTEKSTOWA nie filtrowala. ShortcutHelpCatalog.CreateForContext tylko PRZESTAWIALA kolejnosc sekcji przez OrderBy, dalej zwracajac WSZYSTKIE - w odtwarzaczu radia byly podcasty i biblioteka lokalna. Fix: HashSet 'widoczne' = preferred + "general" + "settings", Where filtruje sekcje i puste (Entries.Count > 0); gdy filtr wyciol wszystko - fallback do pelnego spisu.
+
+4. Kolejnosc odczytu NVDA+strzalka w gore (CommandIds.CurrentBroadcastInformation w MainWindow.xaml.cs ~4100): AudioParametersFormatter.FormatCompact przeniesiony PRZED nazwe audycji - teraz "Program Trzeci, 192 kb/s, utwor", jak w przykladzie Michala.
+
+DECYZJA MICHALA: strzalka w prawo na liscie podcastow ZOSTAJE i ma "otwierac opis i lacza" (to samo okno co Alt+D, bo po naprawie kursora czyta sie poprawnie).
+
+WERYFIKACJA WSTECZNA (zrobiona, warto powtarzac): cofnalem ShortcutHelpCatalog.cs do wersji sprzed poprawki i uruchomilem testy - TestPomocKontekstowaPodShiftF1 OBLAL SIE ("nie moze wypisywac sekcji podcastow"). Test naprawde mierzy zmiane. Potem przywrocono poprawke: 103/103 OK.
+
+PULAPKI TECHNICZNE:
+- Instalator to installer\AMC_Setup.iss (NIE packaging\...), bierze parametry: /DWersja=X /DZrodlo=<publish> /DWyjscie=<katalog>. Sam nie ustawia wersji - domyslnie 0.0.0.
+- Publish musi zawierac KOPIE exe pod nazwa AccessibleMediaController-<wersja>.exe.
+- scripts/wydaj.sh wymaga 2 argumentow: wersja I KATALOG z zalacznikami (+ opcjonalnie plik opisu).
+- Testy uruchamiac przez `dotnet run --project ...` BEZ flagi --nologo - trafia do programu jako nazwa pliku testowego i test zywy sie wywala.
+- tests/.../Program.cs nie mial `using AccessibleMediaController.Core.Presentation` - trzeba bylo dodac.
+- Na maszynie Hermes NIE MA dotneta: kompilacja i testy tylko przez ssh michal-glowny; push tylko z Hermesa (glowny ma rozjechana historie git).
+- terminal() z workdir potrzebuje jawnego workdir, inaczej trafia w nieistniejacy /tmp/es96.
+
+STAGE: C:\Users\micha\stage376, publish: amc-publish-376, wydanie: amc-wydanie-376. Skrypty: /home/michal/amc376_*.ps1.
+
+DO ZROBIENIA DALEJ: slowa/tekst utworu dla plikow lokalnych (menu pod strzalka w prawo w sesji lokalnej), sterowanie TIDAL.
+
+
+### 1789515752 - 2026-09-16 01:42
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG 5.0.108 (16.09.2026) - WYDANE, ZMIERZONE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+
+Commit 12db2c8 na github.com/michalkasperczak/EdSharpNG master (poprzedni 95d9cff), potwierdzone U ZRODLA przez gh api. Wydanie v5.0.108 z zalacznikiem EdSharpNG_Setup_5.0.108.exe (3497754 B). Testy 717/717 PASS.
+
+SUMA SHA256 paczki: E430211ED8996858DDDB0250EDB61B42829C183E911796F1B5B1D8DB42CFB0CE. Policzona z pliku POBRANEGO z wydania (gh release download), nie z kopii lokalnej - zgodna z lokalna.
+SUMA zainstalowanego EdSharpNG.exe: 45566D919641A7BFEB02BAB3021E6EB09947E7AD1052C0FA7A1D751492DB9726 - identyczna z moim plikiem, czyli instalacja bit w bit.
+
+ZREALIZOWANE ZADANIA z "Do zrobienia" 15.09.2026:
+1. "Ciagle czyta Empty line" - komunikat leci RAZ na wejscie w pusty wiersz, nie przy kazdym odswiezeniu. Pomiar testy/pomiar_pustego_wiersza_608.cs: 3 komunikaty na 3 puste wiersze, PASS.
+2. PRZYCZYNA ZLEPIANIA SLOW OD POLSKICH LITER (glowne odkrycie): kontrolka PODGLADU powstawala z DOMYSLNEJ klasy RichEdit WinForms, ktora dzieli slowa inaczej niz kontrolka edycyjna - polska litera z ogonkiem (S, s, o) nie byla dla niej poczatkiem slowa. Naprawa: podglad uzywa tej samej klasy okna RICHEDIT50W z msftedit.dll co edytor (nadpisane CreateParams, LoadLibrary msftedit.dll).
+   POMIAR ROZNICUJACY (testy/pomiar_granic_slow_608.cs): stara 5.0.107 edytor 5/5 podglad 0/5 FAIL; nowa 5.0.108 edytor 5/5 podglad 5/5 PASS.
+3. Podglad zachowuje pozycje kursora przy przerysowaniu.
+4. docs/CO-USUWAMY.md - analiza co zdejmujemy z programu.
+5. docs/OPCJE-USTAWIEN.md - opis kazdej opcji + pokrycie: 27 kluczy w INI = 22 w okienku Ustawien + 5 swiadomie pominietych.
+Oba pliki tez u Michala: D:\Projekty Codex\Hermes\Nowe\ (folder Nowe NIE ISTNIAL, trzeba go bylo utworzyc).
+
+NAPRAWIONE TESTY, KTORE KLAMALY (kod byl poprawny, testy przestarzale) - lekcja: gdy test pada, sprawdz najpierw czy nie opisuje stanu sprzed zmiany decyzji:
+- napisy_w_binarce_570: szukal "File copied", komunikat skrocony do "Copied" 11.09.2026 na polecenie Michala.
+- pomiar_usuniecia_format_code: zadal braku slowa "astyle", a astyle zostaje w Skladniki.cs jako narzedzie DO POBRANIA (nie polecenie formatowania); Control+Y zastapiony przez Control+Shift+Z.
+- pomiar_usuniecia_spisu_tresci: pisany 26.08.2026, a 27.08 Michal PRZYWROCIL "Go to Contents" pod Shift+F6 jako komende na spisie Markdown i przypisal Alt+Shift+T do nowej komendy; usuniete zostalo "Search for Topic".
+- audyt_skrotow_vs_opisy: wskazywal nieistniejacy hotkeys.txt (od 5.0.95 jest GENEROWANY EdSharp_Hotkeys.txt).
+- Hotkeys.ini: wpis "Command Palette" na Control+Shift+X bez odpowiadajacej komendy w programie - usuniety.
+
+LEKCJE TECHNICZNE (SSH do glownego, pomiary):
+1. POTWIERDZONE PONOWNIE: programu GUI NIE uruchomisz przez ssh + Start-Process (proces wstaje BEZ okna, MainWindowHandle 0, i ginie). DZIALA: schtasks /create ... /it /f, schtasks /run, potem /delete. Log potwierdzil "5.0.108 uruchomiony".
+2. Get-Content -Encoding UTF8 przez ssh NIE zwraca poprawnego UTF-8 dla polskich znakow - plik wraca jako cp1250. Dziala: [IO.File]::ReadAllText + [Console]::OutputEncoding UTF8.
+3. Zapis pliku na glowny przez potok do WriteAllText jest NIEPEWNY (jeden z dwoch plikow milczaco nie powstal, a polecenie zwrocilo sukces). Pewniejsze: scp do C:\ (bez spacji w sciezce) + Move-Item. ZAWSZE weryfikowac rozmiarem po zapisie.
+4. Zapis do folderu, ktory NIE ISTNIEJE, konczy sie cisza bez bledu - najpierw New-Item -Force, potem Test-Path.
+5. POMIAR GRANIC SLOW - trzy sondy byly gluche, dopiero czwarta rozniocowala: (a) Control+Shift+Prawo + czytanie zaznaczenia UIA kumuluje zaznaczenie w podgladzie, (b) TextPattern GetVisibleRanges nie pokazuje podzialu na slowa, (c) EM_EXGETSEL/EM_EXSETSEL przekazuja WSKAZNIK i miedzy procesami NIE dzialaja. DZIALA: EM_FINDWORDBREAK z WB_MOVEWORDRIGHT (przekazuje liczby, nie wskazniki) + korekta o jeden znak na wiersz, bo kontrolka liczy pozycje z CR+LF a WM_GETTEXT zwraca tekst z samym LF.
+6. ZASADA POTWIERDZONA W PRAKTYCE: pomiar bez kontroli na STAREJ binarce jest bezwartosciowy. Dwie moje sondy dawaly PASS na wersji z bledem. Stara binarke trzeba skopiowac do katalogu Windows (nie /tmp - Permission denied).
+
+ZADANIE 3 CZESCIOWO NIEDOMKNIETE - POWIEDZIANE MICHALOWI WPROST: zglosil, ze "kursor mniej stabilny, preview nie podaza, wraca do poczatku pliku". Naprawilem zachowanie pozycji przy przerysowaniu podgladu, ALE moj pomiar (testy/pomiar_stabilnosci_kursora_608.cs) NIE ODTWORZYL tego bledu nawet na starej 5.0.107 - czyli nie mam dowodu, ze przyczyna zostala trafiona. Potrzebny scenariusz od Michala, kiedy dokladnie kursor wraca na poczatek.
+
+UWAGA - NIEZAPISANY TEKST MICHALA: przy instalacji EdSharp dzialal od 13.09 z NIEZAPISANYM plikiem D:\iCloudDrive\Documents\notatki\1 notatki nowe.md (Zmieniony=Y, w edytorze 20523 B, na dysku 20978 B). taskkill lagodny NIE zadzialal (program nie zamykal sie 15 s), musialem Stop-Process -Force. Przed zamknieciem zrobilem kopie: D:\Projekty Codex\Hermes\Kopia-przed-108\ (plik odzysku, wersja z dysku, Sesja.ini). Pliki odzysku w AppData nietkniete, Sesja.ini z Kursor=20297 i zakladkami zachowana - program po starcie moze zaproponowac odzysk. MICHAL MA TO SPRAWDZIC.
+
+LEKCJA O MOIM BLEDZIE: wydalem 5.0.108 BEZ sumy kontrolnej w opisie, lamiac wlasna zasade z 13.09.2026 (suma ma byc w opisie wydania, bylo tak przy 5.0.84). Michal to wychwycil i slusznie odmowil uruchomienia niesprawdzalnego pliku. Sume dopisalem po fakcie. Na przyszlosc: suma kontrolna to CZESC wydania, nie dodatek - liczyc ja z pliku pobranego z wydania.
+
+LEKCJA O ROZMIARZE: Michal zglosil obawe "maly plik niezbudowany do konca, 3 MB". Sprawdzone: 3.34 MB to NORMALNY rozmiar tego instalatora (5.0.100-5.0.107 wszystkie 3.33-3.34 MB), plik nie byl obciety. Rozmiar zawsze porownywac z poprzednimi wydaniami, zanim uzna sie go za bledny.
+
+
+### 1789515753 - 2026-09-16 01:42
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG 5.0.108 (16.09.2026) - WYDANE, ZMIERZONE, ZAINSTALOWANE I URUCHOMIONE U MICHALA.
+
+Commit 12db2c8 na github.com/michalkasperczak/EdSharpNG master (poprzedni 95d9cff), potwierdzone U ZRODLA przez gh api. Wydanie v5.0.108 z zalacznikiem EdSharpNG_Setup_5.0.108.exe (3497754 B). Testy 717/717 PASS.
+
+SUMA SHA256 paczki: E430211ED8996858DDDB0250EDB61B42829C183E911796F1B5B1D8DB42CFB0CE. Policzona z pliku POBRANEGO z wydania (gh release download), nie z kopii lokalnej - zgodna z lokalna.
+SUMA zainstalowanego EdSharpNG.exe: 45566D919641A7BFEB02BAB3021E6EB09947E7AD1052C0FA7A1D751492DB9726 - identyczna z moim plikiem, czyli instalacja bit w bit.
+
+ZREALIZOWANE ZADANIA z "Do zrobienia" 15.09.2026:
+1. "Ciagle czyta Empty line" - komunikat leci RAZ na wejscie w pusty wiersz, nie przy kazdym odswiezeniu. Pomiar testy/pomiar_pustego_wiersza_608.cs: 3 komunikaty na 3 puste wiersze, PASS.
+2. PRZYCZYNA ZLEPIANIA SLOW OD POLSKICH LITER (glowne odkrycie): kontrolka PODGLADU powstawala z DOMYSLNEJ klasy RichEdit WinForms, ktora dzieli slowa inaczej niz kontrolka edycyjna - polska litera z ogonkiem (S, s, o) nie byla dla niej poczatkiem slowa. Naprawa: podglad uzywa tej samej klasy okna RICHEDIT50W z msftedit.dll co edytor (nadpisane CreateParams, LoadLibrary msftedit.dll).
+   POMIAR ROZNICUJACY (testy/pomiar_granic_slow_608.cs): stara 5.0.107 edytor 5/5 podglad 0/5 FAIL; nowa 5.0.108 edytor 5/5 podglad 5/5 PASS.
+3. Podglad zachowuje pozycje kursora przy przerysowaniu.
+4. docs/CO-USUWAMY.md - analiza co zdejmujemy z programu.
+5. docs/OPCJE-USTAWIEN.md - opis kazdej opcji + pokrycie: 27 kluczy w INI = 22 w okienku Ustawien + 5 swiadomie pominietych.
+Oba pliki tez u Michala: D:\Projekty Codex\Hermes\Nowe\ (folder Nowe NIE ISTNIAL, trzeba go bylo utworzyc).
+
+NAPRAWIONE TESTY, KTORE KLAMALY (kod byl poprawny, testy przestarzale) - lekcja: gdy test pada, sprawdz najpierw czy nie opisuje stanu sprzed zmiany decyzji:
+- napisy_w_binarce_570: szukal "File copied", komunikat skrocony do "Copied" 11.09.2026 na polecenie Michala.
+- pomiar_usuniecia_format_code: zadal braku slowa "astyle", a astyle zostaje w Skladniki.cs jako narzedzie DO POBRANIA (nie polecenie formatowania); Control+Y zastapiony przez Control+Shift+Z.
+- pomiar_usuniecia_spisu_tresci: pisany 26.08.2026, a 27.08 Michal PRZYWROCIL "Go to Contents" pod Shift+F6 jako komende na spisie Markdown i przypisal Alt+Shift+T do nowej komendy; usuniete zostalo "Search for Topic".
+- audyt_skrotow_vs_opisy: wskazywal nieistniejacy hotkeys.txt (od 5.0.95 jest GENEROWANY EdSharp_Hotkeys.txt).
+- Hotkeys.ini: wpis "Command Palette" na Control+Shift+X bez odpowiadajacej komendy w programie - usuniety.
+
+LEKCJE TECHNICZNE (SSH do glownego, pomiary):
+1. POTWIERDZONE PONOWNIE: programu GUI NIE uruchomisz przez ssh + Start-Process (proces wstaje BEZ okna, MainWindowHandle 0, i ginie). DZIALA: schtasks /create ... /it /f, schtasks /run, potem /delete. Log potwierdzil "5.0.108 uruchomiony".
+2. Get-Content -Encoding UTF8 przez ssh NIE zwraca poprawnego UTF-8 dla polskich znakow - plik wraca jako cp1250. Dziala: [IO.File]::ReadAllText + [Console]::OutputEncoding UTF8.
+3. Zapis pliku na glowny przez potok do WriteAllText jest NIEPEWNY (jeden z dwoch plikow milczaco nie powstal, a polecenie zwrocilo sukces). Pewniejsze: scp do C:\ (bez spacji w sciezce) + Move-Item. ZAWSZE weryfikowac rozmiarem po zapisie.
+4. Zapis do folderu, ktory NIE ISTNIEJE, konczy sie cisza bez bledu - najpierw New-Item -Force, potem Test-Path.
+5. POMIAR GRANIC SLOW - trzy sondy byly gluche, dopiero czwarta rozniocowala: (a) Control+Shift+Prawo + czytanie zaznaczenia UIA kumuluje zaznaczenie w podgladzie, (b) TextPattern GetVisibleRanges nie pokazuje podzialu na slowa, (c) EM_EXGETSEL/EM_EXSETSEL przekazuja WSKAZNIK i miedzy procesami NIE dzialaja. DZIALA: EM_FINDWORDBREAK z WB_MOVEWORDRIGHT (przekazuje liczby, nie wskazniki) + korekta o jeden znak na wiersz, bo kontrolka liczy pozycje z CR+LF a WM_GETTEXT zwraca tekst z samym LF.
+6. ZASADA POTWIERDZONA W PRAKTYCE: pomiar bez kontroli na STAREJ binarce jest bezwartosciowy. Dwie moje sondy dawaly PASS na wersji z bledem. Stara binarke trzeba skopiowac do katalogu Windows (nie /tmp - Permission denied).
+
+ZADANIE 3 CZESCIOWO NIEDOMKNIETE - POWIEDZIANE MICHALOWI WPROST: zglosil, ze "kursor mniej stabilny, preview nie podaza, wraca do poczatku pliku". Naprawilem zachowanie pozycji przy przerysowaniu podgladu, ALE moj pomiar (testy/pomiar_stabilnosci_kursora_608.cs) NIE ODTWORZYL tego bledu nawet na starej 5.0.107 - czyli nie mam dowodu, ze przyczyna zostala trafiona. Potrzebny scenariusz od Michala, kiedy dokladnie kursor wraca na poczatek.
+
+UWAGA - NIEZAPISANY TEKST MICHALA: przy instalacji EdSharp dzialal od 13.09 z NIEZAPISANYM plikiem D:\iCloudDrive\Documents\notatki\1 notatki nowe.md (Zmieniony=Y, w edytorze 20523 B, na dysku 20978 B). taskkill lagodny NIE zadzialal (program nie zamykal sie 15 s), musialem Stop-Process -Force. Przed zamknieciem zrobilem kopie: D:\Projekty Codex\Hermes\Kopia-przed-108\ (plik odzysku, wersja z dysku, Sesja.ini). Pliki odzysku w AppData nietkniete, Sesja.ini z Kursor=20297 i zakladkami zachowana - program po starcie moze zaproponowac odzysk. MICHAL MA TO SPRAWDZIC.
+
+LEKCJA O MOIM BLEDZIE: wydalem 5.0.108 BEZ sumy kontrolnej w opisie, lamiac wlasna zasade z 13.09.2026 (suma ma byc w opisie wydania, bylo tak przy 5.0.84). Michal to wychwycil i slusznie odmowil uruchomienia niesprawdzalnego pliku. Sume dopisalem po fakcie. Na przyszlosc: suma kontrolna to CZESC wydania, nie dodatek - liczyc ja z pliku pobranego z wydania.
+
+LEKCJA O ROZMIARZE: Michal zglosil obawe "maly plik niezbudowany do konca, 3 MB". Sprawdzone: 3.34 MB to NORMALNY rozmiar tego instalatora (5.0.100-5.0.107 wszystkie 3.33-3.34 MB), plik nie byl obciety. Rozmiar zawsze porownywac z poprzednimi wydaniami, zanim uzna sie go za bledny.
+
+
+### 1789581363 - 2026-09-16 19:56
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 16.09.2026 - DECYZJE MICHALA (podpisane "MK.") w pliku D:\Projekty Codex\Hermes\Nowe\CO-USUWAMY.md - CO WYRZUCAMY Z EdSharpNG. Plik jest na glownym komputerze (ssh michal-glowny), 11261 B, kodowanie naprawione (bylo cp852-double-encoded, kopia zepsuta: CO-USUWAMY-zepsuty.bak). TEMAT ODLOZONY - Michal powiedzial "to mozesz potem sie tym zajac, tylko zapisz i wrocimy do tematu". NIE realizowac bez jego slowa.
+
+14 decyzji Michala, wers po wersie (numery wierszy w pliku):
+- w.55 RTF: "To juz usunelsmy przeciez. RTF surowe sie nie wczyta." (moja propozycja zostawienia odczytu .rtf jest nieaktualna - juz usuniete)
+- w.82 KOMENTARZE: "Ale nie masz na mysli przypisow? Jezeli nie, to komentarze moglyby byc, ale napisz, jak by to moglo zostac sensownie rozwiazane: wstawianie i nawigacja, ewentualny zapis/transport poza EdSharp" -> DO ODPOWIEDZI, nie do usuniecia. Michal chce projektu rozwiazania.
+- w.88: "To jednak umie, bo mowiles potem, ze nie." -> moja wczesniejsza informacja byla sprzeczna; SPRAWDZIC U ZRODLA w kodzie, nie zgadywac.
+- w.112 narzedzia wciec (Alt+I i pokrewne, 3 klawisze): USUWAMY
+- w.117 Infer Indent (Alt+prawy nawias): ZOSTAWIAMY
+- w.127: USUWAMY
+- w.133: "tak usuwamy, InvokeSnippet zostawiamy"
+- w.147: USUWAMY
+- w.152: TAK (usuwamy)
+- w.160: USUNAC
+- w.164: TAK (usuwamy)
+- w.169: "Do rozwiniecia, moze zostac" -> ZOSTAWIC
+- w.178 skroty: "Zostawiamy. Alt-cyfra uzywam, Alt-Shift-F2 ZAMIENIC na liste numerowanych Alt-0" -> to ZMIANA do wykonania, nie usuniecie
+- w.189 Markdown: "Konwertuje przeciez do MD juz. Surowego nie otwiera."
+
+LEKCJA: Michal czyta moje propozycje w pliku MD i dopisuje odpowiedzi jako linie "MK. ...". Zawsze odczytywac te linie z pliku u zrodla, bo tam sa jego decyzje - nie zakladac zgody na cala liste.
+
+
+### 1789593403 - 2026-09-16 23:16
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.383 (16.09.2026) - Ctrl+Shift+E/R/T przy oryginalnym TIDALu mowia SAM CZAS.
+
+ZGLOSZENIE MICHALA: "Ctrl+Shift+T niepotrzebnie mowi az tyle: Oryginalny TIDAL, odtwarzanie: Luka, Suzanne Vega, dlugosc 3 minut 51 sekund", potem "Sam czas bez min. sekund slow i Oryginalny Tidal wystarczy" i "Sprawdz CTRL-e i r tez Tidal cos tam za duzo mowi". Obie uwagi trafne.
+
+DWIE NIEZALEZNE PRZYCZYNY (wazna lekcja - 382 naprawila tylko polowe):
+1. W MainWindow.xaml.cs TimeTotal byl w JEDNEJ galezi z ItemProperties (`if (commandId is CommandIds.TimeTotal or CommandIds.ItemProperties)`), PRZED wywolaniem TryAnnounceTidalDesktopTimeAsync. Sciezka odczytu czasu dodana w 382 NIGDY nie dostawala Ctrl+Shift+T. Naprawa: galaz zawezona do samego ItemProperties.
+2. TryAnnounceTidalDesktopTimeAsync w MainWindow.TidalDesktop.cs doklejal przedrostki "Czas od poczatku:", "Czas calkowity:", "Czas pozostaly:". Usuniete - teraz sam CommandRouter.FormatTime(...), format 3:51.
+
+Nazwa "Oryginalny TIDAL" ZOSTAJE wylacznie w komunikatach o BRAKU danych (tam trzeba wyjasnic czego brakuje - cisza/zero byloby nieodroznialne od poczatku utworu).
+
+TEST: TestTidalDesktopCzasMowiSamaLiczbe w tests/AccessibleMediaController.Windows.SmokeTests/Program.cs - pilnuje OBU przyczyn osobno, ma asercje pozytywne (usuniecie wywolania nie przejdzie jako sukces). DOWIEDZIONY celowym zepsuciem reguly w pliku zrodlowym: test padl, kod 1, plik przywrocony (hash zgodny z Hermesem). Testy Windows: 108, zero bledow.
+
+WYPCHNIETE: commit a810162bd5660639c4ae168ba90b44c8dbfd2e06 na github.com/michalkasperczak/AMC main, potwierdzone gh api. Release v0.1.0-alpha.383 z zalacznikiem AMC-Setup-0.1.0-alpha.383.exe (55418882 B, SHA-256 96A98DB6D593DC2DABA524146CBBE1754E734FA4462876D03C61123929372725), stan "uploaded" potwierdzony u zrodla.
+
+ZAINSTALOWANE I URUCHOMIONE u Michala: pid 12940, wersja 0.1.0-alpha.383, C:\Users\micha\AppData\Local\Programs\AMC.
+
+LEKCJA GITOWA (wazna, kosztowala dwa odrzucone pushe): lokalne repo /home/michal/projekty/AMC jest na galezi "wydanie-379", NIE na main. `git push origin main` wypycha lokalny refs/heads/main (przestarzaly), nie HEAD - odrzucenie non-fast-forward mimo ze fetch pokazuje zero brakujacych commitow. Poprawnie: `git push origin HEAD:main`.
+
+LEKCJA INNO SETUP: ISCC.exe NIE jest w Program Files na glownym. Sciezka: C:\Users\micha\AppData\Local\Programs\Inno Setup 6\ISCC.exe (jest tez Inno Setup 7 obok). Wywolanie: ISCC /Qp /DWersja=... /DZrodlo=<publish> /DWyjscie="D:\Projekty Codex\Hermes" installer\AMC_Setup.iss
+
+
+### 1789594110 - 2026-09-16 23:28
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE 16.09.2026 (EdSharpNG - DOKUMENTACJA ROZNIC WOBEC ORYGINALU, do pokazywania ludziom)
+
+ZADANIE MICHALA: "zapisz na githubie i u siebie w dokumentacji, co zostalo zrobione, tak zeby mozna bylo potem przedstawic ludziom dokladne nowosci i roznice w naszej wersji w stosunku do wersji oryginalnej edytora".
+
+POWSTAL NOWY PLIK: docs/ROZNICE-WOBEC-ORYGINALU.md w github.com/michalkasperczak/EdSharpNG. Commit a296180 na master, POTWIERDZONY U ZRODLA przez gh api (rozmiar 15321 B, sha ebac84c). Pisany listami, nie tabelami (czytnik ekranu). 8 rozdzialow: punkt odniesienia, kierunek zmian, nowe funkcje, dostepnosc, budowanie, autorstwo, "czego celowo nie ruszamy", jak powtorzyc pomiary.
+
+TWARDE LICZBY (zmierzone git/wc, nie z pamieci; punkt odniesienia = pierwszy commit 62f07a5 "5.0.73 punkt startowy"):
+- Hotkeys.ini: 230 polecen w oryginale, 217 u nas. USUNIETYCH 18: Compile, Pick Compiler, Review Output, Say Compiler, Run, Run at Cursor, PyDent, PyBrace, Justify, Style, Baseline, Set Selection Font, Say Font, Set Default Font and Color, Web Download, Web Client Utilities, Open Other Format, Text Combine. NOWYCH 5: Command Palette, Report a Problem, Tutorial, Word Spelling Menu, Work Continuity.
+- pliki w repo: 1252 -> 1154 (168 plikow balastu usunietych)
+- EdSharp.cs: 21802 -> 24140 wierszy; caly program 12 plikow C#, 30792 wiersze
+- git diff 62f07a5 HEAD: 264 pliki, 15023 dodane, 200389 usuniete
+- 122 pliki pomiarow w testy/
+
+ZAKTUALIZOWANE TEZ: docs/README.md (nowy plik w spisie), docs/ARCHITEKTURA.md (11 -> 12 plikow C#, dopisane Ustawienia.cs 267 i Wyrazenia.cs 432, jeden kompilator zamiast dwoch), docs/DZIENNIK-TECHNICZNY.md (wydanie 5.0.111 + pulapki + nota o numerze 5.0.110).
+
+WYDANIE 5.0.111 (zrobila je DRUGA SESJA, kanal BlindPilot, commit 4580c49, zalacznik EdSharpNG_Setup_5.0.111.exe 3500492 B): usunieta warstwa skryptow JScript .NET - EdSharp.dll, EdSharp.js, krok jsc.exe, Assembly.LoadFrom. W jej miejsce nowy Wyrazenia.cs (wlasny parser kalkulatora, przyjmuje przecinek I kropke jako separator dziesietny). Usuniete tez PyDent/PyBrace, polecenia budowania kodu z mechanizmem per-kompilator, KeepBackup, HardPageAddress, SectionBreak, CompileCommand/JumpPosition/AbbreviateOutput. MaximizeWindow fabrycznie WLACZONE.
+
+LEKCJA TECHNICZNA (zdejmowanie EdSharp.dll z buildu): pliku bylo w PIECIU miejscach i kazde przerywalo pakowanie PO udanej kompilacji, komunikatem mowiacym o czyms innym. build_installer_garfield.sh: warunek swiezosci (-nt EdSharp.js), kontrola [[ -s EdSharp.dll ]] z komunikatem "build nie utworzyl EdSharpNG.exe", cp do stagingu. zbuduj.sh: bezwarunkowy cp (exit 8). EdSharp_Setup.iss: Source EdSharp.js z ignoreversion BEZ skipifsourcedoesntexist. Wpis w [UninstallDelete] dla EdSharp.dll ZOSTAWIC - zeby plik z poprzednich instalacji zniknal przy odinstalowaniu.
+
+LEKCJA ORGANIZACYJNA - DWIE SESJE W JEDNYM REPO: numer 5.0.110 NIE ISTNIEJE. Ja podnioslem wersje na 5.0.110 i budowalem, gdy druga sesja rownolegle podniosla na 5.0.111 i wydala. Objaw: zbuduj.sh 5.0.110 odmowil bo w EdSharp.cs bylo juz 5.0.111. PRZED podnoszeniem numeru wersji sprawdzac: ps -eo cmd | grep zbuduj.sh oraz git log -1. Narzedzie patch ostrzega "modified by sibling subagent" - to ostrzezenie trzeba czytac.
+
+
+### 1789597517 - 2026-09-17 00:25
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG 5.0.111 (16.09.2026) - WYKONANIE DECYZJI MK z plikow D:\Projekty Codex\Hermes\Nowe\CO-USUWAMY.md i OPCJE-USTAWIEN.md.
+
+WYPCHNIETE I SPRAWDZONE U ZRODLA: commit 4580c49 na refs/heads/master github.com/michalkasperczak/EdSharpNG (uwaga: galaz nazywa sie MASTER, nie main - git log origin/main daje blad). Release v5.0.111 z zalacznikiem EdSharpNG_Setup_5.0.111.exe, 3500492 B, sha256 7b33ea487dff111c7f39613183a71a67e60951aaf5604fe4b29bd60f3bf1cac5.
+
+USUNIETE Z KODU: warstwa JScript .NET (klasa Script, App.Boo, EdSharp.js skasowany git rm, EdSharp.dll znika z instalatora i z BuildEdSharp.cmd - krok jsc.exe wyciety, zbuduj.sh nie kopiuje juz dll); PyDent/PyBrace (handlery + metody PyDent2Brace/PyBrace2Dent); polecenia budowania kodu Compile, Pick Compiler, Review Output, Say Compiler wraz z mechanizmem plikow <Kompilator>.ini i metodami FindCscPath/FindPythonPath; Run z menu File; Run at Cursor; Text Combine; KeepBackup (kopia .bak); HardPageAddress i metoda GetPageAddress (pasek stanu zawsze procent); opcje SectionBreak, CompileCommand, JumpPosition, AbbreviateOutput z okna ustawien (dodane do listy Pomijany() zeby audyt pokrycia nie zglaszal ich jako brakow); pozycja "One section (up to a page break)" z LimitItem.
+
+NOWY PLIK Wyrazenia.cs (433 linie) - wlasny parser kalkulatora wyrazen + rozwijanie sekwencji z backslashem, zastepnik Script.run. Musi byc dopisany do listy plikow w BuildEdSharp.cmd (csc), inaczej "nazwa nie istnieje".
+
+ZMIENIONE: MaximizeWindow fabrycznie "Y" (domyslna MUSI byc rowna w Ustawienia.cs i w App.ReadOption w EdSharp.cs); lista plikow numerowanych z Alt+Shift+F2 na Alt+0, HandleFileSlotKey obsluguje teraz slots 1..9 (cyfra 0 zajeta przez liste, Alt+Shift+0 tez zdjete).
+
+PULAPKI ZMIERZONE: skrypt build_installer_garfield.sh wymagal EdSharp.dll w dwoch miejscach (bramka -s i cp do STAGE) - bez poprawki paczka nie powstaje, a zbuduj.sh melduje exit 9. Po kazdej zmianie chordu trzeba poprawic Hotkeys.ini i przepuscic testy/audyt_skrotow_vs_opisy.py - sonda wylapala rozbieznosc "kod mowi Alt+0, opis mowi Alt+Shift+F2".
+
+OTWARTE: instalacja na glownym komputerze NIE zrobiona - Michal nie odpowiedzial na pytanie, czy zamknac dzialajacy EdSharpNG.exe (PID 25804). Do zrobienia: instalacja 5.0.111 i uruchomienie. Osobno z plikow zostaly nierozstrzygniete pytania MK: przypisy kontra komentarze (jak sensownie zrobic wstawianie i nawigacje), zmiana nazw w menu zeby "Comment" roznil sie od "Named Bookmark", czy GoToEnVironment i ViewLevels maja jeszcze sens, czy Alt+Shift+M (Manual Options) ma sens, Transform Files do rozwiniecia.
+
+
+### 1789598314 - 2026-09-17 00:38
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 17.09.2026 (EdSharpNG, porzadki w plikach): Michal przeniosl na glownym komputerze folder ze STARYMI plikami zadan do D:\Projekty Codex\Hermes\Edsharp (rodzic "Hermes" ma LastWriteTime 17.09.2026 00:30, czyli slad przeniesienia). Zawartosc: "Do zrobienia 2026-08-04.md", "Do zrobienia. 13.06.2026.md", "Edsharp propozycje.md" (duzy zbior wymagan V.1/V.2 z maja-czerwca 2026), "Worklog.md" (dziennik na 4.06.2026, wersje 4.0.7) i siedem arkuszy QA EdSharpNG_QA_* dla wersji 4.0.11-4.0.25. DECYZJA MICHALA: pliki maja ZOSTAC, nie kasujemy, moga sie przydac. WERYFIKACJA U ZRODLA (repo ~/projekty/edsharp na Hermesie, HEAD 86388f2 = 5.0.112): z tych starych list ZROBIONE - Shift+Escape "Detached Preview" (Hotkeys.ini 249), Ctrl+PageUp/PageDown "Next/Prior Section" po naglowkach (176-177), Ctrl+Shift+C kopiowanie z formatowaniem list i naglowkow (46). NIEAKTUALNE - Ctrl+H konwersja do HTML (skrotu Ctrl+H w Hotkeys.ini nie ma, konwersje przejal Save As); likwidacja F7/Shift+F7 (sprawdzanie pisowni i tezaurus SA dalej w Hotkeys.ini 127/129, bo Michal zmienil decyzje - pisownia przebudowana w 5.0.89). NADAL OTWARTE z tych plikow - zamrazanie fokusa/kursora przy Alt-Tab i powrotach z podgladu, "Otworz w" na listach Alt+L/Alt+R dziala tylko raz, ozdzwiekowienie skokow Alt+Ctrl+strzalka lewo/prawo po listach i linkach. Biezace listy zadan zyja w D:\Projekty Codex\Hermes\Do zrobienia.md i Gotowe.md.
+
+
+### 1789598379 - 2026-09-17 00:39
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG 5.0.112 (17.09.2026) - LISTY ZADAN (checklisty Markdown). Commity efc02ef i poprzedni na origin/master (galaz master, nie main). Wydanie https://github.com/michalkasperczak/EdSharpNG/releases/tag/5.0.112, zalacznik EdSharpNG_Setup_5.0.112.exe 3 513 738 B sha256 e3720ac50af60bb11c8dcb7330ca8060e95ba7307e1171c6abdf3e2e39e652e8, stan "uploaded" sprawdzony przez gh. Zainstalowane do C:\Program Files\EdSharpNG (UWAGA: NIE "Program Files (x86)"), binarka w instalacji ma te sama sume 2c24d426... co mierzona, Zadania.cs jest w instalacji, program uruchomiony.
+
+ZLECENIE MK: "Przed komentarzami musimy zrobic obsluge Checklisty markdown. To nie jest trudne, zaproponuj jak." Checklista jako TRZECI rodzaj listy obok punktowanej i numerowanej, skladnia GFM "- [ ]" / "- [x]", wchodzi w te same miejsca co istniejace listy - nie nowy modul.
+
+NOWY PLIK Zadania.cs (funkcje czyste, 10 563 B): rozpoznanie skladni, przelaczanie stanu, zalozenie/zdjecie pola, postep, podpisy dla czytnika. Dopisany do BuildEdSharp.cmd I do EdSharp_Setup.iss.
+
+SKROTY (ostateczne): Control+Shift+X przelacza zrobione/niezrobione (na zaznaczeniu wszystkie jednakowo wg pierwszej pozycji), Control+Shift+F2 robi/zdejmuje checkliste, Control+Shift+F7 okno Task List (spacja przelacza BEZ wychodzenia, Enter skacze, tytul okna niesie postep), Alt+Shift+F2 mowi postep. RELOKACJE: paleta polecen Control+Shift+X -> Control+Shift+F1, samouczek Control+Shift+F1 -> Control+Alt+F1.
+
+ODRZUCONA PROPOZYCJA MK Control+Alt+X i Control+Alt+Shift+X: X ma polski odpowiednik pod prawym Altem, a zmierzone 13.09.2026 - na chordzie dzielonym z polska litera wygrywa PISANIE, komenda nie uruchomilaby sie. Klawisze funkcyjne wariantu z ogonkiem nie maja. MK zgodzil sie ("Zgodza") na Control+Shift+F2 i Control+Shift+F7, a licznik postepu chcial TEZ na klawiszu ("Te ostatnie bez klawisza tez powinny miec") - stad Alt+Shift+F2. Grupowanie w menu kontekstowym MK odlozyl: "To osobna sprawa" - WATEK OTWARTY.
+
+SZESC ISTNIEJACYCH MIEJSC POPRAWIONYCH, bo pozycja checklisty pasuje TAKZE do wzorca zwyklego punktora - pytac trzeba NAJPIERW o checkliste: Enter kontynuujacy liste (nowa pozycja ZAWSZE niezrobiona, nie dziedziczy [x]), Control+L, Control+Shift+L, kopiowanie do Worda, nazwa sekcji, podglad Markdown (pole zamienione na SLOWO [done]/[to do], nie usuniete w cisze). Eksport HTML: prawdziwe <input type="checkbox" disabled> z <label for> i osobnym id na pozycje.
+
+POMIARY (wszystkie przeszly): testy/pomiar_zadania_611.cs 64/64 (funkcje czyste, goly csc), testy/pomiar_zadania_zywe.ps1 6/6 na zywym programie, testy/pomiar_zadania_enter_html.ps1 3/3, testy/pomiar_html_checklisty.ps1 6/6 (refleksja na binarce, bez GUI - MarkdownDocumentToHtml jest public static w typie EdSharp.MdiFrame). Zywy NVDA przez mostek MCP: okno czyta "to do: kupic chleb", tytul "Task List - 1 of 3 done, 33 percent", po spacji "done: kupic chleb", zmiana zapisana do pliku.
+
+
+### 1789598422 - 2026-09-17 00:40
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (17.09.2026, EdSharpNG 5.0.112) - TRZY PULAPKI, KAZDA DALA FALSZYWY WYNIK ZANIM JA ZLAPALEM.
+
+1. SONDA KLAWIATUROWA Z WSL TRAFIA W PUSTKE. SendKeys idzie do okna AKTYWNEGO, a program uruchomiony z WSL nim nie jest. Samo SetForegroundWindow NIE WYSTARCZA - trzeba AttachThreadInput (gotowiec: testy/na_wierzch.ps1 w repo edsharp). Bez tego sonda pokazuje "komenda nie dziala" przy CALKOWICIE dzialajacym kodzie. ZASADA: kazda sonda klawiaturowa MUSI miec KONTROLE POZYTYWNA na poczatku (wpisz zwykly znak, sprawdz ze wszedl) i przerwac pomiar, gdy klawisze nie dochodza - inaczej nie odroznisz "program zepsuty" od "sonda nie dosiega okna".
+
+2. Control+End LADUJE NA PUSTYM WIERSZU ZA TEKSTEM, nie na ostatnim wierszu z trescia (plik konczy sie znakiem konca wiersza). Dwie moje asercje mierzyly przez to pusty wiersz i FALSZYWIE oskarzyly program o zepsute zwykle listy. Po Control+End dawac {UP}{END}, zeby wejsc na tresc.
+
+3. build_installer_garfield.sh ROBI STAGING Z `git ls-files`. Nowy plik zrodlowy jeszcze niedodany do gita wypada z paczki PO CICHU - krok kontrolny [4/6] go nie zglasza, bo pozycje w .iss maja flage skipifsourcedoesntexist. Zadania.cs wszedl do instalatora dopiero po `git add`. KOLEJNOSC: commit, POTEM instalator. Sprawdzac obecnosc nowego pliku w C:\EdSharp (staging) albo w zainstalowanym katalogu, a nie zakladac.
+
+4. DROBIAZG, ktory myli przy weryfikacji: EdSharpNG instaluje sie do "C:\Program Files\EdSharpNG", NIE do "Program Files (x86)".
+
+
+### 1789599086 - 2026-09-17 00:51
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE 17.09.2026 (EdSharpNG - dokumenty dla Michala: lista testowa i projekt sledzenia zmian)
+
+ZADANIE MICHALA: (1) plik z lista nowosci z ostatnich dni do przetestowania punkt po punkcie (funkcja, klawisz), (2) przemyslenie jak zrobic sledzenie zmian i wspolna prace na dwoch EdSharpach, do pliku MD, (3) zalozyc OSOBNY FOLDER EdSharp na takie dokumenty.
+
+POWSTALY DWA PLIKI (commit 475e988 na master, wypchniete):
+- docs/DO-PRZETESTOWANIA-5.0.108-5.0.112.md (10353 B)
+- docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md (8191 B)
+Kopie na glownym: D:\Projekty Codex\Hermes\EdSharp\ (folder JUZ ISTNIAL od 04.08.2026, ze starymi rzeczami: Worklog.md, Edsharp propozycje.md, 6 plikow QA xlsx z 4.0.x - Michal zapowiadal, ze stare rzeczy tam beda).
+Dowieziona tez paczka EdSharpNG_Setup_5.0.112.exe do D:\Projekty Codex\Hermes\ (SHA-256 potwierdzony po obu stronach: E3720AC50AF60BB11C8DCB7330CA8060E95BA7307E1171C6ABDF3E2E39E652E8) - wczesniej lezal tam tylko 5.0.108.
+
+STAN WERSJI USTALONY U ZRODLA: najnowsze wydanie to 5.0.112 (release "5.0.112", commit 86388f2 + dziennik efc02ef, zrobione przez DRUGA SESJE). Na glownym komputerze Michala w rejestrze jest tylko "EdSharp 4.0"; EdSharpNG.exe nie znalazlem ani w Program Files, ani w LOCALAPPDATA - jest tylko %APPDATA%\EdSharp z EdSharp.ini z 16.09 23:05. NIE WIEM, ktora wersje faktycznie uruchamia - dlatego lista testowa zaczyna sie punktem 0 "sprawdz F11".
+
+CO WESZLO 15-17.09 (tresc listy testowej):
+- 5.0.112 LISTY ZADAN (checklisty GFM "- [ ]"): Control+Shift+X przelacz stan, Control+Shift+F2 zrob/zdejmij checkliste, Control+Shift+F7 okno Task List (spacja przelacza bez wychodzenia), Alt+Shift+F2 postep. Nowy plik Zadania.cs. RELOKACJE: paleta polecen Control+Shift+X -> Control+Shift+F1, samouczek Control+Shift+F1 -> Control+Alt+F1.
+- 5.0.111: usunieta warstwa JScript .NET (nowy Wyrazenia.cs - wlasny kalkulator, przecinek I kropka), usuniete Compile/Pick Compiler/Review Output/Say Compiler/Run/Run at Cursor/Text Combine/PyDent/PyBrace/KeepBackup/HardPageAddress/SectionBreak(opcja)/CompileCommand/JumpPosition/AbbreviateOutput. MaximizeWindow fabrycznie Y. Lista plikow numerowanych Alt+Shift+F2 -> Alt+0 (10. slot nie do otwarcia z klawiatury).
+- 5.0.109: "Empty line" USUNIETE z ruchu kursora (zostaje w listach zakladek/przypisow/przegladzie wiersza).
+- 5.0.108: podglad uzywa RICHEDIT50W jak edytor - polskie litery nie przyklejaja sie przy nawigacji po slowach; podglad zachowuje pozycje kursora.
+
+PROJEKT SLEDZENIA ZMIAN (do decyzji Michala, NIC nie zrobione):
+Rozdzielone na zadanie A (sledzenie zmian w jednym pliku) i B (wspolna praca dwoch osob).
+A: skladnia CriticMarkup ({++ ++}, {-- --}, {~~ ~> ~~}, {== ==}, {>> <<}) - ustalona, ma implementacje w Obsidianie. ZMIERZONE U ZRODLA: Pandoc NIE obsluguje CriticMarkup natywnie (jgm/pandoc issues 2873 i 5430 otwarte) - eksport do sledzenia zmian Worda nie wyjdzie sam; obce narzedzia to pancritic i pandiff. Przyjmij/odrzuc = kilkadziesiat linii wlasnego kodu. Interfejs wzorowany na oknie listy zadan (osobne okno "Zmiany", skoki, przyjmij/odrzuc, przyjmij wszystko).
+B: trzy poziomy - (1) historia wlasnego pliku na bazie autozapisu z Ciaglosci Pracy, (2) folder wspolny w chmurze plus przyjmowanie cudzych zmian jako zmian do przyjecia, (3) git za kulisami. ZMIERZONE U ZRODLA: LibGit2Sharp 0.31/0.32 wymaga net472, my kompilujemy pod 4.8 - PASUJE (starsze 0.26 szlo od net46). Konflikt NIGDY jako znaczniki <<<<<<< w tekscie. Odrzucone: edycja na zywo jak w Dokumentach Google.
+CZTERY PYTANIA DO MICHALA na koncu pliku (praca z kims czy wlasna historia; znaczniki widoczne w tekscie czy dokument czysty; druga strona to EdSharp czy Word; chmura czy GitHub).
+
+
+### 1789603417 - 2026-09-17 02:03
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789642634)
+
+USTALENIE 17.09.2026 (EdSharpNG - sledzenie zmian i wspolna praca, ODPOWIEDZI MICHALA na pytania z docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md)
+
+ODPOWIEDZ NA PYTANIE 3 (druga strona wspolpracy): TEZ EDSHARP. Michal: zgodnosc z Wordem "jezeli da sie" byloby dobrze, ale realnie raczej nie wyjdzie, wiec zakladamy EdSharpa po obu stronach. SKUTEK: eksport do sledzenia zmian Worda schodzi na koniec jako "jesli sie uda", NIE jest warunkiem. Wlasna skladnia znacznikow (CriticMarkup) wystarcza; pliki zostaja czystym Markdownem, bez Pandoca (ktory CriticMarkup i tak nie obsluguje - zmierzone 17.09).
+
+NOWY WATEK OTWARTY PRZEZ MK: praca grupowa W CZASIE RZECZYWISTYM - "wcale proste nie bedzie", ma byc oparta o ISTNIEJACY STANDARD (wymienil Etherpada, pozniej Dokumenty Google), i to "pozniej, pozniej", ale trzymane z tylu glowy przy projektowaniu.
+
+DECYZJA PROJEKTOWA WYNIKAJACA Z TEGO (zero dodatkowej pracy teraz): okno "Zmiany" ma stac na LISCIE OPERACJI na tekscie (wstawiono X w miejscu N, usunieto M znakow), nie tylko na gotowym wyniku - bo tak licza wszystkie mechanizmy pracy na zywo. Wtedy podlaczenie zywego zrodla = podmiana dostawcy operacji, nie przepisywanie funkcji.
+
+ZMIERZONE U ZRODLA 17.09.2026:
+- Etherpad ma HTTP API: getText(padID,[rev]) i setText(padID,text), od API 1, wywolywalne GET/POST (POST dla tekstow >8 KB). Czyli "otworz pad"/"wyslij do pada" da sie zwyklym HTTP, bez zadnej biblioteki. Najtansze wejscie na wspolny dokument na standardzie.
+- Yjs ma OFICJALNY port na .NET: github.com/yjs/ycs, MIT, TargetFrameworks netstandard2.0;netstandard2.1 - netstandard2.0 dziala z .NET Framework 4.8, czyli PASUJE do EdSharpNG. Zastrzezenia: brak typow Y.Xml (jest Y.Array/Y.Map/Y.Text), ostatni commit sierpien 2023 (projekt zamrozony, 186 gwiazdek), zaleznosc Newtonsoft.Json - a my kompilujemy jednym csc bez menedzera pakietow, wiec trzeba by dowiezc pliki z paczka.
+- Dokumenty Google: API pozwala czytac/zapisywac dokument, NIE siedziec w sesji edycji ze wspolnym kursorem - realne tylko "wez tekst / odloz tekst".
+
+ZROBIONE: rozdzial 3.4 "Praca na zywo - kierunek na pozniej" i przepisany rozdzial 5 (odpowiedz na pytanie 3, trzy pytania nadal otwarte: praca z kims czy wlasna historia, znaczniki widoczne czy dokument czysty, chmura czy GitHub - zadne nie blokuje punktu 1 planu). Commit ae06f8a na master, wypchniety, potwierdzony przez gh api (10652 B, sha 33c1c58). Kopia na glownym: D:\Projekty Codex\Hermes\EdSharp\SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md, 10652 B - rozmiar zgodny po obu stronach.
+
+NASTEPNY KROK gdy MK powie "zaczynaj": punkt 1 z kolejnosci - znaczniki zmian w pliku + okno "Zmiany" + skoki + przyjmij/odrzuc.
+
+
+### 1789642634 - 2026-09-17 12:57
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 17.09.2026 (EdSharpNG - SLEDZENIE ZMIAN: WSZYSTKIE CZTERY PYTANIA ROZSTRZYGNIETE PRZEZ MICHALA, projekt gotowy do kodowania)
+
+Plik: docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md, commit bba6b42 na master (poprzedni ae06f8a), wypchniety, potwierdzony gh api - 13054 B. Kopia na glownym: D:\Projekty Codex\Hermes\EdSharp\SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md, 13054 B, rozmiary zgodne po obu stronach.
+
+ODPOWIEDZI MK (cytaty):
+1. DO CZEGO: DO OBU RZECZY - "oba warianty, recenzji redagowania i historii zmian, bylyby wskazane". Nie wybieramy jednego zrodla zmian; recenzja i historia to dwaj DOSTAWCY tej samej listy zmian.
+2. ZNACZNIKI W TEKSCIE: DOMYSLNIE NIEWIDOCZNE, opcja do wlaczenia - "raczej nie wyobrazam sobie, zeby te nawiasy byly widoczne w tresci, ale opcjonalnie mozna by to wlaczyc". Dokument brzmi CZYSTO (jak po przyjeciu zmian), zmiany przez okno "Zmiany" i skoki. Opcja pokazania surowych znacznikow fabrycznie WYLACZONA - ta sama zasada co Ciaglosc Pracy i autozapis (12.09.2026).
+3. DRUGA STRONA: TEZ EDSHARP (odpowiedziane wczesniej). Word na koniec, "jesli sie uda", nie warunek.
+4. WYMIANA PLIKOW: CHMURA TERAZ, GIT DOCELOWO - "nie mam doswiadczenia, no ale docelowo pewnie taki git to moglaby byc tez ciekawa opcja. Nie mowie, ze od razu to wszystko musimy zrobic." Git przestaje byc warunkowy, staje sie zaplanowanym celem.
+
+TRZY WARUNKI PROJEKTOWE WYNIKAJACE Z ODPOWIEDZI (nie do zrobienia "potem", musza byc od pierwszej linii kodu):
+A. Znaczniki SA w pliku, ale NIE w tym, co czyta czytnik. Tresc w oknie edytora = tekst po ukryciu znacznikow; pozycje zmian trzymane OSOBNO i przeliczane przy kazdej edycji. To najdrozsza decyzja w calej funkcji.
+B. Lista zmian trzymana jako OPERACJE na tekscie (wstawiono X w miejscu N, usunieto M znakow), nie jako gotowy wynik - bo tak licza mechanizmy pracy na zywo (Etherpad/Yjs, rozdzial 3.4). Wtedy podlaczenie zywego zrodla = podmiana dostawcy operacji.
+C. Wymiana plikow za INTERFEJSEM, ktory da sie podmienic - ten sam mechanizm "sciagnij cudza wersje i pokaz jako zmiany do przyjecia" dziala i dla folderu w chmurze, i dla gita.
+
+KOLEJNOSC PRACY (rozdzial 4, przepisany): 1. rdzen - lista zmian + okno "Zmiany" + skoki + przyjmij/odrzuc, znaczniki ukryte. 2. wpisywanie poprawek jako recenzent. 3. porownanie dwoch plikow jako zmiany. 4. historia wlasnego pliku na autozapisie z Ciaglosci Pracy. 5. folder wspolny w chmurze. 6. git za kulisami. 7. Word na koniec.
+
+MK: "to zdecyduje tutaj i bedziemy dalej kontynuowac" - czyli oczekuje przejscia do KODOWANIA punktu 1. NIC z kodu jeszcze nie zrobione.
+
+
+### 1789648034 - 2026-09-17 14:27
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.384 (17.09.2026) - WSTRZYMYWANIE PO WYJSCIU Z ODTWARZACZA OSOBNO DLA KAZDEJ SESJI. Wydane, zainstalowane i uruchomione u Michala.
+
+ZGLOSZENIE (pozycja 1 z listy "Do zrobienia"): pole wyboru "Wstrzymuj odtwarzanie po wyjsciu z odtwarzacza" bylo TYLKO globalne. Nie dalo sie miec radia grajacego dalej po Escape i plikow lokalnych, ktore sie zatrzymuja.
+
+ROZWIAZANIE: nowe src/AccessibleMediaController.Core/Playback/PlayerExitPausePolicy.cs (wzorowane na istniejacym ResumePositionPolicy - ta sama architektura: GetSessionOverride / ShouldPause / SetSessionOverride / DescribeSessionMode, rachunek w Core zeby dal sie testowac bez GUI). Nowe pole bool? PausePlaybackWhenLeavingPlayerOverride w SessionPlaybackAudioOverrides (AppSettings.cs) - null = dziedzicz globalne, wiec ISTNIEJACE KONFIGURACJE NIE ZMIENIAJA ZACHOWANIA.
+
+GDZIE W GUI: okno "Opcje odtwarzania sesji" (ItemPlaybackOptionsWindow, target Session) - nowy SessionSettingsPanel z ComboBoxem PlayerExitPauseBox, etykieta "Po wyjsciu z odtwarzacza w tej sesji". Trzy pozycje: "Jak ustawienie ogolne — wstrzymuj/odtwarzaj dalej" (etykieta MOWI WPROST co z dziedziczenia wynika), "Wstrzymuj odtwarzanie", "Odtwarzaj dalej". Konstruktor okna dostal 3 nowe parametry opcjonalne: pausePlaybackWhenLeavingPlayerOverride, globalPausePlaybackWhenLeavingPlayer, showPlayerExitPauseOption.
+
+DWIE PULAPKI, KTORE ZAUWAZYLEM I OBSZEDLEM:
+1. WiiM - autonomiczny odtwarzacz sieciowy; ApplyPlaybackPolicyWhenLeavingPlayer robi dla niego early return, wiec pole byloby obietnica bez pokrycia. showPlayerExitPauseOption=false dla sesji "wiim".
+2. Gdy okno NIE pokazalo pola (WiiM), zapis NIE MOZE zetrzec wczesniejszego wyboru - w ShowSessionPlaybackOptions dla wiim przepisuje saved?.PausePlaybackWhenLeavingPlayerOverride, nie wartosc z dialogu (ktora byla by null).
+
+WPIETE W TRZECH MIEJSCACH (nie tylko zapis): ApplyPlaybackPolicyWhenLeavingPlayer (samo zachowanie), PlayerKeyboardHelpText (Shift+F1 mowi teraz co obowiazuje W TEJ SESJI, nie ustawienie ogolne), komunikat po zapisie opcji sesji.
+
+TEST: TestPlayerExitPausePerSession w tests/Core.SmokeTests/Program.cs, wpisany do listy jako "Wstrzymywanie po wyjsciu z odtwarzacza osobno dla sesji". Sprawdza tez, ze SetSessionOverride(null) NIE kasuje pozostalych ustawien audio sesji, a pusty wpis usuwa.
+
+WYNIKI POMIAROW: Windows - build 0 bledow, 201 testow OK, ZERO bledow (mój nowy przechodzi). Linux (Hermes) - 103 OK, 5 bledow ZASTANYCH, sprawdzone git stash: identyczne bez moich zmian (2x TIDAL adres strony, Pokaz w folderze, Odkrywanie lokalnych plikow, zmiana nazwy pliku). Uwaga: to teraz 5, nie 4 jak w starszych notatkach - doszlo "Pokaz w folderze dla plikow i folderow".
+
+WYPCHNIETE: commit 5d14684 na github.com/michalkasperczak/AMC main (poprzedni a810162 = 383), potwierdzone gh api. Push przez `git push origin HEAD:main` - lokalna galaz to nadal "wydanie-379", nie main.
+
+WYDANIE: v0.1.0-alpha.384 prerelease, AMC-Setup-0.1.0-alpha.384.exe 55397613 B, SHA256 4BE7E8018A6B15C62EA25B0F6717723FABF0F5EBCDD56886B911AA98848D0C65, suma w opisie potwierdzona przez scripts/wydaj.sh (uruchamiac `bash scripts/wydaj.sh` - plik NIE MA bitu wykonywalnosci).
+
+ZAINSTALOWANE I URUCHOMIONE: C:\Users\micha\AppData\Local\Programs\AMC, pid 32144, wersja 0.1.0-alpha.384, sesja 1. Nic nie gralo ani nie nagrywalo przed zamknieciem 383 (sprawdzone). Folder D:\Projekty Codex\Hermes sprzatniety do jednego instalatora, skrypty tymczasowe z glownego usuniete.
+
+LEKCJA - KOPIA NA GLOWNYM BYLA ROZJECHANA (znowu): HEAD glownego to 6349c3c, 22 pliki "modified/untracked" wobec niego. NIE zakladac po tym, ze kod jest inny! Zmierzylem sumy MD5 (bajty bez CR) tych 22 plikow wobec Hermesa: 18 IDENTYCZNYCH, rozne tylko 4 = dokladnie te, ktore sam zmienilem. Czyli glowny mial ten sam kod v383, tylko niezacommitowany. Pomiar 22 wskazanych plikow zajal sekundy; proba policzenia sum CALEGO repo przez ssh+PowerShell przekroczyla 300 s i padla na timeout - liczyc tylko to, o co sie pyta.
+
+LEKCJA - PIPELINE PowerShell z Where-Object na tablicy bajtow: `[byte[]]($bajty | Where-Object {...})` na duzych plikach jest zabojczo wolne. Dla malej listy plikow uszlo; do calego repo trzeba innej metody.
+
+ZOSTAJE Z LISTY "Do zrobienia" (AMC): 2. Insert+strzalka w gore w odtwarzaczu - nazwa stacji i utworu jak w odtwarzaczu Vim. 3. Autor tekstu i muzyki biezacego utworu pod skrotem. 4. Aktualizacje w tle z menu Pomoc i przy starcie - cicha instalacja programu i skladnikow. 5. Instalator nie uruchamia AMC po instalacji (zglaszane dwa razy, odlozone przez Michala). 6. Apple Music na ile sie da. 7. Spotify z wewnetrzna obsluga.
+
+NIE SPRAWDZONE ZYWYM NVDA: nowa pozycja w oknie Opcje odtwarzania sesji - Hermes nie ma runtime WPF, czeka na sprawdzenie u Michala.
+
+
+### 1789651468 - 2026-09-17 15:24
+
+(rodzaj: podsumowanie; projekt: amc)
+
+PODSUMOWANIE AMC 0.1.0-alpha.385 (17.09.2026) - WYDANE, ZAINSTALOWANE, POTWIERDZONE U ZRODLA.
+
+CO WESZLO (punkt 2 listy "Do zrobienia"): Insert+strzalka w gore czyta, co teraz leci. SPROSTOWANIE WAZNE: pierwotnie opisalem to jako wzorowane na Winampie - Michal poprawil, ze chodzi o WiiM (jego streamer sieciowy), a sesja urzadzenia WiiM w AMC JUZ tak mowi. Radio internetowe ma mowic to samo: stacja, tytul utworu ze strumienia, wykonawca, album, bez powtorzen tego samego tekstu.
+
+POTWIERDZENIE ZYWE (mostek, sesja 1): nowPlaying -> ok=true "3, stacja nie podaje tytulu utworu, odtwarzanie."; status -> "3, Radio internetowe, odtwarzanie, glosnosc 90%.". Program 0.1.0-alpha.385 dziala, radio wznowione.
+
+RELEASE: v0.1.0-alpha.385 prerelease, dwa zalaczniki uploaded: AMC-Setup-0.1.0-alpha.385.exe 55074547 B SHA-256 0ded8e85f068383dbfda42504204d48584c2ac7a78007875d588b9d1d7549a5a; AMC-NVDA-0.3.0.nvda-addon 13101 B SHA-256 45e7c63e4552e0a9e9e7170a96ab5828b1e22f12a44c4888a70b6c8c17e6884a. Commity: a305d33 (radio jak WiiM), bdd4791 (naprawa lancucha wydania).
+
+LEKCJE TECHNICZNE (wszystkie zmierzone dzis, nie domysl):
+1. ISCC (Inno Setup 7) na glownym lezy w C:\Users\micha\AppData\Local\Programs\Inno Setup 7\ISCC.exe - NIE w Program Files. Szukanie w Program Files dawalo "BRAK ISCC".
+2. build.ps1 BEZ przelacznika -Publish tylko buduje i testuje, instalatora NIE robi. Trzeba -Publish albo wolac ISCC recznie.
+3. Do ISCC podawac plik jako AccessibleMediaController-<wersja>.exe - AMC_Setup.iss sam kopiuje go pod stala nazwe (sekcja Files, DestName). Moje przezwanie pliku z gory lamalo kompilacje ("Source file ... does not exist").
+4. nvda-addon/build.ps1 na PowerShell 5.1 wymagal dwoch poprawek: Add-Type System.IO.Compression.FileSystem oraz rezygnacji z [System.IO.Path]::GetRelativePath (nie ma go w 5.1) na rzecz Substring. Do obu plikow build.ps1 dodano BOM, bo polskie znaki psuly parsowanie.
+5. scripts/wydaj.sh bral tylko *.exe i *.zip - dodatek .nvda-addon wypadlby z wydania. Dodane *.nvda-addon.
+6. Cicha instalacja ODBIJA SIE od dzialajacego AMC: SETUP_EXIT=5, dziennik "User canceled the installation process". Trzeba najpierw zamknac program (CloseMainWindow, potem Kill).
+7. NAJWAZNIEJSZE: Start-Process przez SSH ladowal w sesji 0 i program nie wstawal. Dziala dopiero zadanie harmonogramu w SESJI PULPITU: schtasks /Create ... /IT /RU micha, potem /Run. Tak podniesiono i NVDA, i AMC. Zabicie NVDA przez Stop-Process zostawilo Michala bez czytnika - NIE ROBIC TEGO bez gotowej drogi powrotu.
+8. Test mostka surowym potokiem: nazwa AMC.NVDA.v1.<sesja>, JSON MUSI miec pole version:1, inaczej odpowiedz brzmi "Nieobslugiwane polecenie lub wersja dodatku AMC." (to NIE znaczy zla wersja dodatku - to zly format zadania).
+
+NIEPOTWIERDZONE, do sprawdzenia przez Michala: czy NVDA faktycznie przechwytuje Insert+strzalka w gore w oknie AMC. Dodatek 0.3.0 jest wgrany (C:\Users\micha\AppData\Roaming\nvda\addons\amcController, manifest version = 0.3.0, appModules/accessiblemediacontroller.py na miejscu), NVDA 2026.2 przeladowane, ale moduly aplikacji wczytuja sie dopiero przy fokusie w oknie programu, wiec w dzienniku NVDA jeszcze ich nie widac. Kopia starego dodatku: C:\Users\micha\amcController-kopia-0.2.2.
+
+POZOSTALE OTWARTE PUNKTY LISTY: 3. autor tekstu i muzyki biezacego utworu; 4. aktualizacje w tle z menu Pomoc i przy starcie; 5. instalator sam nie uruchamia AMC po instalacji; 6. Apple Music; 7. Spotify z wewnetrzna obsluga.
+
+
+### 1789652885 - 2026-09-17 15:48
+
+(rodzaj: lekcja; projekt: amc)
+
+LEKCJA 17.09.2026 (AMC, dodatek NVDA) - GEST NVDA ZAPISANY JAKO "insert+..." JEST PO CICHU IGNOROWANY.
+
+Wersja 385 wyszla ZEPSUTA: skrot "co teraz leci" nie dzialal wcale, a ja zameldowalem sukces. Gest byl zapisany jako gesture="kb:insert+upArrow". NVDA takiego zapisu NIE ROZPOZNAJE - modyfikator NVDA zapisuje sie doslownie jako "NVDA". Zle napisany gest nie daje ZADNEGO bledu ani w logu NVDA, ani przy pakowaniu dodatku - po prostu sie nie przypina, a czytnik dalej robi swoje (czyta biezaca linie). Potwierdzone u zrodla: source/globalCommands.py w repo nvaccess/nvda ma gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+l").
+POPRAWNIE: gestures=("kb(desktop):NVDA+upArrow", "kb(laptop):NVDA+upArrow").
+
+DRUGI BLAD, WAZNIEJSZY - MOJ SPRAWDZIAN BYL BEZWARTOSCIOWY. Sprawdzilem tylko, czy program odpowiada na polecenie nowPlaying przez nazwany potok. To NIE MIERZY tego, o co chodzi: czy NVDA przechwytuje klawisz. Odpowiedz z potoku byla poprawna, a skrot nie dzialal. Przy KAZDEJ funkcji uruchamianej skrotem czytnika miara musi obejmowac PRZYPISANIE GESTU (test AST na dokladny tekst gestu + zakaz "insert+"), nie tylko warstwe pod nim.
+
+TRZECI BLAD: test test_app_module_owns_nvda_reserved_gesture WYMUSZAL zly zapis (assertEqual na "kb:insert+upArrow"), czyli utrwalal usterke. Test na skrot musi sprawdzac zapis, ktory NVDA rozumie, i wprost zakazywac "insert+".
+
+TRESC KOMUNIKATU: Michal chce dokladnie tego, co mowi sesja WiiM - "stacja, utwor - wykonawca" (np. "Poznan Nastolatek - Krzysztof Zalewski"). BEZ doklejania "odtwarzanie"/"pauza" - stan jest pod Ctrl+Windows+I. Wczesniej doklejalem stan i bylo to zle.
+
+ZBUDOWANIE INSTALATORA AMC - nazwy zmiennych ISCC (sprawdzone u zrodla w installer/AMC_Setup.iss):
+ISCC.exe /DZrodlo=<katalog publish> /DWersja=0.1.0-alpha.NNN AMC_Setup.iss
+NIE "/DAppVersion" ani "/DSourceDir" - z blednymi nazwami wersja podstawia sie jako 0.0.0 i ISCC przerywa "Source file ... AccessibleMediaController-0.0.0.exe does not exist".
+ISCC.exe stoi w C:\Users\micha\AppData\Local\Programs\Inno Setup 7\ISCC.exe (NIE w Program Files).
+W katalogu publish trzeba PRZED uruchomieniem ISCC zrobic kopie AccessibleMediaController.exe pod nazwa AccessibleMediaController-<wersja>.exe.
+build.ps1 z flaga -Publish, inaczej sam buduje i nie robi instalatora.
+
+PAKOWANIE DODATKU NVDA na PowerShell 5.1: potrzebne Add-Type -AssemblyName System.IO.Compression.FileSystem (samo System.IO.Compression nie wystarczy), a [System.IO.Path]::GetRelativePath NIE ISTNIEJE w 5.1 - trzeba liczyc sciezke przez Substring. Skrypty PS z polskimi znakami zapisywac z BOM UTF-8, inaczej 5.1 sypie bledami skladni.
+
+WYDANIE: scripts/wydaj.sh zbiera *.exe, *.zip i *.nvda-addon (dopisalem .nvda-addon - wczesniej dodatek wypadal z wydania, a bez niego skrot nie dziala).
+
+WYNIK: 0.1.0-alpha.386 + dodatek 0.3.1, commit 3524104, wydanie v0.1.0-alpha.386 z instalatorem i dodatkiem, testy Windows 108 OK + 10 testow wtyczki OK, program 386 dziala u Michala, dodatek 0.3.1 wgrany (potwierdzone: version = 0.3.1 i gestures=("kb(desktop):NVDA+upArrow",...)). OTWARTE: NVDA u Michala dziala z 15:30, czyli JESZCZE NIE PRZELADOWALO nowego modulu - trzeba NVDA+Ctrl+F3 (przeladowanie wtyczek) i wtedy dopiero skrot zadziala.
+
+NIE ZABIJAC NVDA. Zrobilem to wczesniej (Stop-Process) i zostawilem Michala bez czytnika; wstaje tylko przez zadanie harmonogramu z /IT w jego sesji pulpitu. Do wczytania nowego modulu wystarczy, ze Michal wcisnie NVDA+Ctrl+F3 - o to nalezy poprosic, a nie restartowac czytnik za niego.
+
+
+### 1789655165 - 2026-09-17 16:26
+
+(rodzaj: podsumowanie; projekt: amc; NIEAKTUALNY, zastapiony przez 1789657002)
+
+PODSUMOWANIE AMC 0.1.0-alpha.387 (17.09.2026) - WYDANE I POTWIERDZONE U ZRODLA.
+
+WYPCHNIETE: commit d7ee353009a3974249ff14a88d59618bbb2f57ff na github.com/michalkasperczak/AMC main, potwierdzone gh api commits/main oraz <Version>0.1.0-alpha.387 w Directory.Build.props na GitHubie. 8 plikow, 193 wstawienia. Release v0.1.0-alpha.387 z zalacznikiem AMC-Setup-0.1.0-alpha.387.exe (55385701 B, sha256 95349077b3cdafe141ae647000809cf0f71c992abe891fb6e8adbc841dfc5e0e), target commit potwierdzony. Testy 109/109.
+
+ZGLOSZENIE: po wejsciu Enterem w odtwarzacz radia NVDA+strzalka w gore czytalo "Odtwarzacz, 3, Radio internetowe, Odtwarzanie. Wstrzymaj" plus CALY spis skrotow (kilkanascie zdan). Michal chcial jak w sesji WiiM: "Poznan, Nastolatek - Krzysztof Zalewski" czyli stacja - utwor wykonawca.
+
+CO WESZLO:
+1. Nazwa przycisku odtwarzania w sesji radia = "stacja, utwor - wykonawca". Zniklo slowo "Odtwarzacz", nazwa sesji, stan "Odtwarzanie". Stan dokladany TYLKO gdy wnosi informacje (Otwieranie, nagrywanie, wyciszone). Powtorzona nazwa stacji nie czytana dwa razy.
+2. Spis skrotow zszedl z AutomationProperties.HelpText kontrolki - fokus nie uruchamia kilkuzdaniowej wypowiedzi. Pomoc pod Shift+F1; do HelpText wraca tylko przy wlaczonych szczegolowych podpowiedziach (Settings.Messages.DetailedHints).
+3. NvdaNowPlaying.Describe nie dopowiada juz "stacja nie podaje tytulu utworu" - sama nazwa stacji jest odpowiedzia (Michal: zbedna gadanina).
+4. Spis pod Shift+F1 (ShortcutHelpCatalog) uzupelniony o dzialajace, ale nieopisane: Home, Ctrl+M, Page Up/Down, B i Shift+B.
+5. NOWY PLIK src/AccessibleMediaController.Core/Presentation/NowPlayingParts.cs - jedna regula skladania tekstu "co teraz leci" dla nazwy przycisku radia, WiiM i skrotu wtyczki NVDA (byly 3 kopie).
+6. Nowy test smoke TestRadioPlayerControlName pilnuje, ze nazwa przycisku radia nie zacznie znowu mowic "Odtwarzacz" ani stanu.
+
+LEKCJA - AppMutex ZABIJA cicha instalacje Inno Setup: w installer/AMC_Setup.iss AppMutex=Local\AccessibleMultimediaController.SingleInstance powodowal, ze cicha instalacja przerywala sie kodem 1 NIE TKNAWSZY zadnego pliku, a w logu bylo tylko "Got EAbort exception / Deinitializing Setup" - wygladalo na awarie bez przyczyny. Inno sprawdza muteks ZANIM zadziala CloseApplications, pokazuje okno "aplikacja jest aktualnie uruchomiona" (OK/Anuluj), a przy /VERYSILENT /SUPPRESSMSGBOXES domyslna odpowiedzia jest ANULUJ. AppMutex USUNIETY; wystarcza CloseApplications=force przez Restart Managera.
+
+LEKCJA - instalator MUSI iss z sesji graficznej: z sesji SSH (sesja 0) Restart Manager zwraca "Session Mismatch" i wymiana pliku pada na "DeleteFile; kod 5. Odmowa dostepu". Zdalna instalacja idzie przez: schtasks /Create /TN <nazwa> /TR <cmd> /SC ONCE /ST 23:59 /IT /RL LIMITED /F, potem schtasks /Run. /IT (interactive) jest KLUCZOWE. Uruchamianie AMC tak samo.
+
+LEKCJA - byl przypadkiem checkout galezi wydanie-379, nie main: "git push origin main" wypychal STARA lokalna main (behind 11) i GitHub odrzucal jako "behind its remote", co mylnie wyglada na brak zmian zdalnych. Sprawdzaj "git branch -vv" przy takim bledzie; ratunek: git push origin HEAD:main.
+
+LEKCJA - Michal NIE chce nowego wydania za kazda drobna zmiana: zbierac poprawki i wydawac raz.
+
+DIAGNOZA DRUGIEJ PRZYCZYNY: dodatek NVDA amcController 0.3.1 (z appModules/accessiblemediacontroller.py przechwytujacym NVDA+strzalka w gore) zostal zainstalowany 15:37, a NVDA dzialal od 15:30 - wiec NVDA nigdy tego modulu nie wczytal (w logu NVDA zero wystapien amcController) i czytal zwykly obiekt. NVDA wczytuje dodatki TYLKO przy starcie; po instalacji dodatku trzeba zrestartowac NVDA albo nacisnac NVDA+Ctrl+F3 (przeladowanie wtyczek, bez utraty mowy).
+
+STAN NA GLOWNYM: 387 zainstalowana (kod 0) i URUCHOMIONA (PID 28876, wersja potwierdzona z pliku exe). Radio przed instalacja: currentItemId radio:961a56e9-0601-11e8-ae97-52543be04c81, volume 15, timeshift 10 min, nic nie nagrywalo. OTWARTY WATEK: Michal ma nacisnac NVDA+Ctrl+F3, zeby NVDA wczytal dodatek 0.3.1 - dopoki tego nie zrobi, skroty AMC nie odpowiadaja i poprawka nazwy bedzie niewidoczna.
+
+Skrypty pomocnicze do zdalnej pracy z glownym: /home/michal/projekty/amc_pomoc/ (czy_nagrywa.ps1, instaluj_w_sesji2.ps1, uruchom_amc.ps1, buduj_i_pakuj_387.ps1, log_nvda.ps1, co_gra2.ps1).
+
+
+### 1789655967 - 2026-09-17 16:39
+
+(rodzaj: kontekst; projekt: amc)
+
+KONTEKST AMC - MAPA KODU (2026-09-17, wersja 0.1.0-alpha.387, commit d7ee353). Powstal plik MAPA_KODU_PL.md w korzeniu repo michalkasperczak/AMC (wypchniete commitem 766cb30, sprawdzone u zrodla gh api: 14909 bajtow). ZASADA: przy KAZDEJ pracy nad AMC czytaj najpierw MAPA_KODU_PL.md - oszczedza szukania po 74 tys. linii. Po zmianie struktury (nowy katalog, nowy duzy serwis, nowa sesja) AKTUALIZUJ ten plik. NAJWAZNIEJSZE ZMIERZONE FAKTY: Core 95 plikow / 18700 linii (logika bez Windows), Windows 125 plikow / 55900 linii, dodatek NVDA w Pythonie (manifest 0.3.1, 66 polecen). MainWindow.xaml.cs ma 23794 linie i 837 metod, BEZ regionow - szukaj po nazwie z CommandIds, nie po linii; metody *_Click siedza na koncu pliku (21000-23000) i prowadza do wlasciwej funkcji. Dane uzytkownika: %APPDATA%\AccessibleMediaController\state.json, %LOCALAPPDATA%\...\library.db i podcasts.db (SQLite), logi %LOCALAPPDATA%\...\logs\amc.log (rotacja 5 MB, 5 plikow). Ustalane w App.xaml.cs. Polecenia: Core/Commands/CommandIds.cs (191 stalych) -> CommandCatalog -> CommandRouter; skroty domyslne w Core/Input/KeyboardProfile.cs CreateDefault(); skroty zalezne od sesji w Windows/MainWindowShortcutRouter.cs; skroty globalne poza oknem w Services/GlobalPrefixService.cs (RegisterHotKey + hak klawiatury) obslugiwane przez HandleGlobalChord (MainWindow ok. linii 10420). Sesje: SessionManager.CreateDemoSessions daje tidal/appleMusic/wiim, a MainWindow ok. linii 9344-9440 dokłada realne local "Pliki lokalne", radio "Radio internetowe", podcasts "Podcasty i YouTube", wiim. Odtwarzanie: IMediaOutput ma DOKLADNIE trzy implementacje - WindowsMediaOutput (pliki i podcasty, NAudio+SoundTouch), RadioMediaOutput, TidalMediaOutput (WebView2). Mostek NVDA: nazwany potok "AMC.NVDA.v1.<SessionId>" (NvdaCommandServer.cs), po stronie NVDA transport.py na czystym ctypes bez importow NVDA - dlatego testowalny poza czytnikiem. Teksty czytane uzytkownikowi to caly katalog Core/Presentation (NowPlayingParts, MediaItemFormatter, NvdaNowPlaying w Windows/Services). Aktualizator czyta sume SHA-256 z OPISU wydania (Core/Updates/ApplicationUpdatePolicy.ReadChecksumFor), format dwuwierszowy pilnuje test ReleaseNotesChecksumTests, publikacja przez scripts/wydaj.sh ktory ODMAWIA bez sum i wymaga .exe + .zip + .nvda-addon. Build: build.ps1 (restore, Release, dwa projekty testow dymnych, sprzatanie duplikatow w obj). CZEGO NIE MA: wstrzykiwania zaleznosci (obiekty wprost w App.xaml.cs i MainWindow), modelu widoku (MainWindow miesza widok i sterowanie), klasycznych testow jednostkowych (tylko dymne z wlasnym biegaczem). Pakiety: Microsoft.Data.Sqlite 8.0.30, WebView2 1.0.4191.47, NAudio 2.3.0, NAudio.Vorbis 1.5.0, NLayer 2.0.1, SoundTouch.Net 2.3.2; poza NuGet BASS w third_party, FFmpeg i yt-dlp pobierane w trakcie dzialania, SDK TIDAL w TidalPlayerHost (pnpm).
+
+
+### 1789657858 - 2026-09-17 17:10
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE 17.09.2026 (EdSharpNG - SLEDZENIE ZMIAN, KROK 1a ZROBIONY I ZMIERZONY)
+
+MK zazyczyl sobie pracy STOPNIOWO ("I robisz to stopniowo?"), wiec punkt 1 projektu rozbity na cztery kroki w docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md rozdzial 4.1:
+1a rozpoznawanie zmian (funkcje czyste, bez GUI) - ZROBIONE
+1b okno "Zmiany" + skoki + przyjmij/odrzuc, znaczniki JESZCZE widoczne
+1c ukrywanie znacznikow (najdrozsze, osobno - gdyby padlo, 1b zostaje uzyteczne)
+1d zapis i odczyt pliku ze zmianami
+Commity: 1920bcd (podzial na kroki), 255f7da (kod 1a). Oba na origin/master.
+
+NOWY PLIK Zmiany.cs (16 368 B, potwierdzone gh api). Funkcje CZYSTE jak Zadania.cs/Csv.cs - mierzalne golym csc bez Windows Forms. Zawiera: enum RodzajZmiany (Dopisanie/Usuniecie/Podmiana/Podswietlenie/Komentarz), klase Zmiana (Rodzaj, Start, Dlugosc, Stare, Nowe, Koniec - pola readonly), klase Zmiany z: Znajdz, CzyMaZmiany, WMiejscu, Nastepna, Poprzednia, NumerWiersza, TrescPoPrzyjeciu/Odrzuceniu, PrzyjmijWMiejscu/OdrzucWMiejscu, TekstPoPrzyjeciu/TekstPoOdrzuceniu, Zapisz* (piec rodzajow), OpisDoOkna, NazwaRodzaju, OpisLiczby, Skrot, CzyNiedomkniete.
+
+DECYZJE PROJEKTOWE W KODZIE (nie zmieniac bez powodu):
+1. Jeden regex na piec rodzajow, grupy NAZWANE, (?s) zeby zmiana mogla iSC przez kilka wierszy, wszystkie .*? NIEZACHLANNE - zachlanny wzorzec sprawia, ze pierwsza zmiana zjada plik do ostatniego domkniecia.
+2. Zmiana niesie POZYCJE I DLUGOSC w surowym tekscie, nie tylko wynik - to jest "lista operacji" z rozdzialu 3.4, warunek pozniejszego podlaczenia pracy na zywo (Etherpad/Yjs).
+3. Kursor na KONCU zmiany (iPozycja == Koniec) jest JUZ ZA nia - inaczej "przyjmij tu" dziala na zmianie, ktora uzytkownik wlasnie opuscil.
+4. Brak zmiany pod kursorem zwraca NULL, nie tekst bez zmian - "nie ma czego przyjac" ma byc powiedziane, nie przemilczane (ta sama zasada co Zadania.PrzelaczWiersz).
+5. RODZAJ ZMIANY IDZIE NA POCZATEK opisu ("inserted: ...", "replaced: was X, now Y") - czytnik czyta od lewej.
+6. Komentarz recenzenta znika I przy przyjeciu, I przy odrzuceniu - to nie jest tresc dokumentu.
+7. Tekst NIEDOMKNIETY nie jest zmiana i zostaje w dokumencie jako zwykle znaki; CzyNiedomkniete() liczy tylko otwarcia POZA znalezionymi zmianami (inaczej nawias w tresci komentarza dawal falszywy alarm).
+8. CriticMarkup nie ma znaku ucieczki - Bezpieczna() rozdziela spacja tresc, ktora sama zawiera znacznik. Lepiej to niz zapisac cos, czego wlasne rozpoznawanie nie odczyta.
+9. Skrot() 60 znakow, konce wierszy i tabulatory na spacje, pusta tresc mowi "(empty)".
+
+POMIAR: testy/pomiar_zmiany_1a.cs, 10 grup, 90 sprawdzen, WYNIK 90/90 OK.
+Uruchamianie: bash uruchom_pomiar.sh testy/pomiar_zmiany_1a.cs Zmiany.cs
+
+WAZNE - POMIAR MUTACYJNY (nowe narzedzie, warte powtarzania w innych projektach): testy/mutacje_zmiany.sh psuje Zmiany.cs na piec sposobow (po jednej decyzji projektowej kazdy) i ZADA, zeby pomiar krzyknal. WYNIK 5 z 5 zlapanych. Bez tego "90/90 OK" od pierwszego razu nie bylo dowodem, ze pomiar czegokolwiek pilnuje.
+LEKCJA Z TEGO: pierwsza mutacja (zachlanny wzorzec) WYWALILA pomiar wyjatkiem na 21. sprawdzeniu, wiec 69 pozostalych sie nie wykonalo - jedna usterka udawala jedna usterke. Poprawione: cialo pomiaru wyciete do metody Mierz() wolanej w try/catch, wyjatek liczy sie jako blad i pomiar dochodzi do konca.
+
+PODLACZONE DO BUDOWANIA: Zmiany.cs dopisany do BuildEdSharp.cmd (lista plikow csc) I do EdSharp_Setup.iss. Zbudowane bez bledow: EdSharpNG.exe 501 760 B, paczka dist/EdSharpNG_Setup_5.0.112.exe 3 515 193 B sha256 ef64220c6f983c5380142e244e7e69d44afec97511d5355f934c7d79d9fb758e. UWAGA: to NIE jest nowe wydanie - numer wersji zostal 5.0.112, bo krok 1a nie daje uzytkownikowi zadnej funkcji (zero zmian w interfejsie). Wydanie po kroku 1b.
+
+STAN: nic w interfejsie EdSharpa jeszcze nie wola tych funkcji. Nastepny krok to 1b - okno "Zmiany" wzorowane na oknie listy zadan (LbcDialog), skoki, przyjmij/odrzuc, skroty do ustalenia z MK.
+
+
+### 1789658956 - 2026-09-17 17:29
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789702840)
+
+USTALENIE 17.09.2026 (EdSharpNG - PROPOZYCJA KLAWISZY DO SLEDZENIA ZMIAN, krok 1b; CZEKA NA ZATWIERDZENIE MK)
+
+MK: "Dobrac liste i zaproponowac. Potem po drugim etapie plik z info, jak testowac." Czyli: (1) propozycja klawiszy - ZROBIONA, (2) po kroku 1b osobny plik testowy w stylu docs/DO-PRZETESTOWANIA-*.md - ZOBOWIAZANIE, jeszcze nie zrobione.
+
+PROPOZYCJA (docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md rozdzial 6, commit b98bcc3, wypchniete, kopia na glownym 18277 B) - CALA RODZINA F9 na sledzenie zmian:
+Control+Shift+F9 nastepna zmiana, Alt+Shift+F9 poprzednia, Control+Alt+F9 okno "Zmiany", Alt+F9 przyjmij tu, Shift+F9 odrzuc tu.
+
+DLACZEGO RODZINA F9 JEST WOLNA - sprawdzone w TRZECH miejscach (nie w samym spisie!):
+1. EdSharp_Hotkeys.txt 269 wierszy - zero wystapien F9.
+2. grep Keys.F9 po EdSharp.cs i KeyMap.cs - ani jednego warunku, same komentarze historyczne.
+3. Historia: Alt+F9 i Control+Alt+F9 zdjete 13.09.2026 (CO-USUWAMY 1.3), Control+Shift+F9 i Alt+Shift+F9 zwolnione tym samym ruchem (EdSharp.cs 2058), goly F9 i Shift+F9 zwolnione 03.09.2026 razem z warstwa skryptow JAWS (EdSharp.cs 2369).
+Powod trzech miejsc: lekcja 5.0.43 - goly F9 byl przechwytywany wprost w ProcessCmdKey_Helper i NIE MIAL wpisu w Hotkeys.ini, wiec spis pokazywal go jako wolny, a klawisz milczal przy zielonym buildzie.
+
+UZASADNIENIA UKLADU: skoki na Control+Shift+F9 / Alt+Shift+F9 to dokladnie uklad, ktory komentarze mialy przed przeniesieniem - palec zna. Okno na trzyklawiszowym chordzie jak wszystkie okna list w EdSharpie. Przyjmij (Alt+F9) i odrzuc (Shift+F9) najkrotsze CELOWO, bo naciska sie je najczesciej przy przegladaniu recenzji.
+
+ZGLOSZONE RYZYKO: Shift+F9 jest krotkie, a odrzucenie USUWA czyjas prace. Zabezpieczenie: odrzucenie MOWI co zrobilo i cofa sie Control+Z. Jesli MK uzna za zbyt lekkie - odrzucenie na chord trzyklawiszowy.
+
+SWIADOMIE BEZ KLAWISZA: przyjmij/odrzuc wszystkie (tylko paleta i menu - operacja na calym dokumencie, raz na koniec), wlacznik widocznosci znacznikow (krok 1c, pozycja w ustawieniach).
+
+Polskie znaki: klawisz funkcyjny nie wpisuje znaku, wiec kolizji nie ma, ale bezpieczenstwo i tak stoi na strazniku Util.IsTypingChord pytajacym uklad klawiatury.
+
+
+### 1789684795 - 2026-09-18 00:39
+
+(rodzaj: ustalenie; projekt: artykuly)
+
+USTALENIE 18.09.2026 - ZASADY PISANIA MICHALA ODTWORZONE Z EKSPORTU GPT. Michal zazadal, zebym uzywal jego "parametrow wejsciowych z GPT" i zapisal je na stale. Zrobione: powstal skill pisanie-tekstow-tyfloswiat (kategoria productivity) + references/zasady-z-eksportu-gpt.md z cytatami.
+
+KLUCZOWE OGRANICZENIE, ZMIERZONE: eksport ChatGPT NIE ZAWIERA promptow wstepnych. Ani instrukcji niestandardowych konta, ani instrukcji projektu "Artykuly". Plik /home/michal/dane_gpt/chunki_gpt.jsonl (1561 fragmentow, 245 rozmow) ma tylko pola text, title, data, conv_id, para_idx, kawalek, gwiazdka, archiwum, source - czyli sama tresc rozmow. Drugi korpus /home/michal/dane_takeout/chunki_takeout.jsonl (5922 chunki) to NotebookLM, tez bez instrukcji. NIE UDAWAC, ze znam tresc promptow wstepnych. Jesli beda potrzebne doslownie - poprosic Michala o skopiowanie z ustawien ChatGPT.
+
+TO, CO UDALO SIE ODTWORZYC Z CYTATOW (nie domysl): rozmowa "Styl artykulow Michala Kasperczaka" 30.07.2026 conv_id 6a6b384b, 18 fragmentow, 15,5 tys. znakow. Michal wymienil tam swoj "profil ogolny": co najmniej podwojna weryfikacja zrodel, pisanie tylko tego, czego jestem pewny, niehalucynowanie, jezyk polski, usuwanie interpunkcji czatowej (zadnych kropek/przecinkow/dziwnych spacji na poczatku linii). Dalej: dwa gatunki (krotki news bez tla historycznego i szerokich porownan / duzy artykul z kontekstem); zakaz opisywania tego samego dwa razy - raz narracyjnie, raz w tabelce; tytul = dokladnie jeden naglowek H1, sekcje H2; tabela z oznaczonym wierszem naglowkowym; polska perspektywa i polskie nazwy klawiszy; zrodla jako lista pelnych linkow; fakty oddzielone od deklaracji producenta; brak publicznej liczby -> powiedziec wprost, nie wyprowadzac z innej liczby; nie dopisywac do artykulu rzeczy pytanych "przy okazji"; wynik jako zwykly plik do pobrania, bez ramek z kodem i podgladow (niedostepne w NVDA).
+
+KORPUS WZORCOWY: siedem tekstow Michala z Tyfloswiata (BlindShell 2 Classic 1/2022, Sonos 3/2021, monitory brajlowskie 1/2022, glosniki Wi-Fi 2/2021, podcasty iOS 1/2021, Od banku do banku 3/2020, rozmowy konferencyjne 2/2020) plus OPUBLIKOWANA wersja tekstu o Quill Radio - Michal uznal ja za wazniejszy wzorzec od szkicu AI, bo ma jego poprawki. Zasada stala: po kazdej publikacji opublikowana wersja bije szkic, roznice to material na profil stylu.
+
+WATKI POKREWNE W EKSPORCIE: "Uzupelnienie artykulu SpeakUp" 18.08.2026 (conv_id 6a84b42a) - zalacznik bez obiecanej transkrypcji, nie dopowiadac jej z pamieci. "Potwierdzenie polaczenia pliku" o Leasey (conv_id 6a84cd7e) - sprawdzac po ZAWARTOSCI pliku, nie po dlugosci.
+
+UWAGA: projekt Michala "Artykuly" istnieje tez jako folder D:\Projekty Codex\Artykuly na glownym komputerze, ale jest PUSTY (0 plikow, zmierzone 18.09.2026). Folder D:\Projekty Codex\Hermes ChatGPT Migration tez pusty (podkatalogi backup, input, output bez plikow). Teksty robocze Tyfloswiata Michal trzyma na dysku wspoldzielonym H:\Dyski wspoldzielone\Tyfloswiat\Content\Robocze - z Hermesa NIEWIDOCZNYM.
+
+
+### 1789702840 - 2026-09-18 05:40
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE 18.09.2026 (EdSharpNG 5.0.113 - SLEDZENIE ZMIAN KROK 1b ZROBIONY, ZMIERZONY I WYDANY)
+
+UKLAD KLAWISZY - DECYZJA MK, NIE MOJA PROPOZYCJA. Zaproponowalem 17.09 skoki na trzyklawiszowych chordach (Control+Shift+F9 / Alt+Shift+F9), przyjmij na Alt+F9, odrzuc na Shift+F9, okno na Control+Alt+F9. MK 18.09 ODWROCIL to i jego uklad jest w kodzie: F9 nastepna zmiana, Shift+F9 poprzednia, Alt+F9 przyjmij, Alt+Shift+F9 odrzuc, Control+F9 okno "Zmiany". Jego slowa: "F dziewiec shift F dziewiec nastepna poprzednia zmiana, alt F dziewiec przyjmij, alt shift F dziewiec odrzuc, kontrol F dziewiec lista", potem doprecyzowanie: "Tak, na Alt F9, a Alt Shift F9 nieprzyjmowanie."
+
+DLACZEGO JEGO UKLAD JEST LEPSZY (lekcja): (1) skoki robi sie NAJCZESCIEJ - przez recenzje przechodzi sie zmiana po zmianie, a przyjmuje tylko czesc, wiec najkrotszy klawisz nalezy sie skokom; (2) ODRZUCENIE KASUJE CZYJAS PRACE i u MK wymaga DWOCH modyfikatorow - w mojej propozycji siedzialo na samym Shift+F9 i sam zglaszalem to jako ryzyko. MK znowu trafnie ocenil sens technicznego pomyslu.
+
+CO POWSTALO. EdSharp.cs: siedem komend za jedna bramka (Markdown + podglad zamkniety + dokument nie chroniony; skoki i okno TYLKO CZYTAJA, wiec bramka o zapis ich nie dotyczy). Metody: GoToChange, ApplyChangeAtCursor, ApplyAllChanges, ShowChangeList. Przyjmij/odrzuc jednej zmiany idzie przez rtb.ReplaceRange na ZAKRESIE jednej zmiany, nie przez podmiane calego rtb.Text - inaczej ginie historia Control+Z, a przy odrzuceniu cofanie jest jedynym ratunkiem. Przyjmij/odrzuc WSZYSTKIE bez klawisza (tylko menu i paleta) i z pytaniem Dialog.Confirm(tytul, tekst, "N") - UWAGA: Confirm zwraca STRING ("Y"/"N"), nie bool.
+
+SPACJA W OKNIE "ZMIANY" NIC NIE PRZELACZA - rozstrzygniecie, nie przeoczenie. W liscie zadan spacja odznacza zadanie, bo to odwracalne tym samym klawiszem. Przyjecie zmiany odwracalne NIE JEST: po przyjeciu znacznika juz nie ma. Przyjmowanie zostaje przy kursorze w dokumencie, gdzie slychac kontekst zdania.
+
+BLOKU KODU przy zmianach NIE pytamy (inaczej niz przy listach zadan): znacznik CriticMarkup w bloku kodu ma byc pokazany, bo recenzja nie moze po cichu pomijac poprawek w przykladach kodu.
+
+POMIAR: testy/pomiar_zmiany_1b.ps1 - 10 asercji, 10 OK, 0 ZLE na ZYWYM programie. Krok 1a (Zmiany.cs, 90/90 golym kompilatorem) tego nie powtarza. Zmierzone: przyjecie i odrzucenie dopisania/usuniecia/podmiany (szesc wariantow, bo dla kazdego rodzaju przyjecie i odrzucenie daja INNY wynik), drugi skok F9, powrot Shift+F9, zniknienie komentarza recenzenta. Kazdy wariant ma KONTROLE POZYTYWNA KLAWIATURY (wpisanie litery + zapis) - bez niej "plik sie nie zmienil" znaczy to samo przy dzialajacej komendzie i przy klawiszach, ktore nie dochodza. Kontrola NEGATYWNA: Alt+F9 na .txt nic nie robi (bramka Markdown).
+
+WOLNOSC CHORDOW zmierzona przed przypisaniem w trzech miejscach: EdSharp_Hotkeys.txt zero "F9", Hotkeys.ini zero "F9", grep Keys.F9 po .cs zero warunkow. Control+F9 bylo "Say Compiler", zwolnione 16.09.2026 razem z kompilowaniem (EdSharp.cs 5905).
+
+WYDANE: commit c7093c6 na master, wydanie v5.0.113, EdSharpNG_Setup_5.0.113.exe 3521826 B, SHA-256 58F394949A59BA8FECD8EB99E6930F1DB5E695E87B0E12636D2B95B8DD42C352 (sprawdzone gh release view). Kopia u Michala: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.113.exe, rozmiar i suma zgodne po obu stronach.
+
+OTWARTE WATKI: (1) MK powiedzial "potem jeszcze popoprawiac te rzeczy ktore ci dzisiaj napisalem w pliku" - jest plik z jego uwagami z 18.09 do przejrzenia, nie zajmowalem sie nim jeszcze. (2) Krok 1c: ukrywanie znacznikow (dokument brzmi czysto), opcja w ustawieniach do pokazania surowych. (3) Krok 1d: zapis/odczyt pliku ze zmianami, kopia .bak. (4) Wciaz nie przetestowane ZYWYM NVDA - MK ma to przejsc na 5.0.113.
+
+
+### 1789729448 - 2026-09-18 13:04
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 18.09.2026 (EdSharp - ROZBIOR UWAG MK Z TESTOW 5.0.112, ZMIERZONE U ZRODLA)
+
+Plik MK: D:\Projekty Codex\Hermes\EdSharp\DO-PRZETESTOWANIA-5.0.108-5.0.112.md (15242 B, 18.09 godz. 1:32). Skopiowany do repo jako docs/UWAGI-MK-18.09.2026.md BEZ ZMIAN. UWAGA NA PRZYSZLOSC: plik ma BOM i CRLF, a `patch` na nim sie wywala - edytowac przez python z encoding utf-8.
+
+DZIALA (potwierdzil MK): wersja/F11, checklisty Control+Shift+F2 on/off, Control+Shift+X przelaczanie (tez na zwyklym wierszu), okno listy zadan Control+Shift+F7, postep Alt+Shift+F2, Enter kontynuujacy liste, pusty wiersz milczy (czwarta proba wreszcie dobra), polskie litery w podgladzie, Alt+0 lista plikow, kalkulator, paleta Control+Shift+F1 i samouczek Control+Alt+F1 sie otwieraja.
+
+PALETA - ZGLOSZENIE NIEPOTWIERDZONE, ale znalazlem prawdziwa przyczyne. MK: "Nowe skroty sa prawidlowo opisane, ale jak nacisniesz enter, nie wykonuje sie nic, jak by paleta do nich nie doszla." Dwa pomiary na zywym programie: testy/pomiar_paleta_enter.ps1 (3/3 OK - polecenie zmieniajace tekst, Enter w polu filtra I Enter na liscie) oraz testy/pomiar_paleta_okna.ps1 (2/2 OK - samouczek z klawisza i z palety otwiera okno Edge). Paleta URUCHAMIA polecenia. ALE przebieg C wykazal: po wpisaniu "command palette" nic sie nie dzieje, bo kod JAWNIE POMIJA pozycje palety na jej wlasnej liscie (EdSharp.cs 9538 `if (item == menuHelpCommandPalette) continue;`). MK czytal punkt o DWOCH przeniesionych skrotach i szukal w palecie obu - jeden z nich (sama paleta) nie istnieje na liscie, wiec Enter faktycznie nie robil nic. To nie blad wykonywania, to brak pozycji + brak komunikatu.
+
+LEKCJA O HARNESSIE: pierwsza wersja pomiaru palety dala 3x "kontrola klawiatury padla" - bo brakowalo SetForegroundWindow z AttachThreadInput i 14 s na start. Kontrola pozytywna zrobila swoje: nie pozwolila oglosic trzech bledow programu tam, gdzie byl jeden blad mojego skryptu. Baze brac z testy/pomiar_zmiany_1b.ps1. DRUGA LEKCJA: polska litera w NAZWIE FUNKCJI PowerShell ("function Ocen z ogonkiem") wywala parser - nazwy funkcji bez ogonkow.
+
+POZOSTALE USTALENIA U ZRODLA:
+- Control+L / Control+Shift+L na checkliscie: MK mowi ze zostaja cyfry i minusy. Kod ZDEJMUJE cale pole (EdSharp.cs 15348-15351, Zadania.ZdejmijPole) - wiec albo dziala inaczej niz MK opisal, albo problem jest w wersji numerowanej. DO ZMIERZENIA OSOBNO, nie rozstrzygniete.
+- ZAPIS DO FORMATOW - MK ma racje, ale nazwal funkcje z pamieci zle. Save As (Control+Shift+S) ma TYLKO trzy filtry: All files, txt, rtf (EdSharp.cs 19069 i 19097, dwa miejsca z ta sama lista). Konwersja to NIE "transport Alt+Shift+T" (Alt+Shift+T to Table of Contents), a "Export Format" na ALT+SHIFT+E, ktora czyta sekcje [Export] z EdSharp.ini - tam SA md2docx, md2epub, md2epub3, md2pdf, md2html, md2rtf, md2txt, md2tex i wiecej (EdSharp.ini 100-140, przez pandoc z katalogu Convert). Czyli eksport do docx/epub/pdf ISTNIEJE, tylko nie w okienku "Zapisz jako" i nie pod klawiszem, ktory MK pamietal.
+- Alt+minus / Alt+Shift+minus nawigacja po listach: MK mowi ze zniklo. W kodzie komenda ZYJE, ale na CONTROL+minus i CONTROL+Shift+minus (EdSharp.cs 1699-1700, Next List / Prior List). Zmiana modyfikatora, nie usuniecie.
+- Alt+[ wyskakuje menu File: Infer Indent siedzi na Alt+OemCloseBrackets (EdSharp.cs 1840) - czyli na Alt+PRAWY nawias. Alt+LEWY nawias jest wolny po usunieciu PyDent, wiec Windows traktuje go jako wejscie w menu.
+- Alt+Shift+M (Manual Options) - MK chce zwolnic, zostawic tylko w menu.
+- Do zrobienia z listy MK: bogate formatowanie Ctrl+Shift+C dla CALEGO zaznaczenia (naglowki i linki nie przechodza do Worda/Thunderbirda/WordPressa, pojedynczo przechodza), checkboxy w eksporcie HTML jako <input type=checkbox>, podglad okazjonalnie wraca na poczatek pliku, komunikat "Settings saved"/"Cancel" zagluszany polem edycyjnym, kalkulator ma powiedziec zeby wpisac liczbe gdy nie ma tekstu, stary podrecznik ze starymi klawiszami (CTRL-h), skroty od JAWS do usuniecia, MK proponuje przeniesienie Control+Shift+F2 na Alt+Ctrl+X i Control+Shift+F7 na Alt+Shift+X.
+
+
+### 1789732455 - 2026-09-18 13:54
+
+(rodzaj: lekcja; projekt: edsharp)
+
+LEKCJA (EdSharp, pomiary na zywym programie przez SendKeys, 18.09.2026)
+
+PIERWSZE uruchomienie EdSharpNG.exe w danym przebiegu skryptu PS1 GUBI pojedyncze znaki z SendKeys, mimo Start-Sleep 14 s i SetForegroundWindow. Objawy zmierzone w trzech przebiegach pomiar_ctrl_l_warianty.ps1: "kupc chleb" (brak litery i), "kupic cheb" (brak l), a raz klawisze wsypaly sie w tekst jako "- kupic chl2. =->". Kolejne uruchomienia w tym samym przebiegu sa czyste. Okno przyjmuje klawisze, zanim skonczy inicjalizacje.
+
+ROZWIAZANIE: pierwsza pozycja listy wariantow ma byc ROZGRZEWKA na wejsciu, ktorego wyniku sie NIE czyta i NIE liczy do sumy. Zastosowane w testy/pomiar_ctrl_l_warianty.ps1 i testy/pomiar_listy_checklista.ps1 - po dodaniu rozgrzewki 6/6 i 8/8 czysto.
+
+DRUGA LEKCJA: kontrola klawiatury w funkcji Mierz NIE MOZE robic exit/return - wtedy pomiar konczy sie bez zadnej wiedzy o przyczynie. Ma wypisac tytul aktywnego okna i stan pliku, i MIERZYC DALEJ; tresc pliku nizej rozstrzyga sama.
+
+TRZECIA LEKCJA (merytoryczna, ta sama sesja): zgloszenie MK, ktore nie odtwarza sie na wejsciu podstawowym, NIE jest tym samym co zgloszenie nieprawdziwe. "Control+L zostawia nawiasy" nie odtworzylo sie na "- [ ] tekst", ale odtworzylo sie na trzech wejsciach pokrewnych ("- [-] tekst", "- [ ]tekst" bez spacji, "1. [ ] tekst"). Gdy przypadek podstawowy dziala, mierz WEJSCIA POKREWNE wyprowadzone z tego, co wzorzec/regex odrzuca - tam siedzi blad.
+
+
+### 1789735313 - 2026-09-18 14:41
+
+(rodzaj: ustalenie; projekt: hermes)
+
+USTALENIE 18.09.2026 - POPRAWKI PAMIECI I MODELU HERMESA. Na polecenie Michala Dziwisza wdrozono: trwala lokalna kolejka SQLite dla hs_remember (status queued nie oznacza zapisu w bazie), retry co2min i odczyt po zapisie; domyslny pelny recall, dokladne id oraz NIEPELNY przy podgladach; zastapienie starej propozycji klawiszy EdSharp wpis1789702840; kontekst projektu osobno per sesja, lokalne checkpointy po turze i przed kompresja. Przy powrocie doczytaj pelna decyzje i istniejacy plan; nie czekaj na slowo koniec. AMC/EdSharp glowne skille odchudzone bez usuniecia tresci, indeks references/indeks-tematyczny.md. NotebookLM payload ma braki tekstu: plugin odzyskuje dokladny tekst z /home/michal/dane_takeout/chunki_takeout.jsonl po zrodlo_id, bez ponownego ingestu. Baza ma4GiB RAM/6GiB memory-swap, nie byla restartowana. Astra gpt-6-astra przez palantir-astra Responses jest domyslna interaktywnie, reasoning high, native vision. Budzet630000, prog kompresji472500; sonda na TYM koncie przeczytala668964tokeny. Delegacja przypieta Opus5, auxiliary bez zmian, oba crony no_agent. Nie trzeba /new ani /reset na Telegramie. Stary uruchomiony CLI: zamknij po zadaniu i wznow hermes --continue; nie kasuj rozmowy. Kopie ~/.hermes/backups/pamiec-20260918 i pliki-pamiec-20260918-142921. Kod silnika i projektow nietkniety. Bramka i panel uruchomione ponownie w wolnym oknie. Testy46passed; rzeczywisty agent poprawnie odzyskal zatwierdzony uklad klawiszy i wczesniejsze ustalenia streamingowe. Szczegoly techniczne ~/.hermes/maintenance/pamiec-20260918/.
+
+
+### 1789736847 - 2026-09-18 15:07
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 18.09.2026: identyczne polecenie MK 'Bogate formatowanie, zapisywanie, potem GitHub i do mnie' dotarlo do dwoch tematow Telegrama. Potwierdzono session_search: aktywne wdrozenie w sesji 20260918_002328_08637004, temat 33010 (wiadomosc user 45917); ta sesja edytuje EdSharp.cs i testy/pomiar_bogaty_schowek_5114.*. Watek 32113 byl dotad AMC; jego zdublowane prace zatrzymano, nie wycofano cudzych zmian. Plan docs/ZADANIA-2026-09.md zawiera koordynacje. Temat 33010 ma domknac testy, wydanie i dostawe; temat 32113 nie publikuje rownoleglego 5.0.114. User chce jeden spojny watek EdSharp, bez mieszania AMC.
+
+
+### 1789741756 - 2026-09-18 16:29
+
+(rodzaj: pomiar; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789742495)
+
+POMIAR 18.09.2026 - DOCX -> Markdown GFM -> DOCX dla rozważanego zapisu Ctrl+S do formatu zrodlowego. MK pyta o opinie, NIE polecil wdrozenia ani nie zmienil poprzedniej decyzji (roboczy MD, jawny eksport). Pandoc z C:\EdSharpBuild\Convert\Pandoc uruchomiony na probce DOCX z jawnym czerwonym kolorem tekstu, rozmiarem 24pt i wyrownaniem do prawej: tekst i styl Heading1 zachowane, trzy wymienione cechy formatowania utracone po obrocie. Wyniki /mnt/c/EdSharpBuild/RoundtripDecision/result.json; zalozenia w docs/ZADANIA-2026-09.md. Wniosek: opcjonalny tryb pracy z kopia DOCX jest sensowny dla redakcji tresci, nie wolno domyslnie nadpisywac dowolnego oryginalu ani obiecywac bezstratnego zastapienia Worda. To rekomendacja, NIE zatwierdzona funkcja.
+
+
+### 1789742495 - 2026-09-18 16:41
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE MK 18.09.2026 - ZATWIERDZONA NOWA OPCJA USTAWIEN EdSharp: Control+S ma opcjonalnie zapisywac zaimportowany dokument ponownie w jego oryginalnym formacie (Word/DOCX, EPUB, inne wspierane bogate formaty), zamiast zawsze zapisywac MD. Ma byc widoczny checkbox w normalnym oknie ustawien, nie sam klucz INI. Bez zmiany domyslnego bezpiecznego trybu: opcja domyslnie wylaczona. MK swiadomie akceptuje utrate czcionek itp.; celem jest redakcja tresci i struktury do prostej publikacji, np. WordPress. To ZMIANA w stosunku do poprzedniej tury, gdzie byla jedynie dyskusja bez zgody. Zachowac zabezpieczenia: poprzednia wersja oryginalu w kopii, blad konwersji nie rusza pliku, kontrola zewnetrznej zmiany oryginalu. Nie obiecywac bezstratnej edycji Worda.
+
+
+### 1789747522 - 2026-09-18 18:05
+
+(rodzaj: podsumowanie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1789750885)
+
+PODSUMOWANIE EdSharpNG 5.0.114 - WYDANE I DOSTARCZONE 18.09.2026. Repo /home/michal/projekty/edsharp master: kod wydania 765662ebc6504366fe5d2b172e2cd175e4d193bf; koncowe potwierdzenie/dokumentacja f020b3c1624f2c21f3e0bb70606ed1eb1edfa0ca (git status czysty, GitHub master odczytany). Release https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.114 publiczny, nie draft, kanal jak poprzednio nie-prerelease. EXE 3549443 B SHA256 87D8B63AB19F70313104F946F96B8F6FAB4726D9EF926E3DA4E9BD47640B34A4; ZIP 2086299 B SHA256 1B48C23F84397B66D5C480A2ECC3F7AFBFE13F98A625F48C5ABA6AC917FF44B3. Oba pobrane z GitHuba i sumy zgodne; ZIP CRC OK. Installer oraz EdSharpNG_5.0.114_zmiany.txt sa na GLOWNYM komputerze w D:\Projekty Codex\Hermes; dwa starsze instalatory 5.0.112/113 przeniesione do kosz-2026-09-18, odczyt potwierdzony. UWAGA: na GLOWNYM nie uruchamiano instalatora; na HERMESIE finalny instalator zainstalowany exit0, rejestr wersja114, hash EXE zgodny, aplikacja z Program Files dziala i otworzyla probke. ZIP tez uruchomiony z osobnego katalogu. NOWA zatwierdzona opcja Settings Ctrl+przecinek: SaveImportedOriginalFormat, label Control+S saves imported documents in their original format, domyslnie N. Po ON CtrlS przepisuje oryginal DOCX/EPUB/HTML/RTF z roboczego Markdown; poprzednie wersje w .edsharp-backups, konflikt z zewnetrzna zmiana zatrzymuje zapis i podpowiada CtrlShiftS. Jawny zapis MD odczepia link; brak bezstratnosci typografii zaakceptowany przez MK. Naprawiono odzysk sesji (nie miesza okien, nie kasuje nieodczytanych kopii, zachowuje je w nastepnej sesji i po normalnym wyjsciu), zapisy rownolegle (obowiazkowy mutex, odcisk ponownie pod blokada), snippet nie odczepia zrodla, CSV wymaga osobnego pliku. Pozostale: bogaty schowek HTML/RTF z naglowkami, polskimi literami i linkami; prawdziwe Zapisz jako i Export; PDF przez Edge z tagami. Listy zmiana typu ZACHOWUJE checkboxy, dopiero wylaczenie listy usuwa pole; nie opowiadac starej blednej interpretacji uwag MK. Testy finalne: transakcja98, opcja9, integracja107, sesja74, bogaty schowek18x3, poprzednie kopiowanie54, linki na listach12; wszystko zero bledow. Save/PDF:25+89+8+11 oraz pypdf. ZYWE NVDA: checkbox nazwa/stan, zapisDOCX, komunikat konfliktu; inne pomiary opisane docs/WERYFIKACJA-5.0.114.md. Dowody w testy/wyniki/ i plan docs/ZADANIA-2026-09.md zaktualizowany. Krok1c ukrywanie znacznikow nadal osobne przyszle zadanie, NIE czesc tego wydania.
+
+
+### 1789750885 - 2026-09-18 19:01
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE SESJI 18.09.2026 - EdSharpNG 5.0.114 ZAINSTALOWANY U MK, CTRL-SHIFT-C POTWIERDZONE, PRZERWA W PRACACH. Michal sam potwierdzil aktualizacje i instalacje na swoim glownym komputerze. Control+Shift+C: 'super zadzialalo'. Plik nowosci oceniony jako czytelny i sensowny. TO JEST JEDYNY nowy wynik jego prob praktycznych: innych funkcji jeszcze nie testowal. Komunikaty, sledzenie zmian i pozostale rzeczy sprawdzi pozniej. Nie utozsamiac zielonych testow technicznych z akceptacja uzytkownika. DECYZJA: dluzsza przerwa w rozwoju edytora, bez terminu powrotu; nastepne prace dopiero na nowe zlecenie MK. Po powrocie najpierw jego wyniki i uwagi, nie automatyczne rozpoczynanie starej kolejki. Krok 1c ukrywanie znacznikow i dalszy plan wspolpracy nadal przyszle, NIE wdrozone w 5.0.114. Kroki 1a/1b sa wdrozone; F9 nastepna, Shift+F9 poprzednia, Alt+F9 przyjmij, Alt+Shift+F9 odrzuc, Ctrl+F9 lista; MK dopiero je sprawdzi praktycznie. STAN GITHUB: https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.114 (instalator i ZIP, sumy pobranych plikow zgodne). Kod wydania 765662ebc6504366fe5d2b172e2cd175e4d193bf; teraz master 8d5ff389e27fa3d5f42e702a2232695ab1fc13d4, ostatni commit TYLKO dokumentacja. Trzy dokumenty zaktualizowane i ich pelna tresc odczytana z GitHuba: docs/ZADANIA-2026-09.md (aktualny stan i pauza, starsza lista oznaczona historycznie), docs/WERYFIKACJA-5.0.114.md (proby MK odroznione od technicznych), docs/SLEDZENIE-ZMIAN-I-WSPOLNA-PRACA.md (poprawione stare 'kodu nie ma', przyszle kroki wstrzymane). Nie bylo nowego buildu ani podmiany plikow wydania; SHA256 obu assetow API nadal identyczne. Repo /home/michal/projekty/edsharp czyste. PACZKA I ZAKRES: EXE 3549443 B SHA256 87D8B63AB19F70313104F946F96B8F6FAB4726D9EF926E3DA4E9BD47640B34A4; ZIP 2086299 B SHA256 1B48C23F84397B66D5C480A2ECC3F7AFBFE13F98A625F48C5ABA6AC917FF44B3. Installer i EdSharpNG_5.0.114_zmiany.txt w D:\Projekty Codex\Hermes; 5.0.112/113 w kosz-2026-09-18. Wczesniejsze 'nie instalowano na glownym' dotyczylo dzialan agenta; obecnie MK potwierdzil wlasna instalacje. Wydanie: bogaty schowek HTML/RTF, Zapisz jako/Export rzeczywiste formaty, PDF przez Edge, opcjonalny SaveImportedOriginalFormat w Settings Ctrl+przecinek domyslnie N (DOCX/EPUB/HTML/RTF z Markdowna, .edsharp-backups, konflikt wstrzymuje zapis). Nie bezstratny Word; MK akceptuje utrate typografii. Naprawiony odzysk osobnych okien i zachowanie nieodczytanych kopii, mutex zapisu i sprawdzenie odcisku pod blokada, zachowanie checkboxow przy zmianie typu listy. Dowody testow i instalacji na Hermesie w docs/WERYFIKACJA-5.0.114.md i testy/wyniki; finalnie transakcja98, opcja9, integracja107, sesja74, bogaty schowek18x3, kopiowanie54, listy12 bez bledow, Save/PDF25+89+8+11 i pypdf; zywe NVDA ustawienie/zapis/konflikt. Lekcje zostaly w skillu edsharp-development: bezpieczny odzysk, blokada i weryfikacja po oczekiwaniu, wiernosc konwersji, rozdzielenie akceptacji MK od pomiarow i czytelne pliki TXT z nowosciami.
+
+
+### 1789770056 - 2026-09-19 00:20
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE - aktualna lista AMC z sekcji 18.09.2026 w D:\Projekty Codex\Hermes\Do zrobienia.md, kopia przeslana na Telegramie jako doc_6c3827a5e4d1_Do zrobienia.md. Michal wyjasnil, ze NAJNOWSZE daty oznaczaja zadania do zrobienia; starsze sekcje sa zasadniczo wykonana historia, nie nowa kolejka. Aktualne piec obszarow: (1) aktualizacje/komunikaty/kontrolki/odczyt NVDA/instalator na wzor biezacego EdSharpNG oraz F11 sprawdz aktualizacje; (2) TimeShift - komunikaty mowia o zmianie tempa, ale audio nie przyspiesza: zmierzyc prawdziwe tempo bufora; twardy zakaz ruszania dzialajacego parsowania/dekodowania radia i YouTube Live, zwlaszcza poprawek Opus; (3) TIDAL - wskazanie aktualnego utworu na liscie AMC, ewentualne podazanie fokusu; sprawdzic Odtwarzaj jako nastepny / Dodaj do kolejki, naprawic jesli realnie mozliwe, w przeciwnym razie usunac martwe akcje; (4) Apple Music biblioteka/nawigacja/odtwarzanie wedlug mozliwosci, bez domyslnej zgody na platne uslugi; (5) Google Cast/Chromecast. Plan zaktualizowany w /home/michal/projekty/AMC/PLAN-16-09-2026.md. Zaczynamy od aktualizacji. EdSharp jest wzorem do odczytu, nie projektem do zmian w tym zleceniu.
