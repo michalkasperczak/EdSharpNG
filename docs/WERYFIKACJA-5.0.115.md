@@ -28,15 +28,17 @@ Uruchomione **na tej samej binarce**, która trafiła do paczki:
 | Harness | Wynik |
 |---|---|
 | `harness_tozsamosc_importu` | 125 PASS / 0 FAIL / 3 SKIP |
-| zapis oryginału (`verify_original_option`, cz. 1) | 9 PASS / 0 FAIL |
+| transakcyjny zapis oryginału | 98 PASS / 0 FAIL |
+| opcja zapisu oryginału (`verify_original_option`) | 9 PASS / 0 FAIL |
 | integracja oryginału (cz. 2) | 107 PASS / 0 FAIL |
 | sesja/odzysk (cz. 3) | 74 OK / 0 BŁĄD |
 
 Surowe logi: `testy/wyniki/release5115/01-…`, `02-…`.
 
 3 SKIP w harnessie tożsamości to: DOC (brak pliku testowego), ODT (brak
-ścieżki importu w tej gałęzi), EPUB 3 dwukierunkowy (pokryty osobnym
-sprawdzeniem jednokierunkowym).
+ścieżki importu w tej gałęzi) oraz pominięcie EPUB 3 w grupie formatów
+jednokierunkowych. EPUB 3 sprawdzono osobno w sekcji I, łącznie z zapisem
+wstecz i rzeczywistą zmianą bajtów pliku; nie jest to pominięty format.
 
 ## Żywy odbiór: prawdziwy NVDA i prawdziwy schowek
 
@@ -102,8 +104,9 @@ programowo).
   testowego. Kod nie był w tej gałęzi zmieniany, ale to nie jest dowód
   poprawności. Pozostaje jawnie otwarte.
 - **ODT** — brak ścieżki importu w tej gałęzi, nic nie zmierzono.
-- **EPUB 3** — sprawdzony jednokierunkowo (normalizacja przy czytaniu
-  + odmowa uszkodzonego pakietu); trasa dwukierunkowa nie była testowana.
+- **EPUB 3** — import i zapis wstecz sprawdzono w automatycznej sekcji I.
+  Żywy przebieg NVDA obejmował DOCX i PDF, nie EPUB 3. Odmowę uszkodzonego
+  pakietu zmierzono na DOCX, nie na wszystkich formatach archiwów.
 - **Pozostałe formaty z puli ~20** — nie przechodzono ich jeden po drugim;
   ten odbiór celował w zakres poprawki, nie w pełny audyt formatów.
 - **Wydajność i długie sesje** — nie badano.

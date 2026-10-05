@@ -1,40 +1,37 @@
-EdSharpNG 5.0.115 — co nowego
-=============================
+EdSharpNG 5.0.115
 
-Ta wersja naprawia trzy rzeczy wokół importu plików (DOCX, PDF, EPUB
-i pozostałych formatów otwieranych przez konwerter).
+Historia importowanych dokumentów
 
-1. Lista ostatnich plików pokazuje to, co otworzyłeś
-   Wcześniej po zaimportowaniu np. „Raport.docx” lista ostatnich plików
-   (Alt+R) pokazywała techniczny plik roboczy, czyli „Raport.md”. Teraz
-   widzisz nazwę tego, co naprawdę otworzyłeś, i wybranie wpisu otwiera
-   ten sam dokument, a nie plik pośredni.
+Dokumenty otwierane przez konwersję trafiają teraz do listy ostatnich plików pod nazwą i pełną ścieżką oryginału. Dotychczas importowany DOCX mógł w ogóle nie pojawić się pod Alt+R. Wybranie wpisu ponownie otwiera właściwy dokument.
 
-2. Pełna ścieżka źródła pod Alt+Shift+P
-   Skrót kopiujący ścieżkę bieżącego dokumentu podaje teraz pełną
-   ścieżkę pliku, który zaimportowałeś — razem z katalogami i polskimi
-   znakami. Dotąd trafiała tam ścieżka pliku tymczasowego.
-   Jeśli w tym momencie schowek trzyma inny program, usłyszysz jeden
-   komunikat, że ścieżka nie została skopiowana. Wystarczy powtórzyć
-   skrót po chwili — nic się nie psuje i nie trzeba nic zamykać.
+Kopiowanie pełnej ścieżki
 
-3. Bezpieczniejszy odzysk sesji
-   Jeśli plik odzysku stracił powiązanie z oryginałem, program nie
-   wyrzuca już sesji, tylko odtwarza co się da.
+Alt+Shift+P kopiuje ścieżkę oryginalnego dokumentu, a nie samą roboczą nazwę Markdowna lub tekstu. Jeśli zapis do schowka się nie powiedzie, program informuje, że ścieżka nie została skopiowana, zamiast ogłaszać pozorny sukces. Ctrl+Shift+P nadal tworzy listę plików z folderu — jego funkcji nie zmieniono.
 
-Dodatkowo: uszkodzony plik DOCX/EPUB/ODT (np. przerwany podczas
-pobierania) jest teraz odrzucany z komunikatem, zamiast otwierać się
-jako nieczytelna „sieczka” ze środka pakietu ZIP. Czytniki EPUB 3
-dostały też porządkowanie treści przed wyświetleniem.
+Odzyskiwanie pracy
 
-Instalacja
-----------
-Uruchom EdSharpNG_Setup_5.0.115.exe i przejdź przez instalator.
-Twoje ustawienia i lista ostatnich plików zostają na miejscu —
-instalacja nie czyści profilu.
+Zapis sesji rozróżnia teraz oryginalny dokument i roboczy tekst także dla importów bez możliwości zapisu wstecz. Przywracanie niezapisanych zmian zachowuje tę różnicę. Samo zapamiętanie źródła nie uprawnia programu do zastąpienia pliku DOCX lub PDF surowym tekstem.
 
-Uwaga o jednym formacie
------------------------
-Import DOC (stary Word, nie DOCX) nie był w tej wersji zmierzony —
-brakowało pliku testowego. Nic w nim nie zmieniano, ale też nie mogę
-zapewnić, że zachowuje się tak jak pozostałe formaty.
+EPUB 3 i nieudana konwersja
+
+Poprawiono polecenie odczytu plików z rozszerzeniem .epub3, również w starszej konfiguracji użytkownika. Pandoc korzysta przy odczycie z formatu epub; format zapisu epub3 pozostaje bez zmian.
+
+Jeżeli konwersja spakowanego dokumentu zawiedzie, program odmawia otwarcia zamiast pokazywać bajty archiwum jako tekst. Taką odmowę sprawdzono na uszkodzonym pliku DOCX.
+
+Co sprawdzono
+
+Testy obejmowały DOCX, EPUB, EPUB 3, HTML, RTF, PDF, RST i TEX oraz kontrolne Markdown i tekst. Sprawdzono historię, ścieżki, ochronę oryginałów i odzysk sesji. Żywy NVDA potwierdził obsługę Alt+R, kopiowanie ścieżek DOCX i PDF oraz komunikat o zajętym schowku. Wynik kopiowania potwierdzono odczytem schowka i wklejeniem.
+
+Import starego formatu DOC nie został zmierzony. ODT nie ma skonfigurowanej ścieżki importu w tej wersji. Nie przeprowadzano pełnego audytu wszystkich konwerterów.
+
+Instalację i uruchomienie wersji 5.0.115 sprawdzono na komputerze Hermes. Na główny komputer Michała dostarczany jest instalator, bez zamykania działającego edytora. Aktualizację można uruchomić samodzielnie przez F11 lub z pliku instalatora.
+
+Pliki wydania
+
+EdSharpNG_Setup_5.0.115.exe
+Rozmiar: 3552326 bajtów.
+SHA-256: FCF4E77ECCE0E308E731A986CC845F38CB3FACDEB8E9683D1795CA4A8C262D10
+
+EdSharpNG_5.0.115.zip
+Rozmiar: 2090492 bajtów.
+SHA-256: D66B0FC4EBD4346D725EFC0116278A87F20DAE004AF3C1C5876C197B00CE98C1

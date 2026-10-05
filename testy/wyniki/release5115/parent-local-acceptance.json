@@ -1,0 +1,43 @@
+{
+  "commit_reviewed": "0797cde1416d1789713f81bf3cdb2a10a0a213ab",
+  "version": "5.0.115",
+  "product_diff_from_07470eb": "VersionString only",
+  "assets": [
+    {
+      "name": "EdSharpNG_Setup_5.0.115.exe",
+      "size": 3552326,
+      "sha256": "fcf4e77ecce0e308e731a986cc845f38cb3facdeb8e9683d1795ca4a8c262d10"
+    },
+    {
+      "name": "EdSharpNG_5.0.115.zip",
+      "size": 2090492,
+      "sha256": "d66b0fc4ebd4346d725efc0116278a87f20dae004af3c1c5876c197b00ce98c1"
+    }
+  ],
+  "exe_sha256": "86f59310f5f23fe132c361321b9165b2ba8be2c09269cbe4ce1eb6c69316a96e",
+  "zip_entries": 444,
+  "csharp_source_comparison": {
+    "EdSharpNG/Csv.cs": true,
+    "EdSharpNG/EdSharp.cs": true,
+    "EdSharpNG/Inix.cs": true,
+    "EdSharpNG/KeyMap.cs": true,
+    "EdSharpNG/Lbc.cs": true,
+    "EdSharpNG/OriginalFormatSave.cs": true,
+    "EdSharpNG/PdfExport.cs": true,
+    "EdSharpNG/Pisownia.cs": true,
+    "EdSharpNG/Say.cs": true,
+    "EdSharpNG/Sesja.cs": true,
+    "EdSharpNG/Skladniki.cs": true,
+    "EdSharpNG/Ustawienia.cs": true,
+    "EdSharpNG/Web.cs": true,
+    "EdSharpNG/Wyrazenia.cs": true,
+    "EdSharpNG/Zadania.cs": true,
+    "EdSharpNG/ZapisFormatow.cs": true,
+    "EdSharpNG/Zmiany.cs": true
+  },
+  "installed_registry": "5.0.115",
+  "nvda_evidence_checked": "Completed delegation actual tool transcript: NVDA focus roles15 docx/pdf, real SpeechViewer busy message and paste readback; no duplicate suite run",
+  "scope": "Import history/path/recovery/EPUB3; excludes unmeasured DOC, no ODT import and full converter audit",
+  "public_release_verified": false,
+  "main_installed": false
+}
