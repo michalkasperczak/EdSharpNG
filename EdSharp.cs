@@ -846,6 +846,25 @@ public string LastClipboardText = "";
 	// -1 means "never opened in this window".
 	public int DocumentNavigationLastOffset = -1;
 public OriginalDocumentLink OriginalDocument = null;
+
+// SCIEZKA PLIKU, Z KTOREGO TEN BUFOR ZAIMPORTOWANO - sama tozsamosc, BEZ
+// prawa zapisu wstecz.
+//
+// Po imporcie child.File trzyma tylko robocza nazwe Markdowna bez katalogu
+// ("Artykul.md"), bo bufor NIE JEST plikiem na dysku - zapis tej tresci pod
+// nazwa oryginalu uszkodzilby dokument Worda.  Skutek (zmierzone 05.10.2026,
+// docs/DIAGNOZA-QUILL-IMPORT-HISTORIA-2026-10-05.md): historia ostatnich i
+// kopiowanie sciezki pytaja o child.File, widza napis bez ukosnika i
+// MILCZKIEM odpadaja - zaimportowany DOCX nie trafial na Alt+R w 0 z 3 prob,
+// a kontrolny Markdown w 3 z 3.
+//
+// Dlatego tozsamosc zrodla jest TU, osobno od OriginalDocument.  OriginalDocument
+// znaczy "wolno zapisac wstecz" (wymaga wlaczonej opcji SaveImportedOriginalFormat,
+// obslugiwanego formatu i konwertera), a ImportedFrom znaczy tylko "tak nazywa
+// sie dokument, ktory czytam".  Import PDF-a czy .doc nie da prawa zapisu, ale
+// MA prawo pojawic sie w historii pod wlasna nazwa.
+public string ImportedFrom = "";
+
 private string sFile = "";
 public string File {
 get {
@@ -854,8 +873,31 @@ return sFile;
 set {
 sFile = value;
 OriginalDocument = null;
+// Nowy plik to nowa tozsamosc.  Gdyby ImportedFrom przezyl przypisanie
+// child.File, to Zapisz jako Markdown nadal meldowaloby historii stary
+// DOCX - czyli odczepienie od oryginalu byloby pozorne.
+ImportedFrom = "";
 }
 } // File property
+
+// TOZSAMOSC DOKUMENTU DLA POLECEN, KTORE MOWIA O PLIKU, A NIE DO NIEGO PISZA:
+// historia ostatnich, kopiowanie sciezki, stan sesji.
+//
+// Zwraca sciezke zrodla, gdy bufor powstal z importu, a w kazdym innym
+// przypadku dokladnie to samo co dotad (child.File) - wiec dla zwyklego pliku
+// tekstowego nic sie nie zmienia.
+//
+// CZEGO TA WLASNOSC NIE ROBI: nie daje prawa zapisu.  Zapis idzie przez
+// child.File i TrySaveOriginalDocument, ktore pyta o OriginalDocument i opcje.
+// Nie wolno jej uzywac jako celu zapisu - to byl caly powod, dla ktorego
+// child.File zostaje nazwa robocza.
+public string IdentityPath {
+get {
+if (OriginalDocument != null && !String.IsNullOrEmpty(OriginalDocument.Path)) return OriginalDocument.Path;
+if (!String.IsNullOrEmpty(ImportedFrom)) return ImportedFrom;
+return sFile;
+}
+} // IdentityPath property
 
 public DateTime FileTime;
 public bool FileTimeChecked = false;
@@ -975,7 +1017,10 @@ App.Frame.AddMessage("Previous percent " + rtb.Percent);
 }; // Shown
 
 this.Closing += delegate(object o, CancelEventArgs e) {
-sFile = this.File;
+// TOZSAMOSC, NIE NAZWA ROBOCZA.  Przy imporcie this.File jest sama nazwa
+// Markdowna bez katalogu, wiec warunek nizej odrzucal zaimportowany
+// dokument i nie zostawial po nim ZADNEGO sladu w historii.
+sFile = this.IdentityPath;
 if (!sFile.Contains(@"\")) return;
 rtb = this.RTB;
 int iIndex = rtb.Index;
@@ -6647,18 +6692,30 @@ Directory.SetCurrentDirectory(sDir);
 
 if (menuItem == menuMiscWordWrap) {
 rtb.SetWrap(true);
-SetRecent(child.File);
+// Tozsamosc, nie nazwa robocza: dla zaimportowanego dokumentu SetRecent
+// dostawal napis bez ukosnika i odpadal, wiec zapamietanie zawijania
+// bylo dla importow martwe.
+SetRecent(child.IdentityPath);
 }
 
 if (menuItem == menuMiscUnwrap) {
 rtb.SetWrap(false);
-SetRecent(child.File);
+SetRecent(child.IdentityPath);
 }
 
 if (menuItem == menuMiscPathToClipboard) {
-sText = child.File;
-Util.SetClipboardText(sText);
-AddMessage(sText);
+// PELNA SCIEZKA DOKUMENTU, a nie nazwa robocza bufora.  Po imporcie
+// child.File to sam "Artykul.md" bez katalogu - uzytkownik prosil o
+// sciezke, a dostawal napis, ktorego nie da sie nigdzie wkleic.
+sText = child.IdentityPath;
+// WYNIK ZAPISU DO SCHOWKA BYL TU IGNOROWANY.  Util.SetClipboardText od
+// 5.0.9x zwraca falsz, gdy po dziesieciu probach schowek trzyma inny proces
+// (np. menedzer schowka) - a ta komenda i tak mowila sciezke, czyli
+// brzmiala identycznie przy pustym schowku.  Dla niewidomego to najgorszy
+// wariant: zle dowiaduje sie dopiero przy wklejaniu.  Komunikat bledu jest
+// w tej samej postaci, co w pozostalych sciezkach kopiowania.
+if (!Util.SetClipboardText(sText)) AddMessage("Clipboard is busy, path not copied!");
+else AddMessage(sText);
 }
 
 if (menuItem == menuMiscPathList) {
@@ -8684,11 +8741,16 @@ if (sFile.Length > 0 && Util.Equiv(sFile, App.IniFile)) continue;
 
 SesjaOkno okno = new SesjaOkno();
 okno.Plik = sFile;
+// Tozsamosc dla odzysku: zaimportowany dokument ma wrocic jako TEN plik,
+// a nie jako nazwa robocza bez katalogu.  OriginalFormat* wypelniamy
+// jednak TYLKO dla dokumentu z prawem zapisu wstecz - inaczej odzysk
+// nadalby to prawo importowi, ktory go nie mial (patrz ImportedFrom).
 if (child.OriginalDocument != null) {
 okno.Plik = child.OriginalDocument.Path;
 okno.OriginalFormatFile = child.OriginalDocument.Path;
 okno.OriginalFormatHash = child.OriginalDocument.Fingerprint;
 }
+else if (child.ImportedFrom.Length > 0) okno.Plik = child.ImportedFrom;
 okno.Kursor = rtb.Index;
 okno.Zmieniony = rtb.Modified;
 if (sFile.IndexOf('\\') >= 0) okno.Zakladki = App.ReadValue("Bookmarks", sFile, "");
@@ -9076,7 +9138,13 @@ sFile = Util.GetLfn(sFile);
 // SetRecent(sFile);
 object[] children = this.MdiChildren;
 foreach (MdiChild child in children) {
-if (Util.Equiv(child.File, sFile) || (child.OriginalDocument != null && Util.Equiv(child.OriginalDocument.Path, sFile))) {
+// PYTAMY O TOZSAMOSC, nie o nazwe robocza.  Odkad zaimportowany dokument
+// trafia do historii pod wlasna nazwa, Alt+R potrafi poprosic o ten sam
+// plik po raz drugi - a bez tego warunku powstawaloby DRUGIE okno z tym
+// samym artykulem i dwiema niezaleznymi kopiami zmian.  Dotyczy importow
+// bez prawa zapisu wstecz (PDF, .doc, konwersja do czystego tekstu);
+// te z OriginalDocument byly juz tu obsluzone.
+if (Util.Equiv(child.File, sFile) || Util.Equiv(child.IdentityPath, sFile)) {
 Util.Say("returning");
 child.Activate();
 SetCursorPosition(child.RTB, sLine, sColumn);
@@ -9167,12 +9235,31 @@ this.Child.IsRichTextDocument = false;
 }
 this.Child.Text = Path.GetFileNameWithoutExtension(sFile) + "." + sTargetExt;
 this.Child.File = this.Child.Text;
+// TOZSAMOSC ZRODLA ZAPAMIETANA ZAWSZE, GDY DOSZLO DO IMPORTU.
+//
+// Przypisanie wyzej (child.File) wlasnie wyczyscilo tozsamosc, bo nazwa
+// robocza to inny dokument niz zrodlo - wiec kolejnosc jest tu istotna i
+// ImportedFrom musi isc PO niej.
+//
+// Osobno od OriginalDocument, bo to dwie rozne sprawy.  OriginalDocument
+// dostaje tylko Markdown z formatu, w ktory umiemy zapisac wstecz (warunek
+// ponizej).  ImportedFrom dostaje KAZDY import - takze PDF, .doc czy
+// konwersje do czystego tekstu, ktorych nie da sie zapisac z powrotem.  Taki
+// dokument ma prawo trafic do historii i do kopiowania sciezki pod wlasna
+// nazwa, ale NIE zyskuje przez to prawa nadpisania oryginalu.
+this.Child.ImportedFrom = sFile;
 if (originalLink != null && (sTargetExt == "md" || sTargetExt == "markdown") && !this.Child.IsRichTextDocument) {
 this.Child.OriginalDocument = originalLink;
 RefreshOriginalDocumentTitles();
 }
 this.Child.RTB.Modified = false;
-
+// HISTORIA DOSTAJE WPIS JUZ PRZY IMPORCIE, nie dopiero przy zamknieciu.
+//
+// Handler zamkniecia wraca takze przy pozycji kursora 0 (`if (iIndex == 0)
+// return`), wiec dokument przeczytany i zamkniety bez ruszania kursora nie
+// zostawialby po sobie sladu.  Dla pliku otwieranego surowo nic tu nie
+// zmieniamy - wywolanie siedzi WYLACZNIE w galezi importu.
+SetRecent(sFile);
 }
 // Try disabling for auto bookmark
 // SetRecent(sFile);

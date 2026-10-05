@@ -1,0 +1,138 @@
+== TRYB: KANDYDAT (nowy kod)
+== 1/3 kopiuje zrodla kandydata do /mnt/c/EdSharpImportIdentity
+== 2/3 kompiluje kandydata
+NVDA controller client present.
+Compiling EdSharp.cs -> EdSharpNG.exe ...
+
+Build complete:
+  EdSharpNG.exe  -- the application (x64)
+   OK: 535552 B, 2026-10-05 02:24:32.451201400 +0200
+   SHA: cb794a9834faa79944be65128b3f29f53ab38bd4a9fb3bbf12ee240c37e274d9
+== 3/3 uruchamiam pomiar
+BINARKA: C:\EdSharpImportIdentity\EdSharpNG.exe
+SHA256:  cb794a9834faa79944be65128b3f29f53ab38bd4a9fb3bbf12ee240c37e274d9
+WERSJA:  5.0.114
+IdentityPath obecna: True
+
+--- INWENTARZ TABELY [Import] (zrodlo zakresu pomiaru)
+   .brf -> txt
+   .brl -> txt
+   .doc -> txt
+   .docx -> htm,html,md,mw,rst,txt,tex
+   .epub -> htm,html,md,mw,txt,tex
+   .epub3 -> htm,html,md,mw,txt,tex
+   .hlp -> txt
+   .htm -> md,mw,rst,tidy,txt,tex
+   .html -> md,mw,rst,tidy,txt,tex
+   .md -> htm,html,mw,rst,rtf,txt,tex
+   .pdf -> txt
+   .ppt -> txt
+   .pptx -> txt
+   .rst -> htm,html,md,mw,txt,tex
+   .rtf -> md
+   .tex -> htm,html,md,mw,rst,txt
+   .tt -> htm,html,md,mw,rst,txt
+   .wpd -> txt
+   .xls -> csv,txt
+   .xlsx -> csv,txt
+   RAZEM zrodlowych rozszerzen importu: 20
+PASS inwentarz: .odt nadal NIE jest formatem importu (brak wpisu odt2*)
+
+--- A. IMPORT FORMATOW Z ZAPISEM WSTECZ (docx, epub, html, rtf)
+PASS fixture jest prawdziwym plikiem docx (10884 B)
+PASS import doszedl do skutku docx
+PASS historia ma wpis zaraz po imporcie docx
+PASS historia NIE ma wpisu pod nazwa robocza docx
+PASS tozsamosc dla kopiowania sciezki to pelna sciezka zrodla docx
+PASS tozsamosc ma separator katalogu, wiec komenda nie odpadnie docx
+PASS bufor zostaje Markdownem, child.File nietkniety docx
+PASS child.File nadal jest nazwa robocza bez katalogu docx
+PASS import i zamkniecie nie zmieniaja oryginalu docx
+PASS wpis historii przezywa zamkniecie docx
+PASS ponowne otwarcie z historii daje tresc tego samego dokumentu docx
+PASS powtorne otwarcie uaktywnia to samo okno, nie tworzy duplikatu docx
+PASS fixture jest prawdziwym plikiem epub (5566 B)
+PASS import doszedl do skutku epub
+PASS historia ma wpis zaraz po imporcie epub
+PASS historia NIE ma wpisu pod nazwa robocza epub
+PASS tozsamosc dla kopiowania sciezki to pelna sciezka zrodla epub
+PASS tozsamosc ma separator katalogu, wiec komenda nie odpadnie epub
+PASS bufor zostaje Markdownem, child.File nietkniety epub
+PASS child.File nadal jest nazwa robocza bez katalogu epub
+PASS import i zamkniecie nie zmieniaja oryginalu epub
+PASS wpis historii przezywa zamkniecie epub
+PASS ponowne otwarcie z historii daje tresc tego samego dokumentu epub
+PASS powtorne otwarcie uaktywnia to samo okno, nie tworzy duplikatu epub
+PASS fixture jest prawdziwym plikiem html (4188 B)
+PASS import doszedl do skutku html
+PASS historia ma wpis zaraz po imporcie html
+PASS historia NIE ma wpisu pod nazwa robocza html
+PASS tozsamosc dla kopiowania sciezki to pelna sciezka zrodla html
+PASS tozsamosc ma separator katalogu, wiec komenda nie odpadnie html
+PASS bufor zostaje Markdownem, child.File nietkniety html
+PASS child.File nadal jest nazwa robocza bez katalogu html
+PASS import i zamkniecie nie zmieniaja oryginalu html
+PASS wpis historii przezywa zamkniecie html
+PASS ponowne otwarcie z historii daje tresc tego samego dokumentu html
+PASS powtorne otwarcie uaktywnia to samo okno, nie tworzy duplikatu html
+PASS fixture jest prawdziwym plikiem rtf (924 B)
+PASS import doszedl do skutku rtf
+PASS historia ma wpis zaraz po imporcie rtf
+PASS historia NIE ma wpisu pod nazwa robocza rtf
+PASS tozsamosc dla kopiowania sciezki to pelna sciezka zrodla rtf
+PASS tozsamosc ma separator katalogu, wiec komenda nie odpadnie rtf
+PASS bufor zostaje Markdownem, child.File nietkniety rtf
+PASS child.File nadal jest nazwa robocza bez katalogu rtf
+PASS import i zamkniecie nie zmieniaja oryginalu rtf
+PASS wpis historii przezywa zamkniecie rtf
+PASS ponowne otwarcie z historii daje tresc tego samego dokumentu rtf
+PASS powtorne otwarcie uaktywnia to samo okno, nie tworzy duplikatu rtf
+
+--- B. IMPORT BEZ ZAPISU WSTECZ (tozsamosc TAK, prawo zapisu NIE)
+PASS import doszedl do skutku pdf
+PASS historia ma wpis dla importu bez zapisu wstecz pdf
+PASS tozsamosc to pelna sciezka zrodla pdf
+PASS utrwalenie tozsamosci NIE nadalo prawa zapisu wstecz pdf
+PASS oryginal nietkniety pdf
+SKIP fixture doc -- konwerter odmowil: W ustawieniach nie ma wpisu md2doc.
+SKIP fixture odt -- konwerter odmowil: W ustawieniach nie ma wpisu md2odt.
+SKIP import epub3 -- konwersja padla, program wrocil do otwarcia surowego (epub32md)
+PASS import doszedl do skutku rst
+PASS historia ma wpis dla importu bez zapisu wstecz rst
+PASS tozsamosc to pelna sciezka zrodla rst
+PASS utrwalenie tozsamosci NIE nadalo prawa zapisu wstecz rst
+PASS oryginal nietkniety rst
+PASS import doszedl do skutku tex
+PASS historia ma wpis dla importu bez zapisu wstecz tex
+PASS tozsamosc to pelna sciezka zrodla tex
+PASS utrwalenie tozsamosci NIE nadalo prawa zapisu wstecz tex
+PASS oryginal nietkniety tex
+
+--- C. KONTROLA MD/TXT (droga surowa nietknieta)
+PASS otwarcie surowe md
+PASS child.File to pelna sciezka, jak dotad md
+PASS tozsamosc rowna child.File dla pliku nieimportowanego md
+PASS zamkniecie zapisuje historie dla pliku surowego md
+PASS otwarcie surowe txt
+PASS child.File to pelna sciezka, jak dotad txt
+PASS tozsamosc rowna child.File dla pliku nieimportowanego txt
+PASS zamkniecie zapisuje historie dla pliku surowego txt
+
+--- D. ODCZEPIENIE PO JAWNYM ZAPISZ JAKO MARKDOWN
+PASS jawny zapis Markdown odczepia OriginalDocument
+PASS po odczepieniu tozsamosc to NOWY plik, nie stary DOCX
+PASS historia dostaje nowy plik po Zapisz jako
+
+--- E. SESJA ZAPAMIETUJE ZRODLO, NIE NAZWE ROBOCZA
+PASS sesja zapamietuje sciezke zrodla
+PASS sesja zachowuje powiazanie do zapisu wstecz
+PASS odzysk sesji otwiera dokument
+PASS po odzysku tozsamosc nadal wskazuje zrodlo
+
+POMINIETE FORMATY (3):
+  - fixture doc (konwerter odmowil: W ustawieniach nie ma wpisu md2doc.)
+  - fixture odt (konwerter odmowil: W ustawieniach nie ma wpisu md2odt.)
+  - import epub3 (konwersja padla, program wrocil do otwarcia surowego (epub32md))
+
+RESULT: 79 PASS / 0 FAIL / 3 SKIP
+KOD WYJSCIA POMIARU: 0
