@@ -61,7 +61,21 @@ else
     # stagingu, a Convert i tak dowiazujemy nizej do katalogu produktu.
     echo "== 2/3 kompiluje kandydata"
     cd "$STAGE" || exit 5
-    /mnt/c/Windows/System32/cmd.exe /c BuildEdSharp.cmd 2>&1 | tail -8
+    # KOD WYJSCIA KOMPILACJI MUSI PRZEZYC POTOK.  `... | tail -8` oddaje kod
+    # TAIL-a, czyli zawsze 0 - blad kompilacji przechodzil tu niezauwazony az
+    # do kontroli ponizej.  Log idzie do pliku, a potem pokazujemy ogon.
+    LOG_KOMPILACJI="$STAGE/kompilacja_kandydata.log"
+    /mnt/c/Windows/System32/cmd.exe /c BuildEdSharp.cmd > "$LOG_KOMPILACJI" 2>&1
+    KOD_KOMPILACJI=$?
+    tail -8 "$LOG_KOMPILACJI"
+    if grep -aqE "error CS[0-9]+" "$LOG_KOMPILACJI"; then
+        echo "BLAD: kompilator zglosil bledy CS (patrz $LOG_KOMPILACJI)"
+        exit 6
+    fi
+    if [ "$KOD_KOMPILACJI" -ne 0 ]; then
+        echo "BLAD: kompilacja zwrocila kod $KOD_KOMPILACJI (patrz $LOG_KOMPILACJI)"
+        exit 6
+    fi
     if [ ! -f "$STAGE/EdSharpNG.exe" ]; then
         echo "BLAD: nie ma $STAGE/EdSharpNG.exe - kompilacja nie doszla do konca."
         exit 6
@@ -89,4 +103,14 @@ cp "$REPO/testy/uruchamiacze/zmierz_tozsamosc_importu.cmd" "$STAGE"/ || exit 8
 echo "== 3/3 uruchamiam pomiar"
 cd "$STAGE" || exit 9
 /mnt/c/Windows/System32/cmd.exe /c zmierz_tozsamosc_importu.cmd 2>&1
-echo "KOD WYJSCIA POMIARU: $?"
+KOD_POMIARU=$?
+# KOD WYJSCIA POMIARU JEST WYNIKIEM, nie ozdoba logu.  Samo `echo "...: $?"`
+# ustawialo kod skryptu na kod ECHA (0), wiec oblany pomiar konczyl sie
+# cichym PASS dla kazdego, kto patrzy na `$?` albo na `set -e`.
+echo "KOD WYJSCIA POMIARU: $KOD_POMIARU"
+if [ "$KOD_POMIARU" -ne 0 ]; then
+    echo "WYNIK: POMIAR OBLANY (kod $KOD_POMIARU)"
+else
+    echo "WYNIK: POMIAR ZIELONY"
+fi
+exit "$KOD_POMIARU"

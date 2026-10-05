@@ -481,6 +481,14 @@ s = s.Substring(1, s.Length - 2).Trim();
 if (s.IndexOf("pandoc.exe", StringComparison.OrdinalIgnoreCase) >= 0) {
 s = s.Replace("markdown_github", "gfm");
 s = Regex.Replace(s, @"(?<=\s)(?:-S|--smart)(?=\s|$)", "");
+// PANDOC NIE MA CZYTNIKA "epub3", ma tylko ZAPIS do epub3.  Szesc wpisow
+// epub32* wolalo -f epub3 i dostawalo "Unknown input format", wiec import
+// ksiazki konczyl sie bledem, a program wracal do otwarcia SUROWEGO -
+// czytnik ekranu czytal wtedy bajty archiwum ZIP.  Normalizujemy TYLKO
+// format wejscia; -t epub3 jest poprawny i zostaje nietkniety.
+s = Regex.Replace(s, @"(?<=\s)(-f|--from|-r|--read)(\s*=?\s*)epub3(?=\s|$)",
+delegate(Match m) {return m.Groups[1].Value + m.Groups[2].Value + "epub";},
+RegexOptions.IgnoreCase);
 }
 // A new destination has no 8.3 alias yet. Its long path must be quoted even
 // when the old template asks for %Target% instead of %TargetLong%.

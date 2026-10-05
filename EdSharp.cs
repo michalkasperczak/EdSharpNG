@@ -1017,16 +1017,20 @@ App.Frame.AddMessage("Previous percent " + rtb.Percent);
 }; // Shown
 
 this.Closing += delegate(object o, CancelEventArgs e) {
-// TOZSAMOSC, NIE NAZWA ROBOCZA.  Przy imporcie this.File jest sama nazwa
-// Markdowna bez katalogu, wiec warunek nizej odrzucal zaimportowany
-// dokument i nie zostawial po nim ZADNEGO sladu w historii.
-sFile = this.IdentityPath;
-if (!sFile.Contains(@"\")) return;
+// TOZSAMOSC DO HISTORII, BEZ RUSZANIA CELU ZAPISU.  Przy imporcie
+// this.File jest sama nazwa Markdowna, wiec warunek nizej odrzucal
+// zaimportowany dokument i nie zostawial po nim sladu w historii.
+// Tozsamosc trzymamy w LOKALNEJ zmiennej: przypisanie do pola sFile
+// podmienialo cel zapisu na sciezke zrodla (pdf/docx), a przy
+// ANULOWANYM zamknieciu okno zostawalo z tak podmienionym celem i
+// nastepny Control+S pisal surowy tekst na binarnym oryginale.
+string sIdent = this.IdentityPath;
+if (!sIdent.Contains(@"\")) return;
 rtb = this.RTB;
 int iIndex = rtb.Index;
 if (iIndex == 0) return;
 
-sText = App.ReadValue("Recent", sFile, "");
+sText = App.ReadValue("Recent", sIdent, "");
 HomerList hl = new HomerList(sText);
 hl.KeepLike(@"\d+");
 hl.Remove("-1");
@@ -1036,7 +1040,7 @@ sTime = sTime.Substring(0, sTime.Length - 1);
 sText = sTime + "|" + iIndex + "|" + (App.Frame.GetUserGuard(this) ? "G" : "M") + "|" + (string) Util.If(rtb.WordWrap, "W", "U");
 // hl.AddUniqueRange(sText);
 // sText = hl.Segments;
-App.WriteValue("Recent", sFile, sText);
+App.WriteValue("Recent", sIdent, sText);
 }; // Closing
 
 this.FileTime = System.IO.File.GetLastWriteTime(this.File);
@@ -8749,8 +8753,15 @@ if (child.OriginalDocument != null) {
 okno.Plik = child.OriginalDocument.Path;
 okno.OriginalFormatFile = child.OriginalDocument.Path;
 okno.OriginalFormatHash = child.OriginalDocument.Fingerprint;
+okno.Robocza = sFile;
 }
-else if (child.ImportedFrom.Length > 0) okno.Plik = child.ImportedFrom;
+else if (child.ImportedFrom.Length > 0) {
+okno.Plik = child.ImportedFrom;
+// NAZWA ROBOCZA ZAPISANA OBOK ZRODLA.  Odzysk musi odtworzyc bufor pod
+// TA nazwa, nie pod nazwa zrodla - inaczej Control+S w przywroconym
+// oknie pisze Markdown na pdf/docx.
+okno.Robocza = sFile;
+}
 okno.Kursor = rtb.Index;
 okno.Zmieniony = rtb.Modified;
 if (sFile.IndexOf('\\') >= 0) okno.Zakladki = App.ReadValue("Bookmarks", sFile, "");
@@ -8824,6 +8835,12 @@ string sFile = okno.Plik ?? "";
 bool hasFile = sFile.IndexOf('\\') >= 0 && File.Exists(sFile);
 bool hasRecovery = !String.IsNullOrEmpty(okno.Odzysk) && File.Exists(okno.Odzysk);
 bool linked = !String.IsNullOrEmpty(okno.OriginalFormatFile);
+// IMPORT BEZ PRAWA ZAPISU WSTECZ.  Plik wskazuje ZRODLO (pdf, .doc,
+// konwersja do czystego tekstu), a bufor jest Markdownem pod nazwa
+// robocza.  Bez tego rozroznienia odzysk ustawialby cel zapisu na
+// binarny oryginal i Control+S nadpisalby go surowym tekstem.
+bool importOnly = !linked && okno.JestImportem;
+string sRobocza = okno.Robocza ?? "";
 if (hasRecovery && (okno.Zmieniony || !hasFile)) {
 // Recovery is already Markdown/plain text. It must NOT depend on reimporting
 // the original or borrow whichever unrelated child was active after failure.
@@ -8835,6 +8852,13 @@ if (linked) {
 restored.File = Path.GetFileNameWithoutExtension(okno.OriginalFormatFile) + ".md";
 restored.OriginalDocument = new OriginalDocumentLink {Path = okno.OriginalFormatFile, Fingerprint = okno.OriginalFormatHash};
 }
+else if (importOnly) {
+// CEL ZAPISU TO NAZWA ROBOCZA, tozsamosc to zrodlo.  ImportedFrom
+// trzyma zrodlo dla historii i dla Alt+R, ale NIE daje prawa zapisu.
+restored.File = sRobocza;
+restored.Text = sRobocza;
+restored.ImportedFrom = sFile;
+}
 else if (hasFile) { restored.File = sFile; restored.Text = Path.GetFileName(sFile); }
 restored.RTB.Text = recoveredText;
 restored.IsRichTextDocument = false;
@@ -8843,13 +8867,20 @@ AddMessage("Recovered unsaved changes in " + Path.GetFileName(sFile));
 }
 else if (hasFile) {
 if (linked && OriginalFormatSupported(sFile)) OpenOrActivateWindow(sFile, 2, "", "", ZapisFormatow.Rozszerzenie(sFile) + "2md");
+else if (importOnly) OpenOrActivateWindow(sFile, 2, "", "", PreferredImportKey(sFile));
 else OpenOrActivateWindow(sFile, GetViewLevel(sFile));
 // Find the actual matching document. OpenOrActivateWindow can return without
 // creating anything; Child is NOT proof of success and may belong to another file.
+// IMPORT DOPASOWUJEMY PO TOZSAMOSCI, nie po nazwie roboczej: po imporcie
+// candidate.File to "Ksiazka.md", a sFile to pelna sciezka pdf, wiec
+// porownanie nazw nie trafialo NIGDY i odzysk meldowal blad przy
+// POPRAWNIE otwartym oknie.
 foreach (MdiChild candidate in this.MdiChildren) {
-if (linked ? (candidate.OriginalDocument != null && Util.Equiv(candidate.OriginalDocument.Path, sFile)) : Util.Equiv(candidate.File, sFile)) {
-restored = candidate; break;
-}
+bool bMatch;
+if (linked) bMatch = candidate.OriginalDocument != null && Util.Equiv(candidate.OriginalDocument.Path, sFile);
+else if (importOnly) bMatch = Util.Equiv(candidate.IdentityPath, sFile);
+else bMatch = Util.Equiv(candidate.File, sFile);
+if (bMatch) { restored = candidate; break; }
 }
 if (restored == null || restored.RTB == null) throw new IOException("The document could not be opened.");
 }
@@ -21558,6 +21589,18 @@ return "";
 // re-encode pass through Convert\EasyEncode\utf8b.exe is no longer needed.
 // Dropping it removes that external tool from the conversion path.
 if (File.Exists(sTarget)) sText = Util.File2String(sTarget);
+
+// KONWERSJA PADLA, WIEC NIE OTWIERAMY SUROWO TRESCI SPAKOWANEJ.
+// Narzedzie BYLO na miejscu i zostalo uruchomione, tylko skonczylo sie
+// bledem (np. zly format wejscia) - a wtedy ta droga mowila "opening file
+// as is" i czytnik ekranu dostawal bajty archiwum ZIP.  Pozostale galezie
+// wyzej pytaly o FormatSpakowany, ta jedna nie.  Dla formatow tekstowych
+// (rtf, html, pdf) surowa tresc nadal jest lepsza niz nic.
+if (sText.Length == 0 && FormatSpakowany(sSource)) {
+OdmowaOtwarcia = true;
+App.Frame.AddMessage("Not opened: conversion failed and this format cannot be read raw");
+return "";
+}
 
 if (sText.Length == 0) App.Frame.AddMessage("Conversion produced no text; opening file as is");
 }

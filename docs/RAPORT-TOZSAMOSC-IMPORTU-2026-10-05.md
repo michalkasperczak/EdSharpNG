@@ -41,7 +41,11 @@ sprawdzają to osobno dla każdego formatu bez drogi powrotnej).
 1. `MdiChild` — nowe pole `ImportedFrom`, nowa właściwość `IdentityPath`;
    setter `File` czyści `ImportedFrom` (żeby „Zapisz jako Markdown" naprawdę
    odczepiało tożsamość, a nie pozornie).
-2. `MdiChild.Closing` — `sFile = this.IdentityPath` zamiast `this.File`.
+2. `MdiChild.Closing` — tożsamość `this.IdentityPath` zamiast `this.File`.
+   **Poprawione w `docs/RAPORT-DOMKNIECIE-LUK-IMPORTU-2026-10-05.md`:** pierwotnie
+   szło to przez przypisanie do pola `sFile`, czyli do celu zapisu, i anulowane
+   zamknięcie zostawiało okno z celem przestawionym na oryginał. Teraz zmienna
+   lokalna.
 3. `menuMiscWordWrap` / `menuMiscUnwrap` — `SetRecent(child.IdentityPath)`.
 4. `menuMiscPathToClipboard` — kopiuje `child.IdentityPath`; **plus** wynik
    `Util.SetClipboardText` przestał być ignorowany. Dotąd komenda mówiła ścieżkę

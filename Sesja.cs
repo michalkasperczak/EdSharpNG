@@ -57,12 +57,21 @@ public class SesjaOkno {
 public string Plik = "";
 public string OriginalFormatFile = "";
 public string OriginalFormatHash = "";
+// NAZWA ROBOCZA ZAIMPORTOWANEGO DOKUMENTU, gdy Plik wskazuje ZRODLO importu
+// (docx, pdf, epub) a bufor jest Markdownem albo czystym tekstem.  Bez tego
+// odzysk nie wie, ze celu zapisu NIE wolno ustawic na Plik - bo wtedy
+// Control+S zapisalby surowy tekst na binarnym oryginale.
+// Puste znaczy "to nie import": stara sesja bez tego klucza wczytuje sie
+// jak dotad, zgodnie z poprzednim zachowaniem.
+public string Robocza = "";
 public int Kursor = 0;
 public string Zakladki = "";
 // Sciezka kopii autozapisu, gdy okno mialo niezapisane zmiany.
 public string Odzysk = "";
 // Czy tresc rozni sie od pliku na dysku (czyli: czy jest co odzyskiwac).
 public bool Zmieniony = false;
+// Czy Plik to ZRODLO IMPORTU, nie cel zapisu.
+public bool JestImportem { get { return Robocza.Length > 0; } }
 } // SesjaOkno
 
 public static class Sesja {
@@ -194,6 +203,7 @@ sb.Append("\r\n[Okno" + (i + 1).ToString() + "]\r\n");
 sb.Append("Plik=\"" + (okno.Plik ?? "") + "\"\r\n");
 sb.Append("OriginalFormatFile=\"" + (okno.OriginalFormatFile ?? "") + "\"\r\n");
 sb.Append("OriginalFormatHash=\"" + (okno.OriginalFormatHash ?? "") + "\"\r\n");
+sb.Append("Robocza=\"" + (okno.Robocza ?? "") + "\"\r\n");
 sb.Append("Kursor=\"" + okno.Kursor.ToString() + "\"\r\n");
 sb.Append("Zakladki=\"" + (okno.Zakladki ?? "") + "\"\r\n");
 sb.Append("Odzysk=\"" + (okno.Odzysk ?? "") + "\"\r\n");
@@ -253,6 +263,7 @@ continue;
 if (Util.Equiv(sKlucz, "Plik")) okno.Plik = sWartosc;
 else if (Util.Equiv(sKlucz, "OriginalFormatFile")) okno.OriginalFormatFile = sWartosc;
 else if (Util.Equiv(sKlucz, "OriginalFormatHash")) okno.OriginalFormatHash = sWartosc;
+else if (Util.Equiv(sKlucz, "Robocza")) okno.Robocza = sWartosc;
 else if (Util.Equiv(sKlucz, "Kursor")) {
 int iKursor = 0;
 Int32.TryParse(sWartosc, out iKursor);
