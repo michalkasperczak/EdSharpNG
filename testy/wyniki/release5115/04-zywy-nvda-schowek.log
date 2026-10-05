@@ -1,0 +1,159 @@
+ZYWY ODBIOR NA PRAWDZIWYM PULPICIE - EdSharpNG 5.0.115
+=======================================================
+Data: 2026-10-05, sesja zalogowana uzytkownika Michal na Hermesie (WSL -> Windows).
+Binarka: C:\EdSharpImportIdentity\EdSharpNG.exe, ZAMROZONA po kompilacji,
+ta sama przez caly odbior (patrz manifest SHA w MANIFEST-5.0.115.txt).
+Czytnik: ZYWY NVDA (PID 5484), mostek MCP, mowa czytana z PRAWDZIWEGO
+Speech Viewera (narzedzie PodgladMowy.exe czyta kontrolke podgladu przez
+WM_GETTEXT), a nie z 'speak_text' i nie z samej roli obiektu.
+
+CZYM SA ZNACZNIKI.  Przed kazdym krokiem wkladam do mowy unikalny znacznik
+(ALFA/BETA/...), potem czytam podglad mowy OD TEGO znacznika w dol.  Bez tego
+nie da sie odroznic nowej wypowiedzi produktu od tej samej frazy sprzed
+pieciu minut.
+
+-------------------------------------------------------
+1. IMPORT DOCX -> SCHOWEK (Alt+Shift+P), znacznik ALFA
+-------------------------------------------------------
+Otwarte: "C:\EdSharpImportIdentity\QA tożsamość Żółć\Artykuł z spacją.docx"
+(prawdziwy plik zbudowany Pandokiem, spacje i polskie znaki w sciezce).
+
+NVDA, tytul okna:     EdSharpNG - [Artykuł z spacją.md]
+NVDA, fokus:          role 8 (okno), nazwa "Artykuł z spacją.md"
+Mowa (Speech Viewer): Converting
+                      pole edycji  wielowierszowe  ólty naglówek
+                      Path to Clipboard
+                      C:\EdSharpImportIdentity\QA tożsamość Żółć\Artykuł z spacją.docx
+
+Alt+Shift+P wyslany FIZYCZNIE przez mostek NVDA (nvda_send_keys), nie
+wewnetrznym wywolaniem metody.
+
+Odczyt prawdziwego schowka Windows (CF_UNICODETEXT) + wklejenie Control+V
+do wlasnego pola, porownanie z oczekiwana sciezka wczytana z pliku UTF-8:
+  PASS schowek Windows zawiera DOKLADNIE pelna sciezke zrodla
+  PASS wklejenie Control+V do wlasnego bufora daje te sama pelna sciezke
+  PASS sciezka ma separator katalogu (nie sama nazwa robocza)
+  PASS schowek NIE zawiera nazwy roboczej Markdowna
+  PASS sciezka ze schowka wskazuje ISTNIEJACY plik na dysku
+  RESULT: 5 PASS / 0 FAIL
+
+UWAGA O PIERWSZYM PRZEBIEGU.  Pierwszy odczyt dal 2 FAIL, ale NIE w produkcie:
+oczekiwana sciezke podawalem argumentem przez cmd.exe, ktory zmasakrowal
+"tożsamość Żółć" na strone kodowa OEM, wiec porownywalem poprawny schowek ze
+zepsutym wzorcem.  Poprawka w pomiarze (wzorzec czytany z pliku UTF-8)
+i ten sam schowek, NIETKNIETY od wysylki klawisza, dal 5/5.  Mowa i tak
+pokazywala poprawna sciezke od pierwszej proby.
+
+-------------------------------------------------------
+2. DRUGI IMPORT BEZ LINKU (PDF), znacznik BETA
+-------------------------------------------------------
+Otwarte: "C:\EdSharpImportIdentity\QA tożsamość Żółć\Odzysk bez linku.pdf"
+Ten sam proces (PID 12020) - JEDNO okno aplikacji, bez drugiej instancji.
+
+NVDA, tytul okna:     EdSharpNG - [Odzysk bez linku.txt]
+Mowa (Speech Viewer): Converting
+                      pole edycji  wielowierszowe  ólty naglówek
+                      Path to Clipboard
+                      C:\EdSharpImportIdentity\QA tożsamość Żółć\Odzysk bez linku.pdf
+Schowek:              RESULT: 5 PASS / 0 FAIL
+
+-------------------------------------------------------
+3. NOWY KOMUNIKAT "SCHOWEK ZAJETY", znacznik EPSILON
+-------------------------------------------------------
+Blokada schowka: wlasny proces, OpenClipboard bez zamykania, z wlasnym
+finally i limitem czasu - zeby NIE zostawic zablokowanego schowka po tescie.
+
+Dowod NAKLADANIA SIE OKIEN (bez tego pomiar jest bezwartosciowy):
+  blokada zajeta:  2026-10-05T01:32:28.776Z
+  Alt+Shift+P:     2026-10-05T01:32:52.757Z   <- blokada NADAL trzymana
+  (plik stanu po klawiszu zawieral wylacznie "ZAJETY", bez "ZWOLNIONY")
+
+Mowa (Speech Viewer), od znacznika EPSILON:
+  ZNACZNIK EPSILON ZAJETY SCHOWEK TRZECIA PROBA
+  Path to Clipboard
+  Clipboard is busy, path not copied!
+
+Policzone: DOKLADNIE JEDEN komunikat "Clipboard is busy, path not copied!"
+Produkt NIE wyrzucil okna "Unexpected Event" ani sladu stosu.
+
+DWIE WCZESNIEJSZE PROBY tego samego kroku wyszly na "Path to Clipboard" +
+poprawna sciezka, bo blokada (9 s i 25 s) wygasala, zanim klawisz przeszedl
+przez mostek; retry w produkcie to 10 x 40 ms, czyli ~0,4 s - musi trafic w
+trzymana blokade.  Dlatego dodalem znaczniki czasu i trzymalem 120 s.
+To byl blad zestrojenia pomiaru, nie zachowanie produktu.
+
+PO ZWOLNIENIU BLOKADY, znacznik ZETA:
+  Mowa:    Path to Clipboard
+           C:\EdSharpImportIdentity\QA tożsamość Żółć\Odzysk bez linku.pdf
+  Schowek: RESULT: 5 PASS / 0 FAIL
+Czyli blokada degraduje komunikatem, a nie trwale psuje funkcje.
+Kontrola, ze test nie zostawil zajetego schowka: ponowne zajecie udalo sie
+natychmiast (ZAJETY 01:33:20.401 -> ZWOLNIONY 01:33:20.713).
+
+-------------------------------------------------------
+4. Alt+R PO ZAMKNIECIU, znaczniki ETA/THETA
+-------------------------------------------------------
+Oba dokumenty zamkniete przez Control+F4 (najpierw PDF, potem DOCX),
+proces zostal zywy bez otwartego dokumentu. Alt+R:
+
+NVDA, tytul okna:  Recent Files
+NVDA, fokus 1:     "Odzysk bez linku.pdf"      role 15 (element listy)
+NVDA, fokus 2:     "Artykuł z spacją.docx"     role 15 (po strzalce w dol)
+                   klasa WindowsForms10.LISTBOX.app.0.34f5582_r6_ad1
+
+To jest sedno zgloszenia: lista ostatnich plikow pokazuje NAZWY ZRODEL
+(.pdf/.docx) z polskimi znakami, a nie robocze "Odzysk bez linku.txt" /
+"Artykuł z spacją.md".
+
+Wybor DOCX klawiszem Enter:
+  Mowa: Artykuł z spacją.docx
+        Converting
+        pole edycji  wielowierszowe  # Żółty nagłówek
+  Tytul okna: EdSharpNG - [Artykuł z spacją.md]
+  Procesy EdSharpNG: JEDEN (PID 12020) - bez drugiego okna.
+Otworzyla sie WLASCIWA tresc (naglowek "# Żółty nagłówek" z fixture),
+a nie pusty bufor ani surowy ZIP.
+
+-------------------------------------------------------
+5. ODMOWA USZKODZONEGO PAKIETU DOCX, znacznik JOTA
+-------------------------------------------------------
+Fixture "Zepsuty pakiet.docx": kopia dzialajacego docx z wyzerowanym
+ogonem 1500 bajtow (central directory + EOCD). Plik nadal zaczyna sie od
+"PK\x03\x04", wiec dla kodu zgadujacego po magicu to wyglada na pakiet docx,
+ale python zipfile potwierdza BadZipFile: "File is not a zip file".
+Pierwsza proba uszkodzenia (zerowanie SRODKA) byla za slaba - zipfile wciaz
+czytal liste wpisow, bo central directory siedzi na koncu pliku.
+
+Mowa (Speech Viewer), od znacznika JOTA:
+  ZNACZNIK JOTA ZEPSUTY PAKIET DOCX
+  Converting
+  Not opened: conversion failed and this format cannot be read raw
+
+Tytul okna po probie: EdSharpNG - [Artykuł z spacją.md] (stary dokument),
+procesow EdSharpNG: jeden. Czyli program ODMOWIL i NIE wsypal do okna
+surowych bajtow ZIPa ani nie otworzyl drugiego okna.
+Zadne prywatne dokumenty uzytkownika nie byly otwierane - tylko wlasny
+syntetyczny fixture.
+
+-------------------------------------------------------
+6. STAN PO TESCIE (sprzatanie)
+-------------------------------------------------------
+Program zamkniety czysto (CloseMainWindow, proces znikl).
+Historia zapisana do profilu przy wyjsciu - surowe wpisy w
+05-historia-po-zamknieciu.log: PELNE sciezki .docx/.pdf, a "Zepsuty
+pakiet.docx" w historii NIE WYSTEPUJE (odrzucony import nie smieci listy).
+
+Prawdziwy profil uzytkownika PRZYWROCONY z kopii, bajt w bajt:
+  EdSharp.ini  77d9ca58c2fa8e1423642a5cb038cd8a329a974d9e2a6863eb38614ab1f6f23b
+  Default.ini  a658e2a3e36f22e756aff94108e56f0c7a3162fe219ff5d9d931d226413e6eb4
+Schowek uzytkownika oddany (ten sam tekst, 96 znakow; tresci nie loguje).
+NVDA i AMC NIE byly restartowane. Glowny komputer NIE byl dotykany.
+
+OGRANICZENIA TEGO ZYWEGO PRZEBIEGU
+----------------------------------
+- Mierzone dwa formaty wejscia (docx, pdf) + jeden uszkodzony pakiet.
+  To NIE jest przebieg po wszystkich 20 formatach.
+- DOC pozostaje jawnie NIEZMIERZONY (brak fixture), tak jak uzgodniono.
+- Profil zmierzony to prawdziwy profil Hermesa (APPDATA z otoczenia NIE
+  przestawia Environment.GetFolderPath(ApplicationData) - sprawdzone sonda),
+  dlatego byl zabezpieczony kopia i przywrocony.

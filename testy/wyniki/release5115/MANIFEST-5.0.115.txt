@@ -1,0 +1,97 @@
+MANIFEST ARTEFAKTOW - EdSharpNG 5.0.115
+=======================================
+Data wytworzenia: 2026-10-05, Hermes (WSL -> Windows, sesja uzytkownika Michal).
+Gałąź: fix/import-history-path, commit bazowy poprawki: 07470eb22c3ae550e67d7e183d044ea69ebeb13c
+Poprzednie wydanie (orakl skladu paczki): 5.0.114
+
+TOZSAMOSC BINARKI - NAJWAZNIEJSZA ASERCJA
+-----------------------------------------
+AssemblyVersion jest ustawiony na 5.0.* (auto-stamp), wiec KAZDA przebudowa daje
+inny plik. Dlatego binarka zostala ZAMROZONA po kompilacji i ten sam plik byl
+testowany, pakowany ORAZ instalowany. Potwierdzenie - identyczny SHA256 w trzech
+rolach:
+
+  86f59310f5f23fe132c361321b9165b2ba8be2c09269cbe4ce1eb6c69316a96e
+    = binarka po buildzie i po calym QA   (repo/EdSharpNG.exe, 536576 B)
+    = binarka w ZIP                       (EdSharpNG/EdSharpNG.exe)
+    = binarka po instalacji               (C:\Program Files\EdSharpNG\EdSharpNG.exe)
+
+Nie bylo zadnej przebudowy po QA. Zamrozona kopia odniesienia leży poza repo:
+/home/michal/edsharp115-frozen.exe (ten sam hash).
+
+Dla kontrastu, poprzednio zainstalowane 5.0.114 mialo:
+  0a3e8b9db37c2deb41c0bfd2b9f2bd9a0dcb5fab99723ee5b1d958607eb714c6
+
+ARTEFAKTY (SHA256, rozmiar w bajtach)
+-------------------------------------
+fcf4e77ecce0e308e731a986cc845f38cb3facdeb8e9683d1795ca4a8c262d10   3552326
+    dist/EdSharpNG_Setup_5.0.115.exe        (instalator Inno Setup)
+d66b0fc4ebd4346d725efc0116278a87f20dae004af3c1c5876c197b00ce98c1   2090492
+    dist/EdSharpNG_5.0.115.zip              (paczka zapasowa, 444 pliki)
+86f59310f5f23fe132c361321b9165b2ba8be2c09269cbe4ce1eb6c69316a96e    536576
+    EdSharpNG.exe                           (binarka testowana=pakowana=instalowana)
+7206782a56b30262ccf2ab94d9ac46c6746fc81a86ca219d3871ec5ce9049773      5550
+    EdSharpNG-spellcheck.nvda-addon         (dodatek NVDA, wymagany w paczce)
+
+ZRODLA WEJSCIOWE BUILDU (SHA256)
+--------------------------------
+4607ecb1d698d0b688cb79eca46317d22790009a12bde66f70652e5912a80ab8  EdSharp.cs
+e4178e64f83c4da317ea8fe273ba42b3a05e08da43a0a5212dfc49806dbb288f  Sesja.cs
+73e217eac49e93f5c861a31168c01355f9cd130d3c7c0d3d63a26d6d081f6414  OriginalFormatSave.cs
+
+SKLAD PACZKI WOBEC ORAKLA 5.0.114
+---------------------------------
+Lista plikow ZIP 5.0.115 porownana 1:1 z EdSharpNG_5.0.114.zip:
+  brakow wobec 114:   0
+  nadwyzek wobec 114: 0
+  razem plikow:       444 (tyle samo co w 114)
+Obecne wymagane biblioteki: Ude.dll, nvdaControllerClient.dll, Tektosyne.dll.
+Obecny dodatek: EdSharpNG-spellcheck.nvda-addon.
+Konwertery: tylko Convert/any2txt.cmd - tak jak w 5.0.114. Silniki zewnetrzne
+(Pandoc itd.) NIE sa pakowane; instalator ich nie sciaga przy pakowaniu, wiec
+nie pobrano gigabajtow.
+Zrodla w paczce: 24 pliki (.cs/.iss/.sh/.py) + lgpl.txt - prawa licencyjne
+zachowane. Brak profili testowych, brak logow, brak katalogu testy/ w paczce
+(sprawdzone programowo).
+
+INSTALACJA PROBNA NA HERMESIE
+-----------------------------
+Polecenie: EdSharpNG_Setup_5.0.115.exe /VERYSILENT /SUPPRESSMSGBOXES /NORESTART
+           /LOG=C:\EdSharp115Install\install-5.0.115-20261005-034920.log
+Sciezka lokalna (NIE UNC): C:\EdSharp115Install\
+SHA instalatora w miejscu uruchomienia zgodny z dist (fcf4e77e...).
+Kod wyjscia:        0
+Rejestr (HKLM ...\Uninstall\EdSharpNG_is1):
+    DisplayName     : EdSharpNG 5.0.115 (beta)
+    DisplayVersion  : 5.0.115
+    InstallLocation : C:\Program Files\EdSharpNG\
+Log instalacji: 204838 B, konczy sie wpisami "Successfully created ...",
+brak linii Exception/Aborted.
+Uruchomienie: proces 7568 z Path = C:\Program Files\EdSharpNG\EdSharpNG.exe,
+okno "EdSharpNG - [NoName1]". Druga proba uruchomienia zakonczyla sie
+wyjsciem (single instance) - w systemie zostala 1 instancja.
+WERSJA POTWIERDZONA ODCZYTEM, NIE SAMYM ISTNIENIEM PROCESU: wlasny log produktu
+%APPDATA%\EdSharp\EdSharpNG-diagnostyka.log zawiera
+    2026-10-05 03:50:03   start   EdSharpNG 5.0.115 uruchomiony
+czyli zainstalowana binarka sama raportuje 5.0.115.
+
+LOGI I DOWODY SUROWE
+--------------------
+testy/wyniki/release5115/01-harness-tozsamosci-115.log   harness tozsamosci importu
+testy/wyniki/release5115/02-verify-original-option-115.log  pozostale harnessy
+testy/wyniki/release5115/05-historia-po-zamknieciu.log   wpisy historii z profilu
+testy/wyniki/release5115/04-zywy-nvda-schowek.log        zywy NVDA + schowek
+C:\EdSharp115Install\install-5.0.115-20261005-034920.log instalacja (surowy log Inno)
+/tmp/edsharp-iscc-5.0.115.log                            kompilacja instalatora
+
+STAN SRODOWISKA PO PRACY
+------------------------
+C:\EdSharp         - NIETKNIETY, 177 plikow (cudze drzewo robocze; staging
+                     przeniesiony do C:\EdSharp115Stage wlasnie po to)
+C:\EdSharpBuild    - NIETKNIETY, referencja 5.0.114 (SHA 0a3e8b9d...)
+%APPDATA%\EdSharp  - PRZYWROCONY z kopii bajt w bajt:
+                     EdSharp.ini  77d9ca58c2fa8e1423642a5cb038cd8a329a974d9e2a6863eb38614ab1f6f23b
+                     Default.ini  a658e2a3e36f22e756aff94108e56f0c7a3162fe219ff5d9d931d226413e6eb4
+Schowek uzytkownika - przywrocony (kopia zrobiona przed testami, przywrocona po).
+NVDA i AMC - nie restartowane, nie zamykane.
+Glowny komputer - nie dotykany w zadnym kroku.

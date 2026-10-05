@@ -17,7 +17,31 @@ set -euo pipefail
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 VERSION="${1:-}"
-STAGE="/mnt/c/EdSharp"
+# KATALOG STAGINGU PARAMETRYZOWANY (05.10.2026).  Stalo tu na sztywno
+# /mnt/c/EdSharp, a krok [3/6] robi na nim "rm -rf".  Na Hermesie C:\EdSharp
+# jest ZAJETY roboczym drzewem (177 plikow) i buduje sie tam rownolegle inna
+# wersja - wejscie w ciemno skasowaloby cudza prace.  Teraz katalog mozna
+# podac zmienna STAGE, a .iss dostaje SourceDir/OutputDir ustawione pod ten
+# katalog, zamiast polegac na wartosci zaszytej w pliku.  Domyslka bez zmian,
+# zeby nie przestawiac istniejacych wywolan.
+STAGE="${STAGE:-/mnt/c/EdSharp}"
+# Sciezka Windows tego samego katalogu - ISCC to program Windows i nie rozumie
+# sciezek /mnt/c. Wyliczana podstawieniem bash, NIE sedem: w sedzie backslash
+# jest znakiem ucieczki i w zagniezdzonym cytowaniu wychodzilo "C:\\Kat"
+# (podwojny backslash), czego ISCC nie przyjmuje jako sciezki.
+STAGE_WIN="${STAGE#/mnt/}"                       # c/EdSharp115Stage
+STAGE_WIN="${STAGE_WIN%%/*}:${STAGE_WIN#*/}"     # c:EdSharp115Stage
+STAGE_WIN="${STAGE_WIN/:/:\\}"                   # c:\EdSharp115Stage
+STAGE_WIN="${STAGE_WIN//\//\\}"                  # separatory katalogow
+STAGE_WIN="${STAGE_WIN^}"                        # litera dysku wielka
+# ODMOWA KASOWANIA NIEPUSTEGO KATALOGU, KTORY NIE JEST NASZYM STAGINGIEM.
+# Marker zostawiamy wlasnie po to, zeby "rm -rf" dotykal tylko katalogow
+# utworzonych tym skryptem.
+if [[ -e "$STAGE" && -n "$(ls -A "$STAGE" 2>/dev/null)" && ! -e "$STAGE/.edsharp-staging" ]]; then
+    echo "BLAD: $STAGE jest niepusty i nie ma markera .edsharp-staging." >&2
+    echo "      Odmawiam 'rm -rf' na cudzej pracy. Podaj inny STAGE=..." >&2
+    exit 1
+fi
 # SCIEZKA DO INNO SETUP SZUKANA, NIE WPISANA NA SZTYWNO (11.09.2026).  Stalo tu
 # C:\Users\g\... - profil Garfielda.  Na Hermesie uzytkownik nazywa sie Michal,
 # wiec skrypt konczyl sie "brak Inno Setup" mimo poprawnie zainstalowanego
@@ -71,7 +95,11 @@ if [[ ! EdSharpNG.exe -nt EdSharp.cs ]]; then
     echo "BLAD: binarka STARSZA niz EdSharp.cs po trzech probach - NIE WYSYLAJ paczki." >&2
     exit 3
 fi
-if grep -aEq 'error (CS|JS)[0-9]+' "$LOG_BUILD"; then
+# LOG BUILDU MOZE NIE ISTNIEC, gdy binarka byla juz swieza i krok [1/6] nie
+# uruchamial kompilatora (np. finalny build zamrozony przed testami i tylko
+# pakowany).  Wtedy "grep" na nieistniejacym pliku zwracal blad i przy
+# set -euo pipefail wywracal caly pipeline tuz przed stagingiem.
+if [[ -f "$LOG_BUILD" ]] && grep -aEq 'error (CS|JS)[0-9]+' "$LOG_BUILD"; then
     echo "BLAD kompilacji - patrz $LOG_BUILD" >&2
     grep -aE 'error (CS|JS)[0-9]+' "$LOG_BUILD" >&2 || true
     exit 1
@@ -110,9 +138,12 @@ for rel in manifest.ini readme.html appModules/edsharpng.py; do
     }
 done
 
-echo "[3/6] Staging do C:\\EdSharp (SourceDir zaszyty w .iss)..."
+echo "[3/6] Staging do $STAGE_WIN (SourceDir ustawiany w stagingu)..."
 rm -rf "$STAGE"
 mkdir -p "$STAGE"
+# Marker, zeby kolejne uruchomienie wiedzialo, ze ten katalog jest NASZ
+# i wolno go czyscic (patrz bezpiecznik na gorze skryptu).
+: > "$STAGE/.edsharp-staging"
 # Kopiujemy sledzone pliki, zeby staging nie dostal .git, logow ani starych buildow.
 # Pliki, ktorych NIE MA na dysku, pomijamy z ostrzezeniem, a nie wywalamy build:
 # repo dziedziczy z upstream dwie binarki-smieci o nazwach z GUID
@@ -139,9 +170,10 @@ for rel in Ude.dll Convert; do
 done
 
 # Wersje zmieniamy TYLKO w stagingu - build nie brudzi repo.
-python3 - "$STAGE/EdSharp_Setup.iss" "$VERSION" <<'PY'
+python3 - "$STAGE/EdSharp_Setup.iss" "$VERSION" "$STAGE_WIN" <<'PY'
 import re, sys
 path, ver = sys.argv[1], sys.argv[2]
+stage_win = sys.argv[3]
 raw = open(path, 'rb').read()
 # Zachowaj CRLF i kodowanie bajt-w-bajt; wersje sa ASCII.
 for key in (b'AppVersion', b'VersionInfoVersion'):
@@ -153,6 +185,17 @@ for key in (b'AppVersion', b'VersionInfoVersion'):
 raw, n = re.subn(rb'(?m)^AppVerName=.*?\r?$', b'AppVerName=EdSharpNG ' + ver.encode() + b' (beta)', raw)
 if n != 1:
     raise SystemExit(f'BLAD: oczekiwano jednej linii AppVerName, znaleziono {n}')
+# SourceDir/OutputDir POD KATALOG STAGINGU, nie zaszyte C:\EdSharp.  Bez tego
+# ISCC czytalby pliki z cudzego katalogu roboczego, a instalator wyladowalby
+# obok - czyli pakowalibysmy NIE TO, co wlasnie zbudowalismy i przetestowali.
+# PODSTAWIENIE PRZEZ LAMBDE, nie przez napis: sciezka Windows zawiera
+# backslash, ktory re.subn traktuje w ZAMIENNIKU jako znak ucieczki -
+# "C:\EdSharp115Stage" wysypywalo sie na 'bad escape \E'.
+for key in (b'SourceDir', b'OutputDir'):
+    raw, n = re.subn(rb'(?m)^' + key + rb'=.*?\r?$',
+                     lambda m, k=key: k + b'=' + stage_win.encode(), raw)
+    if n != 1:
+        raise SystemExit(f'BLAD: oczekiwano jednej linii {key.decode()}, znaleziono {n}')
 open(path, 'wb').write(raw)
 PY
 
@@ -188,7 +231,7 @@ PY
 }
 
 echo "[5/6] Kompilacja instalatora Inno Setup $VERSION..."
-"$ISCC" 'C:\EdSharp\EdSharp_Setup.iss' >"$LOG_ISCC" 2>&1
+"$ISCC" "${STAGE_WIN}\\EdSharp_Setup.iss" >"$LOG_ISCC" 2>&1
 if ! grep -q 'Successful compile' "$LOG_ISCC"; then
     echo "BLAD Inno Setup - patrz $LOG_ISCC" >&2
     tail -30 "$LOG_ISCC" >&2

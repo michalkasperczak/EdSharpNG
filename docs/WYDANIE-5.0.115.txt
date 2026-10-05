@@ -1,0 +1,40 @@
+EdSharpNG 5.0.115 — co nowego
+=============================
+
+Ta wersja naprawia trzy rzeczy wokół importu plików (DOCX, PDF, EPUB
+i pozostałych formatów otwieranych przez konwerter).
+
+1. Lista ostatnich plików pokazuje to, co otworzyłeś
+   Wcześniej po zaimportowaniu np. „Raport.docx” lista ostatnich plików
+   (Alt+R) pokazywała techniczny plik roboczy, czyli „Raport.md”. Teraz
+   widzisz nazwę tego, co naprawdę otworzyłeś, i wybranie wpisu otwiera
+   ten sam dokument, a nie plik pośredni.
+
+2. Pełna ścieżka źródła pod Alt+Shift+P
+   Skrót kopiujący ścieżkę bieżącego dokumentu podaje teraz pełną
+   ścieżkę pliku, który zaimportowałeś — razem z katalogami i polskimi
+   znakami. Dotąd trafiała tam ścieżka pliku tymczasowego.
+   Jeśli w tym momencie schowek trzyma inny program, usłyszysz jeden
+   komunikat, że ścieżka nie została skopiowana. Wystarczy powtórzyć
+   skrót po chwili — nic się nie psuje i nie trzeba nic zamykać.
+
+3. Bezpieczniejszy odzysk sesji
+   Jeśli plik odzysku stracił powiązanie z oryginałem, program nie
+   wyrzuca już sesji, tylko odtwarza co się da.
+
+Dodatkowo: uszkodzony plik DOCX/EPUB/ODT (np. przerwany podczas
+pobierania) jest teraz odrzucany z komunikatem, zamiast otwierać się
+jako nieczytelna „sieczka” ze środka pakietu ZIP. Czytniki EPUB 3
+dostały też porządkowanie treści przed wyświetleniem.
+
+Instalacja
+----------
+Uruchom EdSharpNG_Setup_5.0.115.exe i przejdź przez instalator.
+Twoje ustawienia i lista ostatnich plików zostają na miejscu —
+instalacja nie czyści profilu.
+
+Uwaga o jednym formacie
+-----------------------
+Import DOC (stary Word, nie DOCX) nie był w tej wersji zmierzony —
+brakowało pliku testowego. Nic w nim nie zmieniano, ale też nie mogę
+zapewnić, że zachowuje się tak jak pozostałe formaty.

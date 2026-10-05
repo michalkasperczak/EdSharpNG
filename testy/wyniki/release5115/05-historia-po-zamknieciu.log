@@ -1,0 +1,12 @@
+SUROWE WPISY HISTORII Z PROFILU PO ZAMKNIECIU PROGRAMU 5.0.115
+zrodlo: %APPDATA%\EdSharp\Default.ini (kodowanie cp1250)
+odczyt: 2026-10-05T03:38:52.323018
+
+C:\EdSharpImportIdentity\QA tożsamość Żółć\Artykuł z spacją.docx="2026-10-05 03:36:29|0|M|W"
+C:\EdSharpImportIdentity\QA tożsamość Żółć\Odzysk bez linku.pdf="2026-10-05 03:29:27|0|M|W"
+Directory=C:\EdSharpImportIdentity\QA tożsamość Żółć
+
+WNIOSEK 1: historia trzyma PELNE SCIEZKI ZRODLA (.docx/.pdf),
+nie nazwy robocze .md/.txt - to jest zgloszony defekt, zamkniety.
+WNIOSEK 2: 'Zepsuty pakiet.docx' NIE wystepuje w historii,
+bo import zostal odrzucony - odmowa nie zasmieca listy ostatnich plikow.

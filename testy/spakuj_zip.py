@@ -2,6 +2,7 @@
 """Build the fallback ZIP from the SAME staged inputs as Inno Setup.
 
 Run after zbuduj.sh: python3 testy/spakuj_zip.py 5.0.114
+Optional second argument: katalog stagingu (domyslnie /mnt/c/EdSharp).
 Never copy a user's installation/profile; exclude temp/build/test outputs.
 """
 from pathlib import Path, PurePosixPath
@@ -15,7 +16,11 @@ version = sys.argv[1]
 if not re.fullmatch(r"\d+\.\d+\.\d+", version):
     raise SystemExit("Expected a three-part release version")
 root = Path(__file__).resolve().parents[1]
-stage = Path('/mnt/c/EdSharp')
+# KATALOG STAGINGU JAKO ARGUMENT (05.10.2026).  Bylo zaszyte /mnt/c/EdSharp,
+# a ten katalog na Hermesie jest zajety innym drzewem roboczym; paczka 5.0.115
+# staguje sie obok (build_installer_garfield.sh STAGE=...).  Bez tego skrypt
+# pakowal pliki z CUDZEGO stagingu albo przerywal na kontroli wersji.
+stage = Path(sys.argv[2]) if len(sys.argv) > 2 else Path('/mnt/c/EdSharp')
 manifest = (stage / 'EdSharp_Setup.iss').read_text(encoding='utf-8')
 if f'AppVersion={version}' not in manifest:
     raise SystemExit('Staging belongs to another version')
