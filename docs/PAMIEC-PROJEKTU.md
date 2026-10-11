@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-10-04 11:00 (CEST). Wpisow: 112 z 722 w calej pamieci.
+Wygenerowane: 2026-10-11 11:00 (CEST). Wpisow: 134 z 868 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
@@ -130,6 +130,28 @@ tutaj, bo pokazuje, co i dlaczego zmienilo sie w ustaleniach.
 - 2026-10-02 21:12 - AMC417 OPUBLIKOWANA, ODEBRANA PRZEZ RODZICA, GLOWNY JESZCZE NIEZAKTUALIZOWANY. deleg_7062e872/sa-0-712055f2 za [NIEAKTUALNY]
 - 2026-10-02 21:19 - AMC417 ZAINSTALOWANA I URUCHOMIONA NA GLOWNYM MICHAL/micha po jawnym Instaluj. Zastepuje stan brakinstalacji.  [NIEAKTUALNY]
 - 2026-10-03 05:28 - AMC419 ZAINSTALOWANE GLOWNY i PODTRZYMANYWX. Zastepuje1790996014, publikacja419 nadalpelna (release402289814/m [NIEAKTUALNY]
+- 2026-10-04 14:26 - POMIAR upstreamu EdSharp 04.10.2026: GitHub jamalmazrui/EdSharp latest v5.0.47, publikacja 2026-10-03T22:47:33
+- 2026-10-04 14:35 - POMIAR 04.10.2026 EdSharpNG vs upstream Pandoc/Python, na prosbe Michala. Werdykt: NIE przenosimy konkretnych 
+- 2026-10-04 14:54 - USTALENIE 04.10.2026: Michal polecil zapisac NA POTEM w EdSharpNG: (1) Python do uruchamiania skryptow, (2) Py
+- 2026-10-05 01:21 - DIAGNOZA 05.10.2026 EdSharpNG 5.0.114: MK otworzyl Quill Lite DOCX z Nowe, po zamknieciu brak wAltR, zglasza C
+- 2026-10-05 01:37 - USTALENIE 05.10.2026: Michal zatwierdzil naprawe EdSharpNG po diagnozie1791156061: 'Tak. Wdrozyc poprawke i no [NIEAKTUALNY]
+- 2026-10-05 02:31 - USTALENIE DOSTAWY 05.10.2026 EdSharp poprawka historii importow: Michal dopuscil instalacje, ale poinformowal 
+- 2026-10-05 03:01 - USTALENIE 05.10.2026 AMC + EDSHARP: Michal zlecil sprawdzenie Sygnalisty Michala Dziwisza TERAZ i wdrozenie PO
+- 2026-10-05 04:02 - PODSUMOWANIE EdSharpNG5.0.115 ZAMKNIETE 05.10.2026: poprawka importow WYDANA i DOSTARCZONA, glowny NIE aktuali
+- 2026-10-05 09:09 - USTALENIE 05.10.2026, po dostarczeniu EdSharpNG5.0.115 Michal polecil 'Dobrze, to dalej AMC'. Kontynuujemy pel [NIEAKTUALNY]
+- 2026-10-05 12:39 - AMC PYTHON: ZYWA LOKALNA KOLEJKA ODEBRANA 05.10.2026. WT /home/michal/projekty/amc-w-full-profile NIEPOPRAWNA  [NIEAKTUALNY]
+- 2026-10-05 12:40 - AMC PYTHON 05.10.2026: ZYWA KOLEJKA LOKALNA ODEBRANA. Repo /home/michal/projekty/amc-wx-full-profile, branch h [NIEAKTUALNY]
+- 2026-10-05 19:57 - USTALENIE 05.10.2026 - QUIN / TRYPSYNTH JAKO ZRODLO DLA NASZYCH APLIKACJI. Michal chce sledzic szerzej repozyt [NIEAKTUALNY]
+- 2026-10-05 20:12 - USTALENIE 05.10.2026 - QUIN / PAPERBACK: PODGLAD POD ESCAPE JEST GLOWNA INTENCJA. Michal doprecyzowal: myslal 
+- 2026-10-05 20:26 - USTALENIE 05.10.2026 - QUILL DODATKOWYM WZORCEM, POWROT DO AMC. Po doprecyzowaniu Paperback/podglad podEscape  [NIEAKTUALNY]
+- 2026-10-05 20:40 - USTALENIE 05.10.2026 - QUILL I PAPERBACK RAZEM DO WYKORZYSTANIA W EDSHARP. Dokladne brzmienie korekty Michala:
+- 2026-10-05 22:13 - AMC 05.10.2026 - JEDNA WERSJA PROBNA, BEZ PRZEPISYWANIA ZAPLECZA. Michal bedzie sukcesywnie testowal. Zlecil u
+- 2026-10-05 22:22 - Quill/Quill Lite 05.10.2026 - Michal: fajny edytor, troche do EdSharpa sobie wezmiemy, jezeli sie da. Zaintere
+- 2026-10-05 23:33 - 05.10.2026 Quill do EdSharp - doprecyzowanie Michala: nie tworzyc osobnych Snippets/Abbreviations, tylko polac
+- 2026-10-05 23:46 - 05.10.2026 EdSharp snippets - Michal doprecyzowal: rozwijanie skrotow PODCZAS PISANIA na pewno ma byc funkcja, [NIEAKTUALNY]
+- 2026-10-05 23:51 - 05.10.2026 EdSharp snippets i globalny dodatek NVDA - doprecyzowanie: Michal POTWIERDZIL automatyczne rozwijan
+- 2026-10-06 19:21 - Michal polecil dopisac PlanCake https://plan-cake.oire.dev do pozniejszych inspiracji EdSharpa: moze warto prz
+- 2026-10-07 14:29 - POMIAR KODU 07.10.2026: porownanie z pytania Michala o C#/Rust i EdSharp/AMC/FastPlay/Sonarpad. Pygount3.2.0 s
 
 ## Wpisy
 
@@ -2559,3 +2581,161 @@ Sonoszakres417:powrotdotejsamejpodlistyiwierszaCtrlcyfra/importplaylistlokalnych
 
 AMC419 ZAINSTALOWANE GLOWNY i PODTRZYMANYWX. Zastepuje1790996014, publikacja419 nadalpelna (release402289814/main-tag39a0c0fce257eacf7f39e76a1841c8e9aa8eed61). ParentSSHzweryfikowal proces15036/session1/wersja419/EXESHAf0a7b52aba91141a81bb2aba88870bb9c9911bc824ee34e4a529d82a80e24f3a i installerSHA. Installer0, niezaleznyOktrue/IPC3z3, przed/po radio3,pauza50proc,Ulubione3z55; nic nie wznowiono bo bylozapauzowane. GuardStopAllEnabledfalse+brakrosnacychplikow bezposrednioprzed zamknieciem; bezstop/kill/NVDArestart. Stary417 przeniesiony do D:\Projekty Codex\Hermes\kosz-2026-10-03-amc419-dostawa; wfolderzejed en419installer, EdSharpnietkniety. Dowody amc_pomoc/rename-release419/main-install/{main-delivery-and-install-419.json,independent-verification-main.json,parent-live-readback.json}; wlasnezadania/tempusuniete. Nie reinstalowac419.
 WX: worker835de1afzakonczony, zrodloamc-wx-tempo-integrated416 e097ed25b2b911ae56e418bac22aa38f02e2121e czyste. PoprawionyDurationAvailablewLiteEngineHandlers; parentczytaldiff. Candidate04ZIP110611619B/SHA9e48ff43ffe328f944eb927a24ffdf045bc77c1b20231eea0ef55ce12a8edb01 zweryfikowany. Podstawowepliki/NVDA/realpozycja,pauza,seek dzialaja; radioiTimeShift NIEODEBRANE (wadliwaatrap apowtarzalaWAV), CRUDstacjiCtrl1/2/F6/menuDSPniebadane. Nie nazywacgotowedodwuchsesji. Teraz deleg9c0aa064/sa-0-e0250f48 wylacznoscGUIWindowsNVDAHermes na TYLKOtebraki, bezpowtarzaniaAMC419/modelow i bezSSHglownego. PublicznyMP3URLRadioPoznan ze swiezegoradio-browserhttp://stream4.nadaje.com:8578/poznan, jeszcze niepomiarodtwarzania. Instrukcjafalszywiezapewniala runtimeguardkolizjistanu: __main__.py47tylkodiagnose, nieGUIstart; poprawiczapewnienielubzmierzycguard. Raportwx amc_pomoc/wx-tempo-acceptance419/odbior-419.json zawiera ograniczenia, nowedowodywx-tempo-radio-final419. PaczkaWXnietrafila jeszcze doMichala. PLAN/ownerzaktualizowane; parentmaja dostarczycpoodbiorze, niewracacdoSonosa.
+
+
+### 1791116773 - 2026-10-04 14:26
+
+(rodzaj: pomiar; projekt: edsharp)
+
+POMIAR upstreamu EdSharp 04.10.2026: GitHub jamalmazrui/EdSharp latest v5.0.47, publikacja 2026-10-03T22:47:33Z = 04.10 00:47 Warszawa, HEAD 03aa9a4ae32c4aac3d2210163ed288da7810f356. Od stanu 27.09 rano (5a656de6b25ae4e596563ba87c6eba5863568333): znormalizowany diff EdSharp.cs dodaje MoveFromRoaming i zmienia katalog ustawien/temp z APPDATA na LOCALAPPDATA, przenosi brakujace pliki bez nadpisywania istniejacych; reszta zmian tego pliku to komentarze i napis licencji MIT. History help/History.md ma wpis 27.09: naprawy instalacji JAWS, wykrywania Pandoc, aktualizacji faktycznie zainstalowanej wersji Python i etykiet instalatora NVDA/JAWS. Wersje 5.0.46-47 glownie narzedzia autora i ujednolicenie napisow licencji. UWAGA monitor nadal pobiera History.md ze starej sciezki glownej i ma stare naglowki w stanie; aktualna sciezka help/History.md, Announce analogicznie. Monitora ani naszej aplikacji w tej rozmowie nie zmieniano; nie instalowano wydania. Wynik oparty na API GitHub, dokumentacji i diffie kodu, nie wykonaniu Windows.
+
+
+### 1791117302 - 2026-10-04 14:35
+
+(rodzaj: pomiar; projekt: edsharp)
+
+POMIAR 04.10.2026 EdSharpNG vs upstream Pandoc/Python, na prosbe Michala. Werdykt: NIE przenosimy konkretnych poprawek instalatora autora. NG 5.0.114 ma Skladniki.cs: SciezkaExe szuka Convert przy programie i APPDATA\EdSharp\Convert (rowniez podfoldery); ten sam resolver dla brakujacych i NaprawSciezkeNarzedzia, wpiety w import/eksport/zapis. Realny pomiar zainstalowanej binarki na Hermesie: 10 zgodnych/0 bledow, Pandoc3.11 znaleziony w profilu, nie zglasza braku, przekierowanie sciezki, realne --version i Markdown->HTML; kontrole samego wyszukiwania na jawnych znacznikach obejmuja brak, profil, priorytet instalacji i powrot do profilu. Python: nie ma aktualizatora autora ani Python.Python.3.13; 307 sledzonych plikow przeszukanych, lista skladnikow bez Python. Nie przenosimy przy okazji Roaming->Local ani JAWS (u nas inna sciezka instalacji, bez skryptu autora). Nie twierdzic ze caly aktualizator jest bezbledny; sprawdzono konkretny problem. Raport docs/PANDOC-PYTHON-UPSTREAM-2026-10-04.md, wynik testy/wyniki/pandoc-upstream-check-20261004.json, sonda testy/pomiar_pandoc_upstream_20261004.ps1, plan docs/ZADANIA-2026-09.md uzupelniony. Kod produktu nietkniety, brak instalacji/wydania, glowny komputer nietkniety, przerwa prac pozostaje.
+
+
+### 1791118459 - 2026-10-04 14:54
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 04.10.2026: Michal polecil zapisac NA POTEM w EdSharpNG: (1) Python do uruchamiania skryptow, (2) Python jako zaplecze lepszego importu PDF, (3) sprawdzenie slownika SYNONIMOW dla jezyka polskiego (kontekst rozmowy o WordNet, nie sprawdzacz pisowni). Doslownie: 'To na potem Python do skryptow i jako import PDF. Slownik po polsku musimy sprawdzic. Zapisz sobie do prac na potem.' Zapis w /home/michal/projekty/edsharp/docs/ZADANIA-2026-09.md, sekcja Na pozniej — Python do skryptow, import PDF i polski slownik synonimow. Bez terminu, bez badan/wdrozenia teraz, przerwa calego rozwoju pozostaje. Mala opcjonalna funkcja skryptow i oddzielne srodowisko Pythona sa propozycjami do dopracowania, NIE zatwierdzona szczegolowa architektura. Jakosc importu PDF i przydatnosc WordNet do polskiego NIE byly jeszcze zmierzone.
+
+
+### 1791156061 - 2026-10-05 01:21
+
+(rodzaj: pomiar; projekt: edsharp)
+
+DIAGNOZA 05.10.2026 EdSharpNG 5.0.114: MK otworzyl Quill Lite DOCX z Nowe, po zamknieciu brak wAltR, zglasza CtrlShiftP i puste kopiowanie sciezki. Potwierdzony glowny PID24512sesja1C:\Program Files\EdSharpNG\EdSharpNG.exe, instalacja5.0.114 i log startu; FileVersion5.0.9757.30397 to techniczny numer. SHA0A3E8B9DB37C2DEB41C0BFD2B9F2BD9A0DCB5FAB99723EE5B1D958607EB714C6 identyczny na glownym/repo/Hermes. U MK SaveImportedOriginalFormat=Y,RecentFiles100; brak Quill wINIRecent. Oba pliki _doprecyzowany.docx/.md nadal w D:\Projekty Codex\Hermes\Nowe, haszezgodnezdostawa. REALNY repro naHermes przez prywatny pulpit nowego procesu+osobneINI+Pandoc: 3/3MD po zamknieciu wRecent, 0/3DOCX; kazdyimportpoprawny, kursorprzesunietyna30. Przyczyna OpenOrActivateWindow ustawia child.File=basename.md, OriginalDocument.Path trzyma pelnyDOCX; Closing iSetRecent odrzucajaFilebezbackslasha. PathToClipboard tez czyta child.File, nieOriginalDocument.Path, stad bledna nazwarobocza zamiastsciezki. Fizycznego zapisu/odczytu schowka NIEwykonano; calkowicie pusty schowek MK nieodtworzony. KLAWISZE:AltShiftP=Path to Clipboard,CtrlShiftP=Path List(oknofolderu/listaplikow), niewolno mylic. Aktywny CreateMenuItem nie czyta juz dawnych overrideKeysINI, sprawdzono kod. KomendaCopy ignoruje boolSetClipboardText, dalsza kwestia do testu. Naprawa musi uzyc tozsamosci oryginalu dohistorii/sciezki, NIEprzypisacDOCX dochild.File(moglabysurowonadpisacWorda). Tylkodiagnoza, kodproduktu/ustawienia/glowny/clipboardnietkniete,ten samPIDna koncu, stagingusuniety. Brakwznowieniarozwoju i zlecenianaprawy. Plan docs/ZADANIA-2026-09.md uzupelniony, raportdocs/DIAGNOZA-QUILL-IMPORT-HISTORIA-2026-10-05.md, sonda testy/diagnoza_import_recent_path.cs, kwitytesty/wyniki/quill-import-diagnoza/result.json. Prywatnekonfiguracjepoza repo ~/.hermes/cache/edsharp/quill-import-main-private. Pierwsze2bladylau nchera (CreateWindowStation5,SetThreadDesktop170) niebledyproduktu; dzialaCreateProcesszSTARTUPINFO.lpDesktopodstartu, bezSwitchDesktop. Procedurazapisanawskilluedsharp. Repo mialo juz cudze niezacommitowanedocs/PANDOC-PYTHON-UPSTREAM-2026-10-04.md i sondy; zachowano, niecommitowano.
+
+
+### 1791157067 - 2026-10-05 01:37
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1791165756)
+
+USTALENIE 05.10.2026: Michal zatwierdzil naprawe EdSharpNG po diagnozie1791156061: 'Tak. Wdrozyc poprawke i nowy instalator, bo to istotne. Sprawdzic tez z innymi formatami, to powazny blad. Ale moze byc po wersji AMC Python, jezeli to powolniloby prace.' Zlecenie obejmuje historie AltR i prawdziwa sciezke importowanych dokumentow, nie tylko DOCX; sprawdzenie fizycznego schowka i ochrony oryginalow. AltShiftP pozostaje kopiowaniem sciezki, CtrlShiftP lista plikow. Warunkowe odlozenie przy kolizji z AMC Python, nie obowiazkowe czekanie na caly port. To ograniczone wznowienie EdSharpa, bez AI, Pythona do skryptow, przebudowy menu ani innych odlozonych funkcji. Plan zaktualizowany ~/projekty/edsharp/docs/ZADANIA-2026-09.md i koordynacja ~/projekty/AMC/PLAN-16-09-2026.md. Wczesniejsze 'brak zlecenia naprawy' z diagnozy juz nieaktualne; wyniki diagnozy pozostaja wazne.
+
+
+### 1791160268 - 2026-10-05 02:31
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE DOSTAWY 05.10.2026 EdSharp poprawka historii importow: Michal dopuscil instalacje, ale poinformowal ze edytor jest uruchomiony i zaakceptowal wariant samego dostarczenia instalatora na glowny, po czym sam zaktualizuje przez normalny aktualizator. Wybrana bezpieczna droga: po pelnym odbiorze publikacja wydania wykrywanego przez aktualizator i sprawdzony instalator w D:\Projekty Codex\Hermes na glownym, BEZ wymuszania zamkniecia aktywnego edytora i bez uruchamiania tam instalatora. Probna instalacja na Hermesie nadal wymagana. Nie nazywac dostawy instalacja u Michala. Plan ~/projekty/edsharp/docs/ZADANIA-2026-09.md uzupelniony.
+
+
+### 1791162111 - 2026-10-05 03:01
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE 05.10.2026 AMC + EDSHARP: Michal zlecil sprawdzenie Sygnalisty Michala Dziwisza TERAZ i wdrozenie POZNIEJ. Bez rozpoczynania implementacji w tej turze. Aktualna kolejnosc AMC: Sonos domkniety (wydane/zainstalowane422 wg planu), dokonczyc wersje Python, zdecydowac o technologii docelowej aplikacji i dystrybucji/instalatorze, ewentualnie poprawic, potem PROBA Apple Music, potem porzadki menu/interfejsu i prosty formularz zgloszen. EdSharp przy pozniejszym powrocie; nie dolaczac Sygnalisty do biezacej osobno zleconej poprawki importow. Nie anulowano innych uzgodnionych poprawek. Wymagania: temat, opis, opcjonalny e-mail, bez kategorii, bez konta GitHub i przegladarki dla zglaszajacego; aplikacja rozpoznawana automatycznie.
+SPRAWDZONO KOD https://github.com/michaldziwisz/sygnalista main504be74f6be9f56bcfa75b23269ef7fedb07bfff, MIT. Cloudflare Worker POST/v1/report tworzy GitHub Issue wedlug app.id; dostarczony klient Python, ale C# tak samo przez HTTP. Wymagane kind=bug/suggestion mozna ustawic wewnetrznie bez kombi. Wlasna instancja Workera i prywatne support-intake, klucz GitHuba tylko na serwerze. UWAGA PRYWATNOSC: schema.ts renderIssueBody dodaje e-mail oraz diagnostyke do issue; prywatne intake NIE ukrywa tej kopii. Oba nasze repo AMC i EdSharpNG sa PUBLICZNE (ghapi05.10), nie stosowac starej informacji o prywatnym EdSharpNG. Zalecenie do wdrozenia: e-mail tylko prywatnie, logi opcjonalne domyslnieOFF, minimalna diagnostyka. Limiter upstream Cache read/modify/write nie jest twardym globalnym limitem; token aplikacji nie chroni jak sekret serwerowy.
+Stan naszego kodu: AMC ProblemReportWindow.Send_Click otwiera przegladarke; EdSharp ReportProblem ma ReportUrl, ale wysyla NIEZGODNY format product/subject/body zamiast app/title/description, nie wystarczy podmiana URL. Oba maja juz formularz i lokalna kopie, wykorzystac to. Odbior pozniej: prawdziwe testowe issue/odczyt, prywatnosc, brak utraty tekstu przy bledzie, klawiatura i zywy NVDA. DOPISANO do istniejacych planow /home/michal/projekty/AMC/PLAN-16-09-2026.md i /home/michal/projekty/edsharp/docs/ZADANIA-2026-09.md. Bez deployu, kont/uslug, testowej wysylki, zmian kodu aplikacji, buildu ani instalacji.
+
+
+### 1791165756 - 2026-10-05 04:02
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE EdSharpNG5.0.115 ZAMKNIETE 05.10.2026: poprawka importow WYDANA i DOSTARCZONA, glowny NIE aktualizowany zgodnie z1791160268. Commit/tag/master de01f686df8d6c4a56571ee50f7c88bb09d7c109, GitHub release403307255 https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.115 . Draft->2uploaded->public, /latest115, prereleasefalse bo FetchLatestRelease korzysta z/latest. Oba pliki pobrane z publicznychURL, SHA/rozmiary zgodne. EXE testowany/ZIP/instalowanyHermes86f59310f5f23fe132c361321b9165b2ba8be2c09269cbe4ce1eb6c69316a96e. Instalator3552326B SHAfcf4e77ecce0e308e731a986cc845f38cb3facdeb8e9683d1795ca4a8c262d10; ZIP2090492B SHAd66b0fc4ebd4346d725efc0116278a87f20dae004af3c1c5876c197b00ce98c1. Zrobione: IdentityPath/ImportedFrom doAltR iAltShiftP bezpodmianychild.File, roboczanazwa wSesja/R odzyskbezprawazapisu, anulowaneClosing niepodmienia pola, -fepub3normalizowane naepub(zapisepub3zostaje), odmowasurowegoZIPpoklescekonwersji. Ryzyka2c1bylywkandydacie,nieprzypisywacichautomatyczniepublicznej114. Testyfinal125/98/9/107/74bezbledow. DOCniezmierzony,ODTbrakimportu,epub3wSKIPtylkogrupajednokierunkowa-sekcjaIpotwierdzilaimportIZAPIS. Parent poprawilblednyopisodbiorutworzacybraktestudwukierunkowego. ZywyMCPNVDA:docx/pdfAltShiftP, WindowsClipboard/paste,AltR/Enter,wlasciwatresc,1busymessageprzylock+powrotdzialania,odmowazepsutegoDOCX. Kwityodczytane zrzeczywistegotranskryptu, nieponawianoclej suity. Hermes instalacja0/rejestr115/wlasnylogstartu,SHAzgodny. GLOWNY: D:\Projekty Codex\Hermes\EdSharpNG_Setup_5.0.115.exe iEdSharpNG_5.0.115_zmiany.txt, obaSHAreadback. Ten samPID24512iEXE114pozostal,niczegoniezamknietoinieinstalowano. Jedenstaryinstalator114do kosz-EdSharpNG-5.0.115; tempplikinieobecne. Planedsharp/docs/ZADANIA-2026-09.md iAMC/PLAN-16-09-2026.md zamkniete, rezerwacjaoddana. Dowodyedsharp/testy/wyniki/release5115/{parent-local-acceptance,public-release-verified,main-delivery-verified}.json. Worktreeedsharp-import-identityfix/import-history-pathczysty, mainmahistorycznediagnozy/zmianyplanuodroznychsesjinieruszane; niegitadd-A. Nieinstalowacponownie115po spoznionejnotyfikacji. DalszefunkcjeEdSharpaodlozone,AMC Pythonosobno.
+
+
+### 1791184174 - 2026-10-05 09:09
+
+(rodzaj: ustalenie; projekt: amc; NIEAKTUALNY, zastapiony przez 1791196780)
+
+USTALENIE 05.10.2026, po dostarczeniu EdSharpNG5.0.115 Michal polecil 'Dobrze, to dalej AMC'. Kontynuujemy pelny rownolegly interfejs AMC Python zgodnie z planem, nie zaczynamy ponownie EdSharpa/listW02/Sonosa. Odczytany czysty amc-wx-full-profile hermes/wx-full-profile14bcc285d10e40bdc4c54c0edd7df04de7565bd0, natywne listy odebrane; stary MAPA_1_1 ma historyczne bledne otwarte punkty o listach, nadrzedne kwity14bcc28/JAK_TESTOWAC i PLAN. Nastepny uzyteczny przyrost: prawdziwa lokalna kolejka zywego hostaC# zamiast samego zapisuCtrlQ, naturalnykoniec->nastepny, startodwybranego, transport/fokus/NVDA. Kolejne mutacje/trwalosc przez jednego wlascicielaC# pozostaja dalszym zakresem, bez dwoch pisarzy profilu. Prace i proby na Hermesie, syntetyczneaudio+pelnaprywatnakopiaprofilu; bez glownego, publikacji, instalacji/restartow. EdSharp zamkniety nieblokujeAMC. Biezacyplan /home/michal/projekty/AMC/PLAN-16-09-2026.md zaktualizowany. Kolejnosc nadal Python -> decyzjatechnologii/dystrybucji -> AppleMusic -> menuiSygnalista.
+
+
+### 1791196780 - 2026-10-05 12:39
+
+(rodzaj: podsumowanie; projekt: amc; NIEAKTUALNY, zastapiony przez 1791196830)
+
+AMC PYTHON: ZYWA LOKALNA KOLEJKA ODEBRANA 05.10.2026. WT /home/michal/projekty/amc-w-full-profile NIEPOPRAWNA SCIEZKA; wlasciwy /home/michal/projekty/amc-wx-full-profile branch hermes/wx-full-profile, finalcf416b1 docs nad38d931e kod. HostDLL6fff6bd05dc3b8e2fa303c2da0126f1e0f21f78f5112ee57ad85b1f76c298806. Python588/0/0,C#6/6,transport22/22,koniec6/6,odlaczenie5/5 odczytane zkwitow. Rodzic domknal braki wykonawcyfinal-integrated: tam byl fixture3rekordy, Announcer.say zamiast zebranegoPodgladu oraz wybraneA->C dopiero po usunieciuA. Prawdziwy odbior rodzica /home/michal/projekty/amc_pomoc/wx-full-profile-after421/live-queue-after-native-lists/parent-speech-full-profile/: nowy SQLitebackup11200+3,5000zakladek,1playlista/54,811historii zachowane, syntetyczneWAV20s zcisza. MCPNVDA own HWND/PID iCtrlQ, Enter/pozostaleklawisze przezten samzywymostek zguardemforeground. C zaznaczono JESZCZEPODCZAS B; naturalne B->A->C,native=model3->2->1->0,Czachowane,stalefokus,ponowneCtrlQ0. PRAWDZIWYPodgladmowy przed/po zachowany: nazwy, Koniecutworu,Plikilokalnelista,Kolejkaodtwarzaniapusto. Zrodlowa kopia5plikow wtymWAL/SHM SHAbez zmian. Swiezy recordingguardfalse przed/po; own5832/host lagodniezamkniete, CIMtylkoobceAMC1452/NVDA5484,pulpitoddany. Bezglownego/publikacji/instalacji/restartow. Hipotezawyscigupublikacjikonca NIEODTWORZONA; bezspekulacyjnejpoprawki, 6probniejestdowodemniemozliwosci. Prosty 'WouldAdvanceAfter zatwierdza stan' jest falszywy, opis poprawiono. Mapy historycznych bledowW02/Foldery=None uporzadkowane, nieotwieractego ponownie.
+Nastepnyuzgodnionyprzyrost juzrealizowany deleg_feccbf7e/sa-0-a2960369: TRWALOSCkolejki przez JEDNEGOC#wlasciciela, kod+headlessrzeczywistyzapis/restart/readback tezpustego. Nowepelne prywatnekopie, pozostaledanechronione,dwaprocesyodmowa,defaultwspolnyprofilnadalread-only; bezPythonSQLitewritera/nowegobrokera/wlasnychharmonogramow/GUI/glownego/restartow. StaryWPF mozenierespektowacblokady - niewlaczacwspolnegozapisubexpomiaru. Kwityqueue-persistence-after-live/. Aktualnyplan /home/michal/projekty/AMC/PLAN-16-09-2026.md iowner.json zaktualizowane. User 'dalejAMC' pozostajezgodanapelnyrownoeglyport, nieukonczonyjeszcze. KolejnoscPython->decyzjatechnologii/dystrybucji->AppleMusic->menu/Sygnalista; EdSharp5.0.115zamkniety.
+
+
+### 1791196830 - 2026-10-05 12:40
+
+(rodzaj: podsumowanie; projekt: amc; NIEAKTUALNY, zastapiony przez 1791207174)
+
+AMC PYTHON 05.10.2026: ZYWA KOLEJKA LOKALNA ODEBRANA. Repo /home/michal/projekty/amc-wx-full-profile, branch hermes/wx-full-profile, cf416b1 dokumentacja nad kodem38d931e. DLL6fff6bd05dc3b8e2fa303c2da0126f1e0f21f78f5112ee57ad85b1f76c298806. Zweryfikowane kwity: Python588/0/0, C#6/6 zestawow, transport22/22, koniec6/6, odlaczenie5/5. Nadrzedny odbior rodzica: /home/michal/projekty/amc_pomoc/wx-full-profile-after421/live-queue-after-native-lists/parent-speech-full-profile/. Nowy backup pelnej bazy11200+3,5000zakladek,1playlista/54,811historii zachowane. WAV20s syntetyczne z cisza. Rzeczywiste CtrlQ/Enter/CtrlQ/End: C wybrane jeszcze podczas B; naturalne B->A->C, model=native3->2->1->0, wyborC i fokus zachowane, ponowneCtrlQ nadal0. PRAWDZIWY Podglad mowy przed/po: nazwy, koniec, lista, pusto. Poprzedni raport final-integrated sam tego nie dowodzil (mala baza3rekordy, Announcer.say, zaznaczenieA->C po usunieciuA). Rodzic domknal brakujace dowody bez zmiany kodu. SHA5plikow kopii zrodlowej zWAL/SHM identyczne. Guardnagrywaniafalse przed/po, swoje5832/host zamkniete; CIM tylkoAMC1452/NVDA5484, pulpitoddany. Bezglownego/publikacji/instalacji/restartow. Hipotezywyscigu publikacjikonca nieodtworzono; bezspekulacyjnejpoprawki, 6prob nie dowodzi niemozliwosci. Stare otwarte wpisyW02/Foldery=None wmapie uporzadkowane, nie wracac.
+AKTYWNY nastepny etap deleg_feccbf7e/sa-0-a2960369: trwalosc kolejki przez jednego wlascicielaC#, kod+realny headless zapis/zamkniecie/nowyhost/odczyt, takze zuzyta pusta kolejka. Nowe pelne prywatnekopie i zachowanie pozostalych danych; odmowa dwoch wlascicieli. Domyslny wspolnyprofil nadalread-only, Python niepiszeSQLite. BezGUI/glownego/publikacji/instalacji/restartow. Nie obiecywac ochrony przed starymWPF bez sprawdzenia jego blokad, nie budowac nowegobrokera wciemno. Kwity queue-persistence-after-live/. Jedynyaktualnyplan /home/michal/projekty/AMC/PLAN-16-09-2026.md, owner.json zaktualizowane. Uzgodnione 'dalejAMC' obejmuje dalszy pelny rownoleglyport, ktory nadal nie jest gotowy. KolejnoscPython->decyzjatechnologii/dystrybucji->AppleMusic->menu/Sygnalista. EdSharp5.0.115 zamkniety.
+
+
+### 1791223067 - 2026-10-05 19:57
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1791223928)
+
+USTALENIE 05.10.2026 - QUIN / TRYPSYNTH JAKO ZRODLO DLA NASZYCH APLIKACJI. Michal chce sledzic szerzej repozytoria Quina Gillespie (github.com/trypsynth), nie tylko wskazany fork wxWidgets; doslal ship-shape i profil ?tab=packages. Rozwazyc rozwiazania czytania Paperback nawet w EdSharpNG, tylko jesli maja sens. To obserwacja i kierunek pozniejszej oceny, NIE polecenie wdrozenia ani zmiana priorytetow. Dopisano plan ~/projekty/edsharp/docs/ZADANIA-2026-09.md i note QUIN-TRYPSYNTH-ZRODLA-2026-10-05.md. Kod Paperback (MIT, Rust) ma wydzielone paperback-core i CLI pb: parsowanie oraz eksport TXT/HTML/Markdown, przy zapisie MD dodaje UTF8 BOM z komentarzem o EdSharp. Najprostszy kandydat: opcjonalny importer, nie wymiana WinForms. Jakosc i zgodnosc z naszymi dokumentami jeszcze niezmierzone. ship-shape (MIT, Rust/wxDragon) kod download.rs sprawdza Minisign przed uznaniem pliku za gotowy; wzorzec aktualizatora, nie biblioteka C#/Python. wxWidgets accessible-name ma SetAccessibleName/MSAA SELF i NAMECHANGE, nie dowodzi naprawy pustej listy AMC. Inne tropy: wxDragon, wx-utils, live-region, native-ocr, key-chord, prismer, refractor, patois, shipfitter/homeport, libchm/libhlp. Refractor target net8.0, nie bezposrednio do EdSharp .NET Framework4.8. Publiczne Packages pokazalo talkietalk; to nie katalog wszystkich bibliotek (takze crates.io/NuGet). Bez zmian produktu, instalacji i testu NVDA. Przygotowany kolektor ~/.hermes/scripts/trypsynth_watch.py i kontrakt/snapshoty ~/.hermes/competitor-watches/trypsynth/: 96repo zgodne z API, 10priorytetowych ze wszystkimi galeziami/wydaniami, linki Packages. Realny drugi odczyt bez zmian=uspienie; testy zmiany galezi, ponowienia nieodebranego przegladu i akceptacji przeszly. Docelowy przeglad tygodniowy niedziela13:00 PL, tylko istotne nowosci dla AMC/EdSharpa do Telegram36102. Status harmonogramu sprawdzac w cron, nie zgadywac ID.
+
+
+### 1791223928 - 2026-10-05 20:12
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 05.10.2026 - QUIN / PAPERBACK: PODGLAD POD ESCAPE JEST GLOWNA INTENCJA. Michal doprecyzowal: myslal bardziej o wyswietlaniu/podgladzie czytanym pod Escape w EdSharpie niz o wczytywaniu plikow. Wczesniejsze skupienie asystenta na pb jako importerze bylo zbyt waskie. Glowny kierunek do POZNIEJSZEJ OCENY: sposob prezentacji tresci i struktury dla czytnika, nawigacja, naglowki/listy/tabele/linki/przypisy, klawiatura i pozycja; w edytorze trzeba zachowac powrot do odpowiedniego miejsca zrodla i niezapisane zmiany. Nie przesadzono wymiany WinForms, osadzenia kontrolki ani implementacji. Import/parsing jest DRUGIM powiazanym tematem, ktorego Michal nie wyklucza. Ceni kompetencje autorow i jakosc Paperback; nie utozsamiac jego oceny z naszym pomiarem - porownania renderowania z EdSharpem jeszcze nie bylo. Poprawiono docs/ZADANIA-2026-09.md, docs/QUIN-TRYPSYNTH-ZRODLA-2026-10-05.md i kontrakt obserwacji ~/.hermes/competitor-watches/trypsynth/contract.json. Regula takze w skillu EdSharp markdown-preview-accessibility. Nadal sledzic cale publiczne repozytoria trypsynth (Quin Gillespie), wxWidgets, ship-shape i Packages. Monitoring ID66b9644ce3b0 zweryfikowany aktywny, niedziela13:00 PL, Telegram829226867 watek36102, tylko istotne nowosci; skrypt trypsynth_watch.py, katalog snapshotow ~/.hermes/competitor-watches/trypsynth/. Poczatek 96repo, 10priorytetowych ze wszystkimi galeziami i wydaniami; testy bramki przeszly. Paperback MIT/Rust ma paperback-core oraz pb TXT/HTML/MD; ship-shape MIT/Rust/wxDragon sprawdza Minisign; wxWidgets accessible-name to trop nie dowod naprawy AMC; Refractor net8.0 nie jest bezposrednia biblioteka do EdSharp Framework4.8. Szczegoly w nocie. Obserwacja nie zmienia priorytetow AMC/EdSharp; bez kodu produktu, instalacji i testu NVDA.
+
+
+### 1791224775 - 2026-10-05 20:26
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1791225642)
+
+USTALENIE 05.10.2026 - QUILL DODATKOWYM WZORCEM, POWROT DO AMC. Po doprecyzowaniu Paperback/podglad podEscape Michal dopisal: 'Ewentualnie Quill tez, bo sie szczyci i podgladem i otwieraniem/zapisywaniem. To praca dluzsza na pozniej. Teraz wracamy do AMC/interfejs.' Dopisano Quill obok Paperback do docs/ZADANIA-2026-09.md. Nie rozpoczynac teraz badan ani implementacji Quill/EdSharp, nie utozsamiac deklaracji programu z wykonanym pomiarem i nie zgadywac konkretnej biblioteki Quill. Glowny biezacy kierunek ponownie interfejs AMC, zgodnie z istniejacym PLAN-16-09-2026 i rownoleglym wxPython. To uzupelnienie decyzji1791223928, nie jej odwrocenie.
+
+
+### 1791225642 - 2026-10-05 20:40
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 05.10.2026 - QUILL I PAPERBACK RAZEM DO WYKORZYSTANIA W EDSHARP. Dokladne brzmienie korekty Michala: 'Quill i Paperback razem do wykorystania w EdSharp. Tak powinno brzmiec.' Nie porownywac Quill z Paperback jako konkurentow ani wybierac jednego zamiast drugiego. Oba maja sluzyc jako zrodla rozwiazan dla EdSharp: przede wszystkim podglad/czytanie podEscape, rowniez otwieranie i zapisywanie dokumentow. Wieksza praca na pozniej, bez nowych badan/implementacji teraz. Biezacy priorytet nadal AMC/interfejs wxPython. Poprawiono zapis docs/ZADANIA-2026-09.md i docs/QUIN-TRYPSYNTH-ZRODLA-2026-10-05.md w ~/projekty/edsharp. Uzupelnia1791223928, zastepuje mylace sformulowanie 'Quill do porownania z Paperback'.
+
+
+### 1791231197 - 2026-10-05 22:13
+
+(rodzaj: ustalenie; projekt: amc)
+
+AMC 05.10.2026 - JEDNA WERSJA PROBNA, BEZ PRZEPISYWANIA ZAPLECZA. Michal bedzie sukcesywnie testowal. Zlecil usuwanie wlasnych zbednych ZIP-ow, starych prob i plikow technicznych z glownego, bez mnozenia widocznych kosz/kopia. Wykonano: pozostawiono D:\Projekty Codex\Hermes\AMC-Python-proba-list-20261005, jej ustawienia, aktualne instalatory AMC422/EdSharp115 i dokumenty Michala. Usunieto stary AMC-wx-Lite, dwa ZIP-y prob, cztery stare kosze z instalatorami, dawne instrukcje TESTY i opisy zastapionych wydan. Archiwum z pelnym porownaniem 1052 plikow zachowane TYLKO na Hermesie /home/michal/.hermes/state/cleanup-main-20261005/archiwum.zip. Osobny final-readback.json potwierdza brak celow i temp, niezmienione chronione pliki oraz ten sam normalny AMC PID14668. Nie podmieniono probnej paczki. Architektura: sam Python nie przyspiesza automatycznie bibliotek/otwierania/nawigacji; nie przepisujemy calego programu od nowa. Zachowac sprawdzona logike C#, zmieniac tylko z konkretnego powodu. Aktualny plan i skille uzupelnione.
+
+
+### 1791231750 - 2026-10-05 22:22
+
+(rodzaj: kontekst; projekt: edsharp)
+
+Quill/Quill Lite 05.10.2026 - Michal: fajny edytor, troche do EdSharpa sobie wezmiemy, jezeli sie da. Zainteresowanie zapozyczeniem wybranych pomyslow, NIE zlecenie implementacji ani wybor funkcji. Odpowiedz na jezyk, polskie dyktowanie, Snippets/Abbreviations: README upstream Community-Access/quill potwierdza Python + wxPython, LICENSE MIT (Copyright 2026 BITS); mozna adaptowac kod przy zachowaniu noty/licencji, port do C# wymaga dostosowania. API releases nadal najnowszy Lite quill-lite-v1.1.2. Tag local_recognizer.py language=en i modele moonshine-tiny-en/Whisper tiny.en. Istotna NOWOSC na main: dodano hiszpanski i Whisper tiny multilingual, ale speech_language.py dopuszcza tylko en/es. Bezpieczne wykonanie samej funkcji coerce_speech_language potwierdzilo pl/pl-PL/Polish -> en, es -> es. Nie oferowac recznej zmiany konfiguracji na pl jako dzialajacej. Polski w Lite przez Windows 11 voice typing (Win+H, online, polski jezyk wejscia); odrebne od starego Windows Speech Recognition. Instrukcja Lite: CtrlAltA Manage Abbreviations tworzy skrot->tekst; spacja rozwija; AltShiftI Snippets to lista TYCH SAMYCH wpisow, podglad i Enter wstawia; AltShiftA przelacza automatyczne rozwijanie. Nie mylic z osobnym rozbudowanym silnikiem snippets pelnego Quill. Brak wlasnego testu GUI/mikrofonu. Kwity /home/michal/projekty/artykuly/robocze/quill-lite/weryfikacja-pytan/. Zrodla https://github.com/Community-Access/quill https://www.quillforall.org/docs/quilllite-userguide.html oraz Microsoft Use voice typing to talk instead of type on your PC.
+
+
+### 1791235999 - 2026-10-05 23:33
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+05.10.2026 Quill do EdSharp - doprecyzowanie Michala: nie tworzyc osobnych Snippets/Abbreviations, tylko polaczyc pomysly Quill z obecnymi Alt+V i Alt+S oraz istniejacymi tekstowymi plikami. To kierunek przyszlej rozbudowy, bez zlecenia wykonania teraz. Kod ~/projekty/edsharp/EdSharp.cs potwierdza AltS Save Snippet, AltV Invoke Snippet, AltShiftV View Snippet, Snippets\Default. Zapomniana przez MK funkcja to Replace Tokens (binding Control+Shift+Oemplus): [Tokens] -> %Nazwa%, wartosc literalna lub zawartosc wskazanego pliku snippetu, rozwijanie backslash; przy braku zaznaczenia i tekstu % komenda takze wybiera snippet po regex dopasowanym do nazwy pliku. InvokeSnippet ma text/html, form (Date/Time/UserName, pola %Nazwa=wartosc%, wlasne tokeny), caret ^^. Nie sa to same zwykle wklejki. Kandydat: ulepszona obecna lista z podgladem i wyszukiwaniem + opcjonalne automatyczne rozwiniecie aliasu do obecnego snippetu; nie dublowac biblioteki ani usuwac tokenow. Sprawdzenie kodu, NIE pomiar GUI. Zapisano w docs/ZADANIA-2026-09.md sekcja Quill rozbudowac nasze snippets. Michal luzno rozwaza Python/wxPython, nie zdecydowal przepisywania. Rekomendacja: te funkcje dodac w C#/WinForms, brak zmierzonej korzysci uzasadniajacej przepisanie.
+
+
+### 1791236810 - 2026-10-05 23:46
+
+(rodzaj: ustalenie; projekt: edsharp; NIEAKTUALNY, zastapiony przez 1791237080)
+
+05.10.2026 EdSharp snippets - Michal doprecyzowal: rozwijanie skrotow PODCZAS PISANIA na pewno ma byc funkcja, nie tylko kandydatem. Wylacznik automatu nadal sensowny; nie mylic opcjonalnego wlaczenia z niezatwierdzonym zakresem. Dodatkowo widzialby osobny dodatek do NVDA dzialajacy GLOBALNIE, jako uzupelnienie albo alternatywe. Dodatek pozostaje pomyslem do rozpoznania, bez zlecenia kodowania teraz i bez gwarancji dzialania wszedzie. Rozpoznanie powinno objac istniejace dodatki, wspolna biblioteke bez dublowania tresci, pauze/wykluczenia, ochrone pol hasel/schowka, unikanie podwojnego rozwijania w EdSharpie; rozbudowane szablony to osobna kwestia. Zaktualizowano docs/ZADANIA-2026-09.md, sekcja Quill rozbudowac nasze snippets. Brak zmian kodu lub instalacji.
+
+
+### 1791237080 - 2026-10-05 23:51
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+05.10.2026 EdSharp snippets i globalny dodatek NVDA - doprecyzowanie: Michal POTWIERDZIL automatyczne rozwijanie skrotow PODCZAS PISANIA jako pewny element przyszlej rozbudowy EdSharpa (wylacznik nadal mozliwy). Globalny dodatek NVDA widzi jako dodatkowy albo alternatywny sposob uzycia; nie zlecil teraz implementacji. Michal juz probowal dodatkow NVDA typu Expansion (dokladna nazwa nieustalona): byly niesatysfakcjonujace, raczej nie dzialaly podczas pisania. W jego doswiadczeniu poza Quill nic sensownie nie dziala. To relacja usera, nie niezalezny test wszystkich dodatkow. Nie kierowac go ponownie do ogolnego przegladu tych dodatkow jako odpowiedzi. Kryterium: wpisuje skrot i zwykly separator, tekst sam sie rozwija, bez listy i dodatkowej komendy. Quill jest wzorcem zachowania. Kolejny sensowny zakres to wykonalnosc globalnego automatu NVDA, nie odtwarzanie recznego menedzera wklejek. Wspolna biblioteka z obecnymi plikami EdSharpa, ochrona hasel/schowka, pauza/wykluczenia i brak podwojnej zamiany; rozbudowane szablony osobno. Plan docs/ZADANIA-2026-09.md i skill edsharp-development uzupelnione. Bez zmian produktu i instalacji.
+
+
+### 1791307287 - 2026-10-06 19:21
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+Michal polecil dopisac PlanCake https://plan-cake.oire.dev do pozniejszych inspiracji EdSharpa: moze warto przejac funkcje notatek do tresci Markdown. Nie zlecil wdrozenia teraz. Dodano sekcje PlanCake w docs/ZADANIA-2026-09.md obok Quill/Paperback. Odczytano oficjalna strone: Markdown Reader with Notes, Oire Software, repo https://github.com/Oire/plan-cake, deklarowana Apache-2.0. Wedlug autora notatki dodawane przy czytaniu podgladu do akapitu/listy/naglowka/wiersza tabeli/kodu trafiaja do TEGO SAMEGO pliku za blokiem, domyslnie [usernote]...[/usernote]; lista i F9/ShiftF9, undo/redo, live reload z zachowaniem pozycji i ochrona przed nadpisaniem niewidzianej zmiany. CLI list/check/clear/export oraz JSON pozwalaja odczytac notatki z kontekstem do pracy z AI. To deklaracje strony, bez analizy implementacji/instalacji/testu NVDA. Pozniejsza ocena: notatki z poziomu podgladu EdSharpa, przypisanie do zrodla, klawiatura/NVDA, wspolpraca z komentarzami/przypisami juz w edytorze bez dublowania, format zapisu i konflikty; nie zakladac od razu przyjecia markerow ani calego komponentu.
+
+
+### 1791376157 - 2026-10-07 14:29
+
+(rodzaj: pomiar; projekt: amc)
+
+POMIAR KODU 07.10.2026: porownanie z pytania Michala o C#/Rust i EdSharp/AMC/FastPlay/Sonarpad. Pygount3.2.0 source_count=kod+linie stringow; bez pustych, komentarzy, bibliotek, danych generowanych i bundli dist. Testy osobno, takze Rust #[cfg(test)]/#[test] wydzielone tokenowo; brak innych form cfg(test) w zbadanym Sonarpad. EdSharpNG de01f686 (5.0.115, zrodla robocze aplikacji zgodne z publicznym): 19318 aplikacja,23125 testy. AMC publiczny1f5dccb6 (422):77742 aplikacja,57507 testy. AMC roboczy3432faa8 + biezace niezacommitowane GUI:85954 aplikacja,70348 testy; suma obejmuje staryWPF i nowywx. Sama czesc wxPython27modulow7081SLOC; LiteHost adapterC#1798. FastPlay pobrany aktualny49b09c1c708038a5800f8b75483d682b99a2d11c:32148 aplikacja,543 testy (aplikacja obejmuje5398iOS). Wykluczone SQLite/UniversalSpeech headers,PFFFT1410 i wygenerowane HRTF2394. Sonarpad6c5b0be4209785c4eec4538eb3889a051a47e61e:178312 aplikacja,11948 testy; aplikacja Rust172171+Python5837+bridgeJS/HTML304. Sonarpad/AMCroboczy2.07 razy kodu, NIE wniosek o szybkosci. Raw pliki obcych repo sprawdzone Gitblob SHA, nic z nich nie budowano/uruchamiano. Dokladne zestawy, skrypt i summary.json w /home/michal/projekty/code-size-20261007/. Ocena architektury: zachowac obecne zapleczeC# AMC i WinForms EdSharpa; pytania oRust nie zmienily zatwierdzonego kierunku. WinForms potwierdzony source EdSharp.cs oraz BuildEdSharp.cmd. To ocena, nie zakaz przyszlej uzasadnionej zmiany.
