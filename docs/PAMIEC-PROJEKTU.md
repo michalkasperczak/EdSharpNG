@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-10-11 11:00 (CEST). Wpisow: 134 z 868 w calej pamieci.
+Wygenerowane: 2026-10-18 11:00 (CEST). Wpisow: 136 z 885 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
@@ -152,6 +152,8 @@ tutaj, bo pokazuje, co i dlaczego zmienilo sie w ustaleniach.
 - 2026-10-05 23:51 - 05.10.2026 EdSharp snippets i globalny dodatek NVDA - doprecyzowanie: Michal POTWIERDZIL automatyczne rozwijan
 - 2026-10-06 19:21 - Michal polecil dopisac PlanCake https://plan-cake.oire.dev do pozniejszych inspiracji EdSharpa: moze warto prz
 - 2026-10-07 14:29 - POMIAR KODU 07.10.2026: porownanie z pytania Michala o C#/Rust i EdSharp/AMC/FastPlay/Sonarpad. Pygount3.2.0 s
+- 2026-10-11 14:11 - EDSHARP - 11.10 zapisano do pozniejszego sprawdzenia wyniki obserwacji trypsynth, bez wdrozenia i bez zmiany p
+- 2026-10-17 11:19 - POMIAR 17.10.2026 QuillVille: publiczna strona GitHub Releases nadal pokazuje jako najnowsze QUILL Lite 1.1.2 
 
 ## Wpisy
 
@@ -2739,3 +2741,17 @@ Michal polecil dopisac PlanCake https://plan-cake.oire.dev do pozniejszych inspi
 (rodzaj: pomiar; projekt: amc)
 
 POMIAR KODU 07.10.2026: porownanie z pytania Michala o C#/Rust i EdSharp/AMC/FastPlay/Sonarpad. Pygount3.2.0 source_count=kod+linie stringow; bez pustych, komentarzy, bibliotek, danych generowanych i bundli dist. Testy osobno, takze Rust #[cfg(test)]/#[test] wydzielone tokenowo; brak innych form cfg(test) w zbadanym Sonarpad. EdSharpNG de01f686 (5.0.115, zrodla robocze aplikacji zgodne z publicznym): 19318 aplikacja,23125 testy. AMC publiczny1f5dccb6 (422):77742 aplikacja,57507 testy. AMC roboczy3432faa8 + biezace niezacommitowane GUI:85954 aplikacja,70348 testy; suma obejmuje staryWPF i nowywx. Sama czesc wxPython27modulow7081SLOC; LiteHost adapterC#1798. FastPlay pobrany aktualny49b09c1c708038a5800f8b75483d682b99a2d11c:32148 aplikacja,543 testy (aplikacja obejmuje5398iOS). Wykluczone SQLite/UniversalSpeech headers,PFFFT1410 i wygenerowane HRTF2394. Sonarpad6c5b0be4209785c4eec4538eb3889a051a47e61e:178312 aplikacja,11948 testy; aplikacja Rust172171+Python5837+bridgeJS/HTML304. Sonarpad/AMCroboczy2.07 razy kodu, NIE wniosek o szybkosci. Raw pliki obcych repo sprawdzone Gitblob SHA, nic z nich nie budowano/uruchamiano. Dokladne zestawy, skrypt i summary.json w /home/michal/projekty/code-size-20261007/. Ocena architektury: zachowac obecne zapleczeC# AMC i WinForms EdSharpa; pytania oRust nie zmienily zatwierdzonego kierunku. WinForms potwierdzony source EdSharp.cs oraz BuildEdSharp.cmd. To ocena, nie zakaz przyszlej uzasadnionej zmiany.
+
+
+### 1791720665 - 2026-10-11 14:11
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+EDSHARP - 11.10 zapisano do pozniejszego sprawdzenia wyniki obserwacji trypsynth, bez wdrozenia i bez zmiany priorytetu AMC. Paperback: 1fbd9771 MarkdownMathML, nawigowalne formuly, pozycja zrodlo/podglad i wylacznik $...$ dla cen/zmiennych; 7e538c01 URL pobiera do izolowanej kopii, lecz zakladki/pozycja/format pod URL; e3f2802b wspolna droga menu iCtrlA/C oraz komunikat zaznaczenia niekolidujacy z mowa. Wszystko jako wzorce dla pozniejszego podgladu Escape/otwierania, niegotowa biblioteka Rust dla WinForms/.NET4.8. wxWidgets32777c76 Tab z notebooka bezfokusowalnejstrony, testC++, nieupstream/niedlaWinForms. wx-utils0.4.3/ship-shape callback postepudopiero po zniszczeniu modala jako wzorzec aktualizatora. prism forkethindp/prism MPL2.0 C++/CMake, niebezposredniazaleznosc; Refractor.net8. Zapisano w ~/projekty/edsharp/docs/ZADANIA-2026-09.md oraz QUIN-TRYPSYNTH-ZRODLA-2026-10-05.md. Pelny raport ~/.hermes/competitor-watches/trypsynth/review-2026-10-11.md; obcychprojektow niebudowano/nietestowanoNVDA.
+
+
+### 1792228765 - 2026-10-17 11:19
+
+(rodzaj: pomiar; projekt: quill)
+
+POMIAR 17.10.2026 QuillVille: publiczna strona GitHub Releases nadal pokazuje jako najnowsze QUILL Lite 1.1.2 z 30.09.2026; od diagnozy 05.10 nie opublikowano nowego instalatora Lite. Repo jest jednak aktywne: commit 13a9660 z 17.10 laczy prace nad QUILL Transcribe (zapowiedz wydania 01.11, ale w commitcie wyraznie: nic nie otagowano, wypchnieto ani opublikowano). Istotne dla Lite: commit 242452c z 17.10 kieruje otwarcie DOCX/XLSX/PPTX przez wlasne czytniki Quill przed MarkItDown; zmierzone czasy zimnego DOCX 12.4s->1.24s, zachowane numerowane listy, rownania jako LaTex i opisy obrazkow. Commit 3e4734a z 17.10: zapis otwartego DOCX w Lite oferuje Save As. Nie znaleziono dowodu, ze opisany 05.10 blad historii/recent i kopiowania sciezki zostal naprawiony.
