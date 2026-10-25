@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-10-18 11:00 (CEST). Wpisow: 136 z 885 w calej pamieci.
+Wygenerowane: 2026-10-25 12:00 (CEST). Wpisow: 140 z 896 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
@@ -154,6 +154,10 @@ tutaj, bo pokazuje, co i dlaczego zmienilo sie w ustaleniach.
 - 2026-10-07 14:29 - POMIAR KODU 07.10.2026: porownanie z pytania Michala o C#/Rust i EdSharp/AMC/FastPlay/Sonarpad. Pygount3.2.0 s
 - 2026-10-11 14:11 - EDSHARP - 11.10 zapisano do pozniejszego sprawdzenia wyniki obserwacji trypsynth, bez wdrozenia i bez zmiany p
 - 2026-10-17 11:19 - POMIAR 17.10.2026 QuillVille: publiczna strona GitHub Releases nadal pokazuje jako najnowsze QUILL Lite 1.1.2 
+- 2026-10-18 16:20 - EDSHARP - ustalenie 18.10: wszystko z obserwacji Paperback ma byc przekazywalne dalej jako JEDNO wspolne zadan
+- 2026-10-18 23:44 - USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, w tym AMC i EdSharp. Projekty maja zostawiac [NIEAKTUALNY]
+- 2026-10-18 23:56 - USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, ale pelny kontrakt Paleta Polecen + pomoc kl
+- 2026-10-24 01:21 - USTALENIE 24.10.2026 EdSharpNG: wstepna ocena aktualnego kodu i materialow Quill/Paperback nie uzasadnia przeb
 
 ## Wpisy
 
@@ -2755,3 +2759,31 @@ EDSHARP - 11.10 zapisano do pozniejszego sprawdzenia wyniki obserwacji trypsynth
 (rodzaj: pomiar; projekt: quill)
 
 POMIAR 17.10.2026 QuillVille: publiczna strona GitHub Releases nadal pokazuje jako najnowsze QUILL Lite 1.1.2 z 30.09.2026; od diagnozy 05.10 nie opublikowano nowego instalatora Lite. Repo jest jednak aktywne: commit 13a9660 z 17.10 laczy prace nad QUILL Transcribe (zapowiedz wydania 01.11, ale w commitcie wyraznie: nic nie otagowano, wypchnieto ani opublikowano). Istotne dla Lite: commit 242452c z 17.10 kieruje otwarcie DOCX/XLSX/PPTX przez wlasne czytniki Quill przed MarkItDown; zmierzone czasy zimnego DOCX 12.4s->1.24s, zachowane numerowane listy, rownania jako LaTex i opisy obrazkow. Commit 3e4734a z 17.10: zapis otwartego DOCX w Lite oferuje Save As. Nie znaleziono dowodu, ze opisany 05.10 blad historii/recent i kopiowania sciezki zostal naprawiony.
+
+
+### 1792333231 - 2026-10-18 16:20
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+EDSHARP - ustalenie 18.10: wszystko z obserwacji Paperback ma byc przekazywalne dalej jako JEDNO wspolne zadanie, nie luźne konkluzje tylko po stronie Hermesa. Utworzono plik repo ~/projekty/edsharp/docs/ZADANIE-PRZEGLAD-PARSOWANIA-EDSHARP-INSPIROWANY-PAPERBACK.md i podlinkowano go z docs/ZADANIA-2026-09.md oraz QUIN-TRYPSYNTH-ZRODLA-2026-10-05.md. Plik jest dla przyszlego wykonawcy na repo Michala poprzez pakiet AI Michala Dziwisza, nie do realizacji na tym Hermesie teraz. Paperback jest TYLKO zrodlem wzorcow i pytan kontrolnych: nie przenosic domniemanych bledow Paperback ani nie uznawac ich za bledy EdSharpNG bez odtworzenia w kodzie/wlasnych dokumentach/NVDA. Zakres wspolny: mapowanie pozycji zrodlo-render-kontrolka i emoji, dlugie fragmentowe RTF, mowa po zamknieciu menu, DOCX strony/linki/zakladki, opcjonalny WebView2; rozdzielac potwierdzone problemy EdSharpNG, poprawne zachowania, kandydaty i odrzucone inspiracje. Wlasne pomiary NVDA obowiazkowe dla GUI. Brak teraz implementacji/instalacji/zmiany priorytetu AMC.
+
+
+### 1792359895 - 2026-10-18 23:44
+
+(rodzaj: ustalenie; projekt: amc; NIEAKTUALNY, zastapiony przez 1792360571)
+
+USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, w tym AMC i EdSharp. Projekty maja zostawiac utrzymywalne pliki/metryki, z ktorych pozniej da sie automatycznie generowac dokumentacje. Przy prawdziwie takim samym kontrakcie rozwiazan najpierw szukaj istniejacego wzorca i wspoldziel/wyodrebnij go zamiast kopiowac rozchodzacy sie kod. Nie kazda funkcja musi miec jeden-do-jednego wpis we wszystkich warstwach. Minimum dla nowego albo zmienionego polecenia uzytkownika to Paleta Polecen, klawiszowy opis/pomoc polecenia, rzeczywiste wykonanie skrotu oraz proporcjonalny test zywego NVDA. Gdy ma zastosowanie, w tej samej zmianie aktualizuj Ctrl+F1, pelna pomoc klawiatury, Ctrl+Shift+K, odpowiednie menu i instrukcje uzytkownika. Testy maja porownywac nazwe, skrot, opis, handler/wykonanie i metadane dostepnosci; wpis w palecie lub pomocy nie dowodzi dzialania skrotu. Wymog wpisany do skilli amc-python-wxpython-development i edsharp-development.
+
+
+### 1792360571 - 2026-10-18 23:56
+
+(rodzaj: ustalenie; projekt: amc)
+
+USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, ale pelny kontrakt Paleta Polecen + pomoc klawiszowa + skroty + Ctrl+F1 + menu + instrukcja jest domyslnym wymaganiem przede wszystkim dla wiekszych aplikacji desktopowych, takich jak AMC i EdSharp. Nie przenos jej mechanicznie do wtyczek NVDA, rozszerzen przegladarki i malych integracji: tam dobieraj dokumentacje, obsluge klawiatury, testy i dostepnosc do faktycznego interfejsu oraz platformowych konwencji. W kazdym projekcie zostawiaj utrzymywalne pliki/metryki dla przyszlej automatycznej dokumentacji. Przy prawdziwie takim samym kontrakcie najpierw szukaj istniejacego wzorca i wspoldziel/wyodrebnij go zamiast kopiowac rozchodzacy sie kod. Dla polecen desktopowych minimum to paleta, klawiszowy opis/pomoc, rzeczywiste wykonanie skrotu i proporcjonalny test zywego NVDA; pozostale warstwy aktualizuj, gdy maja zastosowanie. Testy porownuja nazwe, skrot, opis, handler/wykonanie i metadane dostepnosci; obecny wpis w palecie/pomocy nie dowodzi dzialania skrotu.
+
+
+### 1792797689 - 2026-10-24 01:21
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 24.10.2026 EdSharpNG: wstepna ocena aktualnego kodu i materialow Quill/Paperback nie uzasadnia przebudowy parsera/importu, wymiany WinForms ani portowania obcych bibliotek. EdSharpNG ma import Pandoc, mapy zrodlo<->widok w podgladzie Escape i zabezpieczona w 5.0.115 tozsamosc importowanych dokumentow. Kolejny sensowny krok po wznowieniu to maly, rozrozniajacy przeglad na wlasnych dokumentach i zywy NVDA: Unicode/emoji, pozycje, linki, zakladki, komunikaty menu i rzeczywiste formaty. Najbardziej obiecujacy kierunek: odbior/nawigacja podgladu Escape, nie wymiana importu. Quill: wzorce kontraktow UI, rozdzielenia io/ui i auto-snippets; Paperback: przypadki testowe pozycji/struktury. Plik repo: ~/projekty/edsharp/docs/PODSUMOWANIE-EDSHARPNG-2026-10-24.md; decyzje dodane do docs/ZADANIA-2026-09.md. Kopia potwierdzona hashem na glownym: D:\Projekty Codex\Hermes\Nowe\EdSharpNG_podsumowanie_2026-10-24.md.
