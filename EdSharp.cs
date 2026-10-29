@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.115";
+public const string VersionString = "5.0.117";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -8071,76 +8071,66 @@ rtb.Index = iStart;
 } // SpellCheck method
 
 public void Thesaurus() {
-bool bCreate, bVisible;
-int iDisplayAlerts, iStart, iEnd, iLength;
-string sText, sOldText;
+int iStart, iEnd;
+string sFile, sText;
 object[] aResults;
-object oApp, oDocs, oDoc, oSelection, oRange;
+List<Synonimy.Grupa> lGroups;
+List<string> lValues = new List<string>();
+List<string> lDisplay = new List<string>();
 
 HomerRichTextBox rtb = this.Child.RTB;
 if (rtb.SelectionLength == 0) {
-//AddMessage("Chunk");
 aResults = GetChunk();
 iStart = (int) aResults[0];
 sText = (string) aResults[1];
 }
 else {
-//AddMessage("Selected");
 iStart = rtb.SelectionStart;
 sText = rtb.SelectedText;
 }
 
-sText = sText.TrimEnd();
-if (sText.Length == 0) {
-AddMessage("No text!");
+if (sText.Trim().Length == 0) {
+AddMessage("Brak tekstu.");
+return;
+}
+if (!Synonimy.IsSingleWord(sText)) {
+AddMessage("Zaznacz jedno słowo.");
 return;
 }
 
+sFile = Path.Combine(App.ProgramDir, "Synonyms", "plwordnet-synonyms.txt");
+if (!Synonimy.Load(sFile)) {
+AddMessage("Nie można wczytać słownika synonimów.");
+return;
+}
+lGroups = Synonimy.Find(sText);
+if (lGroups.Count == 0) {
+AddMessage("Nie znaleziono synonimów dla: " + sText);
+return;
+}
+
+for (int iGroup = 0; iGroup < lGroups.Count; iGroup++) {
+Synonimy.Grupa group = lGroups[iGroup];
+string sPart = "Inna część mowy";
+if (group.PartOfSpeech == "n") sPart = "Rzeczownik";
+else if (group.PartOfSpeech == "v") sPart = "Czasownik";
+else if (group.PartOfSpeech == "a") sPart = "Przymiotnik";
+else if (group.PartOfSpeech == "r") sPart = "Przysłówek";
+foreach (string sSynonym in group.Synonyms) {
+lValues.Add(sSynonym);
+lDisplay.Add(sPart + ", znaczenie " + (iGroup + 1) + ": " + sSynonym);
+}
+}
+
+string sChoice = Dialog.Pick("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), false, 0);
+if (sChoice.Length == 0) return;
+sChoice = Synonimy.ApplyCapitalization(sText, sChoice);
 iEnd = iStart + sText.Length;
-sOldText = sText;
-sText = Util.Convert2MacLineBreak(sText);
-
-bool bAppVisible = true;
-//oApp = COM.GetOrCreateObject("Word.Application", out bCreate);
-oApp = COM.WordAccess(out bCreate);
-bVisible = (bool) COM.GetProperty(oApp, "Visible");
-iDisplayAlerts = (int) COM.GetProperty(oApp, "DisplayAlerts");
-COM.SetProperty(oApp, "Visible", bAppVisible);
-COM.SetProperty(oApp, "DisplayAlerts", 0);
-oDocs = COM.GetProperty(oApp, "Documents");
-oDoc = COM.CallMethod(oDocs, "Add");
-oSelection = COM.GetProperty(oApp, "Selection");
-COM.CallMethod(oSelection, "TypeText", sText);
-oRange = COM.GetProperty(oSelection, "Range");
-Util.ActivateProcess("WinWord");
-COM.CallMethod(oRange, "CheckSynonyms");
-iLength = (int) COM.GetProperty(oSelection, "StoryLength");
-COM.CallMethod(oSelection, "SetRange", new object[] {0, iLength});
-sText = (string) COM.GetProperty(oSelection, "Text");
-sText = sText.Trim();
-COM.Release(ref oRange);
-COM.Release(ref oSelection);
-VB.WordClose(oDoc);
-COM.Release(ref oDoc);
-COM.Release(ref oDocs);
-if (bCreate) {
-//VB.WordQuit(oApp);
-}
-else {
-COM.SetProperty(oApp, "Visible", bVisible);
-COM.SetProperty(oApp, "DisplayAlerts", iDisplayAlerts);
-}
-COM.Release(ref oApp);
-
+rtb.ReplaceRange(iStart, iEnd, sChoice);
+rtb.Index = iStart;
 App.Frame.Activate();
 App.Frame.Child.RTB.Select();
-sText = Util.Convert2UnixLineBreak(sText);
-if (sText == sOldText) AddMessage("No changes!");
-else {
-rtb.ReplaceRange(iStart, iEnd, sText);
-rtb.Index = iStart;
-//AddMessage("Done");
-}
+AddMessage("Wstawiono: " + sChoice);
 } // Thesaurus method
 
 // bForce = user SWIADOMIE wybral ponowna instalacje biezacej wersji

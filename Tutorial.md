@@ -124,7 +124,7 @@ EdSharp lets you divide a document into named sections, which is the basis of th
 ### Spell Checker and Thesaurus
 
 - F7 = Spell check.
-- Shift+F7 = Thesaurus.
+- Shift+F7 = Polish thesaurus. It works locally without Microsoft Word or an Internet connection; choose a synonym and press Enter to replace the word.
 
 ### Software Development
 

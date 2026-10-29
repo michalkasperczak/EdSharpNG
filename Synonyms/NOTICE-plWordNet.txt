@@ -1,0 +1,35 @@
+EdSharpNG — lokalny słownik synonimów
+=======================================
+
+Ten katalog zawiera gotowy do odczytu indeks synonimów dla polecenia
+Shift+F7. Program nie łączy się z Internetem podczas wyszukiwania i nie
+wymaga Microsoft Worda, Pythona ani serwera baz danych.
+
+Pochodzenie bieżących danych
+----------------------------
+
+`plwordnet-synonyms.txt` został wygenerowany z eksportu OMW plWordNet 2.0.
+Jest to przejściowy, mały indeks wydania beta. Nie zawiera definicji, odmiany
+wyrazów ani wszystkich wyrażeń wielowyrazowych. Dołączony jest pełny tekst
+licencji źródła: `LICENSE-plWordNet.txt`.
+
+plWordNet 2.3 © 2015 by Wrocław University of Technology. All rights
+reserved. Licencja pozwala używać, kopiować, modyfikować, rozpowszechniać i
+publicznie udostępniać bazę bez opłaty, także komercyjnie, pod warunkiem
+zachowania informacji o prawach autorskich, licencji oraz zastrzeżenia braku
+gwarancji. Pełne, wiążące warunki są w pliku licencji.
+
+Cytowanie źródła
+----------------
+
+Maciej Piasecki, Stanisław Szpakowicz and Bartosz Broda. 2009. *A Wordnet from
+the Ground Up*. Wrocław: Oficyna Wydawnicza Politechniki Wrocławskiej.
+
+Plan aktualizacji
+-----------------
+
+Zespół Słowosieci przekazał dostęp do aktualnego plWordNet 5.0 w postaci bazy
+SQL i potwierdził użycie bezpłatne oraz komercyjne przy zachowaniu licencji,
+zastrzeżeń i cytowań. Po kompletnym, zweryfikowanym pobraniu tej bazy indeks
+zostanie odtworzony z plWordNet 5.0, a ten plik oraz licencja zostaną
+zaktualizowane zgodnie z dołączonymi warunkami wydania 5.0.

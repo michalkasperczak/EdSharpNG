@@ -85,6 +85,7 @@ Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; (16.09.2026, docs/CO-USUWAMY.md 2.2).  Zrodla jada z paczka, zeby program dal
 ; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
 Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
+Source: "Synonimy.cs";        DestDir: "{app}"; Flags: ignoreversion
 ; Zadania.cs -- listy zadan (checklisty Markdown), funkcje czyste
 Source: "Zadania.cs";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Zmiany.cs -- sledzenie zmian (CriticMarkup), funkcje czyste, krok 1a
@@ -136,6 +137,7 @@ Source: "history.txt";        DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "lgpl.txt";           DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Data trees.
 Source: "Snippets\*"; DestDir: "{app}\Snippets"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
+Source: "Synonyms\*"; DestDir: "{app}\Synonyms"; Flags: recursesubdirs ignoreversion
 Source: "Convert\*";  DestDir: "{app}\Convert";  Excludes: "*.sln,*.vcproj,*.vcxproj,*.vcxproj.filters,*.suo,*.user,*.c,*.asm,*.cs,*.obj,*.zip,temp.htm,temp.txt"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
 
 [Dirs]

@@ -94,7 +94,7 @@ Two commands produce text in a new window after comparing sets of lines.  Lines 
 ### Deleting
 As usual, Delete (without a selection) deletes a character in the forward direction, and Backspace deletes backward.  Control+Delete deletes forward by a word, and Control+Backspace deletes backward.  Control+Shift+Delete deletes from the cursor to the end of the line, and Control+Shift+Backspace deletes from the cursor to the start of the line.  Alt+Shift+Delete deletes from the cursor to the end of the document, and Alt+Shift+Backspace deletes from the cursor to the top of the document.  Alt+Backspace deletes the current line.  Control+D deletes the current hard line (past wrapping to the next hard line break).  Control+Shift+D deletes the current paragraph (past one or more blank lines).  After deleting, EdSharp reads the new character, word, or line at the cursor.
 
-Press F7 to spell check all or selected text.  With no selection, checking starts at the cursor rather than at the top of the document, so you can resume where you left off.  EdSharpNG uses the spell checker built into Windows -- the same one other Windows programs use -- so Microsoft Word is no longer required and the check happens without leaving the editor.  Polish is supported, as is any other language whose dictionary is installed in Windows.  Use the Thesaurus command, Shift+F7, to look up synonyms for the word at the cursor position; that one still relies on Microsoft Word.
+Press F7 to spell check all or selected text.  With no selection, checking starts at the cursor rather than at the top of the document, so you can resume where you left off.  EdSharpNG uses the spell checker built into Windows -- the same one other Windows programs use -- so Microsoft Word is no longer required and the check happens without leaving the editor.  Polish is supported, as is any other language whose dictionary is installed in Windows.  Use the Thesaurus command, Shift+F7, to look up Polish synonyms for the word at the cursor position.  The thesaurus works locally from the included plWordNet index: it does not need Microsoft Word or an Internet connection.  The list says the part of speech and meaning number for every result; choose a result and press Enter to replace the word.
 
 ## Navigating
 Press Home or End to go to the start or end of the line, and automatically hear the character there.  Press Alt+Home or Alt+End to go to the first or last non-blank character of the line.  Press Control+Home or Control+End to go to the top or bottom of the document, and automatically hear the line there.
@@ -697,7 +697,7 @@ Go to Special Folder=Control+Shift+F4, Go to special folder of Windows
 Go to Environment=, Go to interactive environment of current compiler (menu only, no shortcut)
 
 Spell Check=F7, Spell check all or selected text
-Thesaurus=Shift+F7, Look up synonyms for word at cursor
+Thesaurus=Shift+F7, Look up Polish synonyms locally for word at cursor; Enter replaces it
 
 Say Path=Alt+P, Say full path of current file
 Path to Clipboard=Alt+Shift+P, Copy full path of current file to clipboard
