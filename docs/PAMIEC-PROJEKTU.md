@@ -5,7 +5,7 @@ Powstal automatycznie i bedzie nadpisywany. Nie edytuj go recznie -
 zmiany przepadna przy nastepnym eksporcie. Dokumentacja i podrecznik
 maja z tego POWSTAC; katalog `docs/` opisuje, co gdzie trafia.
 
-Wygenerowane: 2026-10-25 12:00 (CEST). Wpisow: 140 z 896 w calej pamieci.
+Wygenerowane: 2026-11-01 12:00 (CEST). Wpisow: 145 z 915 w calej pamieci.
 
 Zrodlo: kolekcja `memory` w HyperspaceDB na maszynie Hermesa.
 Skrypt: `~/.hermes/scripts/eksport_pamieci_edsharp.py`.
@@ -158,6 +158,11 @@ tutaj, bo pokazuje, co i dlaczego zmienilo sie w ustaleniach.
 - 2026-10-18 23:44 - USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, w tym AMC i EdSharp. Projekty maja zostawiac [NIEAKTUALNY]
 - 2026-10-18 23:56 - USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, ale pelny kontrakt Paleta Polecen + pomoc kl
 - 2026-10-24 01:21 - USTALENIE 24.10.2026 EdSharpNG: wstepna ocena aktualnego kodu i materialow Quill/Paperback nie uzasadnia przeb
+- 2026-10-28 20:56 - USTALENIE 28.10.2026: Profile Hermes edsharp, amc, audio, szukaj i radio sa odrebne (wlasne katalogi, config.y
+- 2026-10-29 03:47 - USTALENIE 29.10.2026 - raport rozpoznania polskiego slownika synonimow zapisany jako /home/michal/projekty/eds
+- 2026-10-29 04:08 - USTALENIE 29.10.2026 - synonimy EdSharpNG: Docelowo aplikacja ma dostac wlasny indeks tylko do odczytu, genero
+- 2026-10-29 04:24 - USTALENIE 29.10.2026 - na wyrazna zgode Michala wyslano przez skonfigurowane konto Gmail prosbe do plwordnet@c
+- 2026-10-29 14:27 - PODSUMOWANIE 29.10.2026 - EdSharpNG lokalny slownik synonimow, commit 804d2e5. Shift+F7 nie uzywa juz Word COM
 
 ## Wpisy
 
@@ -2787,3 +2792,38 @@ USTALENIE STALE 18.10.2026 - zasada dotyczy wszystkich projektow, ale pelny kont
 (rodzaj: ustalenie; projekt: edsharp)
 
 USTALENIE 24.10.2026 EdSharpNG: wstepna ocena aktualnego kodu i materialow Quill/Paperback nie uzasadnia przebudowy parsera/importu, wymiany WinForms ani portowania obcych bibliotek. EdSharpNG ma import Pandoc, mapy zrodlo<->widok w podgladzie Escape i zabezpieczona w 5.0.115 tozsamosc importowanych dokumentow. Kolejny sensowny krok po wznowieniu to maly, rozrozniajacy przeglad na wlasnych dokumentach i zywy NVDA: Unicode/emoji, pozycje, linki, zakladki, komunikaty menu i rzeczywiste formaty. Najbardziej obiecujacy kierunek: odbior/nawigacja podgladu Escape, nie wymiana importu. Quill: wzorce kontraktow UI, rozdzielenia io/ui i auto-snippets; Paperback: przypadki testowe pozycji/struktury. Plik repo: ~/projekty/edsharp/docs/PODSUMOWANIE-EDSHARPNG-2026-10-24.md; decyzje dodane do docs/ZADANIA-2026-09.md. Kopia potwierdzona hashem na glownym: D:\Projekty Codex\Hermes\Nowe\EdSharpNG_podsumowanie_2026-10-24.md.
+
+
+### 1793213783 - 2026-10-28 20:56
+
+(rodzaj: ustalenie)
+
+USTALENIE 28.10.2026: Profile Hermes edsharp, amc, audio, szukaj i radio sa odrebne (wlasne katalogi, config.yaml, state.db, cron i SOUL.md) i wszystkie sa aktywne w jednym hostowym multiplexerze hermes-gateway.service. Radio przeniesiono z profilu default do profilu radio: stare zadanie 4bf101726a6c usuniete z default, nowe 58f287ee7c28 w radio, aktywne; zachowano identyczne prompt (SHA zgodny), harmonogram 15,45 0-1,5-23 * * *, umiejetnosci, model openai-codex/gpt-5.6-terra, katalog roboczy i dostawe Telegram do watku 36006. Cron doctor Radio bez problemow, ticker zyje. Unit hermes-gateway.service active/running, enabled, linger=yes; po restarcie o 19:43 polaczyl wszystkie profile. Nie wykonano kolejnego restartu w tej sesji, bo terminal jest dzieckiem dzialajacego gatewaya i bezpiecznik blokuje restart z wlasnej cgroup.
+
+
+### 1793238438 - 2026-10-29 03:47
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 29.10.2026 - raport rozpoznania polskiego slownika synonimow zapisany jako /home/michal/projekty/edsharp/docs/RAPORT-SLOWNIK-SYNONIMOW-2026-10-29.md. Aktualny EdSharpNG Shift+F7 nadal automatyzuje Word COM CheckSynonyms. Zbadany upstream Jamala (HEAD 3133ca76): nowy WordNet przez Python/NLTK jest angielski (wordnet.synsets bez lang=pol), wiec jest wzorem UX bez Worda, nie gotowym polskim portem. Rekomendacja: lokalny prototyp C# na kompaktowym OMW/plWordNet 2.0, bez Worda/Pythona/Internetu, potem pomiar co najmniej 100 polskich slow i NVDA. Pobrany OMW pl: 1.12MB xz, 13.9MB XML, 45140 lemow, 33826 synsetow; realne trafienia dom/szybki/wazny/pomoc ale braki np ladny/mowic/robic/sprawdzic i zero definicji synsetow. Pelny oficjalny plWordNet 4.5 ma 444MB i aktualnie wymaga zgloszenia do helpdesku; bez kontaktu nie pobierano. Licencja plWordNet dopuszcza uzycie komercyjne z zachowaniem informacji licencyjnej. PolNet odrzucony: CC BY-NC-ND.
+
+
+### 1793239699 - 2026-10-29 04:08
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 29.10.2026 - synonimy EdSharpNG: Docelowo aplikacja ma dostac wlasny indeks tylko do odczytu, generowany w procesie budowy z XML plWordNet, nie czytac XML ani wymagac Pythona/Worda/Internetu w runtime. Indeks: lemat po normalizacji -> grupy (czesc mowy, ID znaczenia, inne lemy), jawny brak definicji; prototyp moze uzyc UTF-8 JSON/tekst, wydanie po pomiarze zwartego binarnego indeksu. OMW/plWordNet 2.0 jest dostepny od reki, legalny i wystarczajacy do lokalnego prototypu, ale niepelny/stary. Dla docelowego zasobu warto wystapic do zespolu Slowosieci o aktualny pelny plWordNet; kontaktu nie wysylac bez decyzji Michala. Raport rozszerzony i dostarczony na glowny komputer do D:\Projekty Codex\Hermes\Nowe\RAPORT-SLOWNIK-SYNONIMOW-2026-10-29.md; SHA256 lokalnego i celu zgodne: 5d8cccaf545cd0e81eb53e353b3e0a23ac956c8ca05e7dc551b334bd846597c2.
+
+
+### 1793240645 - 2026-10-29 04:24
+
+(rodzaj: ustalenie; projekt: edsharp)
+
+USTALENIE 29.10.2026 - na wyrazna zgode Michala wyslano przez skonfigurowane konto Gmail prosbe do plwordnet@clarin-pl.eu o aktualne pliki plWordNet, format i warunki redystrybucji dla bezplatnego, lokalnego i dostepnego EdSharpNG. Wysylka SMTP oraz kopia w folderze Wyslane zostaly zweryfikowane; wiadomosc id 39469 ma prawidlowy adresata, temat i tresc. Hermes ma skonfigurowany dostep IMAP/SMTP do konta Gmail Michala; nie odczytywano ani nie ujawniano hasla. plWordNet to nazwa polskiej sieci znaczen i relacji wyrazow (Polish WordNet), nie nazwa uslugi mailowej.
+
+
+### 1793276830 - 2026-10-29 14:27
+
+(rodzaj: podsumowanie; projekt: edsharp)
+
+PODSUMOWANIE 29.10.2026 - EdSharpNG lokalny slownik synonimow, commit 804d2e5. Shift+F7 nie uzywa juz Word COM; odczytuje dolaczony lokalny indeks UTF-8 OMW/plWordNet przez Synonimy.cs, pokazuje grupy znaczen, Enter wstawia wybor, Escape anuluje. Runtime nie wymaga Worda, Pythona, Internetu ani SQL. Licencja i notice sa w Synonyms/ i instalator je pakuje. Po niezaleznym review naprawiono blokery: zaznaczenie z otaczajacymi spacjami jest odrzucane bez zmiany zakresu, a zamiana zachowuje poczatkowa/wielkie litery; parser odrzuca bledne UTF-8. Testy loadera i runtime indeksu zielone, build 5.0.117 i instalator przeszly. Zywym NVDA zmierzono: fokus na pozycji Rzeczownik, znaczenie 1: chalupa; Enter dla Dom wstawia Chalupa i wraca do edytora; zaznaczenie ' dom ' nie otwiera listy i zostaje niezmienione. Instalator 5.0.117 i instrukcja sa na komputerze glownym w D:\Projekty Codex\Hermes\Nowe, hash instalatora d1f301b5cdf6957c411b7c09a56007044a4bc2dafe4c321f2f1128a9426b69fe. Aktualny indeks jest beta z OMW/plWordNet, nie pelny plWordNet 5.0. Pobranie SQL 5.0 z CLARIN bylo niestabilne/wolne (HTTP/2 error 92; HTTP/1.1 ok. 4 KB/s) i nie zostalo zweryfikowane; nie wolno twierdzic, ze indeks jest 5.0 ani publikowac go jako finalnego.
