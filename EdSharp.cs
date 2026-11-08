@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.117";
+public const string VersionString = "5.0.118";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -8109,16 +8109,13 @@ AddMessage("Nie znaleziono synonimów dla: " + sText);
 return;
 }
 
+int iTotal = 0;
+foreach (Synonimy.Grupa group in lGroups) iTotal += group.Synonyms.Count;
 for (int iGroup = 0; iGroup < lGroups.Count; iGroup++) {
 Synonimy.Grupa group = lGroups[iGroup];
-string sPart = "Inna część mowy";
-if (group.PartOfSpeech == "n") sPart = "Rzeczownik";
-else if (group.PartOfSpeech == "v") sPart = "Czasownik";
-else if (group.PartOfSpeech == "a") sPart = "Przymiotnik";
-else if (group.PartOfSpeech == "r") sPart = "Przysłówek";
 foreach (string sSynonym in group.Synonyms) {
 lValues.Add(sSynonym);
-lDisplay.Add(sPart + ", znaczenie " + (iGroup + 1) + ": " + sSynonym);
+lDisplay.Add(Synonimy.FormatEntry(sSynonym, group.PartOfSpeech, lValues.Count, iTotal));
 }
 }
 

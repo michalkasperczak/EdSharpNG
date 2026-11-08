@@ -3,6 +3,27 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
+## Synonimy — odbiór pierwszej wersji i krótsza lista (09.11.2026)
+
+Źródło: odesłana instrukcja testu `EdSharp INSTRUKCJA-TEST-SYNONIMY-5.0.116.md`.
+Michał potwierdził działanie pierwszej wersji: Word i przeglądarka nie otwierają
+się, Enter, Escape, strzałki i fokus działają. Nie przypisywać zgłoszeniu
+wersji 5.0.117: nazwa dokumentu wskazuje 5.0.116, wersja uruchomionej binarki
+nie została tym zgłoszeniem osobno potwierdzona.
+
+- [x] Wyraz przed częścią mowy; usunąć zwrot „znaczenie 1”.
+- [x] Numeracja pozycji na całej płaskiej liście, nie numer grupy znaczeniowej.
+  Format: `chałupa, rzeczownik, 1 z 5`. Wersja robocza 5.0.118.
+- [x] Testy formatu, loadera i indeksu; żywy NVDA: pierwsza, druga i ostatnia
+  pozycja, Enter wstawia sam wyraz, Escape nie zmienia dokumentu.
+- [ ] Pełny plWordNet 5.0: pobrać i zweryfikować kompletne źródło; nie zastępować
+  działającego OMW niesprawdzonym pobraniem i nie nazywać go indeksem 5.0.
+- [ ] W kolejnym etapie rozważyć krótkie opisy znaczeń z danych źródłowych.
+  Bez automatycznie wymyślonych definicji, bez drzewa i numerowanych grup
+  narzuconych użytkownikowi. Obecny indeks nie zawiera definicji.
+
+Szczegóły i zapis mowy: `SYNONIMY-ODBIOR-I-KROTSZA-LISTA-5.0.118.md`.
+
 ## Stan na 18.09.2026 — przerwa w pracach po wydaniu 5.0.114
 
 Michał potwierdził w wiadomości z 18.09.2026, że zaktualizował i zainstalował

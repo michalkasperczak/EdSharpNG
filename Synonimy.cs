@@ -49,6 +49,15 @@ if (Char.IsUpper(sSource, 0)) return Char.ToUpperInvariant(sReplacement[0]) + sR
 return sReplacement;
 } // ApplyCapitalization method
 
+public static string FormatEntry(string sSynonym, string sPartOfSpeech, int iPosition, int iTotal) {
+string sPart = "inna część mowy";
+if (sPartOfSpeech == "n") sPart = "rzeczownik";
+else if (sPartOfSpeech == "v") sPart = "czasownik";
+else if (sPartOfSpeech == "a") sPart = "przymiotnik";
+else if (sPartOfSpeech == "r") sPart = "przysłówek";
+return sSynonym + ", " + sPart + ", " + iPosition + " z " + iTotal;
+} // FormatEntry method
+
 public static void ResetForTests() {
 hashGroups.Clear();
 Error = "";

@@ -1,0 +1,7 @@
+PASS runtime synonym index is present
+PASS runtime synonym index loads
+PASS common Polish word dom has a group
+PASS dom has a usable synonym
+PASS important Polish word ważny has a group
+PASS index does not return the source word
+FAILURES=0
