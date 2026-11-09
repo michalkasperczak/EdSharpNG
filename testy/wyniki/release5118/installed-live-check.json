@@ -1,0 +1,19 @@
+{
+  "machine": "HERMES",
+  "installed_exe": "C:\\EdSharpRelease118Installed\\EdSharpNG.exe",
+  "installer_exit_code": 0,
+  "exe_sha256": "59e312495eaf81961279cf26a4dc83aa0569e292c66cdd172099f124b837d26d",
+  "installed_files_identical_to_zip_and_stage": 448,
+  "observed_nvda_focus_first": "chałupa, rzeczownik, 1 z 5",
+  "observed_nvda_focus_after_down": "chata, rzeczownik, 2 z 5",
+  "observed_nvda_editor_after_enter": "\tchata\r",
+  "observed_nvda_editor_after_undo_then_escape": "\tdom\r",
+  "note": "Tab wysłany przy odświeżaniu fokusu dopisał tabulator do własnej próbki przed słowem. Enter zmienił tylko dom na chata; Escape zachował tekst. Nie jest to zmiana w dokumencie użytkownika.",
+  "word_processes_before": [],
+  "word_processes_after_synonyms": [],
+  "observed_f11_dialog_title": "Elevate Version",
+  "observed_f11_message": "EdSharpNG 5.0.118 is up to date.",
+  "speech_transcript_of_same_exe_bytes": "../synonyms118/nvda-speech.json",
+  "new_speech_transcript_captured_in_this_installation_test": false,
+  "main_computer_installation_performed": false
+}

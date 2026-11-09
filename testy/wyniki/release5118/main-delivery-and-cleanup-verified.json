@@ -1,0 +1,23 @@
+{
+  "RemovedOldInstaller": true,
+  "Files": [
+    {
+      "Path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.118.zip",
+      "Bytes": 2425401,
+      "Hash": "3CCCB12704CD287637EB662CA141E18E647FDBC60AFB390D96C186EEC5101569"
+    },
+    {
+      "Path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_Setup_5.0.118.exe",
+      "Bytes": 3777021,
+      "Hash": "A169520818D9A64A8BF7EF537C1E4EE8DB05ADA17AC8534A55F21D7BC7A308EE"
+    }
+  ],
+  "Processes": [
+    {
+      "Name": "EdSharpNG.exe",
+      "ProcessId": 45408,
+      "ExecutablePath": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe"
+    }
+  ],
+  "InstalledHash": "86F59310F5F23FE132C361321B9165B2BA8BE2C09269CBE4CE1EB6C69316A96E"
+}

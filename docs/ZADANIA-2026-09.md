@@ -3,6 +3,32 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
+## Synonimy — publikacja odebranego etapu (09.11.2026)
+
+Michał wyjaśnił, że pobrał aktualizację z GitHuba, i zlecił uporządkowanie
+wydania. Publiczne `/releases/latest` wskazywało 5.0.115, podczas gdy lokalny
+słownik był dotąd tylko w prywatnych instalatorach. Zakres: wydać gotowe
+synonimy i krótszą listę jako 5.0.118, bez pełnego plWordNet 5.0 i bez innych
+odłożonych funkcji. Nie wymuszać aktualizacji w aktywnej sesji na głównym.
+
+- [x] Zamrożone źródła 960e5c9 i ten sam instalator co w dostawie; osobny
+  worktree `edsharp-release-5.0.118`, bez ponownej kompilacji zmieniającej SHA.
+- [x] Próba instalacji dokładnego instalatora na Hermesie; kod 0, wszystkie
+  pliki paczki identyczne, Shift+F7/Enter/Escape zmierzone żywym NVDA.
+- [x] Instalator i ZIP z tego samego stagingu; licencja i notice w obu.
+- [x] Opublikowano i pobrano oba załączniki; `/releases/latest` wskazuje
+  v5.0.118. Aktualizator wybrał właściwy instalator i pierwszą sumę SHA-256
+  z opisu; F11 na próbnej instalacji potwierdziło wersję 5.0.118.
+- [x] W `Nowe` na głównym są instalator, ZIP i opis 5.0.118. Stary własny
+  instalator 5.0.115 z folderu Hermes usunięto po kontroli tożsamości,
+  zachowaniu lokalnej kopii i potwierdzeniu publicznego archiwum.
+  Proces użytkownika i zainstalowane bajty pozostały bez zmian — to nadal
+  5.0.115 do czasu samodzielnej aktualizacji, nie meldować instalacji u niego.
+
+Wydanie: https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.118
+ID 438621260, tag wskazuje 960e5c9501efeff7bb29e98de13e560f00a322d2.
+Weryfikacja: `testy/wyniki/release5118/`, opis: `RELEASE-NOTES-5.0.118.md`.
+
 ## Synonimy — odbiór pierwszej wersji i krótsza lista (09.11.2026)
 
 Źródło: odesłana instrukcja testu `EdSharp INSTRUKCJA-TEST-SYNONIMY-5.0.116.md`.
@@ -23,6 +49,15 @@ nie została tym zgłoszeniem osobno potwierdzona.
   narzuconych użytkownikowi. Obecny indeks nie zawiera definicji.
 
 Szczegóły i zapis mowy: `SYNONIMY-ODBIOR-I-KROTSZA-LISTA-5.0.118.md`.
+
+Zgłoszenie po dostawie: Shift+F7 uruchamia Worda. Odczyt na głównym komputerze
+wykazał działającą i zainstalowaną wersję **5.0.115**, nie 5.0.118; dołączone
+źródło wciąż wywołuje WordAccess/CheckSynonyms. Instalator 5.0.118 w `Nowe`
+ma zgodny hash dostawy. Nie ustalono przyczyny powrotu starszej wersji.
+Nie zamykano programu ani nie instalowano aktualizacji w aktywnej sesji.
+- [ ] Bezpieczna aktualizacja głównego komputera po decyzji Michała i odbiór
+  lokalnego słownika na rzeczywiście uruchomionej binarce.
+Diagnoza: `DIAGNOZA-SYNONIMY-WORD-PO-DOSTAWIE-5.0.118.md`.
 
 ## Stan na 18.09.2026 — przerwa w pracach po wydaniu 5.0.114
 
