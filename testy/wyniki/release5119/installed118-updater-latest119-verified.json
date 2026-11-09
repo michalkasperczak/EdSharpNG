@@ -1,0 +1,7 @@
+{
+  "installer_url": "https://github.com/michalkasperczak/EdSharpNG/releases/download/v5.0.119/EdSharpNG_Setup_5.0.119.exe",
+  "status": 200,
+  "source_exe_sha256": "59e312495eaf81961279cf26a4dc83aa0569e292c66cdd172099f124b837d26d",
+  "first_sha256": "0aee1a2708df49da8ed10c40b05530d46d14840501fdc62d0f38bb171e627cec",
+  "tag": "v5.0.119"
+}

@@ -24,8 +24,11 @@ komunikaty braku wyniku i uszkodzenia indeksu oraz działanie po jego
 odtworzeniu. Pomiar wykonania: 153/190 bezpośrednich haseł, 156/190 z
 rozpoznawaniem form, 259/290 jawnie wybranych poświadczonych form. To zestaw
 kontrolny, nie statystyczna próba języka. Szczegóły i ograniczenia:
-`SYNONIMY-ODBIOR-5.0.119.md`. Publikacja nadal czeka na niezależny przegląd;
-głównej instalacji nie zmieniono. Poniższe akapity zachowują kolejność prac,
+`SYNONIMY-ODBIOR-5.0.119.md`. Po niezależnym przeglądzie opublikowano
+5.0.119: GitHub/latest, oba pobrane załączniki i F11 z instalacji 5.0.118
+zweryfikowano. Instalator, ZIP i opis dostarczono do Nowe na komputerze
+Michała z kontrolą SHA-256; głównej instalacji ani procesu nie zmieniono.
+Poniższe akapity zachowują kolejność prac,
 więc ich wcześniejsze zastrzeżenia „na razie” nie opisują końcowego odbioru.
 
 Nie przenosimy odmiany między OMW i 5.0 po samym napisie lematu: nie ma

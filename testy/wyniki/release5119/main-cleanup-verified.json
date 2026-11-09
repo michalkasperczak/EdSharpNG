@@ -1,0 +1,25 @@
+{
+  "partial_exists": false,
+  "remaining_packages": [
+    {
+      "Name": "EdSharpNG_5.0.119.zip",
+      "Length": 89764115
+    },
+    {
+      "Name": "EdSharpNG_Setup_5.0.119.exe",
+      "Length": 79748196
+    }
+  ],
+  "processes": [
+    {
+      "Id": 17740,
+      "Path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe",
+      "StartTime": "/Date(1794184975315)/"
+    }
+  ],
+  "removed": [
+    "EdSharpNG_5.0.118.zip",
+    "EdSharpNG_Setup_5.0.118.exe"
+  ],
+  "installed_sha256": "59e312495eaf81961279cf26a4dc83aa0569e292c66cdd172099f124b837d26d"
+}

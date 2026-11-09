@@ -1,0 +1,14 @@
+[
+  {
+    "name": "EdSharpNG_Setup_5.0.119.exe",
+    "download_url": "https://github.com/michalkasperczak/EdSharpNG/releases/download/v5.0.119/EdSharpNG_Setup_5.0.119.exe",
+    "sha256": "0aee1a2708df49da8ed10c40b05530d46d14840501fdc62d0f38bb171e627cec",
+    "bytes": 79748196
+  },
+  {
+    "name": "EdSharpNG_5.0.119.zip",
+    "download_url": "https://github.com/michalkasperczak/EdSharpNG/releases/download/v5.0.119/EdSharpNG_5.0.119.zip",
+    "sha256": "d9c2cd732c4d0e57b99dbb04ef2dabb33d3150e70747db65672a751ced5f7baf",
+    "bytes": 89764115
+  }
+]

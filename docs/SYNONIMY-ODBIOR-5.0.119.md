@@ -4,7 +4,11 @@
 
 Kandydat został zbudowany pełnym kompilatorem .NET Framework i rzeczywiście zainstalowany na Hermesie. Wszystkie 453 pliki instalacji są identyczne ze stagingiem i ZIP-em. Odbiór żywym NVDA przeszedł, włącznie z komunikatem uszkodzonego indeksu i odzyskaniem działania w tym samym procesie.
 
-**Stan publikacji: odbiór i niezależny przegląd zakończone; gotowy do publikacji.** Wskazany przez recenzenta brak nowych plików w indeksie Git został usunięty przed udaną budową i instalacją. Rozstrzygnięcie: `testy/wyniki/synonyms119/independent-review-resolution.md`. Nie oznaczamy jeszcze GitHuba ani F11 jako odebranych. Nie zmieniono instalacji na głównym komputerze. Jego świeży odczyt wykazał już binarkę zgodną z przetestowanym 5.0.118, nie wcześniejszym 5.0.115; nie zamykano tam procesu EdSharpNG.
+**Stan publikacji: wydano 5.0.119 i dostarczono pliki, bez aktualizacji głównej instalacji.** Niezależny przegląd zakończono; wskazany przejściowy brak nowych plików w indeksie Git został usunięty przed udaną budową i instalacją. Rozstrzygnięcie: `testy/wyniki/synonyms119/independent-review-resolution.md`.
+
+GitHub Release i `/releases/latest` wskazują [v5.0.119](https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.119), tag prowadzi do `d1f42c10eb7a096b0a3a641cd01390b3ee252d47`. Oba załączniki pobrano z publicznego wydania i porównano pełne SHA-256 z odebraną paczką. Rzeczywiste F11 w testowej instalacji 5.0.118 pokazało dostępne 5.0.119; Escape anulował pytanie bez instalacji. Osobne wywołanie skompilowanego `FetchLatestRelease` zwróciło HTTP 200, poprawny adres instalatora i poprawną pierwszą sumę SHA-256 z opisu.
+
+Na komputerze MICHAL do `D:\Projekty Codex\Hermes\Nowe` dostarczono instalator, ZIP i `EdSharpNG_5.0.119_Nowosci.md`. Hashe obu paczek odczytano z dysku celu; nie zmieniono zainstalowanej binarki 5.0.118 ani procesu użytkownika (ten sam PID i czas startu). Usunięto wyłącznie zastąpione, nieużywane paczki 5.0.118 po pobraniu i sprawdzeniu ich odpowiedników z archiwalnego wydania. Dokumenty użytkownika zachowano; usunięto własną niedokończoną kopię z Temp. Raporty: `testy/wyniki/release5119/public-release-verified.json`, `public-downloads-verified.json`, `installed118-updater-latest119-verified.json`, `main-delivery-verified.json` i `main-cleanup-verified.json`.
 
 ## Dane i pokrycie
 

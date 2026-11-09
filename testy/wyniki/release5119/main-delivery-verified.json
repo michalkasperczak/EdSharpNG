@@ -1,0 +1,27 @@
+{
+  "notes": {
+    "sha256": "41f46966f0a1f91b96eb90323ea62d665eed146594cd6892be94891307b6ca06",
+    "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.119_Nowosci.md"
+  },
+  "installed_sha256": "59e312495eaf81961279cf26a4dc83aa0569e292c66cdd172099f124b837d26d",
+  "processes": [
+    {
+      "Id": 17740,
+      "Path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe",
+      "StartTime": "/Date(1794184975315)/"
+    }
+  ],
+  "files": [
+    {
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_Setup_5.0.119.exe",
+      "sha256": "0aee1a2708df49da8ed10c40b05530d46d14840501fdc62d0f38bb171e627cec",
+      "bytes": 79748196
+    },
+    {
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.119.zip",
+      "sha256": "d9c2cd732c4d0e57b99dbb04ef2dabb33d3150e70747db65672a751ced5f7baf",
+      "bytes": 89764115
+    }
+  ],
+  "machine": "MICHAL"
+}

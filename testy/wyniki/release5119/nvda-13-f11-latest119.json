@@ -1,0 +1,54 @@
+[
+    {
+        "title":  "EdSharpNG - [NoName1]",
+        "handle":  197828,
+        "pid":  5840,
+        "items":  [
+                      {
+                          "name":  "Elevate Version",
+                          "type":  "ControlType.Window",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "A newer EdSharp is available.\nInstalled: 5.0.118\nAvailable: 5.0.119\n\nDownload and run the new installer now?",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Help",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Cancel",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "No",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Yes",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "NoName1",
+                          "type":  "ControlType.Window",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "RichEdit Control",
+                          "type":  "ControlType.Document",
+                          "value":  "\r"
+                      }
+                  ]
+    }
+]

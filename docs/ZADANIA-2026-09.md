@@ -3,7 +3,7 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
-## Synonimy — dalsza rozbudowa (09.11.2026, w toku)
+## Synonimy — dalsza rozbudowa (09.11.2026, wydano 5.0.119)
 
 Plan i wyniki: `SYNONIMY-ROZBUDOWA-2026-11.md`.
 
@@ -23,10 +23,15 @@ Plan i wyniki: `SYNONIMY-ROZBUDOWA-2026-11.md`.
   i uszkodzenia danych oraz powrót po naprawie sprawdzone żywym NVDA.
 - [x] Instalator i ZIP 5.0.119: rzeczywista instalacja na Hermesie, kod 0;
   wszystkie 453 pliki identyczne ze stagingiem i ZIP-em, weryfikacja SHA-256.
-- [ ] Jedno spójne wydanie: instalator, ZIP, GitHub i F11 po odbiorze.
-  Kandydat 5.0.119 czeka na niezależny przegląd przed publikacją. Publiczne
-  5.0.118 oraz instalacja na głównym pozostają bez zmian. Wynik odbioru:
-  `SYNONIMY-ODBIOR-5.0.119.md`. Brak `sprawdziłem` i brak providera Worda
+- [x] Jedno spójne wydanie 5.0.119: instalator, ZIP, GitHub/latest i F11.
+  Niezależny przegląd zakończony; przejściowy brak plików w indeksie usunięto.
+  Tag `v5.0.119` wskazuje `d1f42c10eb7a096b0a3a641cd01390b3ee252d47`.
+  Oba publiczne załączniki pobrano i porównano ich SHA-256. F11 z testowej
+  instalacji 5.0.118 wykryło 5.0.119; pytanie anulowano bez instalacji.
+  Instalator, ZIP i opis są w Nowe na komputerze MICHAL, hashe celu zgodne.
+  Zachowano binarkę i działający proces głównej instalacji 5.0.118.
+  Własne stare paczki usunięto po sprawdzeniu archiwum; Temp posprzątano.
+  Wynik odbioru: `SYNONIMY-ODBIOR-5.0.119.md`. Brak `sprawdziłem` i brak providera Worda
   pozostają jawnymi ograniczeniami, nie zakończonymi funkcjami.
 
 ## Synonimy — publikacja odebranego etapu (09.11.2026)
