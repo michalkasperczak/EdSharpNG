@@ -1,0 +1,783 @@
+{
+  "purpose": "Read-only build-time probe; no production repository files were touched.",
+  "runtime": {
+    "python": "3.11.16",
+    "platform": "Linux-6.18.33.2-microsoft-standard-WSL2-x86_64-with-glibc2.43",
+    "morfeusz2_distribution_version": "1.99.15",
+    "module_path": "/home/michal/.hermes/profiles/edsharp/cache/scratch/morfologia119/venv/lib/python3.11/site-packages/morfeusz2.py",
+    "wheel_files": [
+      {
+        "path": "/home/michal/.hermes/profiles/edsharp/cache/scratch/morfologia119/wheels/morfeusz2-1.99.15-20260601-cp310-abi3-manylinux_2_28_x86_64.whl",
+        "bytes": 9210531,
+        "sha256": "089a83ab03a137a57e23d9d42028d80b8858d1a4de78f1db86a18ba504400a98"
+      }
+    ]
+  },
+  "dictionary": {
+    "id": "pl.sgjp.sgjp-2026.06.01",
+    "copyright": "Copyright © 2007–2026 Marcin Woliński, Zbigniew Bronk, Włodzimierz Gruszczyński, Witold Kieraś, Zygmunt Saloni, Danuta Skowrońska, Robert Wołosz\r\n\r\nAll rights reserved.\r\n\r\nRedistribution and use in source and binary forms, with or without\r\nmodification, are permitted provided that the following conditions are\r\nmet:\r\n\r\nRedistributions of source code must retain the above copyright notice,\r\nthis list of conditions and the following disclaimer.\r\nRedistributions in binary form must reproduce the above copyright\r\nnotice, this list of conditions and the following disclaimer in the\r\ndocumentation and/or other materials provided with the distribution.\r\n\r\nTHIS SOFTWARE IS PROVIDED BY COPYRIGHT HOLDERS “AS IS” AND ANY EXPRESS\r\nOR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED\r\nWARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE\r\nDISCLAIMED. IN NO EVENT SHALL COPYRIGHT HOLDERS OR CONTRIBUTORS BE\r\nLIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\r\nCONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\r\nSUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\r\nINTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\r\nCONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\r\nARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF\r\nTHE POSSIBILITY OF SUCH DAMAGE.\r\n",
+    "tagset_id": "pl.sgjp.morfeusz-0.8.0",
+    "tag_count": 65536
+  },
+  "python_api": {
+    "constructor_signature": "(dict_name=None, dict_path=None, analyse=True, generate=True, expand_dag=False, expand_tags=False, expand_dot=True, expand_underscore=True, aggl=None, praet=None, separate_numbering=True, case_handling=100, whitespace=301)",
+    "analyse_signature": "(text)",
+    "generate_signature": "(lemma, tag_id=None)",
+    "interpretation_shape": [
+      "orth",
+      "lemma",
+      "tag",
+      "names",
+      "labels"
+    ],
+    "analysis_edge_shape": [
+      "start_node",
+      "end_node",
+      "interpretation"
+    ]
+  },
+  "analyses_default_praet_split": {
+    "ważny": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "ważny",
+        "lemma": "ważny",
+        "tag": "adj:sg:acc:m3:pos",
+        "names": [],
+        "labels": []
+      },
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "ważny",
+        "lemma": "ważny",
+        "tag": "adj:sg:nom.voc:m1.m2.m3:pos",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "ważnego": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "ważnego",
+        "lemma": "ważny",
+        "tag": "adj:sg:acc:m1.m2:pos",
+        "names": [],
+        "labels": []
+      },
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "ważnego",
+        "lemma": "ważny",
+        "tag": "adj:sg:gen:m1.m2.m3.n:pos",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "wazny": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "wazny",
+        "lemma": "wazny",
+        "tag": "ign",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "waznego": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "waznego",
+        "lemma": "waznego",
+        "tag": "ign",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "dom": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "dom",
+        "lemma": "dom",
+        "tag": "subst:sg:nom.acc:m3",
+        "names": [
+          "nazwa_pospolita"
+        ],
+        "labels": []
+      }
+    ],
+    "domami": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "domami",
+        "lemma": "dom",
+        "tag": "subst:pl:inst:m3",
+        "names": [
+          "nazwa_pospolita"
+        ],
+        "labels": []
+      }
+    ],
+    "sprawdziłem": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "sprawdził",
+        "lemma": "sprawdzić",
+        "tag": "praet:sg:m1.m2.m3:perf",
+        "names": [],
+        "labels": []
+      },
+      {
+        "start_node": 1,
+        "end_node": 2,
+        "orth": "em",
+        "lemma": "być",
+        "tag": "aglt:sg:pri:imperf:wok",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "sprawdzilem": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "sprawdzilem",
+        "lemma": "sprawdzilem",
+        "tag": "ign",
+        "names": [],
+        "labels": []
+      }
+    ],
+    "mam": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "mam",
+        "lemma": "mama",
+        "tag": "subst:pl:gen:f",
+        "names": [
+          "nazwa_pospolita"
+        ],
+        "labels": []
+      },
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "mam",
+        "lemma": "mieć",
+        "tag": "fin:sg:pri:imperf",
+        "names": [],
+        "labels": []
+      },
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "mam",
+        "lemma": "mamić",
+        "tag": "impt:sg:sec:imperf",
+        "names": [],
+        "labels": []
+      }
+    ]
+  },
+  "analyses_praet_composite": {
+    "sprawdziłem": [
+      {
+        "start_node": 0,
+        "end_node": 1,
+        "orth": "sprawdziłem",
+        "lemma": "sprawdzić",
+        "tag": "praet:sg:m1.m2.m3:pri:perf",
+        "names": [],
+        "labels": []
+      }
+    ]
+  },
+  "targeted_generation_default_praet_split": {
+    "ważny": {
+      "tag_id": null,
+      "all_returned_count": 70,
+      "rows": [
+        {
+          "orth": "najważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m1:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:pl:dat:m1.m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:gen:m1.m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszymi",
+          "lemma": "ważny",
+          "tag": "adj:pl:inst:m1.m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:loc:m1.m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsi",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m1:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m2.m3.f.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszą",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszego",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m1.m2:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszy",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m3:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszemu",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:m1.m2.m3.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszego",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:m1.m2.m3.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszą",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:m1.m2.m3.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:m1.m2.m3.n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsza",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:f:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejszy",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:m1.m2.m3:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "najważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:n:sup",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnych",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m1:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważne",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnym",
+          "lemma": "ważny",
+          "tag": "adj:pl:dat:m1.m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnych",
+          "lemma": "ważny",
+          "tag": "adj:pl:gen:m1.m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnymi",
+          "lemma": "ważny",
+          "tag": "adj:pl:inst:m1.m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnych",
+          "lemma": "ważny",
+          "tag": "adj:pl:loc:m1.m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważni",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m1:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważne",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m2.m3.f.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważną",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnego",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m1.m2:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważny",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m3:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważne",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnej",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnemu",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:m1.m2.m3.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnej",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnego",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:m1.m2.m3.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważną",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnym",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:m1.m2.m3.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnej",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważnym",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:m1.m2.m3.n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważna",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:f:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważny",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:m1.m2.m3:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważne",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:n:pos",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m1:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:pl:acc:m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:pl:dat:m1.m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:gen:m1.m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszymi",
+          "lemma": "ważny",
+          "tag": "adj:pl:inst:m1.m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszych",
+          "lemma": "ważny",
+          "tag": "adj:pl:loc:m1.m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsi",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m1:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:pl:nom.voc:m2.m3.f.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszą",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszego",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m1.m2:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszy",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:m3:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:sg:acc:n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszemu",
+          "lemma": "ważny",
+          "tag": "adj:sg:dat:m1.m2.m3.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszego",
+          "lemma": "ważny",
+          "tag": "adj:sg:gen:m1.m2.m3.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszą",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:sg:inst:m1.m2.m3.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszej",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszym",
+          "lemma": "ważny",
+          "tag": "adj:sg:loc:m1.m2.m3.n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsza",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:f:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejszy",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:m1.m2.m3:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważniejsze",
+          "lemma": "ważny",
+          "tag": "adj:sg:nom.voc:n:com",
+          "names": [],
+          "labels": []
+        },
+        {
+          "orth": "ważno",
+          "lemma": "ważny",
+          "tag": "adja",
+          "names": [],
+          "labels": []
+        }
+      ]
+    },
+    "dom / subst:pl:inst:m3": {
+      "tag_id": 690,
+      "all_returned_count": 1,
+      "rows": [
+        {
+          "orth": "domami",
+          "lemma": "dom",
+          "tag": "subst:pl:inst:m3",
+          "names": [
+            "nazwa_pospolita"
+          ],
+          "labels": []
+        }
+      ]
+    },
+    "sprawdzić / praet:sg:m1.m2.m3:perf": {
+      "tag_id": 549,
+      "all_returned_count": 1,
+      "rows": [
+        {
+          "orth": "sprawdził",
+          "lemma": "sprawdzić",
+          "tag": "praet:sg:m1.m2.m3:perf",
+          "names": [],
+          "labels": []
+        }
+      ]
+    },
+    "mieć / fin:sg:pri:imperf": {
+      "tag_id": 162,
+      "all_returned_count": 1,
+      "rows": [
+        {
+          "orth": "mam",
+          "lemma": "mieć",
+          "tag": "fin:sg:pri:imperf",
+          "names": [],
+          "labels": []
+        }
+      ]
+    },
+    "sprawdzic": {
+      "tag_id": null,
+      "all_returned_count": 1,
+      "rows": [
+        {
+          "orth": "sprawdzic",
+          "lemma": "sprawdzic",
+          "tag": "ign",
+          "names": [],
+          "labels": []
+        }
+      ]
+    }
+  },
+  "targeted_generation_praet_composite": {
+    "sprawdzić / praet:sg:m1.m2.m3:pri:perf": {
+      "tag_id": 554,
+      "all_returned_count": 1,
+      "rows": [
+        {
+          "orth": "sprawdziłem",
+          "lemma": "sprawdzić",
+          "tag": "praet:sg:m1.m2.m3:pri:perf",
+          "names": [],
+          "labels": []
+        }
+      ]
+    }
+  },
+  "assertions": {
+    "wazny_ascii_is_unknown": true,
+    "waznego_ascii_is_unknown": true,
+    "domami_maps_to_dom": true,
+    "sprawdzilem_ascii_is_unknown": true,
+    "sprawdzilem_composite_is_one_edge": true,
+    "mam_is_ambiguous": true,
+    "generate_dom_tag_returns_domami": true,
+    "generate_sprawdzic_split_tag_returns_sprawdzil_stem": true,
+    "generate_sprawdzic_composite_tag_returns_sprawdzilem": true,
+    "generate_miec_tag_returns_mam": true
+  }
+}

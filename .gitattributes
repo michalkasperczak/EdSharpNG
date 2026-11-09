@@ -12,3 +12,7 @@
 *.exe binary
 *.png binary
 *.nvda-addon binary
+*.gz binary
+# Preserve empty final columns in raw measurement tables/transcripts.
+/testy/wyniki/synonyms119/*.tsv whitespace=-blank-at-eol
+/testy/wyniki/synonyms119/*.log whitespace=-blank-at-eol

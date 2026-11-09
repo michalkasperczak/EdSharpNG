@@ -1,0 +1,139 @@
+{
+  "lemmas_total": 190,
+  "literal_lemma_hits": 153,
+  "runtime_lemma_hits": 156,
+  "alias_hits": [
+    "sklep",
+    "długi",
+    "razem"
+  ],
+  "form_queries": 290,
+  "form_hits": 259,
+  "form_misses": [
+    {
+      "lemma": "okno",
+      "form": "oknami"
+    },
+    {
+      "lemma": "okno",
+      "form": "oknem"
+    },
+    {
+      "lemma": "łóżko",
+      "form": "łóżkami"
+    },
+    {
+      "lemma": "łóżko",
+      "form": "łóżkiem"
+    },
+    {
+      "lemma": "miasto",
+      "form": "miastami"
+    },
+    {
+      "lemma": "miasto",
+      "form": "miastem"
+    },
+    {
+      "lemma": "biuro",
+      "form": "biurami"
+    },
+    {
+      "lemma": "biuro",
+      "form": "biurem"
+    },
+    {
+      "lemma": "dziecko",
+      "form": "dzieckiem"
+    },
+    {
+      "lemma": "dziecko",
+      "form": "dziećmi"
+    },
+    {
+      "lemma": "słowo",
+      "form": "słowami"
+    },
+    {
+      "lemma": "słowo",
+      "form": "słowem"
+    },
+    {
+      "lemma": "zdanie",
+      "form": "zdaniami"
+    },
+    {
+      "lemma": "zdanie",
+      "form": "zdaniem"
+    },
+    {
+      "lemma": "rano",
+      "form": "ranami"
+    },
+    {
+      "lemma": "rano",
+      "form": "ranem"
+    },
+    {
+      "lemma": "radość",
+      "form": "radościami"
+    },
+    {
+      "lemma": "radość",
+      "form": "radością"
+    },
+    {
+      "lemma": "strach",
+      "form": "strachami"
+    },
+    {
+      "lemma": "strach",
+      "form": "strachem"
+    },
+    {
+      "lemma": "nadzieja",
+      "form": "nadziejami"
+    },
+    {
+      "lemma": "wielki",
+      "form": "największego"
+    },
+    {
+      "lemma": "wielki",
+      "form": "największej"
+    },
+    {
+      "lemma": "prosty",
+      "form": "najprostszego"
+    },
+    {
+      "lemma": "prosty",
+      "form": "najprostszej"
+    },
+    {
+      "lemma": "głośny",
+      "form": "głośnego"
+    },
+    {
+      "lemma": "głośny",
+      "form": "głośnej"
+    },
+    {
+      "lemma": "ciepły",
+      "form": "cieplejszego"
+    },
+    {
+      "lemma": "ciepły",
+      "form": "cieplejszej"
+    },
+    {
+      "lemma": "jutro",
+      "form": "jutrami"
+    },
+    {
+      "lemma": "jutro",
+      "form": "jutrem"
+    }
+  ],
+  "sample_definition": "190 common-lemma control list; up to two attested forms per lemma, not existing literal headwords; not statistical representativeness"
+}

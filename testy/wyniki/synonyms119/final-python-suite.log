@@ -1,0 +1,18 @@
+test_older_data_only_fills_missing_lemmas_and_keeps_source_label (testy.test_build_synonyms_plwordnet.LegacyFallbackTests.test_older_data_only_fills_missing_lemmas_and_keeps_source_label) ... ok
+test_only_same_synset_and_pos_in_main_polish_lexicon_are_synonyms (testy.test_build_synonyms_plwordnet.LemmaIndexTests.test_only_same_synset_and_pos_in_main_polish_lexicon_are_synonyms) ... ok
+test_binary_ids_stay_bytes_and_polish_text_stays_utf8 (testy.test_build_synonyms_plwordnet.SqlReaderTests.test_binary_ids_stay_bytes_and_polish_text_stays_utf8) ... ok
+test_compressed_records_preserve_exact_source_rows (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_compressed_records_preserve_exact_source_rows) ... ok
+test_keeps_only_main_polish_lemmas_present_in_combined_synonyms (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_keeps_only_main_polish_lemmas_present_in_combined_synonyms) ... ok
+test_preserves_synset_per_meaning_instead_of_merging_zamek (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_preserves_synset_per_meaning_instead_of_merging_zamek) ... ok
+test_reads_dump_twice_because_morphology_precedes_senses (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_reads_dump_twice_because_morphology_precedes_senses) ... ok
+test_rejects_corrupt_binary_uuid_in_morphology (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_rejects_corrupt_binary_uuid_in_morphology) ... ok
+test_writes_hash_sorted_directory_with_exact_record_data (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_writes_hash_sorted_directory_with_exact_record_data) ... ok
+test_bad_resource_preserves_previous_runtime (testy.test_prepare_synonyms.PrepareSynonymsTests.test_bad_resource_preserves_previous_runtime) ... ok
+test_prepares_byte_identical_runtime_without_python_dependency (testy.test_prepare_synonyms.PrepareSynonymsTests.test_prepares_byte_identical_runtime_without_python_dependency) ... ok
+test_replaces_old_runtime_from_verified_resource (testy.test_prepare_synonyms.PrepareSynonymsTests.test_replaces_old_runtime_from_verified_resource) ... ok
+test_morphology_error_is_announced_before_no_results (testy.test_synonyms_ui_contract.SynonymsUiContractTests.test_morphology_error_is_announced_before_no_results) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 2.796s
+
+OK

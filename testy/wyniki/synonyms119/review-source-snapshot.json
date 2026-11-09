@@ -1,0 +1,11 @@
+{
+  "Synonimy.cs": "07a9ac66f5751fcc51a3aae91761915582702bb05247cd0cff523e8bc8088986",
+  "SynonimyOdmiany.cs": "45b131943d23eea7b2ed2609904b433a9c7f950c5255f322a64bc4656206f310",
+  "EdSharp.cs": "fd5e430757cf4fce258f3be0e00cf85ce1a7d62e0a37b593d137728777bcd7a9",
+  "BuildEdSharp.cmd": "0ee346aa899df835c7568fd2fe479f2bc1887a2260855a6c67870edd64ec260c",
+  "PrepareSynonyms.ps1": "02286a9ed39151619c4e51be989acb2baaae8ec1775ecff3e73f8c6d7f02076d",
+  "EdSharp_Setup.iss": "42c9c16b192cb4b636bd3ece0ef55b60e5e8f67cd004711e3272b6c17d6a8523",
+  "build_installer_garfield.sh": "07f1b53bc7b5e9b352fd527fe9b74f0e1e69e010521e6a60d7cf892b978e18ac",
+  "tools/build_synonyms_plwordnet.py": "125269ceb440834d44fb9499680e8a78db4347496f40df69844ea55587bc42ef",
+  "tools/build_synonym_forms.py": "034f4862c7997051e34c3fcccf3c9125ed93897ad79e9390ef5f7745e3432c5d"
+}

@@ -1,35 +1,70 @@
-EdSharpNG — lokalny słownik synonimów
-=======================================
+EdSharpNG — lokalny słownik synonimów i odmiany
+=============================================
 
-Ten katalog zawiera gotowy do odczytu indeks synonimów dla polecenia
-Shift+F7. Program nie łączy się z Internetem podczas wyszukiwania i nie
-wymaga Microsoft Worda, Pythona ani serwera baz danych.
+Shift+F7 korzysta wyłącznie z lokalnych indeksów. Wyszukiwanie nie wymaga
+Internetu, Microsoft Worda, Pythona, SQL ani dodatkowego serwera.
 
-Pochodzenie bieżących danych
-----------------------------
+Pochodzenie danych
+------------------
 
-`plwordnet-synonyms.txt` został wygenerowany z eksportu OMW plWordNet 2.0.
-Jest to przejściowy, mały indeks wydania beta. Nie zawiera definicji, odmiany
-wyrazów ani wszystkich wyrażeń wielowyrazowych. Dołączony jest pełny tekst
-licencji źródła: `LICENSE-plWordNet.txt`.
+Podstawowy indeks plwordnet-synonyms.txt pochodzi z polskiego leksykonu plWN,
+wersja 5.0, w oficjalnym eksporcie CLARIN:
+wordnet_without_extra_lexicons-2026_02_09.sql.gz.
+Źródło: https://nc.clarin.e-science.pl/index.php/s/cEbfsZZX5r4sKNW
 
-plWordNet 2.3 © 2015 by Wrocław University of Technology. All rights
-reserved. Licencja pozwala używać, kopiować, modyfikować, rozpowszechniać i
-publicznie udostępniać bazę bez opłaty, także komercyjnie, pod warunkiem
-zachowania informacji o prawach autorskich, licencji oraz zastrzeżenia braku
-gwarancji. Pełne, wiążące warunki są w pliku licencji.
+Eksport sprawdzono w całości: SHA-256 i CRC gzip. Generator odczytuje dane
+SQL bez ich wykonywania i wybiera wyłącznie potrzebne tabele. Nie dołączamy
+pełnego eksportu ani historii i tabel audytowych.
 
-Cytowanie źródła
+Synonimy łączy wspólny synset i zgodna część mowy. plwordnet-forms.bin to
+indeks EDSYNF02 z poświadczonych rekordów tbl_morphology. Rozpoznanie formy
+wejściowej i znalezienie odmienionej propozycji są osobnymi operacjami.
+Program nie wymyśla końcówek. Brak zgodnej, poświadczonej formy oznacza brak
+tej propozycji. Homonimy mogą dawać kilka znaczeń; program nie rozstrzyga
+samodzielnie kontekstu zdania. Nie zawiera definicji ani wszystkich wyrażeń
+wielowyrazowych. Nie wszystkie formy czasu przeszłego występują w źródle:
+na przykład sprawdził jest dostępne, a sprawdziłem nie jest.
+
+Starszy eksport OMW/plWordNet 2.0 uzupełnia wyłącznie hasła pozbawione
+synonimów w głównym indeksie 5.0. Te rekordy mają prefiks omw-2.0:.
+Bez potwierdzonego mapowania znaczeń nie łączymy ich z odmianą z wersji 5.0.
+Nie zastępują danych głównych i nie są przedstawiane jako dane 5.0.
+
+Licencje
+--------
+
+Pełne warunki dla głównego źródła zachowano w LICENSE-plWordNet5.txt,
+w postaci wskazanej przez autorów: https://slowosiec.pl/pl/about#license.
+Oryginalny copyright brzmi: plWordNet 4.2 © 2020 by Wrocław University of
+Technology. All rights reserved. Zachowujemy go bez samodzielnej zmiany
+numeru wersji na 5.0. Warunki i zastrzeżenie braku gwarancji znajdują się
+w dołączonym pełnym tekście licencji.
+
+Starsze uzupełnienie: plWordNet 2.3 © 2015 by Wrocław University of Technology.
+All rights reserved. Pełne warunki zachowano w LICENSE-plWordNet.txt.
+Obie licencje należy zachować przy dalszej dystrybucji indeksów.
+
+Cytowanie źródeł
 ----------------
 
-Maciej Piasecki, Stanisław Szpakowicz and Bartosz Broda. 2009. *A Wordnet from
-the Ground Up*. Wrocław: Oficyna Wydawnicza Politechniki Wrocławskiej.
+Rudnicka, Ewa, Bartłomiej Alberski, and Maciej Piasecki. 2025.
+“plWordNet 5.0–challenges of a life-long wordnet development process.”
+GWC 2025: 162–170.
 
-Plan aktualizacji
------------------
+Piasecki, Maciej, Agnieszka Dziob, Arkadiusz Janz, Jan Kocoń, Tomasz Naskręt,
+Marcin Oleksy, Ewa Rudnicka, Tomasz Walkowiak, Jan Wieczorek, and Krzysztof
+Hwaszcz. 2025. “CLARIN-PL: A user centred language technology infrastructure.”
+Language Resources & Evaluation 59: 4493–4528.
+https://doi.org/10.1007/s10579-025-09839-y
 
-Zespół Słowosieci przekazał dostęp do aktualnego plWordNet 5.0 w postaci bazy
-SQL i potwierdził użycie bezpłatne oraz komercyjne przy zachowaniu licencji,
-zastrzeżeń i cytowań. Po kompletnym, zweryfikowanym pobraniu tej bazy indeks
-zostanie odtworzony z plWordNet 5.0, a ten plik oraz licencja zostaną
-zaktualizowane zgodnie z dołączonymi warunkami wydania 5.0.
+Maciej Piasecki, Stanisław Szpakowicz and Bartosz Broda. 2009.
+A Wordnet from the Ground Up. Wrocław: Oficyna Wydawnicza Politechniki
+Wrocławskiej.
+
+Budowanie
+---------
+
+PrepareSynonyms.ps1 sprawdza lokalny manifest, rozmiar i SHA-256 gotowego
+indeksu. W repozytorium może odtworzyć go z plwordnet-forms.bin.gz.
+To wyłącznie krok budowania, nie zależność uruchomionego EdSharpNG.
+Instalator i ZIP zawierają już rozwinięty, sprawdzony indeks EDSYNF02.

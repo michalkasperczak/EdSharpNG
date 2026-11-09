@@ -1,0 +1,41 @@
+[
+    {
+        "title":  "Podgląd mowy NVDA",
+        "handle":  7930444,
+        "pid":  5884,
+        "items":  [
+                      {
+                          "name":  "panel",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Podgląd mowy NVDA\r\nPokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p\r\nFile  Alt+  f\r\npole edycji  wielowierszowe  domami\r\nThesaurus\r\nSynonimy dla: domami\r\nlista\r\nkątami, rzeczownik, 1 z 10\r\nchatami, rzeczownik, 2 z 10\r\nWstawiono: chatami\r\npole edycji  wielowierszowe  chatami\r\nThesaurus\r\nSynonimy dla: ważnego\r\nlista\r\nistotnego, przymiotnik, 1 z 3\r\nEdSharpNG - [nvda-probe.txt]\r\npole edycji  wielowierszowe  ważnego\r\nThesaurus\r\nSynonimy dla: DOMAMI\r\nlista\r\nkątami, rzeczownik, 1 z 10\r\nchatami, rzeczownik, 2 z 10\r\nWstawiono: CHATAMI\r\npole edycji  wielowierszowe  CHATAMI\r\n",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "Pokaż podgląd mowy przy starcie",
+                          "type":  "ControlType.Pane",
+                          "value":  ""
+                      }
+                  ]
+    },
+    {
+        "title":  "EdSharpNG - [nvda-probe.txt]",
+        "handle":  132246,
+        "pid":  2372,
+        "items":  [
+                      {
+                          "name":  "nvda-probe.txt",
+                          "type":  "ControlType.Window",
+                          "value":  ""
+                      },
+                      {
+                          "name":  "RichEdit Control",
+                          "type":  "ControlType.Document",
+                          "value":  "chatami\rważnego\rCHATAMI\rsprawdziłem\rzznieistniejacezz\r"
+                      }
+                  ]
+    }
+]

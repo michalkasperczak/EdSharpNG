@@ -57,7 +57,7 @@ if [[ -z "$ISCC" || ! -x "$ISCC" ]]; then
     done
 fi
 LOG_BUILD="$ROOT/BuildEdSharp.log"
-LOG_ISCC="/tmp/edsharp-iscc-${VERSION:-brak}.log"
+LOG_ISCC="${TMPDIR:?TMPDIR must point to the Hermes scratch directory}/edsharp-iscc-${VERSION:-brak}.log"
 
 if [[ -z "$VERSION" || ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
     echo "Uzycie: $0 <wersja, np. 5.0.2>" >&2
@@ -82,8 +82,14 @@ echo "[1/6] Budowa EdSharpNG.exe..."
 # a to jest kontrola mocniejsza: lapie tez przebieg, w ktorym cmd.exe milczal.
 # Do trzech prob; binarka swiezsza od EdSharp.cs przerywa petle od razu, wiec
 # gotowy build z tej samej sesji nie jest budowany po raz drugi.
+needs_build() {
+    for source in EdSharp.cs Synonimy.cs SynonimyOdmiany.cs; do
+        [[ EdSharpNG.exe -nt "$source" ]] || return 0
+    done
+    return 1
+}
 for proba in 1 2 3; do
-    if [[ EdSharpNG.exe -nt EdSharp.cs ]]; then
+    if ! needs_build; then
         echo "  binarka jest swiezsza niz zrodla - nie buduje ponownie"
         break
     fi
@@ -91,7 +97,7 @@ for proba in 1 2 3; do
     /mnt/c/Windows/System32/cmd.exe /c BuildEdSharp.cmd || true
     sleep 5
 done
-if [[ ! EdSharpNG.exe -nt EdSharp.cs ]]; then
+if needs_build; then
     echo "BLAD: binarka STARSZA niz EdSharp.cs po trzech probach - NIE WYSYLAJ paczki." >&2
     exit 3
 fi
@@ -170,6 +176,8 @@ for rel in Ude.dll Convert; do
 done
 
 # Wersje zmieniamy TYLKO w stagingu - build nie brudzi repo.
+mkdir -p "$STAGE/Synonyms"
+cp -a "$ROOT/Synonyms/plwordnet-forms.bin" "$STAGE/Synonyms/"
 python3 - "$STAGE/EdSharp_Setup.iss" "$VERSION" "$STAGE_WIN" <<'PY'
 import re, sys
 path, ver = sys.argv[1], sys.argv[2]

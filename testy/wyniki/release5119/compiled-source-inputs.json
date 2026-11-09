@@ -1,0 +1,83 @@
+{
+  "sources": [
+    {
+      "path": "EdSharp.cs",
+      "sha256": "fd5e430757cf4fce258f3be0e00cf85ce1a7d62e0a37b593d137728777bcd7a9"
+    },
+    {
+      "path": "Lbc.cs",
+      "sha256": "a758e4edb0fb99c895a3eef6e49c906db04d4d3a853eaddad0e7c6d24a5ec85b"
+    },
+    {
+      "path": "Say.cs",
+      "sha256": "cf061f403a2c10aee7c2288313232ec4c0a12db5ff7ca5c04ba5901823c87b85"
+    },
+    {
+      "path": "Inix.cs",
+      "sha256": "8496483bee3add1425c0fa7e5aa5ca1f9798a7150a1a28934fdda7bbff97bcd4"
+    },
+    {
+      "path": "KeyMap.cs",
+      "sha256": "61c532ddf69303707b1578fcc27fa0007c621297a76154884e6070885c6d9505"
+    },
+    {
+      "path": "Web.cs",
+      "sha256": "3ea335fb4c3941219cf7d033cc16b79f2c7a9834f3ae654d77e0c703b38dd87d"
+    },
+    {
+      "path": "Pisownia.cs",
+      "sha256": "bb04708ad837fb3d8bf7290047ac0c788eba9dffc720c49bf9785471b8e14809"
+    },
+    {
+      "path": "Skladniki.cs",
+      "sha256": "d00f3a10c3eeaebcb0476012fafe6ad7e8729ba5a26376dd9176e282941163eb"
+    },
+    {
+      "path": "Csv.cs",
+      "sha256": "9494a350811b90457d8142d55b4d0979b0ac47b0c4889d0b8b40a9cda0186a29"
+    },
+    {
+      "path": "Sesja.cs",
+      "sha256": "e4178e64f83c4da317ea8fe273ba42b3a05e08da43a0a5212dfc49806dbb288f"
+    },
+    {
+      "path": "Ustawienia.cs",
+      "sha256": "44ccd78873b6d98ebe7c01bb66ba606e49c0b767b2e7da8805c04180386fb3e3"
+    },
+    {
+      "path": "Wyrazenia.cs",
+      "sha256": "c4cd60674df65468bf00d82d38859aff3144728e70caa07c7080aace5520d797"
+    },
+    {
+      "path": "Synonimy.cs",
+      "sha256": "07a9ac66f5751fcc51a3aae91761915582702bb05247cd0cff523e8bc8088986"
+    },
+    {
+      "path": "SynonimyOdmiany.cs",
+      "sha256": "45b131943d23eea7b2ed2609904b433a9c7f950c5255f322a64bc4656206f310"
+    },
+    {
+      "path": "Zadania.cs",
+      "sha256": "18284556d7fd47af9f9755f69368bc9d7c88500a797e775242d34d26399a5df2"
+    },
+    {
+      "path": "Zmiany.cs",
+      "sha256": "6cb539df237ba16147da088c870c2d1a76fc579e319b9c2e461620fd5bf9b16a"
+    },
+    {
+      "path": "ZapisFormatow.cs",
+      "sha256": "4b70c82eecd5107d085f79a7953ef9c6b47e06d74576fec1d7fa563ffbaf6581"
+    },
+    {
+      "path": "PdfExport.cs",
+      "sha256": "b7e7915c02dc6301a59caffe2eca163f53beaeb3eec2ba52aab651802e9e3f59"
+    },
+    {
+      "path": "OriginalFormatSave.cs",
+      "sha256": "73e217eac49e93f5c861a31168c01355f9cd130d3c7c0d3d63a26d6d081f6414"
+    }
+  ],
+  "count": 19,
+  "method": "actual full .NET Framework compiler via BuildEdSharp.cmd from NTFS staging; compared every compiled source byte to working tree and installer staging",
+  "deterministic_rebuild_not_asserted": true
+}

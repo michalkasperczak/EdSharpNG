@@ -48,3 +48,8 @@ EdSharpNG-spellcheck.nvda-addon
 /testy/pomiar_spisu/proba*.docx
 /testy/pomiar_spisu/proba*.html
 list-do-jamala.md
+
+# Expanded build resource; the verified gzip is tracked instead.
+/Synonyms/plwordnet-forms.bin
+/Synonyms/plwordnet-forms.bin.building-*
+__pycache__/

@@ -28,6 +28,7 @@ if not exist "Inix.cs" echo ERROR: Inix.cs not found.& popd & exit /b 1
 if not exist "KeyMap.cs" echo ERROR: KeyMap.cs not found.& popd & exit /b 1
 if not exist "Wyrazenia.cs" echo ERROR: Wyrazenia.cs not found.& popd & exit /b 1
 if not exist "Synonimy.cs" echo ERROR: Synonimy.cs not found.& popd & exit /b 1
+if not exist "SynonimyOdmiany.cs" echo ERROR: SynonimyOdmiany.cs not found.& popd & exit /b 1
 if not exist "EdSharp.manifest" echo ERROR: EdSharp.manifest not found.& popd & exit /b 1
 
 rem ---- locate csc.exe: prefer Roslyn (latest C#), fall back to Framework ----
@@ -93,11 +94,15 @@ if exist "Ude.dll" set "udeDef=/define:HAVEUDE"
 if exist "Ude.dll" (echo Ude.dll present - content encoding detection enabled. >> "!log!") else (echo Ude.dll absent - BOM detection + UTF-8-BOM default only. >> "!log!")
 
 rem ---- compile EdSharp.cs -> EdSharpNG.exe (x64) ----
+rem Offline build resource; the running application never invokes PowerShell.
+echo Preparing local synonym forms... >> "!log!"
+powershell -NoProfile -ExecutionPolicy Bypass -File "PrepareSynonyms.ps1" >> "!log!" 2>&1
+if errorlevel 1 goto failed
 echo Compiling EdSharp.cs -^> EdSharpNG.exe ...
 if exist EdSharpNG.exe del /f /q EdSharpNG.exe
 set "icon="
 if exist EdSharp.ico set "icon=/win32icon:EdSharp.ico"
-"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs Wyrazenia.cs Synonimy.cs Zadania.cs Zmiany.cs ZapisFormatow.cs PdfExport.cs OriginalFormatSave.cs >> "!log!" 2>&1
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ !udeDef! %icon% /win32manifest:EdSharp.manifest /reference:"Tektosyne.dll" /reference:"Microsoft.VisualBasic.dll" /reference:"Microsoft.CSharp.dll" /reference:"System.IO.Compression.dll" /reference:"System.IO.Compression.FileSystem.dll" /reference:"!uiaProv!" /reference:"!uiaTypes!" !udeRef! /out:EdSharpNG.exe EdSharp.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs Wyrazenia.cs Synonimy.cs SynonimyOdmiany.cs Zadania.cs Zmiany.cs ZapisFormatow.cs PdfExport.cs OriginalFormatSave.cs >> "!log!" 2>&1
 if errorlevel 1 goto failed
 
 rem ---- native pre-JIT (ngen) is handled by the INSTALLER, not here ----

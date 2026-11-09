@@ -1,0 +1,13 @@
+TOOL C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe
+TOOL C:\WINDOWS\system32\cmd.exe
+TOOL C:\WINDOWS\system32\findstr.exe
+NVDA controller client present.
+
+BUILD FAILED. Errors from BuildEdSharp.log:
+'\\wsl.localhost\Ubuntu\home\michal\projekty\edsharp'
+CMD.EXE was started with the above path as the current directory.
+UNC paths are not supported.  Defaulting to Windows directory.
+'findstr' is not recognized as an internal or external command,
+operable program or batch file.
+
+BUILD_EXIT=255

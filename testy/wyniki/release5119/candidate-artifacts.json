@@ -1,0 +1,18 @@
+{
+  "installer": {
+    "filename": "EdSharpNG_Setup_5.0.119.exe",
+    "bytes": 79748196,
+    "sha256": "0aee1a2708df49da8ed10c40b05530d46d14840501fdc62d0f38bb171e627cec"
+  },
+  "zip": {
+    "filename": "EdSharpNG_5.0.119.zip",
+    "bytes": 89764115,
+    "sha256": "d9c2cd732c4d0e57b99dbb04ef2dabb33d3150e70747db65672a751ced5f7baf"
+  },
+  "application": {
+    "filename": "EdSharpNG.exe",
+    "bytes": 543744,
+    "sha256": "f3fd4557fe4db448a1b208acfb43e8edd138cd832406e9cdcfb967ee81cbd675"
+  },
+  "version": "5.0.119"
+}

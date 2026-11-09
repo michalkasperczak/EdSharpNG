@@ -1,0 +1,381 @@
+{
+  "radość": {
+    "old": [
+      [
+        "n",
+        [
+          "uciecha",
+          "wesołość",
+          "radocha"
+        ]
+      ]
+    ],
+    "new_senses": [
+      {
+        "part": 2,
+        "synset": "f39ef60eaac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "radość",
+            "part": 2
+          }
+        ]
+      }
+    ]
+  },
+  "strach": {
+    "old": [
+      [
+        "n",
+        [
+          "lęk",
+          "bojaźń"
+        ]
+      ]
+    ],
+    "new_senses": [
+      {
+        "part": 2,
+        "synset": "f391f0beaac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "strach",
+            "part": 2
+          }
+        ]
+      },
+      {
+        "part": 2,
+        "synset": "02e53e22aac511edaae50242ac130002",
+        "members": [
+          {
+            "word": "strach",
+            "part": 2
+          }
+        ]
+      }
+    ]
+  },
+  "nadzieja": {
+    "old": [
+      [
+        "n",
+        [
+          "otucha"
+        ]
+      ]
+    ],
+    "new_senses": [
+      {
+        "part": 2,
+        "synset": "f3c46a49aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "nadzieja",
+            "part": 2
+          }
+        ]
+      },
+      {
+        "part": 2,
+        "synset": "f84fcb4baac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "nadzieja",
+            "part": 2
+          }
+        ]
+      }
+    ]
+  },
+  "prosty": {
+    "old": [
+      [
+        "a",
+        [
+          "nieskomplikowany"
+        ]
+      ],
+      [
+        "a",
+        [
+          "niezłożony"
+        ]
+      ]
+    ],
+    "new_senses": [
+      {
+        "part": 4,
+        "synset": "f39e2f49aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f3d0bbffaac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f3d45841aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f7f3ce41aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 2,
+        "synset": "ff302d3baac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 2
+          },
+          {
+            "word": "cios prosty",
+            "part": 2
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f80be7a5aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "ffca4107aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "ffca40b1aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "00e30a5eaac511edaae50242ac130002",
+        "members": [
+          {
+            "word": "prosty",
+            "part": 4
+          }
+        ]
+      }
+    ]
+  },
+  "głośny": {
+    "old": [
+      [
+        "a",
+        [
+          "gwarny",
+          "zgiełkliwy",
+          "hałaśliwy"
+        ]
+      ]
+    ],
+    "new_senses": [
+      {
+        "part": 4,
+        "synset": "f38c8ed8aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "głośny",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f7f48688aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "głośny",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f847ef38aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "głośny",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f3d12670aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "głośny",
+            "part": 4
+          }
+        ]
+      },
+      {
+        "part": 4,
+        "synset": "f84802c1aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "głośny",
+            "part": 4
+          }
+        ]
+      }
+    ]
+  },
+  "pisać": {
+    "old": [],
+    "new_senses": [
+      {
+        "part": 1,
+        "synset": "f3d4a727aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "pisać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f465891daac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "pisać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f472f8bdaac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "pisać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f4dd6da7aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "pisać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f4dd6e23aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "pisać",
+            "part": 1
+          }
+        ]
+      }
+    ]
+  },
+  "czytać": {
+    "old": [],
+    "new_senses": [
+      {
+        "part": 1,
+        "synset": "f3603619aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "czytać",
+            "part": 1
+          },
+          {
+            "word": "oddawać się lekturze",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f3f2ff31aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "czytać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f472e4e7aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "czytać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "f4d929d6aac411edaae50242ac130002",
+        "members": [
+          {
+            "word": "czytać",
+            "part": 1
+          }
+        ]
+      },
+      {
+        "part": 1,
+        "synset": "022ecc19aac511edaae50242ac130002",
+        "members": [
+          {
+            "word": "czytać",
+            "part": 1
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,94 @@
+PASS binary morphology reader exists
+PASS UTF8 keys and values match binary directory
+PASS missing key has no analyses
+PASS compressed v2 preserves exact UTF8 morphology rows
+PASS lemma dictionary loads beside morphology index
+PASS instrumental plural yields attested instrumental plural, not bare lemma
+PASS literal lemma keeps existing lookup priority
+PASS adjective preserves number case gender and degree
+PASS adjective rejects different case or gender
+PASS verb keeps attested tense number gender and aspect
+PASS verb does not silently change aspect
+PASS adverb preserves comparative degree
+PASS adverb rejects different degree
+PASS oversized compressed declaration rejected before allocation
+PASS corrupt morphology returns explicit error without a replacement
+PASS corrupt optional morphology does not break literal dictionary
+FAILURES=0
+LOAD_MS	353
+RESULT	dom	12	2	kąt|lokum|chata|chałupa|dach|rodzina|familia|ród|klan|parantela|gospodarstwo|menaż
+RESULT	domami	10	18	kątami|chatami|chałupami|dachami|rodzinami|familiami|rodami|klanami|parantelami|menażami
+ANALYSIS	domami	dom	n	f36050d3aac411edaae50242ac130002	subst:pl:inst:m3
+ANALYSIS	domami	dom	n	f3b4aff6aac411edaae50242ac130002	subst:pl:inst:m3
+ANALYSIS	domami	dom	n	f3beb7c1aac411edaae50242ac130002	subst:pl:inst:m3
+ANALYSIS	domami	dom	n	f3c56031aac411edaae50242ac130002	subst:pl:inst:m3
+ANALYSIS	domami	dom	n	f48e88baaac411edaae50242ac130002	subst:pl:inst:m3
+ANALYSIS	domami	dom	n	f48e890faac411edaae50242ac130002	subst:pl:inst:m3
+RESULT	ważny	4	0	istotny|znaczący|istotny|nielichy
+RESULT	ważnego	3	3	istotnego|znaczącego|nielichego
+ANALYSIS	ważnego	ważny	a	00f0dec6aac511edaae50242ac130002	adj:sg:acc:m1.m2:pos
+ANALYSIS	ważnego	ważny	a	00f0dec6aac511edaae50242ac130002	adj:sg:gen:m1.m2.m3.n:pos
+ANALYSIS	ważnego	ważny	a	f39aae22aac411edaae50242ac130002	adj:sg:acc:m1.m2:pos
+ANALYSIS	ważnego	ważny	a	f39aae22aac411edaae50242ac130002	adj:sg:gen:m1.m2.m3.n:pos
+ANALYSIS	ważnego	ważny	a	f3d41b33aac411edaae50242ac130002	adj:sg:acc:m1.m2:pos
+ANALYSIS	ważnego	ważny	a	f3d41b33aac411edaae50242ac130002	adj:sg:gen:m1.m2.m3.n:pos
+ANALYSIS	ważnego	ważny	a	f7eeb8acaac411edaae50242ac130002	adj:sg:acc:m1.m2:pos
+ANALYSIS	ważnego	ważny	a	f7eeb8acaac411edaae50242ac130002	adj:sg:gen:m1.m2.m3.n:pos
+ANALYSIS	ważnego	ważny	a	ffc5cce1aac411edaae50242ac130002	adj:sg:acc:m1.m2:pos
+ANALYSIS	ważnego	ważny	a	ffc5cce1aac411edaae50242ac130002	adj:sg:gen:m1.m2.m3.n:pos
+RESULT	sprawdzić	1	0	skontrolować
+RESULT	sprawdziłem	0	0	
+RESULT	sprawdził	1	0	skontrolował
+ANALYSIS	sprawdził	sprawdzić	v	f479ab8caac411edaae50242ac130002	praet:sg:m1.m2.m3:perf
+RESULT	mam	14	31	matek|przyciągaj|nęć|kuś|przynęcaj|przywabiaj|wab|zwabiaj|znęcaj|zwodź|zwódź|łudź|myl|posiadam
+ANALYSIS	mam	mama	n	f3bcb3c5aac411edaae50242ac130002	subst:pl:gen:f
+ANALYSIS	mam	mamić	v	f39a1c60aac411edaae50242ac130002	impt:sg:sec:imperf
+ANALYSIS	mam	mamić	v	f3d2b9d2aac411edaae50242ac130002	impt:sg:sec:imperf
+ANALYSIS	mam	mieć	v	02d9bf82aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9bfe3aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c040aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c097aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c0efaac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c145aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c19caac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c1ffaac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c261aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c2c4aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c332aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c388aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c3e0aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02d9c70caac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02da7ef0aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02db21e4aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccbfdaac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccc72aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dcccd5aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccd3faac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccd99aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccdf6aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dcce6daac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccec7aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccf29aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dccf80aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dcdcc1aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	02dce116aac511edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	f3cf616faac411edaae50242ac130002	fin:sg:pri:imperf
+ANALYSIS	mam	mieć	v	f4b1a1c1aac411edaae50242ac130002	fin:sg:pri:imperf
+RESULT	zamkiem	2	0	suwakiem|eklerem
+RESULT	dobrego	4	10	niezłego|pozytywnego|grzecznego|ładnego
+RESULT	pięknego	4	4	cudownego|krasego|szlachetnego|ślicznego
+RESULT	ładnymi	2	3	pokaźnymi|dobrymi
+RESULT	samochodami	1	0	wozami
+RESULT	szybciej	1	0	prędzej
+RESULT	lepiej	1	0	pozytywniej
+RESULT	czytaliśmy	0	0	
+RESULT	radości	9	1	uciech|wesołości|radoch|uciechy|radochy|uciesze|radosze|uciecho|radocho
+RESULT	strachu	2	0	lęku|bojaźni
+RESULT	nadziei	3	0	otuch|otusze|otuchy
+RESULT	prostego	2	1	nieskomplikowanego|niezłożonego
+RESULT	głośnego	3	5	gwarnego|zgiełkliwego|hałaśliwego
+RESULT	kotami	1	0	gachami
+RESULT	kobietami	7	1	paniami|niewiastami|białogłowami|jejmościami|kobitami|babami|starymi
+RESULT	pracowaliśmy	0	0	
+RESULT	zrobiłem	0	0	
+RESULT	zznieistniejacezz	0	0	

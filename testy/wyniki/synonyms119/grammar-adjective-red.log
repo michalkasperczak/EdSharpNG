@@ -1,0 +1,41 @@
+PASS no error before loading
+PASS loads UTF-8 index
+PASS no error after loading
+PASS keeps separate senses
+PASS returns first sense synonyms
+PASS returns second sense synonyms
+PASS keeps part of speech
+PASS missing word has no groups
+PASS rejects multiword selection
+PASS accepts one exact word
+PASS rejects padded selection without moving its range
+PASS preserves initial capital
+PASS preserves all capitals
+PASS keeps lower case
+PASS rejects malformed UTF-8 index
+PASS loads duplicate synonym fixture
+PASS removes source word and duplicate synonym
+FAILURES=0
+PASS runtime synonym index is present
+PASS runtime synonym index loads
+PASS common Polish word dom has a group
+PASS dom has a usable synonym
+PASS important Polish word ważny has a group
+PASS index does not return the source word
+FAILURES=0
+PASS chałupa, rzeczownik, 1 z 3
+PASS istotny, przymiotnik, 1 z 3
+PASS działać, czasownik, 1 z 3
+PASS szybko, przysłówek, 1 z 3
+PASS inny, inna część mowy, 1 z 3
+FAILURES=0
+PASS binary morphology reader exists
+PASS UTF8 keys and values match binary directory
+PASS missing key has no analyses
+PASS lemma dictionary loads beside morphology index
+PASS instrumental plural yields attested instrumental plural, not bare lemma
+PASS literal lemma keeps existing lookup priority
+FAIL adjective preserves number case gender and degree
+PASS adjective rejects different case or gender
+FAILURES=1
+TESTS=4 FAILED=1

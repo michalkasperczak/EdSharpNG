@@ -1,0 +1,12 @@
+PASS binary morphology reader exists
+PASS UTF8 keys and values match binary directory
+PASS missing key has no analyses
+PASS compressed v2 preserves exact UTF8 morphology rows
+PASS lemma dictionary loads beside morphology index
+PASS instrumental plural yields attested instrumental plural, not bare lemma
+PASS literal lemma keeps existing lookup priority
+PASS adjective preserves number case gender and degree
+PASS adjective rejects different case or gender
+PASS verb keeps attested tense number gender and aspect
+PASS verb does not silently change aspect
+FAILURES=0

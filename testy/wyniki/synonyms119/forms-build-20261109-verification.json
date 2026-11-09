@@ -1,0 +1,90 @@
+{
+  "binary": "/home/michal/projekty/edsharp-data/plwordnet-5/plwordnet-forms.bin",
+  "binary_sha256": "2cf5781e11a4fa0feb866f128d905787512d610ad9f3b8b21338a879dd028282",
+  "binary_bytes": 443587981,
+  "source_sql_gz": "/home/michal/projekty/edsharp-data/plwordnet-5/wordnet_without_extra_lexicons-2026_02_09.sql.gz",
+  "source_sql_gz_sha256": "fcae73be610944582079dedbd1919878fc626cbed4bfda94bd5e9c0a96ad9ab9",
+  "header": {
+    "magic": "EDSYNF01",
+    "directory_count": 805849,
+    "directory_offset": 430694397,
+    "total_file_length": 443587981
+  },
+  "independent_protocol_verification": {
+    "records_checked": 805849,
+    "value_rows_checked": 5812318,
+    "hashes_and_numeric_hash_key_directory_order": true,
+    "record_bounds": true,
+    "values_deduplicated_sorted_and_four_fields": true
+  },
+  "form_lookups": {
+    "domami": {
+      "found": true,
+      "analyses": [
+        "dom\tn\tf36050d3aac411edaae50242ac130002\tsubst:pl:inst:m3",
+        "dom\tn\tf3b4aff6aac411edaae50242ac130002\tsubst:pl:inst:m3",
+        "dom\tn\tf3beb7c1aac411edaae50242ac130002\tsubst:pl:inst:m3",
+        "dom\tn\tf3c56031aac411edaae50242ac130002\tsubst:pl:inst:m3",
+        "dom\tn\tf48e88baaac411edaae50242ac130002\tsubst:pl:inst:m3",
+        "dom\tn\tf48e890faac411edaae50242ac130002\tsubst:pl:inst:m3"
+      ]
+    },
+    "ważnego": {
+      "found": true,
+      "analyses": [
+        "ważny\ta\t00f0dec6aac511edaae50242ac130002\tadj:sg:acc:m1.m2:pos",
+        "ważny\ta\t00f0dec6aac511edaae50242ac130002\tadj:sg:gen:m1.m2.m3.n:pos",
+        "ważny\ta\tf39aae22aac411edaae50242ac130002\tadj:sg:acc:m1.m2:pos",
+        "ważny\ta\tf39aae22aac411edaae50242ac130002\tadj:sg:gen:m1.m2.m3.n:pos",
+        "ważny\ta\tf3d41b33aac411edaae50242ac130002\tadj:sg:acc:m1.m2:pos",
+        "ważny\ta\tf3d41b33aac411edaae50242ac130002\tadj:sg:gen:m1.m2.m3.n:pos",
+        "ważny\ta\tf7eeb8acaac411edaae50242ac130002\tadj:sg:acc:m1.m2:pos",
+        "ważny\ta\tf7eeb8acaac411edaae50242ac130002\tadj:sg:gen:m1.m2.m3.n:pos",
+        "ważny\ta\tffc5cce1aac411edaae50242ac130002\tadj:sg:acc:m1.m2:pos",
+        "ważny\ta\tffc5cce1aac411edaae50242ac130002\tadj:sg:gen:m1.m2.m3.n:pos"
+      ]
+    },
+    "sprawdziłem": {
+      "found": false,
+      "analyses": []
+    },
+    "mam": {
+      "found": true,
+      "analyses": [
+        "mama\tn\tf3bcb3c5aac411edaae50242ac130002\tsubst:pl:gen:f",
+        "mamić\tv\tf39a1c60aac411edaae50242ac130002\timpt:sg:sec:imperf",
+        "mamić\tv\tf3d2b9d2aac411edaae50242ac130002\timpt:sg:sec:imperf",
+        "mieć\tv\t02d9bf82aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9bfe3aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c040aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c097aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c0efaac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c145aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c19caac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c1ffaac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c261aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c2c4aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c332aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c388aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c3e0aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02d9c70caac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02da7ef0aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02db21e4aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccbfdaac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccc72aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dcccd5aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccd3faac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccd99aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccdf6aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dcce6daac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccec7aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccf29aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dccf80aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dcdcc1aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\t02dce116aac511edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\tf3cf616faac411edaae50242ac130002\tfin:sg:pri:imperf",
+        "mieć\tv\tf4b1a1c1aac411edaae50242ac130002\tfin:sg:pri:imperf"
+      ]
+    }
+  }
+}

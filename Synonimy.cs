@@ -24,7 +24,9 @@ Synonyms = lSynonyms;
 } // Grupa class
 
 static Dictionary<string, List<Grupa>> hashGroups = new Dictionary<string, List<Grupa>>(StringComparer.Ordinal);
+static string sFormsPath = "";
 public static string Error = "";
+public static string FormsError = "";
 
 static string Normalize(string sWord) {
 if (sWord == null) return "";
@@ -60,7 +62,9 @@ return sSynonym + ", " + sPart + ", " + iPosition + " z " + iTotal;
 
 public static void ResetForTests() {
 hashGroups.Clear();
+sFormsPath = "";
 Error = "";
+FormsError = "";
 } // ResetForTests method
 
 public static bool Load(string sPath) {
@@ -106,6 +110,8 @@ hashGroups.Add(sWord, lGroups);
 lGroups.Add(new Grupa(aPart[1].Trim(), aPart[2].Trim(), lSynonyms));
 }
 }
+string sCandidate = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(sPath)), "plwordnet-forms.bin");
+if (File.Exists(sCandidate)) sFormsPath = sCandidate;
 return true;
 }
 catch (Exception ex) {
@@ -116,11 +122,43 @@ return false;
 } // Load method
 
 public static List<Grupa> Find(string sWord) {
+FormsError = "";
 string sKey = Normalize(sWord);
 if (sKey.Length == 0) return new List<Grupa>();
 List<Grupa> lGroups;
-if (!hashGroups.TryGetValue(sKey, out lGroups)) return new List<Grupa>();
-return new List<Grupa>(lGroups);
+if (hashGroups.TryGetValue(sKey, out lGroups)) return new List<Grupa>(lGroups);
+if (sFormsPath.Length == 0) return new List<Grupa>();
+try {
+List<Grupa> result = new List<Grupa>();
+HashSet<string> seen = new HashSet<string>(StringComparer.Ordinal);
+Dictionary<string, List<string[]>> cache = new Dictionary<string, List<string[]>>(StringComparer.Ordinal);
+foreach (string[] source in SynonimyOdmiany.Lookup(sFormsPath, "f:" + sKey)) {
+if (!hashGroups.TryGetValue(source[0], out lGroups)) continue;
+foreach (Grupa group in lGroups) {
+// Starsze identyfikatory OMW nie maja potwierdzonego mapowania znaczen 5.0.
+// Fallback zachowujemy dla lematu, nie laczymy odmiany po samym napisie.
+if (group.PartOfSpeech != source[1] || group.SenseId != source[2]) continue;
+List<string> values = new List<string>();
+foreach (string synonym in group.Synonyms) {
+List<string[]> forms;
+if (!cache.TryGetValue(synonym, out forms)) {
+forms = SynonimyOdmiany.Lookup(sFormsPath, "l:" + synonym);
+cache.Add(synonym, forms);
+}
+foreach (string[] target in forms) {
+if (target[1] != group.PartOfSpeech || target[2] != group.SenseId || target[0] == sKey) continue;
+if (SynonimyOdmiany.TagsMatch(group.PartOfSpeech, source[3], target[3]) && seen.Add(group.PartOfSpeech + "\t" + target[0])) values.Add(target[0]);
+}
+}
+if (values.Count > 0) result.Add(new Grupa(group.PartOfSpeech, group.SenseId, values));
+}
+}
+return result;
+}
+catch (Exception) {
+FormsError = "Nie można odczytać indeksu odmiany słownika synonimów.";
+return new List<Grupa>();
+}
 } // Find method
 
 } // Synonimy class

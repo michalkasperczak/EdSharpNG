@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.12
-AppVerName=EdSharpNG 5.0.12 (beta)
-VersionInfoVersion=5.0.12
+AppVersion=5.0.119
+AppVerName=EdSharpNG 5.0.119 (beta)
+VersionInfoVersion=5.0.119
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -86,6 +86,7 @@ Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
 Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Synonimy.cs";        DestDir: "{app}"; Flags: ignoreversion
+Source: "SynonimyOdmiany.cs"; DestDir: "{app}"; Flags: ignoreversion
 ; Zadania.cs -- listy zadan (checklisty Markdown), funkcje czyste
 Source: "Zadania.cs";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Zmiany.cs -- sledzenie zmian (CriticMarkup), funkcje czyste, krok 1a
@@ -98,6 +99,7 @@ Source: "EdSharp.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; skryptow usunieta 16.09.2026 razem z EdSharp.dll (docs/CO-USUWAMY.md 2.2).
 Source: "EdSharp.manifest";   DestDir: "{app}"; Flags: ignoreversion
 Source: "BuildEdSharp.cmd";   DestDir: "{app}"; Flags: ignoreversion
+Source: "PrepareSynonyms.ps1"; DestDir: "{app}"; Flags: ignoreversion
 Source: "FetchConvertTools.ps1";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "FetchUde.ps1";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "ModernizePandocConfig.ps1"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
@@ -137,7 +139,8 @@ Source: "history.txt";        DestDir: "{app}"; Flags: ignoreversion skipifsourc
 Source: "lgpl.txt";           DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 ; Data trees.
 Source: "Snippets\*"; DestDir: "{app}\Snippets"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
-Source: "Synonyms\*"; DestDir: "{app}\Synonyms"; Flags: recursesubdirs ignoreversion
+Source: "Synonyms\*"; DestDir: "{app}\Synonyms"; Excludes: "*.gz,plwordnet-forms.bin,plwordnet-legacy-omw.txt"; Flags: recursesubdirs ignoreversion
+Source: "Synonyms\plwordnet-forms.bin"; DestDir: "{app}\Synonyms"; Flags: ignoreversion
 Source: "Convert\*";  DestDir: "{app}\Convert";  Excludes: "*.sln,*.vcproj,*.vcxproj,*.vcxproj.filters,*.suo,*.user,*.c,*.asm,*.cs,*.obj,*.zip,temp.htm,temp.txt"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
 
 [Dirs]

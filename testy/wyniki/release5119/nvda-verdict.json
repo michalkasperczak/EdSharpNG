@@ -1,0 +1,15 @@
+{
+  "machine": "HERMES",
+  "exe_sha256": "f3fd4557fe4db448a1b208acfb43e8edd138cd832406e9cdcfb967ee81cbd675",
+  "speech_viewer_open_during_tests": true,
+  "actual_bridge_gestures": true,
+  "arrows_and_position_counter": true,
+  "enter_word_only": true,
+  "escape_unchanged": true,
+  "uppercase_preserved": true,
+  "no_results_and_no_guessing": true,
+  "corrupt_index_announced": true,
+  "same_process_recovery_after_resource_restore": true,
+  "ctrl_s_own_probe_roundtrip": true,
+  "all_installed_files_restored_and_verified": true
+}

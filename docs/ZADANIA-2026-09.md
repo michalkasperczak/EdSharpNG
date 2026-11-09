@@ -3,6 +3,32 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
+## Synonimy — dalsza rozbudowa (09.11.2026, w toku)
+
+Plan i wyniki: `SYNONIMY-ROZBUDOWA-2026-11.md`.
+
+- [x] Pełny plWordNet 5.0: zakresy HTTP, SHA-256 i CRC gzip sprawdzone;
+  parser nie wykonuje SQL, leksykon wybiera z metadanych.
+- [x] Większy indeks roboczy i jawny fallback OMW dla brakujących haseł;
+  pomiar 153/190 wobec 75/190, bez pięciu wcześniejszych utrat.
+- [x] Licencja wskazana w odpowiedzi autorów: pełny tekst zachowany bez
+  przerabiania copyrightu. Raport źródeł fleksji i probe Morfeusza2 zachowane.
+- [x] Oficjalne API Worda rozpoznane. Nie wdrażać providera jako gotowego bez
+  testu działającego Worda i sprawdzenia konkretnej licencji Office;
+  Shift+F7 pozostaje lokalny, bez uruchamiania Worda.
+- [x] Gotowy indeks poświadczonych form EDSYNF02 i test rzeczywistych danych
+  w .NET; pełna równoważność wszystkich 805849 rekordów względem EDSYNF01.
+- [x] Regresje i pomiar: 259/290 poświadczonych form w zestawie kontrolnym;
+  działający pełny program, Enter/Escape, wielkość liter, komunikaty braku
+  i uszkodzenia danych oraz powrót po naprawie sprawdzone żywym NVDA.
+- [x] Instalator i ZIP 5.0.119: rzeczywista instalacja na Hermesie, kod 0;
+  wszystkie 453 pliki identyczne ze stagingiem i ZIP-em, weryfikacja SHA-256.
+- [ ] Jedno spójne wydanie: instalator, ZIP, GitHub i F11 po odbiorze.
+  Kandydat 5.0.119 czeka na niezależny przegląd przed publikacją. Publiczne
+  5.0.118 oraz instalacja na głównym pozostają bez zmian. Wynik odbioru:
+  `SYNONIMY-ODBIOR-5.0.119.md`. Brak `sprawdziłem` i brak providera Worda
+  pozostają jawnymi ograniczeniami, nie zakończonymi funkcjami.
+
 ## Synonimy — publikacja odebranego etapu (09.11.2026)
 
 Michał wyjaśnił, że pobrał aktualizację z GitHuba, i zlecił uporządkowanie

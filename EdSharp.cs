@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.118";
+public const string VersionString = "5.0.119";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -8104,6 +8104,10 @@ AddMessage("Nie można wczytać słownika synonimów.");
 return;
 }
 lGroups = Synonimy.Find(sText);
+if (Synonimy.FormsError.Length > 0) {
+AddMessage(Synonimy.FormsError);
+return;
+}
 if (lGroups.Count == 0) {
 AddMessage("Nie znaleziono synonimów dla: " + sText);
 return;

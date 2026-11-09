@@ -1,0 +1,11 @@
+{
+  "schema": "edsharp-synonym-forms-v1",
+  "binary_bytes": 134750740,
+  "binary_sha256": "dac888d39d0a869eb74dd641f5ec0cc2a76dc393c8313bb6b528ce60c726769c",
+  "packed_bytes": 86586121,
+  "packed_sha256": "b434387c233170b83d195d943930022d89b7415c62f11e72cdc410d8e5100479",
+  "format": "EDSYNF02",
+  "source": "plWordNet 5.0 tbl_morphology",
+  "keys": 805849,
+  "records_equal_to_uncompressed": 805849
+}

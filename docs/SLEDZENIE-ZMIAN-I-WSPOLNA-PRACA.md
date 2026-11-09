@@ -1,5 +1,13 @@
 # Sledzenie zmian i wspolna praca na dwoch EdSharpach - propozycja
 
+## Aktualizacja 09.11.2026 — wznowiono wyłącznie uzgodniony zakres
+
+Na późniejsze zlecenie Michała wznowiono rozwój lokalnego słownika synonimów
+i odmiany. Stan przyrostu 5.0.119, odbioru oraz publikacji jest w
+`ZADANIA-2026-09.md` i `SYNONIMY-ODBIOR-5.0.119.md`. Dawna ogólna przerwa
+nie blokuje tego uzgodnionego wydania. Nie oznacza to wznowienia kroku 1c
+ani pozostałych odłożonych prac nad śledzeniem zmian i współpracą.
+
 ## Stan na 18.09.2026 — dalsze prace wstrzymane
 
 Kroki 1a i 1b są już wdrożone; opis układu F9 i wcześniejszych pomiarów jest

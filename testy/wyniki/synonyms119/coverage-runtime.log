@@ -1,0 +1,10 @@
+LEMMAS=190 LEMMA_HITS=156 FORMS=290 FORM_HITS=259
+MEDIAN_MS=1 MAX_MS=40
+PEAK_WORKING_SET_BYTES=95596544
+PASS domami -> chałupami
+PASS ważnego -> istotnego
+PASS sprawdził -> skontrolował
+PASS mam -> posiadam
+PASS zamkiem -> suwakiem
+PASS szybciej -> prędzej
+FAILURES=0

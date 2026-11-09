@@ -1,0 +1,291 @@
+lemma	form	synonyms	lookup_ms	values
+dom	domami	10	5	kątami|chatami|chałupami|dachami|rodzinami|familiami|rodami|klanami|parantelami|menażami
+dom	domem	10	2	kątem|chatą|chałupą|dachem|rodziną|familią|rodem|klanem|parantelą|menażem
+mieszkanie	mieszkaniami	2	2	rezydowaniami|zamieszkiwaniami
+mieszkanie	mieszkaniem	2	1	rezydowaniem|zamieszkiwaniem
+pokój	pokojami	1	0	równowagami
+pokój	pokojem	1	0	równowagą
+okno	oknami	0	0	
+okno	oknem	0	0	
+stół	stołami	1	0	stolikami
+stół	stołem	1	0	stolikiem
+łóżko	łóżkami	0	0	
+łóżko	łóżkiem	0	0	
+szafa	szafami	1	0	garderobami
+szafa	szafą	1	0	garderobą
+miasto	miastami	0	0	
+miasto	miastem	0	0	
+wieś	wsiami	5	1	wioskami|obciachami|wiochami|siarami|porutami
+wieś	wsią	5	1	wioską|obciachem|wiochą|siarą|porutą
+ulica	ulicami	1	0	jezdniami
+ulica	ulicą	1	0	jezdnią
+droga	drogami	5	1	trasami|podróżami|wojażami|peregrynacjami|kanałami
+droga	drogą	9	3	trasą|podróżem|podróżą|wojażem|peregrynacją|kanałem|nietanią|wysokopłatną|bliską
+samochód	samochodami	1	0	wozami
+samochód	samochodem	1	0	wozem
+pociąg	pociągami	4	1	skłonnościami|słabościami|inklinacjami|predylekcjami
+pociąg	pociągiem	4	1	skłonnością|słabością|inklinacją|predylekcją
+szkoła	szkołami	8	2	tendencjami|prądami|nurtami|kierunkami|izmami|edukacjami|budami|nauczkami
+szkoła	szkołą	8	2	tendencją|prądem|nurtem|kierunkiem|izmem|edukacją|budą|nauczką
+praca	pracami	1	1	robotami
+praca	pracą	1	1	robotą
+biuro	biurami	0	0	
+biuro	biurem	0	0	
+lekarz	lekarzami	2	0	doktorami|konsyliarzami
+lekarz	lekarzem	2	0	doktorem|konsyliarzem
+nauczyciel	nauczycielami	1	0	belframi
+nauczyciel	nauczycielem	1	0	belfrem
+człowiek	człowiekiem	6	1	osobą|jednostką|personą|śmiertelnikiem|człekiem|dorosłym
+człowiek	ludźmi	6	1	osobami|jednostkami|personami|śmiertelnikami|człekami|dorosłymi
+kobieta	kobietami	7	1	paniami|niewiastami|białogłowami|jejmościami|kobitami|babami|starymi
+kobieta	kobietą	7	2	panią|niewiastą|białogłową|jejmością|kobitą|babą|starą
+mężczyzna	mężczyznami	1	0	panami
+mężczyzna	mężczyzną	1	0	panem
+dziecko	dzieckiem	0	1	
+dziecko	dziećmi	0	1	
+rodzina	rodzinami	5	1	familiami|rodami|klanami|parantelami|domami
+rodzina	rodziną	5	1	familią|rodem|klanem|parantelą|domem
+matka	matkami	3	0	mamami|autorkami|twórczyniami
+matka	matką	3	0	mamą|autorką|twórczynią
+ojciec	ojcami	4	1	tatami|rodzicielami|autorami|twórcami
+ojciec	ojcem	4	1	tatą|rodzicielem|autorem|twórcą
+kolega	kolegami	2	0	kamratami|kumplami
+kolega	kolegą	2	0	kamratem|kumplem
+pies	psami	2	0	pałami|smerfami
+pies	psem	2	0	pałą|smerfem
+kot	kotami	1	0	gachami
+kot	kotem	1	0	gachem
+woda	wodami	4	1	werbalizmami|gołosłownościami|deklaratywizmami|deklaratywnościami
+woda	wodą	4	1	werbalizmem|gołosłownością|deklaratywizmem|deklaratywnością
+jedzenie	jedzeniami	4	9	zjadaniami|cięciami|ucinaniami|kąsaniami
+jedzenie	jedzeniem	4	11	zjadaniem|cięciem|ucinaniem|kąsaniem
+kawa	kawami	1	0	kawowcami
+kawa	kawą	1	0	kawowcem
+herbata	herbatami	1	0	herbatkami
+herbata	herbatą	1	0	herbatką
+list	listami	8	2	epistołami|e-mailami|mailami|mejlami|spisami|rejestrami|wykazami|regestrami
+list	listem	4	1	epistołą|e-mailem|mailem|mejlem
+wiadomość	wiadomościami	1	1	wieściami
+wiadomość	wiadomością	1	1	wieścią
+telefon	telefonami	1	0	telefoniami
+telefon	telefonem	1	0	telefonią
+komputer	komputerami	1	0	kompami
+komputer	komputerem	1	0	kompem
+program	programami	1	0	planami
+program	programem	1	0	planem
+plik	plikami	2	0	pakietami|kołtunami
+plik	plikiem	1	0	pakietem
+słowo	słowami	0	0	
+słowo	słowem	0	0	
+zdanie	zdaniami	0	0	
+zdanie	zdaniem	0	0	
+język	językami	1	0	mowami
+język	językiem	1	0	mową
+pytanie	pytaniami	4	4	indagowaniami|zapytywaniami|przepytywaniami|odpytywaniami
+pytanie	pytaniem	4	3	indagowaniem|zapytywaniem|przepytywaniem|odpytywaniem
+odpowiedź	odpowiedziami	1	0	responsami
+odpowiedź	odpowiedzią	1	0	responsem
+pomoc	pomocami	2	0	zapomogami|datkami
+pomoc	pomocą	2	0	zapomogą|datkiem
+problem	problemami	3	1	kwestiami|zagwozdkami|punktami
+problem	problemem	3	1	kwestią|zagwozdką|punktem
+błąd	błędami	1	0	pomyłkami
+błąd	błędem	1	0	pomyłką
+rozwiązanie	rozwiązaniami	2	1	rozsupłaniami|rozwikłaniami
+rozwiązanie	rozwiązaniem	2	1	rozsupłaniem|rozwikłaniem
+dzień	dniami	1	0	dobami
+dzień	dniem	1	0	dobą
+rano	ranami	0	2	
+rano	ranem	0	1	
+wieczór	wieczorami	1	0	wieczorkami
+wieczór	wieczorem	1	0	wieczorkiem
+miesiąc	miesiącami	2	0	m-cami|księżycami
+miesiąc	miesiącem	2	0	m-cem|księżycem
+godzina	godzinami	1	0	lekcjami
+godzina	godziną	1	0	lekcją
+minuta	minutami	2	0	sekundami|konceptami
+minuta	minutą	2	0	sekundą|konceptem
+życie	życiami	1	3	egzystowaniami
+życie	życiem	1	2	egzystowaniem
+radość	radościami	0	0	
+radość	radością	0	0	
+smutek	smutkami	1	0	smętami
+smutek	smutkiem	1	0	smętem
+strach	strachami	0	0	
+strach	strachem	0	0	
+miłość	miłościami	1	0	aktami
+miłość	miłością	1	0	aktem
+nadzieja	nadziejami	0	0	
+nadzieja	nadzieją	2	4	wbiją|nabiją
+cel	celami	2	0	przedmiotami|obiektami
+cel	celem	2	0	przedmiotem|obiektem
+pomysł	pomysłami	1	0	konceptami
+pomysł	pomysłem	1	0	konceptem
+myśl	myślami	2	0	ideologiami|ideami
+myśl	myślą	6	3	ideologią|ideą|sądzą|mniemają|uważają|pamiętają
+mówić	mówi	6	3	rozmawia|dialoguje|plotkuje|gada|włada|wypowiada
+mówić	mówię	6	2	rozmawiam|dialoguję|plotkuję|gadam|władam|wypowiadam
+powiedzieć	powie	2	1	wypowie|rzeknie
+powiedzieć	powiedział	2	1	wypowiedział|rzekł
+przeczytać	przeczyta	1	0	wyczyta
+przeczytać	przeczytam	1	0	wyczytam
+słuchać	słucha	2	0	nasłuchuje|nadsłuchuje
+słuchać	słucham	2	0	nasłuchuję|nadsłuchuję
+widzieć	widzi	1	36	postrzega
+widzieć	widział	1	3	postrzegał
+patrzeć	patrzał	1	1	patrzył
+patrzeć	patrzała	1	1	patrzyła
+myśleć	myślał	4	3	sądził|mniemał|uważał|pamiętał
+myśleć	myślała	4	2	sądziła|mniemała|uważała|pamiętała
+rozumieć	rozumiał	1	1	interpretował
+rozumieć	rozumiała	1	0	interpretowała
+uczyć	uczy	1	0	naucza
+uczyć	uczył	1	0	nauczał
+pamiętać	pamięta	1	0	myśli
+pamiętać	pamiętam	1	0	myślę
+pytać	pytam	4	1	indaguję|zapytuję|przepytuję|odpytuję
+pytać	pytał	4	1	indagował|zapytywał|przepytywał|odpytywał
+odpowiadać	odpowiada	12	8	pasuje|dogadza|konweniuje|leży|odpiera|odrzeka|pokutuje|odpokutowuje|odwzajemnia|oddaje|odpisuje|przystaje
+odpowiadać	odpowiadam	12	8	pasuję|dogadzam|konweniuję|leżę|odpieram|odrzekam|pokutuję|odpokutowuję|odwzajemniam|oddaję|odpisuję|przystaję
+szukać	szuka	1	0	poszukuje
+szukać	szukam	1	0	poszukuję
+znaleźć	znajdzie	7	2	podrzutkowi|podrzutku|znajdkowi|znajdku|wynajdzie|odszuka|odnajdzie
+znaleźć	znajdę	6	2	podrzutek|podrzutka|znajdka|wynajdę|odszukam|odnajdę
+pracować	pracował	1	1	robił
+pracować	pracowała	1	1	robiła
+odpoczywać	odpoczywa	3	1	wypoczywa|oddycha|odsapuje
+odpoczywać	odpoczywam	3	1	wypoczywam|oddycham|odsapuję
+spać	spał	2	1	nocował|chrapał
+spać	spała	2	1	nocowała|chrapała
+jeść	jadł	4	7	zjadał|ciął|ucinał|kąsał
+jeść	jadła	4	8	zjadała|cięła|ucinała|kąsała
+robić	robi	2	3	czyni|pracuje
+robić	robię	2	2	czynię|pracuję
+zrobić	zrobi	2	1	uczyni|narobi
+zrobić	zrobię	2	1	uczynię|narobię
+budować	budował	3	2	tworzył|współtworzył|konstruował
+budować	budowała	3	1	tworzyła|współtworzyła|konstruowała
+naprawić	naprawi	3	1	opatrzy|zreperuje|nareperuje
+naprawić	naprawię	3	1	opatrzę|zreperuję|nareperuję
+zmienić	zmieni	1	0	odmieni
+zmienić	zmienię	1	0	odmienię
+poprawić	poprawi	2	1	wyrówna|uładzi
+poprawić	poprawię	2	1	wyrównam|uładzę
+sprawdzić	sprawdzi	1	0	skontroluje
+sprawdzić	sprawdził	1	0	skontrolował
+zamknąć	zamknie	3	3	zgasi|wyłączy|wsadzi
+zamknąć	zamknął	3	2	zgasił|wyłączył|wsadził
+zapisać	zapisał	4	2	wpisał|przepisał|zaordynował|zaaplikował
+zapisać	zapisała	4	2	wpisała|przepisała|zaordynowała|zaaplikowała
+usunąć	usunie	2	0	sprzątnie|zlikwiduje
+usunąć	usunął	2	0	sprzątnął|zlikwidował
+zacząć	zacznie	6	2	rozpocznie|jmie|pocznie|napocznie|naruszy|zadrze
+zacząć	zacznę	6	2	rozpocznę|jmę|pocznę|napocznę|naruszę|zadrę
+skończyć	skończy	2	1	zakończy|ukończy
+skończyć	skończył	2	1	zakończył|ukończył
+czekać	czekam	1	1	zwlekam
+czekać	czekał	1	1	zwlekał
+iść	idzie	9	16	wędruje|chodzi|płynie|nadciąga|nadchodzi|ciągnie|biega|biegnie|przebiega
+iść	idę	9	40	wędruję|chodzę|płynę|nadciągam|nadchodzę|ciągnę|biegam|biegnę|przebiegam
+chodzić	chodzi	9	10	biega|lata|idzie|chadza|kursuje|jeździ|jedzie|drży|drga
+chodzić	chodził	9	11	biegał|latał|szedł|chadzał|kursował|jeździł|jechał|drżał|drgał
+biec	biegnie	8	14	pędzi|gna|mknie|pomyka|płynie|leci|idzie|przebiega
+biec	biegnę	8	15	pędzę|gnam|mknę|pomykam|płynę|lecę|idę|przebiegam
+jechać	jadę	10	15	jeżdżę|przejeżdżam|walę|capię|zajeżdżam|kursuję|chodzę|pojeżdżam|ujeżdżam|śmierdzę
+jechać	jechał	10	14	jeździł|przejeżdżał|walił|capił|zajeżdżał|kursował|chodził|pojeżdżał|ujeżdżał|śmierdział
+przyjść	przyjdzie	2	0	nadejdzie|nadciągnie
+przyjść	przyjdę	2	0	nadejdę|nadciągnę
+wrócić	wróci	3	1	powróci|zawróci|nawróci
+wrócić	wrócił	3	1	powrócił|zawrócił|nawrócił
+kupić	kupi	4	2	zakupi|sprawi|łyknie|chapnie
+kupić	kupię	4	2	zakupię|sprawię|łyknę|chapnę
+sprzedać	sprzeda	1	0	przehandluje
+sprzedać	sprzedam	1	0	przehandluję
+dać	dał	2	1	wydał|oddał
+dać	dała	2	1	wydała|oddała
+wziąć	wezmę	5	3	pobiorę|zaczerpnę|sięgnę|zabiorę|posiądę
+wziąć	weźmie	5	2	pobierze|zaczerpnie|sięgnie|zabierze|posiądzie
+dobry	dobrego	4	23	niezłego|pozytywnego|grzecznego|ładnego
+dobry	dobrej	4	4	niezłej|pozytywnej|grzecznej|ładnej
+zły	gorszego	2	3	nielepszego|gniewniejszego
+zły	gorszej	2	5	nielepszej|gniewniejszej
+ważny	najważniejszego	1	1	najistotniejszego
+ważny	najważniejszej	1	1	najistotniejszej
+istotny	istotnego	3	2	ważnego|znaczącego|nielichego
+istotny	istotnej	3	2	ważnej|znaczącej|nielichej
+nowy	najnowszego	1	1	najświeższego
+nowy	najnowszej	1	1	najświeższej
+stary	najstarszego	1	2	najdawniejszego
+stary	najstarszej	1	3	najdawniejszej
+młody	młodego	1	0	młodzieńczego
+młody	młodej	1	0	młodzieńczej
+mały	małego	7	5	niewielkiego|niedużego|niedorosłego|nędznego|niskiego|nikczemnego|mikrego
+mały	małej	7	4	niewielkiej|niedużej|niedorosłej|nędznej|niskiej|nikczemnej|mikrej
+duży	dużego	3	2	wielkiego|niemałego|niekiepskiego
+duży	dużej	3	2	wielkiej|niemałej|niekiepskiej
+wielki	największego	0	3	
+wielki	największej	0	3	
+krótki	krótkiego	3	4	niedługiego|cienkiego|chudego
+krótki	krótkiej	3	3	niedługiej|cienkiej|chudej
+łatwy	najłatwiejszego	1	2	najlżejszego
+łatwy	najłatwiejszej	1	4	najlżejszej
+trudny	najtrudniejszego	1	2	najcięższego
+trudny	najtrudniejszej	1	3	najcięższej
+prosty	najprostszego	0	0	
+prosty	najprostszej	0	0	
+szybki	najszybszego	1	2	najprędszego
+szybki	najszybszej	1	3	najprędszej
+wolny	najwolniejszego	4	6	najpowolniejszego|najswobodniejszego|najluźniejszego|najrzadszego
+wolny	najwolniejszej	4	7	najpowolniejszej|najswobodniejszej|najluźniejszej|najrzadszej
+cichy	cichego	1	1	spokojnego
+cichy	cichej	1	1	spokojnej
+głośny	głośnego	0	0	
+głośny	głośnej	0	0	
+ładny	najładniejszego	2	1	najpokaźniejszego|najlepszego
+ładny	najładniejszej	2	1	najpokaźniejszej|najlepszej
+piękny	najpiękniejszego	3	4	najcudowniejszego|najszlachetniejszego|najśliczniejszego
+piękny	najpiękniejszej	3	2	najcudowniejszej|najszlachetniejszej|najśliczniejszej
+brzydki	brzydkiego	2	0	nieładnego|niepięknego
+brzydki	brzydkiej	2	1	nieładnej|niepięknej
+jasny	jasnego	3	1	klarownego|jaśniutkiego|jaśniuteńkiego
+jasny	jasnej	3	1	klarownej|jaśniutkiej|jaśniuteńkiej
+ciemny	ciemnego	6	3	podejrzanego|mętnego|niejasnego|niewyraźnego|nieoświeconego|ciemnogłowego
+ciemny	ciemnej	6	2	podejrzanej|mętnej|niejasnej|niewyraźnej|nieoświeconej|ciemnogłowej
+ciepły	cieplejszego	0	0	
+ciepły	cieplejszej	0	0	
+zimny	najzimniejszego	1	2	najchłodniejszego
+zimny	najzimniejszej	1	1	najchłodniejszej
+bliski	bliskiego	4	2	niedalekiego|nieodległego|drogiego|zażyłego
+bliski	bliskiej	4	4	niedalekiej|nieodległej|drogiej|zażyłej
+daleki	dalekiego	2	2	odległego|oddalonego
+daleki	dalekiej	2	3	odległej|oddalonej
+szczęśliwy	najszczęśliwszego	1	1	najfortunniejszego
+szczęśliwy	najszczęśliwszej	1	1	najfortunniejszej
+spokojny	najspokojniejszego	1	2	najcichszego
+spokojny	najspokojniejszej	1	1	najcichszej
+silny	najsilniejszego	1	4	najmocniejszego
+silny	najsilniejszej	1	5	najmocniejszej
+słaby	najsłabszego	3	16	najwątlejszego|najmarniejszego|najlichszego
+słaby	najsłabszej	3	3	najwątlejszej|najmarniejszej|najlichszej
+bezpieczny	bezpiecznego	1	0	niegroźnego
+bezpieczny	bezpiecznej	1	1	niegroźnej
+wygodny	najwygodniejszego	2	1	najdogodniejszego|najsposobniejszego
+wygodny	najwygodniejszej	2	1	najdogodniejszej|najsposobniejszej
+dostępny	dostępnego	1	0	przystępnego
+dostępny	dostępnej	1	0	przystępnej
+lokalny	lokalnego	1	0	miejscowego
+lokalny	lokalnej	1	0	miejscowej
+polski	polskiego	2	1	polskojęzycznego|nadwiślańskiego
+polski	polskiej	2	1	polskojęzycznej|nadwiślańskiej
+dobrze	lepiej	1	0	pozytywniej
+źle	gorzej	5	2	płoń|gorej|pałaj|nielepiej|negatywniej
+szybko	szybciej	1	0	prędzej
+wolno	wolniej	4	1	luźniej|rzadziej|powolniej|swobodniej
+łatwo	łatwiej	2	0	lżej|nietrudniej
+trudno	trudniej	2	0	ciężej|niełatwiej
+blisko	bliżej	2	0	niedalej|zażylej
+często	częściej	1	0	nierzadziej
+rzadko	rzadziej	3	0	luźniej|wolniej|nieczęściej
+jutro	jutrami	0	0	
+jutro	jutrem	0	0	
+wcześnie	wcześniej	1	0	rychlej

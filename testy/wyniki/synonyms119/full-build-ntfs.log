@@ -1,0 +1,7 @@
+NVDA controller client present.
+Compiling EdSharp.cs -> EdSharpNG.exe ...
+
+Build complete:
+  EdSharpNG.exe  -- the application (x64)
+
+BUILD_EXIT=0
