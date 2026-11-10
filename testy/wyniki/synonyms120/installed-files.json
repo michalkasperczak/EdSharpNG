@@ -1,0 +1,5382 @@
+[
+  {
+    "path": "Announce.htm",
+    "bytes": 7652,
+    "sha256": "7eced039a24bcb72b4fab05f6821e71c9ba035d9fb648d8a7eab5392141e7bd4"
+  },
+  {
+    "path": "Announce.md",
+    "bytes": 3353,
+    "sha256": "570bbf1c75464ab36ec1de7de6bc827a0e1b7b9fa5d900a79a2786641df27908"
+  },
+  {
+    "path": "BuildEdSharp.cmd",
+    "bytes": 9845,
+    "sha256": "0ee346aa899df835c7568fd2fe479f2bc1887a2260855a6c67870edd64ec260c"
+  },
+  {
+    "path": "CamelType_CSharp.md",
+    "bytes": 5188,
+    "sha256": "ff7728ad0ec6da1624e042b79faafd79f933f0f869811f554241498c3aec1cfa"
+  },
+  {
+    "path": "CamelType_JAWSScript.md",
+    "bytes": 8091,
+    "sha256": "909d0454a2e22458776fecd28d97a815c2c2491ce5aab80ee295845c678c042f"
+  },
+  {
+    "path": "Convert/Pandoc/COPYING.rtf",
+    "bytes": 20757,
+    "sha256": "b2e44b72220d84e7ec7d5c7ed2b76e42b2c239ae1f179a2a2a9a34d1e40f315e"
+  },
+  {
+    "path": "Convert/Pandoc/COPYRIGHT.txt",
+    "bytes": 9823,
+    "sha256": "43575d901fd50cc06f49042b82f114667a82c17d63b429e99635ae9430c977c4"
+  },
+  {
+    "path": "Convert/Pandoc/MANUAL.html",
+    "bytes": 432010,
+    "sha256": "8c5a88d1d75d7035d681d6b68c34f443f73821e12eb540671d085f157b4c5ccb"
+  },
+  {
+    "path": "Convert/Pandoc/pandoc.exe",
+    "bytes": 239168264,
+    "sha256": "7ab6244548ba15494fab956230050516fe8f57c36ec2dfb50133719ad3b5a791"
+  },
+  {
+    "path": "Convert/Tidy/tidy.dll",
+    "bytes": 886784,
+    "sha256": "71e529f65b7ebd6e057bcdd8b6bd19c9bfe8c9b14c2c18fc758ecb0a141c61b2"
+  },
+  {
+    "path": "Convert/Tidy/tidy.exe",
+    "bytes": 856064,
+    "sha256": "619ac8bb4438eb33b046b09c5726a6efb7d516228235a7e18ffc6e43866d76ac"
+  },
+  {
+    "path": "Convert/Tools.lock",
+    "bytes": 66,
+    "sha256": "0f36b615086bc504fe4c5d4c66cc6313b61c33234ba4211d6b3ee3b8422e277e"
+  },
+  {
+    "path": "Convert/Xpdf/pdfdetach.exe",
+    "bytes": 1028096,
+    "sha256": "3c77e20bfed6b7bc804dc0cc80eacae478154feba2ebde33227dc63379cde2bd"
+  },
+  {
+    "path": "Convert/Xpdf/pdffonts.exe",
+    "bytes": 1046016,
+    "sha256": "058e9e5ba2882382bf68b792cf4ff228701753d11e996a67a425d4649e6a30b8"
+  },
+  {
+    "path": "Convert/Xpdf/pdfimages.exe",
+    "bytes": 1097728,
+    "sha256": "84557704118101191a90ba5299af45152d404ab34f5cd5d68be25faf0cd7f507"
+  },
+  {
+    "path": "Convert/Xpdf/pdfinfo.exe",
+    "bytes": 1056768,
+    "sha256": "454fae64b11454af8ef5b647f9270f23e00690541d6e8cfd749dc807db9c1203"
+  },
+  {
+    "path": "Convert/Xpdf/pdftohtml.exe",
+    "bytes": 1954304,
+    "sha256": "3da63de2f885a0d37046d2a7f30369b53762eabf8b91b24219d67fc8f7bd8fa7"
+  },
+  {
+    "path": "Convert/Xpdf/pdftopng.exe",
+    "bytes": 1871360,
+    "sha256": "856f6e9e2fda6a5f2022bfafb2152e7caa1b9e910e134cad0678fdba89d99266"
+  },
+  {
+    "path": "Convert/Xpdf/pdftoppm.exe",
+    "bytes": 1801216,
+    "sha256": "7723c1c9e1c298316554309e9124ed1e62f83122b6649f7e15f6a55c68c944f6"
+  },
+  {
+    "path": "Convert/Xpdf/pdftops.exe",
+    "bytes": 1969152,
+    "sha256": "7c51bd4e6570259d3850dd40afe4e48fb4e9ca9955a4a33159d484196d9a71c1"
+  },
+  {
+    "path": "Convert/Xpdf/pdftotext.exe",
+    "bytes": 1151488,
+    "sha256": "100f65aa89421a3d778dfbd08c7bbd7eca176c6b285be297fbd333af3dcec5df"
+  },
+  {
+    "path": "Convert/any2txt.cmd",
+    "bytes": 1524,
+    "sha256": "291698e9311b3cd490359d7ce6493d7e0b6ebc3d5f3eb3ab5c1df53f37ec9c62"
+  },
+  {
+    "path": "Convert/astyle/CMakeLists.txt",
+    "bytes": 445,
+    "sha256": "37894f90c7be9bae8218e4288c7fc79e7d515fac8332099c4c091d213610e6d6"
+  },
+  {
+    "path": "Convert/astyle/LICENSE.md",
+    "bytes": 1088,
+    "sha256": "2232966052b6cb7eccac3f865549e33ee6040a4b0013d86bce0ca4537cfa5cab"
+  },
+  {
+    "path": "Convert/astyle/README.md",
+    "bytes": 355,
+    "sha256": "193f57001c0ed3925bbde2625ba760a5ccf52499af17dfa36a9835c152567fdc"
+  },
+  {
+    "path": "Convert/astyle/astyle.exe",
+    "bytes": 1333760,
+    "sha256": "b0d8d79488d853351ca41e1ad3c331e3624a9c03967f5d152da43952844bf36c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Bcc AStyle All.workspace",
+    "bytes": 337,
+    "sha256": "992751d88bc669987527cf8bf697e49f874944c788f3cfbc8622ba088b6c2a33"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Bcc AStyle Dll.cbp",
+    "bytes": 1910,
+    "sha256": "4f062d8bfb5a0e18856e4e78f01a2f6b787af36f8ad43a536d20abc6c8b15585"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Bcc AStyle Java.cbp",
+    "bytes": 2068,
+    "sha256": "e409abd0aa31ca0c40560915c85d3cb51e95eeaf4f5ccdd3291d54a3dabb8ecd"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Bcc AStyle Lib.cbp",
+    "bytes": 1562,
+    "sha256": "ce46b1a224db2fd005067ffef7f73ad3678b0d0455959db15d30cdc6fcf3b2e4"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Bcc AStyle.cbp",
+    "bytes": 2119,
+    "sha256": "a86ca1d8daece964270be0619dd2d3b3bc5695763dbc08d9c3d4c3e1d5975694"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc/Errors.txt",
+    "bytes": 554,
+    "sha256": "e8be9ea79a29ef5b4dfb86434791c378c3d0b3165b5d46254f42cc3d6b54cb53"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc32c/Bcc AStyle All.workspace",
+    "bytes": 346,
+    "sha256": "20ebac20426e67950f1999cdca6b5fd6863400030436248ea051bc7a660fdcde"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc32c/Bcc AStyle Dll.cbp",
+    "bytes": 2049,
+    "sha256": "086fc6fc28b5258a0ab29f71152354032605ab42aa0e3986a9d6a33727b2ac01"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc32c/Bcc AStyle Java.cbp",
+    "bytes": 2198,
+    "sha256": "50a94a7acc2154f726756cdce36f8a9006a767cd184f68415125c56f3ea3958c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc32c/Bcc AStyle Lib.cbp",
+    "bytes": 1648,
+    "sha256": "4081fed3f6cf9851249c007dc0aa50d4d6dc8f3b2e7d1b22114b7bf63eefa052"
+  },
+  {
+    "path": "Convert/astyle/build/cb-bcc32c/Bcc AStyle.cbp",
+    "bytes": 2146,
+    "sha256": "995062ff51036eff920361e2c4d36f2ed15a453c0974e4719c2104909bf9a144"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clang/Clang AStyle A.cbp",
+    "bytes": 2260,
+    "sha256": "4bb68ee11e674182d41e48a48ff6c97d9d2cee5098163aded9621516e182ca19"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clang/Clang AStyle All.workspace",
+    "bytes": 350,
+    "sha256": "21e00712caac0a6ed1fc9add957e6c804315fac7ee8ced492c9c82715730325a"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clang/Clang AStyle Java.cbp",
+    "bytes": 3272,
+    "sha256": "23f51798a0be14b025f20e5b74e188dbb9d360f71f4bc41a5a6b6138ed4e2c1c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clang/Clang AStyle So.cbp",
+    "bytes": 2185,
+    "sha256": "8032dc049d1571e0f6b1fdd81942b62a500477a8921bb72415125f3e2a5a6160"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clang/Clang AStyle.cbp",
+    "bytes": 3380,
+    "sha256": "81ef3da4d495e2c2a8e4d6ac7c192fc44f7aa6b23e91795da327a0981fc0f174"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clangwin/ClangWin AStyle All.workspace",
+    "bytes": 362,
+    "sha256": "3d0b97161e3283b25d9cf8507e66ce22be1b947177cd4aac63976644005884c1"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clangwin/ClangWin AStyle Dll.cbp",
+    "bytes": 2689,
+    "sha256": "c2d88e7d8e37e9cc1aabb552e7a103d37c1e7da459043b304e6ec2ec18fd009a"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clangwin/ClangWin AStyle Java.cbp",
+    "bytes": 3182,
+    "sha256": "06692c1971b1aae4779f042dccc0d400cded3d298f55943c611c6d8bbf91e715"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clangwin/ClangWin AStyle Lib.cbp",
+    "bytes": 2492,
+    "sha256": "e7a41c40da112108b961191d0a2e4f037021fe3d95c822f3dde7b9e680839efa"
+  },
+  {
+    "path": "Convert/astyle/build/cb-clangwin/ClangWin AStyle.cbp",
+    "bytes": 2630,
+    "sha256": "46db3a08bf50f93e4253c3e6295e4e1c4a982d1a1c3a2dbe5e44c43c5f42674a"
+  },
+  {
+    "path": "Convert/astyle/build/cb-gcc/Gcc AStyle A.cbp",
+    "bytes": 1821,
+    "sha256": "2ea56d7aa2771a76d18aad747087b9b140052edf3dd71c982e3178f688f16831"
+  },
+  {
+    "path": "Convert/astyle/build/cb-gcc/Gcc AStyle All.workspace",
+    "bytes": 334,
+    "sha256": "eb681b999ea9863c1f433c11a4debf9e26666db18892bd711846a9a44b5dc1dd"
+  },
+  {
+    "path": "Convert/astyle/build/cb-gcc/Gcc AStyle Java.cbp",
+    "bytes": 2785,
+    "sha256": "41edff813c15b918c3f5f141a59b4c7f18e4bb9e9b395486abac0407b5db3f1f"
+  },
+  {
+    "path": "Convert/astyle/build/cb-gcc/Gcc AStyle So.cbp",
+    "bytes": 2177,
+    "sha256": "e8be99d3aaa872c3c616c0682d62e91c2c1c2d2cfd834c123ed52025d481fb73"
+  },
+  {
+    "path": "Convert/astyle/build/cb-gcc/Gcc AStyle.cbp",
+    "bytes": 4150,
+    "sha256": "c1fa2d62e452bab7dae92329064c366595bd8dcc86318265730757ed0657923d"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/Intel AStyle A.cbp",
+    "bytes": 1860,
+    "sha256": "6bea9d0a46646c6b733d04a7b0f060ca8bcecbe714a1268a8c2849efd2b22b20"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/Intel AStyle All.workspace",
+    "bytes": 344,
+    "sha256": "666e790002137080d7492f5f6f65a2370056ae8d95604ccd658b819576c1d14c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/Intel AStyle Java.cbp",
+    "bytes": 2542,
+    "sha256": "6ae87068de1c047625740516a1361e2e4efa23d826980811b43dfd59c9b4a8d7"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/Intel AStyle So.cbp",
+    "bytes": 2289,
+    "sha256": "30e70e86d09b361c7b660d626b9aa407c05e5cdb418b675260cac82349527e53"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/Intel AStyle.cbp",
+    "bytes": 2001,
+    "sha256": "8b09121369d32d244ea3d0f646cbcaa8b52a3c351c51e436bbb6a26bd023916c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-intel/README.txt",
+    "bytes": 2602,
+    "sha256": "5e3fd0f7d4355608d30e4adefb78fb6ab4fda38adec09fcee74ada344baa6b94"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mac/Mac AStyle A.cbp",
+    "bytes": 2738,
+    "sha256": "33247dc6fa7ad9dbc2e24787e2bf13662b380f03f1199cd266e48b808d98177c"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mac/Mac AStyle All.workspace",
+    "bytes": 334,
+    "sha256": "ee8e6837b0837a925035d19f8648dee42faf94e473fac78892623248dee2dfa4"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mac/Mac AStyle Dy.cbp",
+    "bytes": 2588,
+    "sha256": "aed273827a2befcbdcbb804b1cf5711a7711312d5c1597d46b54166bb6fb5a40"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mac/Mac AStyle Java.cbp",
+    "bytes": 3503,
+    "sha256": "8ae5eccbad1d712c4a374d90ce709dc5bfc3b3316f3ab48c48e9c852a936ffad"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mac/Mac AStyle.cbp",
+    "bytes": 3092,
+    "sha256": "ebfabbc6766c3c5235d1bc35fdbbd22e051e3d4f6aaa5cc90b904e65233fe0d1"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mingw/MinGW AStyle All.workspace",
+    "bytes": 347,
+    "sha256": "84665a2b82bf16a77a0a67b53eaca9bb6e2e467d375575f8f2317bdf165c05f7"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mingw/MinGW AStyle Dll.cbp",
+    "bytes": 3198,
+    "sha256": "1aa584c1788de1d81b274848d3e1205374f34fb2e924d7ad7104f16657f30aeb"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mingw/MinGW AStyle Java.cbp",
+    "bytes": 3426,
+    "sha256": "c562d8f99799a8011052da85ae72693652dedfd791ef80250bbb7b1183117801"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mingw/MinGW AStyle Lib.cbp",
+    "bytes": 1864,
+    "sha256": "996b6d374b4d103921f6802c9ba38fab54af185817f8ed795e20fb0abebe9fb3"
+  },
+  {
+    "path": "Convert/astyle/build/cb-mingw/MinGW AStyle.cbp",
+    "bytes": 3518,
+    "sha256": "b73ed8facafa2f94a01d19587dd2ff04fe08db13e14cc6aa4459a55b0e1d188e"
+  },
+  {
+    "path": "Convert/astyle/build/clang/Makefile",
+    "bytes": 7418,
+    "sha256": "345c52b7f00e2711dca3982b9ab444b070ed0e0bd4bc27d17f8de3dfbbc6f5fb"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/CompilerOptions.cmake",
+    "bytes": 1915,
+    "sha256": "788708cbfc8f3d712d36304528e5750d1e9e2fd45f487bda8a8b90c08421676a"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/InstallOptions.cmake",
+    "bytes": 1823,
+    "sha256": "3cf996a2990a1cd71c0a3b4b4d2d076577dafebd24620bc907634a98b517e64f"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/LinkerOptions.cmake",
+    "bytes": 894,
+    "sha256": "8092da719d1f1756548d5b4669f2ff669f0377d7e57361a01b09758fa01b57ca"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/Options.cmake",
+    "bytes": 942,
+    "sha256": "9b51fb7621a1e1ce91d5104e11314f946f241e749a2a6a1db61f3cf17b6441be"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/OutputFiles.cmake",
+    "bytes": 747,
+    "sha256": "fe8004eba5538a286ee9257644dfb428bff0af96a19960e0534ac915df1f406a"
+  },
+  {
+    "path": "Convert/astyle/build/cmake/PrintInfo.cmake",
+    "bytes": 800,
+    "sha256": "4141748a0001121589e3f6abcfb1fc38c6c7586f229a4026323b9311b6633d31"
+  },
+  {
+    "path": "Convert/astyle/build/gcc/Makefile",
+    "bytes": 7378,
+    "sha256": "c509a59e68eb68a58f785f6bfdce37547f89dcb40a76946d16fc60d76851c3b3"
+  },
+  {
+    "path": "Convert/astyle/build/intel/Makefile",
+    "bytes": 8072,
+    "sha256": "5f8885c7d8a1380711889616abc74fceedcaff8e4986cd7a79b6e176e457ff56"
+  },
+  {
+    "path": "Convert/astyle/build/mac/Makefile",
+    "bytes": 5521,
+    "sha256": "05c2e8663da76532e696d10dff1314b00308912dad4ab2aa46fe84141b72f541"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/AStyle.xcodeproj/project.pbxproj",
+    "bytes": 11794,
+    "sha256": "d46966c1812327ed735fd398c868e3517c96ea1e4c59320ca7d342e6c2e957fa"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/AStyle.xcworkspace/contents.xcworkspacedata",
+    "bytes": 369,
+    "sha256": "2746d52f1057e201ab6be507afdea1d238cd48a59ce07053e5185eed6f45f268"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/AStyleA.xcodeproj/project.pbxproj",
+    "bytes": 11618,
+    "sha256": "2c1cf4918c0551e31c3dc90712c13b262e18f08333cfffbd698724c04884148e"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/AStyleDylib.xcodeproj/project.pbxproj",
+    "bytes": 11889,
+    "sha256": "294b4ae2e77ec84e07ada27d474161886c289efc37145a08bfae662276ee613f"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/AStyleJava.xcodeproj/project.pbxproj",
+    "bytes": 12549,
+    "sha256": "d5275f6d28151ba7c60fc167eb87e23829aa2d373dad120e8a9ed0b98d93c6f4"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/install.sh",
+    "bytes": 2167,
+    "sha256": "c38a0fefd3ac1c456651fa42cd86ee101c7b28adcb7f048307807e9f554f7efd"
+  },
+  {
+    "path": "Convert/astyle/build/xcode/uninstall.sh",
+    "bytes": 1713,
+    "sha256": "89858f6c4ed16fd61f0106e8b4c63a355aa924c1ed71716cb3c456d4fcaeb90c"
+  },
+  {
+    "path": "Convert/astyle/doc/astyle.html",
+    "bytes": 115547,
+    "sha256": "fa89c02486912dca48edceb5537ddc04464678d1d6a012aea5760ee4d5d55271"
+  },
+  {
+    "path": "Convert/astyle/doc/development.html",
+    "bytes": 9877,
+    "sha256": "e4a6ebbe437dcd456645e8b540144b8030b2ff48d9065879be1fed33b4413175"
+  },
+  {
+    "path": "Convert/astyle/doc/favicon.ico",
+    "bytes": 318,
+    "sha256": "abc99fa6f5f96047e19022dc3af0f349f14250cb6042f7349051355c99637374"
+  },
+  {
+    "path": "Convert/astyle/doc/index.html",
+    "bytes": 9714,
+    "sha256": "cccacebb7152e7fecca52f965e44ff7e06cfcef4b1313a4812c1b63213ceebea"
+  },
+  {
+    "path": "Convert/astyle/doc/install.html",
+    "bytes": 32997,
+    "sha256": "5c2f188371babeb992db9d482dbbbf8eacb369a1d54e4c0af02feb3df2e21b2a"
+  },
+  {
+    "path": "Convert/astyle/doc/links.html",
+    "bytes": 16441,
+    "sha256": "4ca9d474e3717409a4ed23271e755603af42cc35f40b0e3d8afea07ff96a2b0a"
+  },
+  {
+    "path": "Convert/astyle/doc/news.html",
+    "bytes": 38124,
+    "sha256": "9e581cf36b55765f67c372c5afa63a14f10ac4f3f73a3a01a91a3103477f2cec"
+  },
+  {
+    "path": "Convert/astyle/doc/newsArchives.html",
+    "bytes": 74349,
+    "sha256": "2ac9d50c4294d9fb73690801d25311442cf46d067706c3f59047ce2dfdf3844b"
+  },
+  {
+    "path": "Convert/astyle/doc/notes.html",
+    "bytes": 28861,
+    "sha256": "5e4c9a3b02ec7e53165430c136b029a45be91455ab942328d51119457d57eb80"
+  },
+  {
+    "path": "Convert/astyle/doc/notesArchives.html",
+    "bytes": 92598,
+    "sha256": "fb57cffb644be3273c64478778aa20ce126adbd45930d088889aa4b435328ccc"
+  },
+  {
+    "path": "Convert/astyle/doc/scripts.html",
+    "bytes": 5707,
+    "sha256": "c86c086753970f2177ff12474e74a475224183dbcb5bdf98b7cdb2385fa4a16e"
+  },
+  {
+    "path": "Convert/astyle/doc/styles.css",
+    "bytes": 1858,
+    "sha256": "d6bd16aca3fb29b20ea853edb87d1881cfbee8adef5a9965fcb94ef1b210baca"
+  },
+  {
+    "path": "Convert/astyle/doc/subversion.html",
+    "bytes": 5343,
+    "sha256": "3c7c040ce3eec2613fcdd2aea362493f1c3f9b604a2eabd5fc4ad1b1b95f1b20"
+  },
+  {
+    "path": "Convert/astyle/doc/vsinstall.html",
+    "bytes": 4811,
+    "sha256": "afd78f1c2794513d9dee131bef9e88b942ab2a168f62f07ee6c2b022428f39bb"
+  },
+  {
+    "path": "Convert/astyle/file/README.md",
+    "bytes": 924,
+    "sha256": "1865452e4ef0ceb419c5e3a500efeeca85043035544d39319c92947952abbe9d"
+  },
+  {
+    "path": "Convert/astyle/file/allman.ini",
+    "bytes": 407,
+    "sha256": "8ccd10a7ba948ed4ddd2c2f1d400d31e6b1b7c76d6dc10d042456cffa7181766"
+  },
+  {
+    "path": "Convert/astyle/file/astyle.ini",
+    "bytes": 805,
+    "sha256": "a2cf93a7d42f03593615509125e899fda35ef1e25a5fb191cb35010e10d969f2"
+  },
+  {
+    "path": "Convert/astyle/file/chromium.ini",
+    "bytes": 597,
+    "sha256": "cedae568f1d7095d65f57fc8f51950b16703552713141a6d22299560e9e81d09"
+  },
+  {
+    "path": "Convert/astyle/file/clang-chromium.yaml",
+    "bytes": 3459,
+    "sha256": "80aabc720f45e4c2aa4d6762a832c40ea870c74d2e3d1d1b272936d7c99d2bf3"
+  },
+  {
+    "path": "Convert/astyle/file/clang-google.yaml",
+    "bytes": 3410,
+    "sha256": "e9b5a8dacb7e806318a8ca2853997618899a5a45669cded8469d05bb02f0e8c1"
+  },
+  {
+    "path": "Convert/astyle/file/clang-llvm.yaml",
+    "bytes": 3424,
+    "sha256": "f80ff1565217cff2837acbff958d8d157726b2e19965468cc06c6293f7429984"
+  },
+  {
+    "path": "Convert/astyle/file/clang-mozilla.yaml",
+    "bytes": 3440,
+    "sha256": "b008d01f51a68d9501fd915efed252d15c7690e847f00e8e6dbb074dfb52b97d"
+  },
+  {
+    "path": "Convert/astyle/file/clang-visualstudio.yaml",
+    "bytes": 1047,
+    "sha256": "662b71b08475127041c23e599150ebb0f62927600bdb025682c93b3dd456dd0f"
+  },
+  {
+    "path": "Convert/astyle/file/clang-webkit.yaml",
+    "bytes": 3392,
+    "sha256": "fe6edfc7a9dc159349b77b84566607396095ddd680be7e5fbea4a7b4ce5abd99"
+  },
+  {
+    "path": "Convert/astyle/file/gnu.ini",
+    "bytes": 625,
+    "sha256": "04d9f51f3ae70a7d9e60e58c825a3b53e5b4854641310e5c7767472150440d39"
+  },
+  {
+    "path": "Convert/astyle/file/google.ini",
+    "bytes": 690,
+    "sha256": "639c34effc19fa9acaccd40ce0a306a10df2325d2b8f4b7bd7a00efdbef32998"
+  },
+  {
+    "path": "Convert/astyle/file/horstmann.ini",
+    "bytes": 425,
+    "sha256": "6984066b62717ecbb14f8aecca3d45011522c136aa7b09aeba3f6ef49ece2df6"
+  },
+  {
+    "path": "Convert/astyle/file/java.ini",
+    "bytes": 361,
+    "sha256": "c91391fd5f17a8bf5ffa770231679ab8390f181fae40f009e0e4fc9c0380974e"
+  },
+  {
+    "path": "Convert/astyle/file/linux.ini",
+    "bytes": 381,
+    "sha256": "9f20dbaacb6b291b3e7d67d183a1e1c45890ab2884b645ca4c76d0b256c84ef2"
+  },
+  {
+    "path": "Convert/astyle/file/llvm.ini",
+    "bytes": 537,
+    "sha256": "97536e810f0179ce1dde555d7653abac858accdef4824de56a55c187989996bb"
+  },
+  {
+    "path": "Convert/astyle/file/mozilla.ini",
+    "bytes": 612,
+    "sha256": "65c19a0a260a7ddee4190d0a171b87941e354a43513d0bc207c32f555f39e6b1"
+  },
+  {
+    "path": "Convert/astyle/file/stroustrup.ini",
+    "bytes": 465,
+    "sha256": "9a53528b2bb3df11d1c4568028aba56a58607e0bdff1f8707b3d9fce25fbc68c"
+  },
+  {
+    "path": "Convert/astyle/file/visualstudio.ini",
+    "bytes": 566,
+    "sha256": "6de8d6a0f1f6ebab1192e27ae00042b8633989c27c4a8eb44547f3ea3b52c0b8"
+  },
+  {
+    "path": "Convert/astyle/file/webkit.ini",
+    "bytes": 543,
+    "sha256": "55f7ca99a2da501312a45858f5d19f18eafa65c819ff6af314bb92f4dcbd75b9"
+  },
+  {
+    "path": "Convert/astyle/man/astyle.1",
+    "bytes": 16691,
+    "sha256": "a94cb216c395a72e0f7be4ec0edad105c8533789c3b575446b79a95f1349eb02"
+  },
+  {
+    "path": "Convert/astyle/sh-completion/astyle.bash",
+    "bytes": 4082,
+    "sha256": "f226fb091ad00ed222ce9b3808c991e15ce709e116ec17581de3c7bfb6f73b18"
+  },
+  {
+    "path": "Convert/astyle/sh-completion/astyle.fish",
+    "bytes": 8826,
+    "sha256": "91b54a103f6f2c5c7409f5be1d817ba34c26196e6110b35a9fa98a35de0de5ba"
+  },
+  {
+    "path": "Convert/astyle/sh-completion/astyle.zsh",
+    "bytes": 7487,
+    "sha256": "f3e3844cd37530b5e9be6a191d89932f0acc471492df8168b67682944714d426"
+  },
+  {
+    "path": "Convert/astyle/sh-completion/gen-completions",
+    "bytes": 10915,
+    "sha256": "ada5ce64a097a7e72ebd0db80c0198336619c325581914766ff9fb316504c9b6"
+  },
+  {
+    "path": "Convert/astyle/src/ASBeautifier.cpp",
+    "bytes": 119968,
+    "sha256": "170d1819e7983793a64210dcf53a54c373230efc5459b3651b6c0057ab0c44e6"
+  },
+  {
+    "path": "Convert/astyle/src/ASEnhancer.cpp",
+    "bytes": 18964,
+    "sha256": "bc832bdf39bbcafe90300f8dffbbc95978f7f000170fae3c5e5baa3ae5063862"
+  },
+  {
+    "path": "Convert/astyle/src/ASFormatter.cpp",
+    "bytes": 249949,
+    "sha256": "ac0d1d10a325ade8266f241c2bb07794a8577c344fed91ce1b158cff14c0df3e"
+  },
+  {
+    "path": "Convert/astyle/src/ASLocalizer.cpp",
+    "bytes": 66209,
+    "sha256": "82d914cbe94218c4769f08ac08be88ee5952bd6d3fd4ebb6834c448ebc3da238"
+  },
+  {
+    "path": "Convert/astyle/src/ASLocalizer.h",
+    "bytes": 4752,
+    "sha256": "afb182c7966611112df4950e78a0fa1ff4bdd89877b8f8877d169ee38190f90a"
+  },
+  {
+    "path": "Convert/astyle/src/ASResource.cpp",
+    "bytes": 30412,
+    "sha256": "9c08b19aa7cbb50fc7dde0ae6cd7ba6ce52b582cfa9668c944fade54b44a3218"
+  },
+  {
+    "path": "Convert/astyle/src/astyle.h",
+    "bytes": 41225,
+    "sha256": "d2ac7a35dd8d889f3ff52da02c1f5d44bce3af9e7c39df35eb92641441b5b275"
+  },
+  {
+    "path": "Convert/astyle/src/astyle_main.cpp",
+    "bytes": 131273,
+    "sha256": "ef08defd9af2814afd266a20fcee37130d9d1b51d786d353dcb229e8873f9eb5"
+  },
+  {
+    "path": "Convert/astyle/src/astyle_main.h",
+    "bytes": 17458,
+    "sha256": "9275c0dfe539d28c327b3f2df32d9a6fbaf843772b59a5327a64a7ccbcf3132b"
+  },
+  {
+    "path": "Convert/liblouis/bin/liblouis-20.def",
+    "bytes": 5835,
+    "sha256": "9500d563e6127c80aadfe981f549ee18fb0fd533c4192334d9806ea8f1aac4c8"
+  },
+  {
+    "path": "Convert/liblouis/bin/liblouis.dll",
+    "bytes": 445304,
+    "sha256": "87a19d951d055fbda316f9d54e8331431e8b64144023bed86adf1c06c6dffa91"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_allround.exe",
+    "bytes": 253054,
+    "sha256": "4ea9164f48da37db9de687be73ea56f66bbfce1ea305af8e9679094a0e435a2c"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_checkhyphens.exe",
+    "bytes": 245098,
+    "sha256": "48bb54604f35d550b054b812a940f96122309901017a84e37992676dc3d65269"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_checktable.exe",
+    "bytes": 243553,
+    "sha256": "4d66ad00cbea2dc07e892cce9e7397309431144a8f9dae7a348d0c0d6bb14147"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_checkyaml.exe",
+    "bytes": 517629,
+    "sha256": "224787464fbcd3d616a2b13436bec0ccae6524060a4a2538030dc68c6f9c37b3"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_debug.exe",
+    "bytes": 258067,
+    "sha256": "99fa4028fffb8369358c6809f18b78414641c66f3945fbeb73047221f2a755e3"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_tableinfo.exe",
+    "bytes": 242845,
+    "sha256": "a9e367e1648d516ce7f121ead91f344c63929f8d0bb14bb27e8028c44fccd3c0"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_trace.exe",
+    "bytes": 254753,
+    "sha256": "c32a9d44d973c69eb21ff3dfdb261e993ecf1e392ced5bb9a462e798a1629690"
+  },
+  {
+    "path": "Convert/liblouis/bin/lou_translate.exe",
+    "bytes": 250339,
+    "sha256": "59463291414d9dafbe235f4accb440d872bf413228459a27e2227f672095ede1"
+  },
+  {
+    "path": "Convert/liblouis/brl2txt.bat",
+    "bytes": 1719,
+    "sha256": "6a16756ea547c85df653b591c344fd8e39ae76e2d1f9e854c44804525f4edd21"
+  },
+  {
+    "path": "Convert/liblouis/include/liblouis/liblouis.h",
+    "bytes": 14809,
+    "sha256": "6a45560bc8fd72c33909070170636af2a257001d18856180ca744b72d53de596"
+  },
+  {
+    "path": "Convert/liblouis/lib/liblouis.a",
+    "bytes": 270384,
+    "sha256": "743b1db72272944e48e3d0cb0261ab3d304b6473e42987a72a25f99e326c95b5"
+  },
+  {
+    "path": "Convert/liblouis/lib/liblouis.dll.a",
+    "bytes": 106252,
+    "sha256": "b63afe5c29635ef6fb567a43fc77d9c21f5e848640b77dce8a1f35489b0985cf"
+  },
+  {
+    "path": "Convert/liblouis/lib/liblouis.la",
+    "bytes": 1011,
+    "sha256": "dd5ecd8da3d9570362f6a3a8db0779cf1e23c1c5af3a413e0946a30282c187c9"
+  },
+  {
+    "path": "Convert/liblouis/lib/pkgconfig/liblouis.pc",
+    "bytes": 308,
+    "sha256": "2eed65d358916547834fd02955e28b28c7721f158cf22ebe8e31837ad6a5ad61"
+  },
+  {
+    "path": "Convert/liblouis/share/info/liblouis.info",
+    "bytes": 185559,
+    "sha256": "6d8b26b8f42efdf909eb86fd402c46a77be7d8bd86efad00b8d38543fdfa868e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/Es-Es-G0.utb",
+    "bytes": 8232,
+    "sha256": "c52b598132a3e51e1511622744c369ea1c54be9de9737f591d8ee1373622ac6f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/IPA-unicode-range.uti",
+    "bytes": 13188,
+    "sha256": "6c33175ce5460533e10fc56be4d65352cced12d9e92433d1f47477c65b4d6132"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/IPA.utb",
+    "bytes": 9081,
+    "sha256": "1a0a678531860509613c924feea090432844a6e91e2663064ccbde7730ebbafa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/Lv-Lv-g1.utb",
+    "bytes": 20418,
+    "sha256": "1df77b14270e62cf6318b81c6890d355a2ce84426d309eeef81d19b9c55a6d35"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/Pl-Pl-g1.utb",
+    "bytes": 10370,
+    "sha256": "99171a94db59484da2c1a1f700c95fab77da35d6b0635b360ff91edb2e9b93aa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/afr-za-g1.ctb",
+    "bytes": 2658,
+    "sha256": "06f0cee02ce6cb5e05460e42cb501c1b55ffc5196bbeab2c1a11b07ae3e6aeb1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/afr-za-g2.ctb",
+    "bytes": 30125,
+    "sha256": "055670a8d314a6f48f9664d45e9065214e9f8e16eed87fe3139962508f9c0141"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/akk-borger.utb",
+    "bytes": 45982,
+    "sha256": "4bb69e1fb7c50e42af0efab59c6d69a73b240c7324e9a7d51edbc9a9eb9fa0ce"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/akk.utb",
+    "bytes": 50441,
+    "sha256": "7abd2a3b54e32c88cb9accc335b3518a42a8a6fe9d12668c2a88028df6af5111"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ancient-languages-borger.utb",
+    "bytes": 3495,
+    "sha256": "0e878633417626ffd88be83e71ad0d061fea7c2f84e1f87e58cbbc60e6dd92c4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ancient-languages-us.utb",
+    "bytes": 3484,
+    "sha256": "a946e7595a92d5aa519def708da75a01484ec959a3063bebc92da28703cdebd7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar-ar-comp8.utb",
+    "bytes": 9197,
+    "sha256": "a88a588bafd749976bb6c436a665cd5d7ee92fc6c85978608b2683e519d70108"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar-ar-g1-core.uti",
+    "bytes": 10492,
+    "sha256": "0d413c8418905422e8237362ddc8f7664ad9a09fa6375d2533d722a76aac3019"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar-ar-g1.utb",
+    "bytes": 1210,
+    "sha256": "a741060a016ac6eaad5befbec6945f1170a5427017379da06c1417b001c9c61b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar-ar-g2.ctb",
+    "bytes": 11780,
+    "sha256": "85fd8adb49a0af2f80f253be46e46227227bbfebac62a6cce31ac50bfdff4a48"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar-ar-math.uti",
+    "bytes": 20865,
+    "sha256": "4e848d02dc70cde47421d1036c5daf08cbf3306019d9875d8a07b588214695f4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ar.tbl",
+    "bytes": 512,
+    "sha256": "d70424627ee28f09eb7c7a81433a88d23399869e9907e550ecfc9b80c9d391e5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/as-in-g1.utb",
+    "bytes": 1216,
+    "sha256": "f1121cad2a033fa41697ea49c07ff9d5f98b567135651e168c1d710e31aa59ee"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/as.tbl",
+    "bytes": 566,
+    "sha256": "92d5b50002a6df26ef0b113c59767693c766e21466a6596476bc6057e848efbf"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/aw-in-g1.utb",
+    "bytes": 1216,
+    "sha256": "b2cb4677d21553fd9c066a0e7a56a0ca60c1f762202a45306328c12ddd42b33c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/awa.tbl",
+    "bytes": 563,
+    "sha256": "1977180de92b37e1d0c6d1fd2d21d9a6258a77aa22fd1cf5c6f08bfcc3fa03a6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ba.utb",
+    "bytes": 2465,
+    "sha256": "ea4c417620305ab522535906b575e5054e4a5e307e1699df79c79187a31d7ad6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/be-in-g1.utb",
+    "bytes": 1215,
+    "sha256": "a8ab96a2502c2525f458d1a9034256034447073b19fea94065670068e0f27e7e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bel-comp.utb",
+    "bytes": 1530,
+    "sha256": "3612944e9b50e1ea13ce0e68849280b39785a3af8987f50a27186811ab699b6d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bel-detailed.utb",
+    "bytes": 1033,
+    "sha256": "09f743f578402bf65113ed0618eff141431d8cc9236ccb1ce5af625f83e7dbb9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bel.utb",
+    "bytes": 1839,
+    "sha256": "b2f4f6f5bce3b5a59d4cd2b3c1b9321952199a10acd89f40f70b7f1ea10d8b39"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bengali.cti",
+    "bytes": 10370,
+    "sha256": "1ca6191e95f91b70c9d0488b4afe9d33697f6541291984ea5dfda99c9d24b972"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bg.ctb",
+    "bytes": 6820,
+    "sha256": "c6fe1d04213715fcb28d6d3f128aa764990d70fa56cd1b13086f9f3a2d333d1e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bg.dis",
+    "bytes": 1749,
+    "sha256": "63ceb927603bd11619bd07588c2d1803b261291a425c4538c34b4fb624d2cb3d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bg.tbl",
+    "bytes": 686,
+    "sha256": "fc6c1874333a7b851f1a433751c06f9638e9d230e83550b3807169e9fc716d1e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bg.utb",
+    "bytes": 18140,
+    "sha256": "3a99d6c61cd4ab0cfb3ebc2d4a3eed6b0db315af529fc49eb17340cb80563f1d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bh.ctb",
+    "bytes": 926,
+    "sha256": "4ed0006c1d44591bc81f3c4979910778439bb1952bc703cc98dd9419b4baf7c5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bh.tbl",
+    "bytes": 546,
+    "sha256": "fe7855918bbc3a8ac720efa2d6bc0fcc036495244d728446362ae1965b75f677"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bn.tbl",
+    "bytes": 564,
+    "sha256": "6dbd7b0217c5d3af0926e966dc59ceda0f9914dc6952e0d04c7ff9f9c0a7aab2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bo.ctb",
+    "bytes": 7248,
+    "sha256": "fbbaca502cfda75ebe4c1ba23de5b8678f596e2ca4535ec1f98cc3568c2cb2af"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bo.tbl",
+    "bytes": 682,
+    "sha256": "df30ef07c4a7b16df7aa0bb43d7af3ee1256929ecd2d16b326dfbe2bc84fcb73"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/boxes.ctb",
+    "bytes": 10305,
+    "sha256": "ab017858e9585b6ec9547755dcdc69a23286af5e2e3903ffb9d85dc56cee8303"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/br-in-g1.utb",
+    "bytes": 1214,
+    "sha256": "a930baff32abfd40b4b46319108942ed999070f289906b3363414629c3672c38"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/bra.tbl",
+    "bytes": 559,
+    "sha256": "49977418fe747834221f8e7a4248b73688dd599b8d80fd43cdf893d7c227905e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/braille-patterns.cti",
+    "bytes": 26431,
+    "sha256": "5e24558303fa6db1642ee99dde12c43a42938edc7de26e87d09d4acfbeae6bbe"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ca-chardefs.cti",
+    "bytes": 16118,
+    "sha256": "d26470d7d9ab8cc65a42e3fcca748f20b547fb6a0f9e6e00c6c9c7413e6fb8b2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ca-g1.ctb",
+    "bytes": 1758,
+    "sha256": "d665fe7f24ccd074fa39ad850bbb783c2afdd105a76d11074fa11acddedf31aa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ca.tbl",
+    "bytes": 561,
+    "sha256": "661f352e862e63dc2117edb992e6d0621932e175eae7e8317ce44d91d00909e3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/chr-us-g1.ctb",
+    "bytes": 5562,
+    "sha256": "8c60519d98dd9de0c88c8cd1c3b3ec1b8e0030915f8b22029d52483a463251e7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ckb-chardefs.cti",
+    "bytes": 8563,
+    "sha256": "2fd157dcff9c5eebeb62c505ab0aa90df63099c340f1ae36ecb9ffad69da29f5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ckb-g1.ctb",
+    "bytes": 1210,
+    "sha256": "16291ab4c166c1069dad6da5f46ef90acb443025f34b7f2bb8da078bf358fdd5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ckb-translation.cti",
+    "bytes": 3541,
+    "sha256": "7c1b7a710e9ce5478ee1ae99539b14acc888d829d0a1526069f36a657e9aa8ed"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ckb.tbl",
+    "bytes": 563,
+    "sha256": "2aa65f2e5604d234a819e901639f4d49e7c1d0a8559d873c19745d642386b305"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/compress.cti",
+    "bytes": 1419,
+    "sha256": "c257f6407730cfac4ca718b2f3dce369c482b774bf69e04e547d2be902f00dc0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/controlchars.cti",
+    "bytes": 1045,
+    "sha256": "fce2908c639023efd748bd3ac077ca7db120a838e97031c32796ecf59da0d0e3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cop-eg-comp8.utb",
+    "bytes": 8665,
+    "sha256": "75a7ad3de65c963b75503978c9fa9cb0db8e9df603678a9309c64c83607df834"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cop.utb",
+    "bytes": 8976,
+    "sha256": "81161b027ffb5a0f53c7b36a3b82523589e51591e7513259fa9e7c455afe0ef5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/corrections.cti",
+    "bytes": 1492,
+    "sha256": "f50149c6dd2f9fc08645eac0267d39ff041364d72a8800ac8c6f77201f3ab37c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/countries.cti",
+    "bytes": 6703,
+    "sha256": "1b703a89b87835e9aec777d561950493bf863eb8a204efa7d9d44ec2f1542e93"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/critical-apparatus.uti",
+    "bytes": 2192,
+    "sha256": "d1a2d5515b0dfdb315bede0b9d40b78797601f423e672bc6bb3305124253a56b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cs-chardefs.cti",
+    "bytes": 24259,
+    "sha256": "1c6c9b752633325b64a20da94a53d2dd39b37d7f5edcb68ba731e39ff00ef4de"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cs-comp8.utb",
+    "bytes": 13503,
+    "sha256": "7fa4b71b92dc7e68da9f3a574b3ed20042ea40435e744416d21fe506f20dcd26"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cs-g1.ctb",
+    "bytes": 1354,
+    "sha256": "68609921c9d7f2e4a8402de30a0e34392387b11a5b43f537c724375eb3c8f718"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cs-translation.cti",
+    "bytes": 2527,
+    "sha256": "3feda17ccb8c229072addea637390abb68a3b320b791bb80a148323f3fc1546c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cs.tbl",
+    "bytes": 632,
+    "sha256": "a78af51905c835a354817be36738a496be03e9005f8af84119b09da05418bcf0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cuneiform-transliterated-compact.utb",
+    "bytes": 12682,
+    "sha256": "501de5f12582188fbd714cd132ef148266cded9736e77f0e4bca70b2dae85b93"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cuneiform-transliterated.utb",
+    "bytes": 6296,
+    "sha256": "92d3d56f943a5fee311fd1f7658b61ad2a940d42a72c3eb6e3adc351f533bbed"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cy-cy-g1.utb",
+    "bytes": 13797,
+    "sha256": "ef7811605ba5c6c4a8b280bcdf3062671880bbb3e2428de5d902be3fe085b8e1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cy-cy-g2.ctb",
+    "bytes": 4305,
+    "sha256": "401d3491729a441c49c570026e47c01808ef9049d163886c31c3930b8f38ad17"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/cy.tbl",
+    "bytes": 602,
+    "sha256": "86a2a478808b37746721fca4868e0f0c9d9c00ab9a76e07c1043f5d25279276b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-6miscChars.cti",
+    "bytes": 19519,
+    "sha256": "64f1d203e9e268d9b07c6705096056fdaf6562ba953c0af23b34a6e1e217f363"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-6miscChars_1993.cti",
+    "bytes": 20699,
+    "sha256": "23266a8779d2a7cd3aca15ab38e3a3a9b7537ce1280d86c59cdbe06b28ea8d8b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-8miscChars.cti",
+    "bytes": 3473,
+    "sha256": "cac918f2b7107c9802498c16634d1dcf6cc6ae5f77f61adec364948f2b487744"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-8miscChars_1993.cti",
+    "bytes": 3947,
+    "sha256": "c79d659e287b721cd9d1931bcacf849cb93d10eeb87496f96bcf6a85993fdce1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g08.ctb",
+    "bytes": 11761,
+    "sha256": "6fa9335a257ced7544061684d384a7f19aabecd14426a7d5180935ca4814eb64"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g08_1993.ctb",
+    "bytes": 13618,
+    "sha256": "2028b2afc951efd6ab144f4868d5e8ef910d788a2bffcfcd53710595fd2695c2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g16-lit_1993.ctb",
+    "bytes": 9461,
+    "sha256": "c039fe86b7cd9a83adb17d109698c5137b9e703ba134ea1b061f33fd29cdb95b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g16.ctb",
+    "bytes": 7785,
+    "sha256": "49a1c24ff9dc8e84b931b36d88631e9ecf6ff5d6470cb1d51b68d3dcaad4e478"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g16_1993.ctb",
+    "bytes": 8189,
+    "sha256": "00d396f5312fb2d2fb0d5d1770391e1397b0f052366ae5b462ab1978084564d8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g18.ctb",
+    "bytes": 24445,
+    "sha256": "754cd0458a5faf47093b1b1a7b22f453121b236e238a64086808fa9850f5652f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g18_1993.ctb",
+    "bytes": 25298,
+    "sha256": "c944dcf44bc49f710abc43c54c2017a5297d1e8d31ab619484a442123274d488"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g2.dic",
+    "bytes": 61628,
+    "sha256": "57562e4c739af43e2c932358c0ad26878a5d5066449736ed34eb4a1c8054349e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g26-lit_1993.ctb",
+    "bytes": 21622,
+    "sha256": "84c97d6a2fc9b1c3c21beba41ff4ebb19a9233bdbef609e515637fc08d3c1701"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g26.ctb",
+    "bytes": 34197,
+    "sha256": "719d6c077b32df30fa255d4bb3c26695b62cbce4672ed292f8f24320c5197228"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g26_1993.ctb",
+    "bytes": 29159,
+    "sha256": "ff0ebd89cba9c0799899bc5569cca70e84ecf4fb22ab493a741a06179f8bb349"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g26l-lit_1993.ctb",
+    "bytes": 15932,
+    "sha256": "0518f44e21190ff61cb6a3c1a5caec7839d77dd1a3330c545b671d33ed418089"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g26l_1993.ctb",
+    "bytes": 15048,
+    "sha256": "7a2f9308778f23ce62c6008a61f3ab8c81259aabc9ad6609152c5eedf109e959"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g28.ctb",
+    "bytes": 74632,
+    "sha256": "ad40fd25cddec5a0e4514dab5c9baa701f110bf6e5180c7d108936480f093588"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g28_1993.ctb",
+    "bytes": 62022,
+    "sha256": "5a4d47cc08574ba631ad5bea39d585aa9e1c0cd4fd2b739296b0fa73a24ec356"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-g28l_1993.ctb",
+    "bytes": 50229,
+    "sha256": "614b38e9d9842f5613604ed0d2f33ddf00db53a6a7bf8723df91bc45e52bf704"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-octobraille.dis",
+    "bytes": 13377,
+    "sha256": "700247513bee5b9b22315ad7f8db0a1d859c67d2995bd74b730240798c77878c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/da-dk-octobraille_1993.dis",
+    "bytes": 13251,
+    "sha256": "446dbce89feae48bbb71a10890150eea4354de05a5689408cb8ac8019da3030d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-accents-detailed.cti",
+    "bytes": 17422,
+    "sha256": "2dea8b5a6e29be7948e92995c80026b07657b339291ab5bc285ea4d3cd180e10"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-accents.cti",
+    "bytes": 17339,
+    "sha256": "dda45222bef6546a2d7e854f135a3a2a732bc469f5ceff2f9ddf5ec384c5c56e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-chardefs6.cti",
+    "bytes": 16907,
+    "sha256": "10b7c9bd19cb365258fd02a8b9891f01b158966562af2cb43b953d41e53e91b4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-chardefs8.cti",
+    "bytes": 19998,
+    "sha256": "a964937e3429ae3cb14e9e65333380fc9607d6412a9a12f6690c703cd975a4b0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-chess.ctb",
+    "bytes": 1489,
+    "sha256": "4778126e933d94ee3f05419de1a3c1e9e82cddeb9abf91823b0b0f36be4f565b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-comp6.utb",
+    "bytes": 15147,
+    "sha256": "c8bc8a94b944fbc66358c218f54ae6b057b733f55d4db8e389f915b43d6eb7c2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-de-comp8.ctb",
+    "bytes": 9333,
+    "sha256": "2e9fcedabc70d9c1cb49fb479bd8eb7601f0f24f1e4602ae98632c78b1ab07e2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-de.dis",
+    "bytes": 14594,
+    "sha256": "b4916e5162f2f7dcb6fd2430a22af76aada2541d26e74f5040bf5d7732f671a0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-eurobrl6.dis",
+    "bytes": 2264,
+    "sha256": "f173bdad9627971897ef7375637637f1ccf955a7b5d0892edb08493f8f51f665"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-eurobrl6u.dis",
+    "bytes": 2091,
+    "sha256": "d2ec0c0a4cc52d8ffe14cbfc79ecbfb01c3dafc26082bbcf539ffe0092ce0e56"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g0-core.uti",
+    "bytes": 26880,
+    "sha256": "6723c8008a12129af7493258837728419bf0befa5b9b54d8d04fd592087a02f4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g0-detailed.utb",
+    "bytes": 3033,
+    "sha256": "9af7c79dad3894cec1a640d386dfff4114b29cf9d35229c986009169859d7a18"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g0.utb",
+    "bytes": 1848,
+    "sha256": "b88f982aa7e52336ca390ccbee759706efe037353ffeccb744b0f414b81e92cc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g1-core-patterns.dic",
+    "bytes": 36095,
+    "sha256": "1ba956bb9a0f2fbf68b5d46f3d29c8d6c9d13232450c21586662b79c6c0dde17"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g1-core.cti",
+    "bytes": 2747,
+    "sha256": "66ef532f4cfaada7951b6b2b2c155ec8e1cae55fecf7db95c8f737dc3e9b5fe9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g1-detailed.ctb",
+    "bytes": 2844,
+    "sha256": "83555c97265d9b62b7fad1db6054157205171a98ca8ae0335e8f819a9706710f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g1.ctb",
+    "bytes": 1788,
+    "sha256": "9c6090b1c45dd01ea7588c8be1f2f7e1569851625150f5a43d125d71cdfdea7c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g2-core-patterns.dic",
+    "bytes": 192568,
+    "sha256": "9eba4bdef06d83a14eb6711e9a5fcfe3c48502520cdbaec1b7a2799d3355940a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g2-core.cti",
+    "bytes": 34300,
+    "sha256": "953533b3e08cd46f11fd0d26d6096cc038235942fc6e78d56e432116c2a32b96"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g2-detailed.ctb",
+    "bytes": 2274,
+    "sha256": "489a86e1ead02d61e04a17ae0e22e6f0311047bf6708f7378b5a3ba3b595fefb"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/de-g2.ctb",
+    "bytes": 1866,
+    "sha256": "eb34cc6bea143ba925912b1f5feff55baf512b19e9d3ba7fed0d9e07ce7cc177"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/devanagari.cti",
+    "bytes": 12718,
+    "sha256": "b1d7aafbecc22ac88f8ccad2cd06ee27b198595141821d5186094bf917ccc44a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/digits6Dots.uti",
+    "bytes": 918,
+    "sha256": "ad1e81b943415139576d4ba1c14d7208f1b8738112d2844c4c1cc4f878ff3ddd"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/digits6DotsPlusDot6.uti",
+    "bytes": 1065,
+    "sha256": "542fecae399ba5cddb0f4b698c4f6e5f62486960117058f64d63b57a82fd7301"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/digits8Dots.uti",
+    "bytes": 928,
+    "sha256": "fdd2b2e72c5745bf50d96a793b527dddbe50a001048c64b7d1def0ebef5aa5ba"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/dra.ctb",
+    "bytes": 905,
+    "sha256": "3e48552048a40b23251b2ec13f36b82c3249ff640367d8403d7bf3327d5bcd3a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/dra.tbl",
+    "bytes": 688,
+    "sha256": "74227745e1d48afebb9c80d9846261242fc6bb2d6a61771ace6bc67b1dd65499"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/el.ctb",
+    "bytes": 30752,
+    "sha256": "0c09c4314f906e89b5a38ed9ea52740b8a0727b06e1f9c7870fb67996f184822"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-GB-g2.ctb",
+    "bytes": 19588,
+    "sha256": "b9bd51b2d511a3e6b60944c94e8aeb1d45f9dc321f5d3a4b99489653b40dfd36"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-chardefs.cti",
+    "bytes": 8629,
+    "sha256": "b09648dd8467c62df0008b2326a70df6a31c02baf48ce177561ebbba835b95e9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-chess.ctb",
+    "bytes": 1498,
+    "sha256": "b8d9d6c9b06f83494363a417db42422f5e81d8cc064e7f5810a24bf0f168dcae"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-g3-patterns.dic",
+    "bytes": 78006,
+    "sha256": "78751444a157c4b162122b690d76d48ea5a06c4edc60a6ba1fe41ebf3cf5e64d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-g3.ctb",
+    "bytes": 65206,
+    "sha256": "e2e6be9a54880ee054336c27988357947b8d9d9636bfacecba817564bcbc234f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-gb-comp8.ctb",
+    "bytes": 12745,
+    "sha256": "861d5844bca129dcdff59e044460988b6d7e58115663388179829655f62e1bde"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-gb-g1.utb",
+    "bytes": 14246,
+    "sha256": "45576b315a63f4182796f1f457469381be0324cfd7cbe290c53e64bf4e3bdb00"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-in-g1.ctb",
+    "bytes": 3425,
+    "sha256": "40fe5c4787bbb3d343be949c2291a20316349e24066cbc5613cf9ad0c9d6c5be"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-nabcc.utb",
+    "bytes": 7265,
+    "sha256": "9b5c147a4db73783c2e9d9cc6e9a7554f7ed58462b3fbc6ea14e4ff480256cae"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-nz-g1.utb",
+    "bytes": 2681,
+    "sha256": "7cb39259b221414580bb2e4e8749afc8ea6956e2bcc35173276ed4f5094a86f7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-nz-g2.ctb",
+    "bytes": 1874,
+    "sha256": "73a2baeec2ae4bc7857507fb4d9985940f50df6e4f1bc22cb730d6ea601736c6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-ueb-chardefs.uti",
+    "bytes": 27834,
+    "sha256": "66b60686cdf901acaa0a6615bf96745883f7e8a5f974eaa355a34c2c417efea0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-ueb-g1.ctb",
+    "bytes": 5368,
+    "sha256": "1f77969efa61620b5af30eda2930068f8a239e18601b235505527601cc3d03ed"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-ueb-g2.ctb",
+    "bytes": 149628,
+    "sha256": "74ff8d2dd6f51ba2cb43934f100b2f3c31a0b37c9d782e3c57367df1de84dfb0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-ueb-math.ctb",
+    "bytes": 2045,
+    "sha256": "d4fa2926bdc0e46fedf0f18e755b3c50a904e5e5b16b635eac88eff6a086f75d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-brf.dis",
+    "bytes": 2438,
+    "sha256": "47ff9400f4b8a0206b0c1942e13c32b539d17ec099dcd1097873a1b9f5cb8b3c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-comp6.ctb",
+    "bytes": 4934,
+    "sha256": "0083bb6a7d9f826c0886c3ce785e0e48734071fac5eb53139ce3f8dd8cfd7695"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-comp8-ext.utb",
+    "bytes": 26122,
+    "sha256": "bf73d68461820d7dd3b8dc31638d3bbd1acc7fb74c5deb4a96464bcee8fde23c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-comp8.ctb",
+    "bytes": 1632,
+    "sha256": "23194fbfa9cc2a4f771094aee830825128c44565b797c55815c4a949415dc29f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-compbrl.uti",
+    "bytes": 2166,
+    "sha256": "1a3486a6260eb15a0ffd8b4b973496c192135d3e6dba7d9c0648507458673ebc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-emphasis.uti",
+    "bytes": 1442,
+    "sha256": "ea3fcd8adf2a3f0f2f5f0c07ffe2377bb369a2754372c355396b6f65af4ad10d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-g1.ctb",
+    "bytes": 4307,
+    "sha256": "66711029e284b365540a24a3df22c9c6ba12ef155cd3990decd01208e9204468"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-g2.ctb",
+    "bytes": 28009,
+    "sha256": "b379e29f81b537eb0f7e7b1af3a1ea5be79323d475358a64732b421b837f2d1b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-interline.ctb",
+    "bytes": 27976,
+    "sha256": "814ee3a98005cb85b0ca0267da894c6aca822edca2fe58054b66ab718a439230"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en-us-mathtext.ctb",
+    "bytes": 20448,
+    "sha256": "2ade1f913f2c33626819d1dee466e31a53f79244a6186096db4a1141e9d9b6e7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en_CA.ctb",
+    "bytes": 8104,
+    "sha256": "a87107060d908a9e79a3863d0b93bb36105f1e6fec356236f2d3d3ca5ce67756"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en_CA.tbl",
+    "bytes": 725,
+    "sha256": "8a5b5397820642a4c72a509555d04112359e1b60d6e4e22d1a383a72831e36dd"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en_GB.tbl",
+    "bytes": 835,
+    "sha256": "8f37e21899206795f946e4206e974871891d3419d81b87f52854393efaea5144"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en_US-comp8-ext.tbl",
+    "bytes": 389,
+    "sha256": "8a74616bed7cb2b9d8d117588f6920aa843074189574becd63b9fd42ca94b179"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/en_US.tbl",
+    "bytes": 839,
+    "sha256": "f74bbb3daa17ee81669f0a946f3600ec5e761dddd9772f7402d4980650ad4f95"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/eo-g1-x-system.ctb",
+    "bytes": 2961,
+    "sha256": "0075c3de334c9d97bf80ed08ed427a15d2b6e747e1c0996e16258aa2bef1dac2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/eo-g1.ctb",
+    "bytes": 6095,
+    "sha256": "4290bb69e5eb522d3a810763740c9d2447d8149ade6a6f363044bf2dcef6d7b0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/eo.tbl",
+    "bytes": 340,
+    "sha256": "f8c3ff8963ad95714d40d6861255311960b38e5ccb31064abc794270e587484a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-chardefs.cti",
+    "bytes": 14572,
+    "sha256": "36e28906a77fe24d15bf5023208a7d71c4465098b972c4f6fa0ccc237a0914a8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-g1.ctb",
+    "bytes": 1281,
+    "sha256": "ab1fc501d1a2294d9cade8e302f631940b95587b390ae572fdc0dfc7f47aba38"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-g2.ctb",
+    "bytes": 25676,
+    "sha256": "6b7f7699a40717604646026a8ddc975e85f2e43ebd47843fc588e2ff80e5ef1e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-new.dis",
+    "bytes": 7611,
+    "sha256": "82df2853bef625ace44a0f97204e1f242747449d55b85fa278bfa7d973de6ea4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-no.utb",
+    "bytes": 2684,
+    "sha256": "41a7cf046aa342f8627a2ec55ddea38184ce4b7107afe7b2582c28973821f52f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es-old.dis",
+    "bytes": 7605,
+    "sha256": "cc79e313f9eaa4c81fa1b9420e0edf688d073bbcddf3db69eadab2de5df29a42"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/es.tbl",
+    "bytes": 605,
+    "sha256": "d5b1e74da03c6a3f3451b20d4de2c3c5a575a8bfb094a9182f45292128d4848f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/et-6dot.utb",
+    "bytes": 9405,
+    "sha256": "a653f8458cba833cf7ba38bd7352fe6670d6cd480c14fc39294af8f1c6f63598"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/et-g0.utb",
+    "bytes": 5402,
+    "sha256": "951bf633d602fa05864ebe57a10268a8aef696768b2adc88b9616411ca8f3477"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ethio-g1.ctb",
+    "bytes": 7772,
+    "sha256": "fe3bdadf3f95569a7354bbf338a04804989c1f1c9a7beed68b24a8674248982f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/eurodefs.cti",
+    "bytes": 3046,
+    "sha256": "82d23c8adbc67211c1fb783b435c94a5299cfc94344851b713eb1bf5a0792c1f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fa-ir-comp8.ctb",
+    "bytes": 5672,
+    "sha256": "ab289481de206b595ee92b6684d6c9e8d4a93103ee52b2efbdc0b3cf5fed1354"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fa-ir-g1.utb",
+    "bytes": 6171,
+    "sha256": "07396a4225c20f8725bf0150c5282cfb0419d290b18cbbcd38db087dffdb5d48"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fi-fi-8dot.ctb",
+    "bytes": 8558,
+    "sha256": "a1047fd03924b7e5a9cc8cbb17f0c7d33ece76f4df043b7a9b3114ecd287e275"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fi.utb",
+    "bytes": 12716,
+    "sha256": "eb19cbbfb43287d951b86792883c477c76276ee14609bee30500248090acaa5c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fil-g2.ctb",
+    "bytes": 14199,
+    "sha256": "50d6b8082e098b1e3ee080403c47faaf0ae261b9b41c76982c4a3d86e522520f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fr-bfu-comp6-puncs-math.uti",
+    "bytes": 12897,
+    "sha256": "adb868643ae6620c10a8d67f385d5c308e9df2002ae25dd1b2b417c7c4ade644"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fr-bfu-comp6.utb",
+    "bytes": 7726,
+    "sha256": "714ce0204755844eb99dc4e88bba7f0fa9fcf470abf1019defe340aef5df0dbf"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fr-bfu-comp68.cti",
+    "bytes": 10685,
+    "sha256": "eb5aca4fc8b1f1516c73c410401616b339633913c5aca31b4f14697b54a4cf49"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fr-bfu-comp8.utb",
+    "bytes": 16446,
+    "sha256": "ca5cb3667af6a2522b5697686de2de6dd87c44784e72a52dc91ae46b502d4248"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/fr-bfu-g2.ctb",
+    "bytes": 144390,
+    "sha256": "d709c4fcd3806384ce0e90d3dac82efc4a9fb8a74f74eedc6545106f79ac459e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ga-g1.utb",
+    "bytes": 2992,
+    "sha256": "964deabdd4ecc2ea66c414909c6fb6529daaa05218a306c4153798daecb83e1e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ga-g2.ctb",
+    "bytes": 5218,
+    "sha256": "ce40ef89d21489331743f219f11f28bfaff8f73ed17353080a4fb89c19b581af"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gd.ctb",
+    "bytes": 5289,
+    "sha256": "357b47518e2a02e7b49040c0072c951b3ede1ba05d49877689ba9e07da69bcf2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gd.tbl",
+    "bytes": 698,
+    "sha256": "c5b3433a6ebd0ec066518e39ea35f7abfb984dfd4588fca76aaab56e7537d0b9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gez.tbl",
+    "bytes": 677,
+    "sha256": "9f22a11711ebfa4beb45a316082a8362c9752b3911a999f39a9bf1b318e45e2a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gon.ctb",
+    "bytes": 944,
+    "sha256": "79673962a65dac7e96e0087dbad0f824b6414e07246e25c0b475aa1c70767f1d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gon.tbl",
+    "bytes": 546,
+    "sha256": "1a1276a74cfa8ed9ab06dc5608de2b2f4ee08ca6c64965ca7b9d70f8f3ab6b35"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gr-pl-comp8.uti",
+    "bytes": 16000,
+    "sha256": "fee57c48f85e69f55b3508924fa54a5625a7ce4821c81851aa6083738b52ea8f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-common.uti",
+    "bytes": 3669,
+    "sha256": "df6b92243983c72142b9c061429113d113c963f04143e84d8ec51a5ae8f9bf18"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-composed.uti",
+    "bytes": 16304,
+    "sha256": "70e3636b18ea3a58bae39033d92891e570a211bde024009e33d4a52dafe4050d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-decomposed.uti",
+    "bytes": 16446,
+    "sha256": "37f1af372dbc982c3b9d2a36769664032dacf25d95b8384789947a695717211a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-en-composed.utb",
+    "bytes": 2167,
+    "sha256": "26c2f38d862f75be7b1aae4c015da10d6ff983367fa9b41e4c11e351b844ba95"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-en.utb",
+    "bytes": 4843,
+    "sha256": "f3b7b151662a2ddb186f0c85734dc525d36db4f1b16c2d9bf86723f3c7321f97"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/grc-international-es.utb",
+    "bytes": 18757,
+    "sha256": "3fdece5655428415a527acac4ae71d1f6948f36d18a6603ad1b11ff2294ee50d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gu-in-g1.utb",
+    "bytes": 1217,
+    "sha256": "e0fb6ab92f5a864a805918aa17bd1cb8dd46f8efdc770ebbc24ad0fd8fd9b626"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gu.tbl",
+    "bytes": 566,
+    "sha256": "6f5ec49d7515c292bf7c8681d771cac3b3c692b1ffc645e94edaf7d10635b865"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gujarati.cti",
+    "bytes": 9603,
+    "sha256": "634fdcdf7057d80ac628fec21cfbc10c64d156875a460826758888bdfaf56649"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/gurumuki.cti",
+    "bytes": 17908,
+    "sha256": "b0b26793617c8b0e59fec084c517818fbaf25db4dcda147db297758899fe1c46"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/haw-us-g1.ctb",
+    "bytes": 1582,
+    "sha256": "4f96c11d84f8ff76ac5719fb57feddb2c44bd520de6a8f7a06acf70863e7351d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-cantillated-rules.uti",
+    "bytes": 3059,
+    "sha256": "4d56d86cb13901036f5a3429ca2ad28ec454397c82690c1bd1973462b11443ff"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-cantillated.utb",
+    "bytes": 4089,
+    "sha256": "2e0cc733aa65dc7da6514610b4037d13cc4c3cdf43ad39d41d14a9dc3a184069"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-common-rules.uti",
+    "bytes": 5160,
+    "sha256": "bc2ab0f35464dfb470ab7b2fd05077d94de3028c252862e8fc9da71b49b13104"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-ihbc-rules.uti",
+    "bytes": 2293,
+    "sha256": "002f84ae026fb9697963914402ae733181b9b7c33e107444577651629325ad14"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-slim-rules.uti",
+    "bytes": 2494,
+    "sha256": "2099d2a8e03184184d91a2ad2075979bfa0e454033d9a6ccbf89fa8a435ad293"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo-slim.utb",
+    "bytes": 3708,
+    "sha256": "4aafe93a9c0aa19aa689f4483c3cea6f27cb3b7f16e213b357cadbfde9060fed"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hbo.utb",
+    "bytes": 4028,
+    "sha256": "07e37124f1b50b3b37aa639a82cfc5ff5f84d8b055e2adced664b6d3c2c80d3d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/he-IL-comp8.utb",
+    "bytes": 19251,
+    "sha256": "57afcba4f977110133a256a20374cca2272381d492da2cffc50b5b9507dea190"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/he-IL.utb",
+    "bytes": 10748,
+    "sha256": "ef5020b87c7dc088132d946a67d535e2041b61b03a32d1634fa32f42013648d9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/he-common-consonants.uti",
+    "bytes": 3263,
+    "sha256": "5e9585a16d4284afd779fc91777c2b47bc72ba9f7b80a745976f27792b808f64"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/he-common-vowels-ihbc.uti",
+    "bytes": 6203,
+    "sha256": "28e33395ff03332511e7a7d5b33e6ae2ece1fbb968cfb96b75e88dd21595d805"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hi-in-g1.utb",
+    "bytes": 1216,
+    "sha256": "7f1a82781b90b62f1a6fee91b247300db5e9d7aeb82df9d28f3fb86c80c1d109"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hi.tbl",
+    "bytes": 560,
+    "sha256": "a54a1f4b9d0de805905d98119b2b81b75cd511f9c55b278fb68facaa26022c13"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-chardefs.cti",
+    "bytes": 16521,
+    "sha256": "58c7e6860579a9eb02b69c9c5ecf44e282b7824b6c66d28163605852e58b6c8c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-comp8.tbl",
+    "bytes": 690,
+    "sha256": "c2a8ba0d68409925b44df5d7df367b6a902ff665da266ea380d5c7368deba98a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-comp8.utb",
+    "bytes": 10517,
+    "sha256": "c839dbff791c6c835c3db2cb443877dbe3b3111a1b28ebdc20cf3e990c1579aa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-digits.uti",
+    "bytes": 1443,
+    "sha256": "3109290593218256740272f0973af752e9f1bb71e1b0f3f1951623c37880f448"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-g1.ctb",
+    "bytes": 1510,
+    "sha256": "5395a52a73c052978122fd74439d4be4bdbb1aab2518be0dd230b5071f00fa36"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-g1.tbl",
+    "bytes": 148,
+    "sha256": "f2f9721dc53b5dbf0a7a127bafc9f8eb7833e2b29d2e7a1a7aebd3c84af0c85d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hr-translation.cti",
+    "bytes": 8470,
+    "sha256": "5aabf0c04bdbc41f26c8bbbeb3eacc1b872dc3b0551f56c796df57b1ce4ed67b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ht-frenchcompatibility.uti",
+    "bytes": 2711,
+    "sha256": "700ee00d005262477de5265219f807e9c2c3bfd42738739bf4a80a0f1ea7178a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ht-g1.utb",
+    "bytes": 4028,
+    "sha256": "8bf1613d96d09a25d6c99d985a27d7c870d6b54394e444bc135535b8bed0490f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-backtranslate-correction.dis",
+    "bytes": 1355,
+    "sha256": "1cea785cd63a9f7fba8634e0fefbf19467271582409b9a634c535ce6e5fa112f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-backtranslate-word-corrections.cti",
+    "bytes": 310288,
+    "sha256": "b6241a815fa4a9655438c26646dcddb0df2f4b407010aec21c13a7ad01d5612a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-chardefs.cti",
+    "bytes": 12637,
+    "sha256": "72cca28ea5e9374bece4694313cca5f2fc55c7fa99ed2f4ee362f3725fb9acc5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-exceptionwords.cti",
+    "bytes": 257639,
+    "sha256": "bf2df944bd6ff187dd54e57120851e3b37309bbaf1c5a352bae954941656aa96"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-hu-comp8.ctb",
+    "bytes": 7217,
+    "sha256": "2d7dcfe9e169903084d4a43cafe7d0e52fd9487167afbacafa2ce63a6da8bc8e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-hu-g1.ctb",
+    "bytes": 5153,
+    "sha256": "0af739290b327dfe66f301776a419e9530745ebf334ecb48a7e167dfe260a638"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-hu-g1_braille_input.cti",
+    "bytes": 18642,
+    "sha256": "284a4e4dbab5121f565d0e79f03e4706786560acd0a4acc614d8908f5197a392"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-hu-g2.ctb",
+    "bytes": 13457,
+    "sha256": "046a87722cce3abd50a6989d2159e508bf05f231809e0c744860ebd9ea515a92"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hu-hu-g2_exceptions.cti",
+    "bytes": 42363,
+    "sha256": "3241167f2b59453258c346b971f949c71e727846ed272a1f842b2c6c33c3b5e8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hy.ctb",
+    "bytes": 5426,
+    "sha256": "7aff3610ad148be843f22bdc48b61ab1dee4411085a5a007ba7a3bf4ad56e98a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hy.tbl",
+    "bytes": 684,
+    "sha256": "85d610dbdba823c31622030d715328b8aee37b5273f479eaca2c85fc79bd73eb"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_cs_CZ.dic",
+    "bytes": 21743,
+    "sha256": "3ecd88309b2ff7fc06bc1acb9a4b5d71045e6321cd2c0bd22e8dbb5740eeb150"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_da_DK.dic",
+    "bytes": 61398,
+    "sha256": "4f5a3a7514b1f9da74f8e9de75f333012b0f130b440b2b0dc92fec3990a2bf2e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_de_DE.dic",
+    "bytes": 36801,
+    "sha256": "6c39958409cf679e9b7231dcb3088d652ffcc1ff7962035d0f440e5d3ef2c856"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_en_US.dic",
+    "bytes": 36467,
+    "sha256": "9199c3592b28167fcddfda503c3cf4522a6211788ce45c898ca275460888ca2b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_eo.dic",
+    "bytes": 10667,
+    "sha256": "88e1b16447e28b15539a3afcbd5ef6b796f885c72fdbd728292d8e0126d3458a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_es_ES.dic",
+    "bytes": 4217,
+    "sha256": "a2aaee7b41a4451ae20d263cf1e926a895d94937087d20abb75dfc8a281bdfcd"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_fr_FR.dic",
+    "bytes": 7979,
+    "sha256": "6b4d394eba588f23a8f24e59ca5672adb4133f2386b78ccda59da091b518ea54"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_hu_HU.dic",
+    "bytes": 876243,
+    "sha256": "58c101cf5516cd2f6835bf2216014a95efc1fba3bed9976027a3f36c9b4b44fa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_it_IT.dic",
+    "bytes": 2206,
+    "sha256": "0a8c12793e89e42d21bd278e5e9fbfa7baf3eeac8c95deb19bc610b8e08869d9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_nb_NO.dic",
+    "bytes": 186678,
+    "sha256": "c6c9b07d9f2c60bb47857fd629d9a453026312c894665d22c72e8e1699420f6c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_nl_NL.dic",
+    "bytes": 83525,
+    "sha256": "3d39067eb1331290207e754a60d61c38c812379affeae3cafd640997de427060"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_nn_NO.dic",
+    "bytes": 186678,
+    "sha256": "c6c9b07d9f2c60bb47857fd629d9a453026312c894665d22c72e8e1699420f6c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_pl_PL.dic",
+    "bytes": 30551,
+    "sha256": "e4195bd2bed6543d8c1df83a775c922b08ea3a1eaadfb97179ce163e47aa706b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_pt_PT.dic",
+    "bytes": 1288,
+    "sha256": "6f18ee89de6db21d9b06120a5527ec41d8132514fc112ccfe7d289ba91649840"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_ru.dic",
+    "bytes": 67536,
+    "sha256": "bde8de5c60f982ccd45721cec83d49c3cd7e9a9a03c4084da039154f8b5fe7ef"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/hyph_sv_SE.dic",
+    "bytes": 31259,
+    "sha256": "5c9e1ded87a89c71418aeb3bd24fe69b03db51e984b8b62f491a4d849699919e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/is-chardefs6.cti",
+    "bytes": 7541,
+    "sha256": "dcf84eccc0eae4d348fd24fd6463c93803f73a2b3598d06953c90c18803ca3e2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/is-chardefs8.cti",
+    "bytes": 21242,
+    "sha256": "fdec00e449017bfe4814bad25114940577d5807896b2ec7c70846ccdbc097d42"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/is.ctb",
+    "bytes": 5901,
+    "sha256": "b7d05ebfe1ebfb40838baa10a06e0d7f5bfa9eb20056dbf47b4b3807556a6a61"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/is.tbl",
+    "bytes": 571,
+    "sha256": "e634ff448f132158f694be0edd6c73ca4fbedf066d84fdc6c6439f8520611f3f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/it-it-comp6.utb",
+    "bytes": 12767,
+    "sha256": "f1c5a46401f3c712ae84fa6ba1796674ac3fc02091be36c4a6e4e39d0746a19e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/it-it-comp8.utb",
+    "bytes": 28939,
+    "sha256": "485fc6818665f68a0ed35de550637d2a65a505d51d27019cc111a3018a0c895e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/iu-ca-g1.ctb",
+    "bytes": 8172,
+    "sha256": "99e0351aa5dea5aa682dd9d7f8a0a51e36721fc1e331f63702d6aea53832c18d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ja-kantenji-ucs2.utb",
+    "bytes": 262294,
+    "sha256": "1719e08ef1490d20f0b254046776b7dcc9ec78188b3e25ca1a4d37f85ddb85fd"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ja-kantenji.utb",
+    "bytes": 1563,
+    "sha256": "fbbcaf300b5a1e8f0de8b0714e1bcff65a1a5c44ffa138a86b5f858c5b152686"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ja-rokutenkanji.utb",
+    "bytes": 216124,
+    "sha256": "b0bdee5f8f99a9aa0c7afd13d16eef09dd953089a2b357d3a785676ec7b2ddd1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ka-in-g1.utb",
+    "bytes": 1215,
+    "sha256": "01c843ca073a4c7084aadc3f35cff062568e8ffd82f120738e934a10c76f64aa"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ka.utb",
+    "bytes": 3869,
+    "sha256": "6d1de8aa8cfa4d163f8e87551a30434d4fcc2566db157dff4a33359cff5ddea0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kannada.cti",
+    "bytes": 12153,
+    "sha256": "a1e23fa41f20ea05933b7c2ae79504ef664208a739d693bc6ebd5c89d54e7b14"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kh-in-g1.utb",
+    "bytes": 1192,
+    "sha256": "b2be1ceae832790b0b9fcb68258c4d063b54ececb13bd4d3f3b09590f0ce2977"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kha.tbl",
+    "bytes": 561,
+    "sha256": "486ebf0e6ce088debe3343227dcd4c3a93899344204672d1c471daca36d746a1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kk.utb",
+    "bytes": 2723,
+    "sha256": "eea9ac22ec93bfc984b1eac3025b37941c3d84a2e3f627a2ec83a25f33147798"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/km-g1.utb",
+    "bytes": 9165,
+    "sha256": "3abf487d11c490d81cde84e0ee7d16bc96f4d18859b8e2d89fa95dc986730005"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kmr.tbl",
+    "bytes": 4775,
+    "sha256": "2916acf428c1f732de0331e0671760291fe5a3c2d4349023d2908eadd1ea2701"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kn.tbl",
+    "bytes": 564,
+    "sha256": "9884f202d473b877eddd0797a396e5534a7e46c30bd3ae2d0c861380c5949765"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-2006-g1.ctb",
+    "bytes": 1779,
+    "sha256": "fcf19e7adf9aa9d7af7a4a25e5fdc292b48c37c989881af6a0976508c4d597fe"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-2006-g2.ctb",
+    "bytes": 1975,
+    "sha256": "72b7fc874c2a1f7c87d89631d7d8fa4912af8de65174d355af84022df810633b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-2006.cti",
+    "bytes": 3959,
+    "sha256": "f87188f5f99913ac9c20dfa948c5d9eb0575e8b73368ef02257470ef500f707a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-chars.cti",
+    "bytes": 382348,
+    "sha256": "c284a1a6b4891d36914499ae2f64c07b8ff26cc231388fcc4a220325fccee887"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-g1-rules.cti",
+    "bytes": 23681,
+    "sha256": "8f32f3584b81d32b2d6da509555e71767b0129e2917ba5af3bd98d03fc83175a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-g1.ctb",
+    "bytes": 1694,
+    "sha256": "88fb02c4fc904ea9a11c922a7ad971d79cdd05949f9c06d698748ab9e9975733"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-g2-rules.cti",
+    "bytes": 274776,
+    "sha256": "02054535b3a6d9212f4fc1c1bcc6370c7ead2eafd52b18e19f364d23471361fc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko-g2.ctb",
+    "bytes": 1896,
+    "sha256": "9ab34529c96d60ae7fd3cf321f755c022f06ac98b2b7db719c07e823bcea878a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ko.cti",
+    "bytes": 5600,
+    "sha256": "fde98715a3e7d4dd7627fa7a5fd2e7c7c3bb8960be0a4a9083e7aaf4df2d517e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kok.ctb",
+    "bytes": 927,
+    "sha256": "4dea9d6e5228ec5cdca826ea35a080d0603ed6137720affc1b0f647c53d6d049"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kok.tbl",
+    "bytes": 550,
+    "sha256": "baa5a23b7d7bcb8de245bc2a7a290a6ba2e8047ff3188b02b164da2d8e87c5a5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kru.ctb",
+    "bytes": 926,
+    "sha256": "6a3e4fd2d5f6672a10e069c857b137853725b175e009a368f29fb3e3a0f356b4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/kru.tbl",
+    "bytes": 548,
+    "sha256": "28d247bf80943de402483c90ba9d29690d3c0fced98865ec1c96860c7db0962d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ks-in-g1.utb",
+    "bytes": 1219,
+    "sha256": "8c37ff459ab13181094725de45be7f7b357116f85ac7a083bd82c4d9b3a124ff"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/latinLetterDef6Dots.uti",
+    "bytes": 1993,
+    "sha256": "644b8b0c9a49ec88d487d2068933995cfa4d77cabb64ec5db26ae04b3d458f71"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/latinLetterDef8Dots.uti",
+    "bytes": 1788,
+    "sha256": "3b6d481e1c568ce6642e9300c3f039bda1effd2f8342cd5e5a4129faa674ebee"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/latinLowercase.uti",
+    "bytes": 10446,
+    "sha256": "723d625c4b4ba57ebc30d519cf320188b608fee7f73b6417df0ae6b8a155a99a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/latinUppercaseComp6.uti",
+    "bytes": 1868,
+    "sha256": "d777e0ab7c0c7a0c3a6a685f1aa74c4c57fea7766f6e16cf25f8ffa1a8be0b5b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lg-ug-g1.utb",
+    "bytes": 2205,
+    "sha256": "5c113986db5d56b21d7cba17d98ed7f2b77d0cfea27c908c703c177f451e606b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/litdigits6Dots.uti",
+    "bytes": 957,
+    "sha256": "d73f34e2f1638807def50ae3a768e0df3af53dc0291e8ba0d2ac5b063b16c1be"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/litdigits6DotsPlusDot6.uti",
+    "bytes": 981,
+    "sha256": "5a85fc12df45bd13dff67e3924aa562ffc7ad282c321ff025fcd26a76fcf5349"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lo-g1.utb",
+    "bytes": 148569,
+    "sha256": "ecb1da6bdc971b3a55e3eac1696d66f8ebd389799a9e07afc9fc0ee175dd7b3e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/loweredDigits6Dots.uti",
+    "bytes": 926,
+    "sha256": "7dc6e70c78258c393dd7a8fad0280c3f0163621f051a3ac6b4ffc97f9ca49221"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/loweredDigits8Dots.uti",
+    "bytes": 936,
+    "sha256": "a41d317ee0a03a24e4ee15122a8623b97d6f93b3a5286f2a30eb5652f4a05554"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lt-6dot.utb",
+    "bytes": 12976,
+    "sha256": "608314fb708d52047ad60f6c86c77fc48634c9803ac5e9558e82e0835c0e2ad1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lt-8dot.utb",
+    "bytes": 11448,
+    "sha256": "639080f0211d962bfccbb25ee1e68d7082a05467f85c744ab073779a8ce6b855"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lt.ctb",
+    "bytes": 17489,
+    "sha256": "529d06000cc98336b49490cd97fbb9702df9cf2c635d724f7c2f05d48012685f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/lv.tbl",
+    "bytes": 677,
+    "sha256": "6c2558159298bdf74b305527e6d8a0df3396563469a714542e52be50d6599889"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/malayalam.cti",
+    "bytes": 29803,
+    "sha256": "45c5cff84f3f8cbd82f3cc120b6b631de6d8955d110af71c89e31898395a8cc0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mao-nz-g1.ctb",
+    "bytes": 2542,
+    "sha256": "6c2c31d77bae963de4ab4d6eb7d2952d6d3e7e3689047f8fd561f499f77c04be"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/marburg_single_cell_defs.cti",
+    "bytes": 1515,
+    "sha256": "c56db362b8e37ea8960265abc56fc65ad6a8f18369d16b172cd85474d571b94b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/marburg_unicode_defs.cti",
+    "bytes": 15548,
+    "sha256": "33f01df57657dc6936b430549722f625ecbc01aa3520178bafe409fb7e792916"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mk-g1.utb",
+    "bytes": 5520,
+    "sha256": "0b11872d29bc0c10dee679cac8819751d763bc87ab73518595e8404f63a7bdb5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ml-in-g1.utb",
+    "bytes": 1219,
+    "sha256": "d1d2fbba7ceeb03a512dd0dd2044b7d3e61752cc7e1e264079f9f491a1e78c97"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ml.tbl",
+    "bytes": 678,
+    "sha256": "5b6ce86992b161152833ba95bd571783cf74aa0943db29d41c3b8f89117a96ed"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mn-MN-common.cti",
+    "bytes": 3290,
+    "sha256": "b078b041c67abd52d568ec855061387fb949971e93ad235e30d1608c0f716d20"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mn-MN-g1.utb",
+    "bytes": 1947,
+    "sha256": "8f323ea79f344ef059632952f8243c62e6866e7f0d3b80af5c8902e983b21b8c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mn-MN-g2.ctb",
+    "bytes": 1943,
+    "sha256": "99bab9a0b4a395c1b2ce59a8625e6729cd4cbf19f28cf2500111023ce6c01c97"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mn-in-g1.utb",
+    "bytes": 1216,
+    "sha256": "7c26b92d50cf2c155bd50688651dbea613b20201c404e83e9b28925e55954b8c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mni.tbl",
+    "bytes": 567,
+    "sha256": "505ed4c22c9b53f48b21e0185c10548d9eab782f0fa1a46b6af629d373280d64"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mr-in-g1.utb",
+    "bytes": 1218,
+    "sha256": "08e3db44441b76e3edf8fdcbb54ce265c67d2d8305e4174732466b87aa9b5ab9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mr.tbl",
+    "bytes": 564,
+    "sha256": "ef7d6605ad25d3b9a5a8e6570830ca6050395be69300510032d439a9ed013cce"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ms-my-g2.ctb",
+    "bytes": 145417,
+    "sha256": "4d9285589949aed7c51b3b2e3a43135a96fd35c35af17c96bc3c16ef5bf707e8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mt.ctb",
+    "bytes": 4551,
+    "sha256": "f56eaa3d7ab0278806bd090b2de65e23f73df630508fac4b621ce18146f715bc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mt.tbl",
+    "bytes": 682,
+    "sha256": "d913f34632880008d1193b6da581639973cd750ae40622e295742141b8618467"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mun.ctb",
+    "bytes": 922,
+    "sha256": "c5d42ca31a132a1c7f62644c67d51a6150f65c08747781621758d320d61a608d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mun.tbl",
+    "bytes": 546,
+    "sha256": "ccbe5268faf28869b932f3f1f102aba169ea88391f93790836473c4b852b09c8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mwr.ctb",
+    "bytes": 927,
+    "sha256": "cecec7678d4f59e3363611e703126779bfc14c5bf8d5269613bb70ac37520582"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/mwr.tbl",
+    "bytes": 550,
+    "sha256": "0baa27b4a0ebf645ee28f37e7e86afe3d4ec4770a1f7e7baf900836ba6b69627"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/my-g1.utb",
+    "bytes": 20203,
+    "sha256": "057d56a06ead50966de1c89922d3e4bf27fb92cb6613e7be86bf759984b0955a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/my-g2.ctb",
+    "bytes": 119212,
+    "sha256": "451443e35205d13502f63367f5c82762cf6456266fc46ae65942353f901dc239"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ne.ctb",
+    "bytes": 892,
+    "sha256": "2c47e8bc1226d763e4285e3a3bc6b1b7f080466a04aa66534162f034a0681982"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ne.tbl",
+    "bytes": 562,
+    "sha256": "0cd901aab3a043ffd9fa87ed8471a74219c5911e976c619f2bf6e0060bf6511a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nemethdefs.cti",
+    "bytes": 19290,
+    "sha256": "295877c6854975786fe812a56a49340227cc14adf32201f71d518888c4f7c617"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-BE.dis",
+    "bytes": 12004,
+    "sha256": "5e62ff8ed4e61963de8180d1e4eaad492ce87898fb4b98957e4565f751967e9a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-NL-g0.utb",
+    "bytes": 30135,
+    "sha256": "f4646527379dc438f2a41e8b19acd219ad77b9700514fa9014429d2207a82119"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-chardefs.uti",
+    "bytes": 27413,
+    "sha256": "a27ef1ad206eddabd9ec94f54054c4286ceff9643895e33b83e16fd64ace1cee"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-comp8.utb",
+    "bytes": 19775,
+    "sha256": "22ae23fd19e9840f856205dc9d9f40b711dbbc90dd31e0941a893f7ce1d6cc55"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-print.dis",
+    "bytes": 10647,
+    "sha256": "847f83497060f8a72b9ac12ee09db915b4f154d394669ef6e2a8a6e76dab5769"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nl-unicode.dis",
+    "bytes": 16643,
+    "sha256": "187442caa92a2fed8ed73d4e26536bd171f90e359a7a9bbb2eda79453318cf45"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-8dot-fallback-6dot-g0.utb",
+    "bytes": 2233,
+    "sha256": "0161b6b86ae7cc09932da9f0a0c4a4768bdb1b9d143b40fedaaa65100f8eefa4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-8dot.utb",
+    "bytes": 33108,
+    "sha256": "c8ed6421a20f24b603e0cd1987272c37c9ac5ef984cf4492e1645a76bdf913e4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-braillo-047-01.dis",
+    "bytes": 7819,
+    "sha256": "53629bc76000f09337859aebd77b34761e4f7793a4c6eb3bf13bc59acb51ba07"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-chardefs6.uti",
+    "bytes": 14026,
+    "sha256": "62a710fb08cbd55a70f4fb32e5f7aa89359982e6c66f98c8d36154c531c9dc98"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-comp8.ctb",
+    "bytes": 21015,
+    "sha256": "93081751a8a881b549adc446d1b9936bd98fa1db39ac0f5a77e462987ebbd710"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-cyrillic6dot.uti",
+    "bytes": 5038,
+    "sha256": "5c8e05d82c79c8400bf8716bd09bca833e52213453705b0b1390d23553e3d2b1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-g0.utb",
+    "bytes": 8443,
+    "sha256": "e9a7e1f07c23c880299d85d00aedd7151be40e7d047f01b860b67f52b6daf8a0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-g1.ctb",
+    "bytes": 7116,
+    "sha256": "51cebc2c6e28ef91cc754e1d51ce46a97d8714b34a34479547556443297a0a5e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-g2.ctb",
+    "bytes": 16774,
+    "sha256": "6ae94abb854f446e74a09018c0a8065249814cb64e48f183d4c9ce2aaf57389d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-g3.ctb",
+    "bytes": 129626,
+    "sha256": "4e788870b20afa7a1bc89622e199c28a00f15f9f45dcaead28aa26d4f45ddc52"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-generic.ctb",
+    "bytes": 13478,
+    "sha256": "637239f3cbafbb2ec91fca8c29cd660d0119acafb969e0a737ae07b22c082f72"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-generic.dis",
+    "bytes": 14173,
+    "sha256": "77fe0e4687a42b7e3eea51dfc2c8c0b33860709fc84cdb8b9a2e61b874e23d3c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no-latinLetterDef6Dots_diacritics.uti",
+    "bytes": 52005,
+    "sha256": "553029d72e65f2c0d4381026d391345c7b05304c838c5acc8c45f0155b423282"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/no-no.dis",
+    "bytes": 13644,
+    "sha256": "448c47933e2af161ec8b8c06aae337220222af9d55ec715d44b1ccd4666b5c80"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/np-in-g1.utb",
+    "bytes": 1217,
+    "sha256": "8ddee1ebac394da77a8a8ca3d89a1922c117ccea20d97a6723c5e4a0ff67693e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nso-za-g1.utb",
+    "bytes": 1394,
+    "sha256": "d288fef0b4f5138eac7f803f19d2b97bc5bbc3520becd7acc825daa7198b01a4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/nso-za-g2.ctb",
+    "bytes": 1391,
+    "sha256": "6cfb336afcab3c47d84de66b462f8569c51f53e63138a9fe0810a4a8a0a369d9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ny-mw.utb",
+    "bytes": 2560,
+    "sha256": "a5d3e38dd8d34a8d8b25b714ed53e003954c7b9dcdbb6e8c2c4bffa60c7b0378"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/or-in-g1.utb",
+    "bytes": 1211,
+    "sha256": "3af8b8bf17081ec7d807ff9208360953c212343d5f6084032383c981ca846ca0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/or.tbl",
+    "bytes": 560,
+    "sha256": "d66a45c9a3b58bb4a7be3198f713c0e758a9271c751cf02baf55db5f9d63653e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/oriya.cti",
+    "bytes": 9533,
+    "sha256": "3a2bd6b9f6663e8d5f3fe34d6b62bce83351249c9df3ca4f449bab281b336ca5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ovd-6g0.utb",
+    "bytes": 1918,
+    "sha256": "75b46bd64cf3c26445b5c291216784256054c4d4177be025552273b4365a079f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ovd-8g0.utb",
+    "bytes": 2988,
+    "sha256": "adfbf107e3cb2312d37b7d5565ddbfc2e6fc49dccb5ce268c744b601908cbd36"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pa.tbl",
+    "bytes": 564,
+    "sha256": "3c0828ffd5ba0937037a4d2faa9fd6e61938b1557ac59b46bdd372f4c6d3c3c0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pi.ctb",
+    "bytes": 924,
+    "sha256": "b2f06885d546d2ad17615c1421bd139b77e2d7da4a4374eabf95e68addb1504a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pi.tbl",
+    "bytes": 542,
+    "sha256": "fbd4b5effef0ddaee32adfe6d9d1822c9e0d087177f44095eb7cedc9c04911a5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pl-pl-comp8.ctb",
+    "bytes": 18337,
+    "sha256": "ba2a13a16ba0fb50aba08d7f53b0a4b02af30eaf704450ebcc95a29872c00fc2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pl.tbl",
+    "bytes": 230,
+    "sha256": "3b88f55ae87371dd8511e708294286cc828070ba6371472a9ffed31cdbf71030"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/printables.cti",
+    "bytes": 1834,
+    "sha256": "bcfb64c2131951536576ecc95eedfecf0b211f3394da5471d8d4c3a9587a510a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pt-comp6.utb",
+    "bytes": 15255,
+    "sha256": "45709e13426835abf35064f90bfa708f373fc04762c1da9a90b723da73026708"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pt-pt-comp8.ctb",
+    "bytes": 25178,
+    "sha256": "b470b406ef61d1798e0f90b115afc5921695090788e1626b87970e96ba4c1482"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pt-pt-g1.utb",
+    "bytes": 98356,
+    "sha256": "192e87b3e8e06d03b0ceb227f2105d04e3f04d045514faf5bd2fbf63967874e7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pt-pt-g2.ctb",
+    "bytes": 21560,
+    "sha256": "a333fe2b97e3d369df722ed7c4f757b1bbb9bcc389e26cac388851ad10f68fd6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pt.tbl",
+    "bytes": 628,
+    "sha256": "b66a4d739cc01a646d619d611a1def06b51497490b28898a31e9fbf994a721b3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/pu-in-g1.utb",
+    "bytes": 1861,
+    "sha256": "40dca4281e577e12d15174e5a4b13a1c28a82a34671d2117fc6eba477c6954b5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/quotation-marks.uti",
+    "bytes": 1180,
+    "sha256": "6df92d5b59a3d2dc8b2bc762f45f56ced898d20774e96cfc28ba615a7fd46350"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ro-g0.utb",
+    "bytes": 2812,
+    "sha256": "69a7b255c68571f049dfe0ecf09c638ef6e409eaf7f53751a6a8b7bc0251ab15"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ro.ctb",
+    "bytes": 5008,
+    "sha256": "2d4f5ac806851667b242484a89dde6844eaaa07468e681b87ba5aa17f721980a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ro.tbl",
+    "bytes": 684,
+    "sha256": "f10cce2f13bd996c1351dcb484ad3395e4c5d38ea5aa36d6585146276b3ff56a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-brf.dis",
+    "bytes": 2526,
+    "sha256": "65c3b75acede2d80a9ff3a6c125a368edace3a33cad7bd671eec419fcc14f9af"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-comp6.utb",
+    "bytes": 7271,
+    "sha256": "464c0a77f54b214209a210623381e1e84972fcbbf604bd0a3cddf9be82e3aa14"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-comp8.utb",
+    "bytes": 35774,
+    "sha256": "60848bec15c842fd30e98690a15fadf07a3bf8a6c81ee1b67458bf5444a7e40d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-letters.dis",
+    "bytes": 2832,
+    "sha256": "892a5e2d19bd03898f7c3b3f979f90d95b888f3eba079db39a9d97799adaf6c3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-litbrl-detailed.utb",
+    "bytes": 4339,
+    "sha256": "1c30338ec2d4c1a1999665a706831019dfde517f4b7a6a32ea6ae8ab459066fe"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-litbrl.ctb",
+    "bytes": 33096,
+    "sha256": "62ad4db22f1cc20eaf6ee5ca46c2f687117a22f749cddef5bb38807708a41d65"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-math.uti",
+    "bytes": 15084,
+    "sha256": "8a7936dbf62fcc7e1a29ab9b9566841678fd1dfde7e992e1a60163d072eb1418"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-ru-g1.ctb",
+    "bytes": 21716,
+    "sha256": "480f855da9720ae91f90adaff0cd1033e1e7b2d667dcd1d3edfd7d48e9abe1d4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ru-unicode.dis",
+    "bytes": 3025,
+    "sha256": "7e66186425570743caf2c60e5b14722ce0600535d28e3fe602a50077eb0d3d7a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/rw-rw-g1.utb",
+    "bytes": 2985,
+    "sha256": "ca25288c2fe03d6de9c6fba658ad8297e5ba49605f62afadf048695f05d701d4"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sa-in-g1.utb",
+    "bytes": 1219,
+    "sha256": "8c6b223766fbeea8606c29967f88f44746cfad7d95fa05c63cb19c509e62d9b5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sa.tbl",
+    "bytes": 566,
+    "sha256": "90c65258b1e2ca3e160843731d1d604de54122fd8e704e934c2baebc759389b1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sah.utb",
+    "bytes": 2644,
+    "sha256": "e7aafb5c3085cbc460ae92b33331b31550493d6b961d4f3f6cd744204a90e829"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sd.tbl",
+    "bytes": 562,
+    "sha256": "4f08ecdaac9c2d025ffc38981601d438e4f13b5e1e442cc8e034fd045a1540e8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/se-se.ctb",
+    "bytes": 10241,
+    "sha256": "84e43a1d8b8a28f58b2a8025c72bb313ba9df1db9ff79a4c8a2a1095057c8fe6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/se-se.dis",
+    "bytes": 14691,
+    "sha256": "cd236f6ef0826db9cb91694ff474c2acb521032400ccbfde64aa5f59cf9cb0d6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/si-in-g1.utb",
+    "bytes": 1217,
+    "sha256": "df2eb54e7112328b4a5d9b915a269598d2a209c397d53992975a1f2ab5f68404"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sin.cti",
+    "bytes": 10964,
+    "sha256": "97890166edc2fc4855a3e7d4178a2362682d86d3bbc35fb0622793f772247f60"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sin.utb",
+    "bytes": 1355,
+    "sha256": "82d52dca31068b635005667489dc1f561914b431bf15ed503880fe8ccc6ea9be"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sk-g1.ctb",
+    "bytes": 78098,
+    "sha256": "5066d39916270e3e1523afab12f5185911c89b281b716dfbc3e3a893e2de8050"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sk-sk-g1.utb",
+    "bytes": 5935,
+    "sha256": "ec7ffcbb7cd0368b9ae2b5076212e13c31c8493828371970627cd959b0e5109f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sk-sk.utb",
+    "bytes": 3048,
+    "sha256": "417dcb8e07be9d5a61c3194d5f576398f98f4cd865d5ccdab3f3efa76609b246"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sl-si-comp8.ctb",
+    "bytes": 8945,
+    "sha256": "413fd726d86fad6f4d8d2c07ed60cedfe0c528347673721f62d5eac9d0993825"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sl-si-g1.utb",
+    "bytes": 16220,
+    "sha256": "a22e1109aa1d5dc2a5577746c60768cf6fed7765ec2071322b8d436e472126cb"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sl.tbl",
+    "bytes": 643,
+    "sha256": "aa4e12938ec20afed84e13bfe9213bcaf54ed7863ced01f339852ac16daab560"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/smi-6g0.utb",
+    "bytes": 1903,
+    "sha256": "562330760fd5e8d841d8393fadd4a51d22b5dcb950c2843e6b177872a3db03b9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/smi-8g0.utb",
+    "bytes": 1731,
+    "sha256": "90a5bd969325d29faa32bd16dd9320c35fe570f7b9a03874ad56db3595c5fe1f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sot-za-g1.ctb",
+    "bytes": 2720,
+    "sha256": "54077c1200cc71b4d9a0aafc6485b6ae30f0e78020e72a6c5eaf77bfd6319c0d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sot-za-g2.ctb",
+    "bytes": 6276,
+    "sha256": "3a063ac8432f0f892cd7c2e60d4df79ce9e53fdb3a4f64b608a108eb24183513"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/spaces.uti",
+    "bytes": 2108,
+    "sha256": "8fdd5a9f42caa6f583540b026d7c5af13760b02029cbd08c052b2393cb8829da"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sr-Cyrl.ctb",
+    "bytes": 2158,
+    "sha256": "48ccc3936a570a0bca3a239d020dac9c72407eccea272ec4cbb952189d241ad0"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sr-common.cti",
+    "bytes": 4885,
+    "sha256": "29e57c321c1178348c5857474e6c125b7202d53c0d855e903e7cb38aa812dd58"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sr-cyrletters.cti",
+    "bytes": 4222,
+    "sha256": "34b0ce12ad5566200d00b4df85c1762e008aef67c979fe481e02ca4dd0cbce33"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sr-g1.ctb",
+    "bytes": 1966,
+    "sha256": "a5e5d9adc4bee6c7ed4a2f317ace60b11a3c74700a5c3c85e670df34eb43f5e1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sr-latletters.cti",
+    "bytes": 1991,
+    "sha256": "499bb97c2fd74309e10741975fb24cd4a7013f7fcec713cb83f5238b394b3f44"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-1989.ctb",
+    "bytes": 9604,
+    "sha256": "ae8d430cd57cd94e5f66f197dbc60de8903f6866cb0b6f298ead0d084365ec4f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-1996.ctb",
+    "bytes": 7740,
+    "sha256": "6d02d6060ca8c0d01371983d37e6be21b4d6fcc156410ace687ccc66069a89d1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6common.uti",
+    "bytes": 29847,
+    "sha256": "c98b651fe9841ba3494105932859b995ada86e63eba6ee3a6bbaec8a191226b1"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g0d.utb",
+    "bytes": 14510,
+    "sha256": "bda7bddae6e989661c6f85b3a500e36795738f62598d56fc3a0225316fef7850"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g0p.utb",
+    "bytes": 2483,
+    "sha256": "ea4f39f67d5d6518601606c4b364887cc6d9c4520f059897c1c7e3e17814abd6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g1.uti",
+    "bytes": 2433,
+    "sha256": "9e39e1178f653b88aa33afade8b13a11481b693ab7ca5612c7bb67c7235bb85b"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g1d.ctb",
+    "bytes": 2299,
+    "sha256": "ba445fc27bac2e8a50bf0e74a719a4c3c36ca647fc5d373ef797822f98165b74"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g2.uti",
+    "bytes": 6080,
+    "sha256": "b133f958c3177f206fc74f80d87acff6450a582c6e4e6d71904354b2a7edb6d2"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-6g2d.ctb",
+    "bytes": 2266,
+    "sha256": "51a0a1b2ec67749a407937c7a3b8070e773d520f7c1418c5e45df2b71d3d4249"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g0d.utb",
+    "bytes": 16480,
+    "sha256": "edcceb9dd1252e4ec399ca898e97f4e82db56ccff0267447ea1c2b167a1d6e35"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g0n.utb",
+    "bytes": 35008,
+    "sha256": "26199c72ca7611a3a4514a0345145fc931b02000197e3cb25477ed2fd94df236"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g1.uti",
+    "bytes": 4871,
+    "sha256": "2f3ebb6fc09c00daadfe77ee101f6720054b405ff840ed6b998ebd8c92cada5f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g1d.ctb",
+    "bytes": 3168,
+    "sha256": "a88a2e27621d9170981f764cfa6e8f52820ea9d26e798761f26008919160384f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g1n.ctb",
+    "bytes": 3091,
+    "sha256": "7102fb10d2bfe11b5efe83c9fcf3427ba25c27a8fb941ba5a69f294e3319e69d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g2.uti",
+    "bytes": 11967,
+    "sha256": "7de7ec7b3c6467d74f537b70c59f67f0514c5f793ac1f30ff41e6898e82d8b63"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g2d.ctb",
+    "bytes": 3145,
+    "sha256": "cd5ba70fc22f137658a25f19767fb012f4bc0689e81efa678f18148a2a6152c6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-8g2n.ctb",
+    "bytes": 3068,
+    "sha256": "375b6a546916e6ddab275ed3bb56a1941ccb42010d4074493e5d0da21c9154ce"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-g0.utb",
+    "bytes": 2485,
+    "sha256": "cf4468ad1cf4d9a9746e374ce666cd6eca6719c5b3dbc224aeacd0352853435a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-g1.ctb",
+    "bytes": 2204,
+    "sha256": "ba6802a7f9b55da580a90205993e2079f58b8e3b07b3bcab7e001ed803ae3cb7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-g2.ctb",
+    "bytes": 2187,
+    "sha256": "5690aceff81eb46a7e59f208f8608ecf5340c3d740cb1c8aadf3ddeff3f0b8ea"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sv-phon.uti",
+    "bytes": 5892,
+    "sha256": "f21851c5edd3eb9a4eb1e1ae882172a2def0bce5b768c6a9335a6f00cf8151ad"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g1-2.ctb",
+    "bytes": 2794,
+    "sha256": "b5ddbdb763d596b52c07ea5d6713c4afa77675c91287285c61bf099d7aa28ef3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g1-3.ctb",
+    "bytes": 3145,
+    "sha256": "826c460d0b6657434e0cb43b2fd33c71580a8f1995faf8f0ff6b8814ae7dfd3e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g1-4.ctb",
+    "bytes": 3429,
+    "sha256": "e2f4fb6bc7af10d850d609c6460c90bd9c3718f40ff6e0c130d47826f04d6d86"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g1-5.ctb",
+    "bytes": 2640,
+    "sha256": "5df723e95ebed33487025eb9b6e2dbfd0899cccba5dab5808d49ed4bd6c0254c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g1.utb",
+    "bytes": 7168,
+    "sha256": "ff7bc9f0df442598a37f108c6a114a61a25da21f3ea7fd7b47d9bea21ac82abe"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/sw-ke-g2.ctb",
+    "bytes": 8346,
+    "sha256": "078680af08bbe4fed07c28c78a4bc4a4c1dfecffdb23f169d72e06ab4db39f93"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/syc.utb",
+    "bytes": 6985,
+    "sha256": "36599fb53c3a4fa52953655c9898bc6bb1ffe1310d9ed9f7e688ae7d69460064"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ta-ta-g1.ctb",
+    "bytes": 5039,
+    "sha256": "56958b4fa7af215ebe60aa9d1212dc77213a0b6ffd2d52d9a042fbb7a5a21b1e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ta.ctb",
+    "bytes": 920,
+    "sha256": "c79f9191bc9472746c5fb4d3b6fdb90f09cbb549482d2318e06f8b4e0a78866f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ta.tbl",
+    "bytes": 678,
+    "sha256": "5fe389287e7dba7943c86384909b1cb43d037c83a7e1e8182e5302640aa0b3cc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tamil.cti",
+    "bytes": 3218,
+    "sha256": "0619036eceb37a7569620ab69b0f454cf51b6b4b361d9e886f677e0b87738064"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/te-in-g1.utb",
+    "bytes": 1213,
+    "sha256": "e51b0e97ae80aa708b984d178c90ccaf0762a59ac481ebf585ed3b354789e825"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/te.tbl",
+    "bytes": 562,
+    "sha256": "3a1922b31e5d68e286fa942393049cbef652289bf6046f137a62921b5aa09fa3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/telugu.cti",
+    "bytes": 9977,
+    "sha256": "8e3c9b5fe920c894c064c511c1534f38e70011805fa1ad0a8ec42f5dd14f9f86"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/text_nabcc.dis",
+    "bytes": 21650,
+    "sha256": "f3b10172236afd9921ac385c94a66d0ae23dbbf92afee92ae81ab31933088fbc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/th-comp8-backward.utb",
+    "bytes": 7035,
+    "sha256": "587b7bc61be52b415114472e6c60f8963f886dec77df1d27960bdade927d3f70"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/th-g0.utb",
+    "bytes": 5079,
+    "sha256": "8b48036dab9950676633dadf23b9cb3fb8592928bcd89b7277e3cf605d9b8b2a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/th-g1.utb",
+    "bytes": 4536,
+    "sha256": "7fc0478bf3446f9fdd5cdba80640ce72f05cef7077d42522e509d45f07bc40af"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/th-g1.uti",
+    "bytes": 14556,
+    "sha256": "93ac7033defc5513b2e8a7a9d1066054eaf1ed171413731ab99ae11ca2abbe3d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/th-g2.ctb",
+    "bytes": 51311,
+    "sha256": "10246c6d77c74fe488d77b3e25c9a72449464afeef0713a00392e63750ebfd5a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tr-g1.ctb",
+    "bytes": 7359,
+    "sha256": "4f4cefdfc02ad0d652f166c3a10b087be6c8109ba838d3610684ce31639998ff"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tr-g2.ctb",
+    "bytes": 30777,
+    "sha256": "647f12a970fd129a42a38ea6b4a6f580f95b9914b81452c27964f703b22e262a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tr-g2.tbl",
+    "bytes": 613,
+    "sha256": "64a21bd707640e441dfe7f9f24997635ec9f7927f0397af94b7869c1e769d36f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tr.ctb",
+    "bytes": 21937,
+    "sha256": "1a07e267ff664bdfb75f0765534df7b7b45db1cfe52714ab46ee4d7d7ff4aac8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tr.tbl",
+    "bytes": 682,
+    "sha256": "9abc141ad1053e927954eed5c1765a69cf886abeae37d4ea5f8f9d986662bafe"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tsn-za-g1.ctb",
+    "bytes": 1142,
+    "sha256": "4eb81ffe6e8e99121e7a2c2f72924172f53b0cf74989d79a847b4c45289d318f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tsn-za-g2.ctb",
+    "bytes": 1139,
+    "sha256": "ba70e963db3acc98e2d2a226d2e694d5b5f3f608f99dd9edb4c360eb2b04c14e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/tt.utb",
+    "bytes": 2678,
+    "sha256": "82e17f02776831baa4d5dae1c76a560e45e368934cd564a5da55dda46127e69a"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uga.utb",
+    "bytes": 2764,
+    "sha256": "cf73d7cfbf1de24ee63f931faffe2aeeb4e249aa6d90a2a8aa1ebae9e5ccacb7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uk-comp.utb",
+    "bytes": 1908,
+    "sha256": "62ddacf40c443a5978582f5947008778d4ae17ea33a281604157a61c4dc86308"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uk-detailed.utb",
+    "bytes": 1031,
+    "sha256": "6c5129b53ae06b21e3ee4984a247e615186ce859a613d14f4d142494fcd435c8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uk.utb",
+    "bytes": 3509,
+    "sha256": "6609a6b4b5ad038ac5a5e41f4c64f02153f00d59ed6c957fa0712b0c1d9aae2c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ukchardefs.cti",
+    "bytes": 3234,
+    "sha256": "a87fbd5d78b1b92eeb62ae9aaaa95329d0a05df4c23c9ff7e97718fe5f31fc5c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ukmaths_single_cell_defs.cti",
+    "bytes": 1532,
+    "sha256": "f564b99039e13a8b88b22d5ce4ef2bda791ba8e665c9bf1272cb0e388e64901e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ukmaths_unicode_defs.cti",
+    "bytes": 15549,
+    "sha256": "536ecafda4055eb70b36de2fa22c5562a15d9abaf69d546a0b7e0abdf3f851dc"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uni-text.dis",
+    "bytes": 14616,
+    "sha256": "41fcb780e24ff791a75cca5bb6018fc0a54ab5ac532fecfa05c3014699427633"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/unicode-braille.utb",
+    "bytes": 24833,
+    "sha256": "0f35d056045cd0651d6fe79f843733a625793f7dd0487f1dd805485a94e79e26"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/unicode-without-blank.dis",
+    "bytes": 902,
+    "sha256": "360e1d40b5d6204b0ef20b3b74cf4b661279117c3a29fc296660abd5981b24f3"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/unicode.dis",
+    "bytes": 5974,
+    "sha256": "eccd0df31bce67a449d73e227ede8a4c2d6de6438b5b6ba520b24d27b11331ab"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ur-pk-g1.utb",
+    "bytes": 12252,
+    "sha256": "ed43b821f11906b9a565c59e80cbc561e618952b0afebf3a761e7a3b461f0f8e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ur-pk-g2.ctb",
+    "bytes": 53499,
+    "sha256": "bea93bfa235c0072394f21fd3b8766772a09c3dc428f8422e1d909b74f2c2915"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/us-table.dis",
+    "bytes": 1562,
+    "sha256": "c257f792b4c2727f8a24852ef171217d94608a6ed4a1b0a6f16f4214143d46d9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/uz-g1.utb",
+    "bytes": 3538,
+    "sha256": "1436f90b3320b25dcc440558b09e251ef1e3ec9128d9c2bb98b8561de19b91f7"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ve-za-g1.utb",
+    "bytes": 2702,
+    "sha256": "732f1fe1a3f7d780d64f6a412265e5936e43252ac5862b5c1fe2cf0ecd4db7da"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/ve-za-g2.ctb",
+    "bytes": 4842,
+    "sha256": "b7341cb4a17006c8d7f0e54772447858c03e85b7831e4d0ef64f9479230e12c6"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-cb8.utb",
+    "bytes": 1941,
+    "sha256": "26713c06c700dd551b744ebdfaf24cdd16ab2f892f2d404049bf9eccf4a7e563"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-charsdef.uti",
+    "bytes": 1243,
+    "sha256": "b0c4fa6594c0d6c9503650cd12825874fba8afa98a638c21f2c4ac8e2a248872"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-lettersdef.uti",
+    "bytes": 11032,
+    "sha256": "8776e47c3b26514cdd9b59440ece7bbd5469e16434fdbd6bed4038d31f52a67d"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-puncsdef.uti",
+    "bytes": 12804,
+    "sha256": "54100d241ac8f3ee7eaf0c12cef412a5fa89d912beff7035c16126bb21ed8910"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-saigon-g1.ctb",
+    "bytes": 21897,
+    "sha256": "fe5dd40fd749ac525b87cdd2f4d932f3f0d9d4fbe65f0bb51f5dc03cddb6319f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-vn-g0.utb",
+    "bytes": 3243,
+    "sha256": "8e1a73e110687bef6ed048ab68d99d7c0cf519cd1bdd5af1d30c8d128902d90e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-vn-g1.ctb",
+    "bytes": 17509,
+    "sha256": "f6d6d6e83c3b77e69e27ab35e0d4eef3c5713918f6e5a71b2aeda0e416cc0695"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/vi-vn-g2.ctb",
+    "bytes": 22557,
+    "sha256": "4883c38fc3d1309ee5363328b22afe20579c97c8783c3889fb45fc825954f60f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/wiskunde-chardefs.cti",
+    "bytes": 18559,
+    "sha256": "bb8137afea49fd6a6b57bddfd25a938d195d6454eda838752b72a61cd5fe2d3f"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/wordcx.dis",
+    "bytes": 3853,
+    "sha256": "869b7244171b5c644b6a76f345a62663ff7e4862cf1a1d071447717644bc70f9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/xh-za-g1.utb",
+    "bytes": 2265,
+    "sha256": "9c230902e2c909df94d8ab65ac79ae8a53b22188a2cce1d36134f9a881ce2ac5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/xh-za-g2.ctb",
+    "bytes": 8862,
+    "sha256": "b770fd8d1cdd2eb99037f72279ba8724b70859180d135c1bc55bcd21c008d74e"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/yi.utb",
+    "bytes": 11550,
+    "sha256": "168e0cb81b631809f813b84f5779a21d49d8157060706a945632443acc9fc4da"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zh-chn.ctb",
+    "bytes": 1263136,
+    "sha256": "6fc300ad59dd50e24d651dfa7f8a300c99a97ad59751b2e6747ce158f32261c8"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zh-hk.ctb",
+    "bytes": 265226,
+    "sha256": "04f133a96c4ed5e9e2a01bd6e1619e855053be0343381c2d50a38fd9990df420"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zh-tw.ctb",
+    "bytes": 1467570,
+    "sha256": "c877ac29c52706653599039cc5aa452f18b578a4c4ae2bf9f882c2e849ffd33c"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zh_CHN.tbl",
+    "bytes": 888,
+    "sha256": "64dbed9d1b846bdf9bce80f8c63d538395be54fe87ca824ab4b1564aa8b598a9"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zhcn-cbs.ctb",
+    "bytes": 1064683,
+    "sha256": "ccdec0636989eb1232a1c8d67a421e2b958e900d19a383b0c2d5c0ecab57fbb5"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zhcn-g1.ctb",
+    "bytes": 676085,
+    "sha256": "79e8cae1fce16e9f7cde7415146818255382c86d4cb4155bc67ad8d1a601ad50"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zhcn-g2.ctb",
+    "bytes": 617600,
+    "sha256": "abfe83cafc7a1980497ce6c9eb222defdce3eb261fb60279fb56ac65eb1c9e24"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zu-za-g1.utb",
+    "bytes": 1069,
+    "sha256": "c94f460c22a2a6e50c7f0ed9ca08f129b020ebbc5956f4f3eee204d78ced1016"
+  },
+  {
+    "path": "Convert/liblouis/share/liblouis/tables/zu-za-g2.ctb",
+    "bytes": 1067,
+    "sha256": "ec60f34adde8c7d1fb1fddca5fb8e38ebc8fd0f47a520e48982a9bf75dcbe38c"
+  },
+  {
+    "path": "Csv.cs",
+    "bytes": 8768,
+    "sha256": "9494a350811b90457d8142d55b4d0979b0ac47b0c4889d0b8b40a9cda0186a29"
+  },
+  {
+    "path": "EdSharp.cs",
+    "bytes": 1026774,
+    "sha256": "c80ce86d87623e441d3596d45102e20c92d38d097d81cb4166c1712bb2c075c1"
+  },
+  {
+    "path": "EdSharp.htm",
+    "bytes": 97966,
+    "sha256": "26e6b87ad18290f5b865fa9c31c25b295170bf1f02f7c115ca5863c1d5d914b2"
+  },
+  {
+    "path": "EdSharp.ico",
+    "bytes": 22008,
+    "sha256": "45f83effa7298de5c3eb70a24c53bfdf4092bde2b9c3f8facd862e42ff8bf471"
+  },
+  {
+    "path": "EdSharp.ini",
+    "bytes": 20268,
+    "sha256": "027234db9abe7e70e576efddfb8c08f1f7d57683589b82d5daa8bdb5acfb8e99"
+  },
+  {
+    "path": "EdSharp.inix",
+    "bytes": 5917,
+    "sha256": "2541d659fa494983058a241111617ea62c4d21d7e9a31c0f859ebf16ad567f19"
+  },
+  {
+    "path": "EdSharp.manifest",
+    "bytes": 1550,
+    "sha256": "dad1d87fb55a7884c7c9fb705dfa311293a4e9c75d3cfb37cb9f529b1d755c2c"
+  },
+  {
+    "path": "EdSharp.md",
+    "bytes": 141430,
+    "sha256": "280daadcc84e3544a7c562f56f47ec787d12e700fdfe6b4bcf13ed1145041300"
+  },
+  {
+    "path": "EdSharp.nvda-addon",
+    "bytes": 3803,
+    "sha256": "1e2a626ccf8c927befd3210d4b81e97409338d01887fffa1f5642c21e87eb789"
+  },
+  {
+    "path": "EdSharpNG-spellcheck.nvda-addon",
+    "bytes": 5537,
+    "sha256": "f75f95915992716777767b97938f2e9bf46945bded1332c38b75bd7ceb0139c2"
+  },
+  {
+    "path": "EdSharpNG.exe",
+    "bytes": 546816,
+    "sha256": "af414d405c6b442c2849a2593fd4617dcc915cbf6ddd31f1fbeb5014cd6021d0"
+  },
+  {
+    "path": "EdSharpNG.exe.config",
+    "bytes": 711,
+    "sha256": "664e14293901426dc12bd71afb537937b88efd147c2987760f474b582da330e1"
+  },
+  {
+    "path": "EdSharp_Hotkeys.txt",
+    "bytes": 21778,
+    "sha256": "d6025c920081bf5ceb61242b758da0ec534955efcdcb02ff046bcfc5d420fe29"
+  },
+  {
+    "path": "EdSharp_Setup.iss",
+    "bytes": 13568,
+    "sha256": "dca8550cb882ded029ca2de4e1cf784159b1db68c1efc3df096445504daf82ab"
+  },
+  {
+    "path": "FetchConvertTools.ps1",
+    "bytes": 8370,
+    "sha256": "6e614cb60a684eb193dae97f40da29b3e4b9d6fe099646772b91a97d5af380f5"
+  },
+  {
+    "path": "FetchUde.ps1",
+    "bytes": 2184,
+    "sha256": "327c0351a90bd8c68b544a63d56a1f2183057db42e2c37237ecd1661bf15f828"
+  },
+  {
+    "path": "Hotkeys.ini",
+    "bytes": 20732,
+    "sha256": "e26fa7bf8adabeb6525350ddd18eef70628e6a332c8aaf8d048c33de2edf8d4d"
+  },
+  {
+    "path": "Inix.cs",
+    "bytes": 21327,
+    "sha256": "8496483bee3add1425c0fa7e5aa5ca1f9798a7150a1a28934fdda7bbff97bcd4"
+  },
+  {
+    "path": "KeyMap.cs",
+    "bytes": 7220,
+    "sha256": "61c532ddf69303707b1578fcc27fa0007c621297a76154884e6070885c6d9505"
+  },
+  {
+    "path": "Lbc.cs",
+    "bytes": 134417,
+    "sha256": "a758e4edb0fb99c895a3eef6e49c906db04d4d3a853eaddad0e7c6d24a5ec85b"
+  },
+  {
+    "path": "ModernizePandocConfig.ps1",
+    "bytes": 2439,
+    "sha256": "d089f02a7241a3e9789f54b536236ff1b595b839521c144b777f7507a578c5c0"
+  },
+  {
+    "path": "OriginalFormatSave.cs",
+    "bytes": 14785,
+    "sha256": "73e217eac49e93f5c861a31168c01355f9cd130d3c7c0d3d63a26d6d081f6414"
+  },
+  {
+    "path": "PdfExport.cs",
+    "bytes": 12230,
+    "sha256": "b7e7915c02dc6301a59caffe2eca163f53beaeb3eec2ba52aab651802e9e3f59"
+  },
+  {
+    "path": "Pisownia.cs",
+    "bytes": 8847,
+    "sha256": "bb04708ad837fb3d8bf7290047ac0c788eba9dffc720c49bf9785471b8e14809"
+  },
+  {
+    "path": "PrepareSynonyms.ps1",
+    "bytes": 2590,
+    "sha256": "02286a9ed39151619c4e51be989acb2baaae8ec1775ecff3e73f8c6d7f02076d"
+  },
+  {
+    "path": "Say.cs",
+    "bytes": 34419,
+    "sha256": "cf061f403a2c10aee7c2288313232ec4c0a12db5ff7ca5c04ba5901823c87b85"
+  },
+  {
+    "path": "Scripts/EdSharp.JCF",
+    "bytes": 69,
+    "sha256": "040f89901b893a9426a9cd843f9e8dff085b13a10e117337e306eac62fc503a2"
+  },
+  {
+    "path": "Scripts/EdSharp.JSS",
+    "bytes": 27296,
+    "sha256": "0c5c18b96272b4358a2ccdf1b7a64c154b292ade70349099ec216be511a7d7ef"
+  },
+  {
+    "path": "Scripts/EdSharp.jsb",
+    "bytes": 24254,
+    "sha256": "e7df13d4d11991229e5f2cf1023cb9f924a043bf82d8c3f630d6de658ac09cd1"
+  },
+  {
+    "path": "Scripts/EdSharp.jsd",
+    "bytes": 2971,
+    "sha256": "467f22179a7769dc5185e7a5664773199116194e24216e4d137713e137dc390a"
+  },
+  {
+    "path": "Scripts/EdSharp_Scripts_Setup.iss",
+    "bytes": 12640,
+    "sha256": "f82a30529fe9a61d183ee3e2beded4cea90face427611ae0222d4dc7fde4521e"
+  },
+  {
+    "path": "Scripts/Homer.jsh",
+    "bytes": 2535,
+    "sha256": "38524b77aecfff7855094aa3d8efe0aab7e586146a6dc2c8c7509ad400e83355"
+  },
+  {
+    "path": "Scripts/MSAA.jsh",
+    "bytes": 5610,
+    "sha256": "83ed58f1a9633969afcfd4a763b971f317a9b78d438676f8aa65156f88288dfd"
+  },
+  {
+    "path": "Scripts/edsharp.jkm",
+    "bytes": 13182,
+    "sha256": "6ac17692212a8738bbd8f4e40dff46ba72f587ccde0ed4c2447c93cc7f1076d5"
+  },
+  {
+    "path": "Scripts/homer.jsb",
+    "bytes": 108408,
+    "sha256": "1157f367926be8c75479cc8233c537c1c12e0750eb2fcfa370ce5c7eab7288cb"
+  },
+  {
+    "path": "Scripts/homer.jsd",
+    "bytes": 47504,
+    "sha256": "c5a41f0c4cabd46e7efa6a7c24b8104fc3bc93666135b879870cfb11a99837c7"
+  },
+  {
+    "path": "Scripts/homer.jss",
+    "bytes": 159120,
+    "sha256": "8e61b527334aac5196a0b0d1a2a084ce04a5c4b500fb3f7630ab4b068b0a70a5"
+  },
+  {
+    "path": "Sesja.cs",
+    "bytes": 16209,
+    "sha256": "e4178e64f83c4da317ea8fe273ba42b3a05e08da43a0a5212dfc49806dbb288f"
+  },
+  {
+    "path": "Skladniki.cs",
+    "bytes": 17013,
+    "sha256": "d00f3a10c3eeaebcb0476012fafe6ad7e8729ba5a26376dd9176e282941163eb"
+  },
+  {
+    "path": "Snippets/AutoIt/hello.au3",
+    "bytes": 95,
+    "sha256": "1d9a528bfb4dbd4a80f9fee73dc3b49748b01e8b2c49aea0463a272d6c578c15"
+  },
+  {
+    "path": "Snippets/C#/EncapsulateField.snippet",
+    "bytes": 1417,
+    "sha256": "9ef63d3b12fd0e2a9befec01b34a37a7b20589fe446cfbe04eaf3f4f680db0f5"
+  },
+  {
+    "path": "Snippets/C#/EncapsulateFieldGet.snippet",
+    "bytes": 1396,
+    "sha256": "349a4d72cbd49c1e4dc149531f217474329b7cbdf32ff56c89f0f13b318c86f9"
+  },
+  {
+    "path": "Snippets/C#/EncapsulateFieldSet.snippet",
+    "bytes": 1395,
+    "sha256": "79900744e605a3eed798b252d7026474474aa5cb383f5926661c36bdc1583f72"
+  },
+  {
+    "path": "Snippets/C#/EventStub - Field.snippet",
+    "bytes": 889,
+    "sha256": "52e4365621421e8341bf7e2385ba93f62e61a79bf1f4797b6015d6889af20ef9"
+  },
+  {
+    "path": "Snippets/C#/EventStub - Property.snippet",
+    "bytes": 1168,
+    "sha256": "8fcf428cea4607bed425b2d7f72f50c1e9d3d017b7a580d73d3e71da5beb3426"
+  },
+  {
+    "path": "Snippets/C#/MethodOverrideStub.snippet",
+    "bytes": 1055,
+    "sha256": "9cc85ae007980f448c7280e2e660378135bac193c2684b9eea1e975b54a3e59a"
+  },
+  {
+    "path": "Snippets/C#/MethodStub.snippet",
+    "bytes": 1120,
+    "sha256": "6e566bd5e9b5cede454ef0a56fd2434ed251d66b4b00999f40a9fd3b5d8b681d"
+  },
+  {
+    "path": "Snippets/C#/MethodStubNoBody.snippet",
+    "bytes": 868,
+    "sha256": "b1a271bccd213983e6d04e1ad96d9c4a13db7a5f75c19252c7f80ff51f61b502"
+  },
+  {
+    "path": "Snippets/C#/PropertyOverrideStub.snippet",
+    "bytes": 1632,
+    "sha256": "ef1e22f85a8b71ab26328cc9d0ef47fd30fee204483bee04270e46435cd829cd"
+  },
+  {
+    "path": "Snippets/C#/PropertyOverrideStubGet.snippet",
+    "bytes": 1082,
+    "sha256": "c64686b7f482d23a9dbfc96c1c0aa593aa21fec8d7958ae3ad60631c2be8246c"
+  },
+  {
+    "path": "Snippets/C#/PropertyOverrideStubSet.snippet",
+    "bytes": 1082,
+    "sha256": "f39488ca3359ced63e666af40403c07df057fd3a992f00e24b060e0f47090fa9"
+  },
+  {
+    "path": "Snippets/C#/PropertyStub.snippet",
+    "bytes": 1535,
+    "sha256": "665302217d8ed3d91b66d2f73254ef466ea4525a58def3db1a68f53a369f9dd5"
+  },
+  {
+    "path": "Snippets/C#/PropertyStubGet.snippet",
+    "bytes": 1116,
+    "sha256": "1ddbe8b4843e406ee364a18eb306d9ec693de8675c2fcc1289ae31904d40e4c7"
+  },
+  {
+    "path": "Snippets/C#/PropertyStubGetNoBody.snippet",
+    "bytes": 918,
+    "sha256": "d76aa576607fb3525138e95b5b7b33a6688ea044bb9b6ba9fd6ff08319a705a3"
+  },
+  {
+    "path": "Snippets/C#/PropertyStubNoBody.snippet",
+    "bytes": 1287,
+    "sha256": "ef95ff39db39d8d95b7cd9f93b6570356d07dd37d74b2d88dd71fc5b8ebab5d2"
+  },
+  {
+    "path": "Snippets/C#/PropertyStubSet.snippet",
+    "bytes": 1116,
+    "sha256": "5a07997cc203e5c0f938b822f89a59830203bcdd4b786baa1c7ea5bb54a7a807"
+  },
+  {
+    "path": "Snippets/C#/PropertyStubSetNoBody.snippet",
+    "bytes": 916,
+    "sha256": "167bf6ed4e906bcb07ec167601a8a0a70d49647417f38af7d3ab3b8c6cf70ed4"
+  },
+  {
+    "path": "Snippets/C#/SnippetsIndex.xml",
+    "bytes": 6252,
+    "sha256": "036ff49615b282c6154a8a9cf904dcf1ddff0b2164e6bc491044d2c02d1476a7"
+  },
+  {
+    "path": "Snippets/C#/attribute.snippet",
+    "bytes": 2357,
+    "sha256": "afdaa4c75ca0d59e45a0ae9ebff1286a10a829658dd3b2e357e131192a5b968d"
+  },
+  {
+    "path": "Snippets/C#/checked.snippet",
+    "bytes": 623,
+    "sha256": "6a1a38deafe6512e8188329a21b5312f6b26be491b62ef3e2d1d1f1daa12f7b8"
+  },
+  {
+    "path": "Snippets/C#/class.snippet",
+    "bytes": 774,
+    "sha256": "de9fb7d94408f4b5b5aa59101358a9b258ea60a5b68c9a5a20c2c1b03bc167b5"
+  },
+  {
+    "path": "Snippets/C#/ctor.snippet",
+    "bytes": 805,
+    "sha256": "e2a3a65755d878bf80c9eaa0e45700219ab7a9ec3c9e648439086e0539002bc5"
+  },
+  {
+    "path": "Snippets/C#/cw.snippet",
+    "bytes": 748,
+    "sha256": "fa7f6df9128eb9a33592cf5b2aeae16a36d2c1dbc3f89c97343b96262f94744c"
+  },
+  {
+    "path": "Snippets/C#/do.snippet",
+    "bytes": 813,
+    "sha256": "9ddba42783fed523e9a15ead69745d4b48c09b0087b52a2d8aa9a608fc0f4541"
+  },
+  {
+    "path": "Snippets/C#/else.snippet",
+    "bytes": 622,
+    "sha256": "afdede7262bec85008e06c7ba7c1eb4537b3d9ba446f5d779dab2d71c73c4919"
+  },
+  {
+    "path": "Snippets/C#/enum.snippet",
+    "bytes": 776,
+    "sha256": "b2a0ec80489066a07005c6ab20b626b9c64bb6a314efd0eb752717b330d2dc68"
+  },
+  {
+    "path": "Snippets/C#/equals.snippet",
+    "bytes": 1586,
+    "sha256": "897727b25d7976797ddfe16362743afdace8aa9067a96777205fb9890546cdbd"
+  },
+  {
+    "path": "Snippets/C#/exception.snippet",
+    "bytes": 2396,
+    "sha256": "7210e33b3c949b8afb0a3c91f77122a85e0ae8f9a733d950938fa13c72405544"
+  },
+  {
+    "path": "Snippets/C#/for.snippet",
+    "bytes": 926,
+    "sha256": "289ed4966e048fce59e0d81ec0779df82547acd04bb596604c7c0dac8b7a4e5a"
+  },
+  {
+    "path": "Snippets/C#/foreach.snippet",
+    "bytes": 1195,
+    "sha256": "719be4e63460c9ae5d797e98e34ae3a6101599df42aa9b75a15c3780e19120e6"
+  },
+  {
+    "path": "Snippets/C#/forr.snippet",
+    "bytes": 942,
+    "sha256": "6cdcf52b03bf8ab9414a8baec968777f136ab3d4735270255f7a3e9e0b41aa17"
+  },
+  {
+    "path": "Snippets/C#/hello.cs",
+    "bytes": 415,
+    "sha256": "afd60a7f88f8164c81b0a0fc5d44fb941244a724d927ca55003fa41471b439e6"
+  },
+  {
+    "path": "Snippets/C#/if.snippet",
+    "bytes": 796,
+    "sha256": "97be3003b87e2d0196be8f64df900ca35f0dc43cc04299ca54b642cbee50b9b7"
+  },
+  {
+    "path": "Snippets/C#/indexer.snippet",
+    "bytes": 1130,
+    "sha256": "595eb5486f58fbd8f889a64420bb0fbcb65ee9c1a1933400424065ab0578d4dc"
+  },
+  {
+    "path": "Snippets/C#/interface.snippet",
+    "bytes": 797,
+    "sha256": "acad7f210c12a2bda90d0e7ca232c7323834e424fbdb4f31480544ddfb255eba"
+  },
+  {
+    "path": "Snippets/C#/invoke.snippet",
+    "bytes": 928,
+    "sha256": "0918d2a020ca94f187e31efe899e3db5b9f1b93a65328fc197c818ac60aa33a8"
+  },
+  {
+    "path": "Snippets/C#/iterator.snippet",
+    "bytes": 1197,
+    "sha256": "b1ae11b9de86140c2ea986fc69fceb1cddb1c45e291e838f68c056f7514cf41d"
+  },
+  {
+    "path": "Snippets/C#/iterindex.snippet",
+    "bytes": 2541,
+    "sha256": "f3d5974a21d046507f721dfbf598272b04d190f784aec79d3782c1fed886c61f"
+  },
+  {
+    "path": "Snippets/C#/lock.snippet",
+    "bytes": 804,
+    "sha256": "9f8a362fb151ead1b103cd9b44a21d420ef701349fc490f4c6ace6d9be13ea17"
+  },
+  {
+    "path": "Snippets/C#/mbox.snippet",
+    "bytes": 931,
+    "sha256": "4140f382927e71b7a5120b77a2dd12b19659999f5bc90add6db246117ccd2fc0"
+  },
+  {
+    "path": "Snippets/C#/namespace.snippet",
+    "bytes": 799,
+    "sha256": "9de7af5e5fb7d09a5e774944b18af6180544136ee751456b4db35883ad7bb0a4"
+  },
+  {
+    "path": "Snippets/C#/pp_if.snippet",
+    "bytes": 803,
+    "sha256": "810655b4bf185a2076c0ae02bde44f2c18afc36567e4ac72955c1b41454a17c9"
+  },
+  {
+    "path": "Snippets/C#/pp_region.snippet",
+    "bytes": 790,
+    "sha256": "7f83998f108ac7fce3c69bf90953a8195602cf2359ad273408f1f61b9ba6c72e"
+  },
+  {
+    "path": "Snippets/C#/prop.snippet",
+    "bytes": 891,
+    "sha256": "4d18065ab1d56edd934453e9491519c01243056c70b6acbe9c9d314c94b8fb1c"
+  },
+  {
+    "path": "Snippets/C#/propa.snippet",
+    "bytes": 2272,
+    "sha256": "f3f4bee2acf9eb52d908fdcbc442f6c32edd737ccb5930371bcbcd3783eef56f"
+  },
+  {
+    "path": "Snippets/C#/propdp.snippet",
+    "bytes": 2128,
+    "sha256": "fd9775090b80714d5b613c166542c251d3451b60e65bfb9862d9df43bc0bbbf7"
+  },
+  {
+    "path": "Snippets/C#/propg.snippet",
+    "bytes": 952,
+    "sha256": "0d6f167706c7c0e322c3d4b9245a7cad3cabf7f72fc7a9ef241428bd0464e89b"
+  },
+  {
+    "path": "Snippets/C#/sim.snippet",
+    "bytes": 593,
+    "sha256": "82ff236e6f6e8e20f621f7443193ef0a382cde9df4bef8fbada29617e93ad73e"
+  },
+  {
+    "path": "Snippets/C#/struct.snippet",
+    "bytes": 780,
+    "sha256": "76580721e6cc0e68cff6f1dc8ffbcd5541d99ffb0af8c35636a441e77a1dbfdf"
+  },
+  {
+    "path": "Snippets/C#/svm.snippet",
+    "bytes": 590,
+    "sha256": "a9d541a3c83d3ecf3f7b9c408c9618d80c062ee2f0e63219b270c1bf7ea894fb"
+  },
+  {
+    "path": "Snippets/C#/switch.snippet",
+    "bytes": 932,
+    "sha256": "e11a6f949e6c241f1bcb21df39dcb66fb287253687bb8b3fd271e78d6712f3f2"
+  },
+  {
+    "path": "Snippets/C#/try.snippet",
+    "bytes": 865,
+    "sha256": "c846d79b6931fdd2e2f44a368003672caf3d16f0ee7533014776e7bd5ce4106d"
+  },
+  {
+    "path": "Snippets/C#/tryf.snippet",
+    "bytes": 670,
+    "sha256": "873cd9e020b6d00e60204ff4473a142cd23f253f0d30101cbf2a3b286f1c4ffe"
+  },
+  {
+    "path": "Snippets/C#/unchecked.snippet",
+    "bytes": 631,
+    "sha256": "fc00b6007661c4ff740c015356a306093fc5fff9ab37223df871b475d4b0a926"
+  },
+  {
+    "path": "Snippets/C#/unsafe.snippet",
+    "bytes": 623,
+    "sha256": "ec174585c3772e4c08220d668f61ef4b09ba3f92c04ee81e4fed9054d4fe7643"
+  },
+  {
+    "path": "Snippets/C#/using.snippet",
+    "bytes": 800,
+    "sha256": "486ef82ecdfb10f52424a1e12357d855168ecae519419df58d08e3805bedc1b9"
+  },
+  {
+    "path": "Snippets/C#/while.snippet",
+    "bytes": 810,
+    "sha256": "d2a94f4cb18ef4c010176d751748263fbe802dd61df28c64273e8514fad0fd53"
+  },
+  {
+    "path": "Snippets/C#/~.snippet",
+    "bytes": 791,
+    "sha256": "45e2170b65790dbac5ec91dd3e73933dbaac563dea0fd5c32cc72d0d79f60848"
+  },
+  {
+    "path": "Snippets/Default/Letter.txt",
+    "bytes": 137,
+    "sha256": "63a7fd98d212d4ffbb5b4c175ff526dc9cf5f921f060ec74422c42413bf78a8a"
+  },
+  {
+    "path": "Snippets/Default/ascii Only.js",
+    "bytes": 311,
+    "sha256": "9bc6b25896eda61ee54ae7d279a1794dae8eae8cdb5768d04a350171a764bd86"
+  },
+  {
+    "path": "Snippets/HTML Tidy/EdSharp.htm",
+    "bytes": 59634,
+    "sha256": "02204c02e110c1563fb275e250203bd9ff44a36ea849aced0545a521ca2e26fc"
+  },
+  {
+    "path": "Snippets/HTML Tidy/MultiInput.js",
+    "bytes": 332,
+    "sha256": "890651e68da43a74fa0492a84ff9b5f207e0949c436427575a7c5dd0b0f3cee7"
+  },
+  {
+    "path": "Snippets/HTML Tidy/a.txt",
+    "bytes": 51,
+    "sha256": "07f334b467a0d56adbfbcb084a93534ff7c21d0d51d8f1673962fbb108ea81d3"
+  },
+  {
+    "path": "Snippets/HTML Tidy/abbr.txt",
+    "bytes": 40,
+    "sha256": "c9df74fd9e9672ebd7e58a16c5cc2b342bdcd9e16aa32bedb7bc773a5bd4ed1d"
+  },
+  {
+    "path": "Snippets/HTML Tidy/acronym.txt",
+    "bytes": 43,
+    "sha256": "c0e575a930be823ce49f3439dded93b9738dee3fb29d331df95b9d6fc743f9ea"
+  },
+  {
+    "path": "Snippets/HTML Tidy/address.txt",
+    "bytes": 36,
+    "sha256": "54684d31e96a9d49fb528afd061601b316d63330f1e74cedc3441aa9439cb0bb"
+  },
+  {
+    "path": "Snippets/HTML Tidy/applet.txt",
+    "bytes": 111,
+    "sha256": "6c594437b83b51235e9827e1083e3178967b0a2f6ebffff124843f7dfd59446f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/area.txt",
+    "bytes": 45,
+    "sha256": "cdf13332bf58b852254a2b59502accc22e95cc6b830c5e59ff2fb8018a268065"
+  },
+  {
+    "path": "Snippets/HTML Tidy/b.txt",
+    "bytes": 37,
+    "sha256": "261a88ac343b3fcbe093e7dc390edc2471e78a57d20487ed18b9e585f3682a07"
+  },
+  {
+    "path": "Snippets/HTML Tidy/base.txt",
+    "bytes": 18,
+    "sha256": "fbdb1716775e639498dd994c7bc1f3f06fc7694fcb3bb8d04c7d2ca2e80051bc"
+  },
+  {
+    "path": "Snippets/HTML Tidy/basefont.txt",
+    "bytes": 29,
+    "sha256": "8da1b615b54b114277f0d03847dd3f1f5f93d92ba7f087401146ac00089e4b13"
+  },
+  {
+    "path": "Snippets/HTML Tidy/bdo.txt",
+    "bytes": 18,
+    "sha256": "970a7aaf5d3e683eb63df15b0de302536ed4e186a82ee42e5107d4455fe8104d"
+  },
+  {
+    "path": "Snippets/HTML Tidy/bgsound.txt",
+    "bytes": 21,
+    "sha256": "b5c4ebf248e94adf8e20a00f186ccaae9582ad4eb4d85a4f8749c2c2a44b93df"
+  },
+  {
+    "path": "Snippets/HTML Tidy/big.txt",
+    "bytes": 39,
+    "sha256": "9e0d8cd2ebaec77938ad6472b46c6a74905e20b77ac02b9651ed836aa49c2667"
+  },
+  {
+    "path": "Snippets/HTML Tidy/blink.txt",
+    "bytes": 20,
+    "sha256": "85298de9a2e4b6e0e6919f5e0d8c5a578c151d83b4ce9a98e63082c57b798491"
+  },
+  {
+    "path": "Snippets/HTML Tidy/blockquote.txt",
+    "bytes": 54,
+    "sha256": "a5bf1d53c5f879697eb3c285a452076d8fcf2c20a54380ab4c0344aa4c4123cd"
+  },
+  {
+    "path": "Snippets/HTML Tidy/body.txt",
+    "bytes": 119,
+    "sha256": "6d92561bd0de4f1c035c8cf81c7ee735291c71f869f84aa1b17c64578a568abb"
+  },
+  {
+    "path": "Snippets/HTML Tidy/br.txt",
+    "bytes": 44,
+    "sha256": "890adf5d9a0e6bd2a8a95398d4f7e9400f1a40566cbe0a1f9dbc5015a3d58260"
+  },
+  {
+    "path": "Snippets/HTML Tidy/button.txt",
+    "bytes": 35,
+    "sha256": "9b31631ca22382dc7effb15442d78f2f8ca69558fa2139a76f04b60d22bce90a"
+  },
+  {
+    "path": "Snippets/HTML Tidy/caption.txt",
+    "bytes": 36,
+    "sha256": "14b955f5546d2bd482dce022b807179342c1798c8d30942bafd5a5744ca80637"
+  },
+  {
+    "path": "Snippets/HTML Tidy/center.txt",
+    "bytes": 35,
+    "sha256": "0b5d750456cbf77d487a76526ef45e2817d1e8f91fa26f248ff52eb2b69c2215"
+  },
+  {
+    "path": "Snippets/HTML Tidy/cite.txt",
+    "bytes": 40,
+    "sha256": "77baec9d9494dcb9f55fde4e5773f71a83f15fb587351cbc36dc4cbf7417adce"
+  },
+  {
+    "path": "Snippets/HTML Tidy/class.txt",
+    "bytes": 16,
+    "sha256": "9e6449db932f4c9b72767b0e44d49e7e7aeae94bdad0989a6819245757f764cd"
+  },
+  {
+    "path": "Snippets/HTML Tidy/code.txt",
+    "bytes": 40,
+    "sha256": "eb690ad1c15649c88b7366af7eb1cf9ecaf4f97ec988d82e38714771cc8a4678"
+  },
+  {
+    "path": "Snippets/HTML Tidy/col.txt",
+    "bytes": 82,
+    "sha256": "67c543478b93702b290980957b86fd905b8e5ca94e1e3255d0f03f102fd549c8"
+  },
+  {
+    "path": "Snippets/HTML Tidy/colgroup.txt",
+    "bytes": 79,
+    "sha256": "556e63859447689a17104c49e6941b3241b5283f1317cd450e62d1e792669fa4"
+  },
+  {
+    "path": "Snippets/HTML Tidy/dd.txt",
+    "bytes": 31,
+    "sha256": "98616258201bb44fab4317cb38f94fcb865a848451d992f0422386adb0975658"
+  },
+  {
+    "path": "Snippets/HTML Tidy/del.txt",
+    "bytes": 50,
+    "sha256": "732ab308b954b2e1cea5d59de38023a8acb18489ce9f651d3a040d8c6414cf68"
+  },
+  {
+    "path": "Snippets/HTML Tidy/dfn.txt",
+    "bytes": 39,
+    "sha256": "b87914ca9d031fd550528a169109748a71ff540602864de9799af2ff0e45f87e"
+  },
+  {
+    "path": "Snippets/HTML Tidy/dir.txt",
+    "bytes": 32,
+    "sha256": "c77620954e2ece1a03a8402e615ad2499b23c90fdc2ebc735df7147661fe9cba"
+  },
+  {
+    "path": "Snippets/HTML Tidy/div.txt",
+    "bytes": 32,
+    "sha256": "4b45f23b46adb14e8d4a1d2398336a8e56eed96d408cb31d72e25c9732700714"
+  },
+  {
+    "path": "Snippets/HTML Tidy/dl.txt",
+    "bytes": 31,
+    "sha256": "559b95bdb6eb908082544ea178da182aec3c84266143f7153f7b936cae431c70"
+  },
+  {
+    "path": "Snippets/HTML Tidy/dt.txt",
+    "bytes": 31,
+    "sha256": "90e6448176cc8af1a60b01c2e5ffb96c8a3356f4d573013f47e078c70b8f5775"
+  },
+  {
+    "path": "Snippets/HTML Tidy/em.txt",
+    "bytes": 38,
+    "sha256": "85b0ff8944e9c59c0a4d9f49ff7ab2dcfb8625d11ab63149b5eb2688aa8fa5f4"
+  },
+  {
+    "path": "Snippets/HTML Tidy/embed.txt",
+    "bytes": 118,
+    "sha256": "d26fc239fa13d9a31f4d5188bfe905f7c42b25e972164a4ca113c5e1d46c8abf"
+  },
+  {
+    "path": "Snippets/HTML Tidy/fieldset.txt",
+    "bytes": 37,
+    "sha256": "74b127c3d7301bdd62fc3d59ac4242afb5d1dce1448afd662b28f00089ee4fcc"
+  },
+  {
+    "path": "Snippets/HTML Tidy/font.txt",
+    "bytes": 62,
+    "sha256": "537fb40f09331290ac1ec3c6f450c9737ee08fb27206e9d81db64d384fed2800"
+  },
+  {
+    "path": "Snippets/HTML Tidy/form.txt",
+    "bytes": 61,
+    "sha256": "5fb66ac24287fd7e2e9fd497c8c0eb558645df12e2d3c3dba0bd5c6f5cbfa78a"
+  },
+  {
+    "path": "Snippets/HTML Tidy/frame.txt",
+    "bytes": 109,
+    "sha256": "6593e4b2fc8dddf0009fdeb217c0ee823f08e71635a5dca2459bbd23bca0ed92"
+  },
+  {
+    "path": "Snippets/HTML Tidy/frameset.txt",
+    "bytes": 51,
+    "sha256": "78f2f8a540ea9b2c1c91dc44985c3e1a310e1fc010ac8aa99012da74226081e0"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h1.txt",
+    "bytes": 31,
+    "sha256": "f469108a40ae31138a06688608448e00e2c277383d819926eb10d0f34edd6ddf"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h2.txt",
+    "bytes": 31,
+    "sha256": "233b13fab10cf35adc37a01ee7e5320ad8864f820cb8b3469f5e39e0a9515782"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h3.txt",
+    "bytes": 31,
+    "sha256": "b59aad46f1ea913186d65351ec48ec885718b05b8c1196eb24f98626c7536d89"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h4.txt",
+    "bytes": 31,
+    "sha256": "6e023b8cb53dacece4dc96290b3a7255ae1895aacfd3d3ccff04f37d1e31435b"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h5.txt",
+    "bytes": 31,
+    "sha256": "dd1b957ccaf35e4a3df088af10ec8c7c8fef7270b5be3503bf87ad002328e87c"
+  },
+  {
+    "path": "Snippets/HTML Tidy/h6.txt",
+    "bytes": 31,
+    "sha256": "a8a5e87c686bb585ae284f0362b0bb611df632500a602e8833dfd3c9cd5e32a1"
+  },
+  {
+    "path": "Snippets/HTML Tidy/head.txt",
+    "bytes": 12,
+    "sha256": "11c8a7fe017a0952df0bffde6d23dcaed1400a16f418a31cf6897d7d9e10172f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/hr.txt",
+    "bytes": 37,
+    "sha256": "ab5223f9f193a875ed58117a78995fb8337cb5bc74f92fb020cc384f2fc4dad1"
+  },
+  {
+    "path": "Snippets/HTML Tidy/html.txt",
+    "bytes": 12,
+    "sha256": "a1d87aef84a423927f1597fd0953ec292c143cac3cc07a118fc9c8a916bb4bd0"
+  },
+  {
+    "path": "Snippets/HTML Tidy/i.txt",
+    "bytes": 37,
+    "sha256": "ba0869f95e41ab6f690fe24fc86ee10ab1e18e36e48dd4e616d37ca80f665410"
+  },
+  {
+    "path": "Snippets/HTML Tidy/iframe.txt",
+    "bytes": 35,
+    "sha256": "2b81e0c7e20ed5c3d7485b9bd5f897edf65dba8ef2fbf98dc55ac01297999800"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ilayer.txt",
+    "bytes": 35,
+    "sha256": "94e3cde8a71c5dcaa03c0ad05d0dec027a5d33a698891105d8592a6dbede4a8c"
+  },
+  {
+    "path": "Snippets/HTML Tidy/img.txt",
+    "bytes": 74,
+    "sha256": "4a757794af87c700c5a5d72bf30f86c5016e70df5a3434db6732acff1ba4b6e5"
+  },
+  {
+    "path": "Snippets/HTML Tidy/input.txt",
+    "bytes": 62,
+    "sha256": "c77fadd1473b3e1de5e4f30daa910f5c7a07475fcb88b6d7c3f16f2379c74976"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ins.txt",
+    "bytes": 50,
+    "sha256": "255ed23366ece83b8e82cb4c83ded9e760124a8176d2cfd92d9604968b24b941"
+  },
+  {
+    "path": "Snippets/HTML Tidy/isindex.txt",
+    "bytes": 42,
+    "sha256": "d3e326a8ca7c592216f5e52f08acf3ff30ec99de17fc9e758e4bd797379e4dcb"
+  },
+  {
+    "path": "Snippets/HTML Tidy/kbd.txt",
+    "bytes": 39,
+    "sha256": "3e6559b869861590d2c26bde7ad1f4f0d34d3e67e3bdbdbb81f3b91a846dc483"
+  },
+  {
+    "path": "Snippets/HTML Tidy/label.txt",
+    "bytes": 47,
+    "sha256": "bf22547a425cafcd7fba9a07ef1ef0a9e0dd5c94e6aa5775b9f3a833cf0aed85"
+  },
+  {
+    "path": "Snippets/HTML Tidy/legend.txt",
+    "bytes": 35,
+    "sha256": "057603a2831ea1baf4351a92753d8497c53b531db8ce9e833c62cb7f1bc814a1"
+  },
+  {
+    "path": "Snippets/HTML Tidy/li.txt",
+    "bytes": 31,
+    "sha256": "5d16dca065e4ee8bcdd0a7902b96d16d39c6e43c48a6e81aa6bdedf95f054307"
+  },
+  {
+    "path": "Snippets/HTML Tidy/line break.txt",
+    "bytes": 21,
+    "sha256": "69ead86e88fd16073e7107d698801b891c2dab23d64e2c009e45666ca3216813"
+  },
+  {
+    "path": "Snippets/HTML Tidy/link.txt",
+    "bytes": 33,
+    "sha256": "1765cf0af813de7094f04d5ab8f9beddf9cee4e540fbcb945e50c0f25ee92ab3"
+  },
+  {
+    "path": "Snippets/HTML Tidy/listing.txt",
+    "bytes": 18,
+    "sha256": "f6e1b627baa95497b4eb048f1d539df7252dec00060004c89651dd407b3529d0"
+  },
+  {
+    "path": "Snippets/HTML Tidy/map.txt",
+    "bytes": 32,
+    "sha256": "0dd6c44e2ec6379dfaf35ecc65be4249ab4e25b2ea1aeab1d45b0aa0285f2f47"
+  },
+  {
+    "path": "Snippets/HTML Tidy/menu.txt",
+    "bytes": 33,
+    "sha256": "3ac1ffd134f82f703372e6842390941c72221082442b22191b2ac80fe023bbf6"
+  },
+  {
+    "path": "Snippets/HTML Tidy/meta.txt",
+    "bytes": 69,
+    "sha256": "9ef5e1b12891bf0c706fa7f701ad7b3e56b38577c4c9719505359cf5a378795c"
+  },
+  {
+    "path": "Snippets/HTML Tidy/multicol.txt",
+    "bytes": 19,
+    "sha256": "3a3d3b3e3b197f786bb0af43b31a0e0889f7b84057f4cfa3024a1572bfafee45"
+  },
+  {
+    "path": "Snippets/HTML Tidy/new html page.txt",
+    "bytes": 128,
+    "sha256": "040c978a5134755323e1cab96b83ecd0dd9e34f4fa716fdda62383eb8bc61890"
+  },
+  {
+    "path": "Snippets/HTML Tidy/new php page.txt",
+    "bytes": 128,
+    "sha256": "2ff57095454c89824f006bb54f64468b94e9343ce7a0c72016b0ab62f97d5804"
+  },
+  {
+    "path": "Snippets/HTML Tidy/nobr.txt",
+    "bytes": 40,
+    "sha256": "ad047fbad6d5086f14d90a2fe40ce0fe9a7b7f10ee23bbf75e411f53da009b97"
+  },
+  {
+    "path": "Snippets/HTML Tidy/noembed.txt",
+    "bytes": 43,
+    "sha256": "8e21d77a159728afbdfc53e9b186db824d3ca517956d8f055cf83d5c7b9a7b83"
+  },
+  {
+    "path": "Snippets/HTML Tidy/noframes.txt",
+    "bytes": 37,
+    "sha256": "c94fd9d13c50597e9d24fb234267b3035720dbfce6754539dffabc5835345d10"
+  },
+  {
+    "path": "Snippets/HTML Tidy/nolayer.txt",
+    "bytes": 36,
+    "sha256": "7520feb95f5eb8232c894923e8179e9abc41b3f9621e8b0f2020576f063bc1b1"
+  },
+  {
+    "path": "Snippets/HTML Tidy/noscript.txt",
+    "bytes": 37,
+    "sha256": "dae14bdefef62d415aca57d5bfcc255869b23475d518e2f4cc1ca1886f799f94"
+  },
+  {
+    "path": "Snippets/HTML Tidy/object.txt",
+    "bytes": 139,
+    "sha256": "ef8d44ea0b3a69231ab72237a2cce534930c610a49a30bad0fd4e4cefcc5f9db"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ol.js",
+    "bytes": 383,
+    "sha256": "8e52e0019659c563d50991014df13d2d1732de4e874c711d7e41b4d6ffa71f0e"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ol.txt",
+    "bytes": 31,
+    "sha256": "ce3ca600f1a793582e082dd2f288940e4d89485ee602240c6e3592d8db0c1adc"
+  },
+  {
+    "path": "Snippets/HTML Tidy/optgroup.txt",
+    "bytes": 56,
+    "sha256": "1dae4c5a60a4b80c76dd56178ef19298928f8970033ecb55be2071fa6682cde9"
+  },
+  {
+    "path": "Snippets/HTML Tidy/option.txt",
+    "bytes": 65,
+    "sha256": "09c4438bf8444336edd72b5f0c7517a038e25bd97c75a0ccd98161659fa8be25"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ordered list wizard.txt",
+    "bytes": 24,
+    "sha256": "a3ce049341da8138c4afb9f0342a062716e1169b9d9e422c2521fb769366f53f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/p.txt",
+    "bytes": 30,
+    "sha256": "621153e8f288f0efa6e8572090e4ef90c1a3a0430507b56f291bd3e5e4cb2da4"
+  },
+  {
+    "path": "Snippets/HTML Tidy/param.txt",
+    "bytes": 67,
+    "sha256": "d141a44bf0dba62862b95c0ebfd306985ba3a893577ff3e6c4d4b54a25314d0f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/plaintext.txt",
+    "bytes": 20,
+    "sha256": "5f8ba8b32db6615185ffae57a6563935ad89f4e954bbf3d1338d36ead3110796"
+  },
+  {
+    "path": "Snippets/HTML Tidy/pre.txt",
+    "bytes": 32,
+    "sha256": "98c8b654fe1c9036f1c0a99145ae3dbfd3b1e8e86c38ff6d38a6862b6b5317ac"
+  },
+  {
+    "path": "Snippets/HTML Tidy/q.txt",
+    "bytes": 44,
+    "sha256": "11b5c033ded078fd2241733831347eb606359a06bada3c4e0ea762657f08cd4b"
+  },
+  {
+    "path": "Snippets/HTML Tidy/readmore.txt",
+    "bytes": 19,
+    "sha256": "573f9e40f398b6594bfbd54e9cd7dac7a73c7ad65da0112fd5c1a9f14869db6b"
+  },
+  {
+    "path": "Snippets/HTML Tidy/rt.txt",
+    "bytes": 31,
+    "sha256": "a4cbc3c4e8e2e12745ca659df68497ff70886500058bf28d9148035b79d8a341"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ruby.txt",
+    "bytes": 33,
+    "sha256": "eddd0f5df5b481ed4f84b12936a6ee86864da4e0c015d0849fb7103fee4bcfab"
+  },
+  {
+    "path": "Snippets/HTML Tidy/s.txt",
+    "bytes": 37,
+    "sha256": "1c807051c8486f05161d00fbcf24fa8336c926a7504cdd34635a8b4e2440c888"
+  },
+  {
+    "path": "Snippets/HTML Tidy/samp.txt",
+    "bytes": 40,
+    "sha256": "1ddbd123e9fa405fec28bcb9e30a1d570c8088737755d27825c685691fcf58a9"
+  },
+  {
+    "path": "Snippets/HTML Tidy/script.txt",
+    "bytes": 59,
+    "sha256": "ae42c6aa0ee904dbadb3beb2fb7adda6be7006c73b8ab76edc2dddf1e5441681"
+  },
+  {
+    "path": "Snippets/HTML Tidy/select.txt",
+    "bytes": 71,
+    "sha256": "864f68f045c1d47ec6c4811745ceca9e5f0ea476f50ab963667c49877c1af74a"
+  },
+  {
+    "path": "Snippets/HTML Tidy/small.txt",
+    "bytes": 41,
+    "sha256": "1e9038d6568ba968bf28a7c336ad42b96e00374c8a0033b4f6d3803d93353514"
+  },
+  {
+    "path": "Snippets/HTML Tidy/spacer.txt",
+    "bytes": 30,
+    "sha256": "515d80731f9f90ef771c8f7b0084e8d573613372ef43631c8ad70f14b0560380"
+  },
+  {
+    "path": "Snippets/HTML Tidy/span.txt",
+    "bytes": 40,
+    "sha256": "4d58515788a34d404417f37ef61ad65334b9877819d6804604d8399473fb0596"
+  },
+  {
+    "path": "Snippets/HTML Tidy/spoiler.txt",
+    "bytes": 18,
+    "sha256": "a13151fc50974231b8b1bde39afc1ed63bbe5992b1af6999cce75923b6cb4b0e"
+  },
+  {
+    "path": "Snippets/HTML Tidy/strike.txt",
+    "bytes": 42,
+    "sha256": "aeeed01fbe3907708d834ecbd7024cdd511cc751f07ac374abbbb17a03d19f12"
+  },
+  {
+    "path": "Snippets/HTML Tidy/strong.txt",
+    "bytes": 42,
+    "sha256": "85acc8f824960e3dc6918ad10e89999846a9eb46c07fd3dee8d2d804c8ddc0d7"
+  },
+  {
+    "path": "Snippets/HTML Tidy/style.txt",
+    "bytes": 52,
+    "sha256": "02104fe86386bedb7c446c5a05159cc8e82c41b0bf09b6daf8dd7d4497a288e1"
+  },
+  {
+    "path": "Snippets/HTML Tidy/sub.txt",
+    "bytes": 39,
+    "sha256": "aebd6a8d0924db0076d26ae191bf6ad87798e3f3a2c77e013b1b293d5b3500ca"
+  },
+  {
+    "path": "Snippets/HTML Tidy/sup.txt",
+    "bytes": 39,
+    "sha256": "1a6fdbe34076c715c6be3c20af1da4bbdf9e51ed7563c1786cfe53ae15aa58e0"
+  },
+  {
+    "path": "Snippets/HTML Tidy/table.txt",
+    "bytes": 96,
+    "sha256": "b60f8a7bb1b11f5114a8d36d6d3b3f45cc40eb35f9f9a28fbefd2b4b36491517"
+  },
+  {
+    "path": "Snippets/HTML Tidy/tbody.txt",
+    "bytes": 115,
+    "sha256": "11fb776a9501f67ec014056fc6a3d9d6b68a75f27f07affc53f6b0e77bee9946"
+  },
+  {
+    "path": "Snippets/HTML Tidy/td.txt",
+    "bytes": 127,
+    "sha256": "214e55e4ddd2f78c9eab9f403bf72b319111403c9972198a57b3719a19b6bb3c"
+  },
+  {
+    "path": "Snippets/HTML Tidy/textarea.txt",
+    "bytes": 80,
+    "sha256": "90f917a8d6e1b8fa7469dd860bb279fc482d8b9a4be864702344ec278ec73508"
+  },
+  {
+    "path": "Snippets/HTML Tidy/tfoot.txt",
+    "bytes": 68,
+    "sha256": "cd1b836e021c0d4bee0cd1ae19c58764bd16aa227cabfc5c5ac08500fec8fed7"
+  },
+  {
+    "path": "Snippets/HTML Tidy/th.txt",
+    "bytes": 143,
+    "sha256": "840c6a680fca26ed35ca95da31267216df9c7ea2c851b7d64ae65043dc4d5b4b"
+  },
+  {
+    "path": "Snippets/HTML Tidy/thead.txt",
+    "bytes": 106,
+    "sha256": "ab4c617af15ddfef8def67528f0f67c7a4850f9871b84d84cf30a055ba4f8367"
+  },
+  {
+    "path": "Snippets/HTML Tidy/title.txt",
+    "bytes": 18,
+    "sha256": "966e1eb7488d0a7bb18db8b0fc1c91da149028b2375d00594d1d5d9bbb95dd5c"
+  },
+  {
+    "path": "Snippets/HTML Tidy/tr.txt",
+    "bytes": 65,
+    "sha256": "71883de5839bf30b8c4203303f8969163ba2093246d890f06a209c3eec918e5f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/tt.txt",
+    "bytes": 38,
+    "sha256": "f819fe1d0fa3620bd76d71503c376e5d1a3bf0f344f5a3e145da574627617a7f"
+  },
+  {
+    "path": "Snippets/HTML Tidy/type.txt",
+    "bytes": 15,
+    "sha256": "9d17eefbe2454d50d3e3f6974f795f1440d3d21c6753e5466ef2ce26cf2df9cd"
+  },
+  {
+    "path": "Snippets/HTML Tidy/u.txt",
+    "bytes": 16,
+    "sha256": "af9454c2274d3b0c8e0671c31e1acd872d7a5df6f89685f6626b20284421b112"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ul from selected.js",
+    "bytes": 216,
+    "sha256": "b6634a37d0c0a46830f3b69cbde583c2080fb2111722f0691bd9f3831b28b588"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ul.js",
+    "bytes": 193,
+    "sha256": "e3f54d49c67cb530455ad2845e5c5c997533f6069aa1480b67216e60b05c8598"
+  },
+  {
+    "path": "Snippets/HTML Tidy/ul.txt",
+    "bytes": 31,
+    "sha256": "cd85568345727d687b9abbdc90cd3b14caf932161bd777c77c612795ef95a0b8"
+  },
+  {
+    "path": "Snippets/HTML Tidy/unordered list wizard.txt",
+    "bytes": 26,
+    "sha256": "05dc3f41d7137cff1dc5de42b64d5007f130ea2afd9c7f8e66cd15b077c5d6bc"
+  },
+  {
+    "path": "Snippets/HTML Tidy/var.txt",
+    "bytes": 39,
+    "sha256": "6bff407b4c85b02000202fb362c8f3d79d5c846ca08381a380ec5528454c1e21"
+  },
+  {
+    "path": "Snippets/HTML Tidy/wbr.txt",
+    "bytes": 27,
+    "sha256": "6401bfbfa4650f55965326ce3c2fbd39d9ba47931f20973e2742646398a6f27d"
+  },
+  {
+    "path": "Snippets/HTML Tidy/xmp.txt",
+    "bytes": 14,
+    "sha256": "6ed0708946544accf38adc9e52c25cf88a3ea6cee64ff3f9fecf0b213139770b"
+  },
+  {
+    "path": "Snippets/JAWS Script/InputBox.txt",
+    "bytes": 68,
+    "sha256": "aa5987f73a18f913a1dc1efc059d34233c9f4a2b5d943e2718f6266dcf55e3bf"
+  },
+  {
+    "path": "Snippets/JAWS Script/SayString.txt",
+    "bytes": 135,
+    "sha256": "66c1e64e9bce994b3a44ee9532d8911eec719c89079706e456c1e1d321374956"
+  },
+  {
+    "path": "Snippets/JScript .NET/hello.js",
+    "bytes": 115,
+    "sha256": "f15e8418b2c8d4753c9811685d4fb9348b9d0ba7bc55817fd9c3df867c37e660"
+  },
+  {
+    "path": "Snippets/LaTeX/FvMn.tex",
+    "bytes": 1491,
+    "sha256": "748228c007c34bd2179eb014971efe63f88a27469f53514e53a91f4bab6babd2"
+  },
+  {
+    "path": "Snippets/LaTeX/accentchars.tex",
+    "bytes": 4915,
+    "sha256": "75f8696af10bb55454003e6a644b22fc6c0c0e51526ebf2333c3925001f89922"
+  },
+  {
+    "path": "Snippets/LaTeX/align.tex",
+    "bytes": 1965,
+    "sha256": "bf831f5bd15f03f90a2720587a152f5fe860ec27b6e6ac6845b6264caf719cd8"
+  },
+  {
+    "path": "Snippets/LaTeX/allbib.tex",
+    "bytes": 241,
+    "sha256": "b81242569bf4f29b9bc88621a59b4d8398cf450808597abb33f596aac7ac8754"
+  },
+  {
+    "path": "Snippets/LaTeX/array.tex",
+    "bytes": 747,
+    "sha256": "0a91fa5f4007ab3e46d63d92d95e4e3e1aae6e388a8915c94e3d29dbf7e8af1c"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_czech.tex",
+    "bytes": 8605,
+    "sha256": "7127ec196b40330331fad77f22ef10a6eff802be1c3c17b759810e06314bba24"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_french.tex",
+    "bytes": 12066,
+    "sha256": "af62a749c8267ed54c5ac72c70cd6685cf7a410fb5b86e77e02ff615e4f1be04"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_frenchb.tex",
+    "bytes": 1403,
+    "sha256": "2feeb6e5fd8dc6f77c5870943c5e2b24ac40ad3506abe1468d1150a2aaa3511a"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_german.tex",
+    "bytes": 2727,
+    "sha256": "9b87fe0d3e47cce78652ddceab26ec8e0bc759f273e4d05d7195f37cc4a31ca9"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_russian.tex",
+    "bytes": 2968,
+    "sha256": "05c204fc04f5d3260f147411da4f9c915829b00555729c6a419b11eb7ba3e296"
+  },
+  {
+    "path": "Snippets/LaTeX/babel_spanish.tex",
+    "bytes": 14758,
+    "sha256": "a2be940c91f4a9d73b71995bd4a45188dcd8da859b5898e10f7d916cf71cf065"
+  },
+  {
+    "path": "Snippets/LaTeX/batch.tex",
+    "bytes": 167,
+    "sha256": "74244cfdf4870d8be489b5dae83f31f83fdaa6a8a79fe596da9eb2373446f9a6"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_apacite.tex",
+    "bytes": 2956,
+    "sha256": "220b3603ff32e0f634faa371175cfe22e9531198c75cdec84466c720e025be55"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_apacite_dblsp.tex",
+    "bytes": 2995,
+    "sha256": "8a429ae8f202ff894990d690f94f99597f3f1064c6236500638e02db95a65cc1"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_apalike.tex",
+    "bytes": 628,
+    "sha256": "4b7f3b1e911063f037329256bcad3f25b3cd6c96e25f1cb27993cda88a7c51f9"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_apalike2.tex",
+    "bytes": 9963,
+    "sha256": "d2aa3ac99f624e5ba54e5c4984cb11b971bb3c8dc85ad310ebadd8a1aff40db8"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_apanat.tex",
+    "bytes": 2346,
+    "sha256": "116ead593b1f4567a5ab0b7a67deea80280ccbd837a1508b656dadd9d79300f3"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_authordate.tex",
+    "bytes": 22811,
+    "sha256": "c015b0347cc9542e382a0d98547d6a95b2191e07d506f0f837ed0f44a9bc2b69"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_harvard.tex",
+    "bytes": 1407,
+    "sha256": "a6b77e97c779f6327c4f99f2a7db009f01a360368957044109eed7b7b425e66e"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_natbib1.tex",
+    "bytes": 3939,
+    "sha256": "eb6ce57ff1a384423a2b20382e046206b8f9240162e9b7ad4a4a72a97ba54dd2"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_natbib2.tex",
+    "bytes": 2418,
+    "sha256": "dba4f15674347dbc102ce0905cb0d792c470f0d1576702a6396dd76ab4451cb5"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_natbib3.tex",
+    "bytes": 7938,
+    "sha256": "1625b1ec5b3d6708434b872920611a7be107dcde609bba0a0805f287e54e18bb"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_simple.tex",
+    "bytes": 909,
+    "sha256": "f9616bc4c3548c47fb13ca4c653ce274a2783441ff672f3b477713acbe69f4fe"
+  },
+  {
+    "path": "Snippets/LaTeX/bib_super.tex",
+    "bytes": 956,
+    "sha256": "73e947b96e36b3114eb7da6f01e06aa2300f6a29b44028b761a282deb3b5091c"
+  },
+  {
+    "path": "Snippets/LaTeX/bibentry_apalike.tex",
+    "bytes": 666,
+    "sha256": "b7a7de811568a529a9c31413fac6736033d2787663aad480ccd694b96acab460"
+  },
+  {
+    "path": "Snippets/LaTeX/bibentry_plain.tex",
+    "bytes": 658,
+    "sha256": "c54a9fe22d4a3cc9decc965e04d50b2082cee16a6c16ec825f22da9049f43303"
+  },
+  {
+    "path": "Snippets/LaTeX/biblio.tex",
+    "bytes": 3021,
+    "sha256": "bc74f98e4c54f7b4dfff3b7ab4924dd1db038ee9151b89d9ea3f396b9d8a0e48"
+  },
+  {
+    "path": "Snippets/LaTeX/box.tex",
+    "bytes": 904,
+    "sha256": "1abf8ef6c5100954f721e6413cb41f47444b7fafe79b983f13f6d1c107d0d577"
+  },
+  {
+    "path": "Snippets/LaTeX/bugs.texi",
+    "bytes": 35897,
+    "sha256": "c66d10d40d34bd38c81498280fa6aac208b9313a0f0d490c7cb10134ef9765ab"
+  },
+  {
+    "path": "Snippets/LaTeX/ch.tex",
+    "bytes": 10035,
+    "sha256": "306999d002ddf4ce8c9c570ac4c272260be81e235e9d7462966d482680bc87d8"
+  },
+  {
+    "path": "Snippets/LaTeX/chem.tex",
+    "bytes": 682,
+    "sha256": "ff7d0d77ba6183d3bca18f8302d7fe54eeeb21c9ada963c51f4044830c71c07d"
+  },
+  {
+    "path": "Snippets/LaTeX/color.tex",
+    "bytes": 571,
+    "sha256": "8f66b34148054f27463289521e6ac762dbfdce1dca846b4a22d27b0e52317e29"
+  },
+  {
+    "path": "Snippets/LaTeX/contrib.tex",
+    "bytes": 4261,
+    "sha256": "8bf9226de6f27005799483e156a9bb90641e4a4f8133259d2e438cac285256fa"
+  },
+  {
+    "path": "Snippets/LaTeX/custom.tex",
+    "bytes": 29432,
+    "sha256": "38379d5c5c2106387fd0894891e21a7ffeb9bca9b88fb2ed513e95127f15a337"
+  },
+  {
+    "path": "Snippets/LaTeX/cwebmac.tex",
+    "bytes": 26553,
+    "sha256": "2410b4139ef6d1430e072fb258efd7d44cb54dbafbe1d5a91b5f2d81a3c135a8"
+  },
+  {
+    "path": "Snippets/LaTeX/cwebman.tex",
+    "bytes": 85218,
+    "sha256": "75b510b208025ec27daf6c9a0dc894ede5dca94429a7f5fd486e02e81e9154bb"
+  },
+  {
+    "path": "Snippets/LaTeX/dblspace.tex",
+    "bytes": 5557,
+    "sha256": "889386d1a557dc30e1a5a0b912b7fb2b9d1c20990279ceef0a0384750ac5bb20"
+  },
+  {
+    "path": "Snippets/LaTeX/defs.tex",
+    "bytes": 1202,
+    "sha256": "0e4f028d60adbe5295444a8043fe1ddc013851a757fd5998f4bacfe11ffb33f2"
+  },
+  {
+    "path": "Snippets/LaTeX/eight.tex",
+    "bytes": 1163,
+    "sha256": "3b21072d81d510a561187942eeda2235e07338538e545d31b78842d4e174e15c"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_applemac.tex",
+    "bytes": 5197,
+    "sha256": "20af92c75e0c461aa99e04026b8626f9bc44a77e0dea122d1a46d57669eb68f3"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp1250.tex",
+    "bytes": 5492,
+    "sha256": "8aee5614dd6329cd2c41c1087f1a6a6760bf7c52b43d3b9f7d0f545219e0c79c"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp1251.tex",
+    "bytes": 5132,
+    "sha256": "070e144672c41c60bbb119dbdf55132a4689755a62e0c93df2db32d538aec07b"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp1252.tex",
+    "bytes": 5278,
+    "sha256": "84bb66088ea66b05508673b63a4cffbb296c8a963de4f47678fb71ae7adf2dd4"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp437.tex",
+    "bytes": 5731,
+    "sha256": "07c8988710e77cc36bc0bc0217b46da7d84f322ee9a911417bee6935c86ea9ee"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp850.tex",
+    "bytes": 5568,
+    "sha256": "f774159414449956acaf77d5ee381d34ef9aeb51d1c95c8b3077ec49dc839d9a"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp852.tex",
+    "bytes": 5855,
+    "sha256": "4db081e322ccb461d71c408775e5dba9cea59f4a4a2a41da6135e89f3e93b8cc"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp855.tex",
+    "bytes": 5428,
+    "sha256": "6d2630da42d906a402468d9c1d2d53b2c5252c21c4896c5efd82e09450a38169"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp865.tex",
+    "bytes": 5776,
+    "sha256": "0382d70e56a3de6aee366c636cd7ad9aa43ef694cb27069b0679e07546993f4b"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_cp866.tex",
+    "bytes": 5609,
+    "sha256": "1161de7f81eab24feb5290f76c19584bfd773d994a2804a86e96a0d3839f8d7d"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_decmulti.tex",
+    "bytes": 4825,
+    "sha256": "b877074a2fa1bd6bade3af80c317c7e4385ecd3c7b2b1663e59f8b4c722a2582"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_koi8-r.tex",
+    "bytes": 6903,
+    "sha256": "de8e6cb16ccbc92eab43cb88ab63bfb752b358159d0296b799cb88be4a7be805"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_koi8-u.tex",
+    "bytes": 5474,
+    "sha256": "257a8f5fc2565af5825961f932134e903e6d835dedbc8777c8fa1dc67833a200"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin1.tex",
+    "bytes": 4923,
+    "sha256": "c9a3e199a68b38a7689752fb58a6ad2d1d673433a79614f8eba4cbeb78f82465"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin2.tex",
+    "bytes": 5194,
+    "sha256": "d4cdd3adcfad072860ef12208e6f1fe385f477005607a8aa0548ce9ec8701733"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin3.tex",
+    "bytes": 5046,
+    "sha256": "ee90a44c21935f3c1be663717e28f91a3bc6d8e2cbdd43d24ff56147571435af"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin4.tex",
+    "bytes": 5168,
+    "sha256": "36c341307f5c21e9f6ed59b248b1a367e50bda81d34dbf9eec98de9a71710ce6"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin5.tex",
+    "bytes": 4957,
+    "sha256": "414b21431614196d316c5f83e08373a337c71d7c7d4fcfea9a9f1baef83e6f27"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_latin9.tex",
+    "bytes": 5012,
+    "sha256": "3c98fbbc63178b5e32c4074e91c19988e7bfe903bacdb0d17e6914956576b38e"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_maccyr.tex",
+    "bytes": 5159,
+    "sha256": "096170a3ec850d6993851591c7deafc8873c58f664a4194e3a5683a1e6026b89"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_macukr.tex",
+    "bytes": 5161,
+    "sha256": "9b72315a31376f6bb7c4c5565fef9d57dcfc6b4fef0340c1fda80b453e121f26"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_next.tex",
+    "bytes": 5299,
+    "sha256": "b573b07b6d4dd40cd69389b39176c36f6f96217bfcf56198a4e43fda35d5c31c"
+  },
+  {
+    "path": "Snippets/LaTeX/enc_utf8x.tex",
+    "bytes": 12093,
+    "sha256": "8f2526714bb7a948bc4fb78492e6a31ad7b55bc66b7bea323fe5f2d18d5579fb"
+  },
+  {
+    "path": "Snippets/LaTeX/end.tex",
+    "bytes": 6,
+    "sha256": "92fc32153d11d3fe1ce63170b07c6c6ae4c75db41f668bee7eb6b153761c6376"
+  },
+  {
+    "path": "Snippets/LaTeX/endnote.tex",
+    "bytes": 3572,
+    "sha256": "0f5808dec012f0b26cbbff4de0f1a29f96e6b99cceb3c136d6df2f5b9ed52cf3"
+  },
+  {
+    "path": "Snippets/LaTeX/eqns-koi8.tex",
+    "bytes": 6078,
+    "sha256": "28cfd0967ea6382f6ab1cee263ed82212e493b08c5b0f70d3cf17fa5095c4786"
+  },
+  {
+    "path": "Snippets/LaTeX/eqns.tex",
+    "bytes": 8720,
+    "sha256": "51d63f7d3966d72da210f5dffd0dbd5e1c384d3fba2e4dc023eccaf2940101aa"
+  },
+  {
+    "path": "Snippets/LaTeX/eqns2.tex",
+    "bytes": 4394,
+    "sha256": "fc51df55c36630f72fe62b10f6ea2ae57069d24deaedae229c1cafa7cb1fdfb8"
+  },
+  {
+    "path": "Snippets/LaTeX/essential.tex",
+    "bytes": 41880,
+    "sha256": "18c2e15aa37bfb47b1a0226da21d8556e020a34cc6ad8c70ff166bfe94290754"
+  },
+  {
+    "path": "Snippets/LaTeX/etex_gen.tex",
+    "bytes": 13948,
+    "sha256": "372e8c71278551bdab47cb10b88939ff6f412028438eb92d19dc82e81e5255e4"
+  },
+  {
+    "path": "Snippets/LaTeX/etrip.tex",
+    "bytes": 46042,
+    "sha256": "b917795a49567ba8e6a5d5e841fe2abd842ec87095010d92b9b501927258c22f"
+  },
+  {
+    "path": "Snippets/LaTeX/etripman.tex",
+    "bytes": 18368,
+    "sha256": "c9debcacb1d2d592dcf373e1d9975f6a9301c6cb143abb8caf7802a815a86eee"
+  },
+  {
+    "path": "Snippets/LaTeX/exampl.tex",
+    "bytes": 176,
+    "sha256": "01636984432ef15298531aed7384a97789296a8e6f5b6c57e47bd50cb84f9772"
+  },
+  {
+    "path": "Snippets/LaTeX/excalibur.tex",
+    "bytes": 75140,
+    "sha256": "471b2d0a0ef73af1ab72731293a606bf16537840d1fe86c0f74b44d379a4599c"
+  },
+  {
+    "path": "Snippets/LaTeX/fancy.tex",
+    "bytes": 967,
+    "sha256": "f0fc32891da8cde5b613fb70d548a21088a8a0cf3cab502f6e0c5e2453a39013"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_endfloat.tex",
+    "bytes": 9516,
+    "sha256": "869f49b8ca2c0778336574ef7670ae73fe7914b53bd0aaf0ddcf447b733e6f3a"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_size.tex",
+    "bytes": 4003,
+    "sha256": "4b9d3927ab44387af45a7af08dd6d093135fe9e94b7b67b41b30b6661aa5bd6f"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_test.tex",
+    "bytes": 1055,
+    "sha256": "c8fb5cac6f888d3d89b9fe454b2fe5b33a7cfa19da30ccfd3457fdaf8ad89ad2"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_test2.tex",
+    "bytes": 490,
+    "sha256": "cfcec4168535ef4227eda7fcac1bb367d7e0eae8c7aa336f53f0d997104a3cb3"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_test3.tex",
+    "bytes": 411,
+    "sha256": "8f0112006ee31b426f0968cf48a8bd352d703a284bf1033537b1cf1ac7f21926"
+  },
+  {
+    "path": "Snippets/LaTeX/fig_test4.tex",
+    "bytes": 315,
+    "sha256": "8f88e89c4756ab1468e92cf90dbcc3eaa386e58bd19353a60eea477f0d38d828"
+  },
+  {
+    "path": "Snippets/LaTeX/fonts.tex",
+    "bytes": 5479,
+    "sha256": "a47256361eba8f9a13acde6859c7cd6223cabade71bacda5f4290cc77af08f40"
+  },
+  {
+    "path": "Snippets/LaTeX/fontsize.tex",
+    "bytes": 505,
+    "sha256": "4514ae48d00622fa398811e8ae36c82aee01d6ea62c4b894b5253e7735011f8f"
+  },
+  {
+    "path": "Snippets/LaTeX/fonttest.tex",
+    "bytes": 731,
+    "sha256": "fac765cb72ae5863afc63dbb2b4a47045806ba5d8777dd94165a2488032d9734"
+  },
+  {
+    "path": "Snippets/LaTeX/frac.tex",
+    "bytes": 1274,
+    "sha256": "19d494cbd077fd49c4974c95a416eb235ccc4f174a945f3e3b5a311c43fe8f02"
+  },
+  {
+    "path": "Snippets/LaTeX/geometry.tex",
+    "bytes": 122,
+    "sha256": "7dc134bad75a9349d51569c052ab12cc323c1b30ad479d9da97b8ffa18803737"
+  },
+  {
+    "path": "Snippets/LaTeX/geotest.tex",
+    "bytes": 6096,
+    "sha256": "5dbf83e6fc654c6dc2156807fe891aceef9e9cec6a7fa84a1ee224cdfc452ce3"
+  },
+  {
+    "path": "Snippets/LaTeX/giri.tex",
+    "bytes": 2298,
+    "sha256": "09537ce43ae85803c33227afb7d1a62f0d6a5b47265153f077487f8f2c4672b9"
+  },
+  {
+    "path": "Snippets/LaTeX/glyphtounicode.tex",
+    "bytes": 179852,
+    "sha256": "9cf6e4a04f5b1b51d819c0d0b6e5504a6a5caa1410c0a2840899673e0171526e"
+  },
+  {
+    "path": "Snippets/LaTeX/head_article.tex",
+    "bytes": 361,
+    "sha256": "fefe12efef17a7f30c03d21cab82ef7322009eca30fecef854eaeae4c86f3224"
+  },
+  {
+    "path": "Snippets/LaTeX/head_book.tex",
+    "bytes": 430,
+    "sha256": "298668eff4ced5b4a6df85708e7dd5f1c5525146bdd0a6cb9fc55550d00e4b0e"
+  },
+  {
+    "path": "Snippets/LaTeX/head_report.tex",
+    "bytes": 432,
+    "sha256": "154d58d5da58ffa8f933e9a3930663c9fb7fd86c8d831573f8f099d20dce4e2a"
+  },
+  {
+    "path": "Snippets/LaTeX/hello.tex",
+    "bytes": 21,
+    "sha256": "d09cc37b39e17f17d8dc10614d4a7fcb5f60e560fb35fd1070d51e58d2c9ca94"
+  },
+  {
+    "path": "Snippets/LaTeX/hier.texi",
+    "bytes": 4849,
+    "sha256": "7cc2f968016cdd394567ea0b9a0b34787406e3e43ed05962afdceb74bf58fcb7"
+  },
+  {
+    "path": "Snippets/LaTeX/ifclause.tex",
+    "bytes": 2664,
+    "sha256": "a60dda915972fe5cd8971aa01feca65a73e9a3a75cd0c6ba5f141753e4d49f0f"
+  },
+  {
+    "path": "Snippets/LaTeX/inc_test.tex",
+    "bytes": 69,
+    "sha256": "14d5ed6fc55f4f640b7c2dbc0b6ae57a7a9c456f7b48405e8cb6583069a4754e"
+  },
+  {
+    "path": "Snippets/LaTeX/include.tex",
+    "bytes": 1946,
+    "sha256": "e45b5454300feacc66e9dcefec9aeb545da5c385be3dfec7428c924736dce716"
+  },
+  {
+    "path": "Snippets/LaTeX/include1.tex",
+    "bytes": 1267,
+    "sha256": "f4b9d3df554d6c01dc6af6236262c144714be98a5ac3490c37c5e24905d32e10"
+  },
+  {
+    "path": "Snippets/LaTeX/include2.tex",
+    "bytes": 1378,
+    "sha256": "c55476e90e5974d474c9ccca0e93045fb9d28276b4423d42ab6eacdd9cabb281"
+  },
+  {
+    "path": "Snippets/LaTeX/include3.tex",
+    "bytes": 1322,
+    "sha256": "1c882954178daa3ed67b9ecb1ac4f501158abb204c7dced051b4eaa10c22bfba"
+  },
+  {
+    "path": "Snippets/LaTeX/install.texi",
+    "bytes": 12017,
+    "sha256": "b16f1ece7bd253c78a09409358a02bf07f315fbf7657427a4e9b9d78501de67d"
+  },
+  {
+    "path": "Snippets/LaTeX/jhsample.tex",
+    "bytes": 2778,
+    "sha256": "4d5f4ebba8e5b205eae71779452d22942fa29e01cc8c072c0cae6fb5eddbc1a6"
+  },
+  {
+    "path": "Snippets/LaTeX/just.texi",
+    "bytes": 64,
+    "sha256": "4fce4d7850e2207e78031732d3237200c12a9cc30a83f8e1a14d022f22da4800"
+  },
+  {
+    "path": "Snippets/LaTeX/kpathsea.texi",
+    "bytes": 78547,
+    "sha256": "ecaf7705a782e49717cf19629d72c09e98eaf30e39da401438804a330e497ab3"
+  },
+  {
+    "path": "Snippets/LaTeX/latex2rtf.texi",
+    "bytes": 88079,
+    "sha256": "5d331f90c8b550ed863ad68055188ba4287a5b48fd6f94884237be039e8e75d4"
+  },
+  {
+    "path": "Snippets/LaTeX/linux.tex",
+    "bytes": 100051,
+    "sha256": "99d9f43d59ba806145f4da05b45cc0b4bbf368737e7fc74208e9e8af766d7211"
+  },
+  {
+    "path": "Snippets/LaTeX/list.tex",
+    "bytes": 9679,
+    "sha256": "e33e4ebda89173fe6753cdda7e408138633cbf0a0f041804a799a941e77f0cef"
+  },
+  {
+    "path": "Snippets/LaTeX/logo.tex",
+    "bytes": 567,
+    "sha256": "a322f0d4310674d88f9995f42893e9da885b5dd19f668fe7abb1094ebed6cca5"
+  },
+  {
+    "path": "Snippets/LaTeX/longtfm.tex",
+    "bytes": 123,
+    "sha256": "eddbfa02905bcbd35dda83e91c0701878e474b30e723c08c3cc813c8fd188445"
+  },
+  {
+    "path": "Snippets/LaTeX/lshort.tex",
+    "bytes": 3164,
+    "sha256": "17755d8990fddcf5b08c4d860f240785308be4764be57e715cc969f40406d5fb"
+  },
+  {
+    "path": "Snippets/LaTeX/lssym.tex",
+    "bytes": 15007,
+    "sha256": "d894b8336c8b6806c2cb46f76e7e7f0a71b005e5d98e22e0d6123294d153ae06"
+  },
+  {
+    "path": "Snippets/LaTeX/magic.tex",
+    "bytes": 20,
+    "sha256": "842bdabbd64dffeb9233f08f6d9dd8f34aa40fd1d5cece1b5ebd8e51a29f0243"
+  },
+  {
+    "path": "Snippets/LaTeX/math.tex",
+    "bytes": 22786,
+    "sha256": "73397d54ff13116d4d3e7e9f844451e0aab904ab5d459940e0d0013e5ec769e8"
+  },
+  {
+    "path": "Snippets/LaTeX/memtest.tex",
+    "bytes": 353,
+    "sha256": "55e39b390552840addf39f0aa2d41e0b3ef68783c40790d5ab66b6800fa9844c"
+  },
+  {
+    "path": "Snippets/LaTeX/misc1.tex",
+    "bytes": 3313,
+    "sha256": "7c7088b4c31465df0ea03bfe42d69af94643dbdc4fa907ca0c6e2acecbbea71c"
+  },
+  {
+    "path": "Snippets/LaTeX/misc2.tex",
+    "bytes": 13266,
+    "sha256": "a5af0cfc97630bec81386d6af3ab4ce65e1efb61ccb19e6cfbdaedc4014d5afd"
+  },
+  {
+    "path": "Snippets/LaTeX/misc3.tex",
+    "bytes": 88602,
+    "sha256": "2b389faf2748ec85fd0a49c7afa3732b4c97682ccd605a8e75be81819d8093a0"
+  },
+  {
+    "path": "Snippets/LaTeX/misc4.tex",
+    "bytes": 149804,
+    "sha256": "ec4005803e88d8e2560bc5a3a8a28bb49be9abacc92ffe02d9979b4cd6cf17e5"
+  },
+  {
+    "path": "Snippets/LaTeX/mltextst.tex",
+    "bytes": 6221,
+    "sha256": "3e633a407198922dce5a8c17075b0c7559a6ef5658834a2db8149b5852da7f4a"
+  },
+  {
+    "path": "Snippets/LaTeX/myFile01.tex",
+    "bytes": 1743,
+    "sha256": "a8ca4f611678b9f0961edd6b28a488968b39d7a554bf60b03b213ef82ee0e930"
+  },
+  {
+    "path": "Snippets/LaTeX/oddchars.tex",
+    "bytes": 4757,
+    "sha256": "16aaac706c9ef8586e7f6748767d9767f1d240f7a3a67563b4a403b3316fac5c"
+  },
+  {
+    "path": "Snippets/LaTeX/one.two.tex",
+    "bytes": 36,
+    "sha256": "b35bbee84b9532386f1c67e178278ba8597cb595f8158b5adf2f6e1d6dae5701"
+  },
+  {
+    "path": "Snippets/LaTeX/openout.tex",
+    "bytes": 102,
+    "sha256": "3cb257d7fb3102d131a9dc20eb18052d854272b40180d94c18948603cf1c0cfe"
+  },
+  {
+    "path": "Snippets/LaTeX/overstrike.tex",
+    "bytes": 6427,
+    "sha256": "05f96042153242c776332447b695727fd69d0299d30cb7467414df88fe4d0415"
+  },
+  {
+    "path": "Snippets/LaTeX/overview.tex",
+    "bytes": 4156,
+    "sha256": "fb0e3ad5a3797272b65584e8a2964294d9a7b23432b37f5082017e51bdb0719f"
+  },
+  {
+    "path": "Snippets/LaTeX/pagenum.tex",
+    "bytes": 96,
+    "sha256": "906dd807b05e8449db21a41f8a4c3f76f8b6a67cdd992737d39af846daa029f6"
+  },
+  {
+    "path": "Snippets/LaTeX/pdfcolor.tex",
+    "bytes": 5845,
+    "sha256": "3318ee47f6e69dc0950f8d1e3dae328ea41d413be26830026b93f66f2fa72894"
+  },
+  {
+    "path": "Snippets/LaTeX/pdftex-i.tex",
+    "bytes": 3273,
+    "sha256": "645df12c20e89cafc843f30337a1c11c6d8cb9fc7fc64386cb451fc27d965449"
+  },
+  {
+    "path": "Snippets/LaTeX/pdftex-t.tex",
+    "bytes": 210364,
+    "sha256": "257f51f9ede47676e6f49c59b5ae4bed86c10d0200638fa97b4115a85e808c16"
+  },
+  {
+    "path": "Snippets/LaTeX/pdftex-w.tex",
+    "bytes": 188,
+    "sha256": "b49eb02393e80d4ae9bd05ca4e570b9d0927a772fbeb9d2b7e72cf5e408b9a82"
+  },
+  {
+    "path": "Snippets/LaTeX/percent.tex",
+    "bytes": 856,
+    "sha256": "a0bb83a4774180cbea2a33900edb74c90b534d0fd754cbdb3731605bf14c6168"
+  },
+  {
+    "path": "Snippets/LaTeX/picture.tex",
+    "bytes": 470,
+    "sha256": "c2e5fdd78e9e4d8b2098a8e0ec503038258befce2c40412662236594ff51101e"
+  },
+  {
+    "path": "Snippets/LaTeX/qualisex.tex",
+    "bytes": 27208,
+    "sha256": "d778461ebc5ee09928094f495c2775de5dde98ef4f98ac6dd00cc41009c357fe"
+  },
+  {
+    "path": "Snippets/LaTeX/ref.tex",
+    "bytes": 670,
+    "sha256": "6fbaad87019778c2526a870c4838580a1598f556c1e6bf97a81e327c05b8f812"
+  },
+  {
+    "path": "Snippets/LaTeX/report.tex",
+    "bytes": 5518,
+    "sha256": "7c846a649a29b5f65e8d2e9235d28fc59076a11ef7170561705a27612abfd97b"
+  },
+  {
+    "path": "Snippets/LaTeX/rtf2LaTeX2eDoc.tex",
+    "bytes": 19478,
+    "sha256": "254abb73dfc698a63705e1a82e5ef0059e7960f5146d89b197b2d49dacf83f0b"
+  },
+  {
+    "path": "Snippets/LaTeX/rtf2latex2eSWP.tex",
+    "bytes": 4970,
+    "sha256": "14b81b8ab334713989c049e412ed6c63d86951c70fb0a0b3e682a11b60d1f69b"
+  },
+  {
+    "path": "Snippets/LaTeX/rtfReader.tex",
+    "bytes": 35456,
+    "sha256": "aaa188c383602ea46955b6083443b2fe371d6c266bb15d85e05f94a71e69b23c"
+  },
+  {
+    "path": "Snippets/LaTeX/sample.tex",
+    "bytes": 8820,
+    "sha256": "daa3fe492a638f34e8039cffd86f9561b78bd638f9b38a4205c3901e95a9f3c8"
+  },
+  {
+    "path": "Snippets/LaTeX/sample2e.tex",
+    "bytes": 7451,
+    "sha256": "abae2caf8522b5f506710d867c188704baee4934ba282e1ab60d80d88996e3ce"
+  },
+  {
+    "path": "Snippets/LaTeX/samplepdf.tex",
+    "bytes": 54356,
+    "sha256": "f8e713209ae3206951eb2fad874f3fc9dab833f29038c8c43503333f26b42c51"
+  },
+  {
+    "path": "Snippets/LaTeX/small2e.tex",
+    "bytes": 1740,
+    "sha256": "54fe9fbae6973811ab12c1d8c8eed7d53e1e741f37c60e2ba8d0fb4c3f8c1fb7"
+  },
+  {
+    "path": "Snippets/LaTeX/spago1.tex",
+    "bytes": 1174,
+    "sha256": "722b1ba9250c0c6b246e683ceb9a91d2cf34f8418a9e287b0c8604c780b672ad"
+  },
+  {
+    "path": "Snippets/LaTeX/spec.tex",
+    "bytes": 13969,
+    "sha256": "254871aad5821dc6d77f430e1ee38d404c88d0494597760512f05f76b440a742"
+  },
+  {
+    "path": "Snippets/LaTeX/subsup.tex",
+    "bytes": 984,
+    "sha256": "3e4912d5244f6bc3ca8642bc19dfcd7a19615b9ac11c58a14a9a3b619ecffa04"
+  },
+  {
+    "path": "Snippets/LaTeX/supp-mis.tex",
+    "bytes": 20292,
+    "sha256": "bf36b544b38235623a0e540dab2cffcb8585d1ace67c21bbddb6dc0e529c026c"
+  },
+  {
+    "path": "Snippets/LaTeX/supp-pdf.tex",
+    "bytes": 72789,
+    "sha256": "5d91826c68279b53f7ca4cd090eb56b6a2d302e4c65ac74d3f818cc2c2d5bfd1"
+  },
+  {
+    "path": "Snippets/LaTeX/symbols.tex",
+    "bytes": 157927,
+    "sha256": "6888aaae7038aedf4398758b79cf600c2e2ca638640a21f3b27698b1f8f17ca5"
+  },
+  {
+    "path": "Snippets/LaTeX/tabbing.tex",
+    "bytes": 3342,
+    "sha256": "3ad08c9fb78ed562e9a785e994735b08fae85a8fb850a7522913a6fec9272011"
+  },
+  {
+    "path": "Snippets/LaTeX/table.tex",
+    "bytes": 6124,
+    "sha256": "2974a4ce8ada5d9663f9b1329a82dfb911dc519579f245f06e329da1362df823"
+  },
+  {
+    "path": "Snippets/LaTeX/tabular.tex",
+    "bytes": 9296,
+    "sha256": "88e58e5f2cb0581de9b8be0f55c52dc9e6190420e34dc82c5da2469424413302"
+  },
+  {
+    "path": "Snippets/LaTeX/template.tex",
+    "bytes": 674,
+    "sha256": "85757627204fa6e456d0534b532d94ce7930511e42f4c275a2a6ea3bc678265c"
+  },
+  {
+    "path": "Snippets/LaTeX/test1.tex",
+    "bytes": 159,
+    "sha256": "0f17b8ef36fde50495e0a56f48172885258aea1ea927348c2104fe3f85e5fb7b"
+  },
+  {
+    "path": "Snippets/LaTeX/test2.tex",
+    "bytes": 180,
+    "sha256": "964144d24db39deb19b42e3c68390c3d570a7207c6b555a72e8077992ff67771"
+  },
+  {
+    "path": "Snippets/LaTeX/test3.tex",
+    "bytes": 101,
+    "sha256": "2c8700d19e31e8facdec6e0a39704c68ab903e70d93a21bd0d5d5f039f31ff58"
+  },
+  {
+    "path": "Snippets/LaTeX/test3a.tex",
+    "bytes": 54,
+    "sha256": "8c97a84aefb0f6b49882c08c36a877ae9d262b1dc76906ffb11c9bd5d2b8b52b"
+  },
+  {
+    "path": "Snippets/LaTeX/test4.tex",
+    "bytes": 211,
+    "sha256": "516d14633da00f2fdfa0017ecd5dbdc5d629e608c41c1ef3f811af7ae35f3c6b"
+  },
+  {
+    "path": "Snippets/LaTeX/testa.tex",
+    "bytes": 197,
+    "sha256": "eec5e2896e316a580ce4038a0f5148b005c9a6e7d17c2a8eaf8ae059057d59a1"
+  },
+  {
+    "path": "Snippets/LaTeX/testex.tex",
+    "bytes": 270,
+    "sha256": "c6d79ca81e277318690d396104913a4ddf8d63dd28127c9e33a77727237a7cc7"
+  },
+  {
+    "path": "Snippets/LaTeX/theorem.tex",
+    "bytes": 3139,
+    "sha256": "4ad165840f8de518637457910430eeecbb2487fcdd59efbcd839e76c82ee87d3"
+  },
+  {
+    "path": "Snippets/LaTeX/things.tex",
+    "bytes": 25320,
+    "sha256": "91f9d5f9f3f4fda23d04f527f1357ff5c349bc35d322d028c6ccfb155c840449"
+  },
+  {
+    "path": "Snippets/LaTeX/tiedoc.tex",
+    "bytes": 4848,
+    "sha256": "8a1918f2d68c63d1e9ba6c2aba9c195b8bf13dd16124aae37d0a53cea315cdfb"
+  },
+  {
+    "path": "Snippets/LaTeX/title.tex",
+    "bytes": 2104,
+    "sha256": "a65e6cfb10582bce322a78aa54d74b8967a648e4e0a2f254299c428f13cf83bd"
+  },
+  {
+    "path": "Snippets/LaTeX/ttgfsr7.tex",
+    "bytes": 42356,
+    "sha256": "3cb3553b374bd4d5749ee928af23d88fd98379a53cd8471c62ac0b43980a07da"
+  },
+  {
+    "path": "Snippets/LaTeX/typeset.tex",
+    "bytes": 38628,
+    "sha256": "e3e2fc55ef263c99656a79d694385c92b49045134bda3387113c5eb066069771"
+  },
+  {
+    "path": "Snippets/LaTeX/unicode.tex",
+    "bytes": 33663,
+    "sha256": "91852f6c2487afe72bb012d444321384713aa211893143988a9b8ce847479e82"
+  },
+  {
+    "path": "Snippets/LaTeX/unixtex.texi",
+    "bytes": 10538,
+    "sha256": "b511d60b01e4e993fcbb0c69a7608e103e6fb4a928e4ffe59f30d29538c95af5"
+  },
+  {
+    "path": "Snippets/LaTeX/warm.tex",
+    "bytes": 2371,
+    "sha256": "efb8a6674b31391060e91837971b7d5bd5b28cb35409e993900bb7edbbd265cd"
+  },
+  {
+    "path": "Snippets/LaTeX/web2c.texi",
+    "bytes": 165499,
+    "sha256": "12b78917783066fc6a9cbe4cb13c0a7eb3212c0977ee058ec8472265b0f0379c"
+  },
+  {
+    "path": "Snippets/LaTeX/write18.tex",
+    "bytes": 65,
+    "sha256": "23ead7d299fc8283f5d9cfe931bc203e01a64440381cf2d01c862970e81b67b3"
+  },
+  {
+    "path": "Snippets/LaTeX/xxxsample.tex",
+    "bytes": 7410,
+    "sha256": "fbbf71025da64244e9b9c70a06af66a5378bffa1ba21156c7d16645ea479b94d"
+  },
+  {
+    "path": "Snippets/MinGW C++/hello.cpp",
+    "bytes": 1581,
+    "sha256": "f79bc56c2303a2ca9d6a47914d36df1ca6615374cbfdba8b69b9b4e48560446a"
+  },
+  {
+    "path": "Snippets/MinGW C++/if-else.cpp",
+    "bytes": 23,
+    "sha256": "50de7e1686d528803b5e4e79168cbf1e4edc870ac8c3e1a05dade7a7f2a53a43"
+  },
+  {
+    "path": "Snippets/MinGW C++/skeleton keyboard input_output program.cpp",
+    "bytes": 402,
+    "sha256": "6ce7e5fa11e620f134c6abf689c70c38f61331e142a93cde53b4066ac40fb6ee"
+  },
+  {
+    "path": "Snippets/MinGW C++/skeleton program.cpp",
+    "bytes": 156,
+    "sha256": "acd3f89cec02631fcf8aa59fe51d679bf5d0a171815817f5816ff4d639a7d1c8"
+  },
+  {
+    "path": "Snippets/MinGW C++/std cout and endl.cpp",
+    "bytes": 254,
+    "sha256": "ee927387d3c92a745534b3baa8e5aa65b024b5d4f08e07b759b1e74a526f0749"
+  },
+  {
+    "path": "Snippets/NSIS/Function.txt",
+    "bytes": 50,
+    "sha256": "3d7d91ca200a4565281c66c1fcac915c663e977c385eb0849c53bc054d3b826c"
+  },
+  {
+    "path": "Snippets/NSIS/Name&OutFile.txt",
+    "bytes": 50,
+    "sha256": "626028f6d5b2b13af3953845f377d33caaa26a56e01092813d81a8ff421a350f"
+  },
+  {
+    "path": "Snippets/NSIS/OnInit.txt",
+    "bytes": 31,
+    "sha256": "bb481774571b270e7b1850e1c6cd7d9860411cae422deb0851f38aeca8bdaf44"
+  },
+  {
+    "path": "Snippets/NSIS/Section.txt",
+    "bytes": 21,
+    "sha256": "9aea9e663e96944f3c9541c2c15033ff3bd34f6aa23c2b0852cfddad70c5a0a4"
+  },
+  {
+    "path": "Snippets/NSIS/UnOnInit.txt",
+    "bytes": 33,
+    "sha256": "db187a1ef5becf0a407fd309ee8c38cc4cb7ed7f89f37240efd85328f3a3f281"
+  },
+  {
+    "path": "Snippets/PHP/class.txt",
+    "bytes": 23,
+    "sha256": "5e945bb8be09ff7fa9ce96887c599a2ca5fa3d263128997f853d8fa2f56294d0"
+  },
+  {
+    "path": "Snippets/PHP/echo.txt",
+    "bytes": 4,
+    "sha256": "092c79e8f80e559e404bcf660c48f3522b67aba9ff1484b0367e1a4ddef7431d"
+  },
+  {
+    "path": "Snippets/PHP/if-else.txt",
+    "bytes": 14,
+    "sha256": "3c206f852d61727b9332519647bed4298ffd7bbc9dbea92568162a5d9c9e4d27"
+  },
+  {
+    "path": "Snippets/PHP/php-opening-closing-tag.txt",
+    "bytes": 11,
+    "sha256": "5b144011d26d28edfd21a232b9cf78e1d6bc4f20c3e348dc64debcaacce87b01"
+  },
+  {
+    "path": "Snippets/Perl/hello.pl",
+    "bytes": 161,
+    "sha256": "e05c38352870e49ce0ddec0e924ceb33d4125ab9f3afa4a4ab0e28ac0326993d"
+  },
+  {
+    "path": "Snippets/PowerBASIC/hello.bas",
+    "bytes": 199,
+    "sha256": "42f7c70309673038b7bf8050cff12bbd474ffabdab0c32ae5c1eacaccf5c4f95"
+  },
+  {
+    "path": "Snippets/Python/Misc.txt",
+    "bytes": 270,
+    "sha256": "4d421e126cb18d6bf6663fff276eb65e43d9c6f32eb93ce009bf12d1678a2b3f"
+  },
+  {
+    "path": "Snippets/Python/hello.py",
+    "bytes": 134,
+    "sha256": "f75def4f1f47822ae2bcf4a14c6ae0636b41e72148058d6856d65826bc03b418"
+  },
+  {
+    "path": "Snippets/Ruby/hello.rbw",
+    "bytes": 114,
+    "sha256": "c01f517ee147ddb31ca9d4c4e0ae5686899fcfa7621b715388ff89580df03f85"
+  },
+  {
+    "path": "Snippets/VBScript/hello.vbs",
+    "bytes": 145,
+    "sha256": "e787d67464af86c9bbdd8e00b07650cea62b6314c9396df6c555096dcb3c967e"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/DependencyProperty Attached.snippet",
+    "bytes": 2982,
+    "sha256": "ece56e6ac874591d30fa2e8f80638e1bf4c4159167c905321324f0961f981ac9"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/DependencyProperty ReadOnly.snippet",
+    "bytes": 2703,
+    "sha256": "b8873a8db037d254393155f020890f32e8acc65630ffd5649b27a149aa61a06c"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/DependencyProperty.snippet",
+    "bytes": 2532,
+    "sha256": "7d1fff03a35df26afc278266a4172275824d1a99bcf955a3f711d9327fe698bd"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/RoutedCommand.snippet",
+    "bytes": 1687,
+    "sha256": "ec533220193f0402af18c95a56f874683a68617298092a68d1df14a6e917a394"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/RoutedCommandHandlers.snippet",
+    "bytes": 2289,
+    "sha256": "5abe44177f711ca975bfd235a2876f3b40df7cdfd05560abebce2638103a9a3e"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/RoutedEvent.snippet",
+    "bytes": 2587,
+    "sha256": "7339f9401a0a90883a8a87f0660425fac450fe2fd038412a68b15ff6c2b567db"
+  },
+  {
+    "path": "Snippets/Visual Basic .NET/hello.vb",
+    "bytes": 263,
+    "sha256": "5a76ab3f2153c19db08261d0afc354da393b55ffc6e6164714dfd6d4b7d13f82"
+  },
+  {
+    "path": "Snippets/WinBatch/hello.wbt",
+    "bytes": 104,
+    "sha256": "15f64393000f9a2f0711343d8ef04e25bd05302dd89b836685e29121787d0434"
+  },
+  {
+    "path": "Snippets/XML/Parent.snippet",
+    "bytes": 939,
+    "sha256": "3198202f4d55dc222151ce1e22a066f9ad77721b20d4a8fa9d34bc8c52db340d"
+  },
+  {
+    "path": "Snippets/XML/schema.snippet",
+    "bytes": 1204,
+    "sha256": "2d4ef1b35bf7821263b277b1b073b5f07809314ceebecab280ad61d3ca094a8f"
+  },
+  {
+    "path": "Snippets/XML/snippet.snippet",
+    "bytes": 2419,
+    "sha256": "dba0a6e6bf9539181576c83e97dd0aa78db0a7015916a21cb881c97bafd2c315"
+  },
+  {
+    "path": "Synonimy.cs",
+    "bytes": 8107,
+    "sha256": "9695a693d04ff31a656490420c5a9d92036b231944884080250707f280ca86ab"
+  },
+  {
+    "path": "SynonimyOdmiany.cs",
+    "bytes": 6206,
+    "sha256": "45b131943d23eea7b2ed2609904b433a9c7f950c5255f322a64bc4656206f310"
+  },
+  {
+    "path": "Synonyms/LICENSE-plWordNet.txt",
+    "bytes": 4304,
+    "sha256": "d9073bcf5f33e8c0a35f272bcc86180e43289c72e7c168cc81ce2fc98ede7398"
+  },
+  {
+    "path": "Synonyms/LICENSE-plWordNet5.txt",
+    "bytes": 2699,
+    "sha256": "12e5ff17c573e52c8e391e7cab8e137ca59830de1184e9a21177c0d82c687a90"
+  },
+  {
+    "path": "Synonyms/NOTICE-plWordNet.txt",
+    "bytes": 4177,
+    "sha256": "27e152c5819a78f0fe47d43e590a0e4eba93a6c016f84c60a76bddb6eca14fe3"
+  },
+  {
+    "path": "Synonyms/forms-resource.json",
+    "bytes": 403,
+    "sha256": "708f3e6008cd64465318c31b02d59aa35a686fe00567e497f79628d69f69337c"
+  },
+  {
+    "path": "Synonyms/plwordnet-details.txt",
+    "bytes": 5127169,
+    "sha256": "4a293b93fae97efb3a33db2febaa4327a36e189864b611a2f9af9b317c8ff7e4"
+  },
+  {
+    "path": "Synonyms/plwordnet-forms.bin",
+    "bytes": 134750740,
+    "sha256": "dac888d39d0a869eb74dd641f5ec0cc2a76dc393c8313bb6b528ce60c726769c"
+  },
+  {
+    "path": "Synonyms/plwordnet-synonyms.txt",
+    "bytes": 4802438,
+    "sha256": "9a4257ceab9a08d371679b6afe4fea418f9deb7a6c476c5a8da9e432885c6ae0"
+  },
+  {
+    "path": "Tektosyne.dll",
+    "bytes": 200704,
+    "sha256": "2fd96076ce50c020e049809eebbf92c56149dde03fdd405a8a23bedd5c2ddcb2"
+  },
+  {
+    "path": "Tools.inix",
+    "bytes": 3110,
+    "sha256": "c67348a020a8e47b09d25abfc7a2ddf19c0ead15cffefb629249cb114d874bd4"
+  },
+  {
+    "path": "Transform_Example.inix",
+    "bytes": 427,
+    "sha256": "253d9ac1136ce4aebf9254a98a00868f83902e69e3486e6c2f78b77cbf7c6cc7"
+  },
+  {
+    "path": "Tutorial.htm",
+    "bytes": 25623,
+    "sha256": "85e212a30110b7c207e3e6edd5c6e8b6a4b33cbc8f18fa8aa55c30be16d0a718"
+  },
+  {
+    "path": "Tutorial.md",
+    "bytes": 19491,
+    "sha256": "6728c79addb3e147a08edbabe7c8277d5fa851ac14317417b6adeb992addbcca"
+  },
+  {
+    "path": "Ude.dll",
+    "bytes": 163840,
+    "sha256": "5a120f43a4b9e7a0d811a680eeab34948d1a7eda4dcc988aa203eefcc33043b6"
+  },
+  {
+    "path": "Ustawienia.cs",
+    "bytes": 16152,
+    "sha256": "44ccd78873b6d98ebe7c01bb66ba606e49c0b767b2e7da8805c04180386fb3e3"
+  },
+  {
+    "path": "Web.cs",
+    "bytes": 15296,
+    "sha256": "3ea335fb4c3941219cf7d033cc16b79f2c7a9834f3ae654d77e0c703b38dd87d"
+  },
+  {
+    "path": "Wyrazenia.cs",
+    "bytes": 17461,
+    "sha256": "c4cd60674df65468bf00d82d38859aff3144728e70caa07c7080aace5520d797"
+  },
+  {
+    "path": "Zadania.cs",
+    "bytes": 11537,
+    "sha256": "18284556d7fd47af9f9755f69368bc9d7c88500a797e775242d34d26399a5df2"
+  },
+  {
+    "path": "ZapisFormatow.cs",
+    "bytes": 27586,
+    "sha256": "4b70c82eecd5107d085f79a7953ef9c6b47e06d74576fec1d7fa563ffbaf6581"
+  },
+  {
+    "path": "Zmiany.cs",
+    "bytes": 16368,
+    "sha256": "6cb539df237ba16147da088c870c2d1a76fc579e319b9c2e461620fd5bf9b16a"
+  },
+  {
+    "path": "history.txt",
+    "bytes": 86114,
+    "sha256": "d0d89424f14af2fa521e68a0249d73ff7744edca58baa76b19de5f4cb017f132"
+  },
+  {
+    "path": "lgpl.txt",
+    "bytes": 7802,
+    "sha256": "03c570a068086ee577dcd795519ea93462b2ed2fcb6dcc4dfce56a71a2fd6e5a"
+  },
+  {
+    "path": "nvdaControllerClient.dll",
+    "bytes": 262808,
+    "sha256": "c98d3b1b0978772626d7e801da1849f0f81731b75d2251d4769793adaf6a3d36"
+  }
+]

@@ -65,7 +65,23 @@ nowych funkcji konwersji ani pełnego regresyjnego odbioru tych narzędzi.
 
 ## Publikacja i dostawa
 
-Do wykonania po końcowym pakowaniu: GitHub/latest, pobranie i SHA-256 obu
-załączników, kontrola F11, Nowe na komputerze MICHAL z kontrolą bajtów celu.
-Dostawa bez instalacji: Michał sam zaktualizuje program. Nie zmieniamy jego
-zainstalowanej binarki, dokumentów ani działającego procesu.
+Wykonano pełny łańcuch. Publiczne wydanie ID439815211 i `/releases/latest`
+wskazują `v5.0.120`; tag odpowiada źródłom
+`7898280d093c5db650d00553a7af0cf5dcded4fb`. Oba publiczne załączniki pobrano
+w całości i porównano rozmiary i SHA-256 z `candidate-artifacts.json`.
+Pierwsza suma w opisie jest sumą instalatora, zgodnie z parserem aktualizatora.
+
+Rzeczywista 5.0.119 na Hermesie po F11 pokazała „Installed: 5.0.119,
+Available: 5.0.120”. Podgląd mowy zawiera odczyt tego pytania przez NVDA
+(`f11-final.json`). Escape anulował bez uruchomienia instalatora. Własną
+aplikację QA i podgląd mowy zamknięto; NVDA pozostał uruchomiony.
+
+Na MICHAL dostarczono instalator, ZIP i opis nowości do
+`D:\Projekty Codex\Hermes\Nowe`. Pełne SHA-256 plików celu zgodne.
+Zainstalowane bajty i PID/czas startu EdSharpa są identyczne przed i po
+dostawie. Nie wymuszano zamknięcia ani aktualizacji. Własny instalator i opis
+5.0.119 usunięto po potwierdzeniu hashy, dostępności publicznego odpowiednika
+i nieużywania. Inne dokumenty użytkownika pozostawiono.
+
+Dostawa zakończona, nie jest to instalacja na głównym komputerze. Michał
+sam wybierze moment aktualizacji. Pozostałe odłożone funkcje nie są wznowione.

@@ -1,0 +1,37 @@
+{
+  "machine": "MICHAL",
+  "folder": "D:\\Projekty Codex\\Hermes\\Nowe",
+  "files": [
+    {
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_Setup_5.0.120.exe",
+      "sha256": "3a81cafa0cf9371fd134ada504fdf4f33a4eef069c3db3e984e01b4734c07b76",
+      "bytes": 111910739
+    },
+    {
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.120.zip",
+      "sha256": "f2b3032e556f29216c410f9c3d387bd8c3dfd8f9aea3be3b213b2f43b6804f92",
+      "bytes": 145491069
+    }
+  ],
+  "notes": {
+    "sha256": "428fd6e0b712ff2a92d176d970512e6602d94b45c08d70a52a37e9400fcb0ba2",
+    "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.120_Nowosci.md"
+  },
+  "installed_bytes_preserved": true,
+  "running_process_and_start_time_preserved": true,
+  "old_own_release_cleanup": [
+    {
+      "state": "absent",
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.119.zip"
+    },
+    {
+      "state": "removed_verified_old_release",
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_Setup_5.0.119.exe"
+    },
+    {
+      "state": "removed_verified_old_release",
+      "path": "D:\\Projekty Codex\\Hermes\\Nowe\\EdSharpNG_5.0.119_Nowosci.md"
+    }
+  ],
+  "installed_on_main": false
+}

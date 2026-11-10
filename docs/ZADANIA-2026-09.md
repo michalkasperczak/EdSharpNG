@@ -3,7 +3,7 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
-## Synonimy — opisy znaczeń na żądanie (5.0.120, w toku)
+## Synonimy — opisy znaczeń na żądanie (5.0.120, wydano 10.11.2026)
 
 Zakres potwierdzony przez Michała: kontynuować lokalne synonimy; bez Worda,
 bez drzewa ani dodatkowego obowiązkowego etapu. F4 na pozycji listy otwiera
@@ -16,7 +16,16 @@ je zawiera. Wybór pozostaje płaski: strzałki, Enter, Escape.
 - [x] Pełny build, 20 testów Python i 5 zestawów C#, odbiór F4 żywym NVDA.
 - [x] Niezależny przegląd; notice skorygowane. Instalator/ZIP, kod instalacji 0,
   wszystkie 1076 plików zgodne ze stagingiem i instalacją próbną na Hermesie.
-- [ ] GitHub/latest, pobrania i SHA-256, F11 oraz dostawa do Nowe.
+- [x] GitHub/latest, pobrania i SHA-256 obu plików, F11 oraz dostawa do Nowe.
+
+Wydanie: https://github.com/michalkasperczak/EdSharpNG/releases/tag/v5.0.120
+Commit źródeł/tagu: `7898280d093c5db650d00553a7af0cf5dcded4fb`.
+Na MICHAL: `D:\Projekty Codex\Hermes\Nowe\EdSharpNG_Setup_5.0.120.exe`,
+ZIP i opis nowości; sumy celu zgodne z publicznym pobraniem. Stary instalator
+i własny opis 5.0.119 usunięte dopiero po potwierdzeniu zastąpienia i hashy.
+F11 rzeczywistej 5.0.119 wykryło 5.0.120; Escape anulował bez instalacji.
+Zainstalowane bajty i działający proces na MICHAL zachowane. Raport:
+`SYNONIMY-ODBIOR-5.0.120.md`; kwity `../testy/wyniki/synonyms120/`.
 
 **Dostawa bez instalacji:** Michał sam zaktualizuje program. Nie zmieniać
 jego bieżącej instalacji ani procesu. plWordNet 5.0 i poświadczona odmiana

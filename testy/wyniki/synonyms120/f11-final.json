@@ -1,0 +1,76 @@
+[
+  {
+    "title": "Podgląd mowy NVDA",
+    "handle": 591028,
+    "pid": 5884,
+    "items": [
+      {
+        "name": "panel",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "F4: szczegóły znaczenia.  lista\r\ntajniak, rzeczownik, 1 z 12\r\nZnaczenie: tajniak\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\ntajny funkcjonariusz służb wewnętrznych: UOP-u, ABW, SB, FBI, tajnej policji, także Interpolu\r\n\r\nSynonimy dla: agent\r\nF4: szczegóły znaczenia.  lista\r\ntajniak, rzeczownik, 1 z 12\r\ntajniak, rzeczownik, 1 z 12\r\najent, rzeczownik, 12 z 12\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\nDefinicja:\r\n\r\nDefinicja:\r\n\r\nF4: szczegóły znaczenia.  lista\r\najent, rzeczownik, 12 z 12\r\nWstawiono: ajent\r\npole edycji  wielowierszowe  ajent\r\nSelect All\r\n5 characters\r\najent zaznaczone\r\nPaste\r\nDOMAMI odznaczone\r\nDOMAMI\r\nThesaurus\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  pusta\r\nSynonimy dla: DOMAMI\r\nF4: szczegóły znaczenia.  lista\r\nkątami, rzeczownik, 1 z 10\r\nEdSharpNG - [NoName1]\r\npole edycji  wielowierszowe  DOMAMI\r\nThesaurus\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\nDefinicja:\r\n\r\nDefinicja:\r\n\r\nPrędkość 85\r\nSynonimy dla: DOMAMI\r\nF4: szczegóły znaczenia.  lista\r\nkątami, rzeczownik, 1 z 10\r\nkątami, rzeczownik, 1 z 10\r\nEdSharpNG - [NoName1]\r\npole edycji  wielowierszowe  DOMAMI\r\nPrędkość 80\r\nPodgląd mowy NVDA\r\nPokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p\r\nEdSharpNG - [NoName1]\r\npole edycji  wielowierszowe  pusta\r\nElevate Version\r\nChecking for updates\r\nElevate Version\r\nMessage  pole edycji  tylko do odczytu  wielowierszowe  zaznaczone A newer EdSharp is available.\r\nInstalled: 5.0.119\r\nAvailable: 5.0.120\r\n\r\nDownload and run the new installer now?\r\n",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Pokaż podgląd mowy przy starcie",
+        "type": "ControlType.Pane",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "title": "EdSharpNG - [NoName1]",
+    "handle": 590584,
+    "pid": 3256,
+    "items": [
+      {
+        "name": "Elevate Version",
+        "type": "ControlType.Window",
+        "value": ""
+      },
+      {
+        "name": "Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "A newer EdSharp is available.\nInstalled: 5.0.119\nAvailable: 5.0.120\n\nDownload and run the new installer now?",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Help",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Cancel",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "No",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Yes",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "NoName1",
+        "type": "ControlType.Window",
+        "value": ""
+      },
+      {
+        "name": "RichEdit Control",
+        "type": "ControlType.Document",
+        "value": "\r"
+      }
+    ]
+  }
+]
