@@ -1,0 +1,13 @@
+PASS base loads
+FAIL source definition and example
+PASS homonym details do not mix
+FAIL other sense isolated
+FAIL legacy no fabricated definition
+FAIL missing meaning explicit
+PASS details do not alter synonyms
+FAIL missing optional file explicit
+PASS missing optional file does not disable synonyms
+FAIL bad UTF8 explicit
+PASS corrupt optional file does not disable synonyms
+FAIL conflicting duplicate rejected
+FAILURES=7

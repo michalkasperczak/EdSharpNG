@@ -3,6 +3,25 @@
 Zrodlo: Michal Kasperczak, wiadomosc z 11.09.2026 wieczorem.
 Kolejnosc zapisu NIE jest priorytetem - priorytety do ustalenia.
 
+## Synonimy — opisy znaczeń na żądanie (5.0.120, w toku)
+
+Zakres potwierdzony przez Michała: kontynuować lokalne synonimy; bez Worda,
+bez drzewa ani dodatkowego obowiązkowego etapu. F4 na pozycji listy otwiera
+opis i przykład z istniejącego eksportu plWordNet 5.0, wyłącznie gdy źródło
+je zawiera. Wybór pozostaje płaski: strzałki, Enter, Escape.
+
+- [x] Test RED/GREEN odczytu opisów i izolacji homonimów; brak pliku oraz
+  uszkodzenie opisu nie wyłączają podstawowej listy synonimów.
+- [x] Generator i rzeczywisty zasób: 21278 definicji, 16834 przykłady, bez domysłów.
+- [x] Pełny build, 20 testów Python i 5 zestawów C#, odbiór F4 żywym NVDA.
+- [x] Niezależny przegląd; notice skorygowane. Instalator/ZIP, kod instalacji 0,
+  wszystkie 1076 plików zgodne ze stagingiem i instalacją próbną na Hermesie.
+- [ ] GitHub/latest, pobrania i SHA-256, F11 oraz dostawa do Nowe.
+
+**Dostawa bez instalacji:** Michał sam zaktualizuje program. Nie zmieniać
+jego bieżącej instalacji ani procesu. plWordNet 5.0 i poświadczona odmiana
+są już wydane w 5.0.119; dawne zdania o nieukończonej migracji dotyczą historii.
+
 ## Synonimy — dalsza rozbudowa (09.11.2026, wydano 5.0.119)
 
 Plan i wyniki: `SYNONIMY-ROZBUDOWA-2026-11.md`.

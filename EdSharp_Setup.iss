@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.119
-AppVerName=EdSharpNG 5.0.119 (beta)
-VersionInfoVersion=5.0.119
+AppVersion=5.0.120
+AppVerName=EdSharpNG 5.0.120 (beta)
+VersionInfoVersion=5.0.120
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak

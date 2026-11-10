@@ -1,0 +1,13 @@
+PASS base loads
+PASS source definition and example
+PASS homonym details do not mix
+PASS other sense isolated
+PASS legacy no fabricated definition
+PASS missing meaning explicit
+PASS details do not alter synonyms
+PASS missing optional file explicit
+PASS missing optional file does not disable synonyms
+PASS bad UTF8 explicit
+PASS corrupt optional file does not disable synonyms
+PASS conflicting duplicate rejected
+FAILURES=0

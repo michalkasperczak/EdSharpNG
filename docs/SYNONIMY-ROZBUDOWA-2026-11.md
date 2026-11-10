@@ -1,5 +1,19 @@
 # Rozbudowa lokalnego słownika synonimów
 
+## Bieżący przyrost 5.0.120 — szczegóły na żądanie
+
+Michał zlecił opisy znaczeń ze źródła, bez Worda, bez drzewa i dodatkowego
+obowiązkowego kroku wyboru. F4 na zaznaczonym synonimie ma pokazywać definicję
+i przykład z tego samego synsetu plWordNet 5.0. Escape ma wracać do tej samej
+pozycji; Enter nadal od razu wstawia synonim. Brak danych oznaczamy wprost.
+Nie dopisujemy własnych parafraz ani nie łączymy OMW z opisami 5.0 po lemacie.
+Próby oraz publikacja są w planie `ZADANIA-2026-09.md`.
+
+Pełny plWordNet 5.0 i poświadczona odmiana są już częścią wydanej 5.0.119.
+Poniższy zapis etapów jest historyczny i nie oznacza, że migracja nadal czeka.
+Integracja z Wordem pozostaje poza zakresem. Instalator ma trafić do Nowe;
+Michał sam zdecyduje, kiedy go uruchomić.
+
 ## Zakres przyjęty od Michała
 
 Michał odebrał obsługę Shift+F7 i skrócony odczyt listy z wersji 5.0.118. Kolejne prace obejmują większą bazę, formy odmienione i możliwe ulepszenia słownika. Osobno należy sprawdzić oficjalny, opcjonalny dostęp do słownika zainstalowanego Worda; to nie jest zgoda na kopiowanie jego bazy ani zastąpienie trybu offline obowiązkowym Wordem.

@@ -1,0 +1,91 @@
+[
+  {
+    "title": "Podgląd mowy NVDA",
+    "handle": 591028,
+    "pid": 5884,
+    "items": [
+      {
+        "name": "panel",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "F4: szczegóły znaczenia.  lista\r\ntajniak, rzeczownik, 1 z 12\r\nZnaczenie: tajniak\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\ntajny funkcjonariusz służb wewnętrznych: UOP-u, ABW, SB, FBI, tajnej policji, także Interpolu\r\n\r\n",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Pokaż podgląd mowy przy starcie",
+        "type": "ControlType.Pane",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "title": "EdSharpNG - [NoName1]",
+    "handle": 525396,
+    "pid": 1612,
+    "items": [
+      {
+        "name": "Synonimy dla: agent",
+        "type": "ControlType.Window",
+        "value": ""
+      },
+      {
+        "name": "Znaczenie: tajniak",
+        "type": "ControlType.Window",
+        "value": ""
+      },
+      {
+        "name": "Szczegóły znaczenia:",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Definicja:\r\ntajny funkcjonariusz służb wewnętrznych: UOP-u, ABW, SB, FBI, tajnej policji, także Interpolu\r\n\r\nPrzykład:\r\nJednostka „agent”: Na podstawie rozmów z osobami, które zetknęły się z \"Tomkiem\", dziennik odtworzył, jak agent penetrował interesujące CBA środowiska.\r\n\r\nŹródło: plWordNet 5.0.",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Help",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Zamknij",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "F4: szczegóły znaczenia.",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Help",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "Cancel",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "OK",
+        "type": "ControlType.Pane",
+        "value": ""
+      },
+      {
+        "name": "NoName1",
+        "type": "ControlType.Window",
+        "value": ""
+      },
+      {
+        "name": "RichEdit Control",
+        "type": "ControlType.Document",
+        "value": "agent\r"
+      }
+    ]
+  }
+]

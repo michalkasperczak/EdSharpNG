@@ -21,7 +21,18 @@ indeks EDSYNF02 z poświadczonych rekordów tbl_morphology. Rozpoznanie formy
 wejściowej i znalezienie odmienionej propozycji są osobnymi operacjami.
 Program nie wymyśla końcówek. Brak zgodnej, poświadczonej formy oznacza brak
 tej propozycji. Homonimy mogą dawać kilka znaczeń; program nie rozstrzyga
-samodzielnie kontekstu zdania. Nie zawiera definicji ani wszystkich wyrażeń
+samodzielnie kontekstu zdania. F4 na liście synonimów pokazuje definicję
+oraz przykład przypisane w źródle do wybranego synsetu, jeżeli występują.
+plwordnet-details.txt zawiera wyłącznie definicje i przykłady z bieżących
+tabel tbl_synset_attributes, tbl_synset_examples, tbl_sense_attributes i
+tbl_sense_examples. Jednostki łączymy z dokładnym synsetem oraz głównym
+polskim leksykonem. Pierwszeństwo ma opis całego synsetu; w przeciwnym razie
+cytujemy definicję jednej jednostki tego synsetu z jawną etykietą „Jednostka”.
+Przykład jednostki wskazuje, którego wyrazu dotyczy. Nie dołączamy historii,
+komentarzy ani nazw operatorów źródła. Wpisy zastępcze „brak danych” pomijamy.
+Normalizujemy jedynie białe znaki; program nie dopisuje własnych opisów.
+Brak opisu jest oznaczony wprost, a starszy fallback OMW nie otrzymuje
+opisów plWordNet 5.0 przez podobieństwo wyrazu. Nie zawiera wszystkich wyrażeń
 wielowyrazowych. Nie wszystkie formy czasu przeszłego występują w źródle:
 na przykład sprawdził jest dostępne, a sprawdziłem nie jest.
 

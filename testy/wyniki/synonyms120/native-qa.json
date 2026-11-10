@@ -1,0 +1,65 @@
+[
+    {
+        "label":  "escape-details-restores-first-row",
+        "pid":  1612,
+        "name":  "tajniak, rzeczownik, 1 z 12",
+        "value":  "",
+        "type":  "ControlType.ListItem"
+    },
+    {
+        "label":  "last-synonym-selected",
+        "pid":  1612,
+        "name":  "ajent, rzeczownik, 12 z 12",
+        "value":  "",
+        "type":  "ControlType.ListItem"
+    },
+    {
+        "label":  "other-meaning-details",
+        "pid":  1612,
+        "name":  "Szczegóły znaczenia",
+        "value":  "Definicja:\r\nprzedstawiciel firmy, handlowy, ubezpieczniowy, bankowy, kredytowy itd.\r\n\r\nPrzykład:\r\nJednostka „agent”: Na rynku oprócz agentów wyłącznych - działających w imieniu tylko jednego ubezpieczyciela - można także spotkać multiagentów.\r\n\r\nŹródło: plWordNet 5.0.",
+        "type":  "ControlType.Document"
+    },
+    {
+        "label":  "escape-details-restores-last-row",
+        "pid":  1612,
+        "name":  "ajent, rzeczownik, 12 z 12",
+        "value":  "",
+        "type":  "ControlType.ListItem"
+    },
+    {
+        "label":  "enter-inserts-only-synonym",
+        "pid":  1612,
+        "name":  "RichEdit Control",
+        "value":  "ajent\r",
+        "type":  "ControlType.Document"
+    },
+    {
+        "label":  "inflected-word-flat-list",
+        "pid":  1612,
+        "name":  "kątami, rzeczownik, 1 z 10",
+        "value":  "",
+        "type":  "ControlType.ListItem"
+    },
+    {
+        "label":  "inflected-word-source-details",
+        "pid":  1612,
+        "name":  "Szczegóły znaczenia",
+        "value":  "Definicja:\r\nJednostka „chata”: mieszkanie, dom.\r\n\r\nPrzykład:\r\nJednostka „chata”: Przykro mi, że pocałowałeś klamkę, ale wczoraj cały dzień nie było mnie na chacie; następnym razem zadzwoń, żebym wiedział, że będziesz.\r\n\r\nŹródło: plWordNet 5.0.",
+        "type":  "ControlType.Document"
+    },
+    {
+        "label":  "inflected-return-same-row",
+        "pid":  1612,
+        "name":  "kątami, rzeczownik, 1 z 10",
+        "value":  "",
+        "type":  "ControlType.ListItem"
+    },
+    {
+        "label":  "escape-leaves-original-uppercase-input",
+        "pid":  1612,
+        "name":  "RichEdit Control",
+        "value":  "DOMAMI\r",
+        "type":  "ControlType.Document"
+    }
+]

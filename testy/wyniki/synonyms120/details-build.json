@@ -1,0 +1,23 @@
+{
+  "coverage_percent": 70.474,
+  "definitions": 21278,
+  "details_rows": 21396,
+  "examples": 16834,
+  "input": {
+    "bytes": 4802438,
+    "path": "Synonyms/plwordnet-synonyms.txt",
+    "sha256": "9a4257ceab9a08d371679b6afe4fea418f9deb7a6c476c5a8da9e432885c6ae0"
+  },
+  "output": {
+    "bytes": 5127169,
+    "path": "Synonyms/plwordnet-details.txt",
+    "sha256": "4a293b93fae97efb3a33db2febaa4327a36e189864b611a2f9af9b317c8ff7e4"
+  },
+  "source": {
+    "bytes": 482280284,
+    "path": "/home/michal/projekty/edsharp-data/plwordnet-5/wordnet_without_extra_lexicons-2026_02_09.sql.gz",
+    "sha256": "fcae73be610944582079dedbd1919878fc626cbed4bfda94bd5e9c0a96ad9ab9"
+  },
+  "synsets_in_current_index": 30360,
+  "unit_definition_rows": 21125
+}

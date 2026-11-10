@@ -25,6 +25,41 @@ Synonyms = lSynonyms;
 
 static Dictionary<string, List<Grupa>> hashGroups = new Dictionary<string, List<Grupa>>(StringComparer.Ordinal);
 static string sFormsPath = "";
+static string sDetailsPath = "";
+static Dictionary<string, string[]> dDetails;
+static string sDetailsError = "";
+public static string GetDetails(string sSenseId) {
+const string sMissing = "Brak definicji i przykładu dla tego znaczenia w dołączonym słowniku.";
+if (string.IsNullOrEmpty(sSenseId) || sSenseId.StartsWith("omw-2.0:", StringComparison.Ordinal)) return sMissing;
+if (dDetails == null) {
+Dictionary<string, string[]> data = new Dictionary<string, string[]>(StringComparer.Ordinal);
+try {
+if (!File.Exists(sDetailsPath)) sDetailsError = "Brak pliku szczegółów znaczeń. Lista synonimów nadal działa.";
+else {
+if (new FileInfo(sDetailsPath).Length > 67108864) throw new InvalidDataException();
+using (StreamReader reader = new StreamReader(sDetailsPath, new UTF8Encoding(false, true), false)) {
+string line;
+while ((line = reader.ReadLine()) != null) {
+if (line.Length == 0 || line.StartsWith("#", StringComparison.Ordinal)) continue;
+string[] fields = line.Split('\t');
+Guid id;
+if (line.Length > 65536 || fields.Length != 3 || fields[0].Length != 32 || !Guid.TryParseExact(fields[0], "N", out id) || data.ContainsKey(fields[0])) throw new InvalidDataException();
+foreach (string field in fields) foreach (char c in field) if (Char.IsControl(c)) throw new InvalidDataException();
+data.Add(fields[0], new string[] { fields[1], fields[2] });
+}
+}
+}
+}
+catch (Exception) { data.Clear(); sDetailsError = "Nie można wczytać szczegółów znaczeń. Lista synonimów nadal działa."; }
+dDetails = data;
+}
+if (sDetailsError.Length > 0) return sDetailsError;
+string[] detail;
+if (!dDetails.TryGetValue(sSenseId, out detail)) return sMissing;
+string result = detail[0].Length > 0 ? "Definicja:\r\n" + detail[0] : "Brak definicji w dołączonym słowniku.";
+if (detail[1].Length > 0) result += "\r\n\r\nPrzykład:\r\n" + detail[1];
+return result + "\r\n\r\nŹródło: plWordNet 5.0.";
+}
 public static string Error = "";
 public static string FormsError = "";
 
@@ -63,6 +98,9 @@ return sSynonym + ", " + sPart + ", " + iPosition + " z " + iTotal;
 public static void ResetForTests() {
 hashGroups.Clear();
 sFormsPath = "";
+sDetailsPath = "";
+dDetails = null;
+sDetailsError = "";
 Error = "";
 FormsError = "";
 } // ResetForTests method
@@ -112,6 +150,7 @@ lGroups.Add(new Grupa(aPart[1].Trim(), aPart[2].Trim(), lSynonyms));
 }
 string sCandidate = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(sPath)), "plwordnet-forms.bin");
 if (File.Exists(sCandidate)) sFormsPath = sCandidate;
+sDetailsPath = Path.Combine(Path.GetDirectoryName(Path.GetFullPath(sPath)), "plwordnet-details.txt");
 return true;
 }
 catch (Exception ex) {

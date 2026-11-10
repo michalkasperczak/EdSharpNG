@@ -17,5 +17,18 @@ class SynonymsUiContractTests(unittest.TestCase):
         self.assertIn('return;', error_branch)
 
 
+    def test_details_are_optional_and_bound_to_row_meaning(self):
+        source = (ROOT / 'EdSharp.cs').read_text(encoding='utf8')
+        handler = source.split('public void Thesaurus() {', 1)[1].split('} // Thesaurus method', 1)[0]
+        self.assertIn('lSenseIds.Add(group.SenseId);', handler)
+        self.assertIn('Dialog.PickSynonyms(', handler)
+        dialog = source.split('public static string PickSynonyms(', 1)[1].split('} // PickSynonyms method', 1)[0]
+        self.assertIn('Keys.F4', dialog)
+        self.assertIn('Synonimy.GetDetails(aSenseIds[i])', dialog)
+        self.assertIn('ReadOnly = true', dialog)
+        self.assertIn('lst.Focus()', dialog)
+        self.assertNotIn('GetDetails(aValue[i])', dialog)
+
+
 if __name__ == '__main__':
     unittest.main(verbosity=2)

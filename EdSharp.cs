@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.119";
+public const string VersionString = "5.0.120";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -8077,6 +8077,7 @@ object[] aResults;
 List<Synonimy.Grupa> lGroups;
 List<string> lValues = new List<string>();
 List<string> lDisplay = new List<string>();
+List<string> lSenseIds = new List<string>();
 
 HomerRichTextBox rtb = this.Child.RTB;
 if (rtb.SelectionLength == 0) {
@@ -8119,11 +8120,12 @@ for (int iGroup = 0; iGroup < lGroups.Count; iGroup++) {
 Synonimy.Grupa group = lGroups[iGroup];
 foreach (string sSynonym in group.Synonyms) {
 lValues.Add(sSynonym);
+lSenseIds.Add(group.SenseId);
 lDisplay.Add(Synonimy.FormatEntry(sSynonym, group.PartOfSpeech, lValues.Count, iTotal));
 }
 }
 
-string sChoice = Dialog.Pick("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), false, 0);
+string sChoice = Dialog.PickSynonyms("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), lSenseIds.ToArray());
 if (sChoice.Length == 0) return;
 sChoice = Synonimy.ApplyCapitalization(sText, sChoice);
 iEnd = iStart + sText.Length;
@@ -19573,6 +19575,34 @@ public static string Pick(string sTitle, string[] aValue, bool bSort, int iIndex
 string[] aDisplay = null;
 return Pick(sTitle, aValue, aDisplay, bSort, iIndex);
 } // Pick method
+
+// F4 is optional. Meanings stay paired with row indexes, not synonym text.
+public static string PickSynonyms(string sTitle, string[] aValue, string[] aDisplay, string[] aSenseIds) {
+using (LbcDialog dlg = new LbcDialog(sTitle, App.Frame)) {
+dlg.addLabel("F4: szczegóły znaczenia.");
+ListBox lst = dlg.addListBox(new List<string>(aDisplay), "", "");
+dlg.setHelpDetail(lst, "Strzałki: wybór synonimu. Enter: wstaw. Escape: anuluj. F4: definicja i przykład ze słownika, jeżeli są dostępne.");
+LbcDialog.selectOnly(lst, 0);
+dlg.setInitialFocus(lst);
+lst.KeyDown += delegate(object sender, KeyEventArgs ev) {
+if (ev.KeyData != Keys.F4) return;
+ev.Handled = true; ev.SuppressKeyPress = true;
+int i = lst.SelectedIndex;
+if (i < 0 || i >= aSenseIds.Length) return;
+using (LbcDialog details = new LbcDialog("Znaczenie: " + aValue[i], dlg.form)) {
+TextBox memo = details.addMemoBox("Szczegóły znaczenia", Synonimy.GetDetails(aSenseIds[i]), "");
+memo.ReadOnly = true;
+memo.Select(0, 0);
+details.setInitialFocus(memo);
+details.runWithButtons(new string[] { "Zamknij" });
+}
+lst.Focus();
+};
+if (!dlg.runOkCancel()) return "";
+int index = lst.SelectedIndex;
+return index >= 0 && index < aValue.Length ? aValue[index] : "";
+}
+} // PickSynonyms method
 
 public static string Pick(string sTitle, string[] aValue, string[] aDisplay, bool bSort, int iIndex) {
 string[] aVal = (string[]) aValue.Clone();
