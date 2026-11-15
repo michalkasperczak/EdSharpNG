@@ -1,0 +1,57 @@
+== test_synonimy_odmiany ==
+PASS binary morphology reader exists
+PASS UTF8 keys and values match binary directory
+PASS missing key has no analyses
+PASS compressed v2 preserves exact UTF8 morphology rows
+PASS lemma dictionary loads beside morphology index
+PASS instrumental plural yields attested instrumental plural, not bare lemma
+PASS literal lemma keeps existing lookup priority
+PASS legacy fallback remains available for literal lemma
+PASS legacy fallback never joins morphology through unrelated senses
+PASS adjective preserves number case gender and degree
+PASS adjective rejects different case or gender
+PASS verb keeps attested tense number gender and aspect
+PASS verb does not silently change aspect
+PASS adverb preserves comparative degree
+PASS adverb rejects different degree
+PASS oversized compressed declaration rejected before allocation
+PASS corrupt morphology returns explicit error without a replacement
+PASS corrupt optional morphology does not break literal dictionary
+FAILURES=0
+== test_slowniki_synonimow ==
+PASS English meanings distinct, case insensitive, excludes self
+PASS explicit PL EN both isolates identical word and keeps PL first
+PASS details dispatch exact language and sense, no lemma joins
+PASS missing English details nonfatal and explicit
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS missing EN warns but does not disable PL in both mode
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS only source-attested irregular form resolves, exact POS, output lemma not guessed inflection
+PASS invalid mode defaults PL not interface or automatic English
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS corrupt optional exceptions warn but preserve literal English lookup
+PASS missing optional exceptions warn but preserve literal English lookup
+PASS missing optional exceptions explicitly explain missing irregular input
+PASS source capitalized lemma searchable case-insensitively, phrase capitalization preserved
+PASS language label formatter exists
+PASS both labels languages without leaking IDs or changing word-first single-mode display
+FAILURES=0
+== test_slowniki_synonimow_real ==
+
+Wyjątek nieobsłużony: System.IO.FileNotFoundException: Nie można odnaleźć pliku 'C:\EdSharpFormsQA\source\does-not-exist.txt'.
+   w System.IO.__Error.WinIOError(Int32 errorCode, String maybeFullPath)
+   w System.IO.FileStream.Init(String path, FileMode mode, FileAccess access, Int32 rights, Boolean useRights, FileShare share, Int32 bufferSize, FileOptions options, SECURITY_ATTRIBUTES secAttrs, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.FileStream..ctor(String path, FileMode mode, FileAccess access, FileShare share, Int32 bufferSize, FileOptions options, String msgPath, Boolean bFromProxy, Boolean useLongPath, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding, Boolean detectEncodingFromByteOrderMarks, Int32 bufferSize, Boolean checkHost)
+   w System.IO.StreamReader..ctor(String path, Encoding encoding)
+   w System.IO.File.InternalReadAllLines(String path, Encoding encoding)
+   w ActualEnglish.Main(String[] args)

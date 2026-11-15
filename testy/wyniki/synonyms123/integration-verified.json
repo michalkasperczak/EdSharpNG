@@ -1,0 +1,14 @@
+{
+  "ui_methods_unchanged_from_122": {
+    "PickSynonyms": true,
+    "PickSynonymForm": true
+  },
+  "exe_hashes": {
+    "/home/michal/projekty/edsharp/EdSharpNG.exe": "24b3c927d9b117443ccdb4e6c41453979927721bcbe2339d7b9c5be246fa4b2e",
+    "/mnt/c/EdSharp123UxStage/EdSharpNG.exe": "24b3c927d9b117443ccdb4e6c41453979927721bcbe2339d7b9c5be246fa4b2e",
+    "/mnt/c/EdSharp123UxInstalled/EdSharpNG.exe": "24b3c927d9b117443ccdb4e6c41453979927721bcbe2339d7b9c5be246fa4b2e",
+    "/mnt/c/EdSharpUxApp/EdSharpNG.exe": "24b3c927d9b117443ccdb4e6c41453979927721bcbe2339d7b9c5be246fa4b2e"
+  },
+  "manual_nvda_snapshots": 7,
+  "router_assertions": 31
+}

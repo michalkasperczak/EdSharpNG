@@ -83,7 +83,7 @@ echo "[1/6] Budowa EdSharpNG.exe..."
 # Do trzech prob; binarka swiezsza od EdSharp.cs przerywa petle od razu, wiec
 # gotowy build z tej samej sesji nie jest budowany po raz drugi.
 needs_build() {
-    for source in EdSharp.cs Synonimy.cs SynonimyOdmiany.cs; do
+    for source in EdSharp.cs Synonimy.cs SynonimyOdmiany.cs SlownikiSynonimow.cs FormySynonimow.cs Ustawienia.cs; do
         [[ EdSharpNG.exe -nt "$source" ]] || return 0
     done
     return 1

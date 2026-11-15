@@ -1,0 +1,6 @@
+CALIBRATION_READ_ONLY=PASS;SELECTED=True;VALUE=en
+MESSAGE=2 settings restored to defaults
+
+FAIL: read-only settings must report failed save, never success
+
+EXIT=1

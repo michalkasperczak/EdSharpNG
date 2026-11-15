@@ -1,0 +1,373 @@
+WORD	time	6	8	170
+WORD	person	1	5	155
+WORD	year	2	3	158
+WORD	way	6	12	154
+WORD	day	4	10	155
+WORD	thing	1	2	152
+WORD	man	7	20	157
+WORD	world	8	25	151
+WORD	life	6	14	149
+WORD	hand	7	15	155
+WORD	part	17	44	157
+WORD	child	3	13	166
+WORD	eye	3	7	162
+WORD	woman	3	7	159
+WORD	place	23	55	159
+WORD	work	21	42	154
+WORD	week	3	3	157
+WORD	case	15	32	151
+WORD	point	24	51	153
+WORD	government	3	8	158
+WORD	company	6	10	158
+WORD	number	11	20	155
+WORD	group	4	5	155
+WORD	problem	2	2	156
+WORD	fact	0	0	158
+WORD	home	7	19	161
+WORD	water	5	10	159
+WORD	room	2	3	153
+WORD	mother	3	10	151
+WORD	area	4	9	157
+WORD	money	0	0	155
+WORD	story	5	17	151
+WORD	issue	14	41	153
+WORD	side	5	6	150
+WORD	kind	3	5	151
+WORD	head	21	40	151
+WORD	house	5	15	148
+WORD	service	11	16	151
+WORD	friend	4	8	157
+WORD	father	8	20	146
+WORD	power	8	20	159
+WORD	hour	3	4	155
+WORD	game	5	19	154
+WORD	line	19	67	148
+WORD	end	10	20	155
+WORD	member	3	5	152
+WORD	law	6	9	156
+WORD	car	5	10	152
+WORD	city	2	3	150
+WORD	community	3	4	155
+WORD	name	11	24	165
+WORD	president	4	10	163
+WORD	team	2	2	158
+WORD	minute	7	13	158
+WORD	idea	4	8	151
+WORD	kid	6	21	155
+WORD	body	6	10	153
+WORD	information	3	4	155
+WORD	back	13	33	153
+WORD	parent	1	4	155
+WORD	face	10	22	151
+WORD	level	14	31	153
+WORD	office	6	18	157
+WORD	door	1	3	161
+WORD	health	1	1	176
+WORD	art	4	8	168
+WORD	war	3	3	173
+WORD	history	1	3	161
+WORD	party	2	2	153
+WORD	result	6	18	147
+WORD	change	9	16	152
+WORD	morning	4	16	149
+WORD	reason	6	10	150
+WORD	research	2	4	154
+WORD	girl	4	10	161
+WORD	guy	3	14	156
+WORD	moment	4	11	157
+WORD	air	10	27	158
+WORD	teacher	1	1	150
+WORD	force	15	26	158
+WORD	education	3	9	156
+WORD	foot	10	19	157
+WORD	boy	2	2	150
+WORD	age	5	12	154
+WORD	policy	1	2	154
+WORD	process	11	19	150
+WORD	music	2	2	157
+WORD	market	5	11	153
+WORD	sense	5	13	153
+WORD	nation	3	10	149
+WORD	plan	6	9	154
+WORD	college	0	0	152
+WORD	interest	8	11	150
+WORD	death	4	7	158
+WORD	experience	5	9	153
+WORD	effect	5	14	151
+WORD	use	10	23	149
+WORD	class	7	18	151
+WORD	control	12	29	154
+WORD	care	9	20	155
+PASS at least100 distinct explicit common English inputs
+PASS actual English data bank
+PASS source POS isolated bank wn30:n:02787772
+PASS source details exist wn30:n:02787772
+PASS source POS isolated bank wn30:n:04139859
+PASS source details exist wn30:n:04139859
+PASS source POS isolated bank wn30:n:08420278
+PASS source details exist wn30:n:08420278
+PASS source POS isolated bank wn30:n:09213828
+PASS source details exist wn30:n:09213828
+PASS source POS isolated bank wn30:v:00688377
+PASS source details exist wn30:v:00688377
+PASS source POS isolated bank wn30:v:02310855
+PASS source details exist wn30:v:02310855
+PASS actual English data list
+PASS source POS isolated list wn30:n:05068080
+PASS source details exist wn30:n:05068080
+PASS source POS isolated list wn30:n:06481320
+PASS source details exist wn30:n:06481320
+PASS source POS isolated list wn30:v:00945853
+PASS source details exist wn30:v:00945853
+PASS source POS isolated list wn30:v:00946755
+PASS source details exist wn30:v:00946755
+PASS source POS isolated list wn30:v:02038791
+PASS source details exist wn30:v:02038791
+PASS source POS isolated list wn30:v:02039013
+PASS source details exist wn30:v:02039013
+PASS actual English data light
+PASS source POS isolated light wn30:a:00361837
+PASS source details exist wn30:a:00361837
+PASS source POS isolated light wn30:a:00408660
+PASS source details exist wn30:a:00408660
+PASS source POS isolated light wn30:a:00693570
+PASS source details exist wn30:a:00693570
+PASS source POS isolated light wn30:a:00993117
+PASS source details exist wn30:a:00993117
+PASS source POS isolated light wn30:a:01192393
+PASS source details exist wn30:a:01192393
+PASS source POS isolated light wn30:a:01906464
+PASS source details exist wn30:a:01906464
+PASS source POS isolated light wn30:a:02121424
+PASS source details exist wn30:a:02121424
+PASS source POS isolated light wn30:a:02320442
+PASS source details exist wn30:a:02320442
+PASS source POS isolated light wn30:a:02337329
+PASS source details exist wn30:a:02337329
+PASS source POS isolated light wn30:a:02401863
+PASS source details exist wn30:a:02401863
+PASS source POS isolated light wn30:a:02544525
+PASS source details exist wn30:a:02544525
+PASS source POS isolated light wn30:n:03665366
+PASS source details exist wn30:n:03665366
+PASS source POS isolated light wn30:n:03666591
+PASS source details exist wn30:n:03666591
+PASS source POS isolated light wn30:n:04951373
+PASS source details exist wn30:n:04951373
+PASS source POS isolated light wn30:n:04953380
+PASS source details exist wn30:n:04953380
+PASS source POS isolated light wn30:n:05018103
+PASS source details exist wn30:n:05018103
+PASS source POS isolated light wn30:n:09184668
+PASS source details exist wn30:n:09184668
+PASS source POS isolated light wn30:n:11473954
+PASS source details exist wn30:n:11473954
+PASS source POS isolated light wn30:n:13983304
+PASS source details exist wn30:n:13983304
+PASS source POS isolated light wn30:n:14563784
+PASS source details exist wn30:n:14563784
+PASS source POS isolated light wn30:r:00390941
+PASS source details exist wn30:r:00390941
+PASS source POS isolated light wn30:v:00291873
+PASS source details exist wn30:v:00291873
+PASS source POS isolated light wn30:v:01199881
+PASS source details exist wn30:v:01199881
+PASS source POS isolated light wn30:v:01958452
+PASS source details exist wn30:v:01958452
+PASS source POS isolated light wn30:v:01978700
+PASS source details exist wn30:v:01978700
+PASS source POS isolated light wn30:v:02229828
+PASS source details exist wn30:v:02229828
+PASS source POS isolated light wn30:v:02759614
+PASS source details exist wn30:v:02759614
+PASS actual English data help
+PASS source POS isolated help wn30:n:01207609
+PASS source details exist wn30:n:01207609
+PASS source POS isolated help wn30:n:05149832
+PASS source details exist wn30:n:05149832
+PASS source POS isolated help wn30:n:05154908
+PASS source details exist wn30:n:05154908
+PASS source POS isolated help wn30:n:09815790
+PASS source details exist wn30:n:09815790
+PASS source POS isolated help wn30:v:00082081
+PASS source details exist wn30:v:00082081
+PASS source POS isolated help wn30:v:01181295
+PASS source details exist wn30:v:01181295
+PASS source POS isolated help wn30:v:01193569
+PASS source details exist wn30:v:01193569
+PASS source POS isolated help wn30:v:02547586
+PASS source details exist wn30:v:02547586
+PASS source POS isolated help wn30:v:02726164
+PASS source details exist wn30:v:02726164
+PASS source POS isolated help wn30:v:02735897
+PASS source details exist wn30:v:02735897
+PASS actual English data go
+PASS source POS isolated go wn30:n:00504325
+PASS source details exist wn30:n:00504325
+PASS source POS isolated go wn30:n:00787061
+PASS source details exist wn30:n:00787061
+PASS source POS isolated go wn30:n:02678738
+PASS source details exist wn30:n:02678738
+PASS source POS isolated go wn30:n:15292069
+PASS source details exist wn30:n:15292069
+PASS source POS isolated go wn30:v:00149583
+PASS source details exist wn30:v:00149583
+PASS source POS isolated go wn30:v:00341560
+PASS source details exist wn30:v:00341560
+PASS source POS isolated go wn30:v:00358431
+PASS source details exist wn30:v:00358431
+PASS source POS isolated go wn30:v:00434374
+PASS source details exist wn30:v:00434374
+PASS source POS isolated go wn30:v:00539110
+PASS source details exist wn30:v:00539110
+PASS source POS isolated go wn30:v:00676267
+PASS source details exist wn30:v:00676267
+PASS source POS isolated go wn30:v:01076615
+PASS source details exist wn30:v:01076615
+PASS source POS isolated go wn30:v:01192773
+PASS source details exist wn30:v:01192773
+PASS source POS isolated go wn30:v:01318849
+PASS source details exist wn30:v:01318849
+PASS source POS isolated go wn30:v:01525666
+PASS source details exist wn30:v:01525666
+PASS source POS isolated go wn30:v:01835496
+PASS source details exist wn30:v:01835496
+PASS source POS isolated go wn30:v:01848718
+PASS source details exist wn30:v:01848718
+PASS source POS isolated go wn30:v:01864230
+PASS source details exist wn30:v:01864230
+PASS source POS isolated go wn30:v:02176268
+PASS source details exist wn30:v:02176268
+PASS source POS isolated go wn30:v:02372605
+PASS source details exist wn30:v:02372605
+PASS source POS isolated go wn30:v:02618149
+PASS source details exist wn30:v:02618149
+PASS source POS isolated go wn30:v:02659763
+PASS source details exist wn30:v:02659763
+PASS source POS isolated go wn30:v:02685951
+PASS source details exist wn30:v:02685951
+PASS source POS isolated go wn30:v:02686471
+PASS source details exist wn30:v:02686471
+PASS source POS isolated go wn30:v:02700455
+PASS source details exist wn30:v:02700455
+PASS source POS isolated go wn30:v:02721284
+PASS source details exist wn30:v:02721284
+PASS source POS isolated go wn30:v:02737876
+PASS source details exist wn30:v:02737876
+PASS actual English data happy
+PASS source POS isolated happy wn30:a:01000442
+PASS source details exist wn30:a:01000442
+PASS source POS isolated happy wn30:a:01048406
+PASS source details exist wn30:a:01048406
+PASS source POS isolated happy wn30:a:02565583
+PASS source details exist wn30:a:02565583
+PASS actual English data good
+PASS source POS isolated good wn30:a:00064787
+PASS source details exist wn30:a:00064787
+PASS source POS isolated good wn30:a:00106020
+PASS source details exist wn30:a:00106020
+PASS source POS isolated good wn30:a:00452883
+PASS source details exist wn30:a:00452883
+PASS source POS isolated good wn30:a:00832784
+PASS source details exist wn30:a:00832784
+PASS source POS isolated good wn30:a:01048762
+PASS source details exist wn30:a:01048762
+PASS source POS isolated good wn30:a:01068306
+PASS source details exist wn30:a:01068306
+PASS source POS isolated good wn30:a:01116026
+PASS source details exist wn30:a:01116026
+PASS source POS isolated good wn30:a:01166413
+PASS source details exist wn30:a:01166413
+PASS source POS isolated good wn30:a:01171213
+PASS source details exist wn30:a:01171213
+PASS source POS isolated good wn30:a:01333477
+PASS source details exist wn30:a:01333477
+PASS source POS isolated good wn30:a:01661289
+PASS source details exist wn30:a:01661289
+PASS source POS isolated good wn30:a:01983162
+PASS source details exist wn30:a:01983162
+PASS source POS isolated good wn30:a:02036934
+PASS source details exist wn30:a:02036934
+PASS source POS isolated good wn30:a:02226162
+PASS source details exist wn30:a:02226162
+PASS source POS isolated good wn30:a:02273643
+PASS source details exist wn30:a:02273643
+PASS source POS isolated good wn30:n:03076708
+PASS source details exist wn30:n:03076708
+PASS source POS isolated good wn30:n:04849241
+PASS source details exist wn30:n:04849241
+PASS source POS isolated good wn30:n:05142180
+PASS source details exist wn30:n:05142180
+PASS source POS isolated good wn30:r:00011093
+PASS source details exist wn30:r:00011093
+PASS source POS isolated good wn30:r:00057388
+PASS source details exist wn30:r:00057388
+PASS actual English data NASA
+PASS source POS isolated NASA wn30:n:08126290
+PASS source details exist wn30:n:08126290
+PASS actual English data children
+PASS source POS isolated children wn30:n:09917593
+PASS source details exist wn30:n:09917593
+PASS source POS isolated children wn30:n:09918248
+PASS source details exist wn30:n:09918248
+PASS source POS isolated children wn30:n:09918554
+PASS source details exist wn30:n:09918554
+PASS actual English data went
+PASS source POS isolated went wn30:v:00149583
+PASS source details exist wn30:v:00149583
+PASS source POS isolated went wn30:v:00341560
+PASS source details exist wn30:v:00341560
+PASS source POS isolated went wn30:v:00358431
+PASS source details exist wn30:v:00358431
+PASS source POS isolated went wn30:v:00434374
+PASS source details exist wn30:v:00434374
+PASS source POS isolated went wn30:v:00539110
+PASS source details exist wn30:v:00539110
+PASS source POS isolated went wn30:v:00676267
+PASS source details exist wn30:v:00676267
+PASS source POS isolated went wn30:v:01076615
+PASS source details exist wn30:v:01076615
+PASS source POS isolated went wn30:v:01192773
+PASS source details exist wn30:v:01192773
+PASS source POS isolated went wn30:v:01318849
+PASS source details exist wn30:v:01318849
+PASS source POS isolated went wn30:v:01525666
+PASS source details exist wn30:v:01525666
+PASS source POS isolated went wn30:v:01835496
+PASS source details exist wn30:v:01835496
+PASS source POS isolated went wn30:v:01848718
+PASS source details exist wn30:v:01848718
+PASS source POS isolated went wn30:v:01864230
+PASS source details exist wn30:v:01864230
+PASS source POS isolated went wn30:v:02176268
+PASS source details exist wn30:v:02176268
+PASS source POS isolated went wn30:v:02372605
+PASS source details exist wn30:v:02372605
+PASS source POS isolated went wn30:v:02618149
+PASS source details exist wn30:v:02618149
+PASS source POS isolated went wn30:v:02659763
+PASS source details exist wn30:v:02659763
+PASS source POS isolated went wn30:v:02685951
+PASS source details exist wn30:v:02685951
+PASS source POS isolated went wn30:v:02686471
+PASS source details exist wn30:v:02686471
+PASS source POS isolated went wn30:v:02700455
+PASS source details exist wn30:v:02700455
+PASS source POS isolated went wn30:v:02721284
+PASS source details exist wn30:v:02721284
+PASS source POS isolated went wn30:v:02737876
+PASS source details exist wn30:v:02737876
+PASS actual English data ablaze
+PASS source POS isolated ablaze wn30:a:00270496
+PASS source details exist wn30:a:00270496
+PASS source POS isolated ablaze wn30:a:00475308
+PASS source details exist wn30:a:00475308
+PASS source POS isolated ablaze wn30:a:01726021
+PASS source details exist wn30:a:01726021
+PASS actual list has separated Polish and English senses
+PASS actual Polish inflection domami to chałupami preserved
+WORDS=100 HITS=97 MEDIAN_MS=155 MAX_MS=176
+PEAK_BYTES=105402368
+FAILURES=0
+
+EXIT=0

@@ -13,6 +13,16 @@
 *.png binary
 *.nvda-addon binary
 *.gz binary
+# Generated WordNet data and verbatim license must retain manifest bytes.
+/Synonyms/wordnet-en-*.txt text eol=lf
+/Synonyms/LICENSE-WordNet.txt text eol=lf whitespace=-blank-at-eol
+/Synonyms/NOTICE-WordNet.txt text eol=lf
+# Empty example is a required final TSV column, not accidental whitespace.
+/Synonyms/wordnet-en-details.txt whitespace=-blank-at-eol
 # Preserve empty final columns in raw measurement tables/transcripts.
 /testy/wyniki/synonyms119/*.tsv whitespace=-blank-at-eol
 /testy/wyniki/synonyms119/*.log whitespace=-blank-at-eol
+# Raw speech and settings fixtures intentionally retain trailing spaces.
+/testy/wyniki/synonyms122/*.log whitespace=-blank-at-eol
+/testy/wyniki/synonyms122/nvda-speech.txt whitespace=-blank-at-eol
+/testy/wyniki/synonyms123/*.log whitespace=-blank-at-eol

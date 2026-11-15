@@ -1,0 +1,12 @@
+test_compressed_records_preserve_exact_source_rows (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_compressed_records_preserve_exact_source_rows) ... ok
+test_keeps_only_main_polish_lemmas_present_in_combined_synonyms (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_keeps_only_main_polish_lemmas_present_in_combined_synonyms) ... ok
+test_preserves_synset_per_meaning_instead_of_merging_zamek (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_preserves_synset_per_meaning_instead_of_merging_zamek) ... ok
+test_reads_dump_twice_because_morphology_precedes_senses (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_reads_dump_twice_because_morphology_precedes_senses) ... ok
+test_rejects_corrupt_binary_uuid_in_morphology (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_rejects_corrupt_binary_uuid_in_morphology) ... ok
+test_writes_hash_sorted_directory_with_exact_record_data (testy.test_build_synonym_forms.BuildSynonymFormsTests.test_writes_hash_sorted_directory_with_exact_record_data) ... ok
+
+----------------------------------------------------------------------
+Ran 6 tests in 0.027s
+
+OK
+EXIT=0

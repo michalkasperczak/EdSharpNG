@@ -1,0 +1,39 @@
+{
+  "archive": {
+    "path": "/mnt/c/EdSharpEnglishQA/wordnet.zip",
+    "sha256": "cbda5ea6eef7f36a97a43d4a75f85e07fccbb4f23657d27b4ccbc93e2646ab59",
+    "bytes": 10775600
+  },
+  "outputs": {
+    "synonyms": {
+      "sha256": "8344bc9c8aec24e551d1b98c3829ae02d56b92321acbe35fd913c6663953e6ec",
+      "bytes": 4567643
+    },
+    "details": {
+      "sha256": "70cf7d39b0cd38b900eaa8196ae3ee484cfee5627e8848c8e26346a473d2da16",
+      "bytes": 3981808
+    },
+    "exceptions": {
+      "sha256": "3478fa61d28f94feb226a2e6377cca27f39a9b7b810967c652a11ea5b6e905c2",
+      "bytes": 61074
+    },
+    "license": {
+      "sha256": "7731175a77952e259390b496fab905e57118b8d19ad3a8383c67eee724ff443f",
+      "bytes": 1625
+    },
+    "notice": {
+      "sha256": "2374cfacf2792f7694314908f1b2545b0d9b2d87bc613660f4ee6d1f8df639fd",
+      "bytes": 311
+    }
+  },
+  "counts": {
+    "source_synsets": 117659,
+    "usable_synsets": 45043,
+    "usable_lemmas": 60874,
+    "lemma_pos_pairs": 65636,
+    "index_rows": 91128,
+    "definitions": 45043,
+    "examples": 13332,
+    "exceptions": 3485
+  }
+}

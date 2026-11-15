@@ -1,0 +1,58 @@
+{
+  "version": "5.0.123",
+  "delivery_only": true,
+  "installed_bytes_unchanged": false,
+  "processes_unchanged": false,
+  "process_note": "Transfer issued no stop/start or installation commands; process set changed during transfer.",
+  "before": {
+    "installed": {
+      "sha256": "F3FD4557FE4DB448A1B208ACFB43E8EDD138CD832406E9CDCFB967EE81CBD675",
+      "path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe"
+    },
+    "host": "MICHAL",
+    "files": [],
+    "temp": "C:\\Users\\micha\\AppData\\Local\\Temp",
+    "processes": [
+      {
+        "id": 42164,
+        "path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe"
+      }
+    ],
+    "folder": "D:\\Projekty Codex\\Hermes"
+  },
+  "after": {
+    "installed": {
+      "sha256": "AF414D405C6B442C2849A2593FD4617DCC915CBF6DDD31F1FBEB5014CD6021D0",
+      "path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe"
+    },
+    "host": "MICHAL",
+    "files": [
+      {
+        "path": "D:\\Projekty Codex\\Hermes\\EdSharpNG_Setup_5.0.123.exe",
+        "sha256": "E189FF2FC19E44466BE74FDD8DA7F0DDEE3422D58D8563C0488A8821F3389B20",
+        "name": "EdSharpNG_Setup_5.0.123.exe",
+        "size": 113999216
+      },
+      {
+        "path": "D:\\Projekty Codex\\Hermes\\EdSharpNG_5.0.123.zip",
+        "sha256": "DA6021E8597E160592C4FE744D0F38355599287090D829D8DDA2719032584A67",
+        "name": "EdSharpNG_5.0.123.zip",
+        "size": 148421861
+      },
+      {
+        "path": "D:\\Projekty Codex\\Hermes\\EdSharpNG_5.0.123-Instrukcja.txt",
+        "sha256": "34122985A0775E5889133CB3A150E63F4EA87A9FFDF62D6D39F348F7EE12787A",
+        "name": "EdSharpNG_5.0.123-Instrukcja.txt",
+        "size": 1666
+      }
+    ],
+    "stageRemoved": true,
+    "processes": [
+      {
+        "id": 26472,
+        "path": "C:\\Program Files\\EdSharpNG\\EdSharpNG.exe"
+      }
+    ],
+    "folder": "D:\\Projekty Codex\\Hermes"
+  }
+}

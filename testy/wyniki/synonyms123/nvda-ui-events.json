@@ -1,0 +1,602 @@
+[
+  {
+    "label": "baseline-review123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Baseline only; previous automatic RED/GREEN speech is excluded from this manual retest"
+  },
+  {
+    "label": "readonly-settings-open",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Settings",
+          "active": true,
+          "controls": [
+            {
+              "type": "combo",
+              "name": "One step of indent is",
+              "text": "Tab character",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Tab character",
+                "Two spaces",
+                "Three spaces",
+                "Four spaces",
+                "Eight spaces"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "Słownik synonimów",
+              "text": "Oba",
+              "index": 2,
+              "focus": false,
+              "items": [
+                "Polski",
+                "Angielski",
+                "Oba"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "New files are saved as",
+              "text": "Markdown (md)",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Markdown (md)",
+                "Plain text (txt)",
+                "HTML (html)"
+              ]
+            },
+            {
+              "type": "text",
+              "name": "How many files the recent list keeps",
+              "text": "100",
+              "readOnly": false,
+              "focus": false
+            },
+            {
+              "type": "combo",
+              "name": "Read files that have no byte order mark as",
+              "text": "Detect from content (recommended)",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Detect from content (recommended)",
+                "UTF-8 with byte order mark",
+                "UTF-8 without byte order mark",
+                "UTF-16",
+                "Windows-1250 Central European",
+                "Latin 2 DOS (852)",
+                "Mazovia (Polish DOS)",
+                "Windows system default"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "Date is written as",
+              "text": "Long, as Windows writes it",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Long, as Windows writes it",
+                "Short, as Windows writes it",
+                "Year-month-day (2026-09-13)",
+                "Day.month.year (13.09.2026)",
+                "Do not insert a date"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "Time is written as",
+              "text": "Short, as Windows writes it",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Short, as Windows writes it",
+                "With seconds (14:35:02)",
+                "24-hour without seconds (14:35)",
+                "12-hour with am or pm",
+                "Do not insert a time"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "Quoted lines start with",
+              "text": "Greater-than (>)",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "Greater-than and a space (> )",
+                "Greater-than (>)",
+                "Two greater-thans (>> )",
+                "Vertical bar and a space (| )"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "When comparing or sorting, one item is",
+              "text": "One line",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "One line",
+                "One paragraph (blank line between)"
+              ]
+            },
+            {
+              "type": "combo",
+              "name": "Matching brackets to jump between",
+              "text": "Curly braces { }",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "Curly braces { }",
+                "Round brackets ( )",
+                "Square brackets [ ]",
+                "Angle brackets < >"
+              ]
+            },
+            {
+              "type": "text",
+              "name": "Command run by Prompt Command",
+              "text": "",
+              "readOnly": false,
+              "focus": false
+            },
+            {
+              "type": "text",
+              "name": "Language of the Go To Environment command",
+              "text": "python",
+              "readOnly": false,
+              "focus": false
+            },
+            {
+              "type": "text",
+              "name": "Formats to open converted or raw",
+              "text": "",
+              "readOnly": false,
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Edit file",
+              "text": "&Edit file",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Restore defaults",
+              "text": "&Restore defaults",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Cancel",
+              "text": "Cancel",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "OK",
+              "text": "OK",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Settings\r\nWrap long lines in new windows  pole wyboru  oznaczone  Alt+  w\r\n"
+  },
+  {
+    "label": "failed-write-spoken123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Start with the window maximized  pole wyboru  oznaczone  Alt+  x\r\nTurn indent mode on in new windows  pole wyboru  nieoznaczone  Alt+  i\r\nOne step of indent is  lista rozwijana  Tab character  zwinięte  Alt+  o\r\nSłownik synonimów  lista rozwijana  Oba  zwinięte  Alt+  s\r\nAngielski\r\nNie zapisano ustawień: Słownik synonimów. Sprawdź dostęp do pliku ustawień.\r\npole edycji  wielowierszowe  zaznaczone dom\r\n"
+  },
+  {
+    "label": "legacy-en-real-list123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "EN",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "depart zaznaczone\r\nThesaurus\r\nSynonimy dla: depart\r\nSynonimy  lista\r\ngo, czasownik, 1 z 19\r\n"
+  },
+  {
+    "label": "legacy-en-details123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "EN",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Znaczenie: go",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Szczegóły znaczenia",
+              "text": "Definicja:\r\nmove away from a place into another direction\r\n\r\nPrzykład:\r\nGo away before I start to cry\r\n\r\nŹródło: Princeton WordNet 3.0 (English).",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\n"
+  },
+  {
+    "label": "legacy-en-forms123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "EN",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: go",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Dostępne odmiany",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "gone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2",
+                "went, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: depart\r\nSynonimy  lista\r\ngo, czasownik, 1 z 19\r\nOdmiany: go\r\nDostępne odmiany  lista\r\ngone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2\r\n"
+  },
+  {
+    "label": "legacy-en-insert123",
+    "state": {
+      "pid": 2028,
+      "version": "5.0.123",
+      "document": "went",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "EN",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "went, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2\r\nWstawiono: went\r\npole edycji  wielowierszowe  went\r\n"
+  }
+]

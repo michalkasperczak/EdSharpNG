@@ -1,0 +1,227 @@
+## right-details
+lokum, rzeczownik, 2 z 12
+Znaczenie: lokum
+Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:
+
+
+## escaped-details
+Synonimy dla: dom
+Synonimy  lista
+lokum, rzeczownik, 2 z 12
+lokum, rzeczownik, 2 z 12
+
+## shift-enter-lokum
+Dostępne odmiany  lista
+loka, rzeczownik: liczba mnoga, rodzaj nijaki, 1 z 11
+
+## escaped-forms
+Synonimy  lista
+lokum, rzeczownik, 2 z 12
+
+## f1-help
+Help text  pole edycji  tylko do odczytu  wielowierszowe  zaznaczone 1264 znaki
+
+## meaning-button
+Synonimy dla: dom
+Synonimy  lista
+lokum, rzeczownik, 2 z 12
+lokum, rzeczownik, 2 z 12
+Znaczenie (w prawo)  przycisk
+Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:
+
+
+## inserted-form
+Synonimy dla: dom
+Synonimy  lista
+lokum, rzeczownik, 2 z 12
+Dostępne odmiany  lista
+loka, rzeczownik: liczba mnoga, rodzaj nijaki, 1 z 11
+lokach, rzeczownik: liczba mnoga, miejscownik, rodzaj nijaki, 2 z 11
+Wstawiono: lokach
+pole edycji  wielowierszowe  lokach
+
+## settings-save-english
+Settings
+Wrap long lines in new windows  pole wyboru  oznaczone  Alt+  w
+Choose a control to focus  lista  Alt+  c
+Wrap long lines in new windows
+Start with the window maximized
+Słownik synonimów
+Settings
+Słownik synonimów  lista rozwijana  Polski  zwinięte  Alt+  s
+Angielski
+One setting saved
+pole edycji  wielowierszowe  lokach
+
+## english-depart
+depart zaznaczone
+Thesaurus
+Synonimy dla: depart
+Synonimy  lista
+go, czasownik, 1 z 19
+
+## english-forms-go
+Odmiany: go
+Dostępne odmiany  lista
+gone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2
+
+## english-no-forms
+Synonimy  lista
+go, czasownik, 1 z 19
+go away, czasownik, 2 z 19
+Dostępność odmian  pole edycji  tylko do odczytu  wielowierszowe  Alt+  d  Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie 
+
+## ordinary-enter
+Synonimy dla: depart
+Synonimy  lista
+go away, czasownik, 2 z 19
+Wstawiono: go away
+pole edycji  wielowierszowe  go away
+
+## english-capitalized-form
+DEPART zaznaczone
+Thesaurus
+Synonimy dla: DEPART
+Synonimy  lista
+GO, czasownik, 1 z 19
+Dostępne odmiany  lista
+GONE, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2
+WENT, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2
+Wstawiono: WENT
+pole edycji  wielowierszowe  WENT
+
+## settings-palette-cancel
+Path List
+Open Folder
+Name:  pole edycji  zaznaczone C:\EdSharpUxApp
+EdSharp Synonyms UX QA - private - [Synonyms UX QA]
+pole edycji  wielowierszowe  WENT
+Command Palette
+Type to filter commands:  pole edycji  pusta
+t
+211 commands, New, Control+N (File)
+h
+8 commands, Replace with Regular Expression, Control+Shift+R (Delete)
+e
+2 commands, Thesaurus, Shift+F7 (Misc)
+s
+2 commands, Thesaurus, Shift+F7 (Misc)
+a
+2 commands, Thesaurus, Shift+F7 (Misc)
+u
+2 commands, Thesaurus, Shift+F7 (Misc)
+r
+2 commands, Thesaurus, Shift+F7 (Misc)
+u
+2 commands, Thesaurus, Shift+F7 (Misc)
+s
+2 commands, Thesaurus, Shift+F7 (Misc)
+spacja
+2 commands, Thesaurus, Shift+F7 (Misc)
+d
+1 commands, Thesaurus Dictionary (Misc)
+i
+1 commands, Thesaurus Dictionary (Misc)
+c
+1 commands, Thesaurus Dictionary (Misc)
+t
+1 commands, Thesaurus Dictionary (Misc)
+Thesaurus Dictionary
+Settings
+Słownik synonimów  lista rozwijana  Angielski  zwinięte  Alt+  s
+Oba
+pole edycji  wielowierszowe  WENT
+
+## both-list
+Command Palette
+Type to filter commands:  pole edycji  th
+t
+211 commands, New, Control+N (File)
+h
+8 commands, Replace with Regular Expression, Control+Shift+R (Delete)
+e
+2 commands, Thesaurus, Shift+F7 (Misc)
+s
+2 commands, Thesaurus, Shift+F7 (Misc)
+a
+2 commands, Thesaurus, Shift+F7 (Misc)
+u
+2 commands, Thesaurus, Shift+F7 (Misc)
+r
+2 commands, Thesaurus, Shift+F7 (Misc)
+u
+2 commands, Thesaurus, Shift+F7 (Misc)
+s
+2 commands, Thesaurus, Shift+F7 (Misc)
+spacja
+2 commands, Thesaurus, Shift+F7 (Misc)
+d
+1 commands, Thesaurus Dictionary (Misc)
+i
+1 commands, Thesaurus Dictionary (Misc)
+c
+1 commands, Thesaurus Dictionary (Misc)
+t
+1 commands, Thesaurus Dictionary (Misc)
+Thesaurus Dictionary
+Settings
+Słownik synonimów  lista rozwijana  Angielski  zwinięte  Alt+  s
+Oba
+One setting saved
+pole edycji  wielowierszowe  WENT
+list zaznaczone
+Thesaurus
+Synonimy dla: list
+Synonimy  lista
+epistoła, rzeczownik, 1 z 13, polski
+
+## f4-alias
+Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:
+
+
+## forms-button
+Synonimy dla: list
+Synonimy  lista
+epistoła, rzeczownik, 1 z 13, polski
+Znaczenie (w prawo)  przycisk
+Odmiany (Shift+Enter)  przycisk
+Dostępne odmiany  lista
+epistole, rzeczownik: liczba pojedyncza, rodzaj żeński, 1 z 11
+
+## final-packaged-grammar-and-persistence
+Synonimy dla: list
+Synonimy  lista
+epistoła, rzeczownik, 1 z 13, polski
+pole edycji  wielowierszowe  zaznaczone list
+cleanup zaznaczone
+Exit EdSharp
+Podgląd mowy NVDA
+Pokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p
+WindowsFormsParkingWindow
+pole edycji  wielowierszowe  zaznaczone dom
+Podgląd mowy NVDA
+Pokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p
+pole edycji  wielowierszowe  zaznaczone dom
+Thesaurus
+Synonimy dla: dom
+Synonimy  lista
+kąt, rzeczownik, 1 z 12, polski
+Dostępne odmiany  lista
+kącie, rzeczownik: liczba pojedyncza, miejscownik, rodzaj męskorzeczowy, 1 z 11
+kącie, rzeczownik: liczba pojedyncza, miejscownik, rodzaj męskorzeczowy, 1 z 11
+
+## missing-polish-resource
+Synonimy  lista
+kąt, rzeczownik, 1 z 12, polski
+Dostępność odmian  pole edycji  tylko do odczytu  wielowierszowe  Alt+  d  Brak indeksu form polskich synonimów. Lista synonimów nadal działa.
+
+## final-insert-after-warning
+Synonimy dla: dom
+Synonimy  lista
+kąt, rzeczownik, 1 z 12, polski
+Wstawiono: kąt
+pole edycji  wielowierszowe  kąt
+
+## final-undo
+Undo
+dom zaznaczone

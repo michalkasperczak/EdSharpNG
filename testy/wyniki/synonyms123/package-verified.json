@@ -1,0 +1,16 @@
+{
+  "version": "5.0.123",
+  "installed_files_verified": 1083,
+  "zip_entries": 1084,
+  "installer": {
+    "path": "/home/michal/projekty/edsharp/dist/EdSharpNG_Setup_5.0.123.exe",
+    "size": 113999216,
+    "sha256": "e189ff2fc19e44466be74fdd8da7f0ddee3422d58d8563c0488a8821f3389b20"
+  },
+  "zip": {
+    "path": "/home/michal/projekty/edsharp/dist/EdSharpNG_5.0.123.zip",
+    "size": 148421861,
+    "sha256": "da6021e8597e160592c4fe744d0f38355599287090d829d8dda2719032584a67"
+  },
+  "exe_sha256": "24b3c927d9b117443ccdb4e6c41453979927721bcbe2339d7b9c5be246fa4b2e"
+}

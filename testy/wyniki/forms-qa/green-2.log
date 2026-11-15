@@ -1,0 +1,67 @@
+PASS public source-attested forms provider exists
+PASS required public forms API exists
+PASS inflected selected Polish synonym resolves only its attested lexical lemma forms
+PASS Polish descriptions use grammar names rather than raw SGJP tags
+PASS wrong Polish source sense has no forms
+PASS wrong Polish part of speech has no forms
+PASS homonym does not borrow forms from another exact source sense
+PASS other homonym keeps its own exact source sense forms
+PASS corrupt optional Polish forms resource has explicit isolated error
+PASS English returns only attested exception forms and never invents goed
+PASS English exception description is honest about incomplete grammar scope
+PASS English does not cross part of speech
+PASS English does not cross source sense
+PASS corrupt optional English exceptions resource has explicit isolated error
+PASS real Polish resource accepts exact selected source dom
+PASS real Polish resource accepts exact selected source domami
+PASS real Polish resource accepts exact selected source wa¾ny
+PASS real Polish resource accepts exact selected source wa¾nego
+PASS real Polish resource accepts exact selected source sprawdzi†
+PASS real Polish resource accepts exact selected source sprawdziˆ
+PASS real Polish resource accepts exact selected source mam
+PASS real Polish resource accepts exact selected source zamek
+PASS real Polish resource accepts exact selected source dobry
+PASS real Polish resource accepts exact selected source dobrego
+PASS real Polish resource accepts exact selected source pi©kny
+PASS real Polish resource accepts exact selected source pi©knego
+PASS real Polish resource accepts exact selected source ˆadny
+PASS real Polish resource accepts exact selected source ˆadnymi
+PASS real Polish resource accepts exact selected source samoch¢d
+PASS real Polish resource accepts exact selected source samochodami
+PASS real Polish resource accepts exact selected source szybko
+PASS real Polish resource accepts exact selected source szybciej
+PASS real Polish resource accepts exact selected source lepiej
+PASS real Polish resource accepts exact selected source rado˜†
+PASS real Polish resource accepts exact selected source strach
+PASS real Polish resource accepts exact selected source nadzieja
+PASS real Polish resource accepts exact selected source prosty
+PASS real Polish resource accepts exact selected source gˆo˜ny
+PASS real Polish resource accepts exact selected source kot
+PASS real Polish resource accepts exact selected source kotami
+PASS real Polish resource accepts exact selected source kobieta
+PASS real Polish resource accepts exact selected source kobietami
+PASS real Polish resource accepts exact selected source pracowa†
+PASS real Polish resource accepts exact selected source zrobi†
+PASS real Polish resource accepts exact selected source ˜wiatˆo
+PASS real Polish resource accepts exact selected source lista
+PASS real Polish resource accepts exact selected source pomoc
+PASS real Polish resource accepts exact selected source dziecko
+PASS real Polish resource accepts exact selected source czˆowiek
+PASS real Polish resource accepts exact selected source miasto
+PASS real Polish resource accepts exact selected source droga
+PASS real resource exercised at least 30 ordinary Polish selections
+PASS real English exception/source selection went
+PASS real English exception/source selection gone
+PASS real English exception/source selection children
+PASS real English exception/source selection mice
+PASS real English exception/source selection better
+PASS real English exception/source selection best
+PASS real English exception/source selection was
+PASS real English exception/source selection were
+PASS real English exception/source selection did
+PASS real English exception/source selection made
+PASS real English exception/source selection ran
+PASS real English exception/source selection saw
+PASS real resource exercised English exception selections
+FAILURES=0
+EXIT=0

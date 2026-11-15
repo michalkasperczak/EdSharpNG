@@ -1,0 +1,26 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20261110134839
+Username: Hermes\Michal
+RunAs User: Hermes\Michal
+Configuration Name: 
+Machine: HERMES (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\WINDOWS\System32\WindowsPowerShell\v1.0\powershell.exe -NoProfile -ExecutionPolicy Bypass -File C:\EdSharpUxQA\install123-transaction.ps1
+Process ID: 4664
+PSVersion: 5.1.26100.9711
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.26100.9711
+BuildVersion: 10.0.26100.9711
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\EdSharpUxQA\install123-transaction.log
+INSTALL_EXIT=0
+INSTALLED_VERSION=5.0.9810.24574
+RESTORED_BYTES_EQUAL
+**********************
+Windows PowerShell transcript end
+End time: 20261110134901
+**********************

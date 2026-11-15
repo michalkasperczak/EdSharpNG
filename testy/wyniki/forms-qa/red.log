@@ -1,0 +1,3 @@
+FAIL public source-attested forms provider exists
+FAILURES=1
+EXIT=1

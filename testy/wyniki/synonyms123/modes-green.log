@@ -1,0 +1,34 @@
+PASS English meanings distinct, case insensitive, excludes self
+PASS explicit PL EN both isolates identical word and keeps PL first
+PASS runtime honors the same legacy English spellings as Settings: EN
+PASS runtime honors the same legacy English spellings as Settings:  en 
+PASS runtime honors the same legacy English spellings as Settings: "EN"
+PASS legacy both spellings preserve both languages: BOTH
+PASS legacy both spellings preserve both languages:  both 
+PASS legacy both spellings preserve both languages: "Both"
+PASS details dispatch exact language and sense, no lemma joins
+PASS missing English details nonfatal and explicit
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS invalid English details rejected as whole optional resource
+PASS missing EN warns but does not disable PL in both mode
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS malformed English base cannot return partial or wrong POS meanings
+PASS only source-attested irregular form resolves, exact POS, output lemma not guessed inflection
+PASS invalid mode defaults PL not interface or automatic English
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS invalid query explicit empty result not an exception or dictionary failure
+PASS corrupt optional exceptions warn but preserve literal English lookup
+PASS missing optional exceptions warn but preserve literal English lookup
+PASS missing optional exceptions explicitly explain missing irregular input
+PASS source capitalized lemma searchable case-insensitively, phrase capitalization preserved
+PASS language label formatter exists
+PASS both labels languages without leaking IDs or changing word-first single-mode display
+FAILURES=0
+
+EXIT=0

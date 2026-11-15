@@ -1,0 +1,36 @@
+## readonly-settings-open
+Settings
+Wrap long lines in new windows  pole wyboru  oznaczone  Alt+  w
+
+## failed-write-spoken123
+Start with the window maximized  pole wyboru  oznaczone  Alt+  x
+Turn indent mode on in new windows  pole wyboru  nieoznaczone  Alt+  i
+One step of indent is  lista rozwijana  Tab character  zwinięte  Alt+  o
+Słownik synonimów  lista rozwijana  Oba  zwinięte  Alt+  s
+Angielski
+Nie zapisano ustawień: Słownik synonimów. Sprawdź dostęp do pliku ustawień.
+pole edycji  wielowierszowe  zaznaczone dom
+
+## legacy-en-real-list123
+depart zaznaczone
+Thesaurus
+Synonimy dla: depart
+Synonimy  lista
+go, czasownik, 1 z 19
+
+## legacy-en-details123
+Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:
+
+
+## legacy-en-forms123
+Synonimy dla: depart
+Synonimy  lista
+go, czasownik, 1 z 19
+Odmiany: go
+Dostępne odmiany  lista
+gone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2
+
+## legacy-en-insert123
+went, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2
+Wstawiono: went
+pole edycji  wielowierszowe  went

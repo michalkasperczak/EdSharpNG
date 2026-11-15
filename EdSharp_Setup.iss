@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.120
-AppVerName=EdSharpNG 5.0.120 (beta)
-VersionInfoVersion=5.0.120
+AppVersion=5.0.123
+AppVerName=EdSharpNG 5.0.123 (beta)
+VersionInfoVersion=5.0.123
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -86,6 +86,8 @@ Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourc
 ; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
 Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
 Source: "Synonimy.cs";        DestDir: "{app}"; Flags: ignoreversion
+Source: "FormySynonimow.cs";     DestDir: "{app}"; Flags: ignoreversion
+Source: "SlownikiSynonimow.cs"; DestDir: "{app}"; Flags: ignoreversion
 Source: "SynonimyOdmiany.cs"; DestDir: "{app}"; Flags: ignoreversion
 ; Zadania.cs -- listy zadan (checklisty Markdown), funkcje czyste
 Source: "Zadania.cs";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist

@@ -1,0 +1,1701 @@
+[
+  {
+    "label": "baseline-utf8",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Baseline retained separately; earlier speech is not evidence of current tests"
+  },
+  {
+    "label": "right-details",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Znaczenie: lokum",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Szczegóły znaczenia",
+              "text": "Definicja:\r\nJednostka „chata”: mieszkanie, dom.\r\n\r\nPrzykład:\r\nJednostka „chata”: Przykro mi, że pocałowałeś klamkę, ale wczoraj cały dzień nie było mnie na chacie; następnym razem zadzwoń, żebym wiedział, że będziesz.\r\n\r\nŹródło: plWordNet 5.0.",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "lokum, rzeczownik, 2 z 12\r\nZnaczenie: lokum\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\n"
+  },
+  {
+    "label": "escaped-details",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": true,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: dom\r\nSynonimy  lista\r\nlokum, rzeczownik, 2 z 12\r\nlokum, rzeczownik, 2 z 12\r\n"
+  },
+  {
+    "label": "shift-enter-lokum",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: lokum",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Dostępne odmiany",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "loka, rzeczownik: liczba mnoga, rodzaj nijaki, 1 z 11",
+                "lokach, rzeczownik: liczba mnoga, miejscownik, rodzaj nijaki, 2 z 11",
+                "lokami, rzeczownik: liczba mnoga, narzędnik, rodzaj nijaki, 3 z 11",
+                "lokom, rzeczownik: liczba mnoga, celownik, rodzaj nijaki, 4 z 11",
+                "lokum, rzeczownik: liczba pojedyncza, celownik, rodzaj nijaki, 5 z 11",
+                "lokum, rzeczownik: liczba pojedyncza, dopełniacz, rodzaj nijaki, 6 z 11",
+                "lokum, rzeczownik: liczba pojedyncza, miejscownik, rodzaj nijaki, 7 z 11",
+                "lokum, rzeczownik: liczba pojedyncza, narzędnik, rodzaj nijaki, 8 z 11",
+                "lokum, rzeczownik: liczba pojedyncza, rodzaj nijaki, 9 z 11",
+                "lokum, rzeczownik: rodzaj nijaki, 10 z 11",
+                "loków, rzeczownik: liczba mnoga, dopełniacz, rodzaj nijaki, 11 z 11"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Dostępne odmiany  lista\r\nloka, rzeczownik: liczba mnoga, rodzaj nijaki, 1 z 11\r\n"
+  },
+  {
+    "label": "escaped-forms",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": true,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy  lista\r\nlokum, rzeczownik, 2 z 12\r\n"
+  },
+  {
+    "label": "f1-help",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Help: Synonimy dla: dom",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Help text",
+              "text": "Fields in this dialog:\r\n  Synonimy\r\n    Keys: Góra i dół: wybór synonimu. Enter: wstaw wyświetlony wyraz i zamknij. Escape: anuluj. Strzałka w prawo: definicja, przykład i źródło wybranego znaczenia. F4 jest dodatkowym skrótem do tych samych szczegółów. Shift+Enter: poświadczone odmiany wybranego synonimu. Escape ze szczegółów lub odmian wraca do tej samej pozycji. Te same działania mają przyciski Znaczenie i Odmiany. Wybór słownika: Opcje aplikacji, Słownik synonimów.\r\n  Znaczenie (w prawo)\r\n  Odmiany (Shift+Enter)\r\n\r\nDialog keys:\r\n  Control+Enter presses the accept button from anywhere.\r\n  Control+Home and Control+End move to the first and last field (outside multi-line text, where they move the caret).\r\n  Escape cancels. F1 shows this help.\r\n  F7 lists the dialog's controls in navigation order; choose one and press OK to focus it (type a letter to jump in the list).\r\n  In text fields: Control+C copies the current line when nothing is selected, Alt+C appends, Control+X cuts the line, Control+D deletes it, F8 and Shift+F8 start and complete a selection, Control+F8 copies all, Alt+F8 reads all, Alt+Y says counts, Shift+F1 speaks the field tip.\r\n  In lists: Control+C copies the current item, Alt+C appends it; Control+J then F3 search the list.\r\n",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "OK",
+              "text": "OK",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Help text  pole edycji  tylko do odczytu  wielowierszowe  zaznaczone 1264 znaki\r\n"
+  },
+  {
+    "label": "meaning-button",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12",
+                "lokum, rzeczownik, 2 z 12",
+                "chata, rzeczownik, 3 z 12",
+                "chałupa, rzeczownik, 4 z 12",
+                "dach, rzeczownik, 5 z 12",
+                "rodzina, rzeczownik, 6 z 12",
+                "familia, rzeczownik, 7 z 12",
+                "ród, rzeczownik, 8 z 12",
+                "klan, rzeczownik, 9 z 12",
+                "parantela, rzeczownik, 10 z 12",
+                "gospodarstwo, rzeczownik, 11 z 12",
+                "menaż, rzeczownik, 12 z 12"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Znaczenie: lokum",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Szczegóły znaczenia",
+              "text": "Definicja:\r\nJednostka „chata”: mieszkanie, dom.\r\n\r\nPrzykład:\r\nJednostka „chata”: Przykro mi, że pocałowałeś klamkę, ale wczoraj cały dzień nie było mnie na chacie; następnym razem zadzwoń, żebym wiedział, że będziesz.\r\n\r\nŹródło: plWordNet 5.0.",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: dom\r\nSynonimy  lista\r\nlokum, rzeczownik, 2 z 12\r\nlokum, rzeczownik, 2 z 12\r\nZnaczenie (w prawo)  przycisk\r\nSzczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\n"
+  },
+  {
+    "label": "inserted-form",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "lokach",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "pl",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: dom\r\nSynonimy  lista\r\nlokum, rzeczownik, 2 z 12\r\nDostępne odmiany  lista\r\nloka, rzeczownik: liczba mnoga, rodzaj nijaki, 1 z 11\r\nlokach, rzeczownik: liczba mnoga, miejscownik, rodzaj nijaki, 2 z 11\r\nWstawiono: lokach\r\npole edycji  wielowierszowe  lokach\r\n"
+  },
+  {
+    "label": "settings-save-english",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "lokach",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Settings\r\nWrap long lines in new windows  pole wyboru  oznaczone  Alt+  w\r\nChoose a control to focus  lista  Alt+  c\r\nWrap long lines in new windows\r\nStart with the window maximized\r\nSłownik synonimów\r\nSettings\r\nSłownik synonimów  lista rozwijana  Polski  zwinięte  Alt+  s\r\nAngielski\r\nOne setting saved\r\npole edycji  wielowierszowe  lokach\r\n"
+  },
+  {
+    "label": "english-depart",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "depart zaznaczone\r\nThesaurus\r\nSynonimy dla: depart\r\nSynonimy  lista\r\ngo, czasownik, 1 z 19\r\n"
+  },
+  {
+    "label": "english-forms-go",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: go",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Dostępne odmiany",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "gone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2",
+                "went, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Odmiany: go\r\nDostępne odmiany  lista\r\ngone, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2\r\n"
+  },
+  {
+    "label": "english-no-forms",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "depart",
+      "selectionStart": 0,
+      "selectionLength": 6,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: depart",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 1,
+              "focus": false,
+              "items": [
+                "go, czasownik, 1 z 19",
+                "go away, czasownik, 2 z 19",
+                "take leave, czasownik, 3 z 19",
+                "quit, czasownik, 4 z 19",
+                "part, czasownik, 5 z 19",
+                "start, czasownik, 6 z 19",
+                "start out, czasownik, 7 z 19",
+                "set forth, czasownik, 8 z 19",
+                "set off, czasownik, 9 z 19",
+                "set out, czasownik, 10 z 19",
+                "take off, czasownik, 11 z 19",
+                "sidetrack, czasownik, 12 z 19",
+                "digress, czasownik, 13 z 19",
+                "straggle, czasownik, 14 z 19",
+                "leave, czasownik, 15 z 19",
+                "pull up stakes, czasownik, 16 z 19",
+                "deviate, czasownik, 17 z 19",
+                "vary, czasownik, 18 z 19",
+                "diverge, czasownik, 19 z 19"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: go away",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Dostępność odmian",
+              "text": "Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie zgaduje form.",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy  lista\r\ngo, czasownik, 1 z 19\r\ngo away, czasownik, 2 z 19\r\nDostępność odmian  pole edycji  tylko do odczytu  wielowierszowe  Alt+  d  Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie \r\n"
+  },
+  {
+    "label": "ordinary-enter",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "go away",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: depart\r\nSynonimy  lista\r\ngo away, czasownik, 2 z 19\r\nWstawiono: go away\r\npole edycji  wielowierszowe  go away\r\n"
+  },
+  {
+    "label": "english-capitalized-form",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "WENT",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "DEPART zaznaczone\r\nThesaurus\r\nSynonimy dla: DEPART\r\nSynonimy  lista\r\nGO, czasownik, 1 z 19\r\nDostępne odmiany  lista\r\nGONE, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 1 z 2\r\nWENT, angielska forma nieregularna, poświadczona w Princeton WordNet 3.0; zestaw wyjątków, nie pełny paradygmat, 2 z 2\r\nWstawiono: WENT\r\npole edycji  wielowierszowe  WENT\r\n"
+  },
+  {
+    "label": "settings-palette-cancel",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "WENT",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "en",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Path List\r\nOpen Folder\r\nName:  pole edycji  zaznaczone C:\\EdSharpUxApp\r\nEdSharp Synonyms UX QA - private - [Synonyms UX QA]\r\npole edycji  wielowierszowe  WENT\r\nCommand Palette\r\nType to filter commands:  pole edycji  pusta\r\nt\r\n211 commands, New, Control+N (File)\r\nh\r\n8 commands, Replace with Regular Expression, Control+Shift+R (Delete)\r\ne\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\ns\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\na\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nu\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nr\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nu\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\ns\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nspacja\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nd\r\n1 commands, Thesaurus Dictionary (Misc)\r\ni\r\n1 commands, Thesaurus Dictionary (Misc)\r\nc\r\n1 commands, Thesaurus Dictionary (Misc)\r\nt\r\n1 commands, Thesaurus Dictionary (Misc)\r\nThesaurus Dictionary\r\nSettings\r\nSłownik synonimów  lista rozwijana  Angielski  zwinięte  Alt+  s\r\nOba\r\npole edycji  wielowierszowe  WENT\r\n"
+  },
+  {
+    "label": "both-list",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "list",
+      "selectionStart": 0,
+      "selectionLength": 4,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: list",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "epistoła, rzeczownik, 1 z 13, polski",
+                "e-mail, rzeczownik, 2 z 13, polski",
+                "mail, rzeczownik, 3 z 13, polski",
+                "mejl, rzeczownik, 4 z 13, polski",
+                "tilt, rzeczownik, 5 z 13, English",
+                "inclination, rzeczownik, 6 z 13, English",
+                "lean, rzeczownik, 7 z 13, English",
+                "leaning, rzeczownik, 8 z 13, English",
+                "listing, rzeczownik, 9 z 13, English",
+                "name, czasownik, 10 z 13, English",
+                "number, czasownik, 11 z 13, English",
+                "heel, czasownik, 12 z 13, English",
+                "lean, czasownik, 13 z 13, English"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Command Palette\r\nType to filter commands:  pole edycji  th\r\nt\r\n211 commands, New, Control+N (File)\r\nh\r\n8 commands, Replace with Regular Expression, Control+Shift+R (Delete)\r\ne\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\ns\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\na\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nu\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nr\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nu\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\ns\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nspacja\r\n2 commands, Thesaurus, Shift+F7 (Misc)\r\nd\r\n1 commands, Thesaurus Dictionary (Misc)\r\ni\r\n1 commands, Thesaurus Dictionary (Misc)\r\nc\r\n1 commands, Thesaurus Dictionary (Misc)\r\nt\r\n1 commands, Thesaurus Dictionary (Misc)\r\nThesaurus Dictionary\r\nSettings\r\nSłownik synonimów  lista rozwijana  Angielski  zwinięte  Alt+  s\r\nOba\r\nOne setting saved\r\npole edycji  wielowierszowe  WENT\r\nlist zaznaczone\r\nThesaurus\r\nSynonimy dla: list\r\nSynonimy  lista\r\nepistoła, rzeczownik, 1 z 13, polski\r\n"
+  },
+  {
+    "label": "f4-alias",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "list",
+      "selectionStart": 0,
+      "selectionLength": 4,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: list",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "epistoła, rzeczownik, 1 z 13, polski",
+                "e-mail, rzeczownik, 2 z 13, polski",
+                "mail, rzeczownik, 3 z 13, polski",
+                "mejl, rzeczownik, 4 z 13, polski",
+                "tilt, rzeczownik, 5 z 13, English",
+                "inclination, rzeczownik, 6 z 13, English",
+                "lean, rzeczownik, 7 z 13, English",
+                "leaning, rzeczownik, 8 z 13, English",
+                "listing, rzeczownik, 9 z 13, English",
+                "name, czasownik, 10 z 13, English",
+                "number, czasownik, 11 z 13, English",
+                "heel, czasownik, 12 z 13, English",
+                "lean, czasownik, 13 z 13, English"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Znaczenie: epistoła",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Szczegóły znaczenia",
+              "text": "Definicja:\r\nJednostka „epistoła”: list (szczególnie długi), wiadomość zapisana na kartce (kartkach) papieru i zapieczętowana lub wysłana do adresata w kopercie.\r\n\r\nPrzykład:\r\nJednostka „epistoła”: Marto, oczekuję szczegółowych epistoł z Harvardu.\r\n\r\nŹródło: plWordNet 5.0.",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Szczegóły znaczenia  pole edycji  tylko do odczytu  wielowierszowe  Alt+  s  Definicja:\r\n\r\n"
+  },
+  {
+    "label": "forms-button",
+    "state": {
+      "pid": 132,
+      "version": "5.0.122",
+      "document": "list",
+      "selectionStart": 0,
+      "selectionLength": 4,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: list",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "epistoła, rzeczownik, 1 z 13, polski",
+                "e-mail, rzeczownik, 2 z 13, polski",
+                "mail, rzeczownik, 3 z 13, polski",
+                "mejl, rzeczownik, 4 z 13, polski",
+                "tilt, rzeczownik, 5 z 13, English",
+                "inclination, rzeczownik, 6 z 13, English",
+                "lean, rzeczownik, 7 z 13, English",
+                "leaning, rzeczownik, 8 z 13, English",
+                "listing, rzeczownik, 9 z 13, English",
+                "name, czasownik, 10 z 13, English",
+                "number, czasownik, 11 z 13, English",
+                "heel, czasownik, 12 z 13, English",
+                "lean, czasownik, 13 z 13, English"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: epistoła",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Dostępne odmiany",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "epistole, rzeczownik: liczba pojedyncza, rodzaj żeński, 1 z 11",
+                "epistoł, rzeczownik: liczba mnoga, dopełniacz, rodzaj żeński, 2 z 11",
+                "epistoła, rzeczownik: liczba pojedyncza, mianownik, rodzaj żeński, 3 z 11",
+                "epistołach, rzeczownik: liczba mnoga, miejscownik, rodzaj żeński, 4 z 11",
+                "epistołami, rzeczownik: liczba mnoga, narzędnik, rodzaj żeński, 5 z 11",
+                "epistoło, rzeczownik: liczba pojedyncza, wołacz, rodzaj żeński, 6 z 11",
+                "epistołom, rzeczownik: liczba mnoga, celownik, rodzaj żeński, 7 z 11",
+                "epistoły, rzeczownik: liczba mnoga, rodzaj żeński, 8 z 11",
+                "epistoły, rzeczownik: liczba pojedyncza, dopełniacz, rodzaj żeński, 9 z 11",
+                "epistołą, rzeczownik: liczba pojedyncza, narzędnik, rodzaj żeński, 10 z 11",
+                "epistołę, rzeczownik: liczba pojedyncza, biernik, rodzaj żeński, 11 z 11"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: list\r\nSynonimy  lista\r\nepistoła, rzeczownik, 1 z 13, polski\r\nZnaczenie (w prawo)  przycisk\r\nOdmiany (Shift+Enter)  przycisk\r\nDostępne odmiany  lista\r\nepistole, rzeczownik: liczba pojedyncza, rodzaj żeński, 1 z 11\r\n"
+  },
+  {
+    "label": "final-packaged-grammar-and-persistence",
+    "state": {
+      "pid": 3620,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12, polski",
+                "lokum, rzeczownik, 2 z 12, polski",
+                "chata, rzeczownik, 3 z 12, polski",
+                "chałupa, rzeczownik, 4 z 12, polski",
+                "dach, rzeczownik, 5 z 12, polski",
+                "rodzina, rzeczownik, 6 z 12, polski",
+                "familia, rzeczownik, 7 z 12, polski",
+                "ród, rzeczownik, 8 z 12, polski",
+                "klan, rzeczownik, 9 z 12, polski",
+                "parantela, rzeczownik, 10 z 12, polski",
+                "gospodarstwo, rzeczownik, 11 z 12, polski",
+                "menaż, rzeczownik, 12 z 12, polski"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: kąt",
+          "active": true,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Dostępne odmiany",
+              "index": 0,
+              "focus": true,
+              "items": [
+                "kącie, rzeczownik: liczba pojedyncza, miejscownik, rodzaj męskorzeczowy, 1 z 11",
+                "kącie, rzeczownik: liczba pojedyncza, wołacz, rodzaj męskorzeczowy, 2 z 11",
+                "kąt, rzeczownik: liczba pojedyncza, mianownik, biernik, rodzaj męskorzeczowy, 3 z 11",
+                "kąta, rzeczownik: liczba pojedyncza, dopełniacz, rodzaj męskorzeczowy, 4 z 11",
+                "kątach, rzeczownik: liczba mnoga, miejscownik, rodzaj męskorzeczowy, 5 z 11",
+                "kątami, rzeczownik: liczba mnoga, narzędnik, rodzaj męskorzeczowy, 6 z 11",
+                "kątem, rzeczownik: liczba pojedyncza, narzędnik, rodzaj męskorzeczowy, 7 z 11",
+                "kątom, rzeczownik: liczba mnoga, celownik, rodzaj męskorzeczowy, 8 z 11",
+                "kątowi, rzeczownik: liczba pojedyncza, celownik, rodzaj męskorzeczowy, 9 z 11",
+                "kąty, rzeczownik: liczba mnoga, mianownik, biernik, wołacz, rodzaj męskorzeczowy, 10 z 11",
+                "kątów, rzeczownik: liczba mnoga, dopełniacz, rodzaj męskorzeczowy, 11 z 11"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: list\r\nSynonimy  lista\r\nepistoła, rzeczownik, 1 z 13, polski\r\npole edycji  wielowierszowe  zaznaczone list\r\ncleanup zaznaczone\r\nExit EdSharp\r\nPodgląd mowy NVDA\r\nPokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p\r\nWindowsFormsParkingWindow\r\npole edycji  wielowierszowe  zaznaczone dom\r\nPodgląd mowy NVDA\r\nPokaż podgląd mowy przy starcie  pole wyboru  nieoznaczone  Alt+  p\r\npole edycji  wielowierszowe  zaznaczone dom\r\nThesaurus\r\nSynonimy dla: dom\r\nSynonimy  lista\r\nkąt, rzeczownik, 1 z 12, polski\r\nDostępne odmiany  lista\r\nkącie, rzeczownik: liczba pojedyncza, miejscownik, rodzaj męskorzeczowy, 1 z 11\r\nkącie, rzeczownik: liczba pojedyncza, miejscownik, rodzaj męskorzeczowy, 1 z 11\r\n"
+  },
+  {
+    "label": "missing-polish-resource",
+    "state": {
+      "pid": 3620,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": false,
+          "controls": []
+        },
+        {
+          "title": "Synonimy dla: dom",
+          "active": false,
+          "controls": [
+            {
+              "type": "list",
+              "name": "Synonimy",
+              "index": 0,
+              "focus": false,
+              "items": [
+                "kąt, rzeczownik, 1 z 12, polski",
+                "lokum, rzeczownik, 2 z 12, polski",
+                "chata, rzeczownik, 3 z 12, polski",
+                "chałupa, rzeczownik, 4 z 12, polski",
+                "dach, rzeczownik, 5 z 12, polski",
+                "rodzina, rzeczownik, 6 z 12, polski",
+                "familia, rzeczownik, 7 z 12, polski",
+                "ród, rzeczownik, 8 z 12, polski",
+                "klan, rzeczownik, 9 z 12, polski",
+                "parantela, rzeczownik, 10 z 12, polski",
+                "gospodarstwo, rzeczownik, 11 z 12, polski",
+                "menaż, rzeczownik, 12 z 12, polski"
+              ]
+            },
+            {
+              "type": "button",
+              "name": "Znaczenie (w prawo)",
+              "text": "Znaczenie (w prawo)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Odmiany (Shift+Enter)",
+              "text": "Odmiany (Shift+Enter)",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Anuluj",
+              "text": "&Anuluj",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wstaw",
+              "text": "&Wstaw",
+              "focus": false
+            }
+          ]
+        },
+        {
+          "title": "Odmiany: kąt",
+          "active": true,
+          "controls": [
+            {
+              "type": "text",
+              "name": "Dostępność odmian",
+              "text": "Brak indeksu form polskich synonimów. Lista synonimów nadal działa.",
+              "readOnly": true,
+              "focus": true
+            },
+            {
+              "type": "button",
+              "name": "Help",
+              "text": "&Help",
+              "focus": false
+            },
+            {
+              "type": "button",
+              "name": "Wróć",
+              "text": "&Wróć",
+              "focus": false
+            }
+          ]
+        }
+      ]
+    },
+    "speechDelta": "Synonimy  lista\r\nkąt, rzeczownik, 1 z 12, polski\r\nDostępność odmian  pole edycji  tylko do odczytu  wielowierszowe  Alt+  d  Brak indeksu form polskich synonimów. Lista synonimów nadal działa.\r\n"
+  },
+  {
+    "label": "final-insert-after-warning",
+    "state": {
+      "pid": 3620,
+      "version": "5.0.122",
+      "document": "kąt",
+      "selectionStart": 0,
+      "selectionLength": 0,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Synonimy dla: dom\r\nSynonimy  lista\r\nkąt, rzeczownik, 1 z 12, polski\r\nWstawiono: kąt\r\npole edycji  wielowierszowe  kąt\r\n"
+  },
+  {
+    "label": "final-undo",
+    "state": {
+      "pid": 3620,
+      "version": "5.0.122",
+      "document": "dom",
+      "selectionStart": 0,
+      "selectionLength": 3,
+      "dictionary": "both",
+      "forms": [
+        {
+          "title": "Synonyms UX QA",
+          "active": true,
+          "controls": []
+        },
+        {
+          "title": "EdSharp Synonyms UX QA - private - [Synonyms UX QA]",
+          "active": true,
+          "controls": []
+        }
+      ]
+    },
+    "speechDelta": "Undo\r\ndom zaznaczone\r\n"
+  }
+]

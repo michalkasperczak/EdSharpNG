@@ -1,0 +1,39 @@
+{
+  "version": "5.0.121",
+  "public": false,
+  "independent_review": "deleg_c6a86d77",
+  "review_resolution": {
+    "untracked_dependencies": "added to index; installer and ZIP include exact bytes, installation verified 1082 files",
+    "missing_optional_exceptions": "reproduced FAILURES=2 then fixed FAILURES=0; missing-file warning read by live NVDA",
+    "sync_load": "measured on packaged .NET binary: PL median348/max375ms; EN median150/max169ms; both median521/max577ms; no unmeasured caching refactor"
+  },
+  "reviewed_final_source_sha256": {
+    "SlownikiSynonimow.cs": "6a1d1f2d76d67a903b026709adcb2144d565d68948fa3d93035f01f4235abd7a",
+    "testy/test_slowniki_synonimow.cs": "d76cd55fe33b8188796d81b158369071d9dcd49e218cd0566632fd3ee0ea720e",
+    "EdSharp.cs": "0efa8cf05b0f994c648479c3a4167629366e4bb59dd425669c780c557d3df897",
+    "BuildEdSharp.cmd": "5365096f123d03f4541d3b8f3bc51ab5b33911040962a325fc07f0460e804b2e",
+    "EdSharp_Setup.iss": "79e5827f0dcb25fb3422886738633d887e19d27e46918d1ab2e5fec3282a6e55",
+    "build_installer_garfield.sh": "a3482d00e5b7abc385f56417935289b1a142bdee1f61105c202e89d400f67875",
+    "testy/test_synonyms_ui_contract.py": "575c64cc24ec2403e719c58b7eacce23c7c645605a2293bf64a6b28caef0bda0"
+  },
+  "exe_sha256": "ff027c0669fd857302e6cf3d3462bcb027e77ee26eb66d9df3fcde4972ef94c4",
+  "process_id": 2188,
+  "nvda_speech_checks": [
+    "inflamed, przymiotnik, 1 z 9, English",
+    "Wstawiono: inflamed",
+    "Nie można odczytać angielskich form nieregularnych. Wyszukiwanie haseł podstawowych nadal działa."
+  ],
+  "private_profile_mode": "[Data]\nIndentMode=0\n[Options]\nSynonymDictionary=\"both\"\n",
+  "saved_nondefault_mode_loaded_after_restart": "English selection observed in real chooser on fresh process",
+  "offline_test": "all firewall profiles enabled; outbound blocked only for own RealTests.exe; actual packaged dictionary provider passed; rule removed",
+  "installation": {
+    "exit": 0,
+    "files_byte_equal": 1082,
+    "worker_registry_and_shortcut_restored_byte_for_byte": true
+  },
+  "limitations": [
+    "English irregular inputs use only source .exc entries; inserted English synonyms remain lemmas",
+    "No cache for full dictionary indexes; measured cost stated above",
+    "No publication or main-computer installation performed"
+  ]
+}

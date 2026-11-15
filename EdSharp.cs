@@ -56,7 +56,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.120";
+public const string VersionString = "5.0.123";
 // GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
 // NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
 // gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
@@ -1411,7 +1411,7 @@ public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuE
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
 public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeList, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeList, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
 public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
@@ -1874,6 +1874,7 @@ menuMiscSpellCheck = CreateMenuItem("Spell Check", "F7", menuItem_Click, "child 
 // ktore klawisza Aplikacje nie maja (laptopy, klawiatury brajlowskie).
 menuMiscSpellingWordMenu = CreateMenuItem("Word Spelling Menu", "Apps", menuItem_Click, "child silent");
 menuMiscThesaurus = CreateMenuItem("Thesaurus", "Shift+F7", menuItem_Click, "child speak");
+menuMiscSynonymDictionary = CreateMenuItem("Thesaurus Dictionary ...", "", menuItem_Click, "frame speak");
 menuMiscLookupTerm = CreateMenuItem("Lookup Term", "Alt+F7", menuItem_Click, "frame silent");
 menuMiscTranslateLanguage = CreateMenuItem("Translate Language", "Alt+Shift+F7", menuItem_Click, "frame speak");
 // KOMUNIKAT MOWI SKUTEK, NIE NAZWE KOMENDY (jego zgloszenie 03.09.2026:
@@ -2232,7 +2233,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 // KOLEJNOSC MA ZNACZENIE: to AddRange stoi PONIZEJ tworzenia pozycji przypisow
 // i komentarzy (dawne menuMisc*), bo od 5.0.95 nawigacja po nich wisi wlasnie
 // tutaj.  Gdy AddRange bylo wyzej (linia ~1693), pozycje jeszcze NIE ISTNIALY
@@ -4688,6 +4689,10 @@ OpenOrActivateWindow(App.SpeechLog, 0);
 
 if (menuItem == menuMiscThesaurus) {
 Thesaurus();
+}
+
+if (menuItem == menuMiscSynonymDictionary) {
+ChooseSynonymDictionary();
 }
 
 if (menuItem == menuMiscLookupTerm) {
@@ -8070,14 +8075,19 @@ rtb.Index = iStart;
 }
 } // SpellCheck method
 
+public void ChooseSynonymDictionary() {
+PokazUstawienia("SynonymDictionary");
+} // ChooseSynonymDictionary method
+
 public void Thesaurus() {
 int iStart, iEnd;
-string sFile, sText;
+string sText;
 object[] aResults;
 List<Synonimy.Grupa> lGroups;
 List<string> lValues = new List<string>();
 List<string> lDisplay = new List<string>();
 List<string> lSenseIds = new List<string>();
+List<string> lParts = new List<string>();
 
 HomerRichTextBox rtb = this.Child.RTB;
 if (rtb.SelectionLength == 0) {
@@ -8099,18 +8109,11 @@ AddMessage("Zaznacz jedno słowo.");
 return;
 }
 
-sFile = Path.Combine(App.ProgramDir, "Synonyms", "plwordnet-synonyms.txt");
-if (!Synonimy.Load(sFile)) {
-AddMessage("Nie można wczytać słownika synonimów.");
-return;
-}
-lGroups = Synonimy.Find(sText);
-if (Synonimy.FormsError.Length > 0) {
-AddMessage(Synonimy.FormsError);
-return;
-}
+string sDictionary = SlownikiSynonimow.NormalizeMode(App.ReadOption("SynonymDictionary", "pl"));
+lGroups = SlownikiSynonimow.Find(Path.Combine(App.ProgramDir, "Synonyms"), sText, sDictionary);
+if (SlownikiSynonimow.Error.Length > 0) AddMessage(SlownikiSynonimow.Error);
 if (lGroups.Count == 0) {
-AddMessage("Nie znaleziono synonimów dla: " + sText);
+if (SlownikiSynonimow.Error.Length == 0) AddMessage("Nie znaleziono synonimów dla: " + sText);
 return;
 }
 
@@ -8119,13 +8122,14 @@ foreach (Synonimy.Grupa group in lGroups) iTotal += group.Synonyms.Count;
 for (int iGroup = 0; iGroup < lGroups.Count; iGroup++) {
 Synonimy.Grupa group = lGroups[iGroup];
 foreach (string sSynonym in group.Synonyms) {
-lValues.Add(sSynonym);
+lValues.Add(Synonimy.ApplyCapitalization(sText, sSynonym));
 lSenseIds.Add(group.SenseId);
-lDisplay.Add(Synonimy.FormatEntry(sSynonym, group.PartOfSpeech, lValues.Count, iTotal));
+lParts.Add(group.PartOfSpeech);
+lDisplay.Add(SlownikiSynonimow.FormatEntry(lValues[lValues.Count - 1], group.PartOfSpeech, group.SenseId, lValues.Count, iTotal, sDictionary));
 }
 }
 
-string sChoice = Dialog.PickSynonyms("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), lSenseIds.ToArray());
+string sChoice = Dialog.PickSynonyms("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), lSenseIds.ToArray(), lParts.ToArray(), Path.Combine(App.ProgramDir, "Synonyms"));
 if (sChoice.Length == 0) return;
 sChoice = Synonimy.ApplyCapitalization(sText, sChoice);
 iEnd = iStart + sText.Length;
@@ -8540,6 +8544,10 @@ catch {}
 // wpisane warianty ("yes", "1250") na kanoniczne za samo zajrzenie w okno.
 // Kto nic nie zmienil, ma plik nietkniety.
 public void PokazUstawienia() {
+PokazUstawienia("");
+} // PokazUstawienia wrapper
+
+public void PokazUstawienia(string sInitialOption) {
 List<Opcja> lOpcje = Ustawienia.Spis();
 
 LbcDialog dlg = new LbcDialog("Settings", this);
@@ -8599,6 +8607,7 @@ dPola[o.Klucz] = dlg.addInputBox(o.Etykieta, sTeraz ?? "", o.Podpowiedz);
 }
 }
 
+if (dPola.ContainsKey(sInitialOption)) dlg.setInitialFocus(dPola[sInitialOption]);
 string sPrzycisk = dlg.runWithButtons(new string[] {"OK", "Cancel", "&Restore defaults", "&Edit file"});
 if (sPrzycisk.Length == 0 || string.Equals(sPrzycisk, "Cancel", StringComparison.OrdinalIgnoreCase)) { dlg.Dispose(); return; }
 
@@ -8614,19 +8623,22 @@ if (sPrzycisk.IndexOf("Restore defaults", StringComparison.OrdinalIgnoreCase) >=
 dlg.Dispose();
 if (Dialog.Confirm("Confirm", "Restore every setting in this window to its default?", "N") != "Y") return;
 int iPrzywrocone = 0;
+List<string> lNieprzywrocone = new List<string>();
 foreach (Opcja o in lOpcje) {
 if (Ustawienia.Pomijany(o.Klucz)) continue;
 if (App.ReadOption(o.Klucz, o.Domyslna) == o.Domyslna) continue;
-App.WriteOption(o.Klucz, o.Domyslna);
-iPrzywrocone++;
+if (App.WriteOption(o.Klucz, o.Domyslna)) iPrzywrocone++;
+else lNieprzywrocone.Add(o.Etykieta.Replace("&", ""));
 }
 RefreshOriginalDocumentTitles();
-AddMessage(iPrzywrocone == 0 ? "Every setting was already at its default" : iPrzywrocone + " settings restored to defaults");
+if (lNieprzywrocone.Count > 0) AddMessage((iPrzywrocone > 0 ? "Przywrócono ustawień: " + iPrzywrocone + ". " : "") + "Nie zapisano ustawień domyślnych: " + string.Join(", ", lNieprzywrocone.ToArray()) + ". Sprawdź dostęp do pliku ustawień.", true);
+else AddMessage(iPrzywrocone == 0 ? "Every setting was already at its default" : iPrzywrocone + " settings restored to defaults");
 return;
 }
 
 // OK: zapis tylko tego, co czlowiek naprawde zmienil.
 int iZmienione = 0;
+List<string> lNiezapisane = new List<string>();
 foreach (Opcja o in lOpcje) {
 if (!dPola.ContainsKey(o.Klucz)) continue;
 Control ctl = dPola[o.Klucz];
@@ -8650,8 +8662,8 @@ if (Ustawienia.CzyWlaczone(sStara) == ((CheckBox) ctl).Checked) continue;
 }
 else if (sNowa == sStara) continue;
 
-App.WriteOption(o.Klucz, sNowa);
-iZmienione++;
+if (App.WriteOption(o.Klucz, sNowa)) iZmienione++;
+else lNiezapisane.Add(o.Etykieta.Replace("&", ""));
 }
 dlg.Dispose();
 
@@ -8664,7 +8676,8 @@ dlg.Dispose();
 // potwierdzenie zapisu przepadalo.  Zgloszenie Michala 13.09.2026: "Settings.
 // Enter zapisuje chyba, ale nie mowi Saved".
 RefreshOriginalDocumentTitles();
-if (iZmienione == 0) AddMessage("No settings changed", true);
+if (lNiezapisane.Count > 0) AddMessage((iZmienione > 0 ? "Zapisano ustawień: " + iZmienione + ". " : "") + "Nie zapisano ustawień: " + string.Join(", ", lNiezapisane.ToArray()) + ". Sprawdź dostęp do pliku ustawień.", true);
+else if (iZmienione == 0) AddMessage("No settings changed", true);
 else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved", true);
 } // PokazUstawienia method
 
@@ -19576,33 +19589,104 @@ string[] aDisplay = null;
 return Pick(sTitle, aValue, aDisplay, bSort, iIndex);
 } // Pick method
 
-// F4 is optional. Meanings stay paired with row indexes, not synonym text.
-public static string PickSynonyms(string sTitle, string[] aValue, string[] aDisplay, string[] aSenseIds) {
+// Each action keeps the selected row's sense/POS; no recursive synonym tree.
+public static string PickSynonyms(string sTitle, string[] aValue, string[] aDisplay, string[] aSenseIds, string[] aParts, string sFolder) {
+if (aValue.Length == 0 || aValue.Length != aDisplay.Length || aValue.Length != aSenseIds.Length || aValue.Length != aParts.Length) return "";
 using (LbcDialog dlg = new LbcDialog(sTitle, App.Frame)) {
-dlg.addLabel("F4: szczegóły znaczenia.");
+dlg.addLabel("Wybierz synonim. F1: pomoc.");
 ListBox lst = dlg.addListBox(new List<string>(aDisplay), "", "");
-dlg.setHelpDetail(lst, "Strzałki: wybór synonimu. Enter: wstaw. Escape: anuluj. F4: definicja i przykład ze słownika, jeżeli są dostępne.");
+lst.SelectionMode = SelectionMode.One;
+lst.AccessibleName = "Synonimy";
+dlg.setHelpDetail(lst, "Góra i dół: wybór synonimu. Enter: wstaw wyświetlony wyraz i zamknij. Escape: anuluj. Strzałka w prawo: definicja, przykład i źródło wybranego znaczenia. F4 jest dodatkowym skrótem do tych samych szczegółów. Shift+Enter: poświadczone odmiany wybranego synonimu. Escape ze szczegółów lub odmian wraca do tej samej pozycji. Te same działania mają przyciski Znaczenie i Odmiany. Wybór słownika: Opcje aplikacji, Słownik synonimów.");
 LbcDialog.selectOnly(lst, 0);
 dlg.setInitialFocus(lst);
-lst.KeyDown += delegate(object sender, KeyEventArgs ev) {
-if (ev.KeyData != Keys.F4) return;
-ev.Handled = true; ev.SuppressKeyPress = true;
+string sFormChoice = "";
+Action showDetails = delegate {
 int i = lst.SelectedIndex;
 if (i < 0 || i >= aSenseIds.Length) return;
 using (LbcDialog details = new LbcDialog("Znaczenie: " + aValue[i], dlg.form)) {
-TextBox memo = details.addMemoBox("Szczegóły znaczenia", Synonimy.GetDetails(aSenseIds[i]), "");
+TextBox memo = details.addMemoBox("Szczegóły znaczenia", SlownikiSynonimow.GetDetails(aSenseIds[i]), "");
 memo.ReadOnly = true;
 memo.Select(0, 0);
+details.setHelpDetail(memo, "Definicja, przykład i źródło dotyczą wybranego znaczenia. Tekst można czytać i kopiować; nie zmienia dokumentu. Escape: wróć do tego samego synonimu.");
 details.setInitialFocus(memo);
-details.runWithButtons(new string[] { "Zamknij" });
+details.runWithButtons(new string[] { "Wróć" });
 }
+LbcDialog.selectOnly(lst, i);
 lst.Focus();
 };
-if (!dlg.runOkCancel()) return "";
+Action chooseForms = delegate {
+int i = lst.SelectedIndex;
+if (i < 0 || i >= aSenseIds.Length) return;
+string choice = PickSynonymForm(dlg.form, sFolder, aValue[i], aParts[i], aSenseIds[i]);
+if (choice.Length > 0) {
+sFormChoice = choice;
+dlg.form.DialogResult = DialogResult.OK;
+dlg.form.Close();
+}
+else { LbcDialog.selectOnly(lst, i); lst.Focus(); }
+};
+AddSynonymAction(dlg, lst, "Znaczenie (w prawo)", showDetails);
+AddSynonymAction(dlg, lst, "Odmiany (Shift+Enter)", chooseForms);
+// Enter is a dialog key. Make Shift+Enter an input key BEFORE AcceptButton.
+lst.PreviewKeyDown += delegate(object sender, PreviewKeyDownEventArgs ev) {
+if (ev.KeyData == (Keys.Shift | Keys.Enter)) ev.IsInputKey = true;
+};
+lst.KeyDown += delegate(object sender, KeyEventArgs ev) {
+if (ev.KeyData == Keys.Right || ev.KeyData == Keys.F4) {
+ev.Handled = true; ev.SuppressKeyPress = true; showDetails();
+}
+else if (ev.KeyData == (Keys.Shift | Keys.Enter)) {
+ev.Handled = true; ev.SuppressKeyPress = true; chooseForms();
+}
+};
+string result = dlg.runWithButtons(new string[] { "Wstaw", "Anuluj" });
+if (sFormChoice.Length > 0) return sFormChoice;
+if (result != "Wstaw") return "";
 int index = lst.SelectedIndex;
 return index >= 0 && index < aValue.Length ? aValue[index] : "";
 }
 } // PickSynonyms method
+
+static void AddSynonymAction(LbcDialog dlg, ListBox lst, string sCaption, Action action) {
+Button button = new Button();
+button.Text = sCaption;
+button.AccessibleName = sCaption;
+button.UseMnemonic = false;
+button.AutoSize = true;
+button.MinimumSize = new Size(220, 30);
+button.TabIndex = lst.Parent.Controls.Count;
+button.Click += delegate { action(); };
+lst.Parent.Controls.Add(button);
+} // AddSynonymAction method
+
+public static string PickSynonymForm(Form owner, string sFolder, string sWord, string sPart, string sSenseId) {
+List<FormySynonimow.Forma> forms = FormySynonimow.GetForms(sFolder, sWord, sPart, sSenseId);
+using (LbcDialog dlg = new LbcDialog("Odmiany: " + sWord, owner)) {
+if (forms.Count == 0 || FormySynonimow.Error.Length > 0) {
+string text = FormySynonimow.Error.Length > 0 ? FormySynonimow.Error : "Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie zgaduje form.";
+TextBox memo = dlg.addMemoBox("Dostępność odmian", text, "");
+memo.ReadOnly = true;
+memo.Select(0, 0);
+dlg.setHelpDetail(memo, "Escape lub przycisk Wróć: powrót do tego samego synonimu bez zmiany dokumentu.");
+dlg.setInitialFocus(memo);
+dlg.runWithButtons(new string[] { "Wróć" });
+return "";
+}
+List<string> labels = new List<string>();
+for (int i = 0; i < forms.Count; i++) labels.Add(Synonimy.ApplyCapitalization(sWord, forms[i].Tekst) + ", " + forms[i].Opis + ", " + (i + 1) + " z " + forms.Count);
+ListBox lst = dlg.addListBox(labels, "", "");
+lst.SelectionMode = SelectionMode.One;
+lst.AccessibleName = "Dostępne odmiany";
+dlg.setHelpDetail(lst, "Góra i dół: wybór formy. Enter lub Wstaw: wstaw wybraną formę do dokumentu i zamknij także listę synonimów. Escape lub Anuluj: wróć do tego samego synonimu bez zmiany dokumentu. Lista zawiera wyłącznie formy ze źródła. Dla angielskiego dostępne są poświadczone wyjątki WordNet, nie pełna odmiana regularna.");
+LbcDialog.selectOnly(lst, 0);
+dlg.setInitialFocus(lst);
+if (dlg.runWithButtons(new string[] { "Wstaw", "Anuluj" }) != "Wstaw") return "";
+int index = lst.SelectedIndex;
+if (index < 0 || index >= forms.Count) return "";
+return Synonimy.ApplyCapitalization(sWord, forms[index].Tekst);
+}
+} // PickSynonymForm method
 
 public static string Pick(string sTitle, string[] aValue, string[] aDisplay, bool bSort, int iIndex) {
 string[] aVal = (string[]) aValue.Clone();

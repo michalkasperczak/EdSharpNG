@@ -1,0 +1,7 @@
+AGID 2016.01.19 — informacja o zmianie w EdSharpNG
+
+Plik wordnet-en-form-metadata.txt jest wygenerowany wyłącznie w procesie budowy z infl.txt AGID 2016.01.19. Źródło zostało przypięte do commitu GitHub en-wl/wordlist b22230cc5250887737fdefe9ca4c9d9d01230eaa; dokładny URL i SHA-256 wejścia są w wordnet-en-form-metadata-manifest.json.
+
+Zmiana EdSharpNG: dla istniejących rekordów wyjątków Princeton WordNet 3.0 zapisano tylko poświadczone przez AGID kandydatury tagów Penn Treebank. W runtime plik jest opcjonalny: brak zachowuje dotychczasową kolejność leksykalną, a błędny plik powoduje ostrzeżenie bez wyłączenia listy form. Dane nie tworzą nowych form, nie rozszerzają kluczy przez transliterację ani zmianę wielkości liter i nie dodają opisów gramatycznych w interfejsie.
+
+Zachowano pełny tekst README AGID jako LICENSE-AGID.txt, w tym warunki Kevina Atkinsona oraz wymagane informacje o WordNet 1.6, Moby, ENABLE2K, UK Advanced Cryptics Dictionary i pozostałych źródłach.

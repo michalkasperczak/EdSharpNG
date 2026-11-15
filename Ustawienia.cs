@@ -145,6 +145,13 @@ public class Ustawienia
         o.Wartosci = new string[] { "\\t", "  ", "   ", "    ", "        " };
         o.Domyslna = "\\t"; l.Add(o);
 
+        // --- lokalny tezaurus, niezaleznie od pisowni i jezyka interfejsu ---
+        o = new Opcja("SynonymDictionary", "Słownik synonimów", "lista",
+            "Słownik pod Shift+F7: polski, angielski albo oba. Wybór nie zmienia języka interfejsu ani sprawdzania pisowni. Działa bez Internetu.");
+        o.Nazwy = new string[] { "Polski", "Angielski", "Oba" };
+        o.Wartosci = new string[] { "pl", "en", "both" };
+        o.Domyslna = "pl"; l.Add(o);
+
         // --- pliki ---
         o = new Opcja("ExtensionDefault", "New files are saved as", "lista",
             "The extension added when you save a new document without typing one.");

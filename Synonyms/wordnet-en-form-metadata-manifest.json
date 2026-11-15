@@ -1,0 +1,38 @@
+{
+  "agid": {
+    "bytes": 3374491,
+    "commit": "b22230cc5250887737fdefe9ca4c9d9d01230eaa",
+    "sha256": "df0c8f6edd4193d823abfad9e4ff6f42b4526211516649e1c73d4533aef749fa",
+    "source_id": "AGID2016.01.19",
+    "source_url": "https://raw.githubusercontent.com/en-wl/wordlist/b22230cc5250887737fdefe9ca4c9d9d01230eaa/agid/infl.txt",
+    "version": "2016.01.19"
+  },
+  "counts": {
+    "ambiguous_candidate_rows": 715,
+    "exception_rows": 3485,
+    "metadata_rows": 2929,
+    "parsed_agid_records": 64264,
+    "skipped_uncertain_pos_records": 48241,
+    "skipped_unknown_layout_records": 4,
+    "unmatched_exception_rows": 556
+  },
+  "generator": "tools/build_english_form_metadata.py",
+  "outputs": {
+    "LICENSE-AGID.txt": {
+      "bytes": 15484,
+      "sha256": "57cadafd8f11481454a5e269a04ffde7951cc72845643613ca4235a84b10db32"
+    },
+    "NOTICE-AGID.txt": {
+      "bytes": 1018,
+      "sha256": "2d134877a64b11619d2df960c14220dc6631919c23533acc35f5b209bcd1628e"
+    },
+    "metadata": {
+      "bytes": 126806,
+      "sha256": "6f25d40288698e0493269472b83844021a7c245bc8f7058f533358913b9a74df"
+    }
+  },
+  "wordnet_exceptions": {
+    "bytes": 61074,
+    "sha256": "3478fa61d28f94feb226a2e6377cca27f39a9b7b810967c652a11ea5b6e905c2"
+  }
+}
