@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Exercise 05 — durable snippet library and ZIP</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Skip to content</a>
+<header><p>EdSharp offline handbook — pre-translation draft.</p></header>
+<main id="tresc"><h1>Exercise 05 — durable snippet library and ZIP</h1><nav aria-labelledby="contents"><h2 id="contents">Contents</h2><ol><li><a href="#steps">Steps</a></li><li><a href="#expected-result">Expected result</a></li><li><a href="#safe-return">Safe return</a></li></ol></nav><aside class="notice"><strong>Target PL/EN menu DRAFT.</strong> Use a new file plus a test folder and ZIP, not your production library.</aside>
+<p><strong>Goal.</strong> Set a durable folder, save and expand a snippet, and learn explicit ZIP export/import.</p>
+<h2 id="steps">Steps</h2>
+<ol><li>Press <code>Ctrl+,</code>. In <strong>Settings > Configuration Options…</strong>, find <strong>Snippet library folder</strong>, use <strong>Browse…</strong>, choose an existing test folder, and confirm.</li><li>In a new file type <code>Regards,</code>, select it, use <code>Alt+S</code> (<strong>Save Snippet…</strong>), and name it <code>signature</code>.</li><li>At a new position use <code>Alt+V</code> (<strong>Insert Snippet…</strong>). <code>Alt+Shift+V</code> (<strong>Edit Snippet…</strong>) opens the file for reading or editing.</li><li>Delete the insertion, type <code>signature</code> before the caret, and press <code>Ctrl+Shift+Space</code> (<strong>Expand Snippet</strong>).</li><li>In <strong>Tools > Snippets</strong>, use <strong>Export Snippet Library…</strong> to save a test ZIP outside the library. For a test import use <strong>Import Snippet Library…</strong> and deliberately select a conflict policy.</li></ol>
+<h2 id="expected-result">Expected result</h2>
+<p>One folder is used for saving, inserting, editing, tokens, and manual expansion. An exact name wins, then a prefix, then a fragment; several matches require a choice. ZIP import asks to skip, keep both, or replace with backup. An empty folder setting means the existing <code>Snippets\Default</code>; an explicit unavailable folder reports an error without silent fallback.</p>
+<h2 id="safe-return">Safe return</h2>
+<p><code>Ctrl+Z</code> reverses insertion in the current document. Keep your own folder copy before import and cancel rather than guessing a conflict policy. <code>Ctrl+Space</code> only selects a non-blank chunk; it does not expand a snippet.</p>
+<p><a href="../handbook.html">Return to handbook</a>.</p></main>
+<footer>Generated locally; this page loads no network resources.</footer>
+</body></html>

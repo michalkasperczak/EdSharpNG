@@ -52,7 +52,7 @@ If you are impatient to get going, here are some things you can do to get up and
 - Press F1 to open the full documentation in your default web browser.
 - Press Alt+Shift+H for the Hotkey Summary, an alphabetically sorted list of hot keys placed in a new EdSharp window.
 - Press Control+F1 for the Key Describer, then press any key to hear which command it runs.
-- Press Alt+F10 for the Alternate Menu, an alphabetical list of every available command.
+- Press Control+Shift+F1 for Command Palette, then type to narrow the available commands.
 - Explore the regular menus to get a feel for the large number of familiar and new commands available through hot keys.
 
 ## Common Hot Keys
@@ -92,7 +92,6 @@ Here is a list of hot keys you will use often. Where EdSharp differs from what y
 - Shift plus the arrow keys = Select by character, word, or line in the usual way.
 - Control+C = Copy. Control+X = Cut. Control+V = Paste. Each works on the current line if there is no selection.
 - Alt+C = Copy and append to the clipboard. Alt+X = Cut and append to the clipboard.
-- Alt+Apostrophe = Speak the current clipboard text.
 
 ### Changing Character Case
 
@@ -116,10 +115,9 @@ EdSharp lets you divide a document into named sections, which is the basis of th
 
 - Control+Enter = Insert a Section Break.
 - Control+PageDown and Control+PageUp = Move to the next and prior section.
-- F6 = Go to Section: jump from a table-of-contents line to its section. Shift+F6 = Go to Contents: jump from a section back to its table-of-contents line.
-- Alt+T = Speak the current section's topic (its first line).
-- Alt+Shift+T = Text Contents: build a table of contents from the first line of each section.
-- Control+F6 = Search for a topic by name. Alt+F6 = Search for that topic again.
+- F6 = Document Navigation: browse headings in the document. Shift+F6 = Go to Contents: move between the current heading and its entry in the table of contents.
+- Alt+Shift+T = Text Contents: create or refresh a table of contents from headings.
+- Control+F6 = Link List: list links in the current document.
 
 ### Spell Checker and Thesaurus
 
@@ -176,7 +174,6 @@ Besides entering and reviewing text, you will spend a lot of time manipulating i
 
 EdSharp has a set of commands for learning about the document you are working on; most are on the Query menu, Alt+Q.
 
-- Alt+Apostrophe speaks what is currently on the clipboard.
 - Alt+A (Address) speaks the line and column of the cursor, followed by its percentage position from the top of the file.
 - Alt+Y (Yield) reports how many characters, words, and lines the file, or the selection, contains.
 - Alt+Z (Status) tells you whether the document has been modified from the version on disk; press it again to hear the character encoding.

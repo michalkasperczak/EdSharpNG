@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Exercise 06 — lists</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Skip to content</a>
+<header><p>EdSharp offline handbook — pre-translation draft.</p></header>
+<main id="tresc"><h1>Exercise 06 — lists</h1><nav aria-labelledby="contents"><h2 id="contents">Contents</h2><ol><li><a href="#steps">Steps</a></li></ol></nav><p><strong>Goal.</strong> Check selection-only operations and distinguish a two-list comparison.</p>
+<h2 id="steps">Steps</h2>
+<p>In a new file type:</p>
+<pre><code class="language-text">Anna
+anna
+Olivia
+Anna</code></pre>
+<p>Select only these four lines and use <code>Alt+Shift+K</code>. Undo with <code>Ctrl+Z</code>, then use <code>Alt+Shift+O</code>, undo, and use <code>Alt+Shift+Z</code>.</p>
+<p><strong>Check:</strong> deduplication keeps the first <code>Anna</code>, <code>Olivia</code>; it does not distinguish <code>Anna</code> and <code>anna</code>. Sorting also ignores case but retains the items' original spelling. Each test is on a selection.</p>
+<p>Replace the text with these two lists and put the caret at the beginning of <code>Anna</code> in the second part:</p>
+<pre><code class="language-text">Anna
+anna
+Olivia
+Anna
+Anna
+olivia</code></pre>
+<p><code>Alt+Shift+G</code> creates a new window with <code>anna</code>, <code>Olivia</code>; <code>Alt+Shift+Q</code> creates a new window with <code>Anna</code>, <code>Anna</code>. The first list is above the current row, the second from the current row to the end. First-list duplicates remain and comparison is case-sensitive.</p>
+<p><strong>Safe return:</strong> output is in a new window; close it without saving so no file is created. Comparison itself leaves the exercise file unchanged.</p>
+<p><a href="../handbook.html">Return to handbook</a>.</p></main>
+<footer>Generated locally; this page loads no network resources.</footer>
+</body></html>

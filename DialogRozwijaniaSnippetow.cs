@@ -21,9 +21,9 @@ catch { return sciezka ?? ""; }
 } // NazwaPliku method
 
 static string Podglad(string sciezka) {
-if (String.IsNullOrEmpty(sciezka) || !File.Exists(sciezka)) return "Snippet file is no longer available.";
+if (String.IsNullOrEmpty(sciezka) || !File.Exists(sciezka)) return JezykInterfejsu.Wybierz("Snippet file is no longer available.", "Plik fragmentu nie jest już dostępny.");
 try { return Util.File2String(sciezka); }
-catch { return "Could not read this snippet."; }
+catch { return JezykInterfejsu.Wybierz("Could not read this snippet.", "Nie można odczytać tego fragmentu."); }
 } // Podglad method
 
 // Zwraca pełną ścieżkę dokładnie tej pozycji, którą wskazuje lista; pusty wynik oznacza Escape/anulowanie.
@@ -72,7 +72,7 @@ lista.SelectionMode = SelectionMode.One;
 lista.IntegralHeight = false;
 lista.TabIndex = 0;
 lista.AccessibleName = "Matching snippets, " + pozycje.Count + " results";
-lista.AccessibleDescription = "Up and Down choose a snippet. Tab moves to its read-only preview. Enter inserts. Escape cancels.";
+lista.AccessibleDescription = JezykInterfejsu.Wybierz("Up and Down choose a snippet. Tab moves to its read-only preview. Enter inserts. Escape cancels.", "Strzałki w górę i w dół wybierają fragment. Tab przechodzi do podglądu tylko do odczytu. Enter wstawia. Escape anuluje.");
 for (int i = 0; i < pozycje.Count; i++) {
 pozycje[i].WyswietlanaNazwa += ", " + (i + 1) + " of " + pozycje.Count;
 lista.Items.Add(pozycje[i]);
@@ -95,7 +95,7 @@ podglad.WordWrap = false;
 podglad.AcceptsTab = false;
 podglad.TabIndex = 1;
 podglad.AccessibleName = "Snippet preview, read-only";
-podglad.AccessibleDescription = "Full text of the selected snippet. Enter inserts the selected snippet. Escape cancels.";
+podglad.AccessibleDescription = JezykInterfejsu.Wybierz("Full text of the selected snippet. Enter inserts the selected snippet. Escape cancels.", "Pełny tekst wybranego fragmentu. Enter wstawia wybrany fragment. Escape anuluje.");
 
 FlowLayoutPanel przyciski = new FlowLayoutPanel();
 przyciski.Dock = DockStyle.Bottom;

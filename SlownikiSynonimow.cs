@@ -41,14 +41,14 @@ foreach(string[] f in Rows(Path.Combine(englishFolder,"wordnet-en-details.txt"),
 if(!EnglishId(f[0]))throw new InvalidDataException();
 details.Add(f[0],new string[]{f[1],f[2]});
 }
-}catch(Exception){details.Clear();detailsError="Nie można wczytać angielskich szczegółów znaczeń. Lista synonimów nadal działa.";}
+}catch(Exception){details.Clear();detailsError=JezykInterfejsu.Wybierz("English sense details could not be loaded. The synonym list still works.", "Nie można wczytać angielskich szczegółów znaczeń. Lista synonimów nadal działa.");}
 }
 if(detailsError.Length>0)return detailsError;
 string[] value;
-if(!details.TryGetValue(senseId,out value))return "Brak definicji i przykładu dla tego znaczenia w dołączonym słowniku.";
-string text=value[0].Length>0?"Definicja:\r\n"+value[0]:"Brak definicji w dołączonym słowniku.";
-if(value[1].Length>0)text+="\r\n\r\nPrzykład:\r\n"+value[1];
-return text+"\r\n\r\nŹródło: Princeton WordNet 3.0 (English).";
+if(!details.TryGetValue(senseId,out value))return JezykInterfejsu.Wybierz("No definition or example for this sense is available in the bundled dictionary.", "Brak definicji i przykładu dla tego znaczenia w dołączonym słowniku.");
+string text=value[0].Length>0?JezykInterfejsu.Wybierz("Definition:\r\n", "Definicja:\r\n")+value[0]:JezykInterfejsu.Wybierz("No definition is available in the bundled dictionary.", "Brak definicji w dołączonym słowniku.");
+if(value[1].Length>0)text+=JezykInterfejsu.Wybierz("\r\n\r\nExample:\r\n", "\r\n\r\nPrzykład:\r\n")+value[1];
+return text+JezykInterfejsu.Wybierz("\r\n\r\nSource: Princeton WordNet 3.0 (English).", "\r\n\r\nŹródło: Princeton WordNet 3.0 (English).");
 }
 public static List<Synonimy.Grupa> Find(string folder,string word,string mode) {
 var result=new List<Synonimy.Grupa>();
@@ -58,7 +58,7 @@ mode=NormalizeMode(mode);
 if(!Synonimy.IsSingleWord(word))return result;
 if(mode=="pl" || mode=="both") {
 if(Synonimy.Load(Path.Combine(folder,"plwordnet-synonyms.txt"))) {result.AddRange(Synonimy.Find(word));Error=Synonimy.FormsError;}
-else Error="Nie można wczytać polskiego słownika synonimów.";
+else Error=JezykInterfejsu.Wybierz("The Polish synonym dictionary could not be loaded.", "Nie można wczytać polskiego słownika synonimów.");
 if(mode=="pl")return result;
 }
 string key=word.ToLowerInvariant();
@@ -71,7 +71,7 @@ foreach(string[] f in Rows(exceptionPath,3)) {
 if(!Synonimy.IsSingleWord(f[0]) || !Synonimy.IsSingleWord(f[2]) || f[1].Length!=1 || "nvar".IndexOf(f[1],StringComparison.Ordinal)<0)throw new InvalidDataException();
 if(String.Equals(f[0],key,StringComparison.OrdinalIgnoreCase))bases.Add(f[2].ToLowerInvariant()+"\t"+f[1]);
 }
-}catch(Exception){bases.Clear();Error+=(Error.Length>0?"\r\n":"")+"Nie można odczytać angielskich form nieregularnych. Wyszukiwanie haseł podstawowych nadal działa.";}
+}catch(Exception){bases.Clear();Error+=(Error.Length>0?"\r\n":"")+JezykInterfejsu.Wybierz("English irregular forms could not be read. Base-word lookup still works.", "Nie można odczytać angielskich form nieregularnych. Wyszukiwanie haseł podstawowych nadal działa.");}
 var inflected=new List<Synonimy.Grupa>();
 foreach(string[] fields in Rows(Path.Combine(folder,"wordnet-en-synonyms.txt"),4)) {
 if(!Synonimy.IsSingleWord(fields[0]) || !EnglishId(fields[2]) || fields[1]!=fields[2].Substring(5,1))throw new InvalidDataException();
@@ -83,7 +83,7 @@ if(values.Count>0)(literal?english:inflected).Add(new Synonimy.Grupa(fields[1],f
 }
 if(english.Count==0)english=inflected;
 result.AddRange(english);
-}catch(Exception){Error+=(Error.Length>0?"\r\n":"")+"Nie można wczytać angielskiego słownika synonimów.";}
+}catch(Exception){Error+=(Error.Length>0?"\r\n":"")+JezykInterfejsu.Wybierz("The English synonym dictionary could not be loaded.", "Nie można wczytać angielskiego słownika synonimów.");}
 return result;
 }
 }

@@ -54,7 +54,7 @@ Every copy in EdSharp retries when the clipboard is busy.  A clipboard manager -
 
 An alternative way of selecting text uses F8 to mark the start of a selection.  Navigate to the end point by whatever means (arrow keys, find command, etc.) without having to hold down the Shift key.  Note that the caret should be placed one position past the last character to be selected.  Press Shift+F8 to select text from the start position.  EdSharp says the number of characters selected.  You may subsequently select between the same positions again with Control+Shift+F8, or return to the start position with Alt+Shift+F8.
 
-As usual, Control+A selects all text.  Control+Shift+A clears any selection.  Press Control+F8 to copy all text to the clipboard with a single command.  Control+V pastes clipboard text at the cursor position.  Control+Shift+V inserts the content of a file instead.
+As usual, Control+A selects all text.  Control+Shift+A clears any selection.  Control+V pastes clipboard text at the cursor position.  Control+Shift+V inserts the content of a file instead.
 
 Press Control+Space to select a chunk of text at the cursor position.  A chunk is defined as a contiguous sequence of non-space characters.  It may be more than what the hotkey Control+Shift+RightArrow selects, since such word movement commands stop at punctuation marks.  Press Control+Space again to extend the selection to the next chunk.
 
@@ -116,7 +116,7 @@ Press Control+RightArrow or Control+LeftArrow to read by word -- stopping at emb
 ## Querying
 Use the Address command, Alt+A, to hear the line, column, and percent position of the cursor in the document.  Press Alt+P to hear the full path of the file on disk.  Use the Yield command, Alt+Y, to hear the number of characters, words, and lines contained in all or selected text.  Press Alt+Z to hear whether the document has been modified from the version on disk, or press it again to check its character encoding and the kind of line breaks the file had on disk (Windows, Unix, Macintosh, or mixed).
 
-Press Alt+F8 to hear the whole document without moving the cursor.  Use the Quote Clipboard command, Alt+Apostrophe, to hear the textual content of the clipboard, or its spelling if this key is pressed again.  Press Alt+Semicolon to hear the current time and date.
+Press Alt+Semicolon to hear the current time and date.
 
 Press Shift+Space to hear selected text.  Press Shift+Backspace to hear the chunk of text at the cursor.  If the same key is pressed again without moving the cursor, the text is spelled instead.
 
@@ -154,7 +154,7 @@ Use the Open Again command, Alt+O, to reload the current file from disk.  Press 
 `*.txt|catalog*.htm`
 
 ### Handling Favorite Files and Bookmark Positions
-Press Alt+Shift+L to add the current file to the list of favorites; pressing it again in a file that is already there takes it off the list, so one key both adds and removes.  The key says what it did and nothing else: "Added to favorites" or "Removed from favorites".  It used to read out the name of the command first, "Toggle Favorite", and only then what had happened, which is two things spoken for one keypress; the name of a key you have just pressed carries no information, while on a toggle the direction of the change is the whole point.  The name of the command still goes to the status bar, so nothing is lost for anyone reading the screen.  Press Alt+L to list favorites and open one, and use Delete on that list to take a file off it without opening the file at all.  The Clear Favorite command is still in the menu, with no shortcut of its own, for taking the current file off the list by name; it now says "Removed from favorites" when it takes the file off the list and "Not in favorites" when the file was never on it, where before it did its work in silence and sounded exactly the same either way.  Bookmarks are kept apart from favorites, in their own section of the configuration file, so taking a file off the list of favorites leaves its bookmarks alone and setting a bookmark does not quietly make the file a favorite; the two lists are separate things.  If a bookmark is set, EdSharp automatically goes to it and says the percent position in the document.  Also, if the word wrap or guard setting is different than when the file was designated as a favorite, EdSharp restores that setting and says so.  This command opens a file verbatim, assuming that you had set it as a favorite to edit it literally, e.g., a .htm file you are developing.  When a file is opened from Windows Explorer or the recent files list, on the other hand, EdSharp automatically converts it to plain text if an import converter is configured for its extension.
+Press Alt+Shift+L to add the current file to the list of favorites; pressing it again in a file that is already there takes it off the list, so one key both adds and removes.  The key says what it did and nothing else: "Added to favorites" or "Removed from favorites".  It used to read out the name of the command first, "Toggle Favorite", and only then what had happened, which is two things spoken for one keypress; the name of a key you have just pressed carries no information, while on a toggle the direction of the change is the whole point.  The name of the command still goes to the status bar, so nothing is lost for anyone reading the screen.  Press Alt+L to list favorites and open one, and use Delete on that list to take a file off it without opening the file at all.  Bookmarks are kept apart from favorites, in their own section of the configuration file, so taking a file off the list of favorites leaves its bookmarks alone and setting a bookmark does not quietly make the file a favorite; the two lists are separate things.  If a bookmark is set, EdSharp automatically goes to it and says the percent position in the document.  Also, if the word wrap or guard setting is different than when the file was designated as a favorite, EdSharp restores that setting and says so.  This command opens a file verbatim, assuming that you had set it as a favorite to edit it literally, e.g., a .htm file you are developing.  When a file is opened from Windows Explorer or the recent files list, on the other hand, EdSharp automatically converts it to plain text if an import converter is configured for its extension.
 
 The Recent Files list (Alt+R) and the Favorites list (Alt+L) each offer extra keys on the highlighted file: RightArrow opens it with another program, LeftArrow reads its full path, Control+Enter shows it in Explorer, Control+C copies the file NAME on its own, Control+Shift+C copies the full PATH, Alt+C appends the path to the clipboard as text, Delete removes entries from the list, and Shift+Delete deletes the file from disk after confirming.  The two copy keys hand you two different pieces of text, which is why both exist: the bare name is what usually goes into a sentence or a search box, and you cannot get it out of a full path without editing by hand.  Control+Shift+C also puts the FILE itself on the clipboard alongside the path, which is what lets you paste it into File Explorer, into an e-mail as an attachment or into any program that takes files; a text box still receives the path, so the destination decides which form it takes.  All the copy keys work across everything you have selected, so Shift with the arrow keys and then Control+C hands you a whole block of files at once; the program says how many it took, and says how many entries no longer exist on disk, since those can only travel as text.  Delete works across the whole selection as well: it takes every selected entry off the list and says how many it took, since the entry is only a line in the settings file and the file on disk is left alone.  Deleting from disk stays deliberately single-file: on several selected items Shift+Delete refuses and says how many are selected, because on a key that erases a file a guess is the difference between a mistake and a lost file.  The list itself announces nothing but the file name, so a screen reader gets to it immediately; these keys are documented here rather than spoken in the list.
 
@@ -189,6 +189,8 @@ Press Control+F9 to verify the current compiler and folder of EdSharp.  Control+
 Press Alt+S to save all or selected text to a file that may be conveniently pasted into other documents.  You may give the file a descriptive name and an extension appropriate for its content.  It is saved in a subfolder of the EdSharp data folder.  Each programming compiler or interpreter may have its own set of snippets.  The subfolder name is the same as the current value of the Pick Compiler command, Control+Shift+F5.  If no compiler has been chosen, the "Default" subfolder is used.
 
 Press Alt+V to pick one of the available snippets and paste it into the current document.  This command lists snippets in the Default snippet folder, as well as those in the folder associated with a Compiler being used.  This lets you have a set of snippets that are available regardless of the programming language in use.  
+
+Press Control+Shift+Space to expand a snippet by typing a fragment of its filename immediately before the cursor.  An exact filename has priority, then matches at the beginning of the filename.  Only when neither exists, EdSharp looks for the fragment in the middle or at the end of the filename, without its extension.  A unique match is inserted at once.  When several files match, EdSharp shows a list of their names; use Up and Down to choose, Tab to read the full read-only preview, Enter to insert, or Escape to leave the document unchanged.  With no filename prefix, the list contains all available snippets.  The command does not expand anything while you type, and it refuses a text selection; use Alt+V when the selected text should be processed by a snippet.
 
 Use the View Snippet command, Alt+Shift+V, to load a snippet file into EdSharp for viewing or editing rather than execution.  You can also manage snippet files with the Explorer Folder command, Alt+Backslash, which lets you open Windows Explorer in the subfolder containing snippet files.
 
@@ -273,7 +275,7 @@ Several commands work with a structured text document consisting of a table of c
 
 Press Control+PageDown to go to the next section and read its heading, or Control+PageUp to go to the previous one.  The topic search that used to be on Control+F6 and Alt+F6 was removed in EdSharpNG: it looked for the form feed of a structured text file, of which a Markdown document has none, so it could only ever answer "Not found!".  Control+F6 now opens the Link List, described further down with the other Markdown commands.  Since 5.0.51 EdSharpNG also takes Control+F6 and Control+Shift+F6 away from the built-in MDI window cycle, so Windows can no longer use them to switch between open documents: that cycle used to fire before our own shortcut table saw the key, which would have made the list of links unreachable.  Use Control+Tab and Control+Shift+Tab to change window, and F4 for the list of open windows.  The way to reach a chapter is the heading tree on F6.  Footnotes left the F6 family entirely: Control+Alt+K travels between a footnote marker and its text.
 
-In EdSharpNG a section is a Markdown heading, so press Control+Enter to start a new section: it inserts a heading prefix at the same level as the heading you are currently in, and you then type the heading text.  Before the first heading of a file it inserts a level 1 heading, the title.  Control+PageDown and Control+PageUp move to the next and previous heading of any level.  Hold Shift as well, Control+Shift+PageDown and Control+Shift+PageUp, to move only between headings of the same level as the section you are in, skipping subsections.  On arrival EdSharp speaks the text of the heading and then its level, for example "Installation, heading 3" -- the word "level" is not spoken, and the text under the heading is not read.  At the last or first matching heading the cursor stays where it is and EdSharp says "Last heading!", "First heading!", or, for the same-level commands, "Last heading at this level!" and "First heading at this level!".  The original dashes-and-form-feed section break of EdSharp is no longer inserted by this command.  Press F6 for Document Navigation: a tree of every heading in the document, with sub-headings hanging under their parent, the way a book reader or an old MHT help file presents a table of contents.  Up and Down Arrow move through it, Right Arrow expands a heading and Left Arrow collapses it or moves to its parent, typing letters jumps to a heading beginning with them, and Enter moves the cursor to the selected heading in the text and speaks it the same way the heading navigation commands do.  Escape closes the tree without moving the cursor.  Reopening the tree returns to the heading you were last on.  A document with no heading is not opened at all: EdSharp only says "No headings!".  Alt+T verbally confirms the topic of the current section.
+In EdSharpNG a section is a Markdown heading, so press Control+Enter to start a new section: it inserts a heading prefix at the same level as the heading you are currently in, and you then type the heading text.  Before the first heading of a file it inserts a level 1 heading, the title.  Control+PageDown and Control+PageUp move to the next and previous heading of any level.  Hold Shift as well, Control+Shift+PageDown and Control+Shift+PageUp, to move only between headings of the same level as the section you are in, skipping subsections.  On arrival EdSharp speaks the text of the heading and then its level, for example "Installation, heading 3" -- the word "level" is not spoken, and the text under the heading is not read.  At the last or first matching heading the cursor stays where it is and EdSharp says "Last heading!", "First heading!", or, for the same-level commands, "Last heading at this level!" and "First heading at this level!".  The original dashes-and-form-feed section break of EdSharp is no longer inserted by this command.  Press F6 for Document Navigation: a tree of every heading in the document, with sub-headings hanging under their parent, the way a book reader or an old MHT help file presents a table of contents.  Up and Down Arrow move through it, Right Arrow expands a heading and Left Arrow collapses it or moves to its parent, typing letters jumps to a heading beginning with them, and Enter moves the cursor to the selected heading in the text and speaks it the same way the heading navigation commands do.  Escape closes the tree without moving the cursor.  Reopening the tree returns to the heading you were last on.  A document with no heading is not opened at all: EdSharp only says "No headings!".
 
 Press Alt+Shift+T to write a table of contents at the top of a Markdown document.  It lists every heading, at every level, as an indented bullet list, and each entry is an internal link to its heading.  Those links keep working after export: pandoc turns them into anchors in HTML and into Word bookmarks in a .docx file, so a reader of the exported document can click an entry and land on the chapter.  Pressing Alt+Shift+T again rewrites the existing contents instead of adding a second one, so it is also the way to refresh the list after you rename or add a chapter.  The command works only on .md files, never writes to disk, and its change can be taken back with Control+Z.
 
@@ -333,10 +335,9 @@ To move to other pieces of Markdown, use the structural commands: Control with P
 To query styles, baseline, and justification, press Alt+Slash; it reports what is under the cursor.  The Font query, formerly Alt+Dash, was removed in 5.0.99: a screen reader answers the same question better and everywhere, with NVDA+F in NVDA.
 
 ## Doing Math
-You can press Control+Equals to evaluate mathematical expressions in JScript code, either on the current line or in selected text.  Control+Shift+G goes to another, more interactive environment, such as the interactive console of Python or iPython.  The latter is particularly useful for learning the library of the .NET Framework and testing expressions that may be incorporated in programming code, including EdSharp snippets.  It may also be used as a simple, speech-friendly calculator.
+You can press Control+Equals to evaluate mathematical expressions in JScript code, either on the current line or in selected text.
 
-Alternatively, the GoToEnvironment setting could be configured for a computer algebra system such as [Maxima](<http://Maxima.SourceForge.net>),
-or [Axiom](<http://Axiom.SourceForge.net>).
+Run Configured Tool is a menu-only command.  Set its GoToEnVironment option to the command line for a tool you use, with any arguments it needs.  The command may include `%Source%` for the current document.  It has no built-in interpreter or other default program; if it is not configured, EdSharp says so and starts nothing.
 
 ### LaTex
 EdSharp includes support for the LaTeX language (pronounced La Tech).  This is a common language used for typesetting, especially for scientific publications.  About 30 sample LaTeX snippets, ending in a .tex extension, are distributed with EdSharp.  You can convert from LaTeX to RTF and vice versa.  To fully work with LaTeX, install the open source [MiKTeX](<http://www.miktex.org>) package for Windows.
@@ -370,7 +371,7 @@ The PyBrace and PyDent formats include comments that indicate when a block has c
 
 A scripting language allows a program to be run as a text file associated by extension with its interpreter, e.g., .py for Python, .au3 for AutoIt, or .rb for Ruby.  Press F5 to run the current file with its associated interpreter.  If the current file name has a complete path, EdSharp saves to disk before running the file to ensure the latest version is being used.  Otherwise, EdSharp saves to a file in a temporary folder and runs that file.
 
-The Alt+F5 command prompts for a command to run and speaks its standard output.  The path of the current file may be passed via the syntax described for EdSharp's Import and Export capability.  The command remembers its previous value, and may be adjusted each time it is run.  Use the Review Output command, Alt+Shift+F5, to open a new editing window containing the output produced by the last command.
+The Alt+F5 command prompts for a command to run without interactive standard input. The command remembers its previous value and may be adjusted each time it is run. Its standard output and standard error appear in a focused, readable result window, with the exit code; use Control+A and Control+C there to copy it. Long output is retained up to a marked limit while both streams continue draining. Escape, Cancel, or closing the result window cancels the controlled command and its ordinary child processes. The path of the current file may be passed via the syntax described for EdSharp's Import and Export capability. If a command uses %Source% or %SourceDir% and the document has changes, EdSharp explicitly offers Save and run, Use last disk version, or Cancel. It does not save merely because a document has a name.
 
 Use the Compile command, Control+F5, for a programming language that involves compiling source code to binary form.  For example, a C# program in a .cs file may be compiled to a .exe file.  This command may also be used for interpreters that report syntax errors via the standard output or standard error streams.
 
@@ -516,7 +517,7 @@ To make navigation more flexible and efficient in a listbox with many items, EdS
 
 Control+J prompts for text within an item, going to the first match if a new search, or the next match if the previous value is accepted.  Alt+J goes to the next match without prompting for a value.  The item with focus when the dialog is closed -- but not canceled -- becomes the current item the next time that the same list dialog is invoked (you are notified when it is not the first item).  The Jump value of that dialog is also remembered.
 
-Control+F sets a filter to restrict what items are shown via wildcards (* to match any sequence of characters or ? to match a single one).  For example, you could browse replace-related commands in the Alternate Menu, Alt+F10, by pressing Control+F after invoking that list and then entering *replace* as the filter expression.  Control+Shift+F clears the filter so all items are shown again.  The order of items may also be changed:  Alt+A for alpha order, Alt+Shift+A for reverse alpha order, Alt+D for default order, or Alt+Shift+D for reverse default order.
+Use Command Palette, Control+Shift+F1, to type replace and narrow the available commands.
 
 Multiple commands support flexible checking or unchecking in a checked listbox, such as the dialog that picks files to convert.  Press Space to toggle the checked state of the current item, Control+A to check all items, or Control+Shift+A to uncheck all.  Press Shift+DownArrow for check and Next, or Shift+UpArrow for check and Previous.  Press Shift+End for check to Bottom, or Shift+Home for check to Top.  Shift+NumPad5 checks the current item.  F8 marks the start of a checking operation, completed with Shift+F8.
 
@@ -536,7 +537,7 @@ The HardPageAddress option determines whether the Address command, Alt+A, gives 
 
 The ViewLevels option controls whether EdSharp converts a file when it is opened from outside the editor -- through Windows Explorer, the "Open with" menu, the command line, or the Recent Files command.  (Since 5.0.99 the Open command, Control+O, uses this same option, so a file behaves identically however it is opened.)  By default EdSharp opens files raw, with one exception: binary and document formats whose raw bytes are not readable -- Word (.doc, .docx), Excel (.xls, .xlsx), PowerPoint (.ppt, .pptx), PDF (.pdf), EPUB (.epub, .epub3), WordPerfect (.wpd), WinHelp (.hlp), and rich text (.rtf) -- are converted to text (or, for .rtf, shown as rich text).  From version 5.0.61 a rich text file opened this way also offers "md" on the import list, which converts it to Markdown through the bundled Pandoc; the older route to plain text went through Microsoft Word and therefore needed Word installed.  Every text, markup, data, source-code, or otherwise unrecognized format opens raw, so no text format is ever auto-converted.  Braille files (.brl, .brf) are treated as text and therefore open raw, showing the braille content as it is stored rather than back-translating it.  Use ViewLevels to override any extension: a value of 0 opens that type raw and 1 converts it.  For example, "docx:0" would open Word files raw, "rst:1" would auto-convert reStructuredText, and "brl:1 brf:1" would back-translate braille on open.  The option is a single space-separated list, as in ViewLevels="docx:0 rst:1".
 
-Braille back-translation itself was repaired on 27.08.2026.  Both .brl and .brf now go through liblouis, which is distributed with EdSharpNG: a braille file opened with Control+O is converted to ordinary text (set "brl:1 brf:1" in ViewLevels, since braille counts as text by default).  Previously the .brl converter named in EdSharp.ini did not exist as a file at all, and the .brf converter (NFBTrans) reported success while writing nothing, so either kind of braille file produced an empty document.  Unified English Braille grade 2 is used by default.  For another code, including Polish, set the BrailleTable environment variable to the name of a liblouis table -- Pl-Pl-g1.utb for Polish -- with Environment Variables, Alt+Shift+V.  Polish back-translation was measured and returns the diacritics correctly when the braille file is stored as UTF-8.
+Braille back-translation itself was repaired on 27.08.2026.  Both .brl and .brf now go through liblouis, which is distributed with EdSharpNG: a braille file opened with Control+O is converted to ordinary text (set "brl:1 brf:1" in ViewLevels, since braille counts as text by default).  Previously the .brl converter named in EdSharp.ini did not exist as a file at all, and the .brf converter (NFBTrans) reported success while writing nothing, so either kind of braille file produced an empty document.  Unified English Braille grade 2 is used by default.  For another code, including Polish, set the BrailleTable environment variable to the name of a liblouis table -- Pl-Pl-g1.utb for Polish.  Polish back-translation was measured and returns the diacritics correctly when the braille file is stored as UTF-8.
 
 The UseIndentModeDefault setting determines the state of indent mode when a new document window is opened.  This mode may be toggled on a per-window basis with Alt+Shift+I.  The configuration setting determines whether it is initially on or off when a file is opened (default is No).
 
@@ -550,7 +551,7 @@ To change key assignments, edit the Keys section of the configuration file, e.g.
 could be changed to\
 `Replace=Control+H`
 
-A command without a hot key may still be invoked via the regular menu system or Alternate Menu (Alt+F10).  The terms used to identify available keys are listed in [Microsoft's Keys enumeration reference](<https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys>).
+A command without a hot key may still be invoked via the regular menu system or Command Palette (Control+Shift+F1).  The terms used to identify available keys are listed in [Microsoft's Keys enumeration reference](<https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms/keys>).
 
 Certain configuration options are associated with the current compiler rather than being global .  Specifically, favorites, bookmarks, and user-defined tokens apply to the current compiler (picked via Control+Shift+F5), so you can work with items more relevant to each coding project.  The Reset Configuration command, Alt+Shift+F10, lets you easily remove custom settings and restore defaults of EdSharp.  This command lets you choose whether to reset the main configuration, current compiler configuration, or create a new compiler configuration.  The New choice prompts for the compiler name, command line, AbbreviateOutput, NavigatePart, QuotePrefix, and ExtensionDefault settings.  
 
@@ -560,14 +561,12 @@ Press F4 to activate an editing window from a list of those currently open.  Pre
 
 Leaving the menu puts the cursor back in the text.  When a menu closes -- with Escape, or after running a command -- Windows hands keyboard focus back to whatever held it before the menu opened, and in a multiple-document window that is often the document frame or the MDI client rather than the edit control itself.  A screen reader then loses the caret and has to be woken up, which used to take pressing Escape twice.  EdSharp now moves focus back to the real edit control whenever a menu closes, the same way it already did when the program regains activation through Alt+Tab.  With the Markdown preview open, focus returns to the preview rather than to the source, since the preview is left by hand and nothing else should throw you out of it.
 
-Use the Alternate Menu command, Alt+F10, to execute a command from a single, alphebetized list.
 
 The Context Menu command, Shift+F10, lets you choose an action to perform on the current file based on those available for its type/extension (in the Windows registry).  Also included is the OpenWith action, by which a default program may be associated with files of this type.  The Send To Menu, Control+F10, lets you choose among SendTo shortcuts (installed by various applications) to perform on the current file.
 
 ### Online Help
 Press Alt+Shift+H for a summary of EdSharp hot keys.  Press F1 to load this documentation, or Alt+F1 to simply confirm the version.  Control+F1 toggles a Key Describer mode in which pressing a key describes its action.  If you switch to another application window, the mode is automatically turned off.
 
-Use the Environment Variables command, in the menu with no shortcut of its own, to review or change such settings of Windows.  It had Control+E until 5.0.58: changing environment variables of Windows is a programmer's errand rather than part of writing a document, and the letter E is worth more than that.  Choose those of the current process, user, or system as a whole.  Jump quickly to a particular variable based on its initial letter, e.g., Alt+P for the PATH setting that determines where Windows searches for an executable file that is not found in the current directory.  Changes to process settings affect the current session of EdSharp, but not the next time it is run.  User settings take effect when you log in again.  System settings take affect when you restart the computer.
 
 The Burn to CD command was removed in EdSharpNG.  The Path List command, Control+Shift+P, still gathers the paths of a folder into the document, which remains useful on its own.
 
@@ -581,7 +580,6 @@ Documentation=F1, Open Documentation in web browser
 About=Alt+F1, Display version and release date
 History of Changes=Shift+F1, Display list of fixes and improvements
 Key Describer=Control+F1, Toggle a mode in which pressing a key describes its action
-Alternate Menu=Alt+F10, Present all commands in a single, alphabetized list
 Context Menu=Shift+F10, Pick a command from those available to Windows Explorer for the current file extension
 SendTo Menu=Control+F10, Pick a command from those available as Windows "Send To" options
 
@@ -596,14 +594,11 @@ Start Selection=F8, Mark starting point of text to be selected
 Complete Selection=Shift+F8, Select text from starting point to cursor
 Reselect=Control+Shift+F8, Reselect between previous start and end positions
 Go to Start of Selection=Alt+Shift+F8, Return to start position of selection
-Copy All=Control+F8, Copy all text to clipboard
-Read All=Alt+F8, Say all text (without moving cursor)
 
 Say Address=Alt+A, Say line, column, and percent position of cursor
 Say Indent=Alt+I, Say the indentation level of the current line, or the preceding line with less indentation if repeated
 Say Yield=Alt+Y, Say number of characters, words, and lines in all or selected text
 Say Status=Alt+Z, Say whether current file has been modified since last save to disk, or say its character encoding and line break kind if repeated
-Say Clipboard=Alt+Apostrophe, Say clipboard text, or spell if repeated
 Say Time=Alt+Semi-colon, Say current time and date
 Insert Time=Alt+Shift+Semicolon, Insert current time and date
 
@@ -625,6 +620,7 @@ Redo=Control+Shift+Z, Redo the last action that was undone; Control+Y does the s
 
 Save Snippet=Alt+S, Save all or selected text to a snippet file
 Invoke Snippet=Alt+V, Pick snippet file to paste or execute
+Expand Snippet=Control+Shift+Space, Expand filename prefix before cursor; choose from a preview list when several snippets match
 View Snippet=Alt+Shift+V, Pick snippet file to view or edit
 
 Regular Expression Tool=Control+Shift+Y, Count matches of a regular expression, or extract them to a new window; the dialog asks which
@@ -645,7 +641,6 @@ Word Wrap=, Word wrap lines (menu only, no shortcut)
 Unwrap=, Unwrap lines (menu only, no shortcut)
 Guard Document=Control+F7, Turn read-only protection on or off
 
-Extra Speech Log=Alt+Shift+X Open speech.log file in a new window
 
 Go to Percent=Control+G, Go to percentage point in document
 Go to Percent Again=Alt+G, Repeat Go command
@@ -661,7 +656,6 @@ Set Named Bookmark=Control+Shift+B, Set a bookmark with a name of your own at th
 Named Bookmark List=Alt+Shift+B, Show the list of named bookmarks and go to the one you choose; Delete removes one
 
 Toggle Favorite=Alt+Shift+L, Add the current file to the list of favorites, or take it off that list if it is already there; says only what happened, "Added to favorites" or "Removed from favorites", not the name of the command
-Clear Favorite=, Clear current file from the list of favorites and say so, or say "Not in favorites" if it was never on the list (menu only, no shortcut)
 List Favorites=Alt+L, Open a file from the list of favorites; on the list Control+C copies the files themselves, so they paste into File Explorer as well as into text, Alt+C appends the paths as text, Delete takes every selected entry off the list
 Recent Files=Alt+R, Open a file from the list of those recently used; on the list Control+C copies the files themselves, so they paste into File Explorer as well as into text, Alt+C appends the paths as text, Delete takes every selected entry off the list
 Numbered Files=Alt+Shift+F2, Open a file from the list of numbered files
@@ -687,14 +681,13 @@ Mail Attachment=Control+Shift+M, Mail current file as an email attachment, offer
 Run=, Execute current file, based on its extension (menu only, F5 now opens the Markdown preview in a web browser)
 Preview Markdown in Web Browser=F5, Show the current Markdown document as a page in the default web browser
 Run at Cursor=Shift+F5, Execute a web URL or email address at cursor position or in selected text
-Prompt Command=Alt+F5, Prompt for a command line to execute and say its standard output
-Review Output=Alt+Shift+F5, Open standard output of last prompt or compile command in a new editing window
+Prompt Command=Alt+F5, Run a non-interactive command with an explicit save decision for %Source%; output, errors and exit code open in a copyable result window
 Compile=Control+F5, Compile source code, say output, and jump to error position
 Pick Compiler=Control+Shift+F5, Pick a compiler or interpreter from the list of those configured
 Say Compiler=Control+F9, Say current compiler and folder
 Go to Folder=Shift+F4, Go to folder containing recent or favorite files
 Go to Special Folder=Control+Shift+F4, Go to special folder of Windows
-Go to Environment=, Go to interactive environment of current compiler (menu only, no shortcut)
+Run Configured Tool=, Run the command line in the GoToEnVironment option (menu only, no shortcut)
 
 Spell Check=F7, Spell check all or selected text
 Thesaurus=Shift+F7, Look up local Polish or English synonyms; Enter inserts, Right (also F4) shows source meaning, Shift+Enter selects attested forms, F1 explains dialog keys
@@ -757,7 +750,6 @@ Link List=Control+F6, Show the list of links in the document and go to the one y
 Next Link=Alt+PageDown, Go to the next link in the document and say its text, address and kind
 Prior Link=Alt+PageUp, Go to the previous link in the document and say its text, address and kind
 
-Topic=Alt+T, Say topic of current section
 Section Break=Control+Enter, Start a new section by inserting a Markdown heading at the level of the heading above
 
 Text Combine=, Convert other formats to text and combine them in a new editing window (menu only, no shortcut)
@@ -777,7 +769,6 @@ Next Comment=, Go to the next internal comment and read it
 Prior Comment=, Go to the prior internal comment and read it
 Comment List=, Show the list of internal comments and go to the one you choose
 
-Say Styles=Alt+Slash, Say current justification and styles
 
 Infer Indent=Alt+RightBracket, Infer the indent unit of the current document, or configure EdSharp accordingly if repeated
 Toggle Indentation=Windows+Grave, Toggle announcement of indentation by JAWS
@@ -807,7 +798,6 @@ PyBrace=Alt+Shift+LeftBracket, Convert from PyDent format, or reformat typical P
 
 Explorer Folder=Alt+Backslash, Open Windows Explorer in the EdSharp program folder, data folder, or current folder
 Command Prompt=Control+Backslash, Open a command prompt in the EdSharp program folder, data folder, or current folder
-Environment Variables=, Change Windows environment variables for the current process, user, or system (menu only, no shortcut)
 
 Next Window=Control+Tab, Cycle to next editing window
 Prior Window=Control+Shift+Tab, Cycle to previous editing window

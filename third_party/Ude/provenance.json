@@ -1,0 +1,320 @@
+{
+  "component": "UDE.CSharp",
+  "package_version": "1.1.0",
+  "assembly_version": "0.1.0.0",
+  "modified": false,
+  "binary": {
+    "path": "Ude.dll",
+    "package_member": "lib/Ude.dll",
+    "bytes": 163840,
+    "sha256": "5a120f43a4b9e7a0d811a680eeab34948d1a7eda4dcc988aa203eefcc33043b6"
+  },
+  "package": {
+    "url": "https://api.nuget.org/v3-flatcontainer/ude.csharp/1.1.0/ude.csharp.1.1.0.nupkg",
+    "sha256": "47eff159c239eeb6c574b06758c6d9eea8d463f92804de6fe51a29252b9475c2"
+  },
+  "source_archive": {
+    "url": "https://storage.googleapis.com/google-code-archive-source/v2/code.google.com/ude/source-archive.zip",
+    "sha256": "ad7a1f37719538194a724b6c34180ab71d6e27285ef2fe85738a0faaa0970b49"
+  },
+  "upstream_license_choices": "MPL-1.1 OR GPL-2.0-or-later OR LGPL-2.1-or-later",
+  "distribution_license_choice": "LGPL-3.0-or-later",
+  "upstream_files": [
+    {
+      "path": "configure.ac",
+      "bytes": 2131,
+      "sha256": "95d5ef99dba80002337f2db88377450e69fbbea4da1a2c9fa7f7faca136b60fb"
+    },
+    {
+      "path": "AUTHORS",
+      "bytes": 14,
+      "sha256": "6c11e20f20319ad5ae23b0f87d47a6cdcb14a8b8e41836b72cc6fe4add20c1b4"
+    },
+    {
+      "path": "COPYING",
+      "bytes": 22,
+      "sha256": "113bcb888834ed2dc21b07f6cd193fcab6ce251982293d4fa6e997925a0948c6"
+    },
+    {
+      "path": "NEWS",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "missing",
+      "bytes": 11135,
+      "sha256": "b6eea6a3da69ea84e46913618750a3b56c55685cf61038f2a89bd343f67af12f"
+    },
+    {
+      "path": "Makefile.am",
+      "bytes": 199,
+      "sha256": "f45f8a0b7e24af3303e6d8079c400ab63768b619f5307a1b6f58f0cce3083a30"
+    },
+    {
+      "path": "Makefile.include",
+      "bytes": 1230,
+      "sha256": "57d68873bd1283bd81b50f1688bec007b62094d7b8ca621d4f6f4565ea3b0e4e"
+    },
+    {
+      "path": "INSTALL",
+      "bytes": 808,
+      "sha256": "9f03a970f1175e3588bf405ad002da8d119e7948928d21cd4f92d4e5bc5589e6"
+    },
+    {
+      "path": "README",
+      "bytes": 2232,
+      "sha256": "5f9c1b2742e13ae89a7e9de236ac105a956fe63ba39dca35edefbcf5b96dc29f"
+    },
+    {
+      "path": "ChangeLog",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/Library/Ude.csproj",
+      "bytes": 4208,
+      "sha256": "8deffbcb692136c222b2b6c11bcbae5aca8a2f59c1636aa6c16e187243e66039"
+    },
+    {
+      "path": "src/Library/ude.pc.in",
+      "bytes": 218,
+      "sha256": "1ee332ffddb012c2d441af5409bd442299fb55e9e93262c35528789354c97161"
+    },
+    {
+      "path": "src/Library/Makefile.am",
+      "bytes": 1941,
+      "sha256": "2b64ea52e67290e3986f0498a3d4527975240ed1adb07d837907bac35b0b8d94"
+    },
+    {
+      "path": "src/Library/Ude.mdp",
+      "bytes": 4266,
+      "sha256": "b06cc14f1644ad57082d72373765dd38cc1770c2925373498b8fa2da3e05c73b"
+    },
+    {
+      "path": "src/Library/Properties/AssemblyInfo.cs",
+      "bytes": 661,
+      "sha256": "71294763f1b080c5eb912a2c468809a932e6d507b8ebe2a1e9fa20be4318bcd2"
+    },
+    {
+      "path": "src/Library/Ude/DetectionConfidence.cs",
+      "bytes": 3213,
+      "sha256": "df4fb0f4f4dc09438b12eee513038e805747ec230392e838e16152982b4731aa"
+    },
+    {
+      "path": "src/Library/Ude/ICharsetDetector.cs",
+      "bytes": 3260,
+      "sha256": "b4049d6e60eb58c31287d05228e28014214ba6f7396a31c275f53f98fa8a7420"
+    },
+    {
+      "path": "src/Library/Ude/CharsetDetector.cs",
+      "bytes": 4112,
+      "sha256": "6e69b8e09998816c35d0b8933f5adfea4c94e9f38821bda10bd6f97f9aa8f836"
+    },
+    {
+      "path": "src/Library/Ude.Core/SMModel.cs",
+      "bytes": 2937,
+      "sha256": "0727a5c1b3921290712bd6bbc6b1af9ec576725df1aeaaa6513ce5ca2ef1ec6d"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangHungarianModel.cs",
+      "bytes": 15328,
+      "sha256": "4272b3fe34d8e8c31cdc1758735d2bab31de065e47c23163814afc063d70a462"
+    },
+    {
+      "path": "src/Library/Ude.Core/SBCharsetProber.cs",
+      "bytes": 6256,
+      "sha256": "3675fe11d557c48b996f3b1e51293c7ce5486ff5e54183c559f60bfd638c2daf"
+    },
+    {
+      "path": "src/Library/Ude.Core/MBCSGroupProber.cs",
+      "bytes": 6365,
+      "sha256": "9fd2cbebe0e9cf1f3d353205706fe6a00596e1b5356dcc22ab2ebce17b313539"
+    },
+    {
+      "path": "src/Library/Ude.Core/EscCharsetProber.cs",
+      "bytes": 4361,
+      "sha256": "c60fdf366b1ab867b44972b91a259e055d6a0f1fe5a90109b62fa9e593558718"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangCyrillicModel.cs",
+      "bytes": 21236,
+      "sha256": "0a5faf3810adc6b0b32251defe774297541e2a8d0653411fdb2767914b13aad0"
+    },
+    {
+      "path": "src/Library/Ude.Core/GB18030Prober.cs",
+      "bytes": 4146,
+      "sha256": "337e6f953505e6ae5f7d26bf22514a251307b92f7c843ee7e5e1f041b835f605"
+    },
+    {
+      "path": "src/Library/Ude.Core/EUCKRProber.cs",
+      "bytes": 4042,
+      "sha256": "1a394d043f289d2584eb835cfce803d892683761e476f28464c9446566ffefa3"
+    },
+    {
+      "path": "src/Library/Ude.Core/SBCSGroupProber.cs",
+      "bytes": 7424,
+      "sha256": "4dd461b47eb47b8b76c09a66e808170b974f85ffd2aec3048eebfbba36019e2b"
+    },
+    {
+      "path": "src/Library/Ude.Core/Latin1Prober.cs",
+      "bytes": 7503,
+      "sha256": "d9e67ae568d0e2682e39cedc9bead1615551cbdacfbf2ed678fa63339709916a"
+    },
+    {
+      "path": "src/Library/Ude.Core/EUCTWProber.cs",
+      "bytes": 4045,
+      "sha256": "a3513d623a9cdccf8f0ebfe6297dfe13cb3f87d14e6b52a445c63dafee6e3eef"
+    },
+    {
+      "path": "src/Library/Ude.Core/SJISProber.cs",
+      "bytes": 4743,
+      "sha256": "7a72ba564f3c3a0dafb508d1509989127910b0b7bba529dadd2156bf2c98d3f1"
+    },
+    {
+      "path": "src/Library/Ude.Core/CodingStateMachine.cs",
+      "bytes": 3309,
+      "sha256": "2540ad914ec51aecb67fa48420791a316e71fb2d79ad1b37237c466b8b61fc61"
+    },
+    {
+      "path": "src/Library/Ude.Core/EUCJPProber.cs",
+      "bytes": 4434,
+      "sha256": "a47b857c292993bc66d706cb9ea1a229179b18fe7eaaf855a5cc3272826f33c1"
+    },
+    {
+      "path": "src/Library/Ude.Core/Charsets.cs",
+      "bytes": 4987,
+      "sha256": "829cb39095086a437c69de2ecff833e784959ade5914d75c8f5579e5335bd2ad"
+    },
+    {
+      "path": "src/Library/Ude.Core/CharDistributionAnalyser.cs",
+      "bytes": 278354,
+      "sha256": "a75577b0116ec2e893550bb3cfbd62a54bdc7d8c4165342e283643d9aabb25ed"
+    },
+    {
+      "path": "src/Library/Ude.Core/JapaneseContextAnalyser.cs",
+      "bytes": 23655,
+      "sha256": "d2b37abdb8a3ba4d329056ec0c6ec459e6b2d3282e10e3bc1e0e2d8ddf450705"
+    },
+    {
+      "path": "src/Library/Ude.Core/Big5Prober.cs",
+      "bytes": 4107,
+      "sha256": "817d467c0b89dc89f9bd5147f86344144843653ab9fe046973263f262aa2d2b9"
+    },
+    {
+      "path": "src/Library/Ude.Core/BitPackage.cs",
+      "bytes": 3748,
+      "sha256": "77c0599924863410da0c18461a2884c0c089d362fdb555ea2afe2a2e1c776911"
+    },
+    {
+      "path": "src/Library/Ude.Core/SequenceModel.cs",
+      "bytes": 3440,
+      "sha256": "ae72dcc8b969c41c2a5c2ace0d1c5a82eff48e9b53f359736b55f2f50dd4ace4"
+    },
+    {
+      "path": "src/Library/Ude.Core/EscSM.cs",
+      "bytes": 16343,
+      "sha256": "20b0f2f39d9f050e93e1da73f188c2271bb537dd25adf03028a5f1cb3c879964"
+    },
+    {
+      "path": "src/Library/Ude.Core/UTF8Prober.cs",
+      "bytes": 3997,
+      "sha256": "21a4ebd2406a78678ca41de304179ebcb1d03dea0296828e1962518531f96b5a"
+    },
+    {
+      "path": "src/Library/Ude.Core/MBCSSM.cs",
+      "bytes": 34752,
+      "sha256": "d89c74f7256885d249b4186e528d66a523e7edbfd6d6443413cf936ff40984d8"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangHebrewModel.cs",
+      "bytes": 14225,
+      "sha256": "266e64f39e340d5a069fbdca37ca275d961a63dd9ad3e882586f2cde6e899175"
+    },
+    {
+      "path": "src/Library/Ude.Core/CharsetProber.cs",
+      "bytes": 6918,
+      "sha256": "ffb1e4b463d48eb96b9272c0741394d4c692e3d2ab02a61ac7951383be35558d"
+    },
+    {
+      "path": "src/Library/Ude.Core/HebrewProber.cs",
+      "bytes": 15475,
+      "sha256": "a6f753c74246127608d16ea89e2d714dbb60f120b81038bcd3ef69a6a291187c"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangGreekModel.cs",
+      "bytes": 15264,
+      "sha256": "8da68d507553fd5158ba310e1575f183622f1e601d0c3985cee3bc224671c10b"
+    },
+    {
+      "path": "src/Library/Ude.Core/UniversalDetector.cs",
+      "bytes": 10540,
+      "sha256": "cde809937ffffd8134b66a9b9dd1791626110302a25eaf4ac4907dad12d5cc15"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangThaiModel.cs",
+      "bytes": 13467,
+      "sha256": "409661954f20f97b468029839ef86927e2276a3568dcba17b106acd95ee3f859"
+    },
+    {
+      "path": "src/Library/Ude.Core/LangBulgarianModel.cs",
+      "bytes": 15795,
+      "sha256": "25eeecaf44ff1eec0514e5250b3c1fec8f00bec5c5e31ea67de924cc84aadece"
+    },
+    {
+      "path": "Ude.sln",
+      "bytes": 2025,
+      "sha256": "a39f55ac1e797a6eefc52c81751653249db591a4934ac9e57b9e740b854e77ca"
+    },
+    {
+      "path": "aclocal.m4",
+      "bytes": 26859,
+      "sha256": "6403e75b5b64a728903db1481d5cb2b56d32321dda1a00807e3a8a5b98c45a3f"
+    },
+    {
+      "path": "install-sh",
+      "bytes": 13620,
+      "sha256": "6d81eb01a4adde88768b01aa9dca9c8c79adb6215fc44e90ad243875d487c961"
+    },
+    {
+      "path": "license/MPL-1.1.txt",
+      "bytes": 25755,
+      "sha256": "53692a2ed6c6a2c6ec9b32dd0b820dfae91e0a1fcdf625ca9ed0bdf8705fcc4f"
+    },
+    {
+      "path": "license/gpl-2.0.txt",
+      "bytes": 17987,
+      "sha256": "ab15fd526bd8dd18a9e77ebc139656bf4d33e97fc7238cd11bf60e2b9b8666c6"
+    },
+    {
+      "path": "license/lgpl-2.1.txt",
+      "bytes": 26436,
+      "sha256": "5df07007198989c622f5d41de8d703e7bef3d0e79d62e24332ee739a452af62a"
+    },
+    {
+      "path": "m4/Makefile.am",
+      "bytes": 63,
+      "sha256": "07db17f7e5470e05e12f05932ca6b52282d16db3de5fb7d9044bbe17c880f05d"
+    },
+    {
+      "path": "m4/expansions.m4",
+      "bytes": 822,
+      "sha256": "b73958ae4ba61c0ca64d0827e2cc859ab2c6737ffa3267e2933065957e980622"
+    },
+    {
+      "path": "Ude.mds",
+      "bytes": 1107,
+      "sha256": "8af6c3ed91321d535fdb3f9cfd051b846d93ffcd4fcb2905a19b43075e9ab145"
+    },
+    {
+      "path": "configure",
+      "bytes": 108676,
+      "sha256": "bbf81a37cee8a81c4489890c152048ebc60ae6ef859c6011aed2ad291f6e39a9"
+    },
+    {
+      "path": "autogen.sh",
+      "bytes": 1538,
+      "sha256": "f459d8a123d9ced74de7a81637a0615928739d43296e0756a5ff2f6184bb8e52"
+    }
+  ],
+  "scope": "Original library sources, upstream notices and build scripts. Example and test data omitted; no byte-reproducible rebuild claim."
+}

@@ -83,11 +83,11 @@ public class LbcTextBox : TextBox
             lsAlpha.Sort(StringComparer.OrdinalIgnoreCase);   // pick list in alpha order
             using (LbcDialog dlgPick = new LbcDialog("Pick value", FindForm()))
             {
-                ListBox lbPick = dlgPick.addListBox("Choose a value:", lsAlpha, Text);
+                ListBox lbPick = dlgPick.addListBox(JezykInterfejsu.Wybierz("Choose a value:", "Wybierz wartość:"), lsAlpha, Text);
                 if (!string.Equals(dlgPick.runWithButtons(new string[] { "OK", "Cancel" }),
                         "OK", StringComparison.OrdinalIgnoreCase)) return;
                 if (lbPick.SelectedItem == null) return;
-                if (ReadOnly) { Say.say("Read-only"); return; }
+                if (ReadOnly) { Say.say(JezykInterfejsu.Wybierz("Read-only", "Tylko do odczytu")); return; }
                 Text = lbPick.SelectedItem.ToString();
                 SelectionStart = TextLength;
                 SelectionLength = 0;
@@ -103,9 +103,9 @@ public class LbcTextBox : TextBox
     protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
     {
         if (keyData == (Keys.Control | Keys.A))
-        { SelectAll(); Say.say("Selected all"); return true; }
+        { SelectAll(); Say.say(JezykInterfejsu.Wybierz("Selected all", "Zaznaczono wszystko")); return true; }
         if (keyData == (Keys.Control | Keys.Shift | Keys.A))
-        { SelectionLength = 0; Say.say("Selection cleared"); return true; }
+        { SelectionLength = 0; Say.say(JezykInterfejsu.Wybierz("Selection cleared", "Usunięto zaznaczenie")); return true; }
         return base.ProcessCmdKey(ref msg, keyData);
     }
 
@@ -130,17 +130,17 @@ public class LbcTextBox : TextBox
             if (SelectionLength > 0) return;   // normal copy proceeds
             sLine = currentLineText();
             setClipboard(sLine);
-            Say.say(sLine.Length == 0 ? "Copied blank line" : "Copied line");
+            Say.say(sLine.Length == 0 ? JezykInterfejsu.Wybierz("Copied blank line", "Skopiowano pusty wiersz") : JezykInterfejsu.Wybierz("Copied line", "Skopiowano wiersz"));
         }
         else if (key == (Keys.Alt | Keys.C))
         {
             sLine = (SelectionLength > 0) ? SelectedText : currentLineText();
             setClipboard(clipboardJoin(sLine));
-            Say.say("Appended to clipboard");
+            Say.say(JezykInterfejsu.Wybierz("Appended to clipboard", "Dodano do schowka"));
         }
         else if (key == (Keys.Control | Keys.X))
         {
-            if (ReadOnly) { Say.say("Read-only"); return; }
+            if (ReadOnly) { Say.say(JezykInterfejsu.Wybierz("Read-only", "Tylko do odczytu")); return; }
             if (SelectionLength > 0) return;   // normal cut proceeds
             lineBounds(true, out iStart, out iLength);
             Select(iStart, iLength);
@@ -151,7 +151,7 @@ public class LbcTextBox : TextBox
         }
         else if (key == (Keys.Alt | Keys.X))
         {
-            if (ReadOnly) { Say.say("Read-only"); return; }
+            if (ReadOnly) { Say.say(JezykInterfejsu.Wybierz("Read-only", "Tylko do odczytu")); return; }
             string sPrior = clipboardJoin("");
             if (SelectionLength == 0)
             {
@@ -171,7 +171,7 @@ public class LbcTextBox : TextBox
         }
         else if (key == (Keys.Control | Keys.D))
         {
-            if (ReadOnly) { Say.say("Read-only"); return; }
+            if (ReadOnly) { Say.say(JezykInterfejsu.Wybierz("Read-only", "Tylko do odczytu")); return; }
             lineBounds(true, out iStart, out iLength);
             Text = Text.Remove(iStart, iLength);
             SelectionStart = Math.Min(iStart, TextLength);
@@ -186,7 +186,7 @@ public class LbcTextBox : TextBox
         }
         else if (key == (Keys.Shift | Keys.F8))
         {
-            if (!(Tag is int)) { Say.say("No selection start; press F8 first"); return; }
+            if (!(Tag is int)) { Say.say(JezykInterfejsu.Wybierz("No selection start; press F8 first", "Brak początku zaznaczenia; najpierw naciśnij F8")); return; }
             int iAnchor2 = (int)Tag;
             int iCaret = SelectionStart + SelectionLength;
             Select(Math.Min(iAnchor2, iCaret), Math.Abs(iCaret - iAnchor2));
@@ -195,41 +195,55 @@ public class LbcTextBox : TextBox
         else if (key == (Keys.Control | Keys.F8))
         {
             setClipboard(Text);
-            Say.say("Copied all");
+            Say.say(JezykInterfejsu.Wybierz("Copied all", "Skopiowano wszystko"));
         }
         else if (key == (Keys.Alt | Keys.F8))
         {
-            Say.say(TextLength == 0 ? "Blank" : Text);
+            Say.say(TextLength == 0 ? JezykInterfejsu.Wybierz("Blank", "Puste") : Text);
         }
         else if (key == (Keys.Alt | Keys.Y))
         {
             int iLines = Multiline ? Lines.Length : 1;
-            Say.say(iLines + (iLines == 1 ? " line, " : " lines, ")
-                + TextLength + (TextLength == 1 ? " character" : " characters"));
+            Say.say(LocalizedCountSentence(iLines, LocalizedCountWord(iLines, "line", "lines", "wiersz", "wiersze", "wierszy"), TextLength, LocalizedCountWord(TextLength, "character", "characters", "znak", "znaki", "znaków")));
         }
         else if (key == (Keys.Alt | Keys.OemQuotes))
         {
             string sClip = getClipboard();
-            Say.say(sClip.Length == 0 ? "Clipboard empty" : sClip);
+            Say.say(sClip.Length == 0 ? JezykInterfejsu.Wybierz("Clipboard empty", "Schowek jest pusty") : sClip);
         }
         else if (key == (Keys.Shift | Keys.F1))
         {
-            Say.say(string.IsNullOrEmpty(Tip) ? "No tip for this field" : Tip);
+            Say.say(string.IsNullOrEmpty(Tip) ? JezykInterfejsu.Wybierz("No tip for this field", "Brak wskazówki dla tego pola") : Tip);
         }
         // Homer structured-text line operations, active only in
         // multiline fields (notes, tags). Each acts on the selected
         // lines, or all lines when there is no selection. Keys are
         // the original Homer editor bindings. These mutate text, so
         // they no-op (with a spoken note) on read-only fields.
-        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.O))   applyLineOp(sortLines,    "Sorted");
-        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.Z))   applyLineOp(reverseLines, "Reversed");
-        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.K))   applyLineOp(uniqueLines,  "Kept unique,");
-        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.N))   applyLineOp(numberLines,  "Numbered");
-        else if (Multiline && key == (Keys.Control | Keys.Shift | Keys.Enter)) applyLineOp(trimBlanks, "Trimmed");
+        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.O))   applyLineOp(sortLines,    JezykInterfejsu.Wybierz("Sorted", "Posortowano"));
+        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.Z))   applyLineOp(reverseLines, JezykInterfejsu.Wybierz("Reversed", "Odwrócono kolejność"));
+        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.K))   applyLineOp(uniqueLines,  JezykInterfejsu.Wybierz("Kept unique,", "Usunięto duplikaty,"));
+        else if (Multiline && key == (Keys.Alt | Keys.Shift | Keys.N))   applyLineOp(numberLines,  JezykInterfejsu.Wybierz("Numbered", "Ponumerowano"));
+        else if (Multiline && key == (Keys.Control | Keys.Shift | Keys.Enter)) applyLineOp(trimBlanks, JezykInterfejsu.Wybierz("Trimmed", "Usunięto puste znaki"));
         else return;
 
         evArgs.Handled = true;
         evArgs.SuppressKeyPress = true;
+    }
+
+    private static string LocalizedCountWord(int iValue, string sEnglishSingle, string sEnglishPlural, string sPolishSingle, string sPolishFew, string sPolishMany)
+    {
+        if (!JezykInterfejsu.Polski) return iValue == 1 ? sEnglishSingle : sEnglishPlural;
+        int iLast = Math.Abs(iValue) % 10;
+        int iLastTwo = Math.Abs(iValue) % 100;
+        if (iValue == 1) return sPolishSingle;
+        return iLast >= 2 && iLast <= 4 && (iLastTwo < 12 || iLastTwo > 14) ? sPolishFew : sPolishMany;
+    }
+
+    private static string LocalizedCountSentence(int iFirst, string sFirstWord, int iSecond, string sSecondWord)
+    {
+        return JezykInterfejsu.Wybierz("{0} {1}, {2} {3}", "{0} {1}, {2} {3}")
+            .Replace("{0}", iFirst.ToString()).Replace("{1}", sFirstWord).Replace("{2}", iSecond.ToString()).Replace("{3}", sSecondWord);
     }
 
     // applyLineOp: run a line transform over the selected lines, or
@@ -237,7 +251,7 @@ public class LbcTextBox : TextBox
     // place (undoable) and speaking the resulting line count.
     private void applyLineOp(Func<string, string> op, string sVerb)
     {
-        if (ReadOnly) { Say.say("Read-only"); return; }
+        if (ReadOnly) { Say.say(JezykInterfejsu.Wybierz("Read-only", "Tylko do odczytu")); return; }
         if (SelectionLength == 0) SelectAll();
         string sOut = op(SelectedText);
         SelectedText = sOut;
@@ -335,7 +349,7 @@ public class LbcTextBox : TextBox
     private void sayLanding()
     {
         string sLine = currentLineText();
-        Say.say(sLine.Length == 0 ? "Blank" : sLine);
+        Say.say(sLine.Length == 0 ? JezykInterfejsu.Wybierz("Blank", "Puste") : sLine);
     }
 
     // clipboardJoin / setClipboard: shared by the text conveniences
@@ -436,7 +450,7 @@ public class LbcForm : Form
                     if (btn.DialogResult == DialogResult.OK) return btn;
                 }
                 else if (btn.Text != null
-                    && btn.Text.Replace("&", "").Trim().Equals("OK", StringComparison.OrdinalIgnoreCase))
+                    && btn.Text.Replace("&", "").Trim().Equals(JezykInterfejsu.Wybierz("OK", "OK"), StringComparison.OrdinalIgnoreCase))
                     return btn;
             }
             Button nested = findButton(c, bByDialogResult);
@@ -1190,6 +1204,28 @@ public class LbcDialog : IDisposable
         return addInputBox(sLabel, sValue, null);
     }
 
+    // addFolderBox: a labeled folder path together with a real Browse button.
+    // The caller owns persistence: cancelling the native folder picker only
+    // leaves the existing TextBox value in place.
+    public TextBox addFolderBox(string sLabel, string sValue, string sTip, EventHandler onBrowse)
+    {
+        TextBox tb = addInputBox(sLabel, sValue, sTip);
+        Button btn = new Button();
+        btn.Text = "&Browse...";
+        btn.UseMnemonic = true;
+        btn.AccessibleName = "Browse " + cleanLabel(sLabel);
+        btn.Size = new Size(120, DefaultLineHeight);
+        btn.TabIndex = iTabIndex++;
+        btn.Margin = new Padding(0, 0, 0, DefaultRowGap);
+        btn.GotFocus += handleGotFocus;
+        if (onBrowse != null) btn.Click += onBrowse;
+        queueAccessKey(btn, btn.Text);
+        registerWidget(btn, "Button", btn.AccessibleName);
+        if (!string.IsNullOrEmpty(sTip)) dFocusTips[btn] = "Choose a folder for " + cleanLabel(sLabel) + ".";
+        pnlStack.Controls.Add(btn);
+        return tb;
+    }
+
     // addTextLine: alias for addInputBox without a tip. Kept
     // for backward compatibility with the earlier API.
     public TextBox addTextLine(string sLabel, string sValue)
@@ -1395,7 +1431,7 @@ public class LbcDialog : IDisposable
         foreach (int iSel in lb.SelectedIndices)
             if (iSel >= 0 && iSel < lb.Items.Count && lb.Items[iSel] != null)
                 lsPicked.Add(lb.Items[iSel].ToString());
-        if (lsPicked.Count == 0) { Say.say("No item"); evArgs.Handled = true; evArgs.SuppressKeyPress = true; return; }
+        if (lsPicked.Count == 0) { Say.say(JezykInterfejsu.Wybierz("No item", "Brak pozycji")); evArgs.Handled = true; evArgs.SuppressKeyPress = true; return; }
         string sItem = string.Join("\r\n", lsPicked.ToArray());
         // Liczba w komunikacie MA znaczenie: niewidomy nie widzi podswietlenia,
         // wiec inaczej nie wie, ile pozycji wlasnie zabral.
@@ -1433,7 +1469,7 @@ public class LbcDialog : IDisposable
     // in sListSearchTerm so subsequent F3 / Shift+F3 can advance.
     private void promptAndFindInListBox(ListBox lb)
     {
-        string sPrompt = "Find substring (case-insensitive):";
+        string sPrompt = JezykInterfejsu.Wybierz("Find substring (case-insensitive):", "Znajdź fragment (bez rozróżniania wielkości liter):");
         string sInitial = sListSearchTerm ?? "";
         // Simple inline input: a tiny modal dialog with one input
         // box. We don't recurse into LbcDialog because nesting
@@ -1480,7 +1516,7 @@ public class LbcDialog : IDisposable
         // from the top," not "find next from current position").
         int iFound = findInListBoxFrom(lb, 0, true, sListSearchTerm);
         if (iFound < 0)
-            Say.say("No match for \"" + sListSearchTerm + "\"");
+            Say.say(JezykInterfejsu.Wybierz("No match for \"{0}\".", "Brak dopasowania dla „{0}”.").Replace("{0}", sListSearchTerm));
         else
         { selectOnly(lb, iFound); lb.Focus(); }
     }
@@ -1492,13 +1528,13 @@ public class LbcDialog : IDisposable
     private void findNextInListBox(ListBox lb, bool bForward)
     {
         if (string.IsNullOrEmpty(sListSearchTerm))
-        { Say.say("No find substring set; press Control+J first"); return; }
+        { Say.say(JezykInterfejsu.Wybierz("No find substring set; press Control+J first", "Nie ustawiono szukanego fragmentu; najpierw naciśnij Ctrl+J")); return; }
         int iFrom = lb.SelectedIndex + (bForward ? 1 : -1);
         if (iFrom < 0) iFrom = lb.Items.Count - 1;
         if (iFrom >= lb.Items.Count) iFrom = 0;
         int iFound = findInListBoxFrom(lb, iFrom, bForward, sListSearchTerm);
         if (iFound < 0)
-            Say.say("No more matches for \"" + sListSearchTerm + "\"");
+            Say.say(JezykInterfejsu.Wybierz("No more matches for \"{0}\".", "Nie ma więcej dopasowań dla „{0}”.").Replace("{0}", sListSearchTerm));
         else
             selectOnly(lb, iFound);
     }
@@ -1820,6 +1856,19 @@ public class LbcDialog : IDisposable
 
     // ------- Finish and show -------
 
+    // Display names are localized, but runWithButtons returns original labels.
+    // Existing callers compare those labels (not the visible buttons), so this
+    // boundary keeps their stable return contract intact.
+    private static string LocalizedButtonLabel(string sLabel)
+    {
+        string sPlain = (sLabel ?? "").Replace("&", "");
+        if (string.Equals(sPlain, "OK", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("OK", "OK");
+        if (string.Equals(sPlain, "Cancel", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("Cancel", "Anuluj");
+        if (string.Equals(sPlain, "Close", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("Close", "Zamknij");
+        if (string.Equals(sPlain, "Help", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("&Help", "&Pomoc");
+        return sLabel ?? "";
+    }
+
     // runOkCancel: convenience wrapper. Returns true on OK.
     public bool runOkCancel()
     {
@@ -1889,8 +1938,10 @@ public class LbcDialog : IDisposable
         for (int i = aButtonLabels.Length - 1; i >= 0; i--)
         {
             string sLabel = aButtonLabels[i] ?? "";
-            Button btn = new Button();
             string sPlain = sLabel.Replace("&", "");
+            string sDisplayLabel = LocalizedButtonLabel(sLabel);
+            string sDisplayPlain = sDisplayLabel.Replace("&", "");
+            Button btn = new Button();
             // OK and Cancel get NO trigger letter, on Kasperczak's own
             // decision (29.08.2026: "Enter zatwierdza, Esc anuluuje,
             // czyli jak u niego") and for a plain reason: Enter and
@@ -1902,15 +1953,16 @@ public class LbcDialog : IDisposable
             // the letters are claimed here in reverse order too. That
             // is harmless: the set only has to be free of duplicates,
             // and the caller's own ampersands are honoured either way.
-            btn.Text = bNoAccessKey ? sPlain : claimAccessKey(sLabel);
+            btn.Text = bNoAccessKey ? sDisplayPlain : claimAccessKey(sDisplayLabel);
             btn.UseMnemonic = true;
-            btn.AccessibleName = sPlain;
+            btn.AccessibleName = sDisplayPlain;
             btn.Size = new Size(DefaultButtonWidth, DefaultButtonHeight);
             btn.TabIndex = iTabBase + i;   // GIVEN order, not add order - see above
             btn.Margin = new Padding(DefaultRowGap, 0, 0, 0);
             btn.UseVisualStyleBackColor = true;
 
-            string sCaptured = sLabel.Replace("&", "");
+            string sCaptured = sPlain;
+            btn.Tag = sCaptured; // Return/control API stays on the caller's stable identifier, never display text.
             if (bAddHelp && string.Equals(sCaptured, "Help", StringComparison.OrdinalIgnoreCase))
             {
                 btn.Click += delegate(object o, EventArgs e) { showHelp(); };
@@ -2112,7 +2164,7 @@ public class LbcDialog : IDisposable
     {
         string sTip;
         StringBuilder sbHelp = new StringBuilder();
-        sbHelp.AppendLine("Fields in this dialog:");
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("Fields in this dialog:", "Pola w tym oknie:"));
         foreach (Control ctl in pnlStack.Controls)
         {
             if (ctl is Label) continue;
@@ -2126,17 +2178,17 @@ public class LbcDialog : IDisposable
             // so they never delay the dialog's opening announcement.
             string sDetail;
             if (dHelpDetails.TryGetValue(ctl, out sDetail) && !string.IsNullOrEmpty(sDetail))
-                sbHelp.Append("    Keys: ").AppendLine(sDetail);
+                sbHelp.Append(JezykInterfejsu.Wybierz("    Keys: ", "    Klawisze: ")).AppendLine(sDetail);
         }
         sbHelp.AppendLine();
-        sbHelp.AppendLine("Dialog keys:");
-        sbHelp.AppendLine("  Control+Enter presses the accept button from anywhere.");
-        sbHelp.AppendLine("  Control+Home and Control+End move to the first and last field (outside multi-line text, where they move the caret).");
-        sbHelp.AppendLine("  Escape cancels. F1 shows this help.");
-        sbHelp.AppendLine("  F7 lists the dialog's controls in navigation order; choose one and press OK to focus it (type a letter to jump in the list).");
-        sbHelp.AppendLine("  In text fields: Control+C copies the current line when nothing is selected, Alt+C appends, Control+X cuts the line, Control+D deletes it, F8 and Shift+F8 start and complete a selection, Control+F8 copies all, Alt+F8 reads all, Alt+Y says counts, Shift+F1 speaks the field tip.");
-        sbHelp.AppendLine("  In lists: Control+C copies the current item, Alt+C appends it; Control+J then F3 search the list.");
-        using (LbcDialog dlgHelp = new LbcDialog("Help: " + frm.Text, frm))
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("Dialog keys:", "Klawisze okna:"));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  Control+Enter presses the accept button from anywhere.", "  Ctrl+Enter uruchamia przycisk zatwierdzający z dowolnego miejsca."));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  Control+Home and Control+End move to the first and last field (outside multi-line text, where they move the caret).", "  Ctrl+Home i Ctrl+End przechodzą do pierwszego i ostatniego pola (poza tekstem wielowierszowym, gdzie przesuwają kursor)."));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  Escape cancels. F1 shows this help.", "  Escape anuluje. F1 wyświetla tę pomoc."));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  F7 lists the dialog's controls in navigation order; choose one and press OK to focus it (type a letter to jump in the list).", "  F7 wyświetla kontrolki okna w kolejności nawigacji; wybierz jedną i naciśnij OK, aby do niej przejść (litera przenosi na liście)."));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  In text fields: Control+C copies the current line when nothing is selected, Alt+C appends, Control+X cuts the line, Control+D deletes it, F8 and Shift+F8 start and complete a selection, Control+F8 copies all, Alt+F8 reads all, Alt+Y says counts, Shift+F1 speaks the field tip.", "  W polach tekstowych: Ctrl+C kopiuje bieżący wiersz bez zaznaczenia, Alt+C dodaje, Ctrl+X wycina wiersz, Ctrl+D go usuwa, F8 i Shift+F8 rozpoczynają i kończą zaznaczenie, Ctrl+F8 kopiuje wszystko, Alt+F8 odczytuje wszystko, Alt+Y podaje liczniki, Shift+F1 odczytuje wskazówkę pola."));
+        sbHelp.AppendLine(JezykInterfejsu.Wybierz("  In lists: Control+C copies the current item, Alt+C appends it; Control+J then F3 search the list.", "  Na listach: Ctrl+C kopiuje bieżącą pozycję, Alt+C ją dodaje; Ctrl+J, a następnie F3 wyszukują na liście."));
+        using (LbcDialog dlgHelp = new LbcDialog(JezykInterfejsu.Wybierz("Help: {0}", "Pomoc: {0}").Replace("{0}", frm.Text), frm))
         {
             TextBox tbHelp = dlgHelp.addMemo(sbHelp.ToString(), null);
             tbHelp.ReadOnly = true;
@@ -2207,7 +2259,7 @@ public class LbcDialog : IDisposable
             foreach (Control ctl in pnlRow.Controls)
             {
                 Button btn = ctl as Button;
-                if (btn != null && string.Equals(btn.Text.Replace("&", ""), sLabel,
+                if (btn != null && string.Equals((btn.Tag as string) ?? btn.Text.Replace("&", ""), sLabel,
                         StringComparison.OrdinalIgnoreCase))
                 { btn.PerformClick(); return true; }
             }
@@ -2283,7 +2335,7 @@ public class LbcDialog : IDisposable
             if (sb.Length > 0) sb.Append(". ");
             sb.Append(sDetail);
         }
-        Say.sayForced(sb.Length == 0 ? "No tip for this field" : sb.ToString());
+        Say.sayForced(sb.Length == 0 ? JezykInterfejsu.Wybierz("No tip for this field", "Brak wskazówki dla tego pola") : sb.ToString());
     }
 
     private void handleGotFocus(object sender, EventArgs evArgs)
@@ -2510,8 +2562,9 @@ public class LbcDialog : IDisposable
         if (iEnd < iStart) { int t = iStart; iStart = iEnd; iEnd = t; }
         int iLength = iEnd - iStart;
         tb.Select(iStart, iLength);
-        lblStatusBar.Text = "Complete Selection, " + iLength + " character" + (iLength == 1 ? "" : "s");
-        Say.say("Selected " + iLength + " character" + (iLength == 1 ? "" : "s"));
+        string sCharacterWord = iLength == 1 ? JezykInterfejsu.Wybierz("character", "znak") : JezykInterfejsu.Wybierz("characters", "znaków");
+        lblStatusBar.Text = JezykInterfejsu.Wybierz("Complete Selection, {0} {1}", "Ukończono zaznaczenie, {0} {1}").Replace("{0}", iLength.ToString()).Replace("{1}", sCharacterWord);
+        Say.say(JezykInterfejsu.Wybierz("Selected {0} {1}.", "Zaznaczono {0} {1}.").Replace("{0}", iLength.ToString()).Replace("{1}", sCharacterWord));
     }
 
     // Ctrl+F8 -- copy ALL text in the field to the clipboard.
@@ -2519,11 +2572,11 @@ public class LbcDialog : IDisposable
     {
         try
         {
-            if (!LbcTextBox.setClipboard(tb.Text)) { Say.say("Could not copy"); return; }
+            if (!LbcTextBox.setClipboard(tb.Text)) { Say.say(JezykInterfejsu.Wybierz("Could not copy", "Nie można skopiować")); return; }
             lblStatusBar.Text = "Copy All";
             Say.say("Copied all, " + tb.TextLength + " character" + (tb.TextLength == 1 ? "" : "s"));
         }
-        catch { Say.say("Could not copy"); }
+        catch { Say.say(JezykInterfejsu.Wybierz("Could not copy", "Nie można skopiować")); }
     }
 
     // Alt+F8 -- speak ALL text in the field via the live region.
@@ -2539,9 +2592,9 @@ public class LbcDialog : IDisposable
         int iStart, iLength;
         textEditCurrentLineRange(tb, out iStart, out iLength);
         string sLine = tb.Text.Substring(iStart, iLength);
-        if (!LbcTextBox.setClipboard(sLine)) { Say.say("Could not copy"); return; }
+        if (!LbcTextBox.setClipboard(sLine)) { Say.say(JezykInterfejsu.Wybierz("Could not copy", "Nie można skopiować")); return; }
         lblStatusBar.Text = "Copy Line";
-        Say.say("Copied line");
+        Say.say(JezykInterfejsu.Wybierz("Copied line", "Skopiowano wiersz"));
     }
 
     // Alt+C -- append the current line (or selection) to the
@@ -2561,7 +2614,7 @@ public class LbcDialog : IDisposable
             textEditCurrentLineRange(tb, out iStart, out iLength);
             sAdd = tb.Text.Substring(iStart, iLength);
         }
-        if (!LbcTextBox.setClipboard(sExisting + sAdd)) { Say.say("Could not append"); return; }
+        if (!LbcTextBox.setClipboard(sExisting + sAdd)) { Say.say(JezykInterfejsu.Wybierz("Could not append", "Nie można dodać do schowka")); return; }
         lblStatusBar.Text = "Append to Clipboard";
         Say.say("Appended");
     }
@@ -2585,7 +2638,7 @@ public class LbcDialog : IDisposable
             && tb.Text[iStart + iCutLen] == '\n')
             iCutLen++;
         string sLine = tb.Text.Substring(iStart, iCutLen);
-        if (!LbcTextBox.setClipboard(sLine)) { Say.say("Could not cut"); return; }
+        if (!LbcTextBox.setClipboard(sLine)) { Say.say(JezykInterfejsu.Wybierz("Could not cut", "Nie można wyciąć")); return; }
         tb.Text = tb.Text.Remove(iStart, iCutLen);
         tb.SelectionStart = Math.Min(iStart, tb.TextLength);
         tb.SelectionLength = 0;
@@ -2595,7 +2648,9 @@ public class LbcDialog : IDisposable
         int iNextStart, iNextLen;
         textEditCurrentLineRange(tb, out iNextStart, out iNextLen);
         string sNext = tb.Text.Substring(iNextStart, iNextLen);
-        Say.say(sNext.Length > 0 ? "Cut, now: " + sNext : "Cut, end of text");
+        Say.say(sNext.Length > 0
+            ? JezykInterfejsu.Wybierz("Cut; now: {0}", "Wycięto; teraz: {0}").Replace("{0}", sNext)
+            : JezykInterfejsu.Wybierz("Cut; end of text", "Wycięto; koniec tekstu"));
     }
 
     // Alt+X -- cut current line / selection AND append to
@@ -2623,12 +2678,12 @@ public class LbcDialog : IDisposable
             if (iLength > 0 && iStart + iLength < tb.TextLength
                 && tb.Text[iStart + iLength] == '\n') iLength++;
         }
-        if (!LbcTextBox.setClipboard(sExisting + sAdd)) { Say.say("Could not append"); return; }
+        if (!LbcTextBox.setClipboard(sExisting + sAdd)) { Say.say(JezykInterfejsu.Wybierz("Could not append", "Nie można dodać do schowka")); return; }
         tb.Text = tb.Text.Remove(iStart, iLength);
         tb.SelectionStart = Math.Min(iStart, tb.TextLength);
         tb.SelectionLength = 0;
         lblStatusBar.Text = "Cut and Append";
-        Say.say("Cut, appended");
+        Say.say(JezykInterfejsu.Wybierz("Cut, appended", "Wycięto i dodano"));
     }
 
     // Ctrl+D -- delete the current line; speak the next line as
@@ -2648,7 +2703,9 @@ public class LbcDialog : IDisposable
         int iNextStart, iNextLen;
         textEditCurrentLineRange(tb, out iNextStart, out iNextLen);
         string sNext = tb.Text.Substring(iNextStart, iNextLen);
-        Say.say(sNext.Length > 0 ? "Deleted, now: " + sNext : "Deleted, end of text");
+        Say.say(sNext.Length > 0
+            ? JezykInterfejsu.Wybierz("Deleted; now: {0}", "Usunięto; teraz: {0}").Replace("{0}", sNext)
+            : JezykInterfejsu.Wybierz("Deleted; end of text", "Usunięto; koniec tekstu"));
     }
 
     // registerWidget: store the control under an auto-generated

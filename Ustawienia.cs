@@ -71,7 +71,7 @@ public class Opcja
 
     public Opcja(string sKlucz, string sEtykieta, string sRodzaj, string sPodpowiedz)
     {
-        Klucz = sKlucz; Etykieta = sEtykieta; Rodzaj = sRodzaj; Podpowiedz = sPodpowiedz;
+        Klucz = sKlucz; Etykieta = JezykInterfejsu.Tekst(sEtykieta); Rodzaj = sRodzaj; Podpowiedz = JezykInterfejsu.Tekst(sPodpowiedz);
         Min = 0; Max = 1000; Domyslna = ""; Zaawansowana = false;
     }
 }
@@ -99,7 +99,8 @@ public class Ustawienia
     public static int PozycjaDlaWartosci(Opcja o, string sWartosc)
     {
         if (o.Wartosci == null) return -1;
-        string s = (sWartosc ?? "").Trim().Trim('"');
+        string s = string.Equals(o.Klucz, "InterfaceLanguage", StringComparison.OrdinalIgnoreCase)
+            ? (sWartosc ?? "").Trim().Trim('"').Trim() : (sWartosc ?? "");
         for (int i = 0; i < o.Wartosci.Length; i++)
             if (string.Equals(s, o.Wartosci[i], StringComparison.OrdinalIgnoreCase)) return i;
         return -1;
@@ -120,6 +121,14 @@ public class Ustawienia
     {
         List<Opcja> l = new List<Opcja>();
         Opcja o;
+
+        // Interfejs jest niezależny od treści dokumentów, pisowni i słownika
+        // synonimów.  Wartości w pliku pozostają krótkim, stabilnym kontraktem.
+        o = new Opcja("InterfaceLanguage", "Interface language", "lista",
+            "Choose the language for the user interface. The choice is saved now and is used after the next start. It does not change document text, spelling or the synonym dictionary.");
+        o.Nazwy = new string[] { "Match system language", "Polski", "English" };
+        o.Wartosci = new string[] { "system", "pl", "en" };
+        o.Domyslna = "system"; l.Add(o);
 
         // --- okno i pisanie ---
         o = new Opcja("WordWrap", "&Wrap long lines in new windows", "przelacznik",
@@ -167,6 +176,10 @@ public class Ustawienia
             "Off: keep working and saving in Markdown. On: rebuild imported DOCX, EPUB, HTML or RTF documents from Markdown when saving. Typography and unsupported document features may be lost. Previous versions are kept in .edsharp-backups next to the original. External changes block the save.");
         o.Domyslna = "N"; l.Add(o);
 
+        o = new Opcja("SnippetLibraryFolder", "&Snippet library folder", "folder",
+            "Leave empty for the existing Snippets\\Default folder in your EdSharp data folder. Browse chooses an existing library folder. The folder is used for saving, inserting, editing, tokens and manual snippet expansion.");
+        o.Domyslna = ""; l.Add(o);
+
         o = new Opcja("OpenPrevious", "Open the files from the &previous session on startup", "przelacznik",
             "Files that were open when you last left are opened again.  Work Continuity, in this same menu, also brings back the cursor positions.");
         o.Domyslna = "N"; l.Add(o);
@@ -183,6 +196,16 @@ public class Ustawienia
         o.Domyslna = ""; l.Add(o);
 
         // --- czytanie i mowa ---
+        // Minimalna diagnostyka techniczna jest domyślnie włączona, ale zapisuje
+        // wyłącznie bezpieczne zdarzenia strukturalne, nie mowę ani treść dokumentów.
+        o = new Opcja("DiagnosticLogging", "&Dziennik diagnostyczny", "przelacznik",
+            "Zapisuje ograniczony, bezpieczny dziennik techniczny bez nazw dokumentów, ścieżek, treści i Speech.log. Wyłączenie zatrzymuje wszystkie wpisy.");
+        o.Domyslna = "Y"; l.Add(o);
+
+        o = new Opcja("AttachDiagnosticLog", "Dołączaj bezpieczny dziennik do zgłoszenia problemu", "przelacznik",
+            "Domyślnie wyłączone. Przy zgłoszeniu można dołączyć tylko zredagowany bezpieczny dziennik diagnostyczny, nigdy Speech.log.");
+        o.Domyslna = "N"; l.Add(o);
+
         o = new Opcja("DateFormat", "Date is written as", "lista",
             "The form used by Insert Date and Time and by the %Date% token.");
         o.Nazwy = new string[] { "Long, as Windows writes it", "Short, as Windows writes it", "Year-month-day (2026-09-13)",
@@ -226,17 +249,28 @@ public class Ustawienia
         o.Domyslna = "{}"; o.Zaawansowana = true; l.Add(o);
 
         o = new Opcja("PromptCommand", "Command run by Pro&mpt Command", "tekst",
-            "The program started by the Prompt Command item in the Miscellaneous menu.");
+            "The non-interactive program started by Prompt Command. Standard input is closed; output opens in a readable, copyable result window.");
         o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
 
-        o = new Opcja("GoToEnVironment", "Language of the Go To En&vironment command", "tekst",
-            "The interpreter opened by Go To Environment, for example python.");
-        o.Domyslna = "python"; o.Zaawansowana = true; l.Add(o);
+        o = new Opcja("GoToEnVironment", "Command for Run Configured &Tool", "tekst",
+            "Command line run by Run Configured Tool.  Set it to the tool you use; it can include arguments and %Source%.");
+        o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
 
         o = new Opcja("ViewLevels", "Formats to open converted or raw", "tekst",
             "Pairs such as docx:0 rst:1, separated by spaces.  Zero opens that kind of file as it is stored, one converts it to text.");
         o.Domyslna = ""; o.Zaawansowana = true; l.Add(o);
 
+        return LokalizujNazwyList(l);
+    }
+
+    // Dane konfiguracyjne (Wartosci) nie są tłumaczone.  Tłumaczymy wyłącznie
+    // widoczne dane formularza po pełnym zbudowaniu listy opcji.
+    static List<Opcja> LokalizujNazwyList(List<Opcja> l)
+    {
+        foreach (Opcja o in l) {
+            if (o.Nazwy == null) continue;
+            for (int i = 0; i < o.Nazwy.Length; i++) o.Nazwy[i] = JezykInterfejsu.Tekst(o.Nazwy[i]);
+        }
         return l;
     }
 

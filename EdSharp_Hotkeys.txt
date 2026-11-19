@@ -13,7 +13,6 @@ Documentation, F1, Open Documentation in web browser
 About, Alt+F1, Display version and release date
 History of Changes, Shift+F1, Display list of fixes and improvements
 Key Describer, Control+F1, Toggle a mode in which pressing a key describes its action
-Alternate Menu, Alt+F10, Present all commands in a single, alphabetized list
 Work Continuity, (no key assigned), Turn on restoring open files after restart and auto saving recovery copies
 Command Palette, Control+Shift+F1, Type to filter commands and run one without walking the menus
 Tutorial, Control+Alt+F1, Open the tutorial
@@ -32,15 +31,12 @@ Start Selection, F8, Mark starting point of text to be selected
 Complete Selection, Shift+F8, Select text from starting point to cursor
 Reselect, Control+Shift+F8, Reselect between previous start and end positions
 Go to Start of Selection, Alt+Shift+F8, Return to start position of selection
-Copy All, Control+F8, Copy all text to clipboard
-Read All, Alt+F8, Say all text (without moving cursor)
 
 Say Address, Alt+A, Say line, column, and percent position of cursor
 Say Braces, Alt+Shift+], Say number of braces on either side of cursor
 Say Indentation, Alt+I, Say the indentation level of the current line, or the preceding line with less indentation if repeated
 Say Yield, Alt+Y, Say number of characters, words, and lines in all or selected text
 Say Status, Alt+Z, Say whether current file has been modified since last save to disk, or say its character encoding and line break kind if repeated
-Say Clipboard, Alt+Apostrophe, Say clipboard text, or spell if repeated
 Say Time, Alt+Semi-colon, Say current time and date
 Insert Time, Alt+Shift+Semicolon, Insert current time and date
 
@@ -63,6 +59,8 @@ Redo, Control+Shift+Z, Redo the last action that was undone; Control+Y does the 
 Save Snippet, Alt+S, Save all or selected text to a snippet file
 Invoke Snippet, Alt+V, Pick snippet file to paste or execute
 View Snippet, Alt+Shift+V, Pick snippet file to view or edit
+Import Snippet Library, (no key assigned), Import a ZIP archive into the current snippet library; choose Skip, Keep Both, or Replace with Backup (menu only, no shortcut)
+Export Snippet Library, (no key assigned), Export the current snippet library as a ZIP archive (menu only, no shortcut)
 
 Regular Expression Tool, Control+Shift+Y, Count matches of a regular expression, or extract them to a new window; the dialog asks which
 Replace with Regular Expression, Control+Shift+R, Search and replace regular expression in all or selected text
@@ -86,7 +84,6 @@ Voice Louder, Alt+Grave, Increase JAWS voice volume by 5%
 Voice Softer, Alt+Shift+Grave, Decrease JAWS voice volume by 5%
 Voice Faster, Control+Grave, Increase JAWS voice rate by 5%
 Voice Slower, Control+Shift+Grave, Decrease JAWS voice rate by 5%
-Extra Speech Log, Alt+Shift+X, Open speech.log file in a new window
 
 Go to Percent, Control+G, Go to percentage point in document
 Go to Percent Again, Alt+G, Repeat Go command
@@ -102,7 +99,6 @@ Set Named Bookmark, Control+Shift+B, Set a bookmark with a name of your own at t
 Named Bookmark List, Alt+Shift+B, Show the list of named bookmarks and go to the one you choose; Delete removes one
 
 Toggle Favorite, Alt+Shift+L, Add the current file to the list of favorites, or take it off that list if it is already there; says only what happened, "Added to favorites" or "Removed from favorites", not the name of the command
-Clear Favorite, (no key assigned), Clear current file from the list of favorites and say so, or say "Not in favorites" if it was never on the list (menu only, no shortcut)
 List Favorites, Alt+L, Open a file from the list of favorites; on the list Control+C copies the file name, Control+Shift+C the full path and the file itself, so it pastes into File Explorer too, Alt+C appends the paths, Delete removes entries
 Recent Files, Alt+R, Open a file from the list of recently used files; on the list Control+C copies the file name, Control+Shift+C the full path and the file itself, so it pastes into File Explorer too, Alt+C appends the paths, Delete removes entries
 Numbered Files, Alt+0, Open a file from the list of numbered files
@@ -129,7 +125,7 @@ Preview Markdown in Web Browser, F5, Show the current Markdown document as a pag
 Prompt Command, Alt+F5, Prompt for a command line to execute and say its standard output
 Go to Folder, Shift+F4, Go to folder containing recent or favorite files
 Go to Special Folder, Control+Shift+F4, Go to special folder of Windows
-Go to Environment, (no key assigned), Go to interactive environment of current compiler (menu only, no shortcut)
+Run Configured Tool, (no key assigned), Run the command line in the GoToEnVironment option (menu only, no shortcut)
 
 Spell Check, F7, Spell check from the cursor to the end, or selected text
 Word Spelling Menu, Apps, Menu for the word at the cursor: add to dictionary, ignore, replacements
@@ -194,7 +190,6 @@ Link List, Control+F6, Show the list of links in the document and go to the one 
 Next Link, Alt+PageDown, Go to the next link in the document and say its text, address and kind
 Prior Link, Alt+PageUp, Go to the previous link in the document and say its text, address and kind
 
-Topic, Alt+T, Say topic of current section
 Section Break, Control+Enter, Start a new section by inserting a Markdown heading at the level of the heading above
 
 Insert Link, Control+K, Insert a link: type the text and the address, or pick an image or a place in this document
@@ -224,7 +219,6 @@ Next Comment, Alt+Shift+PageDown, Go to the next internal comment and read it
 Prior Comment, Alt+Shift+PageUp, Go to the prior internal comment and read it
 Comment List, (no key assigned), Show the list of internal comments and go to the one you choose
 
-Say Styles, Alt+Slash, Say current justification and styles
 
 Infer Indent, Alt+RightBracket, Infer the indent unit of the current document, or configure EdSharp accordingly if repeated
 Toggle Indentation, Windows+Grave, Toggle announcement of indentation by JAWS
@@ -254,7 +248,6 @@ Insert All Users Path, Control+Shift+I, Insert JAWS All Users path in Open or Sa
 
 Explorer Folder, Alt+Backslash, Open Windows Explorer in the EdSharp program folder, data folder, or current folder
 Command Prompt, Control+Backslash, Open a command prompt in the EdSharp program folder, data folder, or current folder
-Environment Variables, (no key assigned), Change Windows environment variables for the current process, user, or system (menu only, no shortcut)
 
 Next Window, Control+Tab, Cycle to next editing window
 Prior Window, Control+Shift+Tab, Cycle to previous editing window

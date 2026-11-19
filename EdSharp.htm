@@ -271,8 +271,7 @@ says the number of characters selected. You may subsequently select
 between the same positions again with Control+Shift+F8, or return to the
 start position with Alt+Shift+F8.</p>
 <p>As usual, Control+A selects all text. Control+Shift+A clears any
-selection. Press Control+F8 to copy all text to the clipboard with a
-single command. Control+V pastes clipboard text at the cursor position.
+selection. Control+V pastes clipboard text at the cursor position.
 Control+Shift+V inserts the content of a file instead.</p>
 <p>Press Control+Space to select a chunk of text at the cursor position.
 A chunk is defined as a contiguous sequence of non-space characters. It
@@ -448,10 +447,7 @@ number of characters, words, and lines contained in all or selected
 text. Press Alt+Z to hear whether the document has been modified from
 the version on disk, or press it again to check its character
 encoding.</p>
-<p>Press Alt+F8 to hear the whole document without moving the cursor.
-Use the Quote Clipboard command, Alt+Apostrophe, to hear the textual
-content of the clipboard, or its spelling if this key is pressed again.
-Press Alt+Semicolon to hear the current time and date.</p>
+<p>Press Alt+Semicolon to hear the current time and date.</p>
 <p>Press Shift+Space to hear selected text. Press Shift+Backspace to
 hear the chunk of text at the cursor. Press Shift+F4 to hear the titles
 of open document windows. If the same key is pressed again without
@@ -748,13 +744,11 @@ file in the EdSharp program folder. The default location is<br />
 heading, or Control+PageUp to go to the previous one. When the cursor is
 on a topic in the table of contents, press F6 to go to its corresponding
 section in the body. Press Shift+F6 to go from a section in the body to
-its topic in the table of contents. Press Control+F6 to search for a
-topic based on text within its heading. The search starts at the
-beginning of the document. Press Alt+F6 to search again for the next
-match.</p>
+its topic in the table of contents. Press Control+F6 to open the Link
+List for the current document.</p>
 <p>To create a structured text document, press Control+Enter to insert a
 section break at the cursor position, then type the heading of the next
-section. Alt+T verbally confirms the topic of the current section. Use
+section. Use
 the Text Contents command, Alt+Shift+T, to generate and prepend a table
 of contents to the current document. The first line of the document
 becomes the first topic in the table of contents. Each line of text
@@ -807,17 +801,12 @@ current context is read.</p>
 baseline, and justification, press Alt+Slash.</p>
 <h2 id="doing-math">Doing Math</h2>
 <p>You can press Control+Equals to evaluate mathematical expressions in
-JScript code, either on the current line or in selected text.
-Control+Shift+G goes to another, more interactive environment, such as
-the interactive console of Python or iPython. The latter is particularly
-useful for learning the library of the .NET Framework and testing
-expressions that may be incorporated in programming code, including
-EdSharp snippets. It may also be used as a simple, speech-friendly
-calculator.</p>
-<p>Alternatively, the GoToEnvironment setting could be configured for a
-computer algebra system such as <a
-href="http://Maxima.SourceForge.net">Maxima</a>, or <a
-href="http://Axiom.SourceForge.net">Axiom</a>.</p>
+JScript code, either on the current line or in selected text.</p>
+<p>Run Configured Tool is a menu-only command. Set its GoToEnVironment
+option to the command line for a tool you use, with any arguments it
+needs. The command may include <code>%Source%</code> for the current
+document. It has no built-in interpreter or other default program; if it
+is not configured, EdSharp says so and starts nothing.</p>
 <h3 id="latex">LaTex</h3>
 <p>EdSharp includes support for the LaTeX language (pronounced La Tech).
 This is a common language used for typesetting, especially for
@@ -1192,7 +1181,7 @@ is also remembered.</p>
 <p>Control+F sets a filter to restrict what items are shown via
 wildcards (* to match any sequence of characters or ? to match a single
 one). For example, you could browse replace-related commands in the
-Alternate Menu, Alt+F10, by pressing Control+F after invoking that list
+Command Palette, Control+Shift+F1, by typing to narrow the command list
 and then entering <em>replace</em> as the filter expression.
 Control+Shift+F clears the filter so all items are shown again. The
 order of items may also be changed: Alt+A for alpha order, Alt+Shift+A
@@ -1294,7 +1283,7 @@ conflict when loading unless that command is also reassigned or detached
 from a key as follows:<br />
 <code>HTML Format=None</code></p>
 <p>A command without a hot key may still be invoked via the regular menu
-system or Alternate Menu (Alt+F10). The terms used to identify available
+system or Command Palette (Control+Shift+F1). The terms used to identify available
 keys are listed in <a
 href="https://learn.microsoft.com/en-us/dotnet/api/system.windows.forms.keys">Microsoft's
 Keys enumeration reference</a>.</p>
@@ -1321,8 +1310,6 @@ visually organized according to common MDI (multiple document interface)
 patterns. The Window menu includes the following commands: Arrange
 Icons, Alt+F11; Cascade, Control+F11; Tile Horizontal, Alt+Shift+F11;
 and Tile Vertical, Control+Shift+F11.</p>
-<p>Use the Alternate Menu command, Alt+F10, to execute a command from a
-single, alphebetized list.</p>
 <p>The Context Menu command, Shift+F10, lets you choose an action to
 perform on the current file based on those available for its
 type/extension (in the Windows registry). Also included is the OpenWith
@@ -1336,15 +1323,6 @@ this documentation, or Alt+F1 to simply confirm the version. Control+F1
 toggles a Key Describer mode in which pressing a key describes its
 action. If you switch to another application window, the mode is
 automatically turned off.</p>
-<p>Use the Environment Variables command, Control+E, to review or change
-such settings of Windows. Choose those of the current process, user, or
-system as a whole. Jump quickly to a particular variable based on its
-initial letter, e.g., Alt+P for the PATH setting that determines where
-Windows searches for an executable file that is not found in the current
-directory. Changes to process settings affect the current session of
-EdSharp, but not the next time it is run. User settings take effect when
-you log in again. System settings take affect when you restart the
-computer.</p>
 <p>The Burn to CD command, Alt+Shift+B, operates on a path list in the
 current document. Each file or folder path should be placed on a
 separate line. If a parent folder is not specified, the last one in the
@@ -1371,7 +1349,6 @@ Documentation=F1, Open Documentation in web browser
 About=Alt+F1, Display version and release date
 History of Changes=Shift+F1, Display list of fixes and improvements
 Key Describer=Control+F1, Toggle a mode in which pressing a key describes its action
-Alternate Menu=Alt+F10, Present all commands in a single, alphabetized list
 Context Menu=Shift+F10, Pick a command from those available to Windows Explorer for the current file extension
 SendTo Menu=Control+F10, Pick a command from those available as Windows &quot;Send To&quot; options
 
@@ -1386,15 +1363,12 @@ Start Selection=F8, Mark starting point of text to be selected
 Complete Selection=Shift+F8, Select text from starting point to cursor
 Reselect=Control+Shift+F8, Reselect between previous start and end positions
 Go to Start of Selection=Alt+Shift+F8, Return to start position of selection
-Copy All=Control+F8, Copy all text to clipboard
-Read All=Alt+F8, Say all text (without moving cursor)
 
 Say Address=Alt+A, Say line, column, and percent position of cursor
 Say Block=Alt+B, Say the rest of the current code block, or the whole block if repeated
 Say Indent=Alt+I, Say the indentation level of the current line, or the preceding line with less indentation if repeated
 Say Yield=Alt+Y, Say number of characters, words, and lines in all or selected text
 Say Status=Alt+Z, Say whether current file has been modified since last save to disk, or say its character encoding if repeated
-Say Clipboard=Alt+Apostrophe, Say clipboard text, or spell if repeated
 Say Time=Alt+Semi-colon, Say current time and date
 Insert Time=Alt+Shift+Semi-colon, Insert current time and date
 Calculate Date=Control+Shift+Semi-colon, Calculate and insert date
@@ -1441,7 +1415,6 @@ Guard Document=Control+F7, Make document read-only
 No Guard=Control+Shift+F7, Clear read-only status
 
 Extra Speech Toggle=Control+Shift+X, Toggle extra speech messages on or off, redirecting to Speech.log file
-Extra Speech Log=Alt+Shift+X Open speech.log file in a new window
 
 Go to Percent=Control+G, Go to percentage point in document
 Go to Percent Again=Alt+G, Repeat Go command
@@ -1453,7 +1426,6 @@ Clear Bookmark=Control+Shift+K, Clear bookmark at cursor position
 Go to Bookmark=Alt+K, Go to bookmark in current file
 
 Set Favorite=Control+L, Add current file to the list of favorites
-Clear Favorite=Control+Shift+L, Clear current file from the list of favorites
 List Favorites=Alt+L, Open a file from the list of favorites
 Recent Files=Alt+R, Open a file from the list of those recently used
 
@@ -1485,7 +1457,7 @@ Pick Compiler=Control+Shift+F5, Pick a compiler or interpreter from the list of 
 Say Compiler=Alt+0, Say current compiler and folder
 Go to Folder=Control+0, Go to folder containing recent or favorite files
 Go to Special Folder=Control+Shift+0, Go to special folder of Windows
-Go to Environment=Control+Shift+G, Go to interactive environment of current compiler
+Run Configured Tool=, Run the command line in the GoToEnVironment option (menu only, no shortcut)
 
 Spell Check=F7, Spell check all or selected text
 Thesaurus=Shift+F7, Look up synonyms for word at cursor
@@ -1538,10 +1510,7 @@ Next Section=Control+PageDown, Go to next section
 Prior Section=Control+PageUp, Go to Prior Section
 Go to Section=F6, Go to section in body from topic in table of contents
 Go to Contents=Shift+F6, Go to topic in table of contents from section in body
-Search for Topic=Control+F6, Search for a topic based on text in its heading
-Search for Topic Again=Alt+F6, Search again for the next matching topic
 
-Topic=Alt+T, Say topic of current section
 Text Contents=Alt+Shift+T, Generate and prepend a table of contents to the current document
 Section Break=Control+Enter, Insert a section break at the cursor position
 
@@ -1562,7 +1531,6 @@ Prior Baseline=Control+Shift+6, Go to previous change in baseline
 Next Font=Control+Dash, Go to next change in font
 Prior Font=Control+Shift+Dash, Go to previous change in font
 Say Font=Alt+Dash, Say current font and color
-Say Styles=Alt+Slash, Say current justification and styles
 
 Infer Indent=Alt+RightBracket, Infer the indent unit of the current document, or configure EdSharp accordingly if repeated
 Toggle Indentation=Windows+Grave, Toggle announcement of indentation by JAWS
@@ -1597,7 +1565,6 @@ PyBrace=Alt+Shift+LeftBracket, Convert from PyDent format, or reformat typical P
 
 Explorer Folder=Alt+Backslash, Open Windows Explorer in the EdSharp program folder, data folder, or current folder
 Command Prompt=Control+Backslash, Open a command prompt in the EdSharp program folder, data folder, or current folder
-Environment Variables=Control+E, Change Windows environment variables for the current process, user, or system
 
 Next Window=Control+Tab, Cycle to next editing window
 Prior Window=Control+Shift+Tab, Cycle to previous editing window

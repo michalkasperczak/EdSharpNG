@@ -8,6 +8,9 @@ EdSharp.exe
 EdSharp.dll
 *.pdb
 BuildEdSharp.log
+BuildEdSharp.csc.args.rsp
+/stage/
+/out/
 
 # Pomiary z katalogu testy sa kompilowane z .cs obok nich (csc /r:EdSharpNG.exe)
 /testy/*.exe
@@ -15,8 +18,9 @@ BuildEdSharp.log
 # Installer output (built from EdSharp_Setup.iss with Inno Setup)
 EdSharp_Setup.exe
 
-# Encoding-detection library fetched by FetchUde.ps1
-Ude.dll
+# Encoding-detection library pinned to the accepted NuGet bytes.
+# See third_party/Ude/NOTICE.md and provenance.json.
+!Ude.dll
 
 # Third-party Convert tools fetched by FetchConvertTools.ps1
 /Convert/astyle/

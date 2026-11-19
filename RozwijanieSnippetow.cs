@@ -82,13 +82,15 @@ string prefiks = tekst.Substring(start, pozycjaKursora - start);
 List<Kandydat> wszystkie = Kandydaci(sciezki);
 List<Kandydat> dokladne = new List<Kandydat>();
 List<Kandydat> prefiksy = new List<Kandydat>();
+List<Kandydat> fragmenty = new List<Kandydat>();
 foreach (Kandydat kandydat in wszystkie) {
 if (String.Equals(kandydat.Nazwa, prefiks, StringComparison.OrdinalIgnoreCase)) dokladne.Add(kandydat);
 else if (kandydat.Nazwa.StartsWith(prefiks, StringComparison.OrdinalIgnoreCase)) prefiksy.Add(kandydat);
+else if (prefiks.Length > 0 && kandydat.Nazwa.IndexOf(prefiks, StringComparison.OrdinalIgnoreCase) >= 0) fragmenty.Add(kandydat);
 }
 
 bool isExact = dokladne.Count > 0;
-IList<string> dopasowane = Sciezki(isExact ? dokladne : prefiksy);
+IList<string> dopasowane = Sciezki(isExact ? dokladne : prefiksy.Count > 0 ? prefiksy : fragmenty);
 return new WynikRozwijaniaSnippetow(start, pozycjaKursora - start, prefiks, dopasowane, OdmowaRozwijaniaSnippetow.Brak, isExact);
 } // Dopasuj method
 } // RozwijanieSnippetow class

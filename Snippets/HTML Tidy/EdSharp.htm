@@ -48,7 +48,7 @@ Modified GPL License</p>
 <h1><a name="A3">Editing</a></h1>
 <p>As usual, you may press Control+C or Control+X to copy or cut selected text to the clipboard.  EdSharp tries to make an an intelligent guess when no text is selected.  In this case, the current line is assumed .  Press Alt+C or Alt+X to perform a copy or cut operation that appends rather than replaces text on the clipboard.  If the previous clipboard text did not end with a line break, EdSharp inserts one before the appended text.</p>
 <p>An alternative way of selecting text uses F8 to mark the start of a selection.  Navigate to the end point by whatever means (arrow keys, find command, etc.) without having to hold down the Shift key.  Press Shift+F8 to select text from the start position.  EdSharp says the number of characters selected.  You may subsequently select between the same positions again with Control+Shift+F8, or return to the start position with Alt+Shift+F8.</p>
-<p>As usual, Control+A selects all text.  Control+Shift+A clears any selection.  Press Control+F8 to copy all text to the clipboard with a single command.  Press Control+Space to select a chunk of text at the cursor position.  A chunk is defined as a contiguous sequence of non-space characters.  It may be more than what Control+Shift+RightArrow selects, since such word movement commands stop at punctuation marks.  Press Control+Space again to extend the selection to the next chunk.</p>
+<p>As usual, Control+A selects all text.  Control+Shift+A clears any selection.  Press Control+Space to select a chunk of text at the cursor position.  A chunk is defined as a contiguous sequence of non-space characters.  It may be more than what Control+Shift+RightArrow selects, since such word movement commands stop at punctuation marks.  Press Control+Space again to extend the selection to the next chunk.</p>
 <p>As usual, Control+V pastes clipboard text at the cursor position.  Press Control+Shift+V to insert the content of another file instead.</p>
 <p>Press Control+Z to undo the last editing operation, or Control+Shift+Z to redo it.  Press Control+N to start a new document, or Control+Shift+N to initialize one with clipboard text.</p>
 <p>Press Control+R to replace text and hear the number of matches.  Press Control+Shift+R to replace with a &quot;regular expression&quot; -- a complex but powerful syntax that permits almost any transformation of text.  EdSharp replaces within selected text, or all text if there is no selection.  Press Control+Shift+E to extract parts of text based on a regular expression.  The matching parts are placed in a new editing window separated by a divider sequence of characters.  EdSharp uses regular expressions of the .NET Framework, explained at</p>
@@ -79,7 +79,7 @@ Modified GPL License</p>
 <p>Press Control+RightArrow or Control+LeftArrow to read by word -- stopping at embedded symbols.  Press Alt+RightArrow or Alt+LeftArrow to read by chunk -- text delimited only by white space characters.  Press Alt+DownArrow or Alt+UpArrow to read by sentence.  Press Control+DownArrow or Control+UpArrow to read by paragraph.</p>
 <h1><a name="A5">Querying</a></h1>
 <p>Use the Address command, Alt+A, to hear the line, column, and percent position of the cursor in the document.  Press Alt+P to hear the full path of the file on disk.  Use the Yield command, Alt+Y, to hear the number of characters, words, and lines contained in all or selected text.  Press Alt+Z to hear whether the document has been modified from the version on disk.</p>
-<p>Press Alt+F8 to hear the whole document without moving the cursor.  Use the Quote Clipboard command, Alt+Apostrophe, to hear the textual content of the clipboard.  Press Alt+Semicolon to hear the current time and date.</p>
+<p>Press Alt+Semicolon to hear the current time and date.</p>
 <p>Press Shift+Space to hear selected text.  Press Shift+Backspace to hear the chunk of text at the cursor.  Press Shift+F4 to hear the titles of open document windows.</p>
 <p>Press Control+Shift+Y for the &quot;yield&quot; or number of matches found from a regular expression that you specify.  This may be useful before using Control+Shift+R to replace text or Control+Shift+E to extract it.</p>
 <h1><a name="A6">Managing Files</a></h1>
@@ -139,8 +139,8 @@ Modified GPL License</p>
 <h1><a name="A8">Working with Structured Text</a></h1>
 <p>Several commands work with a structured text document consisting of a table of contents that lists topics at the beginning of the document, followed by a section for each topic in the body.  Each topic in the table of contents is a line with the same text as the heading of its corresponding section.  A divider sequence of characters -- a line of 10 dashes followed by a form feed and line break, seperates each section.  The next line after such a section break is the topic heading of the next section.  For an example of this structure, examine the EdSharp.txt file in the EdSharp program folder.  The default location is</p>
 <p>C:\Program Files\EdSharp\EdSharp.txt</p>
-<p>Press Control+PageDown to go to the next section and read its heading, or Control+PageUp to go to the previous one.  When the cursor is on a topic in the table of contents, press F6 to go to its corresponding section in the body.  Press Shift+F6 to go from a section in the body to its topic in the table of contents.  Press Control+F6 to search for a topic based on text within its heading.   The search starts at the beginning of the document.  Press Alt+F6 to search again for the next match.</p>
-<p>Press Control+Enter to insert a section break at the cursor position, then type the heading of the next section.  Alt+T verbally confirms the topic of the current section.  Use the Text Contents command, Alt+Shift+T, to generate and prepend a table of contents to the current document.  The first line of the document becomes the first topic in the table of contents.  Each line of text after a section break becomes another topic.</p>
+<p>Press Control+PageDown to go to the next section and read its heading, or Control+PageUp to go to the previous one.  When the cursor is on a topic in the table of contents, press F6 to go to its corresponding section in the body.  Press Shift+F6 to go from a section in the body to its topic in the table of contents.  Press Control+F6 to open the Link List for the current document.</p>
+<p>Press Control+Enter to insert a section break at the cursor position, then type the heading of the next section.  Use the Text Contents command, Alt+Shift+T, to generate and prepend a table of contents to the current document.  The first line of the document becomes the first topic in the table of contents.  Each line of text after a section break becomes another topic.</p>
 <h1><a name="A9">Word Processing</a></h1>
 <p>EdSharp supports several aspects of Rich Text Format (.rtf) as well as plain text (with optional structure).  In certain situations, EdSharp behaves differently if a file has a .rtf extension rather than any other one.  Specifically, the Open Other Format command, Control+Shift+O, imports a .rtf file with its formatting rather than converting it to plain text.  The Save, Save As, and Save Copy commands, Control+S, Control+Shift+S, and Alt+S, save a .rtf file with formatting preserved.  Use the Copy Rich Text command, Control+Shift+C, to copy selected text with formatting to the clipboard.</p>
 <p>Formatting commands include the following.  Use the Justify command, Alt+Shift+J, to set the horizontal alignment of text as left, bullet, center, or right.  This formatting applies to either selected text or the current hard line -- a line of text terminated by a hard line break (created by pressing Enter rather than wrapping).</p>
@@ -202,9 +202,9 @@ Modified GPL License</p>
 <p>Replace=Control+H</p>
 <p>Since Control+H is assigned to the the HTML Format command by default, however, EdSharp will alert you to a conflict when loading unless that command is also reassigned or detached from a key as follows:</p>
 <p>HTML Format=None</p>
-<p>A command without a hot key may still be invoked via the regular menu system or Alternate Menu (Alt+F10).  The terms used to identify available keys are listed on the following web page:</p>
+<p>A command without a hot key may still be invoked via the regular menu system or Command Palette (Control+Shift+F1).  The terms used to identify available keys are listed on the following web page:</p>
 <a href="http://msdn2.microsoft.com/en-us/library/system.windows.forms.keys(vs.80).aspx">http://msdn2.microsoft.com/en-us/library/system.windows.forms.keys(vs.80).aspx</a><br />
-<p>Press F4 to activate an editing window from a list of those currently open.  Press Control+F4 to close the current window, or Control+Shift+F4 to close all windows except the current one.  Use the Alternate Menu command, Alt+F10, to execute a command from a single, alphebetized list.</p>
+<p>Press F4 to activate an editing window from a list of those currently open.  Press Control+F4 to close the current window, or Control+Shift+F4 to close all windows except the current one.  Use Command Palette, Control+Shift+F1, to type and narrow the available commands.</p>
 <p>The Context Menu command, Shift+F10, lets you choose an action to perform on the current file based on those available for its type/extension (in the Windows registry).  Also included is the OpenWith action, by which a default program may be associated with files of this type.  The Send To Menu, Control+F10, lets you choose among SendTo shortcuts (installed by various applications) to perform on the current file.</p>
 <p>Press Alt+Shift+H for a summary of EdSharp hot keys.  Press F1 to load this documentation, or Alt+F1 to simply confirm its version.</p>
 <p>Use the Elevate Version command, F11, to update EdSharp to the current version available at</p>
@@ -215,7 +215,6 @@ Modified GPL License</p>
 <p>About Alt+F1 Display version and release date</p>
 <p>History of Changes Shift+F1 Display list of fixes and improvements</p>
 <p>Hot Key Summary Alt+Shift+h Display this list of command names, hot keys, and descriptions</p>
-<p>Alternate Menu Alt+F10 Present all commands in a single, alphabetized list</p>
 <p>Context Menu Shift+F10 Pick a command from those available to Windows Explorer for the current file extension</p>
 <p>SendTo Menu Control+F10 Pick a command from those available as Windows &quot;Send To&quot; options</p>
 <p>Select All Control+A Select all text</p>
@@ -227,12 +226,9 @@ Modified GPL License</p>
 <p>Complete Selection Shift+F8 Select text from starting point to cursor</p>
 <p>Reselect Control+Shift+F8 Reselect between previous start and end positions</p>
 <p>Go to Selection Start Alt+Shift+F8 Return to start position of selection</p>
-<p>Copy All Control+F8 Copy all text to clipboard</p>
-<p>Read All Alt+F8 Say all text (without moving cursor)</p>
 <p>Say Address Alt+A  Say line, column, and percent position of cursor</p>
 <p>Say Yield Alt+y Say number of characters, words, and lines in all or selected text</p>
 <p>Say Status Alt+z Say whether current file has been modified since last save to disk</p>
-<p>Quote Clipboard Alt+' Say clipboard text</p>
 <p>Say Time Alt+; Say current time and date</p>
 <p>Insert Time Alt+Shift+; Insert current time and date</p>
 <p>Insert Date  Control+Shift+; Calculate and insert date</p>
@@ -275,7 +271,6 @@ Modified GPL License</p>
 <p>Clear Bookmark Control+Shift+k Clear bookmark at cursor position</p>
 <p>Go to Bookmark Alt+k Go to bookmark in current file</p>
 <p>Set Favorite Control+l Add current file to the list of favorites</p>
-<p>Clear Favorite Control+Shift+l Clear current file from the list of favorites</p>
 <p>List Favorites Alt+l Open a file from the list of favorites</p>
 <p>Recent Files Alt+r Open a file from the list of those recently used</p>
 <p>New File Control+n Open a new editing window</p>
@@ -330,9 +325,6 @@ Modified GPL License</p>
 <p>Rename File Alt+Shift+r Rename current file on disk</p>
 <p>Go to Section F6 Go to section in body from topic in table of contents</p>
 <p>Go to Contents Shift+F6 Go to topic in table of contents from section in body</p>
-<p>Topic Search Control+F6 Search for a topic based on text in its heading</p>
-<p>Topic Again Alt+F6 Search again for the next matching topic</p>
-<p>Topic Alt+T Say topic of current section</p>
 <p>Text Contents Alt+Shift+T Generate and prepend a table of contents to the current document</p>
 <p>Section Break Control+Enter Insert a section break at the cursor position</p>
 <p>HTML Format Control+h Convert current document to HTML in a new window</p>

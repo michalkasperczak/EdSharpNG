@@ -62,8 +62,8 @@ public class Wyrazenia
     // przeczytalby to w calosci.
     public static string Sformatuj(double d)
     {
-        if (double.IsNaN(d)) return "!Nie jest liczba";
-        if (double.IsInfinity(d)) return "!Nieskonczonosc";
+        if (double.IsNaN(d)) return JezykInterfejsu.Wybierz("!Not a number", "!Nie jest liczbą");
+        if (double.IsInfinity(d)) return JezykInterfejsu.Wybierz("!Infinity", "!Nieskończoność");
         double dR = Math.Round(d, 10);
         if (Math.Abs(dR) < 1e-10) dR = 0;
         string s = dR.ToString("G12", CultureInfo.InvariantCulture);
@@ -94,7 +94,7 @@ public class Wyrazenia
             Omin(s, ref i);
             if (i < s.Length)
             {
-                w.Blad = "Nie rozumiem znaku " + Nazwij(s[i]);
+                w.Blad = JezykInterfejsu.Wybierz("I do not understand the character ", "Nie rozumiem znaku ") + Nazwij(s[i]);
                 return w;
             }
             w.Udane = true;
@@ -102,7 +102,7 @@ public class Wyrazenia
             return w;
         }
         catch (BladWyrazenia bw) { w.Blad = bw.Message; return w; }
-        catch (Exception) { w.Blad = "Nie umiem tego policzyc"; return w; }
+        catch (Exception) { w.Blad = JezykInterfejsu.Wybierz("I cannot calculate this.", "Nie umiem tego obliczyć."); return w; }
     }
 
     // ---------- przygotowanie tekstu ----------
@@ -215,7 +215,7 @@ public class Wyrazenia
             {
                 i++;
                 double dDziel = Potega(s, ref i);
-                if (dDziel == 0) throw new BladWyrazenia("Dzielenie przez zero");
+                if (dDziel == 0) throw new BladWyrazenia(JezykInterfejsu.Wybierz("Division by zero", "Dzielenie przez zero"));
                 d /= dDziel;
             }
             else if (c == '%')
@@ -224,7 +224,7 @@ public class Wyrazenia
                 // znaczyc tylko reszte z dzielenia ("7 % 3").
                 i++;
                 double dMod = Potega(s, ref i);
-                if (dMod == 0) throw new BladWyrazenia("Dzielenie przez zero");
+                if (dMod == 0) throw new BladWyrazenia(JezykInterfejsu.Wybierz("Division by zero", "Dzielenie przez zero"));
                 d = d % dMod;
             }
             else return d;
@@ -247,7 +247,7 @@ public class Wyrazenia
     private static double Jednostka(string s, ref int i)
     {
         Omin(s, ref i);
-        if (i >= s.Length) throw new BladWyrazenia("Wyrazenie urwane");
+        if (i >= s.Length) throw new BladWyrazenia(JezykInterfejsu.Wybierz("Incomplete expression", "Niepełne wyrażenie"));
 
         char c = s[i];
         if (c == '-') { i++; return -Jednostka(s, ref i); }
@@ -259,7 +259,7 @@ public class Wyrazenia
             i++;
             d = Suma(s, ref i);
             Omin(s, ref i);
-            if (i >= s.Length || s[i] != ')') throw new BladWyrazenia("Brak nawiasu zamykajacego");
+            if (i >= s.Length || s[i] != ')') throw new BladWyrazenia(JezykInterfejsu.Wybierz("Missing closing parenthesis", "Brak nawiasu zamykającego"));
             i++;
         }
         else if (char.IsDigit(c) || c == '.' || c == ',')
@@ -270,7 +270,7 @@ public class Wyrazenia
         {
             d = Nazwa(s, ref i);
         }
-        else throw new BladWyrazenia("Nie rozumiem znaku " + Nazwij(c));
+        else throw new BladWyrazenia(JezykInterfejsu.Wybierz("I do not understand the character ", "Nie rozumiem znaku ") + Nazwij(c));
 
         // Procent postfiksowy: "20%" to 0.2.  Sprawdzamy, czy po '%' NIE stoi
         // kolejna jednostka -- wtedy to reszta z dzielenia, nie procent.
@@ -303,10 +303,10 @@ public class Wyrazenia
             }
             break;
         }
-        if (sb.Length == 0) throw new BladWyrazenia("Oczekiwalem liczby");
+        if (sb.Length == 0) throw new BladWyrazenia(JezykInterfejsu.Wybierz("Expected a number", "Oczekiwano liczby"));
         double d;
         if (!double.TryParse(sb.ToString(), NumberStyles.Float, CultureInfo.InvariantCulture, out d))
-            throw new BladWyrazenia("Zla liczba " + s.Substring(iStart, i - iStart));
+            throw new BladWyrazenia(JezykInterfejsu.Wybierz("Invalid number ", "Nieprawidłowa liczba ") + s.Substring(iStart, i - iStart));
         return d;
     }
 
@@ -320,7 +320,7 @@ public class Wyrazenia
         if (sNazwa == "e") return Math.E;
 
         Omin(s, ref i);
-        if (i >= s.Length || s[i] != '(') throw new BladWyrazenia("Nie znam nazwy " + sNazwa);
+        if (i >= s.Length || s[i] != '(') throw new BladWyrazenia(JezykInterfejsu.Wybierz("Unknown name ", "Nieznana nazwa ") + sNazwa);
         i++;
         List<double> l = new List<double>();
         Omin(s, ref i);
@@ -333,7 +333,7 @@ public class Wyrazenia
                 Omin(s, ref i);
                 if (i < s.Length && (s[i] == ',' || s[i] == ';')) { i++; continue; }
                 if (i < s.Length && s[i] == ')') { i++; break; }
-                throw new BladWyrazenia("Brak nawiasu zamykajacego w " + sNazwa);
+                throw new BladWyrazenia(JezykInterfejsu.Wybierz("Missing closing parenthesis in ", "Brak nawiasu zamykającego w ") + sNazwa);
             }
         }
 
@@ -341,7 +341,7 @@ public class Wyrazenia
         switch (sNazwa)
         {
             case "sqrt":
-                if (a0 < 0) throw new BladWyrazenia("Pierwiastek z liczby ujemnej");
+                if (a0 < 0) throw new BladWyrazenia(JezykInterfejsu.Wybierz("Square root of a negative number", "Pierwiastek z liczby ujemnej"));
                 return Math.Sqrt(a0);
             case "abs": return Math.Abs(a0);
             case "round":
@@ -351,13 +351,13 @@ public class Wyrazenia
             case "ceil": return Math.Ceiling(a0);
             case "trunc": return Math.Truncate(a0);
             case "min":
-                if (l.Count < 2) throw new BladWyrazenia("min potrzebuje dwoch liczb");
+                if (l.Count < 2) throw new BladWyrazenia(JezykInterfejsu.Wybierz("min needs two numbers", "min potrzebuje dwóch liczb"));
                 { double d = a0; for (int k = 1; k < l.Count; k++) d = Math.Min(d, l[k]); return d; }
             case "max":
-                if (l.Count < 2) throw new BladWyrazenia("max potrzebuje dwoch liczb");
+                if (l.Count < 2) throw new BladWyrazenia(JezykInterfejsu.Wybierz("max needs two numbers", "max potrzebuje dwóch liczb"));
                 { double d = a0; for (int k = 1; k < l.Count; k++) d = Math.Max(d, l[k]); return d; }
             case "pow":
-                if (l.Count < 2) throw new BladWyrazenia("pow potrzebuje dwoch liczb");
+                if (l.Count < 2) throw new BladWyrazenia(JezykInterfejsu.Wybierz("pow needs two numbers", "pow potrzebuje dwóch liczb"));
                 return Math.Pow(a0, l[1]);
             case "log":
                 if (l.Count > 1) return Math.Log(a0, l[1]);
@@ -369,7 +369,7 @@ public class Wyrazenia
             case "cos": return Math.Cos(a0);
             case "tan": return Math.Tan(a0);
         }
-        throw new BladWyrazenia("Nie znam funkcji " + sNazwa);
+        throw new BladWyrazenia(JezykInterfejsu.Wybierz("Unknown function ", "Nieznana funkcja ") + sNazwa);
     }
 
     // ---------- rozwijanie zapisu z odwrotnym ukosnikiem ----------

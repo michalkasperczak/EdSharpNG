@@ -157,31 +157,31 @@ return !String.IsNullOrEmpty(sCmd) && sCmd.Trim().Length > 0;
 // ktory naprawiamy.
 public static string BudujFiltr(string sSourceExt, Func<string, string> fnCzytajWpis) {
 List<string> l = new List<string>();
-l.Add("Markdown files (*.md)|*.md");
-l.Add("Text files (*.txt)|*.txt");
+l.Add(JezykInterfejsu.Wybierz("Markdown files (*.md)|*.md", "Pliki Markdown (*.md)|*.md"));
+l.Add(JezykInterfejsu.Wybierz("Text files (*.txt)|*.txt", "Pliki tekstowe (*.txt)|*.txt"));
 
 if (FormatZrodlowy(sSourceExt) && fnCzytajWpis != null) {
 // Nazwy mowione pelnym slowem, nie samym rozszerzeniem: czytnik ekranu
 // wymawia "docx" jako litery, a "Word document" jest zrozumiale od razu.
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "docx", "Word document (*.docx)|*.docx");
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "docx", JezykInterfejsu.Wybierz("Word document (*.docx)|*.docx", "Dokument Word (*.docx)|*.docx"));
 // ODT NIE MA WPISU W EdSharp.ini (sprawdzone 18.09.2026: grep "^md2" pokazuje
 // docx, epub, epub3, htm, html, mw, pdf, rst, rtf, tex, txt - ODT NIE MA).
 // Pozycja zostaje tu SWIADOMIE: AddJesliUmiemy pominie ja, dopoki wpisu nie
 // ma, a gdy ktos doda "md2odt", format pojawi sie w oknie bez zmiany kodu.
 // Dlatego lista formatow NIE jest obietnica - jest pytaniem do ustawien.
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "odt", "OpenDocument text (*.odt)|*.odt");
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "epub", "EPUB e-book (*.epub)|*.epub");
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "html", "Web page (*.html)|*.html");
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "rtf", "Rich Text Format (*.rtf)|*.rtf");
-AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "pdf", "PDF document (*.pdf)|*.pdf");
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "odt", JezykInterfejsu.Wybierz("OpenDocument text (*.odt)|*.odt", "Tekst OpenDocument (*.odt)|*.odt"));
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "epub", JezykInterfejsu.Wybierz("EPUB e-book (*.epub)|*.epub", "E-book EPUB (*.epub)|*.epub"));
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "html", JezykInterfejsu.Wybierz("Web page (*.html)|*.html", "Strona internetowa (*.html)|*.html"));
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "rtf", JezykInterfejsu.Wybierz("Rich Text Format (*.rtf)|*.rtf", "Format Rich Text (*.rtf)|*.rtf"));
+AddJesliUmiemy(l, sSourceExt, fnCzytajWpis, "pdf", JezykInterfejsu.Wybierz("PDF document (*.pdf)|*.pdf", "Dokument PDF (*.pdf)|*.pdf"));
 }
 else {
 // Stary zestaw dla dokumentow, ktorych nie konwertujemy - zeby nie zabrac
 // nikomu tego, co bylo.
-l.Add("Rich Text Format files (*.rtf)|*.rtf");
+l.Add(JezykInterfejsu.Wybierz("Rich Text Format files (*.rtf)|*.rtf", "Pliki Rich Text Format (*.rtf)|*.rtf"));
 }
 
-l.Add("All files (*.*)|*.*");
+l.Add(JezykInterfejsu.Wybierz("All files (*.*)|*.*", "Wszystkie pliki (*.*)|*.*"));
 return String.Join("|", l.ToArray());
 }
 
@@ -355,17 +355,17 @@ Func<string, string> fnBrakujace) {
 WynikZapisu w = new WynikZapisu();
 w.PlikWynikowy = sTargetFile;
 
-if (String.IsNullOrEmpty(sTargetFile)) { w.Powod = "Nie podano pliku docelowego."; return w; }
-if (fnCzytajWpis == null || fnRozwin == null || fnUruchom == null) { w.Powod = "Brak obslugi konwersji."; return w; }
+if (String.IsNullOrEmpty(sTargetFile)) { w.Powod = JezykInterfejsu.Wybierz("No target file was supplied.", "Nie podano pliku docelowego."); return w; }
+if (fnCzytajWpis == null || fnRozwin == null || fnUruchom == null) { w.Powod = JezykInterfejsu.Wybierz("Conversion is not supported.", "Brak obsługi konwersji."); return w; }
 
 string sTargetExt = Rozszerzenie(sTargetFile);
 string sKlucz = KluczKonwersji(sSourceExt, sTargetExt);
-if (sKlucz.Length == 0) { w.Powod = "Nie znam konwersji do tego formatu."; return w; }
+if (sKlucz.Length == 0) { w.Powod = JezykInterfejsu.Wybierz("Conversion to this format is not supported.", "Nie znam konwersji do tego formatu."); return w; }
 
 string sCmdWzor = "";
 try { sCmdWzor = fnCzytajWpis(sKlucz); } catch {}
 if (String.IsNullOrEmpty(sCmdWzor) || sCmdWzor.Trim().Length == 0) {
-w.Powod = "W ustawieniach nie ma wpisu " + sKlucz + ".";
+w.Powod = JezykInterfejsu.Wybierz("The settings do not contain an entry for ", "W ustawieniach nie ma wpisu ") + sKlucz + ".";
 return w;
 }
 
@@ -378,7 +378,7 @@ sCmdWzor = DopiszStandalone(NormalizujPolecenie(sCmdWzor), sTargetExt);
 string sDir = "";
 try { sDir = Path.GetDirectoryName(Path.GetFullPath(sTargetFile)); } catch {}
 if (String.IsNullOrEmpty(sDir) || !Directory.Exists(sDir)) {
-w.Powod = "Katalog docelowy nie istnieje.";
+w.Powod = JezykInterfejsu.Wybierz("The target folder does not exist.", "Katalog docelowy nie istnieje.");
 return w;
 }
 
@@ -404,7 +404,7 @@ try {
 File.WriteAllText(sSrc, sText == null ? "" : sText, new UTF8Encoding(false));
 }
 catch (Exception ex) {
-w.Powod = "Nie moge przygotowac pliku zrodlowego: " + ex.Message;
+w.Powod = JezykInterfejsu.Wybierz("Cannot prepare the source file: ", "Nie można przygotować pliku źródłowego: ") + ex.Message;
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
 }
@@ -412,7 +412,7 @@ return w;
 string sCmd = "";
 try { sCmd = fnRozwin(sCmdWzor, sSrc, sTemp); }
 catch (Exception ex) {
-w.Powod = "Nie moge zlozyc polecenia konwersji: " + ex.Message;
+w.Powod = JezykInterfejsu.Wybierz("Cannot construct the conversion command: ", "Nie można utworzyć polecenia konwersji: ") + ex.Message;
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
 }
@@ -429,16 +429,16 @@ w.Polecenie = sCmd;
 // czego brakuje.
 try {
 int exitCode = fnUruchom(sCmd);
-if (exitCode != 0) throw new IOException("Converter exit code: " + exitCode.ToString());
+if (exitCode != 0) throw new IOException(JezykInterfejsu.Wybierz("Converter exit code: ", "Kod wyjścia konwertera: ") + exitCode.ToString());
 }
 catch (System.ComponentModel.Win32Exception) {
-w.Powod = "Nie moge uruchomic konwertera.";
+w.Powod = JezykInterfejsu.Wybierz("Cannot start the converter.", "Nie można uruchomić konwertera.");
 try { if (fnBrakujace != null) w.BrakujaceNarzedzie = fnBrakujace(sCmd); } catch {}
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
 }
 catch (Exception ex) {
-w.Powod = "Konwersja nie doszla do skutku: " + ex.Message;
+w.Powod = JezykInterfejsu.Wybierz("Conversion did not complete: ", "Konwersja nie doszła do skutku: ") + ex.Message;
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
 }
@@ -461,14 +461,14 @@ try {
 PodmienPlik(sTemp, sTargetFile);
 }
 catch (Exception ex) {
-w.Powod = "Nie moge zapisac pliku docelowego: " + ex.Message;
+w.Powod = JezykInterfejsu.Wybierz("Cannot save the target file: ", "Nie można zapisać pliku docelowego: ") + ex.Message;
 Sprzataj(sSrc); Sprzataj(sTemp);
 return w;
 }
 
 Sprzataj(sSrc);
 w.Udane = File.Exists(sTargetFile);
-if (!w.Udane) w.Powod = "Plik docelowy nie powstal.";
+if (!w.Udane) w.Powod = JezykInterfejsu.Wybierz("The target file was not created.", "Plik docelowy nie powstał.");
 return w;
 } // Konwertuj
 
@@ -513,7 +513,7 @@ public static int UruchomKonwerter(string command) {
 string s = CytujProgram(command), exe, args;
 if (s.StartsWith("\"")) {
 int end = s.IndexOf('"', 1);
-if (end < 0) throw new IOException("Invalid converter command.");
+if (end < 0) throw new IOException(JezykInterfejsu.Wybierz("Invalid converter command.", "Nieprawidłowe polecenie konwertera."));
 exe = s.Substring(1, end - 1); args = s.Substring(end + 1).Trim();
 } else {
 int end = s.IndexOf(' ');
@@ -532,7 +532,7 @@ lock (errors) { if (errors.Length < 4000) errors.AppendLine(e.Data); }
 };
 process.OutputDataReceived += delegate(object sender, DataReceivedEventArgs e) {};
 process.Start(); process.BeginErrorReadLine(); process.BeginOutputReadLine();
-if (!process.WaitForExit(120000)) {try {process.Kill(); process.WaitForExit(5000);} catch {} throw new IOException("Conversion timed out.");}
+if (!process.WaitForExit(120000)) {try {process.Kill(); process.WaitForExit(5000);} catch {} throw new IOException(JezykInterfejsu.Wybierz("Conversion timed out.", "Upłynął limit czasu konwersji."));}
 process.WaitForExit();
 if (process.ExitCode != 0) throw new IOException("Converter failed (" + process.ExitCode.ToString() + "). " + errors.ToString().Trim());
 return process.ExitCode;
@@ -578,8 +578,8 @@ try { if (!String.IsNullOrEmpty(sFile) && File.Exists(sFile)) File.Delete(sFile)
 // niewidomy nie ma skad wiedziec, ktory plik przyjmie nastepne Control+S.
 public static string KomunikatSukcesu(string sTargetExt, string sNazwaBufora) {
 string sExt = (sTargetExt == null) ? "" : sTargetExt.TrimStart('.').ToUpper();
-string s = "Saved as " + sExt;
-if (!String.IsNullOrEmpty(sNazwaBufora)) s += ", still editing " + sNazwaBufora;
+string s = JezykInterfejsu.Wybierz("Saved as ", "Zapisano jako ") + sExt;
+if (!String.IsNullOrEmpty(sNazwaBufora)) s += JezykInterfejsu.Wybierz(", still editing ", ", nadal edytujesz ") + sNazwaBufora;
 return s;
 }
 

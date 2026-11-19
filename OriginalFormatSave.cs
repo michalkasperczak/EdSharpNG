@@ -76,7 +76,7 @@ const string KATALOG_KOPII = ".edsharp-backups";
 // odcisk, ktory pozniej "zgadza sie" z kolejnym pustym i pozwolilby nadpisac
 // plik, ktorego nigdy nie widzielismy.
 public static string SumaKontrolna(string sPath) {
-if (String.IsNullOrEmpty(sPath)) throw new ArgumentException("Brak sciezki pliku.");
+if (String.IsNullOrEmpty(sPath)) throw new ArgumentException(JezykInterfejsu.Wybierz("File path is missing.", "Brak ścieżki pliku."));
 using (FileStream fs = new FileStream(sPath, FileMode.Open, FileAccess.Read, FileShare.Read))
 using (SHA256 alg = SHA256.Create()) {
 byte[] a = alg.ComputeHash(fs);
@@ -92,7 +92,7 @@ return sb.ToString();
 // Zwrocenie "nic" udawaloby, ze skojarzenia po prostu nie ma, a wtedy Control+S
 // po cichu zapisalby Markdown gdzie indziej.
 public static OriginalDocumentLink Capture(string sPath) {
-if (String.IsNullOrEmpty(sPath)) throw new ArgumentException("Brak sciezki pliku zrodlowego.");
+if (String.IsNullOrEmpty(sPath)) throw new ArgumentException(JezykInterfejsu.Wybierz("Source-file path is missing.", "Brak ścieżki pliku źródłowego."));
 string sFull = Path.GetFullPath(sPath);
 OriginalDocumentLink link = new OriginalDocumentLink();
 link.Path = sFull;
@@ -116,8 +116,8 @@ out string sBlad, out string sBackupPath) {
 sBlad = "";
 sBackupPath = "";
 
-if (link == null || String.IsNullOrEmpty(link.Path)) { sBlad = "Brak skojarzenia z plikiem zrodlowym."; return false; }
-if (fnKonwertuj == null) { sBlad = "Brak obslugi konwersji."; return false; }
+if (link == null || String.IsNullOrEmpty(link.Path)) { sBlad = JezykInterfejsu.Wybierz("There is no association with a source file.", "Brak skojarzenia z plikiem źródłowym."); return false; }
+if (fnKonwertuj == null) { sBlad = JezykInterfejsu.Wybierz("Conversion is not supported.", "Brak obsługi konwersji."); return false; }
 
 string sOrig;
 string sDir;
@@ -125,17 +125,17 @@ try {
 sOrig = Path.GetFullPath(link.Path);
 sDir = Path.GetDirectoryName(sOrig);
 }
-catch (Exception ex) { sBlad = "Zla sciezka pliku zrodlowego: " + ex.Message; return false; }
-if (String.IsNullOrEmpty(sDir) || !Directory.Exists(sDir)) { sBlad = "Katalog pliku zrodlowego nie istnieje."; return false; }
-if (!File.Exists(sOrig)) { sBlad = "Plik zrodlowy nie istnieje: " + sOrig; return false; }
+catch (Exception ex) { sBlad = JezykInterfejsu.Wybierz("Invalid source-file path: ", "Zła ścieżka pliku źródłowego: ") + ex.Message; return false; }
+if (String.IsNullOrEmpty(sDir) || !Directory.Exists(sDir)) { sBlad = JezykInterfejsu.Wybierz("The source-file folder does not exist.", "Katalog pliku źródłowego nie istnieje."); return false; }
+if (!File.Exists(sOrig)) { sBlad = JezykInterfejsu.Wybierz("The source file does not exist: ", "Plik źródłowy nie istnieje: ") + sOrig; return false; }
 
 // KONTROLA PRZED KONWERSJA.  Bez niej wynik konwertera nadpisalby plik, ktory
 // w miedzyczasie zmienil kto inny.
 string sTeraz;
 try { sTeraz = SumaKontrolna(sOrig); }
-catch (Exception ex) { sBlad = "Nie moge przeczytac pliku zrodlowego: " + ex.Message; return false; }
-if (String.IsNullOrEmpty(link.Fingerprint)) { sBlad = "Brak odcisku pliku zrodlowego."; return false; }
-if (sTeraz != link.Fingerprint) { sBlad = "Plik zrodlowy zmienil sie poza edytorem - zapis wstrzymany."; return false; }
+catch (Exception ex) { sBlad = JezykInterfejsu.Wybierz("Cannot read the source file: ", "Nie można odczytać pliku źródłowego: ") + ex.Message; return false; }
+if (String.IsNullOrEmpty(link.Fingerprint)) { sBlad = JezykInterfejsu.Wybierz("The source-file fingerprint is missing.", "Brak odcisku pliku źródłowego."); return false; }
+if (sTeraz != link.Fingerprint) { sBlad = JezykInterfejsu.Wybierz("The source file changed outside the editor; saving stopped.", "Plik źródłowy zmienił się poza edytorem — zapis wstrzymany."); return false; }
 
 string sExt = Path.GetExtension(sOrig);            // z kropka albo puste
 string sBase = Path.GetFileNameWithoutExtension(sOrig);
@@ -145,14 +145,14 @@ WynikZapisu w = null;
 try { w = fnKonwertuj(sMarkdown == null ? "" : sMarkdown, sStage); }
 catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Konwersja nie doszla do skutku: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Conversion did not complete: ", "Konwersja nie doszła do skutku: ") + ex.Message;
 return false;
 }
 if (w == null || !w.Udane) {
 // Nieudany konwerter potrafi zostawic urywek pliku - usuwamy go, zeby nie
 // zaslanial katalogu uzytkownika.
 Sprzataj(sStage);
-sBlad = (w != null && !String.IsNullOrEmpty(w.Powod)) ? w.Powod : "Konwersja nie udala sie.";
+sBlad = (w != null && !String.IsNullOrEmpty(w.Powod)) ? w.Powod : JezykInterfejsu.Wybierz("Conversion failed.", "Konwersja nie udała się.");
 return false;
 }
 
@@ -161,7 +161,7 @@ long iLen = -1;
 try { if (File.Exists(sStage)) iLen = new FileInfo(sStage).Length; } catch {}
 if (iLen <= 0) {
 Sprzataj(sStage);
-sBlad = "Konwerter nie utworzyl pliku.";
+sBlad = JezykInterfejsu.Wybierz("The converter did not create a file.", "Konwerter nie utworzył pliku.");
 return false;
 }
 
@@ -175,7 +175,7 @@ string sNowyOdcisk;
 try { sNowyOdcisk = SumaKontrolna(sStage); }
 catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Nie moge odczytac wyniku konwersji: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot read the conversion result: ", "Nie można odczytać wyniku konwersji: ") + ex.Message;
 return false;
 }
 
@@ -184,13 +184,13 @@ return false;
 try {
 if (SumaKontrolna(sOrig) != link.Fingerprint) {
 Sprzataj(sStage);
-sBlad = "Plik zrodlowy zmienil sie podczas konwersji - zapis wstrzymany.";
+sBlad = JezykInterfejsu.Wybierz("The source file changed during conversion; saving stopped.", "Plik źródłowy zmienił się podczas konwersji — zapis wstrzymany.");
 return false;
 }
 }
 catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Nie moge sprawdzic pliku zrodlowego po konwersji: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot verify the source file after conversion: ", "Nie można sprawdzić pliku źródłowego po konwersji: ") + ex.Message;
 return false;
 }
 
@@ -201,7 +201,7 @@ string sKopie = Path.Combine(sDir, KATALOG_KOPII);
 try { if (!Directory.Exists(sKopie)) Directory.CreateDirectory(sKopie); }
 catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Nie moge utworzyc katalogu kopii zapasowych: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot create the backup folder: ", "Nie można utworzyć katalogu kopii zapasowych: ") + ex.Message;
 return false;
 }
 
@@ -223,31 +223,31 @@ catch (AbandonedMutexException) { bMam = true; }   // poprzednik padl - wchodzim
 }
 catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Cannot lock the original document for saving: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot lock the original document for saving: ", "Nie można zablokować oryginalnego dokumentu do zapisu: ") + ex.Message;
 return false;
 }
 if (!bMam) {
 Sprzataj(sStage);
-sBlad = "Another save is still using this document. Please try again.";
+sBlad = JezykInterfejsu.Wybierz("Another save is still using this document. Please try again.", "Inny zapis nadal używa tego dokumentu. Spróbuj ponownie.");
 return false;
 }
 // A writer may have waited behind another save. Recheck AFTER acquiring ownership.
 try {
 if (SumaKontrolna(sOrig) != link.Fingerprint) {
 Sprzataj(sStage);
-sBlad = "The original changed while waiting to save. Save stopped.";
+sBlad = JezykInterfejsu.Wybierz("The original changed while waiting to save. Save stopped.", "Oryginał zmienił się podczas oczekiwania na zapis. Zapis wstrzymano.");
 return false;
 }
 } catch (Exception ex) {
 Sprzataj(sStage);
-sBlad = "Cannot verify the original before replacement: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot verify the original before replacement: ", "Nie można sprawdzić oryginału przed zastąpieniem: ") + ex.Message;
 return false;
 }
 
 sKopia = WolnaNazwaKopii(sKopie, sBase, sExt);
 if (String.IsNullOrEmpty(sKopia)) {
 Sprzataj(sStage);
-sBlad = "Nie moge wybrac nazwy kopii zapasowej.";
+sBlad = JezykInterfejsu.Wybierz("Cannot choose a backup name.", "Nie można wybrać nazwy kopii zapasowej.");
 return false;
 }
 
@@ -259,7 +259,7 @@ File.Replace(sStage, sOrig, sKopia, true);
 catch (Exception ex) {
 Sprzataj(sStage);
 Sprzataj(sKopia);              // zwalniamy zarezerwowana nazwe - podmiany nie bylo
-sBlad = "Nie moge podmienic pliku zrodlowego: " + ex.Message;
+sBlad = JezykInterfejsu.Wybierz("Cannot replace the source file: ", "Nie można zastąpić pliku źródłowego: ") + ex.Message;
 return false;
 }
 
@@ -271,7 +271,7 @@ if (iKopia <= 0) {
 sBackupPath = "";
 link.Fingerprint = sNowyOdcisk;      // dokument JEST podmieniony - odcisk musi to opisywac
 Sprzataj(sStage);
-sBlad = "Plik zostal podmieniony, ale kopia zapasowa nie powstala - rownolegly zapis tego samego pliku.";
+sBlad = JezykInterfejsu.Wybierz("The file was replaced, but no backup was created because another save wrote the same file.", "Plik został zastąpiony, ale kopia zapasowa nie powstała — równoległy zapis tego samego pliku.");
 return false;
 }
 }
@@ -294,7 +294,7 @@ Sprzataj(sStage);              // File.Replace zwykle je usuwa; na wszelki wypad
 // sBackupPath i odcisk sa juz ustawione powyzej.
 long iNowy = -1;
 try { if (File.Exists(sOrig)) iNowy = new FileInfo(sOrig).Length; } catch {}
-if (iNowy <= 0) { sBlad = "Po podmianie plik zrodlowy jest pusty. Poprzednia wersja jest w kopii zapasowej."; return false; }
+if (iNowy <= 0) { sBlad = JezykInterfejsu.Wybierz("After replacement the source file is empty. The previous version is in the backup.", "Po zastąpieniu plik źródłowy jest pusty. Poprzednia wersja jest w kopii zapasowej."); return false; }
 
 return true;
 }

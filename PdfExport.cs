@@ -95,28 +95,28 @@ return Render(sHtml, sOutputFile, null, out sError);
 public static bool Render(string sHtml, string sOutputFile, string sBrowserExe, out string sError) {
 sError = "";
 
-if (String.IsNullOrEmpty(sHtml)) { sError = "Brak tresci do zapisania."; return false; }
-if (String.IsNullOrEmpty(sOutputFile)) { sError = "Brak nazwy pliku wynikowego."; return false; }
+if (String.IsNullOrEmpty(sHtml)) { sError = JezykInterfejsu.Wybierz("There is no content to save.", "Brak treści do zapisania."); return false; }
+if (String.IsNullOrEmpty(sOutputFile)) { sError = JezykInterfejsu.Wybierz("The output file name is missing.", "Brak nazwy pliku wynikowego."); return false; }
 
 string sOut;
 try { sOut = Path.GetFullPath(sOutputFile); }
-catch (Exception ex) { sError = "Zla sciezka pliku wynikowego: " + ex.Message; return false; }
+catch (Exception ex) { sError = JezykInterfejsu.Wybierz("Invalid output-file path: ", "Zła ścieżka pliku wynikowego: ") + ex.Message; return false; }
 
 // PLIK WYNIKOWY MUSI BYC NOWY.  Ta metoda nie nadpisuje niczego: nie wie,
 // czy trafila w plik tymczasowy, czy w dokument uzytkownika.  Wolajacy
 // podaje swiezy plik w stagingu i sam decyduje o podmianie.
 try {
 if (File.Exists(sOut) || Directory.Exists(sOut)) {
-sError = "Plik wynikowy juz istnieje: " + sOut;
+sError = JezykInterfejsu.Wybierz("The output file already exists: ", "Plik wynikowy już istnieje: ") + sOut;
 return false;
 }
 }
-catch (Exception ex) { sError = "Nie moge sprawdzic pliku wynikowego: " + ex.Message; return false; }
+catch (Exception ex) { sError = JezykInterfejsu.Wybierz("Cannot verify the output file: ", "Nie można sprawdzić pliku wynikowego: ") + ex.Message; return false; }
 
 string sOutDir = "";
 try { sOutDir = Path.GetDirectoryName(sOut); } catch {}
 if (String.IsNullOrEmpty(sOutDir) || !Directory.Exists(sOutDir)) {
-sError = "Katalog pliku wynikowego nie istnieje: " + sOutDir;
+sError = JezykInterfejsu.Wybierz("The output-file folder does not exist: ", "Katalog pliku wynikowego nie istnieje: ") + sOutDir;
 return false;
 }
 
@@ -133,7 +133,7 @@ try {
 sWork = Path.Combine(Path.GetTempPath(), "edsharp-pdf-" + Guid.NewGuid().ToString("N"));
 Directory.CreateDirectory(sWork);
 }
-catch (Exception ex) { sError = "Nie moge przygotowac katalogu roboczego: " + ex.Message; return false; }
+catch (Exception ex) { sError = JezykInterfejsu.Wybierz("Cannot prepare the working folder: ", "Nie można przygotować katalogu roboczego: ") + ex.Message; return false; }
 
 string sSrc = Path.Combine(sWork, "dokument.html");
 string sProfil = Path.Combine(sWork, "profil");
@@ -145,7 +145,7 @@ File.WriteAllText(sSrc, sHtml, new UTF8Encoding(false));
 Directory.CreateDirectory(sProfil);
 }
 catch (Exception ex) {
-sError = "Nie moge przygotowac zrodla HTML: " + ex.Message;
+sError = JezykInterfejsu.Wybierz("Cannot prepare the HTML source: ", "Nie można przygotować źródła HTML: ") + ex.Message;
 Sprzataj(sWork);
 return false;
 }
@@ -199,7 +199,7 @@ Sprzataj(sWork);
 return false;
 }
 catch (Exception ex) {
-sError = "Nie moge uruchomic przegladarki: " + ex.Message;
+sError = JezykInterfejsu.Wybierz("Cannot start the browser: ", "Nie można uruchomić przeglądarki: ") + ex.Message;
 Sprzataj(sWork);
 return false;
 }
@@ -215,7 +215,7 @@ return false;
 }
 
 if (iKod != 0) {
-sError = "PDF conversion failed, browser exit code: " + iKod.ToString() + SkrotBledu(sStdErr);
+sError = JezykInterfejsu.Wybierz("PDF conversion failed, browser exit code: ", "Konwersja PDF nie powiodła się, kod wyjścia przeglądarki: ") + iKod.ToString() + SkrotBledu(sStdErr);
 UsunNieudany(sOut); return false;
 }
 
@@ -277,8 +277,8 @@ static bool WynikJestPdf(string sOut, out string sPowod) {
 sPowod = "";
 long iLen = -1;
 try { if (File.Exists(sOut)) iLen = new FileInfo(sOut).Length; } catch {}
-if (iLen < 0) { sPowod = "Przegladarka nie utworzyla pliku PDF."; return false; }
-if (iLen == 0) { sPowod = "Przegladarka utworzyla pusty plik PDF."; return false; }
+if (iLen < 0) { sPowod = JezykInterfejsu.Wybierz("The browser did not create a PDF file.", "Przeglądarka nie utworzyła pliku PDF."); return false; }
+if (iLen == 0) { sPowod = JezykInterfejsu.Wybierz("The browser created an empty PDF file.", "Przeglądarka utworzyła pusty plik PDF."); return false; }
 byte[] ab = new byte[5];
 int iRead = 0;
 try {
@@ -286,10 +286,10 @@ using (FileStream fs = new FileStream(sOut, FileMode.Open, FileAccess.Read, File
 iRead = fs.Read(ab, 0, 5);
 }
 }
-catch (Exception ex) { sPowod = "Nie moge sprawdzic pliku PDF: " + ex.Message; return false; }
+catch (Exception ex) { sPowod = JezykInterfejsu.Wybierz("Cannot verify the PDF file: ", "Nie można sprawdzić pliku PDF: ") + ex.Message; return false; }
 if (iRead < 5 || ab[0] != (byte)'%' || ab[1] != (byte)'P' || ab[2] != (byte)'D'
 || ab[3] != (byte)'F' || ab[4] != (byte)'-') {
-sPowod = "Plik nie jest dokumentem PDF.";
+sPowod = JezykInterfejsu.Wybierz("The file is not a PDF document.", "Plik nie jest dokumentem PDF.");
 return false;
 }
 return true;
@@ -306,7 +306,7 @@ if (String.IsNullOrEmpty(sErr)) return "";
 string s = sErr.Replace("\r", " ").Replace("\n", " ").Trim();
 if (s.Length == 0) return "";
 if (s.Length > 300) s = s.Substring(0, 300) + "...";
-return " Przegladarka zglosila: " + s;
+return JezykInterfejsu.Wybierz(" The browser reported: ", " Przeglądarka zgłosiła: ") + s;
 }
 
 // Katalog roboczy ginie razem z profilem.  Edge potrafi jeszcze chwile

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ćwiczenie 04 — zadania i tabela</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Przejdź do treści</a>
+<header><p>Podręcznik offline EdSharp — szkic przed tłumaczeniem interfejsu.</p></header>
+<main id="tresc"><h1>Ćwiczenie 04 — zadania i tabela</h1><nav aria-labelledby="contents"><h2 id="contents">Spis treści</h2><ol><li><a href="#kroki">Kroki</a></li><li><a href="#oczekiwany-wynik">Oczekiwany wynik</a></li><li><a href="#bezpieczny-powr-t">Bezpieczny powrót</a></li></ol></nav><aside class="notice"><strong>DRAFT docelowego menu PL/EN.</strong> Wykonaj to tylko w nowym pliku ćwiczenia; nie jest to dowód testu GUI ani NVDA.</aside>
+<p><strong>Cel.</strong> Utworzyć dwa zadania, przełączyć jedno i wstawić małą tabelę.</p>
+<h2 id="kroki">Kroki</h2>
+<ol><li>W nowym pliku wpisz <code>kupić chleb</code> i <code>odpisać</code>.</li><li>Zaznacz oba wiersze i naciśnij <code>Ctrl+Shift+F2</code>.</li><li>Ustaw kursor na pierwszym zadaniu, naciśnij <code>Ctrl+Shift+X</code>, a potem <code>Alt+Shift+F2</code>.</li><li>Naciśnij <code>Ctrl+Shift+T</code>, podaj dwa nagłówki oraz dwa wiersze danych i zatwierdź <code>Ctrl+Enter</code>.</li></ol>
+<h2 id="oczekiwany-wynik">Oczekiwany wynik</h2>
+<p>Oba wiersze są listą zadań; pierwszy ma <code>- [x]</code>, drugi <code>- [ ]</code>. W DRAFT-cie pozycja w <strong>Przegląd > Zadania</strong> zmienia się między <strong>Oznacz jako wykonane</strong> i <strong>Oznacz jako niewykonane</strong>, a pomoc/paleta używają nazwy <strong>Przełącz wykonanie zadania</strong>. Komunikat skutku ma brzmieć <strong>Wykonane</strong> albo <strong>Niewykonane</strong>. Tabela Markdown jest w bieżącym dokumencie; jej docelowe miejsce to <strong>Wstawianie > Wstaw tabelę…</strong>.</p>
+<h2 id="bezpieczny-powr-t">Bezpieczny powrót</h2>
+<p><code>Ctrl+Z</code> cofa ostatnią operację tylko w tym pliku ćwiczenia.</p>
+<p><a href="../podrecznik.html">Wróć do podręcznika</a>.</p></main>
+<footer>Wygenerowano lokalnie; strona nie pobiera żadnych zasobów z sieci.</footer>
+</body></html>

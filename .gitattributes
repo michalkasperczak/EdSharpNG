@@ -13,6 +13,10 @@
 *.png binary
 *.nvda-addon binary
 *.gz binary
+# Frozen runtime resources/tutorial/notices retain exact manifest bytes.
+/Synonyms/** -text
+/docs/tutorial/** -text
+/Hotkeys.ini -text
 # Generated WordNet data and verbatim license must retain manifest bytes.
 /Synonyms/wordnet-en-*.txt text eol=lf
 /Synonyms/LICENSE-WordNet.txt text eol=lf whitespace=-blank-at-eol
@@ -20,6 +24,14 @@
 # Empty example is a required final TSV column, not accidental whitespace.
 /Synonyms/wordnet-en-details.txt whitespace=-blank-at-eol
 # Preserve empty final columns in raw measurement tables/transcripts.
+# Release inputs preserve their frozen byte identity (mixed historic LF/CRLF).
+# This also keeps a clean clone identical to the sources used by the compiler.
+/*.cs -text
+/Localizacja/*.cs -text
+/BuildEdSharp.cmd -text
+/EdSharp_Setup.iss -text
+/third_party/Ude/** -text
+/ConvertHelpers/brl2txt.bat -text
 /testy/wyniki/synonyms119/*.tsv whitespace=-blank-at-eol
 /testy/wyniki/synonyms119/*.log whitespace=-blank-at-eol
 # Raw speech and settings fixtures intentionally retain trailing spaces.

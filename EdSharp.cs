@@ -33,6 +33,7 @@ using System.Windows.Forms;
 using Tektosyne.NetMail ;
 using Tektosyne.Win32Api;
 using Homer;
+using EdSharp.Pretranslation128;
 
 [assembly: AssemblyTitle("EdSharpNG")]
 [assembly: AssemblyProduct("EdSharpNG")]
@@ -56,14 +57,10 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.123";
-// GDZIE IDA ZGLOSZENIA (dolozone 11.09.2026).  Adres formularza zgloszen w
-// NASZYM repozytorium; uzywany przez "Report a Problem" i przez okno awarii,
-// gdy nie ma skonfigurowanego punktu odbiorczego (klucz ReportUrl w pliku
-// ustawien).  Adres e-mail opiekuna programu NIE jest wpisany w kod - siedzi w
-// pliku ustawien pod kluczem ReportMail, bo adres prywatny nie ma czego szukac
-// w binarce rozdawanej testerom.
-public const string ReportIssuesUrl = "https://github.com/michalkasperczak/EdSharpNG/issues/new";
+public const string VersionString = "5.0.130";
+// Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
+// public/test resource file.  No fallback browser, mailto address or secret is
+// compiled into the client.
 public static App Shell;
 public static MdiFrame Frame;
 public static string ProgramName;
@@ -124,7 +121,7 @@ if (sArg.Equals("--install-jaws-settings", StringComparison.OrdinalIgnoreCase)
 int iCopied, iCompiled;
 string sScriptsDir = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "Scripts");
 string sReport = JawsScripts.install(sScriptsDir, out iCopied, out iCompiled);
-MessageBox.Show(sReport, "EdSharp JAWS scripts: " + iCopied + " copied, " + iCompiled + " compiled");
+MessageBox.Show(sReport, String.Format(JezykInterfejsu.Wybierz("EdSharp JAWS scripts: {0} copied, {1} compiled", "Skrypty JAWS programu EdSharp: skopiowano {0}, skompilowano {1}"), iCopied, iCompiled));
 return;
 }
 }
@@ -194,7 +191,7 @@ InitJFW();
 
 this.Shutdown += delegate(object o, EventArgs e) {
 if (App.WordCreated) {
-Util.Say("Exiting Microsoft Word");
+Util.Say(JezykInterfejsu.Wybierz("Exiting Microsoft Word", "Zamykanie programu Microsoft Word"));
 COM.WordExit();
 }
 if (App.JAWS != null) COM.Release(ref App.JAWS);
@@ -211,13 +208,12 @@ sMessage += "\n\nStack trace:\n" + ex.StackTrace;
 // SLAD AWARII IDZIE NA DYSK, ZANIM ZOBACZY GO UZYTKOWNIK (13.09.2026).
 // Do 5.0.94 slad istnial tylko w tym okienku: kto je zamknal, tracil dowod.
 // Teraz jest w katalogu danych i mozna go dolaczyc do zgloszenia pozniej.
-Util.LogDiagnostic("awaria", ex.GetType().Name + ": " + sMessage);
+Util.LogDiagnosticException("unhandled", ex);
 // sMessage += "\nExit EdSharp?\n\nStack trace:\n" + ex.StackTrace;
 // e.ExitApplication = Dialog.Confirm("Confirm", "Unexpected event!\n" + sMessage + ".\nExit EdSharp?", "N") == "Y";
-string[] aButtons = {"&Report the Problem", "Copy to Clipboard", "Exit EdSharp"};
-string sButton = Dialog.Choose("Unexpected Event", sMessage, aButtons, 0);
-switch (sButton) {
-case "&Report the Problem" :
+string[] aButtons = {JezykInterfejsu.Wybierz("&Report the Problem", "&Zgłoś problem"), JezykInterfejsu.Wybierz("Copy to Clipboard", "Kopiuj do schowka"), JezykInterfejsu.Wybierz("Exit EdSharp", "Zakończ EdSharp")};
+string sButton = Dialog.Choose(JezykInterfejsu.Wybierz("Unexpected Event", "Nieoczekiwane zdarzenie"), sMessage, aButtons, 0);
+if (sButton == JezykInterfejsu.Wybierz("&Report the Problem", "&Zgłoś problem")) {
 // ZGLOSZENIE AWARII IDZIE DO NAS, NIE DO AUTORA ORYGINALU (naprawa 11.09.2026).
 // Do tej pory ten przycisk nazywal sie "Mail to Developer" i wysylal awarie
 // EdSharpNG na jamal@EmpowermentZone.com - adres autora programu, z ktorego
@@ -225,16 +221,16 @@ case "&Report the Problem" :
 // kodu nie pisal i nie moze go naprawic, a my nie dowiadywalismy sie o awarii
 // wcale.  Teraz slad awarii wchodzi do tego samego okna zgloszen, co reszta:
 // z opisem, kopia na dysku i uczciwym komunikatem, czy wyszlo.
-Util.Say("Please add steps to reproduce the problem, if possible.");
+Util.Say(JezykInterfejsu.Wybierz("Please add steps to reproduce the problem, if possible.", "Jeśli to możliwe, dodaj kroki pozwalające odtworzyć problem."));
 try {
-if (App.Shell != null && App.Frame != null) App.Frame.ReportProblem("EdSharp error: " + ex.Message, sMessage);
+if (App.Shell != null && App.Frame != null) App.Frame.ReportProblem(JezykInterfejsu.Wybierz("EdSharp error: ", "Błąd EdSharp: ") + ex.Message, sMessage);
 }
 catch {}
-break;
-case "Copy to Clipboard" :
+}
+else if (sButton == JezykInterfejsu.Wybierz("Copy to Clipboard", "Kopiuj do schowka")) {
 Util.SetClipboardText(sMessage);
-break;
-case "Exit EdSharp" :
+}
+else if (sButton == JezykInterfejsu.Wybierz("Exit EdSharp", "Zakończ EdSharp")) {
 // Application.Exit();
 e.ExitApplication = true;
 return;
@@ -254,6 +250,7 @@ App.TempFile = GetTempFile();
 App.DefaultIniFile = GetDefaultIniFile();
 App.HotkeyIniFile = Path.Combine(App.ProgramDir, "Hotkeys.ini");
 App.IniFile = GetIniFile();
+JezykInterfejsu.Initialize(App.ReadOption("InterfaceLanguage", "system"), CultureInfo.CurrentCulture);
 App.IndentModeFile = Path.Combine(App.DataDir, "IndentMode.tmp");
 // IniFile = GetIniFile();
 
@@ -270,8 +267,8 @@ if (File.Exists(App.SpeechLog)) File.Delete(App.SpeechLog);
 // DZIENNIK AWARII: ustawiany obok Speech.log, ale NIE KASOWANY przy starcie -
 // awaria z wczoraj musi przetrwac do dzisiejszego zgloszenia.  Wpis "start"
 // daje tez date uruchomienia, wiec widac, ktory przebieg programu sie wywrocil.
-App.ErrorLog = Path.Combine(App.DataDir, "EdSharpNG-diagnostyka.log");
-Util.LogDiagnostic("start", "EdSharpNG " + App.VersionString + " uruchomiony");
+App.ErrorLog = Path.Combine(App.DataDir, "EdSharpNG-diagnostics-safe-v2.log");
+Util.LogDiagnostic("start", "");
 App.ExtraSpeech = (App.ReadOption("E&xtraSpeech", "Y").ToLower().Substring(0, 1) == "n") ? false : true;
 App.IndentChange = App.ReadOption("E&xtraSpeech", "Y").Contains("-") ? false : true;
 
@@ -308,7 +305,7 @@ int iIndex = Int32.Parse(App.ReadValue("Previous", s, "-1"));
 App.Frame.OpenOrActivateWindow(s, App.Frame.GetViewLevel(s));
 if (App.Frame.Child.RTB.Index == 0) App.Frame.Child.RTB.Index = iIndex;
 }
-if (iCount > 0) App.Frame.AddMessage("Opened " + iCount + " previous file" + (iCount == 1 ? "" : "s"));
+if (iCount > 0) App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Opened {0} previous files", "Otwarto {0} plików z poprzedniej sesji"), iCount));
 }
 App.DeleteSection("Previous");
 
@@ -390,7 +387,7 @@ if (Util.CompareVersions(sLatest, App.VersionString) <= 0) return;
 if (App.Frame == null || !App.Frame.IsHandleCreated) return;
 App.Frame.BeginInvoke((MethodInvoker)delegate() {
 try {
-App.Frame.AddMessage("EdSharpNG " + sLatest + " is available. Press F11 to update. You have " + App.VersionString + ".");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("EdSharpNG {0} is available. Press F11 to update. You have {1}.", "EdSharpNG {0} jest dostępny. Naciśnij F11, aby zaktualizować. Masz wersję {1}."), sLatest, App.VersionString));
 }
 catch {}
 });
@@ -452,7 +449,7 @@ if (sZrobione.Length == 0) return;
 if (App.Frame == null || !App.Frame.IsHandleCreated) return;
 App.Frame.BeginInvoke((MethodInvoker)delegate() {
 try {
-App.Frame.AddMessage("Pobrano brakujace skladniki konwersji: " + sZrobione + ".");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Downloaded missing conversion components: {0}.", "Pobrano brakujące składniki konwersji: {0}."), sZrobione));
 }
 catch {}
 });
@@ -1012,7 +1009,7 @@ return;
 
 sResult = hl[0];
 rtb.Index = Int32.Parse(sResult);
-App.Frame.AddMessage("Previous percent " + rtb.Percent);
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Previous percent {0}", "Poprzedni procent {0}"), rtb.Percent));
 // Util.Say(rtb.RowText);
 }; // Shown
 
@@ -1049,7 +1046,7 @@ this.Show();
 
 public void CheckFileTime(object sender, EventArgs e) {
 if (App.Frame.KeyDescriber) {
-App.Frame.SetMessage("No Key Describer");
+App.Frame.SetMessage(JezykInterfejsu.Wybierz("No Key Describer", "Opis klawiszy wyłączony"));
 App.Frame.KeyDescriber = false;
 }
 
@@ -1063,7 +1060,7 @@ DateTime dt = System.IO.File.GetLastWriteTime(sFile);
 //if (this.FileTime >= dt || Util.File2String(sFile).Length == 0) return;
 if (this.FileTime >= dt) return;
 this.FileTimeChecked = true;
-switch (Dialog.Confirm("Confirm", this.Text + " on disk is newer than the version opened in this window.  Open Again?", "Y")) {
+switch (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), this.Text + JezykInterfejsu.Wybierz(" on disk is newer than the version opened in this window.  Open Again?", " na dysku jest nowsza od wersji otwartej w tym oknie. Otworzyć ponownie?"), "Y")) {
 case "Y" :
 int iIndex = this.RTB.Index;
 this.LoadTextOrRtfFile(sFile);
@@ -1156,7 +1153,7 @@ if (Util.IsNumeric(sEncoding)) en = Encoding.GetEncoding(Int32.Parse(sEncoding))
 else en = Encoding.GetEncoding(sEncoding);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 en = new UTF8Encoding(true);
 }
 }
@@ -1221,8 +1218,8 @@ if ((sExt == ".csv" || sExt == ".tsv") && !bLiteral) {
 char cSepDetect;
 int iColsDetect, iRowsDetect;
 if (EdSharp.Csv.WygladaNaTabele(sText, out cSepDetect, out iColsDetect, out iRowsDetect)) {
-string sQ = "This looks like a table: " + iRowsDetect + " rows and " + iColsDetect + " columns.\n\nOpen it as a table you can read and edit column by column?";
-if (Dialog.Confirm("CSV Table", sQ, "Y") == "Y") {
+string sQ = String.Format(JezykInterfejsu.Wybierz("This looks like a table: {0} rows and {1} columns.\n\nOpen it as a table you can read and edit column by column?", "To wygląda na tabelę: {0} wierszy i {1} kolumn.\n\nOtworzyć ją jako tabelę, którą można czytać i edytować kolumna po kolumnie?"), iRowsDetect, iColsDetect);
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("CSV Table", "Tabela CSV"), sQ, "Y") == "Y") {
 // Okno tabeli otwieramy PO tym, jak dokument stanie sie widoczny -
 // inaczej modalne okno wstaje nad niegotowa jeszcze ramka.
 string sCsvPath = sFile;
@@ -1250,7 +1247,7 @@ if (iCp == 667) sOld = "Mazovia";
 else if (iCp == 852) sOld = "Latin II (CP852)";
 else if (iCp == 1250) sOld = "Windows-1250";
 if (sOld != null)
-App.Frame.AddMessage("Opened as " + sOld + "; will be saved as UTF-8.");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Opened as {0}; will be saved as UTF-8.", "Otwarto jako {0}; plik zostanie zapisany w UTF-8."), sOld));
 }
 }
 //else this.RTB.Text = Util.OldFile2String(sFile);
@@ -1265,25 +1262,23 @@ catch (Exception exOpen) {
 // PRAWDZIWA PRZYCZYNA IDZIE DO DZIENNIKA (13.09.2026).  Ten catch zamienial
 // KAZDY blad otwarcia na jeden komunikat "Cannot open file!", wiec przyczyna
 // przepadala - przy diagnozie trzeba bylo zgadywac po kodzie.
-Util.LogDiagnostic("otwarcie", "nie udalo sie otworzyc " + sFile + ": "
-+ exOpen.GetType().Name + ": " + exOpen.Message + " | " + exOpen.StackTrace);
+Util.LogDiagnosticException("open_failed", exOpen);
 // BEZ REKURENCJI.  Gdy otwarcie kopii tymczasowej TEZ padnie, stara wersja
 // kasowala kopie i probowala skopiowac ja na sama siebie - stad mylace
 // "Nie mozna odnalezc pliku EdSharp.tmp" zamiast prawdziwego bledu.
 if (String.Equals(sFile, App.TempFile, StringComparison.OrdinalIgnoreCase)) {
-App.Frame.AddMessage("Cannot open file!");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Cannot open file!", "Nie można otworzyć pliku!"));
 return;
 }
-App.Frame.AddMessage("Cannot open file!  Opening temporary copy.");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Cannot open file!  Opening temporary copy.", "Nie można otworzyć pliku! Otwieranie kopii tymczasowej."));
 try {
 if (System.IO.File.Exists(App.TempFile)) System.IO.File.Delete(App.TempFile);
 System.IO.File.Copy(sFile, App.TempFile);
 App.Frame.OpenOrActivateWindow(App.TempFile);
 }
 catch (Exception exTmp) {
-Util.LogDiagnostic("otwarcie", "kopia tymczasowa tez sie nie udala: "
-+ exTmp.GetType().Name + ": " + exTmp.Message);
-App.Frame.AddMessage("Cannot open file!");
+Util.LogDiagnosticException("temporary_copy_failed", exTmp);
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Cannot open file!", "Nie można otworzyć pliku!"));
 }
 }
 //Dialog.Show(this.File);
@@ -1317,7 +1312,7 @@ else if (Path.GetExtension(sFile).ToLower() == ".rtf") {
 // z czego tego wyczytac, a plik .rtf zapisany tekstem otworzy sie w Wordzie
 // inaczej, niz sie spodziewa.  Komunikat idzie PRZED zapisem, zeby nie
 // przepadl pod ogloszeniem nazwy pliku w tytule okna.
-App.Frame.AddMessage("Saving as plain text, not rich text");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Saving as plain text, not rich text", "Zapisywanie jako zwykły tekst, nie jako tekst sformatowany"));
 Encoding enPlain = this.YieldEncoding;
 if (enPlain == null) enPlain = GetYieldEncoding();
 if (enPlain == null) enPlain = new UTF8Encoding(true);
@@ -1406,17 +1401,18 @@ public static string EOD = LB + DD + LB + "End of Document" + LB;
 
 public static Dictionary<Keys, ToolStripMenuItem> hashKey = new Dictionary<Keys, ToolStripMenuItem>();
 public MenuStrip menuMain;
-public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
-public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode;
+public ToolStripMenuItem menuFile, menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit;
+public ToolStripMenuItem menuEdit, menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode;
 public ToolStripMenuItem menuDelete, menuDeleteReplaceRegular, menuDeleteReplaceWithRegExp, menuDeleteHardLine, menuDeleteParagraph, menuDeleteLine, menuDeleteRight, menuDeleteLeft, menuDeleteDown, menuDeleteUp, menuDeleteFile, menuDeleteTrimBlanks;
 public ToolStripMenuItem menuNavigate, menuNavigateForwardFind, menuNavigateReverseFind, menuNavigateForwardFindWithRegExp, menuNavigateReverseFindWithRegExp,  menuNavigateForwardFindAtCursor, menuNavigateReverseFindAtCursor, menuNavigateForwardFindAgain, menuNavigateReverseFindAgain, menuNavigateJumpToLine, menuNavigateJumpToLineAgain, menuNavigateGoToPercent, menuNavigateGoToPercentAgain, menuNavigateSetBookmark, menuNavigateClearBookmark, menuNavigateGoToBookmark, menuNavigateHomeCharacter, menuNavigateEndCharacter, menuNavigateStartTag, menuNavigateEndTag, menuNavigateRightBrace, menuNavigateLeftBrace, menuNavigateNextIndent, menuNavigatePriorIndent, menuNavigateNextChunk,  menuNavigatePriorChunk, menuNavigateNextSentence, menuNavigatePriorSentence, menuNavigateNextParagraph, menuNavigatePriorParagraph, menuNavigateNextSection, menuNavigatePriorSection, menuNavigateNextSectionSameLevel, menuNavigatePriorSectionSameLevel, menuNavigateGoToStartOfSelection, menuNavigateNextBookmark, menuNavigatePriorBookmark, menuNavigateSetNamedBookmark, menuNavigateNamedBookmarkList, menuNavigateDocumentNavigation, menuNavigateGoToContents, menuNavigateNextEmphasis, menuNavigatePriorEmphasis, menuNavigateNextList, menuNavigatePriorList, menuNavigateLinkList, menuNavigateNextLink, menuNavigatePriorLink;
-public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles;
-public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeList, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
+public ToolStripMenuItem menuQuery, menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryTime;
+public ToolStripMenuItem menuMiscWorkContinuity, menuMisc, menuMiscConfigurationOptions, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeNext, menuMiscChangePrior, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeList, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscGoToFootnote, menuMiscNextFootnote, menuMiscPriorFootnote, menuMiscFootnoteList, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscNextComment, menuMiscPriorComment, menuMiscCommentList, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscExpandSnippet, menuMiscViewSnippet, menuMiscImportSnippetLibrary, menuMiscExportSnippetLibrary, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt;
 public ToolStripMenuItem menuWindow, menuWindowNext, menuWindowPrior, menuWindowArrangeIcons, menuWindowCascade, menuWindowTileHorizontal, menuWindowTileVertical;
 public ToolStripMenuItem menuHelpCommandPalette;
-public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
+public ToolStripMenuItem menuHelp, menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem;
 public StatusStrip statusBar;
 public ToolStripStatusLabel lblStatus;
+public bool AgreedMenuPolish;
 
 public MdiFrame() {
 this.SuspendLayout();
@@ -1437,9 +1433,9 @@ menuFileRecent = CreateMenuItem("Recent Files ...", "Alt+R", menuItem_Click, "fr
 // Control+L i Control+Shift+L oddaja miejsce listom Markdown, bo ulubionych
 // dodaje sie do listy raz, a listy pisze sie caly czas.
 //
-// JEDNA POZYCJA MENU ZAMIAST DWOCH: Set Favorite i Clear Favorite byly osobnymi
+// JEDNA POZYCJA MENU ZAMIAST DWOCH: Set Favorite i separate favorite action byly osobnymi
 // komendami na osobnych klawiszach; teraz jest JEDEN przelacznik, ktory patrzy,
-// czy plik JUZ jest na liscie.  Clear Favorite ZOSTAJE w menu bez skrotu, bo
+// czy plik JUZ jest na liscie.  separate favorite action ZOSTAJE w menu bez skrotu, bo
 // jest jedyna droga dla kogos, kto chce zdjac plik z listy nie ufajac
 // przelacznikowi, a zdejmowanie pozycji z menu jest trudniejsze do cofniecia
 // niz jej zostawienie.
@@ -1455,10 +1451,9 @@ menuFileRecent = CreateMenuItem("Recent Files ...", "Alt+R", menuItem_Click, "fr
 // nie wystarczylo: nazwa zostawala na pasku i wracala w mowie razem z
 // komunikatem (poprawione 11.09.2026).
 menuFileSetFavorite = CreateMenuItem("Toggle Favorite", "Alt+Shift+L", menuItem_Click, "child quiet");
-// Clear Favorite tak samo, plus komunikat, ktorego dotad NIE BYLO WCALE: ta
+// separate favorite action tak samo, plus komunikat, ktorego dotad NIE BYLO WCALE: ta
 // komenda kasowala klucz w ciszy, wiec dla niewidomego brzmiala identycznie na
 // pliku ulubionym i na pliku, ktorego na liscie nigdy nie bylo.
-menuFileClearFavorite = CreateMenuItem("Clear Favorite", "", menuItem_Click, "child quiet");
 menuFileListFavorites = CreateMenuItem("List Favorites ...", "Alt+L", menuItem_Click, "frame silent");
 menuFileFind = CreateMenuItem("File Find ...", "Alt+Shift+F", menuItem_Click, "frame speak");
 menuFileSave = CreateMenuItem("&Save", "Control+S", menuItem_Click, "child speak");
@@ -1499,7 +1494,7 @@ menuFileCloseAllButCurrentWindow = CreateMenuItem("Close All but Current Window"
 // plik zawsze byl dostepny przez te liste, i tak zostaje.
 menuFileSlots = CreateMenuItem("Numbered Files ...", "Alt+D0", menuItem_Click, "frame silent");
 menuFileExit = CreateMenuItem("&E&xit EdSharp", "Alt+F4", menuItem_Click, "frame speak");
-menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileClearFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
+menuFile.DropDownItems.AddRange(new ToolStripItem[] {menuFileNew, menuFileNewFromClipboard, menuFileOpen, menuFileOpenAgain, menuFileRecent, menuFileSetFavorite, menuFileListFavorites, menuFileFind, menuFileSave, menuFileSaveAs, menuFileSaveCopy, menuFileExport, menuFileRename, menuFileProperties, menuFileMailBody, menuFileMailAttach, menuFilePrint, menuFileCurrentWindows, menuFileClose, menuFileCloseAllButCurrentWindow, menuFileSlots, menuFileExit});
 //Dialog.Show("File.", menuFile.DropDownItems.Count);
 
 menuEdit = CreateMenu("&Edit");
@@ -1517,7 +1512,6 @@ menuEditRedo = CreateMenuItem("Redo", "Control+Shift+Z", menuItem_Click, "child 
 menuEditStartSelection = CreateMenuItem("Start Selection", "F8", menuItem_Click, "child speak");
 menuEditCompleteSelection = CreateMenuItem("Complete Selection", "Shift+F8", menuItem_Click, "child speak");
 menuEditReselect = CreateMenuItem("Reselect", "Control+Shift+F8", menuItem_Click, "child speak");
-menuEditCopyAll = CreateMenuItem("Copy All", "Control+F8", menuItem_Click, "child speak");
 menuEditSelectChunk = CreateMenuItem("Select Chunk", "Control+Space", menuItem_Click, "child silent");
 // Alt+D7 was freed for the File Slot commands (Alt+7 opens file slot 7), on
 // Kasperczak's explicit authorization of that collision.  Moved to a free
@@ -1555,7 +1549,7 @@ menuEditIndentMode = CreateMenuItem("Indent Mode", "Alt+Shift+I", menuItem_Click
 // Moved off Alt+Shift+D6 so file slot 6 can be assigned like every other
 // slot -- Kasperczak authorized this move explicitly (14.08.2026 18:19).
 // Kept the "6" mnemonic by landing on the matching function key.
-menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditCopyAll, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode});
+menuEdit.DropDownItems.AddRange(new ToolStripItem[] {menuEditSelectAll, menuEditUnselectAll, menuEditCopy, menuEditCopyAppend, menuEditCopyRichText, menuEditCut, menuEditCutAppend, menuEditPaste, menuEditPasteFile, menuEditUndo, menuEditRedo, menuEditStartSelection, menuEditCompleteSelection, menuEditReselect, menuEditSelectChunk, menuEditAppendFromClipboard, menuEditQuote, menuEditUnquote, menuEditUpperCase, menuEditLowerCase, menuEditProperCase, menuEditSwapCase, menuEditYieldEncoding, menuEditJoinLines, menuEditHardLineBreak, menuEditEnterNewLine, menuEditIndentNewLine, menuEditIndentNewLinePrior, menuEditIndent, menuEditOutdent, menuEditAlign, menuEditIndentMode});
 //Dialog.Show("Edit.", menuEdit.DropDownItems.Count);
 
 menuDelete = CreateMenu("&Delete");
@@ -1783,23 +1777,19 @@ menuQueryAddress = CreateMenuItem("Address", "Alt+A", menuItem_Click, "child sil
 menuQueryBraces = CreateMenuItem("Braces", "Alt+Shift+OemCloseBrackets", menuItem_Click, "child silent");
 menuQueryIndent = CreateMenuItem("Indentation", "Alt+I", menuItem_Click, "child silent");
 menuQueryPath = CreateMenuItem("Path", "Alt+P", menuItem_Click, "child silent");
-menuQueryTopic = CreateMenuItem("Topic", "Alt+T", menuItem_Click, "child speak");
 menuQueryYield = CreateMenuItem("Yield", "Alt+Y", menuItem_Click, "child speak");
 menuQueryStatus = CreateMenuItem("Status", "Alt+Z", menuItem_Click, "child silent");
 // Alt+D0 was freed for the File Slot commands; since 16.09.2026 it opens the
 // LIST of numbered files (menu File, "Numbered Files"), not slot 10.
 menuQuerySelected = CreateMenuItem("Selected", "Shift+Space", menuItem_Click, "child silent");
 menuQueryChunk = CreateMenuItem("Chunk", "Shift+Back", menuItem_Click, "child silent");
-menuQueryReadAll = CreateMenuItem("Read All", "Alt+F8", menuItem_Click, "child speak");
 // KOMENDA "Windows Open" (Shift+F4, mowila tytuly otwartych okien) USUNIETA -
 // Kasperczak, ustalenie edsharpng-6, jego uzasadnienie: F4 i tak pokazuje
 // LISTE okien, po ktorej mozna chodzic strzalkami, a lista jest lepsza niz
 // wyliczanka, bo w wyliczance nie da sie zatrzymac.  Shift+F4 dostaje LISTE
 // FOLDEROW (Go to Folder) - patrz ustalenie edsharpng-5.
-menuQueryClipboard = CreateMenuItem("Clipboard", "Alt+OemQuotes", menuItem_Click, "frame silent");
 menuQueryTime = CreateMenuItem("Time", "Alt+OemSemicolon", menuItem_Click, "frame silent");
-menuQueryStyles = CreateMenuItem("Styles", "Alt+OemQuestion", menuItem_Click, "child silent");
-menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryTopic, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryReadAll, menuQueryClipboard, menuQueryTime, menuQueryStyles});
+menuQuery.DropDownItems.AddRange(new ToolStripItem[] {menuQueryAddress, menuQueryBraces, menuQueryIndent, menuQueryPath, menuQueryYield, menuQueryStatus, menuQuerySelected, menuQueryChunk, menuQueryTime});
 //Dialog.Show("Query.", menuQuery.DropDownItems.Count);
 
 menuMisc = CreateMenu("&Misc");
@@ -1858,9 +1848,8 @@ menuMiscUnwrap = CreateMenuItem("Unwrap", "", menuItem_Click, "child speak");
 // stale - i wlasnie dlatego razem z komenda schodzi WPIS z pliku ustawien:
 // App.ClearExtraSpeechOption() usuwa klucz ExtraSpeech, wiec przy nastepnym
 // starcie odczyt wraca do domyslnego "Y".  Nikt nie zostanie z cisza bez
-// wlacznika.  Dziennik mowy (Extra Speech Log, Alt+Shift+X) ZOSTAJE - to
+// wlacznika.  Dziennik mowy (the retired speech-log viewer) ZOSTAJE - to
 // osobna funkcja, ktora czyta plik, a nie przelacza ustawienie.
-menuMiscExtraSpeechLog = CreateMenuItem("Extra Speech Log", "Alt+Shift+X", menuItem_Click, "frame speak");
 // SKROT ZDJETY, FUNKCJA ZOSTAJE W MENU (jego decyzja 01.09.2026): "To jest
 // wartosciowa funkcja, ale zupelnie nie rozumiem, po co pod takim dosyc
 // prostym, waznym Ctrl-E.  To moze byc w jakis narzedziach, moim zdaniem bez
@@ -1868,7 +1857,6 @@ menuMiscExtraSpeechLog = CreateMenuItem("Extra Speech Log", "Alt+Shift+X", menuI
 // programistyczna, obca edytorowi Markdown, a litera E jest cenna.
 // Pusty chord = Keys.None, czyli komenda menu-only: bez wpisu w hashKey i bez
 // wyswietlanego skrotu.  Litera E jest teraz WOLNA pod Control.
-menuMiscEnvironmentVariables = CreateMenuItem("&Environment Variables ...", "", menuItem_Click, "frame speak");
 menuMiscSpellCheck = CreateMenuItem("Spell Check", "F7", menuItem_Click, "child speak");
 // Ta sama rzecz co klawisz Aplikacje, ale widoczna w menu - dla klawiatur,
 // ktore klawisza Aplikacje nie maja (laptopy, klawiatury brajlowskie).
@@ -2196,11 +2184,14 @@ menuMiscTransformFiles = CreateMenuItem("Transform Files", "Alt+Oemplus", menuIt
 // chcieli, na pewno ten skr..." - zdanie urwalo sie w pliku, ktory przyslal,
 // ale kierunek jest jednoznaczny i dotyczy SKROTU, nie funkcji.  Uruchomienie
 // srodowiska kompilatora zostaje wiec dostepne z menu.
-menuMiscGoToEnvironment = CreateMenuItem("Go to Environment", "", menuItem_Click, "frame speak");
+menuMiscGoToEnvironment = CreateMenuItem("Run Configured Tool ...", "", menuItem_Click, "frame quiet");
 menuMiscPromptCommand = CreateMenuItem("Prompt Command", "Alt+F5", menuItem_Click, "child silent");
 menuMiscSaveSnippet = CreateMenuItem("Save Snippet", "Alt+S", menuItem_Click, "child speak");
 menuMiscInvokeSnippet = CreateMenuItem("Invoke Snippet", "Alt+V", menuItem_Click, "child speak");
+menuMiscExpandSnippet = CreateMenuItem("Expand Snippet", "Control+Shift+Space", menuItem_Click, "child quiet");
 menuMiscViewSnippet = CreateMenuItem("View Snippet", "Alt+Shift+V", menuItem_Click, "frame speak");
+menuMiscImportSnippetLibrary = CreateMenuItem("Import Snippet Library ...", "", menuItem_Click, "frame silent");
+menuMiscExportSnippetLibrary = CreateMenuItem("Export Snippet Library ...", "", menuItem_Click, "frame silent");
 menuMiscKeepUniqueItems = CreateMenuItem("Keep Unique Items", "Alt+Shift+K", menuItem_Click, "child speak");
 menuMiscNumberItems = CreateMenuItem("Number Items ...", "Alt+Shift+N", menuItem_Click, "child silent");
 menuMiscOrderItems = CreateMenuItem("Order Items", "Alt+Shift+O", menuItem_Click, "child speak");
@@ -2233,7 +2224,7 @@ menuMiscCommandPrompt = CreateMenuItem("Command Prompt", "Control+Oem5", menuIte
 // Pliki Burn2CD.exe i Burn2CD.dll zostaja w repozytorium: sa dziedzictwem
 // wersji autora, nie sa przez nic wolane, a ich usuniecie z historii to osobna
 // decyzja o zawartosci repo, nie o zachowaniu programu.
-menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscExtraSpeechLog, menuMiscEnvironmentVariables, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscViewSnippet, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
+menuMisc.DropDownItems.AddRange(new ToolStripItem[] {menuMiscConfigurationOptions, menuMiscWorkContinuity, menuMiscManualOptions, menuMiscResetConfiguration, menuMiscGoToFolder, menuMiscGoToSpecialFolder, menuMiscWordWrap, menuMiscUnwrap, menuMiscSpellCheck, menuMiscSpellingWordMenu, menuMiscThesaurus, menuMiscSynonymDictionary, menuMiscLookupTerm, menuMiscTranslateLanguage, menuMiscGuardDocument, menuMiscInferIndent, menuMiscRepeatLine, menuMiscSectionBreak, menuMiscPathToClipboard, menuMiscPathList, menuMiscInsertTime, menuMiscPreviewMarkdownBrowser, menuMiscInsertTable, menuMiscCsvTable, menuMiscBulletList, menuMiscNumberedList, menuMiscTaskToggle, menuMiscTaskList, menuMiscTaskListWindow, menuMiscTaskProgress, menuMiscChangeAccept, menuMiscChangeReject, menuMiscChangeAcceptAll, menuMiscChangeRejectAll, menuMiscInsertLink, menuMiscTableOfContents, menuMiscInsertFootnote, menuMiscExportFootnotes, menuMiscInsertComment, menuMiscRegExpTool, menuMiscSpecialCharacter, menuMiscEvaluateExpression, menuMiscReplaceTokens, menuMiscTransformFiles, menuMiscGoToEnvironment, menuMiscPromptCommand, menuMiscSaveSnippet, menuMiscInvokeSnippet, menuMiscExpandSnippet, menuMiscViewSnippet, menuMiscImportSnippetLibrary, menuMiscExportSnippetLibrary, menuMiscKeepUniqueItems, menuMiscNumberItems, menuMiscOrderItems, menuMiscReverseItems, menuMiscListDifferentItems, menuMiscQueryCommonItems, menuMiscExplorerFolder, menuMiscCommandPrompt});
 // KOLEJNOSC MA ZNACZENIE: to AddRange stoi PONIZEJ tworzenia pozycji przypisow
 // i komentarzy (dawne menuMisc*), bo od 5.0.95 nawigacja po nich wisi wlasnie
 // tutaj.  Gdy AddRange bylo wyzej (linia ~1693), pozycje jeszcze NIE ISTNIALY
@@ -2266,7 +2257,6 @@ menuHelpTutorial = CreateMenuItem("Tutorial", "Control+Alt+F1", menuItem_Click, 
 menuHelpHistoryOfChanges = CreateMenuItem("History of Changes", "Shift+F1", menuItem_Click, "frame speak");
 menuHelpKeyDescriber = CreateMenuItem("Key Describer", "Control+F1", menuItem_Click, "frame silent");
 menuHelpHotKeySummary = CreateMenuItem("Hotkey Summary", "Alt+Shift+H", menuItem_Click, "frame speak");
-menuHelpAlternateMenu= CreateMenuItem("Alternate Menu ...", "Alt+F10", menuItem_Click, "frame silent");
 menuHelpContextMenu= CreateMenuItem("Context Menu ...", "Shift+F10", menuItem_Click, "child silent");
 menuHelpSendToMenu= CreateMenuItem("SendTo Menu ...", "Control+F10", menuItem_Click, "child silent");
 menuHelpElevateVersion = CreateMenuItem("Elevate Version", "F11", menuItem_Click, "frame speak");
@@ -2293,7 +2283,7 @@ menuHelpReportProblem = CreateMenuItem("Report a Problem ...", "Alt+Shift+F1", m
 // krotszy klawisz, a paleta wchodzi do rodziny F1 razem z pozostala pomoca.
 // Zwolnione Control+Shift+F1 zajmowal samouczek, ktory zeszedl na Control+Alt+F1.
 menuHelpCommandPalette = CreateMenuItem("Command Palette ...", "Control+Shift+F1", menuItem_Click, "frame silent");
-menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpAlternateMenu, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem, menuHelpCommandPalette});
+menuHelp.DropDownItems.AddRange(new ToolStripItem[] {menuHelpAbout, menuHelpDocumentation, menuHelpTutorial, menuHelpHistoryOfChanges, menuHelpKeyDescriber, menuHelpHotKeySummary, menuHelpContextMenu, menuHelpSendToMenu, menuHelpElevateVersion, menuHelpReinstall, menuHelpUpdateComponents, menuHelpReportProblem, menuHelpCommandPalette});
 //Dialog.Show("Help.", menuHelp.DropDownItems.Count);
 
 menuMain.Items.AddRange(new ToolStripItem[] {menuFile, menuEdit, menuDelete, menuNavigate, menuQuery, menuMisc, menuWindow, menuHelp});
@@ -2303,10 +2293,11 @@ statusBar = CreateStatusBar();
 this.Controls.AddRange(new Control[] {statusBar, menuMain});
 this.MainMenuStrip = menuMain;
 menuMain.MdiWindowListItem = menuWindow;
+ApplyAgreedMenuLayout(JezykInterfejsu.Polski);
 //this.AutoSize = true;
 this.Size = new Size(600, 600);
 this.StartPosition = FormStartPosition.CenterScreen;
-this.Text = "EdSharpNG";
+this.Text = JezykInterfejsu.Wybierz("EdSharpNG", "EdSharpNG");
 this.ResumeLayout();
 this.KeyPreview = true;
 //this.MdiChildActivate += delegate(object o, EventArgs e) {this.Child = (MdiChild) this.ActiveMdiChild;};
@@ -2351,11 +2342,43 @@ s = Ini.ReadValue(sFile, "Data", "Directory", "");
 if (Directory.Exists(s) && !Util.Equiv(sDir, s)) {
 //Dialog.Show(sDir, s);
 //Directory.SetCurrentDirectory(s);
-AddMessage("Folder " + Path.GetFileName(s));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Folder {0}", "Folder {0}"), Path.GetFileName(s)));
 Directory.SetCurrentDirectory(s);
 }
 
 } // MdiFrame constructor
+
+// Uklad menu jest niezalezny od mechanizmu wyboru jezyka.  Do czasu polaczenia
+// z Ustawieniami konstruktor wybiera angielski; testy i przyszly wlasciciel
+// lokalizacji podaja true dla polskiego bez tworzenia drugiego drzewa polecen.
+public void ApplyAgreedMenuLayout(bool polish) {
+AgreedMenuPolish = polish;
+AgreedMenuLayout.Apply(this, polish);
+RefreshAgreedDynamicMenuNames();
+} // ApplyAgreedMenuLayout method
+
+public void RefreshAgreedDynamicMenuNames() {
+bool bFavorite = false;
+if (this.Child != null && !String.IsNullOrEmpty(this.Child.File) && this.Child.File.Contains(@"\"))
+bFavorite = App.ReadValue("Favorites", this.Child.File, "\u0000") != "\u0000";
+AgreedMenuLayout.ApplyText(menuFileSetFavorite,
+bFavorite ? "Remove from Favorites" : "Add to Favorites",
+bFavorite ? "Usuń z ulubionych" : "Dodaj do ulubionych",
+bFavorite ? "V" : "V", bFavorite ? "U" : "U", AgreedMenuPolish);
+
+bool bMarkDone = true;
+MdiChild child = this.Child;
+if (child != null && child.RTB != null) {
+int iStart, iEnd;
+GetSelectedLineSpan(child.RTB, out iStart, out iEnd);
+string[] aLines = child.RTB.GetRange(iStart, iEnd).Split('\n');
+bMarkDone = Zadania.CzyOznaczycJakoWykonane(aLines);
+}
+AgreedMenuLayout.ApplyText(menuMiscTaskToggle,
+bMarkDone ? "Mark as Done" : "Mark as Not Done",
+bMarkDone ? "Oznacz jako wykonane" : "Oznacz jako niewykonane",
+bMarkDone ? "M" : "M", bMarkDone ? "O" : "O", AgreedMenuPolish);
+} // RefreshAgreedDynamicMenuNames method
 
 public void SetStatus(object o) {
 string sText = o.ToString();
@@ -2452,7 +2475,7 @@ if (HandleFileSlotKey(keyData)) return true;
 // always wins; keyboard help still reports an unbound key.
 if ((keyData == (Keys.Alt | Keys.OemOpenBrackets)
 || keyData == (Keys.Alt | Keys.Shift | Keys.OemOpenBrackets)) && !hashKey.ContainsKey(keyData)) {
-if (this.KeyDescriber) AddMessage("No command assigned");
+if (this.KeyDescriber) AddMessage(JezykInterfejsu.Wybierz("No command assigned", "Nie przypisano polecenia"));
 return true;
 }
 if (HandleSpellingWordMenuKey(keyData)) return true;
@@ -2576,7 +2599,7 @@ menuItem.Text = sText;
 }
 else if (hashKey.ContainsKey(keyData)) {
 string s = hashKey[keyData].Name;
-Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand + ",\nsince already assigned to " + s);
+Dialog.Show(JezykInterfejsu.Wybierz("Alert", "Ostrzeżenie"), String.Format(JezykInterfejsu.Wybierz("Cannot assign {0} to {1},\nsince already assigned to {2}", "Nie można przypisać {0} do {1},\nponieważ jest już przypisane do {2}"), sKey, sCommand, s));
 }
 // STRAZNIK PISANIA: chord, ktorym uzytkownik WPISUJE znak, nie moze zostac
 // skrotem.  Kasperczak zapytal o to wprost (30.08.2026): "Alt+Ctrl to tez to
@@ -2614,10 +2637,7 @@ Dialog.Show("Alert", "Cannot assign " + sKey + " to " + sCommand + ",\nsince alr
 // zadziala tylko z LEWEGO Alta.  Alarmu na ekranie nie ma: program dziala
 // poprawnie, a modalne okno na starcie byloby kara za nic.
 else if (Util.IsTypingChord(keyData)) {
-Util.LogDiagnostic("skrot", "Skrot " + sKey + " przy " + sCommand
-+ " dzieli klawisz z litera wpisywana prawym Altem; na polskim ukladzie litere"
-+ " wpisze KAZDY Alt, wiec ten skrot moze nie zadzialac (pisanie ma pierwszenstwo)."
-+ " Zmierzone: spor_ctrl_alt_s.ps1, kontrola_ctrl_alt_k.ps1.");
+Util.LogDiagnostic("shortcut_typing_collision", "");
 string sFriendlyKeyTyping = Util.GetFriendlyKeyName(sKey);
 menuItem.ShortcutKeyDisplayString = sFriendlyKeyTyping;
 menuItem.AccessibleName = sText.Replace("&", "") + "   " + sFriendlyKeyTyping;
@@ -2635,27 +2655,17 @@ hashKey.Add(keyData, menuItem);
 // Register the command in the central KeyMap (Homer): command -> key,
 // owning menu item, and UI context (the sOptions string, e.g. "frame
 // speak"). Additive -- hashKey above is unchanged; KeyMap becomes the
-// single table the status bar, Key Describer, and Alternate Menu read.
+// single table the status bar, Key Describer, and Command Palette read.
 KeyMap.register(sCommand, keyData, menuItem, sOptions);
 
 menuItem.Paint += delegate(object oSender, PaintEventArgs e) {
-// if (!App.Frame.KeyDescriber) return;
-foreach (ToolStripMenuItem menu in App.Frame.menuMain.Items) {
-foreach (object o in menu.DropDownItems) {
-ToolStripMenuItem item = o as ToolStripMenuItem;
-if (item == null) continue;
-if (!item.Selected) continue;
+ToolStripMenuItem item = App.Frame.GetSelectedAgreedMenuItem();
+if (item == null) return;
 string[] aSummary = App.Frame.GetKeySummary(item);
-string sSummary = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
 string sDescription = aSummary[2];
 if (sDescription != App.Frame.LastDescription) {
-// System.Threading.Thread.Sleep(1000);
-// Util.Say(sDescription);
 App.Frame.SetStatus(sDescription);
 App.Frame.LastDescription = sDescription;
-}
-break;
-}
 }
 };
 
@@ -2676,7 +2686,7 @@ return sb;
 } // CreateStatusBar method
 
 public string GetPercentAddress(HomerRichTextBox rtb) {
-return String.Format("Line {0}   Column {1}   Percent{2}", rtb.Line, rtb.Column, rtb.Percent);
+return String.Format(JezykInterfejsu.Wybierz("Line {0}   Column {1}   Percent{2}", "Wiersz {0}   kolumna {1}   Procent{2}"), rtb.Line, rtb.Column, rtb.Percent);
 } // GetPercentAddress method
 
 // ADRES LICZONY OD ZNAKOW WYSUWU STRONY (GetPageAddress) USUNIETY 16.09.2026
@@ -2747,8 +2757,8 @@ bool bZglos = (iDelta == 1 || bRuchPionowy);
 // o pustym wierszu ANI w gore, ANI w dol.  Zdejmuje ten warunek: informacja o
 // pustym wierszu, znaku wysuwu strony i tabulatorze nalezy sie zawsze.
 if (!bZglos || iNewTextLength != rtb.OldTextLength) {} // Do nothing
-else if (c == '\f') Util.Say("FormFeed");
-else if (c == '\t') Util.Say("TabChar");
+else if (c == '\f') Util.Say(JezykInterfejsu.Wybierz("FormFeed", "Znak końca strony"));
+else if (c == '\t') Util.Say(JezykInterfejsu.Wybierz("TabChar", "Znak tabulacji"));
 rtb.OldIndex = iNewIndex;
 rtb.OldRow = iNewRow;
 rtb.OldTextLength = iNewTextLength;
@@ -2817,7 +2827,7 @@ public bool IsCharacter(out int iIndex) {
 HomerRichTextBox rtb = this.Child.RTB;
 iIndex = rtb.Index;
 if (iIndex >= rtb.TextLength) {
-AddMessage("No character at cursor!");
+AddMessage(JezykInterfejsu.Wybierz("No character at cursor!", "Brak znaku przy kursorze!"));
 return false;
 }
 else return true;
@@ -2845,64 +2855,201 @@ return iLevels;
 
 public string GetDelta(int iBefore, int iAfter) {
 if (iBefore < iAfter) return "In " + (iAfter - iBefore);
-else return "Out " + (iBefore - iAfter);
+else return JezykInterfejsu.Wybierz("Out ", "Na zewnątrz ") + (iBefore - iAfter);
 } // GetDelta method
 
 public string GetStyleText() {
 HomerRichTextBox rtb = this.Child.RTB;
 string sText = "";
-if (rtb.SelectionFont.Bold) sText += "Bold ";
-if (rtb.SelectionFont.Italic) sText += "Italic ";
-if (rtb.SelectionFont.Underline) sText += "Underline";
+if (rtb.SelectionFont.Bold) sText += JezykInterfejsu.Wybierz("Bold ", "Pogrubienie ");
+if (rtb.SelectionFont.Italic) sText += JezykInterfejsu.Wybierz("Italic ", "Kursywa ");
+if (rtb.SelectionFont.Underline) sText += JezykInterfejsu.Wybierz("Underline", "Podkreślenie");
 sText = sText.Trim();
-if (sText.Length == 0) sText = "Regular";
+if (sText.Length == 0) sText = JezykInterfejsu.Wybierz("Regular", "Zwykły");
 return sText;
 } // GetStyleText method
 
 public string GetJustifyText() {
 HomerRichTextBox rtb = this.Child.RTB;
-string sText = "Left";
+string sText = JezykInterfejsu.Wybierz("Left", "Do lewej");
 HorizontalAlignment ha = rtb.SelectionAlignment;
-if (rtb.SelectionBullet) sText = "Bullet";
-else if (ha == HorizontalAlignment.Center) sText = "Center";
-else if (ha == HorizontalAlignment.Right) sText = "Right";
+if (rtb.SelectionBullet) sText = JezykInterfejsu.Wybierz("Bullet", "Wypunktowanie");
+else if (ha == HorizontalAlignment.Center) sText = JezykInterfejsu.Wybierz("Center", "Wyśrodkowanie");
+else if (ha == HorizontalAlignment.Right) sText = JezykInterfejsu.Wybierz("Right", "Do prawej");
 return sText;
 } // GetJustifyText method
 
 public string GetBaselineText() {
 HomerRichTextBox rtb = this.Child.RTB;
-string sText = "Flat";
+string sText = JezykInterfejsu.Wybierz("Flat", "Normalny");
 int iOffset = rtb.SelectionCharOffset;
-if (iOffset < 0) sText = "Down";
-else if (iOffset > 0) sText = "Up";
+if (iOffset < 0) sText = JezykInterfejsu.Wybierz("Down", "Obniżony");
+else if (iOffset > 0) sText = JezykInterfejsu.Wybierz("Up", "Podwyższony");
 return sText;
 } // GetBaselineText method
 
-public string[] GetSnippetFiles(out string[] aValues) {
-// Katalog snippetow ma w sciezce czlon "Default" po nieistniejacym juz
-// biezacym kompilatorze (Pick Compiler usuniety 16.09.2026).  Nazwa zostaje
-// STALA i doslowna, bo w Snippets\\Default leza pliki, ktore uzytkownik juz
-// ma - zmiana sciezki schowalaby mu je bez sladu.
-string sBaseDir = @"Snippets\Default";
-string sDir = Path.Combine(App.DataDir, sBaseDir);
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+public static bool TryGetSnippetDir(out string sDir, out string sError) {
+sDir = App.ReadOption("SnippetLibraryFolder", "").Trim().Trim('"');
+sError = "";
+try {
+if (sDir.Length == 0) {
+    sDir = Path.Combine(App.DataDir, @"Snippets\Default");
+    Directory.CreateDirectory(sDir);
+}
+else {
+    sDir = Path.GetFullPath(sDir);
+    if (!Directory.Exists(sDir)) {
+        sError = JezykInterfejsu.Wybierz("Snippet library unavailable: ", "Biblioteka fragmentów jest niedostępna: ") + sDir;
+        return false;
+    }
+}
+Directory.GetFiles(sDir);
+return true;
+}
+catch (Exception ex) {
+sError = JezykInterfejsu.Wybierz("Snippet library unavailable: ", "Biblioteka fragmentów jest niedostępna: ") + sDir + " (" + ex.Message + ")";
+return false;
+}
+} // TryGetSnippetDir method
+
+private static string SnippetArchiveChangeActionText(string action) {
+if (action == "added-directory") return JezykInterfejsu.Wybierz("Added directory", "Dodano katalog");
+if (action == "added") return JezykInterfejsu.Wybierz("Added", "Dodano");
+if (action == "replaced") return JezykInterfejsu.Wybierz("Replaced", "Zastąpiono");
+if (action == "replaced-rolled-back") return JezykInterfejsu.Wybierz("Replacement rolled back", "Zastąpienie wycofano");
+return action;
+} // SnippetArchiveChangeActionText method
+
+private static string SnippetArchiveResultText(string action, SnippetArchiveResult result) {
+StringBuilder sb = new StringBuilder();
+if (result.Succeeded) sb.Append(String.Format(JezykInterfejsu.Wybierz("{0} completed.", "Ukończono operację: {0}."), action));
+else sb.Append(String.Format(JezykInterfejsu.Wybierz("{0} failed: {1}", "Nie udało się wykonać operacji „{0}”: {1}"), action, result.Error));
+if (result.Changes.Count > 0) {
+sb.Append(JezykInterfejsu.Wybierz("\r\nChanges:", "\r\nZmiany:"));
+foreach (SnippetArchiveChange change in result.Changes) sb.Append("\r\n" + SnippetArchiveChangeActionText(change.Action) + ": " + change.RelativePath + " -> " + change.DestinationPath);
+}
+if (result.SkippedPaths.Count > 0) sb.Append(JezykInterfejsu.Wybierz("\r\nSkipped: ", "\r\nPominięte: ") + String.Join(", ", result.SkippedPaths));
+if (result.RollbackIncompletePaths.Count > 0) sb.Append(JezykInterfejsu.Wybierz("\r\nRollback incomplete: ", "\r\nWycofanie nie zostało ukończone: ") + String.Join(", ", result.RollbackIncompletePaths));
+if (!String.IsNullOrEmpty(result.BackupDirectory)) sb.Append(JezykInterfejsu.Wybierz("\r\nBackup directory: ", "\r\nKatalog kopii zapasowej: ") + result.BackupDirectory);
+return sb.ToString();
+} // SnippetArchiveResultText method
+
+public void ImportSnippetLibrary() {
+string sDir, sError;
+if (!TryGetSnippetDir(out sDir, out sError)) { Dialog.Show(JezykInterfejsu.Wybierz("Import Snippet Library", "Importuj bibliotekę fragmentów"), sError); return; }
+string sArchive = Dialog.OpenFile(JezykInterfejsu.Wybierz("Import Snippet Library", "Importuj bibliotekę fragmentów"), sDir, JezykInterfejsu.Wybierz("ZIP archives (*.zip)|*.zip|All files (*.*)|*.*", "Archiwa ZIP (*.zip)|*.zip|wszystkie pliki (*.*)|*.*"));
+if (sArchive.Length == 0) return;
+string sChoice = Dialog.Choose(JezykInterfejsu.Wybierz("Import Snippet Library", "Importuj bibliotekę fragmentów"), JezykInterfejsu.Wybierz("Choose how existing files are handled.", "Wybierz sposób obsługi istniejących plików."), new string[] {JezykInterfejsu.Wybierz("&Skip", "&Pomiń"), JezykInterfejsu.Wybierz("&Keep Both", "&Zachowaj oba"), JezykInterfejsu.Wybierz("&Replace with Backup", "&Zastąp kopią zapasową")}, 0);
+if (sChoice.Length == 0) return;
+SnippetArchiveConflictPolicy policy = SnippetArchiveConflictPolicy.Skip;
+if (sChoice == JezykInterfejsu.Wybierz("&Keep Both", "&Zachowaj oba")) policy = SnippetArchiveConflictPolicy.KeepBoth;
+else if (sChoice == JezykInterfejsu.Wybierz("&Replace with Backup", "&Zastąp kopią zapasową")) policy = SnippetArchiveConflictPolicy.ReplaceWithBackup;
+SnippetArchiveResult result = new SnippetArchive().Import(sArchive, sDir, policy, null, null);
+Dialog.Show(JezykInterfejsu.Wybierz("Import Snippet Library", "Importuj bibliotekę fragmentów"), SnippetArchiveResultText(JezykInterfejsu.Wybierz("Import", "Importuj"), result));
+} // ImportSnippetLibrary method
+
+public void ExportSnippetLibrary() {
+string sDir, sError;
+if (!TryGetSnippetDir(out sDir, out sError)) { Dialog.Show(JezykInterfejsu.Wybierz("Export Snippet Library", "Eksportuj bibliotekę fragmentów"), sError); return; }
+string sArchive = Dialog.SaveFile(JezykInterfejsu.Wybierz("Export Snippet Library", "Eksportuj bibliotekę fragmentów"), Path.Combine(Path.GetDirectoryName(sDir), "SnippetLibrary.zip"), JezykInterfejsu.Wybierz("ZIP archives (*.zip)|*.zip|All files (*.*)|*.*", "Archiwa ZIP (*.zip)|*.zip|wszystkie pliki (*.*)|*.*"));
+if (sArchive.Length == 0) return;
+SnippetArchiveResult result = new SnippetArchive().Export(sDir, sArchive, null, null);
+Dialog.Show(JezykInterfejsu.Wybierz("Export Snippet Library", "Eksportuj bibliotekę fragmentów"), SnippetArchiveResultText(JezykInterfejsu.Wybierz("Export", "Eksportuj"), result));
+} // ExportSnippetLibrary method
+
+public string[] GetSnippetFiles(out string[] aValues, out string sError) {
+aValues = new string[0];
+sError = "";
+string sDir;
+if (!TryGetSnippetDir(out sDir, out sError)) return new string[0];
+try {
 string[] aResults = Directory.GetFiles(sDir);
-
-List<string> listResults = new List<string>(aResults);
-List<string> listFiles = new List<string>();
-foreach (string s in aResults) listFiles.Add(Path.GetFileName(s).ToLower());
-
-sBaseDir = @"Snippets\Default";
-sDir = Path.Combine(App.DataDir, sBaseDir);
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
-aResults = Directory.GetFiles(sDir);
-foreach (string s in aResults) if (!listFiles.Contains(Path.GetFileName(s).ToLower())) listResults.Add(s);
-aResults = listResults.ToArray();
-
 aValues = new string[aResults.Length];
 for (int i = 0; i < aResults.Length; i++) aValues[i] = Path.GetFileName(aResults[i]);
 return aResults;
+}
+catch (Exception ex) {
+sError = String.Format(JezykInterfejsu.Wybierz("Snippet library unavailable: {0} ({1})", "Biblioteka fragmentów jest niedostępna: {0} ({1})"), sDir, ex.Message);
+return new string[0];
+}
 } // GetSnippetFiles method
+
+bool SnippetDocumentUnchanged(MdiChild child, HomerRichTextBox rtb, string sText, int iRevision, int iSelectionStart, int iSelectionLength) {
+if (child == null || rtb == null) return false;
+if (this.Child != child || child.RTB != rtb) return false;
+if (child.MarkdownReviewMode || GetUserGuard(child)) return false;
+if (child.TextRevision != iRevision) return false;
+if (rtb.SelectionStart != iSelectionStart || rtb.SelectionLength != iSelectionLength) return false;
+return rtb.Text == sText;
+} // SnippetDocumentUnchanged method
+
+// Ręczne rozwijanie skrótów: świadome polecenie, bez automatu podczas pisania.
+public void RozwinSkrotSnippetu() {
+MdiChild child = this.Child;
+if (child == null || child.RTB == null) return;
+if (child.MarkdownReviewMode) {
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+return;
+}
+if (GetUserGuard(child)) {
+AddMessage(JezykInterfejsu.Wybierz("Document is read-only", "Dokument jest tylko do odczytu"));
+return;
+}
+
+HomerRichTextBox rtb = child.RTB;
+string sDocument = rtb.Text;
+int iRevision = child.TextRevision;
+int iSelectionStart = rtb.SelectionStart;
+int iSelectionLength = rtb.SelectionLength;
+string[] aValues;
+string sSnippetError;
+string[] aFiles = GetSnippetFiles(out aValues, out sSnippetError);
+if (sSnippetError.Length > 0) {
+AddMessage(sSnippetError, true);
+return;
+}
+WynikRozwijaniaSnippetow wynik = RozwijanieSnippetow.Dopasuj(sDocument, iSelectionStart, iSelectionLength, aFiles);
+if (wynik.Odmowa == OdmowaRozwijaniaSnippetow.Zaznaczenie) {
+AddMessage(JezykInterfejsu.Polski ? String.Format("Zaznaczenie: użyj Alt+V") : "Selection: use Alt+V");
+return;
+}
+if (wynik.Odmowa != OdmowaRozwijaniaSnippetow.Brak) {
+AddMessage(JezykInterfejsu.Wybierz("Cannot expand snippet here", "Nie można tu rozwinąć fragmentu"));
+return;
+}
+if (wynik.DopasowaneSciezki.Count == 0) {
+AddMessage(JezykInterfejsu.Wybierz("No matching snippet", "Brak pasującego fragmentu"));
+return;
+}
+
+string sSnippet = "";
+if (wynik.DopasowaneSciezki.Count == 1) sSnippet = wynik.DopasowaneSciezki[0];
+else sSnippet = DialogRozwijaniaSnippetow.Pick(this, wynik.DopasowaneSciezki);
+if (sSnippet.Length == 0) return;
+if (!File.Exists(sSnippet)) {
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Snippet unavailable: {0}", "Fragment niedostępny: {0}"), Path.GetFileName(sSnippet)));
+return;
+}
+if (!SnippetDocumentUnchanged(child, rtb, sDocument, iRevision, iSelectionStart, iSelectionLength)) {
+AddMessage(JezykInterfejsu.Wybierz("Document changed; snippet not inserted", "Dokument zmienił się; fragment nie został wstawiony"));
+return;
+}
+
+bool bInserted;
+try {
+bInserted = InvokeSnippet(sSnippet, wynik.Prefiks, wynik.StartTokenu, wynik.StartTokenu + wynik.DlugoscTokenu, false,
+delegate { return SnippetDocumentUnchanged(child, rtb, sDocument, iRevision, iSelectionStart, iSelectionLength); });
+}
+catch {
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Could not expand {0}", "Nie można rozwinąć {0}"), Path.GetFileName(sSnippet)));
+return;
+}
+if (!bInserted) {
+if (!SnippetDocumentUnchanged(child, rtb, sDocument, iRevision, iSelectionStart, iSelectionLength)) AddMessage(JezykInterfejsu.Wybierz("Document changed; snippet not inserted", "Dokument zmienił się; fragment nie został wstawiony"));
+return;
+}
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Expanded {0}", "Rozwinięto {0}"), Path.GetFileName(sSnippet)));
+} // RozwinSkrotSnippetu method
 
 public void GetDateAndTime(out string sDate, out string sTime) {
 DateTime dt = DateTime.Now;
@@ -2920,8 +3067,17 @@ string[] aTokens = App.ReadSectionKeys("Tokens");
 foreach (string sToken in aTokens) {
 if (sText.IndexOf(sToken) == -1) continue;
 string s = App.ReadValue("Tokens", sToken, "");
-string sFile = GetSnippetDir() + @"\" + s;
-if (File.Exists(sFile)) s = Util.File2String(sFile);
+string sDir, sError;
+if (!TryGetSnippetDir(out sDir, out sError)) {
+AddMessage(sError, true);
+continue;
+}
+string sFile = "";
+try { sFile = Path.Combine(sDir, s); }
+catch (ArgumentException) { }
+catch (NotSupportedException) { }
+catch (PathTooLongException) { }
+if (sFile.Length > 0 && File.Exists(sFile)) s = Util.File2String(sFile);
 //Dialog.Show(sFile, s);
 // TOKEN TO TERAZ CZYSTY TEKST (16.09.2026).  Dawniej wartosc tokenu (albo
 // tresc wskazanego pliku) szla do Script.run, czyli do JScriptu .NET - token
@@ -2950,7 +3106,7 @@ App.CaptureOutput = true;
 HomerRichTextBox rtb = this.Child.RTB;
 
 string sJob = App.ReadData("Job", "");
-string sTransformFile = Dialog.OpenFile("Open Job", sJob);
+string sTransformFile = Dialog.OpenFile(JezykInterfejsu.Wybierz("Open Job", "Otwórz zadanie"), sJob);
 if (sTransformFile.Length == 0) { App.CaptureOutput = false; return; }
 App.WriteData("Job", sTransformFile);
 
@@ -2962,16 +3118,16 @@ foreach (InixCodec.Section section in lsAll) {
 if (section.get("Find") != null) lsTasks.Add(section);
 }
 if (lsTasks.Count == 0) {
-Dialog.Show("Transform Files", "No tasks found.  A job is now an .inix file with one [Section] per task, each having Find, Replace, Options, Extract, and Divider keys.");
+Dialog.Show("Transform Files", JezykInterfejsu.Wybierz("No tasks found.  A job is now an .inix file with one [Section] per task, each having Find, Replace, Options, Extract, and Divider keys.", "Nie znaleziono zadań. Zadanie jest teraz plikiem .inix z jedną sekcją [Section] na zadanie oraz kluczami Find, Replace, Options, Extract i Divider."));
 App.CaptureOutput = false;
 return;
 }
 
-string[] aChoices = {"&Test", "&Run", "&Verbose"};
-string sChoice = Dialog.Choose("Choose Mode", "", aChoices, 0);
+string[] aChoices = {JezykInterfejsu.Wybierz("&Test", "&Test"), JezykInterfejsu.Wybierz("&Run", "&Uruchom"), JezykInterfejsu.Wybierz("&Verbose", "&Szczegółowo")};
+string sChoice = Dialog.Choose(JezykInterfejsu.Wybierz("Choose Mode", "Wybierz tryb"), "", aChoices, 0);
 if (sChoice.Length == 0) { App.CaptureOutput = false; return; }
-bool bApply = (sChoice != "&Test");
-bool bVerbose = (sChoice == "&Verbose");
+bool bApply = (sChoice != JezykInterfejsu.Wybierz("&Test", "&Test"));
+bool bVerbose = (sChoice == JezykInterfejsu.Wybierz("&Verbose", "&Szczegółowo"));
 
 string sSourceList = rtb.Text.Trim();
 string[] aSourceLines = sSourceList.Split('\n');
@@ -3008,7 +3164,7 @@ sDivider = (sDivider == null || sDivider.Length == 0) ? "\f\n" : Regex.Unescape(
 Regex rex;
 try { rex = new Regex(sFind, options); }
 catch (Exception ex) {
-Dialog.Show("Error", section.Name + ": " + ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), String.Format(JezykInterfejsu.Wybierz("{0}: {1}", "{0}: {1}"), section.Name, ex.Message));
 App.CaptureOutput = false;
 return;
 }
@@ -3035,7 +3191,7 @@ return m.Result(sReplace).Replace("$#", iCount.ToString());
 });
 if (iCount > 0) bChanged = true;
 }
-if (bVerbose || !bApply) AddMessage(Util.Pluralize(iCount, "match", "matches"));
+if (bVerbose || !bApply) AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("match", "dopasowanie"), JezykInterfejsu.Wybierz("matches", "dopasowania")));
 }
 
 if (bApply && bChanged) {
@@ -3050,50 +3206,46 @@ try {
 string sClip = Util.GetClipboardText();
 if (sClip.Length > 0) sClip += sClipboardDivider.Replace("\n", "\r\n");
 Util.SetClipboardText(sClip + sExtractText);
-AddMessage(Util.Pluralize(iExtractTotal, "match", "matches") + " to clipboard");
+AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} matches copied to clipboard", "Skopiowano do schowka: {0} dopasowań"), iExtractTotal));
 }
 catch {}
 }
 
-AddMessage("Done", true);
+AddMessage(JezykInterfejsu.Wybierz("Done", "Gotowe"), true);
 App.CaptureOutput = false;
 } // TransForm files method
 
 public static string GetSnippetDir() {
-// Katalog snippetow ma w sciezce czlon "Default" po nieistniejacym juz
-// biezacym kompilatorze (Pick Compiler usuniety 16.09.2026).  Nazwa zostaje
-// STALA i doslowna, bo w Snippets\\Default leza pliki, ktore uzytkownik juz
-// ma - zmiana sciezki schowalaby mu je bez sladu.
-string sBaseDir = @"Snippets\Default";
-string sDir = Path.Combine(App.DataDir, sBaseDir);
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+string sDir, sError;
+if (!TryGetSnippetDir(out sDir, out sError)) return "";
 return sDir;
 } // GetSnippetDir method
 
 public string GetDirChoice() {
-string[] aButtons = {"&Current", "&Program", "&Data", "&Snippet", "&Other"};
-string sButton = Dialog.Choose("Choose Directory", "", aButtons, 0);
+string[] aButtons = {JezykInterfejsu.Wybierz("&Current", "&Bieżący"), JezykInterfejsu.Wybierz("&Program", "&Program"), JezykInterfejsu.Wybierz("&Data", "&Dane"), JezykInterfejsu.Wybierz("&Snippet", "&Fragmenty"), JezykInterfejsu.Wybierz("&Other", "&Inny")};
+string sButton = Dialog.Choose(JezykInterfejsu.Wybierz("Choose Directory", "Wybierz katalog"), "", aButtons, 0);
 if (sButton.Length == 0) return "";
 
 string sDir = Directory.GetCurrentDirectory();
-switch (sButton) {
-case "&Current" :
+if (sButton == JezykInterfejsu.Wybierz("&Current", "&Bieżący")) {
 if (this.Child != null && this.Child.File.IndexOf(@"\") >= 0) sDir = Path.GetDirectoryName(this.Child.File);
-break;
-case "&Program" :
+}
+else if (sButton == JezykInterfejsu.Wybierz("&Program", "&Program")) {
 sDir = App.ProgramDir;
-break;
-case "&Data" :
+}
+else if (sButton == JezykInterfejsu.Wybierz("&Data", "&Dane")) {
 sDir = App.DataDir;
-break;
-case "&Snippet" :
-sDir = App.DataDir + @"\Snippets\Default";   // patrz GetSnippetDir: nazwa stala po usunieciu kompilatorow
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
-break;
-case "&Other" :
-sDir = Dialog.OpenFolder("Open Folder", "Name", Directory.GetCurrentDirectory());
+}
+else if (sButton == JezykInterfejsu.Wybierz("&Snippet", "&Fragmenty")) {
+string sSnippetError;
+if (!TryGetSnippetDir(out sDir, out sSnippetError)) {
+Dialog.Show(JezykInterfejsu.Wybierz("Snippet library", "Biblioteka fragmentów"), sSnippetError);
+return "";
+}
+}
+else if (sButton == JezykInterfejsu.Wybierz("&Other", "&Inny")) {
+sDir = Dialog.OpenFolder(JezykInterfejsu.Wybierz("Open Folder", "Otwórz folder"), JezykInterfejsu.Wybierz("Name", "Nazwa"), Directory.GetCurrentDirectory());
 if (sDir.Length == 0) return "";
-break;
 }
 return sDir;
 } // GetDirChoice method
@@ -3118,7 +3270,7 @@ string[] aViewLevel = sViewLevel.Split(':');
 if (aViewLevel.Length < 2) continue;
 if (sExt != aViewLevel[0].Trim().ToLower()) continue;
 try { return Int32.Parse(aViewLevel[1]); }
-catch (Exception ex) { Dialog.Show("Error", ex.Message); }
+catch (Exception ex) { Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message); }
 }
 foreach (string sBinaryFormat in sBinaryFormats.Split(' ')) if (sExt == sBinaryFormat) return 1;
 return 0;
@@ -3184,7 +3336,7 @@ public string[] GetKeySummary(ToolStripMenuItem item) {
 string sCommand = item.Name;
 // KeyMap (Homer) is the single source. The first time a command's summary
 // is requested it is read once from Hotkeys.ini and cached here, so the
-// status bar, Key Describer, and Alternate Menu all agree and later reads
+// status bar, Key Describer, and Command Palette all agree and later reads
 // cost nothing. The Hotkeys.ini format and parse are unchanged.
 string sValue = KeyMap.getSummary(sCommand);
 if (sValue.Length == 0) {
@@ -3201,6 +3353,7 @@ else {
 sKey = sValue.Substring(0, iComma);
 sDescription = sValue.Substring(iComma + 1);
 }
+sDescription = OpisyPolecen.Tlumacz(sCommand, sDescription);
 // SKROT BIERZEMY Z KODU, NIE Z PLIKU OPISOW (12.09.2026, zgloszenie
 // Kasperczaka: "Paleta polecen, wszystko dobrze, ale nie czyta skrotow
 // klawiszowych po poleceniu").
@@ -3220,8 +3373,29 @@ sDescription = sValue.Substring(iComma + 1);
 // (polecenie bez skrotu), zostaje to, co bylo - czyli nic.
 Keys keyBound = KeyMap.getKey(sCommand);
 if (keyBound != Keys.None) sKey = Util.KeyToSpoken(keyBound);
-return new string[] {sCommand, sKey, sDescription};
+string sDisplay = item.Text.Replace("&", "").Trim();
+if (item == menuMiscTaskToggle) sDisplay = AgreedMenuPolish ? "Przełącz wykonanie zadania" : "Toggle Task Completion";
+if (sDisplay.Length == 0) sDisplay = sCommand;
+return new string[] {sDisplay, sKey, sDescription};
 } // GetKeySummary method
+
+public ToolStripMenuItem GetSelectedAgreedMenuItem() {
+foreach (ToolStripItem item in menuMain.Items) {
+ToolStripMenuItem found = GetSelectedAgreedMenuItem(item as ToolStripMenuItem);
+if (found != null) return found;
+}
+return null;
+} // GetSelectedAgreedMenuItem method
+
+private ToolStripMenuItem GetSelectedAgreedMenuItem(ToolStripMenuItem menu) {
+if (menu == null) return null;
+if (menu.Selected && menu.DropDownItems.Count == 0) return menu;
+foreach (ToolStripItem item in menu.DropDownItems) {
+ToolStripMenuItem found = GetSelectedAgreedMenuItem(item as ToolStripMenuItem);
+if (found != null) return found;
+}
+return null;
+} // GetSelectedAgreedMenuItem method
 
 // FOKUS WRACA DO POLA EDYCYJNEGO.  Jeden nosnik dla DWOCH wejsc: uaktywnienia
 // okna (Alt+Tab) i zamkniecia menu.  Wczesniej to samo cialo stalo w domknieciu
@@ -3329,20 +3503,20 @@ if (child == null || child.OriginalDocument == null || !SaveImportedOriginalEnab
 OriginalDocumentLink link = child.OriginalDocument;
 if (!OriginalFormatSupported(link.Path) || child.IsRichTextDocument
 || !ZapisFormatow.WymagaKonwersji("md", ZapisFormatow.Rozszerzenie(link.Path), CzytajWpisEksportu)) {
-error = "No converter is configured for the original format. Use Save As to save your work as Markdown. The original has not been changed.";
+error = JezykInterfejsu.Wybierz("No converter is configured for the original format. Use Save As to save your work as Markdown. The original has not been changed.", "Nie skonfigurowano konwertera dla oryginalnego formatu. Użyj polecenia Zapisz jako, aby zapisać pracę jako Markdown. Oryginał nie został zmieniony.");
 return true;
 }
 string backup;
 if (!OriginalFormatSave.TrySave(link, child.RTB.Text,
 delegate(string text, string target) { return KonwertujDoPliku(text, "md", target, child.File); },
 out error, out backup)) {
-if (!String.IsNullOrEmpty(backup)) error += Environment.NewLine + "Previous version: " + backup;
-error += Environment.NewLine + "Use Control+Shift+S (Save As) to save your current work under a new name, or as Markdown.";
+if (!String.IsNullOrEmpty(backup)) error += Environment.NewLine + JezykInterfejsu.Wybierz("Previous version: ", "Poprzednia wersja: ") + backup;
+error += Environment.NewLine + JezykInterfejsu.Wybierz("Use Control+Shift+S (Save As) to save your current work under a new name, or as Markdown.", "Użyj Ctrl+Shift+S (Zapisz jako), aby zapisać bieżącą pracę pod nową nazwą lub jako Markdown.");
 return true;
 }
 child.RTB.Modified = false;
 RefreshOriginalDocumentTitles();
-AddMessage("Saved " + Path.GetFileName(link.Path) + ". Previous version in .edsharp-backups.", true);
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Saved {0}. Previous version in .edsharp-backups.", "Zapisano {0}. Poprzednia wersja jest w folderze .edsharp-backups."), Path.GetFileName(link.Path)), true);
 return true;
 }
 
@@ -3375,7 +3549,7 @@ string error;
 if (!PdfExport.Render(html, temporary, out error)) {result.Powod = error; return result;}
 ZapisFormatow.PodmienPlik(temporary, target);
 result.Udane = true;
-} catch (Exception ex) {result.Powod = "Cannot save PDF: " + ex.Message;}
+} catch (Exception ex) {result.Powod = JezykInterfejsu.Wybierz("Cannot save PDF: ", "Nie można zapisać PDF: ") + ex.Message;}
 finally {try {if (temporary.Length > 0 && File.Exists(temporary)) File.Delete(temporary);} catch {}}
 return result;
 }
@@ -3392,7 +3566,7 @@ private static bool SaveSnippetFile(MdiChild child, string text, string target, 
 // Saving a reusable snippet is a copy, never a change of the imported document identity.
 if (child.OriginalDocument != null) {
 if (String.Equals(Path.GetFullPath(target), child.OriginalDocument.Path, StringComparison.OrdinalIgnoreCase)) {
-App.Frame.AddMessage("Use Save As to write to the original document, not Save Snippet.", true);
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Use Save As to write to the original document, not Save Snippet.", "Użyj polecenia Zapisz jako, aby zapisać do oryginalnego dokumentu, a nie Zapisz fragment."), true);
 return false;
 }
 Util.String2File(text, target);
@@ -3401,6 +3575,10 @@ else if (wholeDocument) child.SaveTextOrRtfFile(target);
 else Util.String2File(text, target);
 return true;
 }
+
+public static string GetLocalizedTutorialPath(string sProgramDir, bool bPolish) {
+return Path.Combine(sProgramDir, "docs", "tutorial", "html", bPolish ? "pl" : "en", bPolish ? "podrecznik.html" : "handbook.html");
+} // GetLocalizedTutorialPath method
 
 public void menuItem_Click(object sender, EventArgs e) {
 //Util.Beep();
@@ -3501,7 +3679,7 @@ string[] aRtfDisplay = new string[] {
 "Open as rich text, keeping formatting",
 "Open as plain text, showing RTF source",
 "Other conversion ..."};
-string sRtfChoice = Dialog.Pick("Open RTF File As", aRtfChoice, aRtfDisplay, false, 0);
+string sRtfChoice = Dialog.Pick(JezykInterfejsu.Wybierz("Open RTF File As", "Otwórz plik RTF jako"), aRtfChoice, aRtfDisplay, false, 0);
 if (sRtfChoice.Length == 0) return;
 
 if (sRtfChoice == "md") {
@@ -3549,7 +3727,7 @@ OpenOrActivateWindow(sFile, iConvert);
 if (menuItem == menuFileOpenAgain) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -3571,7 +3749,7 @@ list.RemoveAt(i);
 
 aResults = list.ToArray();
 if (aResults.Length == 0) {
-AddMessage("No items!");
+AddMessage(JezykInterfejsu.Wybierz("No items!", "Brak elementów!"));
 return;
 }
 
@@ -3606,7 +3784,7 @@ FileFind();
 }
 
 if (menuItem == menuFileSaveCopy) {
-AddMessage("Save Copy");
+AddMessage(JezykInterfejsu.Wybierz("Save Copy", "Zapisz kopię"));
 sFile = child.File + ".bak";
 sFile = Dialog.SaveFile("", sFile);
 if (sFile.Length == 0) return;
@@ -3623,7 +3801,7 @@ this.SetRecent(sFile);
 if ((menuItem == menuFileSave) || (menuItem == menuFileSaveAs)) {
 string originalError;
 if (menuItem == menuFileSave && TrySaveOriginalDocument(child, out originalError)) {
-if (originalError.Length > 0) Dialog.Show("Save original document", originalError);
+if (originalError.Length > 0) Dialog.Show(JezykInterfejsu.Wybierz("Save original document", "Zapisz oryginalny dokument"), originalError);
 return;
 }
 sFile = child.File;
@@ -3658,7 +3836,7 @@ if (!wyn.Udane) {
 // NIE MELDUJEMY SUKCESU, KTOREGO NIE BYLO, I NIE RUSZAMY BUFORA.
 // Plik na dysku zostal taki, jaki byl (harness punkt 3), a dokument
 // w oknie dalej jest tym Markdownem, ktory uzytkownik pisal.
-Dialog.Show("Save As", wyn.Powod);
+Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), wyn.Powod);
 return;
 }
 
@@ -3671,7 +3849,7 @@ return;
 }
 if (ZapisFormatow.FormatBogaty(sExtCelu) && sExtCelu != sExtZrodla
 && (sExtCelu != "rtf" || ZapisFormatow.FormatZrodlowy(sExtZrodla))) {
-Dialog.Show("Save As", "No converter is configured for this format. The destination has not been changed.");
+Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), JezykInterfejsu.Wybierz("No converter is configured for this format. The destination has not been changed.", "Nie skonfigurowano konwertera dla tego formatu. Miejsce docelowe nie zostało zmienione."));
 return;
 }
 }
@@ -3796,25 +3974,25 @@ if (Util.Equiv(s, ".rtf")) sText = rtb.Rtf;
 else sText = rtb.Text;
 if (sExt.IndexOf('2') > 0) {
 WynikZapisu exportResult = KonwertujDokumentDoPliku(child, sText, s.TrimStart('.'), sFile);
-if (!exportResult.Udane) Dialog.Show("Export Format", exportResult.Powod);
+if (!exportResult.Udane) Dialog.Show(JezykInterfejsu.Wybierz("Export Format", "Format eksportu"), exportResult.Powod);
 else AddMessage(ZapisFormatow.KomunikatSukcesu(Path.GetExtension(sFile).TrimStart('.'), Path.GetFileName(child.File)));
 return;
 }
 Util.ConvertString2FileFormat(sText, s, sFile, sExt);
 break;
 }
-if (File.Exists(sFile)) AddMessage("Done");
-else AddMessage("Error!");
+if (File.Exists(sFile)) AddMessage(JezykInterfejsu.Wybierz("Done", "Gotowe"));
+else AddMessage(JezykInterfejsu.Wybierz("Error!", "Błąd!"));
 }
 
 if (menuItem == menuFileRename) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
-string sName = Dialog.Input("Rename", "File Name", child.Text).Trim();
+string sName = Dialog.Input(JezykInterfejsu.Wybierz("Rename", "Zmień nazwę"), JezykInterfejsu.Wybierz("File Name", "Nazwa pliku"), child.Text).Trim();
 if (sName.Length == 0) return;
 
 string sNewFile = Path.Combine(Path.GetDirectoryName(sFile), sName);
@@ -3822,7 +4000,7 @@ try {
 File.Move(sFile, sNewFile);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 child.Text = sName;
@@ -3864,7 +4042,7 @@ Mail(false);
 if (menuItem == menuFileMailAttach) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -3884,7 +4062,7 @@ string sSubject = Path.GetFileName(child.Text) + " attached";
 KeyValuePair<string, string>[] aAttachments = {new KeyValuePair<String, String>(Path.GetFileName(sFile), sFile)};
 try {
 MapiMail.SendMail(sSubject, "", null, aAttachments);
-AddMessage("Mail with attachment handed to the mail client");
+AddMessage(JezykInterfejsu.Wybierz("Mail with attachment handed to the mail client", "Wiadomość z załącznikiem przekazano do klienta poczty"));
 }
 catch (Exception exMail) {
 // PUSTY catch BYL TU CICHA AWARIA: gdy MAPI zawiedzie (brak
@@ -3896,7 +4074,7 @@ catch (Exception exMail) {
 // jest inna: mowimy wprost, co sie stalo, i zostawiamy wybor.
 string sMailError = exMail.Message;
 if (sMailError == null) sMailError = "";
-AddMessage("Mail client refused the attachment!");
+AddMessage(JezykInterfejsu.Wybierz("Mail client refused the attachment!", "Klient poczty odrzucił załącznik!"));
 if (Dialog.Confirm("Mail Attachment Failed", "The mail client did not accept the attachment.\n" + sMailError + "\n\nSend the text as the message body instead (without the file attached)?", "Y") == "Y") {
 Util.MailMessage("", Path.GetFileNameWithoutExtension(child.Text), rtb.Text);
 }
@@ -3917,7 +4095,7 @@ sFile = child.File;
 sFile = Path.GetFileName(sFile);
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -3942,7 +4120,7 @@ File.Delete(sFile);
 if (menuItem == menuFileProperties) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -3972,7 +4150,7 @@ ExitApp();
 if (menuItem == menuEditSelectAll) {
 rtb.SelectAll();
 iCount = rtb.SelectedText.Length;
-AddMessage(Util.Pluralize(iCount, "character"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("character", "znak")));
 }
 
 if (menuItem == menuEditUnselectAll) {
@@ -3985,7 +4163,7 @@ AddMessage(sText);
 
 if (menuItem == menuEditCopy) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 sText = rtb.RowText + LineBreak;
 }
 else {
@@ -4002,7 +4180,7 @@ sText = Util.GetClipboardText();
 sText = Util.Convert2UnixLineBreak(sText);
 if (sText.Length > 0 && !sText.EndsWith(LB)) sText += LB;
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 sText += rtb.RowText + LB;
 }
 else {
@@ -4033,7 +4211,7 @@ if (!TryCopyMarkdownSelection(this.Child) && !TryCopyMarkdownLinkAsRichText(this
 
 if (menuItem == menuEditCut) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 sText = rtb.RowText + LineBreak;
 rtb.Select(rtb.RowStart, rtb.RowLength);
 }
@@ -4052,7 +4230,7 @@ sText = Util.GetClipboardText();
 sText = Util.Convert2UnixLineBreak(sText);
 if (sText.Length > 0 && !sText.EndsWith(LB)) sText += LB;
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 sText += rtb.RowText + LB;
 rtb.Select(rtb.RowStart, rtb.RowLength);
 }
@@ -4130,19 +4308,13 @@ iEnd = rtb.Index;
 if (iStart > iEnd) Util.Swap(ref iStart, ref iEnd);
 rtb.SelectRange(iStart, iEnd);
 iCount = rtb.SelectedText.Length;
-AddMessage(Util.Pluralize(iCount, "character"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("character", "znak")));
 rtb.OldSelectionStart = rtb.SelectionStart;
 rtb.OldSelectionLength = rtb.SelectionLength;
 }
 
 if (menuItem == menuEditReselect) {
 rtb.Reselect();
-}
-
-if (menuItem == menuEditCopyAll) {
-sText = rtb.Text;
-sText = Util.Convert2WinLineBreak(sText);
-Util.SetClipboardText(sText);
 }
 
 if (menuItem == menuEditSelectChunk) {
@@ -4179,12 +4351,12 @@ rtb.SelectRange(iStart, iEnd);
 
 if (menuItem == menuEditAppendFromClipboard) {
 if (child.AppendFromClipboard == 0) {
-AddMessage("Append from Clipboard On");
+AddMessage(JezykInterfejsu.Wybierz("Append from Clipboard On", "Dołączanie ze schowka włączone"));
 child.AppendFromClipboard = -1;
 child.NextClipboardViewer =  Util.SetClipboardViewer(child.Handle);
 }
 else {
-AddMessage("No Append from Clipboard");
+AddMessage(JezykInterfejsu.Wybierz("No Append from Clipboard", "Brak dołączania ze schowka"));
 child.AppendFromClipboard = 0;
 Util.ChangeClipboardChain(child.Handle, child.NextClipboardViewer);
 child.NextClipboardViewer = (IntPtr) 0;
@@ -4196,7 +4368,7 @@ if (menuItem == menuEditQuote) {
 
 string sPrefix = App.ReadOption("QuotePrefix", "> ");
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 iStart = rtb.RowStart;
 iEnd = iStart + rtb.RowText.Length;
 //Dialog.Show(iStart, iEnd);
@@ -4217,7 +4389,7 @@ Util.Say(rtb.RowText);
 if (menuItem == menuEditUnquote) {
 string sPrefix = App.ReadOption("QuotePrefix", "> ");
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 iStart = rtb.RowStart;
 iEnd = iStart + rtb.RowText.Length;
 }
@@ -4237,7 +4409,7 @@ Util.Say(rtb.RowText);
 
 if (menuItem == menuEditUpperCase) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Character");
+AddMessage(JezykInterfejsu.Wybierz("Character", "Znak"));
 iStart = rtb.Index;
 iEnd = iStart + 1;
 bSelected = false;
@@ -4260,7 +4432,7 @@ AddMessage(sText);
 
 if (menuItem == menuEditLowerCase) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Character");
+AddMessage(JezykInterfejsu.Wybierz("Character", "Znak"));
 iStart = rtb.Index;
 iEnd = iStart + 1;
 bSelected = false;
@@ -4283,7 +4455,7 @@ AddMessage(sText);
 
 if (menuItem == menuEditProperCase) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Character");
+AddMessage(JezykInterfejsu.Wybierz("Character", "Znak"));
 iStart = rtb.Index;
 iEnd = iStart + 1;
 bSelected = false;
@@ -4306,7 +4478,7 @@ AddMessage(sText);
 
 if (menuItem == menuEditSwapCase) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Character");
+AddMessage(JezykInterfejsu.Wybierz("Character", "Znak"));
 iStart = rtb.Index;
 iEnd = iStart + 1;
 bSelected = false;
@@ -4419,7 +4591,7 @@ Util.Say(rtb.RowText);
 
 if (menuItem == menuEditJoinLines) {
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -4465,7 +4637,7 @@ sText = Util.RegExpReplaceCase(sText, sMatch, sReplace);
 sText = "\n" + sText;
 rtb.ReplaceRange(iIndex, iIndex, sText);
 rtb.Index = iIndex + sText.Length;
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 // Reduce verbosity
 // Util.Say(rtb.RowText);
 }
@@ -4480,7 +4652,7 @@ sText = Util.RegExpReplaceCase(sText, sMatch, sReplace);
 sText = sText + "\n";
 rtb.ReplaceRange(iIndex, iIndex, sText);
 rtb.Index--;
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 // Reduce verbosity
 // Util.Say(rtb.RowText);
 }
@@ -4510,7 +4682,7 @@ rtb.ReplaceRange(iStart, iEnd, sText);
 //if (bLine) rtb.Index = iIndex;
 if (bLine) rtb.Index = iIndex + sIndent.Length;
 else rtb.Index  = iIndex + sText.Length;
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 //Util.Say(rtb.RowText);
 }
 
@@ -4534,7 +4706,7 @@ iLength = sText.Length;
 sText = Util.RegExpReplaceCase(sText, "^" + sIndent, "");
 rtb.ReplaceRange(iStart, iEnd, sText);
 if (sText.Length < iLength) rtb.Index = iIndex - sIndent.Length;
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 //Util.Say(rtb.RowText);
 }
 
@@ -4544,7 +4716,7 @@ sIndent = Util.Literalize(sIndent);
 iIndex = rtb.Index;
 bool bLine;
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 iStart = rtb.RowStart;
 iEnd = iStart + rtb.RowText.Length;
 bLine = true;
@@ -4596,12 +4768,12 @@ if (sText.Length < iLength) iIndex -= sIndent.Length;
 rtb.ReplaceRange(iStart, iEnd, sText);
 bLine = !bLine;
 rtb.Index = iIndex;
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 }
 
 if (menuItem == menuEditIndentMode) {
 rtb.IndentMode = !rtb.IndentMode;
-AddMessage(rtb.IndentMode ? "On" : "Off");
+AddMessage(rtb.IndentMode ? JezykInterfejsu.Wybierz("On", "Włączone") : JezykInterfejsu.Wybierz("Off", "Wyłączone"));
 // Environment.SetEnvironmentVariable("EdSharpIndent", "", EnvironmentVariableTarget.User);
 bool b = System.IO.File.Exists(App.IndentModeFile);
 if (b && !rtb.IndentMode) System.IO.File.Delete(App.IndentModeFile);
@@ -4623,68 +4795,12 @@ else if (!b && rtb.IndentMode) System.IO.File.Create(App.IndentModeFile).Close()
 // zapisie pliku.  Zwolnione chordy: Alt+Shift+OemQuestion (Style),
 // Alt+Shift+F6 (Baseline).  Nie przywracac przy scalaniu z upstream.
 
-if (menuItem == menuMiscEnvironmentVariables) {
-string sChoice = Dialog.Choose("Target", "", new string[] {"&Process", "&User", "&Machine"}, 0);
-if (sChoice.Length == 0) return;
-
-EnvironmentVariableTarget target = EnvironmentVariableTarget.Process;
-if (sChoice == "&User") target = EnvironmentVariableTarget.User;
-else if (sChoice == "&Machine") target = EnvironmentVariableTarget.Machine;
-
-IDictionary dic = Environment.GetEnvironmentVariables(target);
-iCount = dic.Count;
-aLabels = new string[iCount];
-aValues = new string[iCount];
-string[] aKeys = new string[iCount];
-
-int iKey = 0;
-foreach (DictionaryEntry de in dic) {
-aKeys[iKey] = ((string) de.Key).ToLower();
-aLabels[iKey] = "&" + (string) de.Key;
-iKey++;
-}
-Array.Sort(aKeys, aLabels);
-
-iKey = 0;
-foreach (DictionaryEntry de in dic) {
-aKeys[iKey] = ((string) de.Key).ToLower();
-aValues[iKey] = (string) de.Value;
-iKey++;
-}
-Array.Sort(aKeys, aValues);
-
-sTitle = "Variables for ";
-if (sChoice == "&Process") sTitle += "Process " + Process.GetCurrentProcess().ProcessName;
-else if (sChoice == "&User") sTitle += "User " + Environment.UserName;
-else if (sChoice == "&Machine") sTitle += "Machine " + Environment.MachineName;
-aResults = Dialog.MultiInput(sTitle, aLabels, aValues);
-if (aResults.Length == 0) return;
-
-try {
-for (int i = 0; i < iCount; i++) {
-if (aResults[i] == aValues[i]) continue;
-
-if (Dialog.Confirm("Confirm", "Change " + aKeys[i] + "?", "Y") != "Y") continue;
-Environment.SetEnvironmentVariable(aKeys[i], aResults[i], target);
-}
-}
-catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
-return;
-}
-AddMessage("Done");
-}
-
 if (menuItem == menuMiscSpellCheck) {
 SpellCheck();
 }
 
 if (menuItem == menuMiscSpellingWordMenu) {
 SpellingWordMenu();
-}
-
-if (menuItem == menuMiscExtraSpeechLog) {
-OpenOrActivateWindow(App.SpeechLog, 0);
 }
 
 if (menuItem == menuMiscThesaurus) {
@@ -4715,12 +4831,12 @@ sText = sText.TrimEnd();
 else sText = "";
 
 if (sText.Length == 0) sText = App.ReadData("Term", "");
-sResult = Dialog.Input("Lookup", "Term", sText).Trim();
+sResult = Dialog.Input(JezykInterfejsu.Wybierz("Lookup", "Wyszukiwanie"), JezykInterfejsu.Wybierz("Term", "Termin"), sText).Trim();
 if (sResult.Length == 0) return;
 
 App.WriteData("Term", sResult);
 //AddMessage("Please wait");
-AddMessage("Connecting");
+AddMessage(JezykInterfejsu.Wybierz("Connecting", "Łączenie"));
 sText = VB.LookupTerm(sResult);
 if (!IsEmptyWindow()) new MdiChild(this);
 child = this.Child;
@@ -4743,10 +4859,10 @@ sText = rtb.GetRange(iStart, iEnd);
 
 string[] aLanguageNames, aLanguageAbbreviations;
 Util.GetGoogleLanguages(out aLanguageNames, out aLanguageAbbreviations);
-string sSourceLanguage = Dialog.Pick("Source Language", aLanguageAbbreviations, aLanguageNames, false, 0);
+string sSourceLanguage = Dialog.Pick(JezykInterfejsu.Wybierz("Source Language", "Język źródłowy"), aLanguageAbbreviations, aLanguageNames, false, 0);
 if (sSourceLanguage.Length == 0) return;
 
-string sTargetLanguage = Dialog.Pick("Target Language", aLanguageAbbreviations, aLanguageNames, false, 0);
+string sTargetLanguage = Dialog.Pick(JezykInterfejsu.Wybierz("Target Language", "Język docelowy"), aLanguageAbbreviations, aLanguageNames, false, 0);
 if (sTargetLanguage.Length == 0) return;
 
 string sExe = App.ProgramDir + @"\Convert\TranLang.exe";
@@ -4782,13 +4898,13 @@ rtb.Text = sText;
 // rzeczy i komunikat jest jedynym sposobem, zeby wiedziec ktora.
 if (menuItem == menuMiscGuardDocument) {
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 bool bWasGuarded = GetUserGuard(child);
 rtb.SetGuard(!bWasGuarded);
 SaveGuardFlag(child.File, !bWasGuarded);
-AddMessage(bWasGuarded ? "Guard off" : "Guard on");
+AddMessage(bWasGuarded ? JezykInterfejsu.Wybierz("Guard off", "Blokada wyłączona") : JezykInterfejsu.Wybierz("Guard on", "Blokada włączona"));
 }
 
 
@@ -4796,7 +4912,7 @@ if (menuItem == menuMiscInferIndent) {
 sText = rtb.Text;
 aResults = Util.RegExpExtractCase(sText, @"^( |\t)+");
 if (aResults.Length == 0) {
-AddMessage("No indentation found!");
+AddMessage(JezykInterfejsu.Wybierz("No indentation found!", "Nie znaleziono wcięcia!"));
 return;
 }
 
@@ -4819,7 +4935,7 @@ else {
 sIndent = sIndent.Replace(" ", @"\040");
 sIndent = sIndent.Replace("\t", @"\t");
 App.WriteOption("IndentUnit", sIndent);
-AddMessage("IndentUnit configured");
+AddMessage(JezykInterfejsu.Wybierz("IndentUnit configured", "Skonfigurowano jednostkę wcięcia"));
 }
 }
 
@@ -4871,7 +4987,7 @@ sText = rtb.GetRange(iStart, iEnd);
 iCount = Util.RegExpCountEquiv(sText, sMatch);
 sText = Util.RegExpReplaceEquiv(sText, sMatch, sReplace);
 if (iCount > 0) rtb.ReplaceRange(iStart, iEnd, sText);
-AddMessage(Util.Pluralize(iCount, "match", "matches"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("match", "dopasowanie"), JezykInterfejsu.Wybierz("matches", "dopasowania")));
 }
 
 if (menuItem == menuDeleteReplaceWithRegExp) {
@@ -4903,7 +5019,7 @@ sText = rtb.GetRange(iStart, iEnd);
 iCount = Util.RegExpCountCase(sText, sPattern);
 sText = Util.RegExpReplaceCase(sText, sPattern, sSubstitute);
 if (iCount > 0) rtb.ReplaceRange(iStart, iEnd, sText);
-AddMessage(Util.Pluralize(iCount, "match", "matches"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("match", "dopasowanie"), JezykInterfejsu.Wybierz("matches", "dopasowania")));
 }
 
 if (menuItem == menuMiscRegExpTool) {
@@ -4913,7 +5029,7 @@ if (menuItem == menuMiscRegExpTool) {
 // bywa dlugi i zaczynanie go od nowa po zmianie zdania jest kosztowne.
 string[] aRegExpValues = new string[] {"count", "extract"};
 string[] aRegExpNames = new string[] {"Count matches", "Extract matches to a new window"};
-string sAction = Dialog.Pick("Regular Expression Tool", aRegExpValues, aRegExpNames, false, 0);
+string sAction = Dialog.Pick(JezykInterfejsu.Wybierz("Regular Expression Tool", "Narzędzie wyrażeń regularnych"), aRegExpValues, aRegExpNames, false, 0);
 if (sAction.Length == 0) return;
 bool bExtract = (sAction == "extract");
 
@@ -4937,12 +5053,12 @@ App.WriteData("Pattern", sResult);
 sText = rtb.GetRange(iStart, iEnd);
 if (!bExtract) {
 iCount = Util.RegExpCountCase(sText, sResult);
-AddMessage(Util.Pluralize(iCount, "match", "matches"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("match", "dopasowanie"), JezykInterfejsu.Wybierz("matches", "dopasowania")));
 }
 else {
 aResults = Util.RegExpExtractCase(sText, sResult);
 iCount = aResults.Length;
-AddMessage(Util.Pluralize(iCount, "match", "matches"));
+AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("match", "dopasowanie"), JezykInterfejsu.Wybierz("matches", "dopasowania")));
 if (iCount == 0) return;
 
 new MdiChild(this);
@@ -4962,7 +5078,7 @@ rtb.Index = 0;
 
 if (menuItem == menuMiscSpecialCharacter) {
 string sCode = App.ReadData("Code", "");
-sResult = Dialog.Input("Special Character", "Code:", sCode).Trim().ToLower();
+sResult = Dialog.Input(JezykInterfejsu.Wybierz("Special Character", "Znak specjalny"), JezykInterfejsu.Wybierz("Code:", "Kod:"), sCode).Trim().ToLower();
 if (sResult.Length == 0) return;
 
 App.WriteData("Code", sResult);
@@ -4974,7 +5090,7 @@ int iCode = Int32.Parse(sResult);
 sText = Util.Code2String(iCode);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 }
@@ -4983,7 +5099,7 @@ if (sResult.StartsWith("u")) sResult = sResult.Remove(0, 1);
 string s = sResult;
 sText = Util.Literalize(@"\u" + sResult.PadLeft(4, '0'));
 if (sText.Length == 0 || sText == "\u0000") {
-Dialog.Show("Error", "Invalid Unicode number");
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), JezykInterfejsu.Wybierz("Invalid Unicode number", "Nieprawidłowy numer Unicode"));
 return;
 }
 }
@@ -5061,7 +5177,7 @@ Util.Say(rtb.RowText);
 if (menuItem == menuDeleteFile) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5072,7 +5188,7 @@ child.Close();
 
 if (menuItem == menuDeleteTrimBlanks) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Line");
+AddMessage(JezykInterfejsu.Wybierz("Line", "Wiersz"));
 iStart = rtb.RowStart;
 iEnd = iStart + rtb.RowText.Length;
 }
@@ -5095,7 +5211,7 @@ if (menuItem == menuNavigateForwardFind || menuItem == menuNavigateForwardFindAt
 iIndex = rtb.Index;
 iStart = 0;
 sText = App.ReadData("Find", "");
-if (menuItem == menuNavigateForwardFind) sText = Dialog.Input("Forward Find", "Text", sText);
+if (menuItem == menuNavigateForwardFind) sText = Dialog.Input(JezykInterfejsu.Wybierz("Forward Find", "Znajdź dalej"), JezykInterfejsu.Wybierz("Text", "Tekst"), sText);
 else if (menuItem == menuNavigateForwardFindAtCursor) {
 if (rtb.SelectionLength == 0) {
 object[] a = GetChunk();
@@ -5132,14 +5248,14 @@ if (iIndex >= 0) {
 rtb.Index = iIndex + sText.Length;
 Util.Say(rtb.RowText);
 }
-else AddMessage("Not found!");
+else AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 
 if (menuItem == menuNavigateReverseFind || menuItem == menuNavigateReverseFindAtCursor || (!this.FindWithRegExp && menuItem == menuNavigateReverseFindAgain)) {
 iIndex = rtb.Index;
 iEnd = 0;
 sText = App.ReadData("Find", "");
-if (menuItem == menuNavigateReverseFind) sText = Dialog.Input("Reverse Find", "Text", sText);
+if (menuItem == menuNavigateReverseFind) sText = Dialog.Input(JezykInterfejsu.Wybierz("Reverse Find", "Znajdź wstecz"), JezykInterfejsu.Wybierz("Text", "Tekst"), sText);
 else if (menuItem == menuNavigateReverseFindAtCursor) {
 if (rtb.SelectionLength == 0) {
 object[] a = GetChunk();
@@ -5176,12 +5292,12 @@ if (iIndex >= 0 && iIndex < iEnd) {
 rtb.Index = iIndex;
 Util.Say(rtb.RowText);
 }
-else AddMessage("Not found!");
+else AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 
 if (menuItem == menuNavigateForwardFindWithRegExp || (this.FindWithRegExp && menuItem == menuNavigateForwardFindAgain)) {
 sMatch = App.ReadData("Pattern", "");
-if (menuItem == menuNavigateForwardFindWithRegExp) sMatch = Dialog.Input("Forward Find with Regular Expression", "Pattern", sMatch);
+if (menuItem == menuNavigateForwardFindWithRegExp) sMatch = Dialog.Input(JezykInterfejsu.Wybierz("Forward Find with Regular Expression", "Znajdź dalej za pomocą wyrażenia regularnego"), JezykInterfejsu.Wybierz("Pattern", "Wzorzec"), sMatch);
 if (sMatch.Length == 0) return;
 
 App.WriteData("Pattern", sMatch);
@@ -5204,12 +5320,12 @@ sValue = (string) a[1];
 rtb.Index = iStart + iIndex + sValue.Length;
 Util.Say(rtb.RowText);
 }
-else AddMessage("Not found!");
+else AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 
 if (menuItem == menuNavigateReverseFindWithRegExp || (this.FindWithRegExp && menuItem == menuNavigateReverseFindAgain)) {
 sMatch = App.ReadData("Pattern", "");
-if (menuItem == menuNavigateReverseFindWithRegExp) sMatch = Dialog.Input("Reverse Find with Regular Expression", "Pattern", sMatch);
+if (menuItem == menuNavigateReverseFindWithRegExp) sMatch = Dialog.Input(JezykInterfejsu.Wybierz("Reverse Find with Regular Expression", "Znajdź wstecz za pomocą wyrażenia regularnego"), JezykInterfejsu.Wybierz("Pattern", "Wzorzec"), sMatch);
 if (sMatch.Length == 0) return;
 
 App.WriteData("Pattern", sMatch);
@@ -5232,12 +5348,12 @@ sValue = (string) a[1];
 rtb.Index = iStart + iIndex;
 Util.Say(rtb.RowText);
 }
-else AddMessage("Not found!");
+else AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 
 if (menuItem == menuNavigateJumpToLine || menuItem == menuNavigateJumpToLineAgain) {
 sText = App.ReadData("Jump", "");
-if (menuItem == menuNavigateJumpToLine) sText = Dialog.Input("Jump to", "Line", sText);
+if (menuItem == menuNavigateJumpToLine) sText = Dialog.Input(JezykInterfejsu.Wybierz("Jump to", "Przejdź do"), JezykInterfejsu.Wybierz("Line", "Wiersz"), sText);
 if (sText.Length == 0) return;
 
 string[] a = sText.Split(',');
@@ -5249,7 +5365,7 @@ try {
 iLine = Int32.Parse(sLine);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 
@@ -5258,7 +5374,7 @@ try {
 iColumn = Int32.Parse(sColumn);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 
@@ -5269,20 +5385,20 @@ rtb.Column = iColumn;
 Util.Say(rtb.RowText);
 }
 catch {
-Dialog.Show("Error", "Invalid position!");
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), JezykInterfejsu.Wybierz("Invalid position!", "Nieprawidłowa pozycja!"));
 return;
 }
 }
 if (menuItem == menuNavigateGoToPercent || menuItem == menuNavigateGoToPercentAgain) {
 sText = App.ReadData("Percent", "");
-if (menuItem == menuNavigateGoToPercent) sText = Dialog.Input("Go to", "Percent", sText);
+if (menuItem == menuNavigateGoToPercent) sText = Dialog.Input(JezykInterfejsu.Wybierz("Go to", "Przejdź do"), JezykInterfejsu.Wybierz("Percent", "Procent"), sText);
 if (sText.Length == 0) return;
 
 try {
 iPercent = Int32.Parse(sText);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 
@@ -5294,7 +5410,7 @@ Util.Say(rtb.RowText);
 if (menuItem == menuNavigateSetBookmark) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5314,7 +5430,7 @@ App.WriteValue("Bookmarks", sFile, sText);
 if (menuItem == menuNavigateClearBookmark) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5330,7 +5446,7 @@ else App.WriteValue("Bookmarks", sFile, sText);
 if (menuItem == menuNavigateGoToBookmark) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5339,7 +5455,7 @@ HomerList hl = new HomerList(sText);
 hl.KeepLike(@"\d+");
 hl.Remove("-1");
 if (hl.Count == 0) {
-AddMessage("No bookmark!");
+AddMessage(JezykInterfejsu.Wybierz("No bookmark!", "Brak zakładki!"));
 return;
 }
 
@@ -5387,7 +5503,7 @@ if (menuItem == menuNavigateNextBookmark || menuItem == menuNavigatePriorBookmar
 bool bNextBookmark = (menuItem == menuNavigateNextBookmark);
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5396,7 +5512,7 @@ HomerList hlMarks = new HomerList(sText);
 hlMarks.KeepLike(@"^\d+$");
 hlMarks.Remove("-1");
 if (hlMarks.Count == 0) {
-AddMessage("No bookmark!");
+AddMessage(JezykInterfejsu.Wybierz("No bookmark!", "Brak zakładki!"));
 return;
 }
 
@@ -5409,7 +5525,7 @@ if (iMark > rtb.TextLength) iMark = rtb.TextLength;
 if (!listMarks.Contains(iMark)) listMarks.Add(iMark);
 }
 if (listMarks.Count == 0) {
-AddMessage("No bookmark!");
+AddMessage(JezykInterfejsu.Wybierz("No bookmark!", "Brak zakładki!"));
 return;
 }
 listMarks.Sort();
@@ -5428,7 +5544,7 @@ if (listMarks[i] < iIndex) { iResult = listMarks[i]; break; }
 }
 
 if (iResult < 0) {
-AddMessage(bNextBookmark ? "Last bookmark!" : "First bookmark!");
+AddMessage(bNextBookmark ? JezykInterfejsu.Wybierz("Last bookmark!", "Ostatnia zakładka!") : JezykInterfejsu.Wybierz("First bookmark!", "Pierwsza zakładka!"));
 return;
 }
 
@@ -5446,7 +5562,7 @@ if (menuItem == menuNavigateSetNamedBookmark) {
 if (child == null) return;
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5469,7 +5585,7 @@ sSuggest = (string) aChunk[1];
 if (sSuggest == null) sSuggest = "";
 sSuggest = sSuggest.Trim();
 
-LbcDialog dlgNamed = new LbcDialog(bEditNamed ? "Rename Bookmark" : "Set Named Bookmark", this);
+LbcDialog dlgNamed = new LbcDialog(bEditNamed ? JezykInterfejsu.Wybierz("Rename Bookmark", "Zmień nazwę zakładki") : JezykInterfejsu.Wybierz("Set Named Bookmark", "Ustaw nazwaną zakładkę"), this);
 TextBox txtNamed = dlgNamed.addInputBox("Bookmark &name", bEditNamed ? sExisting : sSuggest);
 if (!dlgNamed.runOkCancel()) {
 dlgNamed.Dispose();
@@ -5485,14 +5601,14 @@ if (sNamed.Length > 120) sNamed = sNamed.Substring(0, 120).Trim();
 if (sNamed.Length == 0) {
 if (bEditNamed) {
 DeleteNamedBookmark(sFile, iRowNamed);
-AddMessage("Named bookmark removed");
+AddMessage(JezykInterfejsu.Wybierz("Named bookmark removed", "Usunięto nazwaną zakładkę"));
 }
-else AddMessage("No name, no bookmark set!");
+else AddMessage(JezykInterfejsu.Wybierz("No name, no bookmark set!", "Brak nazwy; zakładka nie została ustawiona!"));
 return;
 }
 
 WriteNamedBookmark(sFile, iRowNamed, sNamed);
-AddMessage(bEditNamed ? "Bookmark renamed" : "Named bookmark set");
+AddMessage(bEditNamed ? JezykInterfejsu.Wybierz("Bookmark renamed", "Zmieniono nazwę zakładki") : JezykInterfejsu.Wybierz("Named bookmark set", "Ustawiono nazwaną zakładkę"));
 }
 
 // Lista zakladek z nazwa (Alt+Shift+B).  OSOBNA od listy zakladek zwyklych
@@ -5502,7 +5618,7 @@ if (menuItem == menuNavigateNamedBookmarkList) {
 if (child == null) return;
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5510,7 +5626,7 @@ List<int> listRows = new List<int>();
 List<string> listNames = new List<string>();
 ReadNamedBookmarks(sFile, listRows, listNames);
 if (listRows.Count == 0) {
-AddMessage("No named bookmark!");
+AddMessage(JezykInterfejsu.Wybierz("No named bookmark!", "Brak nazwanej zakładki!"));
 return;
 }
 
@@ -5542,7 +5658,7 @@ Util.Say(rtb.RowText);
 if (menuItem == menuFileSetFavorite) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -5560,7 +5676,8 @@ return;
 sText = App.ReadValue("Favorites", sFile, "\u0000");
 if (sText != "\u0000") {
 App.DeleteKey("Favorites", sFile);
-AddMessage("Removed from favorites");
+AddMessage(JezykInterfejsu.Wybierz("Removed from favorites", "Usunięto z ulubionych"));
+RefreshAgreedDynamicMenuNames();
 return;
 }
 
@@ -5570,31 +5687,8 @@ sText = (GetUserGuard(child) ? "G" : "M") + "|" + (string) Util.If(rtb.WordWrap,
 hl.AddUniqueRange(sText);
 sText = hl.Segments;
 App.WriteValue("Favorites", sFile, sText);
-AddMessage("Added to favorites");
-}
-
-if (menuItem == menuFileClearFavorite) {
-sFile = child.File;
-if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
-return;
-}
-
-// KOMENDA MILCZALA CALKOWICIE (naprawa 06.09.2026, przy jego zgloszeniu o
-// mowie przelacznika).  Kasowala klucz i nie mowila nic, wiec na pliku
-// ulubionym i na pliku, ktorego na liscie nigdy nie bylo, brzmiala
-// IDENTYCZNIE - czyli nie brzmiala wcale.  Dla niewidomego cisza po
-// nacisnieciu jest nierozroznialna od zepsutego klawisza.
-// Obecnosc rozstrzyga ReadValue z wartoscia domyslna, ktorej klucz nie moze
-// przyjac: pusty ciag jest legalna wartoscia wpisu, wiec nie odroznia braku.
-sText = App.ReadValue("Favorites", sFile, "\u0000");
-if (sText == "\u0000") {
-AddMessage("Not in favorites");
-return;
-}
-
-App.DeleteKey("Favorites", sFile);
-AddMessage("Removed from favorites");
+AddMessage(JezykInterfejsu.Wybierz("Added to favorites", "Dodano do ulubionych"));
+RefreshAgreedDynamicMenuNames();
 }
 
 if (menuItem == menuFileListFavorites) {
@@ -5609,7 +5703,7 @@ list.RemoveAt(i);
 
 aResults = list.ToArray();
 if (aResults.Length == 0) {
-AddMessage("No items!");
+AddMessage(JezykInterfejsu.Wybierz("No items!", "Brak elementów!"));
 return;
 }
 
@@ -5662,7 +5756,7 @@ sMatch = @"</?\w+( |>)";
 object[] a = Util.RegExpContainsLastCase(sText, sMatch);
 iStart = (int) a[0];
 if (iStart == -1) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 
@@ -5671,7 +5765,7 @@ if (sWord.IndexOf("/") == -1) {
 if (iStart == iIndex) {
 if (iIndex > 0) iIndex = sText.Substring(0, iIndex - 1).LastIndexOf("<");
 if (iStart == 0 || iIndex < 0) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 }
@@ -5683,7 +5777,7 @@ sWord = "<" + sWord.Substring(2, sWord.Length - 3);
 sMatch = sWord + "( |>)";
 iIndex = (int) Util.RegExpContainsEquiv(rtb.Text, sMatch)[0];
 if (iIndex == -1) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 
@@ -5698,7 +5792,7 @@ if (menuItem == menuNavigateEndTag) {
 iIndex = rtb.Index;
 iEnd = rtb.Text.IndexOf(">", rtb.Index);
 if (iEnd == -1) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 
@@ -5709,7 +5803,7 @@ sMatch = @"</?\w+( |>)";
 object[] a = Util.RegExpContainsLastCase(sText, sMatch);
 iStart = (int) a[0];
 if (iStart == -1) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 
@@ -5719,7 +5813,7 @@ if (sWord.IndexOf("/") >= 0) {
 if (iStart == iIndex) {
 if (iIndex < rtb.TextLength - 1) iIndex = rtb.Text.IndexOf(">", iIndex + 1);
 if (iStart == rtb.TextLength - 1 || iIndex < 0) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 }
@@ -5731,7 +5825,7 @@ sMatch = "</" + sWord.Substring(1, sWord.Length -2) + ">";
 a = Util.RegExpContainsEquiv(rtb.Text, sMatch, iEnd);
 iIndex = (int) a[0];
 if (iIndex == -1) {
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return;
 }
 
@@ -5751,7 +5845,7 @@ Util.Say(sText);
 
 if (menuItem == menuNavigateRightBrace || menuItem == menuNavigateLeftBrace || menuItem == menuQueryBraces) {
 if (rtb.Text.Length == 0) {
-AddMessage("No text!");
+AddMessage(JezykInterfejsu.Wybierz("No text!", "Brak tekstu!"));
 return;
 }
 
@@ -5794,7 +5888,7 @@ bool bLoop = true;
 while (bLoop) {
 if (i == sText.Length) {
 bLoop = false;
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 else if (sText.Substring(i, 1) == sLeft && i > 0) {
 iCount++;
@@ -5826,7 +5920,7 @@ bool bLoop = true;
 while (bLoop) {
 if (i == sText.Length) {
 bLoop = false;
-AddMessage("Not found!");
+AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 }
 else if (sText.Substring(i, 1) == sRight) {
 iCount++;
@@ -5891,8 +5985,8 @@ i++;
 else i++;
 }
 int iInLevels = iCount;
-AddMessage(Util.Absolute(iInLevels) + " left");
-AddMessage(Util.Absolute(iOutLevels) + " right");
+AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} left", "{0} w lewo"), Util.Absolute(iInLevels)));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} right", "{0} w prawo"), Util.Absolute(iOutLevels)));
 }
 }
 
@@ -5919,7 +6013,7 @@ if (iLevels != i) break;
 //rtb.EndUpdate();
 
 if (iLevels == i) {
-AddMessage("Bottom!");
+AddMessage(JezykInterfejsu.Wybierz("Bottom!", "Koniec!"));
 rtb.Index = rtb.TextLength;
 }
 else AddMessage(GetDelta(iLevels, i));
@@ -5946,7 +6040,7 @@ if (iLevels != i) break;
 //rtb.EndUpdate();
 
 if (iLevels == i) {
-AddMessage("Top!");
+AddMessage(JezykInterfejsu.Wybierz("Top!", "Początek!"));
 rtb.Index = 0;
 }
 else AddMessage(GetDelta(iLevels, i));
@@ -6037,7 +6131,7 @@ GoToMarkdownList(rtb, menuItem == menuNavigateNextList);
 if (menuItem == menuNavigateLinkList) {
 if (child == null) return;
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 ShowMarkdownLinkList(rtb);
@@ -6054,7 +6148,7 @@ ShowMarkdownLinkList(rtb);
 if (menuItem == menuNavigateNextLink || menuItem == menuNavigatePriorLink) {
 if (child == null) return;
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 GoToMarkdownLink(rtb, menuItem == menuNavigateNextLink);
@@ -6074,7 +6168,7 @@ if (menuItem == menuQueryIndent) {
 //if (!rtb.IndentMode)  AddMessage("Level " + this.GetIndent());
 // else {
 if (this.KeyRepeat % 2 == 0) {
-AddMessage("Level " + this.GetIndent());
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Level {0}", "Poziom {0}"), this.GetIndent()));
 return;
 }
 // AddMessage("Block");
@@ -6113,40 +6207,11 @@ Util.Spell(sText);
 }
 }
 
-if (menuItem == menuQueryTopic) {
-sText = rtb.Text;
-iIndex = sText.IndexOf(LB, rtb.Index);
-if (iIndex == -1) {
-AddMessage("Not found!");
-return;
-}
-iEnd = iIndex + LB.Length;
-sText = sText.Substring(0, iEnd);
-iIndex = sText.LastIndexOf(SB);
-if (iIndex == -1) {
-AddMessage("Not found!");
-return;
-}
-iStart = iIndex + SB.Length;
-iIndex = sText.IndexOf(LB, iStart);
-if (iIndex == -1) {
-AddMessage("Not found!");
-return;
-}
-iEnd = iIndex + LB.Length;
-sLine = sText.Substring(iStart, iEnd - iStart);
-sText = sLine;
-if (this.KeyRepeat % 2 == 0) AddMessage(sText);
-else {
-Util.Spell(sText);
-}
-}
-
 if (menuItem == menuQueryYield) {
 iStart = rtb.SelectionStart;
 iEnd = iStart + rtb.SelectionLength;
 if (iStart == iEnd) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -6154,13 +6219,13 @@ else  AddMessage("Selected");
 
 sText = rtb.GetRange(iStart, iEnd);
 iResult = sText.Length;
-AddMessage(Util.Pluralize(iResult, "character"));
+AddMessage(Util.Pluralize(iResult, JezykInterfejsu.Wybierz("character", "znak")));
 
 if (iResult > 0) {
 iResult = Util.RegExpCountCase(sText, "\\S+");
-AddMessage(Util.Pluralize(iResult, "Word"));
+AddMessage(Util.Pluralize(iResult, JezykInterfejsu.Wybierz("Word", "Słowo")));
 iResult = Util.RegExpCountCase(sText, LB) + 1;
-AddMessage("\t" + Util.Pluralize(iResult, "Line"));
+AddMessage("\t" + String.Format(JezykInterfejsu.Wybierz("{0} Line", "{0} wiersz"), iResult));
 }
 
 }
@@ -6209,26 +6274,6 @@ Util.Spell(sText);
 }
 }
 
-if (menuItem == menuQueryReadAll) {
-sText = rtb.Text;
-if (sText.Length == 0) sText = "No text!";
-sText = Util.ConvertQuotes(sText);
-if (this.KeyRepeat % 2 == 0) AddMessage(sText);
-else {
-Util.Spell(sText);
-}
-}
-
-if (menuItem == menuQueryClipboard) {
-sText = Util.GetClipboardText();
-if (sText.Length == 0) sText = "No text!";
-if (this.KeyRepeat % 2 == 0) AddMessage(sText);
-else {
-Util.Spell(sText);
-// SetStatus(sText);
-}
-}
-
 if (menuItem == menuQueryTime || menuItem == menuMiscInsertTime) {
 string sDate, sTime;
 GetDateAndTime(out sDate, out sTime);
@@ -6247,17 +6292,6 @@ Util.Say(rtb.RowText);
 }
 }
 
-if (menuItem == menuQueryStyles) {
-sText = GetStyleText() + " ";
-sText += GetJustifyText() + " ";
-sText += GetBaselineText() + " ";
-sText = sText.Replace("Regular ", "");
-sText = sText.Replace("Left ", "");
-sText = sText.Replace("Flat ", "");
-if (sText.Trim().Length == 0) sText = "Default";
-AddMessage(sText);
-}
-
 if (menuItem == menuMiscPreviewMarkdownBrowser) {
 // Render the current document as HTML and open it in the default web
 // browser, via a temporary file that EdSharp deletes at exit. The point is
@@ -6267,14 +6301,14 @@ if (menuItem == menuMiscPreviewMarkdownBrowser) {
 // Escape -- that one keeps the cursor in the source and can stay synced.
 // Both were kept side by side deliberately (Kasperczak, 20 August 2026).
 if (rtb.TextLength == 0) {
-AddMessage("Document is empty, nothing to preview");
+AddMessage(JezykInterfejsu.Wybierz("Document is empty, nothing to preview", "Dokument jest pusty; nie ma czego wyświetlić w podglądzie"));
 return;
 }
 
 string sPreviewName = (child.File != null && child.File.Contains("\\")) ? Path.GetFileNameWithoutExtension(child.File) : "Untitled";
 string sPreviewHtml = MarkdownDocumentToHtml(rtb.Text, sPreviewName);
 if (sPreviewHtml.Length == 0) {
-AddMessage("Could not convert this document to HTML");
+AddMessage(JezykInterfejsu.Wybierz("Could not convert this document to HTML", "Nie można przekonwertować tego dokumentu do HTML"));
 return;
 }
 
@@ -6283,10 +6317,10 @@ string sPreviewFile = Path.Combine(Path.GetTempPath(), "edsharp_preview_" + Guid
 Util.String2FileU(sPreviewHtml, sPreviewFile);
 App.TempFiles.Add(sPreviewFile);
 Process.Start(sPreviewFile);
-AddMessage("Markdown preview opened in web browser");
+AddMessage(JezykInterfejsu.Wybierz("Markdown preview opened in web browser", "Podgląd Markdown otwarto w przeglądarce internetowej"));
 }
 catch (Exception exPreview) {
-AddMessage("Could not open the preview: " + exPreview.Message);
+AddMessage(JezykInterfejsu.Polski ? String.Format("Nie można otworzyć podglądu: {0}", exPreview.Message) : "Could not open the preview: " + exPreview.Message);
 }
 
 return;
@@ -6305,15 +6339,15 @@ if (child == null) return;
 // Kasperczaka przy Format Code: bramka na typ pliku, zadnego zapisu na
 // dysk i podmiana COFALNA przez ReplaceRange (Control+Z dziala).
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Table of Contents works only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Table of Contents works only on Markdown files!", "Spis treści działa tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 WriteMarkdownContents(rtb);
@@ -6341,11 +6375,11 @@ bool bGlobalSpeech = (menuItem == menuMiscGoToFootnote || menuItem == menuMiscNe
 // Bramka na typ pliku: przypis markdownowy w pliku .txt bylby smieciem,
 // ktorego nic nie zrozumie.  Ta sama zasada, co przy spisie tresci.
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Footnotes work only on Markdown files!", bGlobalSpeech);
+AddMessage(JezykInterfejsu.Wybierz("Footnotes work only on Markdown files!", "Przypisy działają tylko w plikach Markdown!"), bGlobalSpeech);
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!", bGlobalSpeech);
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"), bGlobalSpeech);
 return;
 }
 if (menuItem == menuMiscInsertFootnote) {
@@ -6353,7 +6387,7 @@ if (menuItem == menuMiscInsertFootnote) {
 // zabezpieczonego.  Skoki i lista sa tylko do czytania i tej bramki nie
 // potrzebuja - dzialaja tez na zabezpieczonym pliku.
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 InsertMarkdownFootnote(rtb);
@@ -6374,18 +6408,18 @@ if (child == null) return;
 // w skladni Markdown ma sens tylko w pliku Markdown (w .txt bylby widocznym
 // smieciem), a w podgladzie nie ma gdzie pisac.
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Comments work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Comments work only on Markdown files!", "Komentarze działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (menuItem == menuMiscInsertComment) {
 // Bramka na dokument zabezpieczony dotyczy TYLKO wstawiania i poprawiania:
 // skoki i lista sa do czytania, wiec dzialaja tez na zabezpieczonym pliku.
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 InsertOrEditMarkdownComment(rtb);
@@ -6413,15 +6447,15 @@ if (child == null) return;
 bool bReadOnlyChange = (menuItem == menuMiscChangeNext || menuItem == menuMiscChangePrior
 || menuItem == menuMiscChangeList);
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Tracked changes work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Tracked changes work only on Markdown files!", "Śledzone zmiany działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode && !bReadOnlyChange) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (rtb.ReadOnly && !bReadOnlyChange) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 if (menuItem == menuMiscChangeNext) GoToChange(rtb, true);
@@ -6439,15 +6473,15 @@ if (child == null) return;
 // Markdown ma sens tylko w pliku Markdown, w podgladzie nie ma gdzie pisac,
 // a dokument zabezpieczony jest do czytania.
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Links work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Links work only on Markdown files!", "Łącza działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 InsertMarkdownLink(rtb);
@@ -6460,7 +6494,7 @@ InsertMarkdownLink(rtb);
 if (menuItem == menuMiscCsvTable) {
 if (child == null) return;
 if (!CanEditCsvDocument(child)) {
-AddMessage("Use Save As to create a separate CSV file first, then open that file as a table.");
+AddMessage(JezykInterfejsu.Wybierz("Use Save As to create a separate CSV file first, then open that file as a table.", "Najpierw użyj polecenia Zapisz jako, aby utworzyć osobny plik CSV, a potem otwórz go jako tabelę."));
 return;
 }
 if (rtb != null && rtb.Modified) {
@@ -6483,15 +6517,15 @@ if (child == null) return;
 // Te same dwie bramki, co przy przypisach i spisie tresci: tabela w skladni
 // Markdown ma sens tylko w pliku Markdown, a w podgladzie nie ma gdzie pisac.
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Tables work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Tables work only on Markdown files!", "Tabele działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 RunMarkdownTableWizard(rtb);
@@ -6508,16 +6542,16 @@ if (child == null) return;
 bool bNumbered = (menuItem == menuMiscNumberedList);
 if (!IsRichTextFile(child)) {
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Lists work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Lists work only on Markdown files!", "Listy działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 }
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 if (!IsRichTextFile(child)) {
@@ -6526,7 +6560,7 @@ int iCur = rtb.Index;
 if (iCur < 0) iCur = 0;
 if (iCur > sFenceText.Length) iCur = sFenceText.Length;
 if (IsMarkdownIndexInFence(MarkdownReview_FindFenceRanges(sFenceText), iCur)) {
-AddMessage("Cannot make a list inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot make a list inside a code block!", "Nie można utworzyć listy wewnątrz bloku kodu!"));
 return;
 }
 }
@@ -6543,15 +6577,15 @@ if (menuItem == menuMiscTaskToggle || menuItem == menuMiscTaskList
 if (child == null) return;
 bool bTylkoCzyta = (menuItem == menuMiscTaskListWindow || menuItem == menuMiscTaskProgress);
 if (!MarkdownReview_IsMarkdownFile(child.File)) {
-AddMessage("Task lists work only on Markdown files!");
+AddMessage(JezykInterfejsu.Wybierz("Task lists work only on Markdown files!", "Listy zadań działają tylko w plikach Markdown!"));
 return;
 }
 if (child.MarkdownReviewMode && !bTylkoCzyta) {
-AddMessage("Close the preview first!");
+AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
 return;
 }
 if (rtb.ReadOnly && !bTylkoCzyta) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return;
 }
 if (!bTylkoCzyta) {
@@ -6560,7 +6594,7 @@ int iCurTask = rtb.Index;
 if (iCurTask < 0) iCurTask = 0;
 if (iCurTask > sFenceTask.Length) iCurTask = sFenceTask.Length;
 if (IsMarkdownIndexInFence(MarkdownReview_FindFenceRanges(sFenceTask), iCurTask)) {
-AddMessage("Cannot change a task list inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot change a task list inside a code block!", "Nie można zmienić listy zadań wewnątrz bloku kodu!"));
 return;
 }
 }
@@ -6568,6 +6602,7 @@ if (menuItem == menuMiscTaskToggle) ToggleTaskDoneShortcut(child);
 else if (menuItem == menuMiscTaskList) ToggleTaskListShortcut(child);
 else if (menuItem == menuMiscTaskListWindow) ShowTaskListWindow(child);
 else SpeakTaskProgress(child);
+RefreshAgreedDynamicMenuNames();
 }
 
 if (menuItem == menuMiscWorkContinuity) {
@@ -6622,10 +6657,10 @@ catch {}
 // Jedno zdanie potwierdzenia mowi SKUTEK obu ustawien naraz, bo to one razem
 // skladaja sie na "ciaglosc pracy" - osobne komunikaty kazalyby skladac ten
 // obraz w glowie.
-if (bSesjaNowa && iSekundNowe > 0) AddMessage("Work continuity on: files come back on startup, recovery copy every " + iSekundNowe + " seconds");
-else if (bSesjaNowa) AddMessage("Files come back on startup; auto save off");
-else if (iSekundNowe > 0) AddMessage("Recovery copy every " + iSekundNowe + " seconds; files do not come back on startup");
-else AddMessage("Work continuity off");
+if (bSesjaNowa && iSekundNowe > 0) AddMessage(String.Format(JezykInterfejsu.Wybierz("Work continuity on: files come back on startup, recovery copy every {0} seconds", "Ciągłość pracy włączona: pliki wrócą przy uruchomieniu, kopia odzyskiwania co {0} sekund"), iSekundNowe));
+else if (bSesjaNowa) AddMessage(JezykInterfejsu.Wybierz("Files come back on startup; auto save off", "Pliki zostaną przywrócone przy uruchomieniu; automatyczny zapis wyłączony"));
+else if (iSekundNowe > 0) AddMessage(String.Format(JezykInterfejsu.Wybierz("Recovery copy every {0} seconds; files do not come back on startup", "Kopia odzyskiwania co {0} sekund; pliki nie wrócą przy uruchomieniu"), iSekundNowe));
+else AddMessage(JezykInterfejsu.Wybierz("Work continuity off", "Ciągłość pracy wyłączona"));
 }
 
 if (menuItem == menuMiscConfigurationOptions) {
@@ -6659,7 +6694,7 @@ App.SetConfigurationValues();
 if (Dialog.Confirm("Reset Configuration", "Reset all options to default?", "N") != "Y") return;
 if (System.IO.File.Exists(App.IniFile)) System.IO.File.Delete(App.IniFile);
 System.IO.File.Copy(App.DefaultIniFile, App.IniFile);
-AddMessage("Done");
+AddMessage(JezykInterfejsu.Wybierz("Done", "Gotowe"));
 return;
 }
 
@@ -6679,7 +6714,7 @@ if (!hl.Contains(sDir)) hl.Add(sDir);
 }
 
 if (hl.Count == 0) {
-AddMessage("No items!");
+AddMessage(JezykInterfejsu.Wybierz("No items!", "Brak elementów!"));
 return;
 }
 
@@ -6723,7 +6758,7 @@ sText = child.IdentityPath;
 // brzmiala identycznie przy pustym schowku.  Dla niewidomego to najgorszy
 // wariant: zle dowiaduje sie dopiero przy wklejaniu.  Komunikat bledu jest
 // w tej samej postaci, co w pozostalych sciezkach kopiowania.
-if (!Util.SetClipboardText(sText)) AddMessage("Clipboard is busy, path not copied!");
+if (!Util.SetClipboardText(sText)) AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, path not copied!", "Schowek jest zajęty, ścieżka nie została skopiowana!"));
 else AddMessage(sText);
 }
 
@@ -6736,11 +6771,11 @@ Directory.SetCurrentDirectory(sDir);
 
 sText = Util.GetExtensions(sDir);
 if (sText.Length == 0) {
-AddMessage("No files!");
+AddMessage(JezykInterfejsu.Wybierz("No files!", "Brak plików!"));
 return;
 }
 
-sResult = Dialog.Input("Filter", "Extensions", sText);
+sResult = Dialog.Input(JezykInterfejsu.Wybierz("Filter", "Filtr"), JezykInterfejsu.Wybierz("Extensions", "Rozszerzenia"), sText);
 if (sResult.Length == 0) return;
 
 aResults = Util.GetPathsWithExtensions(Directory.GetFiles(sDir), sResult);
@@ -6798,7 +6833,7 @@ return;
 // liczb dawal milczenie, czyli to samo, co komenda nieistniejaca albo klawisz
 // nie dochodzacy do okna - uzytkownik niewidomy nie ma jak tego rozroznic.
 if (sText.Length == 0) {
-AddMessage("Nothing to calculate, type an expression like 2+2 in the line first");
+AddMessage(JezykInterfejsu.Polski ? String.Format("Nie ma czego obliczać; najpierw wpisz w wierszu wyrażenie, na przykład 2+2.") : "Nothing to calculate, type an expression like 2+2 in the line first");
 return;
 }
 
@@ -6823,52 +6858,18 @@ iEnd = iStart + rtb.SelectionLength;
 }
 sText = rtb.GetRange(iStart, iEnd);
 
-if (rtb.SelectionLength == 0 && !sText.StartsWith("%")) {
-AddMessage("Replace Snippet");
-aResults = GetSnippetFiles(out aValues);
-HomerList hlResults = new HomerList(aResults);
-HomerList hlValues = new HomerList(aValues);
-//sMatch = @"^" + sText + @".*";
-sMatch = sText;
-Regex rx = new Regex(sMatch, RegexOptions.IgnoreCase);
-iCount = hlResults.Count;
-for (int i = iCount - 1; i >= 0; i--) {
-if (rx.IsMatch(aValues[i])) continue;
-hlResults.RemoveAt(i);
-hlValues.RemoveAt(i);
-}
-
-if (hlResults.Count == 0) {
-AddMessage("No match!");
-return;
-}
-
-aResults = hlResults.ToArray();
-aValues = hlValues.ToArray();
-
-string sSnippet;
-if (aResults.Length == 1) sSnippet = aResults[0];
-else {
-sSnippet = Dialog.Pick("Pick", aResults, aValues, false, 0);
-if (sSnippet.Length == 0) return;
-}
-
-InvokeSnippet(sSnippet, sText, iStart, iEnd);
-}
-else {
-if (rtb.SelectionLength == 0) AddMessage("Replace Token");
-else AddMessage("Replace Selected Tokens");
+if (rtb.SelectionLength == 0) AddMessage(JezykInterfejsu.Wybierz("Replace Token", "Zastąp token"));
+else AddMessage(JezykInterfejsu.Wybierz("Replace Selected Tokens", "Zastąp zaznaczone tokeny"));
 string sTemp = sText;
 sText = ReplaceTokens(sText);
 if (sText == sTemp) {
-AddMessage("No match!");
+AddMessage(JezykInterfejsu.Wybierz("No match!", "Brak dopasowania!"));
 return;
 }
 
 rtb.ReplaceRange(iStart, iEnd, sText);
 rtb.Index = iStart + sText.Length;
 AddMessage(rtb.RowText);
-}
 }
 
 if (menuItem == menuMiscTransformFiles) {
@@ -6885,14 +6886,31 @@ TransFormFiles();
 // Ustawienia.cs.  Zniknelo razem z Compile i Review Output.
 
 if (menuItem == menuMiscGoToEnvironment) {
-string sCommand = @"%ProgDir%\ijs.exe";
-sCommand = App.ReadOption("GoToEnvironment", sCommand);
+string sCommand = App.ReadOption("GoToEnvironment", "").Trim();
+if (sCommand.Length == 0) {
+AddMessage(JezykInterfejsu.Wybierz("Configure GoToEnvironment before running this tool.", "Skonfiguruj GoToEnvironment przed uruchomieniem tego narzędzia."), true);
+return;
+}
+try {
 if (this.Child == null) sFile = "temp.txt";
 else sFile = child.File;
 if (!sFile.Contains(@"\")) sFile = Path.Combine(Directory.GetCurrentDirectory(), sFile);
 sCommand = Util.ExpandCommandLine(sCommand, sFile, sFile);
-string sProcess = Path.GetFileNameWithoutExtension(sCommand);
-if (!Util.ActivateProcess(sProcess)) Util.Run(sCommand);
+string sProcess = sCommand;
+if (sProcess.StartsWith("\"")) {
+int iQuote = sProcess.IndexOf('\"', 1);
+if (iQuote > 0) sProcess = sProcess.Substring(1, iQuote - 1);
+}
+else {
+int iSpace = sProcess.IndexOf(' ');
+if (iSpace > 0) sProcess = sProcess.Substring(0, iSpace);
+}
+sProcess = Path.GetFileNameWithoutExtension(sProcess);
+if (!Util.ActivateProcess(sProcess) && Util.Run(sCommand) == 0) AddMessage(JezykInterfejsu.Wybierz("Could not start the configured tool.", "Nie można uruchomić skonfigurowanego narzędzia."), true);
+}
+catch {
+AddMessage(JezykInterfejsu.Wybierz("Could not start the configured tool.", "Nie można uruchomić skonfigurowanego narzędzia."), true);
+}
 }
 
 // KOMPILATOR USUNIETY, ZOSTAJE SAM "PROMPT COMMAND" (16.09.2026).
@@ -6908,65 +6926,102 @@ if (!Util.ActivateProcess(sProcess)) Util.Run(sCommand);
 // a czytalo go osobne polecenie "Review Output" - usuniete razem z
 // kompilatorem.  Bez tej zmiany wynik polecenia bylby zapisywany w miejsce,
 // do ktorego nic juz nie zaglada, czyli po cichu przepadal.
+// PROMPT COMMAND (Alt+F5): an explicit, controlled non-interactive process.
 if (menuItem == menuMiscPromptCommand) {
 string sCommand = App.ReadOption("PromptCommand", "");
-sCommand = Dialog.Input("Prompt", "Command", sCommand).Trim();
+sCommand = Dialog.Input("Prompt Command", JezykInterfejsu.Wybierz("Command (standard input is closed)", "Polecenie (standardowe wejście jest zamknięte)"), sCommand).Trim();
 if (sCommand.Length == 0) return;
 App.WriteOption("PromptCommand", sCommand);
 
-sFile = child.File;
-if (!sFile.Contains(@"\")) sFile = "";
-if (sCommand.IndexOf("%Source") >=0 && sFile.Length == 0) {
-AddMessage("No disk file is open for this command!");
+bool bNeedsSource = sCommand.IndexOf("%Source", StringComparison.OrdinalIgnoreCase) >= 0;
+string sSource = "";
+if (bNeedsSource) {
+string sCandidate = child.File;
+bool bHasDiskFile = !String.IsNullOrEmpty(sCandidate) && Path.IsPathRooted(sCandidate) && File.Exists(sCandidate);
+if (child.RTB.Modified) {
+PromptCommandSaveChoice choice = PromptCommandSaveDialog.Ask(this, bHasDiskFile);
+if (choice == PromptCommandSaveChoice.Cancel) return;
+if (choice == PromptCommandSaveChoice.SaveAndRun) {
+string sSave = bHasDiskFile ? sCandidate : Dialog.SaveFile("Save document for command", String.IsNullOrEmpty(sCandidate) ? Directory.GetCurrentDirectory() : sCandidate);
+if (sSave.Length == 0) return;
+try {
+child.SaveTextOrRtfFile(sSave);
+}
+catch {
+AddMessage(JezykInterfejsu.Wybierz("Document was not saved; command was not started.", "Dokument nie został zapisany; polecenie nie zostało uruchomione."), true);
 return;
 }
-else if (sFile.Length > 0) child.SaveTextOrRtfFile(sFile);
-
-string sDir = Directory.GetCurrentDirectory();
-if (sCommand.IndexOf("%SourceDir%") >=0) Directory.SetCurrentDirectory(Path.GetDirectoryName(sFile));
-sCommand = Util.ExpandCommandLine(sCommand, sFile, Path.ChangeExtension(sFile, ".exe"));
-// Dialog.Show(sCommand);
-
-// Try with COMSpec
-// string sOutput = Util.GetProgramOutput(@"c:\windows\system32\cmd.exe", "/c " + sCommand);
-
-// Debug JAWS script
-// if (!sCommand.Trim().EndsWith(">1")) sOutput = File.ReadAllText(App.TempFile);
-// Util.Run(sCommand);
-
-string sOutput = "";
-// if (sCommand.Trim().EndsWith(">1") || sCommand.Trim().EndsWith("&1")) Util.GetProgramOutput("cmd.exe", "/c " + sCommand);
-if (sCommand.Trim().EndsWith(">1") || sCommand.Trim().EndsWith("&1")) sOutput = Util.GetProgramOutput("cmd.exe", "/c " + sCommand);
-else {
-Util.RunHideWait(sCommand);
-sOutput = File.ReadAllText(App.TempFile);
+if (!File.Exists(sSave) || child.RTB.Modified || !String.Equals(child.File, sSave, StringComparison.OrdinalIgnoreCase)) {
+AddMessage(JezykInterfejsu.Wybierz("Document was not saved; command was not started.", "Dokument nie został zapisany; polecenie nie zostało uruchomione."), true);
+return;
+}
+sCandidate = sSave;
+bHasDiskFile = true;
+}
+else if (!bHasDiskFile) {
+AddMessage(JezykInterfejsu.Wybierz("This command needs a saved document; command was not started.", "To polecenie wymaga zapisanego dokumentu; polecenie nie zostało uruchomione."), true);
+return;
+}
+}
+if (!bHasDiskFile) {
+AddMessage(JezykInterfejsu.Wybierz("This command needs a disk file; command was not started.", "To polecenie wymaga pliku dyskowego; polecenie nie zostało uruchomione."), true);
+return;
+}
+sSource = sCandidate;
 }
 
-// Dialog.Show("output", sOutput.Length);
-
-/*
-Dialog.Show(sCommand);
-int i = sCommand.IndexOf(".exe");
-string sParams = sCommand.Substring(i + 5);
-sCommand = sCommand.Substring(0, i + 4);
-Dialog.Show(sCommand, sParams);
-string sOutput = Util.GetProgramOutput(sCommand, sParams);
-Dialog.Show(sOutput);
-*/
-
-if (sDir != Directory.GetCurrentDirectory()) Directory.SetCurrentDirectory(sDir);
-
-sOutput = sOutput.Trim();
-AddMessage((sOutput.Length == 0) ? "Done" : sOutput);
+string sTarget = (sSource.Length > 0) ? Path.ChangeExtension(sSource, ".exe") : "";
+string sExpanded = Util.ExpandCommandLine(sCommand, sSource, sTarget);
+string sExe, sArgs, sStartError;
+if (!ControlledCommand.TrySplitCommandLine(sExpanded, out sExe, out sArgs, out sStartError)) {
+AddMessage(sStartError, true);
+return;
 }
+string sWorkingDirectory = (sCommand.IndexOf("%SourceDir%", StringComparison.OrdinalIgnoreCase) >= 0)
+? Path.GetDirectoryName(sSource) : Directory.GetCurrentDirectory();
+if (String.IsNullOrEmpty(sWorkingDirectory) || !Directory.Exists(sWorkingDirectory)) {
+AddMessage(JezykInterfejsu.Wybierz("The command working folder is unavailable; command was not started.", "Katalog roboczy polecenia jest niedostępny; polecenie nie zostało uruchomione."), true);
+return;
+}
+
+PromptCommandResultForm resultForm = new PromptCommandResultForm();
+resultForm.Show(this);
+ControlledCommand command;
+bool bStarted = ControlledCommand.TryStart(sExe, sArgs, sWorkingDirectory, delegate(ControlledCommandResult result) {
+try {
+if (!resultForm.IsDisposed) resultForm.BeginInvoke((MethodInvoker)delegate {
+resultForm.Complete(result);
+AddMessage(result.Cancelled ? JezykInterfejsu.Wybierz("Command cancelled.", "Polecenie anulowano.") : String.Format(JezykInterfejsu.Wybierz("Command completed: exit code {0}.", "Polecenie zakończono: kod wyjścia {0}."), result.ExitCode));
+});
+}
+catch {}
+}, out command, out sStartError);
+if (!bStarted) {
+resultForm.Close();
+resultForm.Dispose();
+AddMessage(sStartError, true);
+return;
+}
+resultForm.Attach(command);
+AddMessage(JezykInterfejsu.Wybierz("Command started. Standard input is closed.", "Polecenie uruchomione. Standardowe wejście jest zamknięte."));
+}
+
 
 // REVIEW OUTPUT (Alt+Shift+F5) USUNIETE 16.09.2026 (docs/CO-USUWAMY.md 2.3).
 // Otwieralo plik z wynikiem BUDOWANIA, ktorego juz nikt nie tworzy - jedynym
 // pisarzem tego pliku byla komenda Compile.
 
+if (menuItem == menuMiscImportSnippetLibrary) {
+ImportSnippetLibrary();
+}
+
+if (menuItem == menuMiscExportSnippetLibrary) {
+ExportSnippetLibrary();
+}
+
 if (menuItem == menuMiscSaveSnippet) {
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -6977,21 +7032,23 @@ iEnd = iStart + rtb.SelectionLength;
 }
 sText = rtb.GetRange(iStart, iEnd);
 
-string sDir = @"Snippets\Default";   // patrz GetSnippetDir
-sDir = Path.Combine(App.DataDir, sDir);
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
+string sDir, sSnippetError;
+if (!TryGetSnippetDir(out sDir, out sSnippetError)) {
+AddMessage(sSnippetError, true);
+return;
+}
 sFile = Path.Combine(sDir, Path.GetFileName(child.File));
 //sFile = Path.ChangeExtension(sFile, ".txt");
 if (Path.GetExtension(sFile).Length == 0) sFile += ".txt";
 sFile = Dialog.SaveFile("", sFile);
 if (sFile.Length == 0) return;
 
-if (SaveSnippetFile(child, sText, sFile, rtb.SelectionLength == 0)) AddMessage("Done");
+if (SaveSnippetFile(child, sText, sFile, rtb.SelectionLength == 0)) AddMessage(JezykInterfejsu.Wybierz("Done", "Gotowe"));
 }
 
 if (menuItem == menuMiscInvokeSnippet) {
 if (rtb.SelectionLength == 0) {
-AddMessage("Cursor");
+AddMessage(JezykInterfejsu.Wybierz("Cursor", "Kursor"));
 //iStart = 0;
 //iEnd = rtb.TextLength;
 iStart = rtb.Index;
@@ -7004,7 +7061,12 @@ iEnd = iStart + rtb.SelectionLength;
 }
 sText = rtb.GetRange(iStart, iEnd);
 
-aResults = GetSnippetFiles(out aValues);
+string sSnippetError;
+aResults = GetSnippetFiles(out aValues, out sSnippetError);
+if (sSnippetError.Length > 0) {
+AddMessage(sSnippetError, true);
+return;
+}
 
 /*
 foreach (string sSnippetFile in aResults) {
@@ -7021,24 +7083,33 @@ Util.String2File(sbSnippet.ToString(), sSnippetFile);
 */
 
 if (aResults.Length == 0) {
-AddMessage("No files!");
+AddMessage(JezykInterfejsu.Wybierz("No files!", "Brak plików!"));
 return;
 }
 
-string sSnippet = Dialog.Pick("Pick", aResults, aValues, false, 0);
+string sSnippet = Dialog.Pick(JezykInterfejsu.Wybierz("Pick", "Wybierz"), aResults, aValues, false, 0);
 if (sSnippet.Length == 0) return;
 
 InvokeSnippet(sSnippet, sText, iStart, iEnd);
 }
 
+if (menuItem == menuMiscExpandSnippet) {
+RozwinSkrotSnippetu();
+}
+
 if (menuItem == menuMiscViewSnippet) {
-aResults = GetSnippetFiles(out aValues);
+string sSnippetError;
+aResults = GetSnippetFiles(out aValues, out sSnippetError);
+if (sSnippetError.Length > 0) {
+AddMessage(sSnippetError, true);
+return;
+}
 if (aResults.Length == 0) {
-AddMessage("No files!");
+AddMessage(JezykInterfejsu.Wybierz("No files!", "Brak plików!"));
 return;
 }
 
-sResult = Dialog.Pick("Pick", aResults, aValues, false, 0);
+sResult = Dialog.Pick(JezykInterfejsu.Wybierz("Pick", "Wybierz"), aResults, aValues, false, 0);
 if (sResult.Length == 0) return;
 
 OpenOrActivateWindow(sResult, 0);
@@ -7047,7 +7118,7 @@ OpenOrActivateWindow(sResult, 0);
 if (menuItem == menuMiscKeepUniqueItems) {
 string sLimitItem = Util.Literalize(App.ReadOption("LimitItem", "\n"));
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -7087,14 +7158,14 @@ iStart = rtb.SelectionStart;
 iEnd = iStart + rtb.SelectionLength;
 }
 
-sResult = Dialog.Input(sTitle, "Start", "1").Trim();
+sResult = Dialog.Input(sTitle, JezykInterfejsu.Wybierz("Start", "Początek"), "1").Trim();
 if (sResult.Length == 0) return;
 
 try {
 iLine = Int32.Parse(sResult);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 
@@ -7115,7 +7186,7 @@ rtb.Index = iStart;
 if (menuItem == menuMiscOrderItems) {
 string sLimitItem = Util.Literalize(App.ReadOption("LimitItem", "\n"));
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -7140,7 +7211,7 @@ rtb.Index = iStart;
 if (menuItem == menuMiscReverseItems) {
 string sLimitItem = Util.Literalize(App.ReadOption("LimitItem", "\n"));
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 iEnd = rtb.TextLength;
 }
@@ -7170,11 +7241,11 @@ List<string> list = new List<string>();
 foreach (string s in aResults) if (s.Trim().Length > 0 && Array.IndexOf(a, s) == -1) list.Add(s);
 aResults = list.ToArray();
 if (aResults.Length == 0) {
-AddMessage("No output!");
+AddMessage(JezykInterfejsu.Wybierz("No output!", "Brak wyniku!"));
 return;
 }
 
-AddMessage(Util.Pluralize(aResults.Length, "line"));
+AddMessage(Util.Pluralize(aResults.Length, JezykInterfejsu.Wybierz("line", "wiersz")));
 // sText = String.Join("\n", aResults).TrimEnd('\n') + "\n";
 sText = String.Join(sLimitItem, aResults);
 child = new MdiChild(App.Frame);
@@ -7195,11 +7266,11 @@ List<string> list = new List<string>();
 foreach (string s in aResults) if (s.Trim().Length > 0 && Array.IndexOf(a, s) >= 0) list.Add(s);
 aResults = list.ToArray();
 if (aResults.Length == 0) {
-AddMessage("No output!");
+AddMessage(JezykInterfejsu.Wybierz("No output!", "Brak wyniku!"));
 return;
 }
 
-AddMessage(Util.Pluralize(aResults.Length, "line"));
+AddMessage(Util.Pluralize(aResults.Length, JezykInterfejsu.Wybierz("line", "wiersz")));
 // sText = String.Join("\n", aResults).TrimEnd('\n') + "\n";
 sText = String.Join(sLimitItem, aResults);
 child = new MdiChild(App.Frame);
@@ -7252,7 +7323,7 @@ sText = "EdSharpNG " + App.VersionString + " (beta)\n" + Util.GetProgramBuildDat
 sText += "Based on EdSharp by Jamal Mazrui.\nOriginal work copyright 2007 - 2026 by Jamal Mazrui.\nEdSharpNG changes copyright 2026 by Michal Kasperczak.\nGNU Lesser General Public License (LGPL)\n\n";
 sText += ".NET Framework " + RuntimeEnvironment.GetSystemVersion() + "\n\n";
 sText += Util.GetPortableExecutableKind();
-Dialog.Show("About", sText);
+Dialog.Show(JezykInterfejsu.Wybierz("About", "O programie"), sText);
 }
 
 if (menuItem == menuHelpDocumentation) {
@@ -7261,8 +7332,12 @@ Process.Start(sFile);
 }
 
 if (menuItem == menuHelpTutorial) {
-// Open the tutorial in the default browser associated with the .htm extension.
-sFile = Path.Combine(App.ProgramDir, "Tutorial.htm");
+// The upstream Tutorial.htm remains unchanged; use only the handbook matching the UI language.
+sFile = GetLocalizedTutorialPath(App.ProgramDir, JezykInterfejsu.Polski);
+if (!File.Exists(sFile)) {
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Tutorial file is missing: {0}", "Brakuje pliku podręcznika: {0}"), sFile));
+return;
+}
 Process.Start(sFile);
 }
 if (menuItem == menuHelpHistoryOfChanges) {
@@ -7272,11 +7347,11 @@ OpenOrActivateWindow(sFile, 1);
 
 if (menuItem == menuHelpKeyDescriber) {
 if (this.KeyDescriber) {
-SetMessage("No Key Describer");
+SetMessage(JezykInterfejsu.Wybierz("No Key Describer", "Opis klawiszy wyłączony"));
 this.KeyDescriber = false;
 }
 else {
-SetMessage("Key Describer On");
+SetMessage(JezykInterfejsu.Wybierz("Key Describer On", "Opis klawiszy włączony"));
 this.KeyDescriber = true;
 }
 }
@@ -7292,10 +7367,6 @@ sFile = Path.Combine(App.ProgramDir, "EdSharp_Hotkeys.txt");
 OpenOrActivateWindow(sFile, 1);
 }
 
-if (menuItem == menuHelpAlternateMenu) {
-AlternateMenu();
-}
-
 if (menuItem == menuHelpCommandPalette) {
 CommandPalette();
 }
@@ -7303,7 +7374,7 @@ CommandPalette();
 if (menuItem == menuHelpContextMenu) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -7313,7 +7384,7 @@ ContextMenu(sFile);
 if (menuItem == menuHelpSendToMenu) {
 sFile = child.File;
 if (!sFile.Contains(@"\")) {
-AddMessage("No disk file is open for this command!");
+AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 return;
 }
 
@@ -7352,7 +7423,7 @@ ReportProblem();
 // porwac fokusu w chwili, gdy uzytkownik zdazyl wrocic do pisania.
 public void UpdateComponents() {
 try {
-App.Frame.AddMessage("Sprawdzam skladniki konwersji...");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Checking conversion components...", "Sprawdzam składniki konwersji..."));
 System.Threading.Thread thread = new System.Threading.Thread(delegate() {
 string sWynik;
 try {
@@ -7360,15 +7431,15 @@ bool bTylkoBrakujace = false;
 string sZrobione = Skladniki.SprawdzIUzupelnij(bTylkoBrakujace);
 System.Collections.Generic.List<string> lBrak = Skladniki.Brakujace();
 if (sZrobione.Length > 0 && lBrak.Count == 0)
-sWynik = "Skladniki gotowe: " + sZrobione + ".";
+sWynik = JezykInterfejsu.Wybierz("Components ready: ", "Składniki gotowe: ") + sZrobione + ".";
 else if (sZrobione.Length > 0)
-sWynik = "Pobrano: " + sZrobione + ". Nadal brakuje: " + string.Join(", ", lBrak.ToArray()) + ".";
+sWynik = JezykInterfejsu.Wybierz("Downloaded: ", "Pobrano: ") + sZrobione + JezykInterfejsu.Wybierz(". Still missing: ", ". Nadal brakuje: ") + string.Join(", ", lBrak.ToArray()) + ".";
 else if (lBrak.Count == 0)
-sWynik = "Wszystkie skladniki sa aktualne.";
+sWynik = JezykInterfejsu.Wybierz("All components are up to date.", "Wszystkie składniki są aktualne.");
 else
-sWynik = "Nie udalo sie pobrac: " + string.Join(", ", lBrak.ToArray()) + ". Sprawdz polaczenie z internetem.";
+sWynik = JezykInterfejsu.Wybierz("Could not download: ", "Nie udało się pobrać: ") + string.Join(", ", lBrak.ToArray()) + JezykInterfejsu.Wybierz(". Check your Internet connection.", ". Sprawdź połączenie z Internetem.");
 }
-catch { sWynik = "Sprawdzanie skladnikow nie doszlo do skutku."; }
+catch { sWynik = JezykInterfejsu.Wybierz("Component check did not complete.", "Sprawdzanie składników nie doszło do skutku."); }
 
 try {
 if (App.Frame == null || !App.Frame.IsHandleCreated) return;
@@ -7430,6 +7501,12 @@ return new object[] {iStart, sText};
 } // GetChunk method
 
 public void InvokeSnippet(string sSnippet, string sText, int iStart, int iEnd) {
+InvokeSnippet(sSnippet, sText, iStart, iEnd, true, null);
+} // InvokeSnippet method
+
+// Wspólny silnik dla Alt+V i ręcznego rozwijania.  Druga droga może po modalu
+// ponownie sprawdzić dokument zanim dojdzie do jedynego ReplaceRange.
+public bool InvokeSnippet(string sSnippet, string sText, int iStart, int iEnd, bool bSayResult, Func<bool> fnCanApply) {
 string[] aLabels, aValues, aResults;
 int iIndex;
 HomerRichTextBox rtb = this.Child.RTB;
@@ -7479,7 +7556,7 @@ listValues.Add(sValue);
 aLabels = listLabels.ToArray();
 aValues = listValues.ToArray();
 aResults = Dialog.MultiInput("Attributes", aLabels, aValues);
-if (aResults.Length == 0) return;
+if (aResults.Length == 0) return false;
 
 for (int i = 0; i < aResults.Length; i++) {
 sLabel = aLabels[i].Substring(1);
@@ -7537,7 +7614,7 @@ listValues.Add(sValue);
 aLabels = listLabels.ToArray();
 aValues = listValues.ToArray();
 aResults = Dialog.MultiInput("Variables", aLabels, aValues);
-if (aResults.Length == 0) return;
+if (aResults.Length == 0) return false;
 
 aVars = listVars.ToArray();
 for (int i = 0; i < aVars.Length; i++) {
@@ -7565,9 +7642,11 @@ iIndex = iStart + sText.Length;
 if (rtb.SelectionLength == 0) iIndex -= sPost.Length;
 }
 
+if (fnCanApply != null && !fnCanApply()) return false;
 rtb.ReplaceRange(iStart, iEnd, sText);
 rtb.Index = iIndex;
-Util.Say(rtb.RowText);
+if (bSayResult) Util.Say(rtb.RowText);
+return true;
 } // InvokeSnippet method
 
 // METODY PyDent2Brace i PyBrace2Dent USUNIETE 16.09.2026 razem z komendami
@@ -7580,12 +7659,12 @@ string sResult, sTitle, sBody, sText, sLine;
 int iWidth, iLength, iIndex, iStart, iEnd, i;
 HomerRichTextBox rtb = this.Child.RTB;
 if (rtb.SelectionLength == 0) {
-sTitle = "Hard Line Break All";
+sTitle = JezykInterfejsu.Wybierz("Hard Line Break All", "Twardy podział wiersza — wszystko");
 iStart = 0;
 iEnd = rtb.TextLength;
 }
 else {
-sTitle = "Hard Line Break Selected";
+sTitle = JezykInterfejsu.Wybierz("Hard Line Break Selected", "Twardy podział wiersza — zaznaczenie");
 iStart = rtb.SelectionStart;
 iEnd = iStart + rtb.SelectionLength;
 }
@@ -7597,14 +7676,14 @@ if (iLength > iWidth) iWidth = iLength;
 }
 
 sText = iWidth.ToString();
-sResult = Dialog.Input(sTitle, "Width", sText).Trim();
+sResult = Dialog.Input(sTitle, JezykInterfejsu.Wybierz("Width", "Szerokość"), sText).Trim();
 if (sResult.Length == 0) return;
 
 try {
 iWidth = Int32.Parse(sResult);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 
@@ -7652,7 +7731,7 @@ HomerRichTextBox rtb = this.Child.RTB;
 sText = rtb.Text;
 
 if (sText.Length == 0) {
-AddMessage("No text!");
+AddMessage(JezykInterfejsu.Wybierz("No text!", "Brak tekstu!"));
 return;
 }
 sText = Util.Convert2WinLineBreak(sText);
@@ -7743,22 +7822,22 @@ bool bOdKursora = false;
 if (rtb.SelectionLength > 0) { AddMessage("Selected"); iBaza = rtb.SelectionStart; sText = rtb.SelectedText; }
 else if (rtb.SelectionStart > 0) {
 bOdKursora = true; iBaza = rtb.SelectionStart; sText = rtb.Text.Substring(iBaza);
-AddMessage("From cursor");
+AddMessage(JezykInterfejsu.Wybierz("From cursor", "Od kursora"));
 }
-else { AddMessage("All"); iBaza = 0; sText = rtb.Text; }
-if (sText.Length == 0) { AddMessage("No text!"); return; }
+else { AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko")); iBaza = 0; sText = rtb.Text; }
+if (sText.Length == 0) { AddMessage(JezykInterfejsu.Wybierz("No text!", "Brak tekstu!")); return; }
 
 List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sText);
 if (lBledy.Count == 0 && bOdKursora) {
 // Od kursora czysto - proponujemy calosc, zeby brak bledow nie znaczyl
 // czegos innego, niz uzytkownik uslyszal.
-if (String.Equals(Dialog.Confirm("Spelling", "No spelling errors from the cursor to the end.\n\nCheck the whole document from the beginning?", "Y"), "Y")) {
+if (String.Equals(Dialog.Confirm(JezykInterfejsu.Wybierz("Spelling", "Pisownia"), JezykInterfejsu.Wybierz("No spelling errors from the cursor to the end.\n\nCheck the whole document from the beginning?", "Brak błędów pisowni od kursora do końca.\n\nSprawdzić cały dokument od początku?"), "Y"), "Y")) {
 iBaza = 0; sText = rtb.Text; bOdKursora = false;
 lBledy = Pisownia.Sprawdz(sText);
 }
 }
 if (lBledy.Count == 0) {
-string sGdzie = bOdKursora ? "No spelling errors from the cursor to the end" : "No spelling errors found";
+string sGdzie = bOdKursora ? JezykInterfejsu.Wybierz("No spelling errors from the cursor to the end", "Brak błędów pisowni od kursora do końca") : JezykInterfejsu.Wybierz("No spelling errors found", "Nie znaleziono błędów pisowni");
 AddMessage(sGdzie); Say.say(sGdzie); return;
 }
 
@@ -7797,8 +7876,8 @@ int iZazn = lMapa.IndexOf(iWybrany);
 if (iZazn < 0) { for (int k = 0; k < lMapa.Count; k++) if (lMapa[k] >= iWybrany) { iZazn = k; break; } }
 if (iZazn < 0) iZazn = lWiersze.Count - 1;
 
-LbcDialog dlgL = new LbcDialog(String.Format("Spelling: {0} of {1} to check", iZostalo, lStan.Count), App.Frame);
-ListBox lstB = dlgL.addListBox("Misspelled words", lWiersze, lWiersze[iZazn]);
+LbcDialog dlgL = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("Spelling: {0} of {1} to check", "Pisownia: {0} z {1} do sprawdzenia"), iZostalo, lStan.Count), App.Frame);
+ListBox lstB = dlgL.addListBox(JezykInterfejsu.Wybierz("Misspelled words", "Błędnie zapisane słowa"), lWiersze, lWiersze[iZazn]);
 dlgL.setInitialFocus(lstB);
 // Kursor w dokumencie idzie za wyborem z listy, zeby czytnik czytal to
 // samo miejsce, ktore jest zaznaczone w oknie.
@@ -7812,7 +7891,7 @@ rtbL.Index = iBazaL + bb.Start;
 rtbL.Select(iBazaL + bb.Start, bb.Dlugosc);
 };
 }
-string sBtnL = dlgL.runWithButtons(new string[] {"Correct", "&Add to dictionary", "&Ignore all", "Finish"});
+string sBtnL = dlgL.runWithButtons(new string[] {"Correct", JezykInterfejsu.Wybierz("&Add to dictionary", "&Dodaj do słownika"), JezykInterfejsu.Wybierz("&Ignore all", "&Ignoruj wszystkie"), "Finish"});
 int iSel = lstB.SelectedIndex;
 dlgL.Dispose();
 if (sBtnL.Length == 0 || String.Equals(sBtnL, "Finish", StringComparison.OrdinalIgnoreCase)) { bPrzerwane = true; break; }
@@ -7830,25 +7909,25 @@ iWybrany = lMapa[iSel];
 // Dodanie do slownika ZARAZEM zdejmuje blad ze wszystkich wystapien (i
 // z przyszlych sprawdzen), bo slowo uznane za poprawne przestaje byc
 // bledem - nie trzeba go osobno ignorowac.
-if (String.Equals(sBtnL, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
+if (String.Equals(sBtnL, JezykInterfejsu.Wybierz("Add to dictionary", "Dodaj do słownika"), StringComparison.OrdinalIgnoreCase)) {
 string sSl = lStan[iWybrany].B.Slowo;
 if (Pisownia.Dodaj(sSl)) {
 iDodanych++;
 int iIle = OznaczWszystkie(lStan, sSl, "added");
-AddMessage(String.Format("Added: {0} ({1})", sSl, iIle));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Added: {0} ({1})", "Dodano: {0} ({1})"), sSl, iIle));
 }
-else AddMessage("Could not add word");
+else AddMessage(JezykInterfejsu.Wybierz("Could not add word", "Nie można dodać słowa"));
 continue;
 }
 
 // "Ignore all" z listy - dla nazwiska, ktore wraca kilkanascie razy, bez
 // wchodzenia w okno poprawiania.
-if (String.Equals(sBtnL, "Ignore all", StringComparison.OrdinalIgnoreCase)) {
+if (String.Equals(sBtnL, JezykInterfejsu.Wybierz("Ignore all", "Ignoruj wszystkie"), StringComparison.OrdinalIgnoreCase)) {
 string sSl = lStan[iWybrany].B.Slowo;
 Pisownia.Pomijaj(sSl);
 int iIle = OznaczWszystkie(lStan, sSl, "ignored");
 iIgnorowanych += iIle;
-AddMessage(String.Format("Ignored: {0} ({1})", sSl, iIle));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Ignored: {0} ({1})", "Pominięto: {0} ({1})"), sSl, iIle));
 continue;
 }
 } else {
@@ -7865,10 +7944,10 @@ rtb.Select(iBaza + b.Start, b.Dlugosc);
 
 int iIleRazy = IleWystapien(lStan, b.Slowo);
 string sOtoczenie = Otoczenie(sText, b.Start, b.Dlugosc);
-LbcDialog dlg = new LbcDialog(String.Format("Spelling: {0}", b.Slowo), App.Frame);
-dlg.addLabel(String.Format("Not in dictionary: {0}", b.Slowo));
-dlg.addLabel(String.Format("Context: {0}", sOtoczenie));
-if (iIleRazy > 1) dlg.addLabel(String.Format("This word occurs {0} times", iIleRazy));
+LbcDialog dlg = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("Spelling: {0}", "Pisownia: {0}"), b.Slowo), App.Frame);
+dlg.addLabel(String.Format(JezykInterfejsu.Wybierz("Not in dictionary: {0}", "Brak w słowniku: {0}"), b.Slowo));
+dlg.addLabel(String.Format(JezykInterfejsu.Wybierz("Context: {0}", "Kontekst: {0}"), sOtoczenie));
+if (iIleRazy > 1) dlg.addLabel(String.Format(JezykInterfejsu.Wybierz("This word occurs {0} times", "To słowo występuje {0} razy"), iIleRazy));
 
 // KOLEJNOSC: najpierw LISTA PODPOWIEDZI z fokusem, potem pole tekstowe
 // (12.09.2026, zgloszenie Kasperczaka).  Powod: gdy fokus startowal w
@@ -7878,7 +7957,7 @@ if (iIleRazy > 1) dlg.addLabel(String.Format("This word occurs {0} times", iIleR
 List<string> lWybor = new List<string>(b.Podpowiedzi);
 ListBox lst = null;
 if (lWybor.Count > 0) lst = dlg.addListBox("Suggestions", lWybor, lWybor[0]);
-TextBox txt = dlg.addInputBox("Replace with", b.Podpowiedzi.Count > 0 ? b.Podpowiedzi[0] : b.Slowo);
+TextBox txt = dlg.addInputBox(JezykInterfejsu.Wybierz("Replace with", "Zamień na"), b.Podpowiedzi.Count > 0 ? b.Podpowiedzi[0] : b.Slowo);
 // Wybor z listy przepisuje sie do pola tekstowego, zeby dalo sie i wybrac
 // podpowiedz, i dopisac wlasna wersje - bez przeskakiwania miedzy trybami.
 if (lst != null) {
@@ -7896,37 +7975,37 @@ dlg.setInitialFocus(txt);   // brak podpowiedzi - jedyne, co da sie zrobic, to w
 // "Replace all" tylko gdy slowo faktycznie wraca - inaczej byloby to
 // martwym przyciskiem do przetabowania.
 List<string> lPrzyciski = new List<string>();
-lPrzyciski.Add("&Replace");
-if (iIleRazy > 1) lPrzyciski.Add("Replace a&ll");
-lPrzyciski.Add("Ski&p");
-lPrzyciski.Add("&Ignore all");
-lPrzyciski.Add("&Add to dictionary");
-lPrzyciski.Add("Cancel");
+lPrzyciski.Add(JezykInterfejsu.Wybierz("&Replace", "&Zamień"));
+if (iIleRazy > 1) lPrzyciski.Add(JezykInterfejsu.Wybierz("Replace a&ll", "Zamień &wszystkie"));
+lPrzyciski.Add(JezykInterfejsu.Wybierz("Ski&p", "&Pomiń"));
+lPrzyciski.Add(JezykInterfejsu.Wybierz("&Ignore all", "&Ignoruj wszystkie"));
+lPrzyciski.Add(JezykInterfejsu.Wybierz("&Add to dictionary", "&Dodaj do słownika"));
+lPrzyciski.Add(JezykInterfejsu.Wybierz("Cancel", "Anuluj"));
 string sBtn = dlg.runWithButtons(lPrzyciski.ToArray());
 string sNowe = txt.Text;
 dlg.Dispose();
 
-if (sBtn.Length == 0 || String.Equals(sBtn, "Cancel", StringComparison.OrdinalIgnoreCase)) {
+if (sBtn.Length == 0 || String.Equals(sBtn, JezykInterfejsu.Wybierz("Cancel", "Anuluj"), StringComparison.OrdinalIgnoreCase)) {
 // Anulowanie w oknie jednego bledu wraca DO LISTY, nie konczy calego
 // sprawdzania - inaczej pomylka kosztowalaby cala prace.  Sprawdzanie
 // konczy przycisk Finish na liscie albo Escape na niej.
 if (bLista) continue;
 bPrzerwane = true; break;
 }
-if (String.Equals(sBtn, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
+if (String.Equals(sBtn, JezykInterfejsu.Wybierz("Add to dictionary", "Dodaj do słownika"), StringComparison.OrdinalIgnoreCase)) {
 if (Pisownia.Dodaj(b.Slowo)) {
 iDodanych++;
 OznaczWszystkie(lStan, b.Slowo, "added");
-AddMessage(String.Format("Added: {0}", b.Slowo));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Added: {0}", "Dodano: {0}"), b.Slowo));
 }
-else AddMessage("Could not add word");
+else AddMessage(JezykInterfejsu.Wybierz("Could not add word", "Nie można dodać słowa"));
 continue;
 }
-if (String.Equals(sBtn, "Ignore all", StringComparison.OrdinalIgnoreCase)) {
+if (String.Equals(sBtn, JezykInterfejsu.Wybierz("Ignore all", "Ignoruj wszystkie"), StringComparison.OrdinalIgnoreCase)) {
 Pisownia.Pomijaj(b.Slowo);
 int iIle = OznaczWszystkie(lStan, b.Slowo, "ignored");
 iIgnorowanych += iIle;
-AddMessage(String.Format("Ignored: {0} ({1})", b.Slowo, iIle));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Ignored: {0} ({1})", "Pominięto: {0} ({1})"), b.Slowo, iIle));
 continue;
 }
 if (String.Equals(sBtn, "Skip", StringComparison.OrdinalIgnoreCase)) {
@@ -7936,14 +8015,14 @@ continue;
 }
 if (sNowe.Length == 0 || sNowe == b.Slowo) { w2.Zrobione = true; w2.Los = "unchanged"; continue; }
 
-if (String.Equals(sBtn, "Replace all", StringComparison.OrdinalIgnoreCase)) {
+if (String.Equals(sBtn, JezykInterfejsu.Wybierz("Replace all", "Zamień wszystkie"), StringComparison.OrdinalIgnoreCase)) {
 int iIle = 0;
 foreach (BladWTrakcie w3 in lStan) {
 if (w3.Zrobione || w3.B.Slowo != b.Slowo) continue;
 w3.Nowe = sNowe; w3.Zrobione = true; w3.Los = "replaced"; iIle++;
 }
 iPoprawionych += iIle;
-AddMessage(String.Format("Replaced {0}: {1} -> {2}", iIle, b.Slowo, sNowe));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Replaced {0}: {1} -> {2}", "Zastąpiono {0}: {1} -> {2}"), iIle, b.Slowo, sNowe));
 continue;
 }
 
@@ -7964,12 +8043,12 @@ rtb.Index = iBaza;
 // Podsumowanie wymienia tylko to, co faktycznie sie stalo - zerowe liczniki
 // sa halasem, przez ktory trzeba przesluchac cale zdanie.
 List<string> lCzesci = new List<string>();
-if (iPoprawionych > 0) lCzesci.Add(String.Format("{0} replaced", iPoprawionych));
-if (iDodanych > 0) lCzesci.Add(String.Format("{0} added to dictionary", iDodanych));
-if (iIgnorowanych > 0) lCzesci.Add(String.Format("{0} ignored", iIgnorowanych));
-if (iPominietych > 0) lCzesci.Add(String.Format("{0} skipped", iPominietych));
-if (lCzesci.Count == 0) lCzesci.Add("nothing changed");
-string sPodsumowanie = String.Join(", ", lCzesci.ToArray()) + (bPrzerwane ? ", stopped" : "");
+if (iPoprawionych > 0) lCzesci.Add(String.Format(JezykInterfejsu.Wybierz("{0} replaced", "Zamieniono: {0}"), iPoprawionych));
+if (iDodanych > 0) lCzesci.Add(String.Format(JezykInterfejsu.Wybierz("{0} added to dictionary", "Dodano do słownika: {0}"), iDodanych));
+if (iIgnorowanych > 0) lCzesci.Add(String.Format(JezykInterfejsu.Wybierz("{0} ignored", "Pominięto: {0}"), iIgnorowanych));
+if (iPominietych > 0) lCzesci.Add(String.Format(JezykInterfejsu.Wybierz("{0} skipped", "Pominięto: {0}"), iPominietych));
+if (lCzesci.Count == 0) lCzesci.Add(JezykInterfejsu.Wybierz("nothing changed", "nic nie zmieniono"));
+string sPodsumowanie = String.Join(", ", lCzesci.ToArray()) + (bPrzerwane ? JezykInterfejsu.Wybierz(", stopped", ", przerwano") : "");
 AddMessage(sPodsumowanie);
 Say.say(sPodsumowanie);
 } // SpellCheckSystem method
@@ -8013,7 +8092,7 @@ object oApp, oDocs, oDoc, oSelection;
 
 HomerRichTextBox rtb = this.Child.RTB;
 if (rtb.SelectionLength == 0) {
-AddMessage("All");
+AddMessage(JezykInterfejsu.Wybierz("All", "Wszystko"));
 iStart = 0;
 sText = rtb.Text;
 }
@@ -8024,7 +8103,7 @@ sText = rtb.SelectedText;
 }
 
 if (sText.Length == 0) {
-AddMessage("No text!");
+AddMessage(JezykInterfejsu.Wybierz("No text!", "Brak tekstu!"));
 return;
 }
 
@@ -8067,7 +8146,7 @@ COM.Release(ref oApp);
 App.Frame.Activate();
 App.Frame.Child.RTB.Select();
 sText = Util.Convert2UnixLineBreak(sText);
-if (sText == sOldText) AddMessage("No changes!");
+if (sText == sOldText) AddMessage(JezykInterfejsu.Wybierz("No changes!", "Brak zmian!"));
 else {
 rtb.ReplaceRange(iStart, iEnd, sText);
 rtb.Index = iStart;
@@ -8101,11 +8180,11 @@ sText = rtb.SelectedText;
 }
 
 if (sText.Trim().Length == 0) {
-AddMessage("Brak tekstu.");
+AddMessage(JezykInterfejsu.Wybierz("No text.", "Brak tekstu."));
 return;
 }
 if (!Synonimy.IsSingleWord(sText)) {
-AddMessage("Zaznacz jedno słowo.");
+AddMessage(JezykInterfejsu.Wybierz("Select one word.", "Zaznacz jedno słowo."));
 return;
 }
 
@@ -8113,7 +8192,7 @@ string sDictionary = SlownikiSynonimow.NormalizeMode(App.ReadOption("SynonymDict
 lGroups = SlownikiSynonimow.Find(Path.Combine(App.ProgramDir, "Synonyms"), sText, sDictionary);
 if (SlownikiSynonimow.Error.Length > 0) AddMessage(SlownikiSynonimow.Error);
 if (lGroups.Count == 0) {
-if (SlownikiSynonimow.Error.Length == 0) AddMessage("Nie znaleziono synonimów dla: " + sText);
+if (SlownikiSynonimow.Error.Length == 0) AddMessage(String.Format(JezykInterfejsu.Wybierz("No synonyms found for: {0}", "Nie znaleziono synonimów dla: {0}"), sText));
 return;
 }
 
@@ -8129,7 +8208,7 @@ lDisplay.Add(SlownikiSynonimow.FormatEntry(lValues[lValues.Count - 1], group.Par
 }
 }
 
-string sChoice = Dialog.PickSynonyms("Synonimy dla: " + sText, lValues.ToArray(), lDisplay.ToArray(), lSenseIds.ToArray(), lParts.ToArray(), Path.Combine(App.ProgramDir, "Synonyms"));
+string sChoice = Dialog.PickSynonyms(JezykInterfejsu.Wybierz("Synonyms for: ", "Synonimy dla: ") + sText, lValues.ToArray(), lDisplay.ToArray(), lSenseIds.ToArray(), lParts.ToArray(), Path.Combine(App.ProgramDir, "Synonyms"));
 if (sChoice.Length == 0) return;
 sChoice = Synonimy.ApplyCapitalization(sText, sChoice);
 iEnd = iStart + sText.Length;
@@ -8137,7 +8216,7 @@ rtb.ReplaceRange(iStart, iEnd, sChoice);
 rtb.Index = iStart;
 App.Frame.Activate();
 App.Frame.Child.RTB.Select();
-AddMessage("Wstawiono: " + sChoice);
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Inserted: {0}", "Wstawiono: {0}"), sChoice));
 } // Thesaurus method
 
 // bForce = user SWIADOMIE wybral ponowna instalacje biezacej wersji
@@ -8167,7 +8246,7 @@ string sOwnerRepo = "michalkasperczak/EdSharpNG";
 string sReleasesUrl = "https://github.com/" + sOwnerRepo + "/releases/latest";
 string sName = "EdSharpNG_Setup.exe";
 
-Util.Say("Checking for updates");
+Util.Say(JezykInterfejsu.Wybierz("Checking for updates", "Sprawdzanie aktualizacji"));
 int iHttp;
 string sNotes, sAssetUrl;
 string sTag = Util.FetchLatestRelease(sOwnerRepo, sName, out sNotes, out sAssetUrl, out iHttp);
@@ -8176,9 +8255,9 @@ if (sTag.Length == 0) {
 // i wydania po prostu nie ma - mowic wtedy o "sprawdz polaczenie z internetem"
 // byloby wysylaniem czlowieka do naprawy czegos, co dziala.
 if (iHttp == 404)
-Dialog.Show("Elevate Version", "No release has been published for EdSharpNG yet, so there is nothing to update to.\nYou are running version " + App.VersionString + ".\nTest builds are delivered to you directly, outside this command.");
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("No release has been published for EdSharpNG yet, so there is nothing to update to.\nYou are running version {0}.\nTest builds are delivered to you directly, outside this command.", "Nie opublikowano jeszcze wydania EdSharpNG, więc nie ma do czego aktualizować.\nUżywasz wersji {0}.\nWersje testowe są dostarczane bezpośrednio, poza tym poleceniem."), App.VersionString));
 else
-Dialog.Show("Elevate Version", "Could not check for updates right now.\nPlease check your internet connection and try again.\nYou can also download the latest installer from\n" + sReleasesUrl);
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Could not check for updates right now.\nPlease check your internet connection and try again.\nYou can also download the latest installer from\n{0}", "Nie można teraz sprawdzić aktualizacji.\nSprawdź połączenie z internetem i spróbuj ponownie.\nNajnowszy instalator możesz też pobrać z\n{0}"), sReleasesUrl));
 return;
 }
 
@@ -8195,25 +8274,25 @@ int iCompare = Util.CompareVersions(sLatest, sLocal);
 // wersji zostaje mozliwe, ale jako SWIADOMY wybor z menu (Reinstall
 // Current Version), a nie jako pytanie, ktore wyskakuje samo.
 if (iCompare == 0 && !bForce) {
-Dialog.Show("Elevate Version", "EdSharpNG " + sLocal + " is up to date.");
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("EdSharpNG {0} is up to date.", "EdSharpNG {0} jest aktualny."), sLocal));
 return;
 }
 string sDefault = "N";
 string sMsg;
 if (iCompare > 0) {
-sMsg = "A newer EdSharp is available.\nInstalled: " + sLocal + "\nAvailable: " + sLatest + "\n\nDownload and run the new installer now?";
+sMsg = String.Format(JezykInterfejsu.Wybierz("A newer EdSharp is available.\nInstalled: {0}\nAvailable: {1}\n\nDownload and run the new installer now?", "Nowsza wersja EdSharp jest dostępna.\nZainstalowana: {0}\nDostępna: {1}\n\nPobrać i uruchomić nowy instalator teraz?"), sLocal, sLatest);
 sDefault = "Y";
 }
-else if (iCompare == 0) sMsg = "EdSharpNG " + sLocal + " is already the latest release.\n\nDownload and install it again anyway?";
-else sMsg = "EdSharp's version number (" + sLocal + ") is higher than the latest public release (" + sLatest + ").\n\nDownload and install the latest public release from the web anyway?";
-if (Dialog.Confirm("Elevate Version", sMsg, sDefault) != "Y") return;
+else if (iCompare == 0) sMsg = String.Format(JezykInterfejsu.Wybierz("EdSharpNG {0} is already the latest release.\n\nDownload and install it again anyway?", "EdSharpNG {0} jest już najnowszym wydaniem.\n\nPobrać i zainstalować go ponownie mimo to?"), sLocal);
+else sMsg = String.Format(JezykInterfejsu.Wybierz("EdSharp's version number ({0}) is higher than the latest public release ({1}).\n\nDownload and install the latest public release from the web anyway?", "Numer wersji EdSharp ({0}) jest wyższy niż najnowsze wydanie publiczne ({1}).\n\nMimo to pobrać i zainstalować najnowsze wydanie publiczne z internetu?"), sLocal, sLatest);
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), sMsg, sDefault) != "Y") return;
 
-Util.Say("Downloading installer");
+Util.Say(JezykInterfejsu.Wybierz("Downloading installer", "Pobieranie instalatora"));
 // Adres z API wydania; skladanie z nazwy tylko wtedy, gdy API go nie oddalo.
 string sUrl = (sAssetUrl.Length > 0) ? sAssetUrl : (sReleasesUrl + "/download/" + sName);
 string sFile = Homer.Web.download(sUrl, Path.GetTempPath(), sName);
 if (sFile.Length == 0) {
-Dialog.Show("Elevate Version", "The download did not complete.\nYou can download the installer manually from\n" + sReleasesUrl);
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The download did not complete.\nYou can download the installer manually from\n{0}", "Pobieranie nie zostało ukończone.\nInstalator możesz pobrać ręcznie z\n{0}"), sReleasesUrl));
 return;
 }
 
@@ -8228,28 +8307,28 @@ string sExpected = "";
 Match matchSum = Regex.Match(sNotes == null ? "" : sNotes, "\\b([0-9a-fA-F]{64})\\b");
 if (matchSum.Success) sExpected = matchSum.Groups[1].Value.ToUpperInvariant();
 if (sExpected.Length == 64) {
-Util.Say("Checking the installer");
+Util.Say(JezykInterfejsu.Wybierz("Checking the installer", "Sprawdzanie instalatora"));
 string sActual = Util.FileSha256(sFile);
 if (sActual.Length == 0) {
-Dialog.Show("Elevate Version", "The downloaded installer could not be checked, so it was NOT started.\nThe file is here, if you want to inspect it yourself:\n" + sFile);
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The downloaded installer could not be checked, so it was NOT started.\nThe file is here, if you want to inspect it yourself:\n{0}", "Nie można było sprawdzić pobranego instalatora, więc go nie uruchomiono.\nPlik jest tutaj, jeśli chcesz sprawdzić go samodzielnie:\n{0}"), sFile));
 return;
 }
 if (sActual != sExpected) {
 // Plik kasujemy: zostawienie w katalogu tymczasowym pliku o nazwie
 // EdSharpNG_Setup.exe, ktory nie jest nasza paczka, samo w sobie jest pulapka.
 try { File.Delete(sFile); } catch {}
-Dialog.Show("Elevate Version", "STOP: the downloaded installer does not match the checksum published with release " + sTag + ".\nIt was NOT started and has been deleted.\n\nThis can mean a broken download, or a file that is not ours.\nTry again later, or download it yourself from\n" + sReleasesUrl);
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("STOP: the downloaded installer does not match the checksum published with release {0}.\nIt was NOT started and has been deleted.\n\nThis can mean a broken download, or a file that is not ours.\nTry again later, or download it yourself from\n{1}", "STOP: pobrany instalator nie odpowiada sumie kontrolnej opublikowanej z wydaniem {0}.\nNie został uruchomiony i został usunięty.\n\nMoże to oznaczać uszkodzone pobieranie albo obcy plik.\nSpróbuj później albo pobierz go samodzielnie z\n{1}"), sTag, sReleasesUrl));
 return;
 }
 }
 else {
-if (Dialog.Confirm("Elevate Version", "Release " + sTag + " does not publish a checksum, so EdSharp cannot verify that the downloaded installer is genuine.\n\nRun it anyway?", "N") != "Y") {
-Dialog.Show("Elevate Version", "The installer was not started.\nThe downloaded file is here:\n" + sFile);
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Release {0} does not publish a checksum, so EdSharp cannot verify that the downloaded installer is genuine.\n\nRun it anyway?", "Wydanie {0} nie publikuje sumy kontrolnej, więc EdSharp nie może zweryfikować autentyczności pobranego instalatora.\n\nUruchomić go mimo to?"), sTag), "N") != "Y") {
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The installer was not started.\nThe downloaded file is here:\n{0}", "Instalator nie został uruchomiony.\nPobrany plik jest tutaj:\n{0}"), sFile));
 return;
 }
 }
 
-Util.Say("Starting installer");
+Util.Say(JezykInterfejsu.Wybierz("Starting installer", "Uruchamianie instalatora"));
 // PROGRAM ZAMYKA SIE SAM PRZED AKTUALIZACJA (poprawka 12.09.2026).
 //
 // Michal zglosil: przy aktualizacji instalator pokazywal "Setup has detected
@@ -8303,18 +8382,18 @@ Process.Start(processStartInfo);
 bLaunched = true;
 }
 catch (Exception ex) {
-Dialog.Show("Elevate Version", "The installer downloaded but could not be started.\n" + ex.Message + "\n\nThe file is here:\n" + sFile);
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The installer downloaded but could not be started.\n{0}\n\nThe file is here:\n{1}", "Instalator został pobrany, ale nie można go uruchomić.\n{0}\n\nPlik jest tutaj:\n{1}"), ex.Message, sFile));
 return;
 }
 }
 
 // Teraz wychodzimy. Mowimy o tym wprost, bo samoczynne zamkniecie programu
 // bez slowa wygladaloby jak awaria - zwlaszcza przy czytniku ekranu.
-Util.Say("Closing EdSharp so the update can install");
+Util.Say(JezykInterfejsu.Wybierz("Closing EdSharp so the update can install", "Zamykanie EdSharp, aby można było zainstalować aktualizację"));
 if (!ExitApp()) {
 // Uzytkownik anulowal zapis - program zostaje otwarty. Instalator juz
 // czeka w tle, wiec uczciwie mowimy, co sie stanie.
-Dialog.Show("Elevate Version", "The update was not installed, because closing EdSharp was cancelled.\nNothing was lost - your files are still open here.\n\nThe installer is ready at\n" + sFile + "\nand will start in a moment; you can close EdSharp and let it run, or cancel it and update later.");
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The update was not installed, because closing EdSharp was cancelled.\nNothing was lost - your files are still open here.\n\nThe installer is ready at\n{0}\nand will start in a moment; you can close EdSharp and let it run, or cancel it and update later.", "Aktualizacja nie została zainstalowana, ponieważ anulowano zamknięcie EdSharp.\nNic nie utracono — pliki nadal są tutaj otwarte.\n\nInstalator jest gotowy pod adresem\n{0}\ni za chwilę się uruchomi; możesz zamknąć EdSharp i pozwolić mu działać albo anulować i zaktualizować później."), sFile));
 }
 } // ElevateVersion method
 
@@ -8323,166 +8402,10 @@ ReportProblem("", "");
 } // ReportProblem method
 
 public void ReportProblem(string sPreSubject, string sPreBody) {
-// ZGLOSZENIE PROBLEMU LUB PROSBY O FUNKCJE (dolozone 11.09.2026).
-//
-// Dwa argumenty sa dla wywolania z okna awarii: temat i slad wyjatku sa juz
-// wtedy znane, a uzytkownik ma tylko dopisac, co robil.  Z menu Pomoc oba sa
-// puste i formularz otwiera sie czysty.
-//
-// Okno ma cztery pola i nic wiecej: temat, adres e-mail, rodzaj zgloszenia
-// (lista rozwijana) i opis.  Imienia i nazwiska NIE PYTAMY - adres zwrotny
-// wystarcza do odpowiedzi, a kazde dodatkowe pole to kolejny przystanek dla
-// osoby, ktora wlasnie na cos sie natknela i chce to opisac, nie wypelniac
-// ankiety.
-//
-// PIERWSZA RZECZ TO ZAPIS NA DYSKU, DOPIERO POTEM WYSYLKA.  Tresc, ktora ktos
-// napisal, nie moze zniknac przez brak internetu ani przez awarie serwera:
-// kopia lezy w katalogu danych programu i komunikat zawsze mowi, gdzie.
-// Nie wolno powiedziec "wyslano", kiedy wyslanie sie nie udalo, wiec kazda z
-// trzech drog konczy sie osobnym, prawdziwym komunikatem.
-string[] asKind = new string[] {
-"Something does not work",
-"Request for a new feature",
-"Question or other remark"
-};
-string sEmailLast = App.ReadData("ReportEmail", "");
-
-LbcDialog dlg = new LbcDialog("Report a Problem", App.Frame);
-TextBox txtSubject = dlg.addInputBox("&Subject", sPreSubject == null ? "" : sPreSubject);
-// Adres pamietamy miedzy zgloszeniami - tester zglaszajacy piata rzecz nie ma
-// powodu wpisywac go za kazdym razem.
-TextBox txtEmail = dlg.addInputBox("Your &e-mail address", sEmailLast);
-ComboBox cboKind = dlg.addComboPickBox("&Kind of report", new List<string>(asKind), asKind[0], "");
-// Przy awarii slad wyjatku jest juz w polu opisu, a kursor stoi nad nim: user
-// dopisuje "co robilem", nie przepisuje komunikatu bledu z pamieci.
-string sBodyStart = "";
-if (sPreBody != null && sPreBody.Trim().Length > 0)
-sBodyStart = "\r\n\r\n--- what EdSharp reported ---\r\n" + sPreBody;
-TextBox txtBody = dlg.addTextMemo("&Description", sBodyStart);
-// DZIENNIK DIAGNOSTYCZNY DOLACZAMY TYLKO NA ZYCZENIE (13.09.2026).
-// Log moze zawierac nazwy otwieranych plikow, wiec nie wysylam go za czyimis
-// plecami.  Pytanie pojawia sie tylko wtedy, gdy dziennik faktycznie istnieje -
-// martwy checkbox w oknie zgloszenia to jeden przystanek wiecej dla czytnika.
-bool bLogExists = false;
-try { bLogExists = (App.ErrorLog != null && File.Exists(App.ErrorLog)); } catch {}
-CheckBox cbLog = null;
-if (bLogExists)
-cbLog = dlg.addCheckBox("Attach the diagnostic &log", true,
-"Start times and error traces, with names of files EdSharp opened.");
-bool bOk = dlg.runOkCancel();
-string sSubject = bOk ? txtSubject.Text.Trim() : "";
-string sEmail = bOk ? txtEmail.Text.Trim() : "";
-string sKind = bOk ? (cboKind.Text == null ? "" : cboKind.Text.Trim()) : "";
-string sBody = bOk ? txtBody.Text : "";
-bool bAttachLog = bOk && cbLog != null && cbLog.Checked;
-dlg.Dispose();
-if (!bOk) return;
-
-if (sSubject.Length == 0 && sBody.Trim().Length == 0) {
-Dialog.Show("Report a Problem", "Nothing was written, so no report was created.");
-return;
-}
-if (sSubject.Length == 0) sSubject = "(no subject)";
-if (sKind.Length == 0) sKind = asKind[0];
-if (sEmail.Length > 0) App.WriteData("ReportEmail", sEmail);
-
-// Dane techniczne dokladamy sami.  Pytanie testera o wersje programu i system
-// jest pytaniem o rzecz, ktora program o sobie wie.
-StringBuilder sbEnv = new StringBuilder();
-sbEnv.Append("EdSharpNG " + App.VersionString + " (" + Util.GetProgramBuildDate() + ")\r\n");
-try { sbEnv.Append("Windows: " + Environment.OSVersion.VersionString + (Environment.Is64BitOperatingSystem ? " 64-bit" : " 32-bit") + "\r\n"); } catch {}
-try { sbEnv.Append(".NET: " + Environment.Version.ToString() + "\r\n"); } catch {}
-try { sbEnv.Append("Culture: " + CultureInfo.CurrentCulture.Name + "\r\n"); } catch {}
-sbEnv.Append("Reported: " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\r\n");
-string sEnv = sbEnv.ToString();
-
-StringBuilder sbReport = new StringBuilder();
-sbReport.Append("Kind: " + sKind + "\r\n");
-sbReport.Append("E-mail: " + (sEmail.Length > 0 ? sEmail : "(not given)") + "\r\n");
-sbReport.Append("\r\n" + sBody.TrimEnd() + "\r\n");
-// OGON DZIENNIKA, NIE CALY PLIK.  Bierzemy ostatnie 200 wierszy: awaria jest
-// zawsze na koncu, a zgloszenie nie ma wazyc pol megabajta.
-if (bAttachLog) {
-try {
-string[] aLog = File.ReadAllLines(App.ErrorLog, Encoding.UTF8);
-int iFrom = Math.Max(0, aLog.Length - 200);
-sbReport.Append("\r\n--- diagnostic log (last " + (aLog.Length - iFrom) + " lines) ---\r\n");
-for (int i = iFrom; i < aLog.Length; i++) sbReport.Append(aLog[i] + "\r\n");
-}
-catch {}
-}
-sbReport.Append("\r\n---\r\n" + sEnv);
-string sReport = sbReport.ToString();
-
-// [1] KOPIA NA DYSKU - zawsze, przed jakakolwiek siecia.
-string sSaved = "";
-try {
-string sDir = Path.Combine(App.DataDir, "Reports");
-if (!Directory.Exists(sDir)) Directory.CreateDirectory(sDir);
-string sFile = Path.Combine(sDir, "report-" + DateTime.Now.ToString("yyyyMMdd-HHmmss") + ".txt");
-File.WriteAllText(sFile, "Subject: " + sSubject + "\r\n" + sReport, Encoding.UTF8);
-sSaved = sFile;
-}
-catch {}
-
-// [2] WYSYLKA NA NASZ PUNKT ODBIORCZY, gdy jest skonfigurowany.  Adres siedzi w
-// pliku ustawien (klucz ReportUrl), a nie w kodzie, zeby zmiana punktu odbioru
-// nie wymagala nowej wersji programu i zeby tester mogl zglaszac do wlasnego.
-string sUrl = App.ReadData("ReportUrl", "").Trim();
-if (sUrl.Length > 0) {
-Util.Say("Sending report");
-StringBuilder sbJson = new StringBuilder();
-sbJson.Append("{\"product\":\"EdSharpNG\"");
-sbJson.Append(",\"version\":\"" + Homer.Web.jsonEscape(App.VersionString) + "\"");
-sbJson.Append(",\"kind\":\"" + Homer.Web.jsonEscape(sKind) + "\"");
-sbJson.Append(",\"subject\":\"" + Homer.Web.jsonEscape(sSubject) + "\"");
-sbJson.Append(",\"email\":\"" + Homer.Web.jsonEscape(sEmail) + "\"");
-sbJson.Append(",\"body\":\"" + Homer.Web.jsonEscape(sBody) + "\"");
-sbJson.Append(",\"environment\":\"" + Homer.Web.jsonEscape(sEnv) + "\"");
-sbJson.Append("}");
-int iStatus;
-string sError;
-Homer.Web.post(sUrl, sbJson.ToString(), "application/json", out iStatus, out sError);
-if (iStatus >= 200 && iStatus < 300) {
-Dialog.Show("Report a Problem", "Your report was sent. Thank you.\r\n\r\nA copy is kept here:\r\n" + (sSaved.Length > 0 ? sSaved : "(the copy could not be written)"));
-return;
-}
-// Wysylka nie wyszla - mowimy to wprost i proponujemy droge zapasowa, zamiast
-// udawac sukces albo zostawic czlowieka z komunikatem o kodzie HTTP.
-string sWhy = (iStatus == 0) ? "There was no answer from the server (no internet connection, or the server is down)." : ("The server refused the report (HTTP " + iStatus + ").");
-if (Dialog.Confirm("Report a Problem", "The report could NOT be sent.\r\n" + sWhy + "\r\n\r\nA copy is saved here:\r\n" + (sSaved.Length > 0 ? sSaved : "(the copy could not be written)") + "\r\n\r\nSend it by e-mail instead?", "Y") != "Y") return;
-}
-
-// [3] DROGA ZAPASOWA: otwarcie formularza zgloszen w przegladarce z wypelnionym
-// tematem i trescia, albo listu e-mail, gdy opiekun programu ma wpisany adres w
-// pliku ustawien (klucz ReportMail).  Ta droga dziala bez naszego serwera, wiec
-// jest tym, co zostaje, gdy zawiedzie wszystko inne.
-string sMailTo = App.ReadData("ReportMail", "").Trim();
-string sOpen;
-if (sMailTo.Length > 0)
-sOpen = "mailto:" + sMailTo
-+ "?subject=" + Homer.Web.urlEncode("[EdSharpNG] " + sSubject)
-+ "&body=" + Homer.Web.urlEncode(sReport);
-else
-sOpen = App.ReportIssuesUrl
-+ "?title=" + Homer.Web.urlEncode("[" + sKind + "] " + sSubject)
-+ "&body=" + Homer.Web.urlEncode(sReport);
-bool bOpened = false;
-try {
-ProcessStartInfo psiOpen = new ProcessStartInfo();
-psiOpen.FileName = sOpen;
-psiOpen.UseShellExecute = true;
-Process.Start(psiOpen);
-bOpened = true;
-}
-catch {}
-string sWhere = (sSaved.Length > 0) ? sSaved : "(the copy could not be written)";
-if (bOpened && sMailTo.Length > 0)
-Dialog.Show("Report a Problem", "Your e-mail program was opened with the report ready to send.\r\nCheck it and press send there.\r\n\r\nA copy is kept here:\r\n" + sWhere);
-else if (bOpened)
-Dialog.Show("Report a Problem", "The report form was opened in your web browser with everything filled in.\r\nPress the button that submits it there.\r\n\r\nA copy is kept here:\r\n" + sWhere);
-else
-Dialog.Show("Report a Problem", "The report could not be sent from EdSharp, and neither your web browser nor an e-mail program answered.\r\n\r\nThe report is saved here, so nothing is lost:\r\n" + sWhere + "\r\n\r\nYou can attach that file to a report at\r\n" + App.ReportIssuesUrl);
+// Jedyna ścieżka menu, skrótu i okna awarii do formularza Sygnalisty.
+// Stare ReportUrl/mailto/przeglądarka nie są już używane: klient zapisuje
+// zredagowaną kopię lokalnie, a ewentualna wysyłka idzie tylko do endpointu HTTPS.
+ProblemReportDialog.Show(this, sPreSubject, sPreBody);
 } // ReportProblem method
 
 // CIAGLOSC PRACY: zegar autozapisu i zbieranie sesji (zadanie 12, 12.09.2026).
@@ -8550,8 +8473,8 @@ PokazUstawienia("");
 public void PokazUstawienia(string sInitialOption) {
 List<Opcja> lOpcje = Ustawienia.Spis();
 
-LbcDialog dlg = new LbcDialog("Settings", this);
-dlg.addLabel("Settings apply to the whole program.  Changes take effect when you press OK; some of them apply to windows opened afterwards.");
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Tekst("Settings"), this);
+dlg.addLabel(JezykInterfejsu.Tekst("Settings apply to the whole program.  Changes take effect when you press OK; some of them apply to windows opened afterwards."));
 
 // Kontrolki trzymam w slowniku pod kluczem opcji, zeby odczyt po OK szedl
 // po TEJ SAMEJ liscie co budowanie - bez rownoleglych tablic, w ktorych
@@ -8567,7 +8490,7 @@ dPrzed[o.Klucz] = sTeraz;
 
 if (o.Zaawansowana && !bNaglowekZaawansowanych) {
 dlg.addSeparator();
-dlg.addLabel("For building and running code");
+dlg.addLabel(JezykInterfejsu.Tekst("For building and running code"));
 bNaglowekZaawansowanych = true;
 }
 
@@ -8592,7 +8515,7 @@ List<string> lNazwy = new List<string>(o.Nazwy);
 List<string> lWartosci = new List<string>(o.Wartosci);
 int iPoz = Ustawienia.PozycjaDlaWartosci(o, sTeraz);
 if (iPoz < 0) {
-lNazwy.Add("Kept from the configuration file: " + sTeraz);
+lNazwy.Add(JezykInterfejsu.Tekst("Kept from the configuration file: ") + sTeraz);
 lWartosci.Add(sTeraz);
 iPoz = lNazwy.Count - 1;
 }
@@ -8602,42 +8525,85 @@ ComboBox cb = dlg.addComboPickBox(o.Etykieta, lNazwy, lNazwy[iPoz], o.Podpowiedz
 cb.Tag = lWartosci.ToArray();
 dPola[o.Klucz] = cb;
 }
+else if (o.Rodzaj == "folder") {
+TextBox tbFolder = null;
+tbFolder = dlg.addFolderBox(o.Etykieta, sTeraz ?? "", o.Podpowiedz, delegate(object sender, EventArgs e) {
+string sStart = tbFolder.Text.Trim();
+if (!Directory.Exists(sStart)) sStart = App.DataDir;
+string sChosen = Dialog.BrowseForFolder(JezykInterfejsu.Tekst("Choose snippet library folder"), sStart);
+if (sChosen.Length > 0) tbFolder.Text = sChosen;
+});
+foreach (KeyValuePair<string, Control> pair in dlg.widgets) {
+Button btnBrowse = pair.Value as Button;
+if (btnBrowse == null || btnBrowse.Text != "&Browse...") continue;
+btnBrowse.Text = JezykInterfejsu.Tekst("&Browse...");
+btnBrowse.AccessibleName = JezykInterfejsu.Tekst("Browse snippet library folder");
+}
+dPola[o.Klucz] = tbFolder;
+}
 else {
 dPola[o.Klucz] = dlg.addInputBox(o.Etykieta, sTeraz ?? "", o.Podpowiedz);
 }
 }
 
 if (dPola.ContainsKey(sInitialOption)) dlg.setInitialFocus(dPola[sInitialOption]);
-string sPrzycisk = dlg.runWithButtons(new string[] {"OK", "Cancel", "&Restore defaults", "&Edit file"});
-if (sPrzycisk.Length == 0 || string.Equals(sPrzycisk, "Cancel", StringComparison.OrdinalIgnoreCase)) { dlg.Dispose(); return; }
+// LbcDialog creates its standard Help button while opening.  This form owns
+// its wording, so translate that one button after Lbc has assembled the row
+// without changing the shared dialog component used by unrelated windows.
+dlg.form.Shown += delegate(object sender, EventArgs e) {
+if (!JezykInterfejsu.Polski) return;
+foreach (Control row in dlg.form.Controls) {
+FlowLayoutPanel panel = row as FlowLayoutPanel;
+if (panel == null) continue;
+foreach (Control control in panel.Controls) {
+Button button = control as Button;
+if (button == null) continue;
+if (button.Text.Replace("&", "") == "Help") {
+button.Text = "&Pomoc";
+button.AccessibleName = "Pomoc";
+}
+else if (button.AccessibleName == JezykInterfejsu.Tekst("Browse snippet library folder")) {
+button.Text = JezykInterfejsu.Tekst("&Browse...");
+}
+}
+}
+};
+string sPrzycisk = dlg.runWithButtons(new string[] {JezykInterfejsu.Tekst("OK"), JezykInterfejsu.Tekst("Cancel"), JezykInterfejsu.Tekst("&Restore defaults"), JezykInterfejsu.Tekst("&Edit file")});
+if (sPrzycisk.Length == 0 || string.Equals(sPrzycisk, JezykInterfejsu.Tekst("Cancel"), StringComparison.OrdinalIgnoreCase)) { dlg.Dispose(); return; }
 
-if (sPrzycisk.IndexOf("Edit file", StringComparison.OrdinalIgnoreCase) >= 0) {
+if (sPrzycisk.IndexOf(JezykInterfejsu.Tekst("&Edit file").Replace("&", ""), StringComparison.OrdinalIgnoreCase) >= 0) {
 dlg.Dispose();
 // Ta sama droga co Manual Options: glowny plik ustawien w oknie edytora.
 OpenOrActivateWindow(App.IniFile, 0);
-AddMessage("Editing the configuration file; save it and restart EdSharp for changes to apply");
+AddMessage(JezykInterfejsu.Tekst("Editing the configuration file; save it and restart EdSharp for changes to apply"));
 return;
 }
 
-if (sPrzycisk.IndexOf("Restore defaults", StringComparison.OrdinalIgnoreCase) >= 0) {
+if (sPrzycisk.IndexOf(JezykInterfejsu.Tekst("&Restore defaults").Replace("&", ""), StringComparison.OrdinalIgnoreCase) >= 0) {
 dlg.Dispose();
-if (Dialog.Confirm("Confirm", "Restore every setting in this window to its default?", "N") != "Y") return;
+if (Dialog.Confirm(JezykInterfejsu.Tekst("Confirm"), JezykInterfejsu.Tekst("Restore every setting in this window to its default?"), "N") != "Y") return;
 int iPrzywrocone = 0;
+bool bJezykPrzywrocony = false;
 List<string> lNieprzywrocone = new List<string>();
 foreach (Opcja o in lOpcje) {
 if (Ustawienia.Pomijany(o.Klucz)) continue;
 if (App.ReadOption(o.Klucz, o.Domyslna) == o.Domyslna) continue;
-if (App.WriteOption(o.Klucz, o.Domyslna)) iPrzywrocone++;
+if (App.WriteOption(o.Klucz, o.Domyslna)) {
+iPrzywrocone++;
+if (o.Klucz == "InterfaceLanguage") bJezykPrzywrocony = true;
+}
 else lNieprzywrocone.Add(o.Etykieta.Replace("&", ""));
 }
 RefreshOriginalDocumentTitles();
-if (lNieprzywrocone.Count > 0) AddMessage((iPrzywrocone > 0 ? "Przywrócono ustawień: " + iPrzywrocone + ". " : "") + "Nie zapisano ustawień domyślnych: " + string.Join(", ", lNieprzywrocone.ToArray()) + ". Sprawdź dostęp do pliku ustawień.", true);
-else AddMessage(iPrzywrocone == 0 ? "Every setting was already at its default" : iPrzywrocone + " settings restored to defaults");
+string sRestartJezyka = bJezykPrzywrocony ? " " + JezykInterfejsu.Tekst("Interface language saved. It will change after the next start.") : "";
+if (lNieprzywrocone.Count > 0) AddMessage(JezykInterfejsu.Wybierz((iPrzywrocone > 0 ? iPrzywrocone + " settings restored. " : "") + "Could not restore default settings: " + string.Join(", ", lNieprzywrocone.ToArray()) + ". Check access to the settings file.", (iPrzywrocone > 0 ? "Przywrócono ustawień: " + iPrzywrocone + ". " : "") + "Nie zapisano ustawień domyślnych: " + string.Join(", ", lNieprzywrocone.ToArray()) + ". Sprawdź dostęp do pliku ustawień.") + sRestartJezyka, true);
+else AddMessage((iPrzywrocone == 0 ? JezykInterfejsu.Tekst("Every setting was already at its default") : JezykInterfejsu.Wybierz(iPrzywrocone + " settings restored to defaults", iPrzywrocone + " ustawień przywrócono do wartości domyślnych")) + sRestartJezyka, true);
 return;
 }
 
 // OK: zapis tylko tego, co czlowiek naprawde zmienil.
 int iZmienione = 0;
+bool bJezykZapisany = false;
 List<string> lNiezapisane = new List<string>();
 foreach (Opcja o in lOpcje) {
 if (!dPola.ContainsKey(o.Klucz)) continue;
@@ -8654,6 +8620,11 @@ sNowa = aWartosci[i];
 }
 else sNowa = ((TextBox) ctl).Text;
 
+if (o.Rodzaj == "folder" && sNowa.Trim().Length > 0 && !Directory.Exists(sNowa)) {
+lNiezapisane.Add(JezykInterfejsu.Wybierz("Snippet library unavailable: ", "Folder biblioteki fragmentów jest niedostępny: ") + sNowa);
+continue;
+}
+
 string sStara = dPrzed.ContainsKey(o.Klucz) ? dPrzed[o.Klucz] : null;
 // Przelacznik porownuje sie po ZNACZENIU, nie po tekscie: kto ma w pliku
 // "yes", a w oknie nie ruszyl pola, nie moze dostac zapisu "Y".
@@ -8662,7 +8633,10 @@ if (Ustawienia.CzyWlaczone(sStara) == ((CheckBox) ctl).Checked) continue;
 }
 else if (sNowa == sStara) continue;
 
-if (App.WriteOption(o.Klucz, sNowa)) iZmienione++;
+if (App.WriteOption(o.Klucz, sNowa)) {
+iZmienione++;
+if (o.Klucz == "InterfaceLanguage") bJezykZapisany = true;
+}
 else lNiezapisane.Add(o.Etykieta.Replace("&", ""));
 }
 dlg.Dispose();
@@ -8676,9 +8650,10 @@ dlg.Dispose();
 // potwierdzenie zapisu przepadalo.  Zgloszenie Michala 13.09.2026: "Settings.
 // Enter zapisuje chyba, ale nie mowi Saved".
 RefreshOriginalDocumentTitles();
-if (lNiezapisane.Count > 0) AddMessage((iZmienione > 0 ? "Zapisano ustawień: " + iZmienione + ". " : "") + "Nie zapisano ustawień: " + string.Join(", ", lNiezapisane.ToArray()) + ". Sprawdź dostęp do pliku ustawień.", true);
-else if (iZmienione == 0) AddMessage("No settings changed", true);
-else AddMessage(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved", true);
+string sRestartJezykaPoZapisie = bJezykZapisany ? " " + JezykInterfejsu.Tekst("Interface language saved. It will change after the next start.") : "";
+if (lNiezapisane.Count > 0) AddMessage(JezykInterfejsu.Wybierz((iZmienione > 0 ? iZmienione + " settings saved. " : "") + "Could not save: " + string.Join(", ", lNiezapisane.ToArray()) + ". Check access to the settings file.", (iZmienione > 0 ? "Zapisano ustawień: " + iZmienione + ". " : "") + "Nie zapisano ustawień: " + string.Join(", ", lNiezapisane.ToArray()) + ". Sprawdź dostęp do pliku ustawień.") + sRestartJezykaPoZapisie, true);
+else if (iZmienione == 0) AddMessage(JezykInterfejsu.Tekst("No settings changed"), true);
+else AddMessage(JezykInterfejsu.Wybierz(iZmienione == 1 ? "One setting saved" : iZmienione + " settings saved", iZmienione == 1 ? "Zapisano jedno ustawienie" : iZmienione + " ustawień zapisano") + sRestartJezykaPoZapisie, true);
 } // PokazUstawienia method
 
 // Przelaczenie ciaglosci pracy W TRAKCIE dzialania programu, z menu.
@@ -8826,8 +8801,8 @@ if (lista.Count == 0) return 0;
 bool bJestOdzysk = false;
 foreach (SesjaOkno okno in lista)
 if (okno.Zmieniony && !String.IsNullOrEmpty(okno.Odzysk) && File.Exists(okno.Odzysk)) bJestOdzysk = true;
-if (bJestOdzysk && Dialog.Confirm("Restore Session",
-"EdSharp did not close normally last time." + Environment.NewLine + Environment.NewLine + Sesja.OpisSesji(lista) + Environment.NewLine + Environment.NewLine + "Restore that session?", "Y") != "Y") {
+if (bJestOdzysk && Dialog.Confirm(JezykInterfejsu.Wybierz("Restore Session", "Przywracanie sesji"),
+JezykInterfejsu.Wybierz("EdSharp did not close normally last time.", "EdSharp nie został ostatnio poprawnie zamknięty.") + Environment.NewLine + Environment.NewLine + Sesja.OpisSesji(lista) + Environment.NewLine + Environment.NewLine + JezykInterfejsu.Wybierz("Restore that session?", "Przywrócić tę sesję?"), "Y") != "Y") {
 foreach (SesjaOkno okno in lista) Sesja.UsunOdzysk(okno.Odzysk);
 pendingSessionRecovery.Clear();
 Sesja.Wyczysc();
@@ -8853,7 +8828,7 @@ if (hasRecovery && (okno.Zmieniony || !hasFile)) {
 string recoveredText = File.ReadAllText(okno.Odzysk, new UTF8Encoding(true));
 new MdiChild(this, GetNoNameTitle());
 restored = this.Child;
-if (restored == null || restored.RTB == null) throw new IOException("Cannot create a recovery window.");
+if (restored == null || restored.RTB == null) throw new IOException(JezykInterfejsu.Wybierz("Cannot create a recovery window.", "Nie można utworzyć okna odzyskiwania."));
 if (linked) {
 restored.File = Path.GetFileNameWithoutExtension(okno.OriginalFormatFile) + ".md";
 restored.OriginalDocument = new OriginalDocumentLink {Path = okno.OriginalFormatFile, Fingerprint = okno.OriginalFormatHash};
@@ -8869,7 +8844,7 @@ else if (hasFile) { restored.File = sFile; restored.Text = Path.GetFileName(sFil
 restored.RTB.Text = recoveredText;
 restored.IsRichTextDocument = false;
 restored.RTB.Modified = true;
-AddMessage("Recovered unsaved changes in " + Path.GetFileName(sFile));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Recovered unsaved changes in {0}", "Przywrócono niezapisane zmiany w {0}"), Path.GetFileName(sFile)));
 }
 else if (hasFile) {
 if (linked && OriginalFormatSupported(sFile)) OpenOrActivateWindow(sFile, 2, "", "", ZapisFormatow.Rozszerzenie(sFile) + "2md");
@@ -8888,9 +8863,9 @@ else if (importOnly) bMatch = Util.Equiv(candidate.IdentityPath, sFile);
 else bMatch = Util.Equiv(candidate.File, sFile);
 if (bMatch) { restored = candidate; break; }
 }
-if (restored == null || restored.RTB == null) throw new IOException("The document could not be opened.");
+if (restored == null || restored.RTB == null) throw new IOException(JezykInterfejsu.Wybierz("The document could not be opened.", "Nie można otworzyć dokumentu."));
 }
-else throw new IOException("The document and its recovery copy are unavailable.");
+else throw new IOException(JezykInterfejsu.Wybierz("The document and its recovery copy are unavailable.", "Dokument i jego kopia odzyskiwania są niedostępne."));
 int max = restored.RTB.TextLength;
 restored.RTB.Index = Math.Max(0, Math.Min(max, okno.Kursor));
 if (!String.IsNullOrEmpty(okno.Zakladki) && sFile.IndexOf('\\') >= 0 && App.ReadValue("Bookmarks", sFile, "").Length == 0)
@@ -8902,14 +8877,14 @@ if (hasRecovery) Sesja.UsunOdzysk(okno.Odzysk);
 }
 catch (Exception ex) {
 failed.Add(okno);
-AddMessage("Could not restore " + Path.GetFileName(okno.Plik) + ". Recovery copy kept for another attempt. " + ex.Message, true);
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Could not restore {0}. Recovery copy kept for another attempt. {1}", "Nie można przywrócić {0}. Kopię odzyskiwania zachowano do kolejnej próby. {1}"), Path.GetFileName(okno.Plik), ex.Message), true);
 }
 }
 pendingSessionRecovery = failed;
 RefreshOriginalDocumentTitles();
-if (iOtwarte > 0) AddMessage("Restored " + iOtwarte + " file" + (iOtwarte == 1 ? "" : "s") + " from the previous session");
+if (iOtwarte > 0) AddMessage(String.Format(JezykInterfejsu.Wybierz("Restored {0} file(s) from the previous session", "Przywrócono {0} plików z poprzedniej sesji"), iOtwarte));
 }
-catch (Exception ex) { AddMessage("Could not restore the session: " + ex.Message, true); }
+catch (Exception ex) { AddMessage(String.Format(JezykInterfejsu.Wybierz("Could not restore the session: {0}", "Nie można przywrócić sesji: {0}"), ex.Message), true); }
 return iOtwarte;
 } // PrzywrocSesje method
 
@@ -8946,7 +8921,7 @@ return CloseWindow(child, bExiting);
 public bool CloseWindow(MdiChild child, bool bExiting) {
 HomerRichTextBox rtb = child.RTB;
 if (rtb.Modified) {
-switch (Dialog.Confirm("Confirm", "Save changes to " + child.Text + "?", "Y")) {
+switch (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("Save changes to ", "Zapisać zmiany w ") + child.Text + "?", "Y")) {
 case "Y" :
 menuFileSave.PerformClick();
 if (rtb.Modified) return false;
@@ -9011,7 +8986,7 @@ sText = "-1|M|" + Util.If((sText == "N"), "U", "W");
 sText = App.ReadValue(sSection, sFile, sText);
 bool b = (bool) Util.If(sText.EndsWith("U"), false, true);
 if (b && !rtb.WordWrap) {
-AddMessage("Word wrap");
+AddMessage(JezykInterfejsu.Wybierz("Word wrap", "Zawijanie wierszy"));
 rtb.SetWrap(true);
 }
 else if (!b && rtb.WordWrap) {
@@ -9048,7 +9023,7 @@ sText = App.ReadOption("WordWrap", "Y");
 sText = "-1|M|" + Util.If((sText == "N"), "U", "W");
 sText = App.ReadValue(sSection, sFile, sText);
 if (sText.IndexOf("G") >= 0) {
-AddMessage("Guard");
+AddMessage(JezykInterfejsu.Wybierz("Guard", "Blokada"));
 rtb.SetGuard(true);
 }
 return true;
@@ -9071,7 +9046,7 @@ try {
 string[] a = sText.Split('|');
 sText = a[0];
 rtb.Index = Int32.Parse(sText);
-AddMessage("Bookmark at percent " + rtb.Percent);
+AddMessage(JezykInterfejsu.Polski ? String.Format("Zakładka przy procencie {0}", rtb.Percent) : "Bookmark at percent " + rtb.Percent);
 }
 catch {}
 } // ApplyFavorite method
@@ -9166,7 +9141,7 @@ public void OpenOrActivateWindow(string sFile, int iConvert, string sLine, strin
 string sText;
 sFile = Util.Unquote(sFile);
 if (!File.Exists(sFile)) {
-AddMessage("File not found!");
+AddMessage(JezykInterfejsu.Wybierz("File not found!", "Nie znaleziono pliku!"));
 return;
 }
 
@@ -9182,7 +9157,7 @@ foreach (MdiChild child in children) {
 // bez prawa zapisu wstecz (PDF, .doc, konwersja do czystego tekstu);
 // te z OriginalDocument byly juz tu obsluzone.
 if (Util.Equiv(child.File, sFile) || Util.Equiv(child.IdentityPath, sFile)) {
-Util.Say("returning");
+Util.Say(JezykInterfejsu.Wybierz("returning", "powrót"));
 child.Activate();
 SetCursorPosition(child.RTB, sLine, sColumn);
 return;
@@ -9192,7 +9167,7 @@ return;
 OriginalDocumentLink originalLink = null;
 if (iConvert > 0 && OriginalFormatSupported(sFile)) {
 try { originalLink = OriginalFormatSave.Capture(sFile); }
-catch (Exception ex) { AddMessage("Cannot safely read original document: " + ex.Message, true); return; }
+catch (Exception ex) { AddMessage(String.Format(JezykInterfejsu.Wybierz("Cannot safely read original document: {0}", "Nie można bezpiecznie odczytać oryginalnego dokumentu: {0}"), ex.Message), true); return; }
 }
 string sTargetExt = "txt";
 if (iConvert == 0 || iConvert == iOpenRichText) sText = "";
@@ -9238,9 +9213,9 @@ sText = "";
 if (originalLink != null && iConvert > 0) {
 try {
 if (OriginalFormatSave.SumaKontrolna(sFile) != originalLink.Fingerprint) {
-AddMessage("The original changed while importing. Please open it again.", true); return;
+AddMessage(JezykInterfejsu.Wybierz("The original changed while importing. Please open it again.", "Oryginał zmienił się podczas importowania. Otwórz go ponownie."), true); return;
 }
-} catch (Exception ex) { AddMessage("Cannot verify original document: " + ex.Message, true); return; }
+} catch (Exception ex) { AddMessage(String.Format(JezykInterfejsu.Wybierz("Cannot verify original document: {0}", "Nie można zweryfikować oryginalnego dokumentu: {0}"), ex.Message), true); return; }
 }
 
 // Did so above
@@ -9317,8 +9292,8 @@ return bReturn;
 
 public void NextWindow() {
 object[] children = this.MdiChildren;
-if (children.Length == 0) AddMessage("No windows!");
-else if (children.Length == 1) AddMessage("Only this window!");
+if (children.Length == 0) AddMessage(JezykInterfejsu.Wybierz("No windows!", "Brak okien!"));
+else if (children.Length == 1) AddMessage(JezykInterfejsu.Wybierz("Only this window!", "Tylko to okno!"));
 else {
 MdiChild child = this.Child;
 int iPosition = Array.IndexOf(children, child);
@@ -9541,7 +9516,7 @@ sText = rtb.GetRange(iStart, iEnd);
 aResults = Util.RegExpContainsEquiv(sText, sMatch);
 }
 if ((int) aResults[0] == -1) {
-this.AddMessage("Bottom!");
+this.AddMessage(JezykInterfejsu.Wybierz("Bottom!", "Koniec!"));
 iStart = iEnd;
 iIndex = iEnd;
 }
@@ -9602,7 +9577,7 @@ iEnd = iIndex;
 sText = rtb.GetRange(iStart, iEnd);
 aResults = Util.RegExpContainsLastEquiv(sText, sMatch);
 if ((int) aResults[0] == -1) {
-this.AddMessage("Top!");
+this.AddMessage(JezykInterfejsu.Wybierz("Top!", "Początek!"));
 iIndex = iStart;
 iEnd = iStart;
 }
@@ -9660,12 +9635,12 @@ string[] aLabels, aValues, aFilters, aResults, aFiles, aNames;
 
 sContains = App.ReadData("Contains", "");
 sFilter = App.ReadData("Filter", "*.*");
-string sTitle = "Open Folder";
-sDir = Dialog.OpenFolder(sTitle, "Name", Directory.GetCurrentDirectory());
+string sTitle = JezykInterfejsu.Wybierz("Open Folder", "Otwórz folder");
+sDir = Dialog.OpenFolder(sTitle, JezykInterfejsu.Wybierz("Name", "Nazwa"), Directory.GetCurrentDirectory());
 if (sDir.Length == 0) return;
 
 Directory.SetCurrentDirectory(sDir);
-aLabels = new string[] {"&Contains", "&Filter"};
+aLabels = new string[] {JezykInterfejsu.Wybierz("&Contains", "&Zawiera"), JezykInterfejsu.Wybierz("&Filter", "&Filtr")};
 aValues = new string[] {sContains, sFilter};
 aResults = Dialog.MultiInput("Criteria", aLabels, aValues);
 if (aResults.Length == 0) return;
@@ -9679,14 +9654,14 @@ aFilters = sFilter.Split('|');
 sDir = Directory.GetCurrentDirectory();
 aFiles = Util.FindInFiles(sContains, sDir, aFilters, false);
 if (aFiles.Length == 0) {
-Dialog.Show("Alert", "No matches!");
+Dialog.Show(JezykInterfejsu.Wybierz("Alert", "Ostrzeżenie"), JezykInterfejsu.Wybierz("No matches!", "Brak dopasowań!"));
 return;
 }
 
 aNames = new string[aFiles.Length];
 for (int i = 0; i < aNames.Length; i++) aNames[i] = Path.GetFileName(aFiles[i]);
 //Array.Sort(aNames, aFiles);
-sFile = Dialog.Pick("Pick", aFiles, aNames, true, 0);
+sFile = Dialog.Pick(JezykInterfejsu.Wybierz("Pick", "Wybierz"), aFiles, aNames, true, 0);
 if (sFile.Length == 0) return;
 
 OpenOrActivateWindow(sFile, 1);
@@ -9765,7 +9740,7 @@ foreach (MdiChild child in children) {
 sTitles += child.Text + "\n";
 }
 string[] aTitles = sTitles.Trim().Split('\n');
-string sTitle = Dialog.Pick("Current Windows", aTitles, true, 0);
+string sTitle = Dialog.Pick(JezykInterfejsu.Wybierz("Current Windows", "Bieżące okna"), aTitles, true, 0);
 if (sTitle.Length == 0) return;
 
 int iTitle = Array.IndexOf(aTitles, sTitle);
@@ -9778,17 +9753,20 @@ try {
 Process.Start(sCommand);
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 } // ExplorerFolder method
 
 public void CommandPrompt(string sDir) {
 string sCommand = Environment.GetEnvironmentVariable("COMSPEC");
-sDir = Util.Quote(sDir);
-string sParams = "/k cd " + sDir;
 try {
-Process.Start(sCommand, sParams);
+ProcessStartInfo psi = new ProcessStartInfo();
+psi.FileName = sCommand;
+psi.Arguments = "/k";
+psi.WorkingDirectory = sDir;
+psi.UseShellExecute = false;
+Process.Start(psi);
 }
 catch (Exception ex) {
 Dialog.Show("Error", ex.Message);
@@ -9807,57 +9785,13 @@ return;
 // wystapienia, czyli innych klientow (miedzy innymi Path List pod
 // Control+Shift+P i pobieranie z sieci).  Zdjecie ich razem z ta komenda dalo by
 // zielony build i ciche zepsucie tamtych funkcji.
-public void AlternateMenu() {
-int iChoice = -1;
-List<ToolStripMenuItem> items = new List<ToolStripMenuItem>();
-string sItems = "";
-StringBuilder sb = new StringBuilder();
-foreach (ToolStripMenuItem menu in menuMain.Items) {
-foreach (object o in menu.DropDownItems) {
-ToolStripMenuItem item = o as ToolStripMenuItem;
-if (item == null) continue;
-if (item == menuHelpAlternateMenu) continue;
-// string sText = item.Text.Replace("&", "") + "\t" + item.ShortcutKeyDisplayString;
-// if ("1234567890".Contains(sText.Substring(0, 1))) continue;
-if (item.IsMdiWindowListEntry) continue;
-string[] aSummary = GetKeySummary(item);
-string sText = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
-sb.Append(sText + "\n");
-items.Add(item);
-}
-}
-sItems = sb.ToString();
-string[] aItems = sItems.Trim().Split('\n');
-string sItem = Dialog.Pick("Alternate Menu", aItems, true, 0);
-if (sItem.Length == 0) return;
-
-foreach (ToolStripMenuItem item in items) {
-string[] aSummary = GetKeySummary(item);
-string sText = aSummary[0] + " = " + aSummary[1] + ", " + aSummary[2];
-if (sItem == sText) {
-iChoice = items.IndexOf(item);
-break;
-}
-}
-// NIE WOLAJ POLECENIA, KTOREGO NIE ROZPOZNANO.  iChoice zostaje -1, gdy wybrany
-// wiersz nie zgadza sie z zadna pozycja (tak dzieje sie, gdy tekst pozycji
-// zmieni sie miedzy zbudowaniem listy a wyborem - np. polecenie przelaczajace
-// zmienia nazwe).  Dotad szlo prosto w items[-1] i program przewracal sie
-// wyjatkiem ArgumentOutOfRange - dla osoby niewidomej to znikajace okno bez
-// slowa wyjasnienia.  Lepiej powiedziec wprost i nie robic nic.
-if (iChoice < 0 || iChoice >= items.Count) {
-Say.sayForced("Command not recognized");
-return;
-}
-items[iChoice].PerformClick();
-} // AlternateMenu method
 
 // PALETA POLECEN (Control+Shift+F1) - jego zlecenie 11.09.2026: "Paleta
 // polecen.  Trzeba ja wprowadzic, jak w AMC.  Zaproponuj skrot klawiszowy",
 // a nastepnie: "Paleta w AMC jezeli chodzi o filtrowanie i to co czyta NVDA,
 // jest dobrze zrobiona.  Mozesz sie jakos tam wzorowac".
 //
-// Rozne od Alternate Menu (Control+Shift+M), ktore pokazuje CALE menu na
+// Rozne od Command Palette (Control+Shift+M), ktore pokazuje CALE menu na
 // raz i wymaga strzalkowania przez ~200 pozycji: tutaj sie PISZE, a lista
 // sie zawęza.  Zapozyczone z AMC (CommandPaletteSearch.Filter i FoldForSearch):
 //   - zapytanie dzielone na SLOWA, pozycja zostaje gdy zawiera WSZYSTKIE
@@ -9873,37 +9807,36 @@ public void CommandPalette() {
 List<ToolStripMenuItem> items = new List<ToolStripMenuItem>();
 List<string> lLabels = new List<string>();
 foreach (ToolStripMenuItem menu in menuMain.Items) {
-foreach (object o in menu.DropDownItems) {
-ToolStripMenuItem item = o as ToolStripMenuItem;
-if (item == null) continue;
-if (item == menuHelpAlternateMenu) continue;
-// Keep the palette itself visible so its current shortcut can be found.
-if (item.IsMdiWindowListEntry) continue;
-if (!item.Enabled) continue;
-string[] aSummary = GetKeySummary(item);
-string sKeys = (aSummary[1] == null) ? "" : aSummary[1].Trim();
-// NAZWA POLECENIA IDZIE PIERWSZA, MENU NA KONCU.  Do 5.0.94 wiersz zaczynal
-// sie od nazwy menu ("File: List Favorites, Alt+L"), wiec czytnik ekranu przy
-// KAZDEJ pozycji zaczynal od slowa, ktore nic nie wnosi - zeby uslyszec, co to
-// za polecenie, trzeba bylo czekac.  Przy przegladaniu kilkudziesieciu wynikow
-// to kilkadziesiat niepotrzebnych slow.  Uzytkownik: "niepotrzebnie czyta
-// przed poleceniem menu, z ktorego pochodzi".
-// Menu ZOSTAJE, tylko na koncu: rozroznia pozycje o tej samej nazwie w roznych
-// menu i nadal daje sie po nim filtrowac (wpisanie "file" zawezi do menu File).
-string sMenu = menu.Text.Replace("&", "").Trim();
-string sLabel = aSummary[0];
-if (sKeys.Length > 0) sLabel += ", " + sKeys;
-if (sMenu.Length > 0) sLabel += " (" + sMenu + ")";
-items.Add(item);
-lLabels.Add(sLabel);
+AddAgreedPaletteItems(menu, menu.Text.Replace("&", "").Trim(), items, lLabels);
 }
-}
-if (items.Count == 0) { Say.sayForced("No commands available"); return; }
+if (items.Count == 0) { Say.sayForced(JezykInterfejsu.Wybierz("No commands available", "Brak dostępnych poleceń")); return; }
 
-int iChosen = Dialog.PickCommand("Command Palette", lLabels);
+int iChosen = Dialog.PickCommand(JezykInterfejsu.Wybierz("Command Palette", "Paleta poleceń"), lLabels);
 if (iChosen < 0 || iChosen >= items.Count) return;
 items[iChosen].PerformClick();
 } // CommandPalette method
+
+private void AddAgreedPaletteItems(ToolStripMenuItem menu, string sPath, List<ToolStripMenuItem> items, List<string> labels) {
+if (menu == null) return;
+foreach (ToolStripItem o in menu.DropDownItems) {
+ToolStripMenuItem item = o as ToolStripMenuItem;
+if (item == null || item.IsMdiWindowListEntry) continue;
+string sHere = item.Text.Replace("&", "").Trim();
+string sNextPath = sPath.Length == 0 ? sHere : sPath + " > " + sHere;
+if (item.DropDownItems.Count > 0) {
+AddAgreedPaletteItems(item, sNextPath, items, labels);
+continue;
+}
+if (!item.Enabled) continue;
+string[] aSummary = GetKeySummary(item);
+string sKeys = (aSummary[1] == null) ? "" : aSummary[1].Trim();
+string sLabel = aSummary[0];
+if (sKeys.Length > 0) sLabel += ", " + sKeys;
+if (sPath.Length > 0) sLabel += " (" + sPath + ")";
+items.Add(item);
+labels.Add(sLabel);
+}
+} // AddAgreedPaletteItems method
 
 new void ContextMenu(string sFile) {
 MdiChild child = this.Child;
@@ -9922,7 +9855,7 @@ aVerbs[aVerbs.Length - 1] = "Open With...";
 string[] aNames = new string[aVerbs.Length];
 for (int iVerb = 0; iVerb < aVerbs.Length; iVerb++) aNames[iVerb] = aVerbs[iVerb].Replace("&", "");
 
-string sName = Dialog.Pick("Context Menu", aNames, true, 0);
+string sName = Dialog.Pick(JezykInterfejsu.Wybierz("Context Menu", "Menu kontekstowe"), aNames, true, 0);
 if (sName.Length == 0) return;
 
 int i = Array.IndexOf(aNames, sName);
@@ -9943,7 +9876,7 @@ string[]aLinks = Directory.GetFiles(sDir);
 string sNameList = "";
 foreach (string s in aLinks) sNameList += Path.GetFileNameWithoutExtension(s) + "\n";
 string[]aNames = sNameList.Trim().Split('\n');
-string sName = Dialog.Pick("SendTo Menu", aNames, true, 0);
+string sName = Dialog.Pick(JezykInterfejsu.Wybierz("SendTo Menu", "Menu Wyślij do"), aNames, true, 0);
 if (sName.Length == 0) return;
 
 int i = Array.IndexOf(aNames, sName);
@@ -9969,7 +9902,7 @@ e.Handled = true;
 else if(e.KeyCode == Keys.J && ((e.Alt && !e.Control) || (!e.Alt && e.Control)) && !e.Shift) {
 string sText = Dialog.Jump;
 if (e.Control) {
-sText = Dialog.Input("Jump", "Text", sText);
+sText = Dialog.Input(JezykInterfejsu.Wybierz("Jump", "Skok"), JezykInterfejsu.Wybierz("Text", "Tekst"), sText);
 if (sText.Length == 0) return;
 }
 
@@ -9985,7 +9918,7 @@ while (iIndex < iCount && lst.Items[iIndex].ToString().ToLower().IndexOf(sText) 
 iIndex ++;
 }
 if (iIndex < iCount) LbcDialog.selectOnly(lst, iIndex);
-else AddMessage("Not found!");
+else AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 //lst.Update();
 e.Handled = true;
 }
@@ -10217,11 +10150,11 @@ sFragment = asciiHtml.ToString();
 			// ReadOnly (zmierzone harnessem: tresc zostaje nietknieta), ale wtedy
 			// MILCZY, a niewidomy nie ma jak odroznic tego od pustego schowka.
 			if (rtb != null && rtb.ReadOnly) {
-			AddMessage("Document is guarded!");
+			AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 			return true;
 			}
 			if (!PasteMarkdownTextInto(rtb, sMarkdown)) return false;
-			AddMessage("Markdown pasted");
+			AddMessage(JezykInterfejsu.Wybierz("Markdown pasted", "Wklejono Markdown"));
 			return true;
 			} // PasteEdSharpMarkdownFormat method
 
@@ -10361,8 +10294,8 @@ sFragment = asciiHtml.ToString();
 			// Wlasny format: wklejenie WEWNATRZ EdSharpa ma odtworzyc skladnie
 			// Markdown, a nie sam tytul (zgloszenie Kasperczaka 01.09).
 			data.SetData(EdSharpMarkdownFormat, "[" + sTitle + "](" + sUrl + ")");
-			if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, link not copied!"); return false;}
-				AddMessage("Link copied");
+			if (!Util.SetClipboardData(data)) {AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, link not copied!", "Schowek jest zajęty, łącze nie zostało skopiowane!")); return false;}
+				AddMessage(JezykInterfejsu.Wybierz("Link copied", "Skopiowano łącze"));
 				return true;
 				} // CopyMarkdownInlineLinkSpanAsRichText method
 
@@ -10438,11 +10371,11 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 
 			if (iDigit >= 1 && iDigit <= 6) {
 			if (this.KeyDescriber) {
-			AddMessage("Heading " + iDigit);
+			AddMessage(String.Format(JezykInterfejsu.Wybierz("Heading {0}", "Nagłówek {0}"), iDigit));
 			return true;
 			}
 			ApplyHeadingShortcut(child, iDigit);
-			AddMessage("Heading " + iDigit);
+			AddMessage(String.Format(JezykInterfejsu.Wybierz("Heading {0}", "Nagłówek {0}"), iDigit));
 			return true;
 			}
 
@@ -10458,7 +10391,7 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 
 			if (iDigit == 9) {
 			if (this.KeyDescriber) {
-			AddMessage("Insert Markdown link");
+			AddMessage(JezykInterfejsu.Wybierz("Insert Markdown link", "Wstaw łącze Markdown"));
 			return true;
 			}
 			InsertMarkdownLinkShortcut(child);
@@ -10468,7 +10401,7 @@ if (keyData != Keys.Enter && hashKey.ContainsKey(keyData)) return false;
 
 			if (iDigit == 0) {
 			if (this.KeyDescriber) {
-			AddMessage("Clear formatting");
+			AddMessage(JezykInterfejsu.Wybierz("Clear formatting", "Wyczyść formatowanie"));
 			return true;
 			}
 			ClearFormattingShortcut(child);
@@ -11218,7 +11151,7 @@ return result;
 		if (keyCode != Keys.Up && keyCode != Keys.Down) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage(keyCode == Keys.Up ? "Move section up" : "Move section down");
+		AddMessage(keyCode == Keys.Up ? JezykInterfejsu.Wybierz("Move section up", "Przenieś sekcję w górę") : JezykInterfejsu.Wybierz("Move section down", "Przenieś sekcję w dół"));
 		return true;
 		}
 
@@ -11277,29 +11210,29 @@ return result;
 		} // HandleSpellingWordMenuKey method
 
 // Menu pisowni dla JEDNEGO wyrazu - tego, na ktorym stoi kursor.
-// Kolejnosc pozycji jest celowa: najpierw "Add to dictionary", bo w
-// polskim tekscie najczestszym powodem zgloszenia jest poprawne nazwisko
-// lub nazwa wlasna, ktorej brak w slowniku.  Podpowiedzi sa nizej, bo
-// siega sie po nie rzadziej.
+// Kolejność pozycji jest celowa: najpierw dodanie do słownika, bo
+// w polskim tekście najczęstszym powodem zgłoszenia jest poprawne nazwisko
+// lub nazwa własna, której brak w słowniku. Podpowiedzi są niżej, bo
+// sięga się po nie rzadziej.
 public void SpellingWordMenu() {
 	MdiChild child = this.Child;
 	if (child == null) return;
 	HomerRichTextBox rtb = child.RTB;
 
-	if (!Pisownia.Dostepne()) { Say.say("Spell checking not available"); return; }
+	if (!Pisownia.Dostepne()) { Say.say(JezykInterfejsu.Wybierz("Spell checking not available", "Sprawdzanie pisowni jest niedostępne")); return; }
 
 	// Granice wyrazu wokol kursora.  Litera to dla nas wszystko, co .NET
 	// uznaje za litere (wiec polskie znaki tez), plus apostrof i lacznik
 	// wewnatrz wyrazu.
 	string sText = rtb.Text;
 	int iPos = rtb.SelectionStart;
-	if (sText.Length == 0) { Say.say("No text"); return; }
+	if (sText.Length == 0) { Say.say(JezykInterfejsu.Wybierz("No text", "Brak tekstu")); return; }
 	if (iPos >= sText.Length) iPos = sText.Length - 1;
 	if (iPos < 0) iPos = 0;
 	// Gdy kursor stoi ZA wyrazem (spacja, koniec zdania), cofamy sie o
 	// jeden znak - tak jak dziala czytanie wyrazu w czytniku ekranu.
 	if (!Char.IsLetter(sText[iPos]) && iPos > 0 && Char.IsLetter(sText[iPos - 1])) iPos--;
-	if (!Char.IsLetter(sText[iPos])) { Say.say("No word at cursor"); return; }
+	if (!Char.IsLetter(sText[iPos])) { Say.say(JezykInterfejsu.Wybierz("No word at cursor", "Brak słowa przy kursorze")); return; }
 
 	int iStart = iPos;
 	while (iStart > 0 && (Char.IsLetter(sText[iStart - 1]) || sText[iStart - 1] == '\'' || sText[iStart - 1] == '-')) iStart--;
@@ -11308,38 +11241,43 @@ public void SpellingWordMenu() {
 	// Lacznik/apostrof na samym brzegu nie nalezy do wyrazu.
 	while (iEnd > iStart && !Char.IsLetter(sText[iEnd])) iEnd--;
 	string sWord = sText.Substring(iStart, iEnd - iStart + 1);
-	if (sWord.Length == 0) { Say.say("No word at cursor"); return; }
+	if (sWord.Length == 0) { Say.say(JezykInterfejsu.Wybierz("No word at cursor", "Brak słowa przy kursorze")); return; }
 
 	List<Pisownia.Blad> lBledy = Pisownia.Sprawdz(sWord);
 	bool bBlad = (lBledy.Count > 0);
 	List<string> lPodp = bBlad ? lBledy[0].Podpowiedzi : new List<string>();
 
+	List<string> lWartosci = new List<string>();
 	List<string> lOpcje = new List<string>();
-	lOpcje.Add("Add to dictionary");
-	lOpcje.Add("Ignore this word");
+	lWartosci.Add("Add to dictionary");
+	lOpcje.Add(JezykInterfejsu.Wybierz("Add to dictionary", "Dodaj do słownika"));
+	lWartosci.Add("Ignore this word");
+	lOpcje.Add(JezykInterfejsu.Wybierz("Ignore this word", "Ignoruj to słowo"));
 	if (bBlad) {
 		int iIle = 0;
 		foreach (string sP in lPodp) {
 			if (sP == null || sP.Length == 0) continue;
-			lOpcje.Add("Replace with: " + sP);
+			lWartosci.Add("Replace with: " + sP);
+			lOpcje.Add(JezykInterfejsu.Wybierz("Replace with: ", "Zamień na: ") + sP);
 			iIle++;
 			if (iIle >= 10) break;
 		}
 	}
-	lOpcje.Add("Spell check from here");
+	lWartosci.Add("Spell check from here");
+	lOpcje.Add(JezykInterfejsu.Wybierz("Spell check from here", "Sprawdź pisownię od tego miejsca"));
 
-	string sTytul = bBlad ? ("Spelling: " + sWord) : ("Spelling: " + sWord + " (correct)");
-	string sWybor = Dialog.Pick(sTytul, lOpcje.ToArray(), true, 0);
+	string sTytul = bBlad ? (JezykInterfejsu.Wybierz("Spelling: ", "Pisownia: ") + sWord) : (JezykInterfejsu.Wybierz("Spelling: ", "Pisownia: ") + sWord + JezykInterfejsu.Wybierz(" (correct)", " (pisownia prawidłowa)"));
+	string sWybor = Dialog.Pick(sTytul, lWartosci.ToArray(), lOpcje.ToArray(), true, 0);
 	if (sWybor.Length == 0) return;
 
 	if (String.Equals(sWybor, "Add to dictionary", StringComparison.OrdinalIgnoreCase)) {
-		if (Pisownia.Dodaj(sWord)) { AddMessage("Added: " + sWord); Say.say("Added to dictionary"); }
-		else Say.say("Could not add word");
+		if (Pisownia.Dodaj(sWord)) { AddMessage(String.Format(JezykInterfejsu.Wybierz("Added: {0}", "Dodano: {0}"), sWord)); Say.say(JezykInterfejsu.Wybierz("Added to dictionary", "Dodano do słownika")); }
+		else Say.say(JezykInterfejsu.Wybierz("Could not add word", "Nie można dodać słowa"));
 		return;
 	}
 	if (String.Equals(sWybor, "Ignore this word", StringComparison.OrdinalIgnoreCase)) {
-		if (Pisownia.Pomijaj(sWord)) { AddMessage("Ignoring: " + sWord); Say.say("Ignoring this word"); }
-		else Say.say("Could not ignore word");
+		if (Pisownia.Pomijaj(sWord)) { AddMessage(String.Format(JezykInterfejsu.Wybierz("Ignoring: {0}", "Pomijanie: {0}"), sWord)); Say.say(JezykInterfejsu.Wybierz("Ignoring this word", "Pomijanie tego słowa")); }
+		else Say.say(JezykInterfejsu.Wybierz("Could not ignore word", "Nie można pominąć słowa"));
 		return;
 	}
 	if (String.Equals(sWybor, "Spell check from here", StringComparison.OrdinalIgnoreCase)) {
@@ -11354,8 +11292,8 @@ public void SpellingWordMenu() {
 		rtb.Select(iStart, sWord.Length);
 		rtb.SelectedText = sNowe;
 		rtb.Select(iStart + sNowe.Length, 0);
-		AddMessage(String.Format("Replaced: {0} -> {1}", sWord, sNowe));
-		Say.say("Replaced");
+		AddMessage(String.Format(JezykInterfejsu.Wybierz("Replaced: {0} -> {1}", "Zastąpiono: {0} -> {1}"), sWord, sNowe));
+		Say.say(JezykInterfejsu.Wybierz("Replaced", "Zastąpiono"));
 		return;
 	}
 } // SpellingWordMenu method
@@ -11385,7 +11323,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		if (hashKey.ContainsKey(keyData)) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage((bAssign ? "Assign numbered file " : "Open numbered file ") + iSlot);
+		AddMessage(String.Format(JezykInterfejsu.Wybierz(bAssign ? "Assign numbered file {0}" : "Open numbered file {0}", bAssign ? "Przypisz plik numerowany {0}" : "Otwórz plik numerowany {0}"), iSlot));
 		return true;
 		}
 
@@ -11425,7 +11363,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		if (hashKey.ContainsKey(keyData)) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage("Go to window " + iDigit);
+		AddMessage(JezykInterfejsu.Polski ? String.Format("Przejdź do okna {0}", iDigit) : "Go to window " + iDigit);
 		return true;
 		}
 
@@ -11438,13 +11376,13 @@ private bool HandleFileSlotKey(Keys keyData) {
 		List<MdiChild> children = new List<MdiChild>();
 		foreach (MdiChild c in this.MdiChildren) children.Add(c);
 		if (children.Count == 0) {
-		AddMessage("No windows!");
+		AddMessage(JezykInterfejsu.Wybierz("No windows!", "Brak okien!"));
 		return;
 		}
 
 		children.Sort(delegate(MdiChild a, MdiChild b) {return a.OpenSequence.CompareTo(b.OpenSequence);});
 		if (iNumber > children.Count) {
-		AddMessage("Only " + children.Count + (children.Count == 1 ? " window!" : " windows!"));
+		AddMessage(String.Format(JezykInterfejsu.Wybierz("Only {0} window(s)!", "Tylko {0} okien!"), children.Count));
 		return;
 		}
 
@@ -11529,7 +11467,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		if (hashKey.ContainsKey(keyData)) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage("Nothing");
+		AddMessage(JezykInterfejsu.Wybierz("Nothing", "Nic"));
 		return true;
 		}
 
@@ -11541,7 +11479,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		if (hashKey.ContainsKey(keyData)) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage("Close Window");
+		AddMessage(JezykInterfejsu.Wybierz("Close Window", "Zamknij okno"));
 		return true;
 		}
 
@@ -11559,12 +11497,12 @@ private bool HandleFileSlotKey(Keys keyData) {
 		MdiChild child = this.Child;
 		string sFile = (child == null) ? "" : child.File;
 		if (sFile.Length == 0 || !sFile.Contains(@"\")) {
-		AddMessage("No disk file is open for this command!");
+		AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dla tego polecenia nie jest otwarty żaden plik dyskowy!"));
 		return;
 		}
 
 		App.WriteValue(c_sFileSlotSection, iSlot.ToString(), sFile);
-		AddMessage("Numbered file " + iSlot + " is " + Path.GetFileName(sFile));
+		AddMessage(String.Format(JezykInterfejsu.Wybierz("Numbered file {0} is {1}", "Plik numerowany {0} to {1}"), iSlot, Path.GetFileName(sFile)));
 		} // AssignFileSlot method
 
 		// Open (or activate, if already open) the file remembered in a slot.
@@ -11578,12 +11516,12 @@ private bool HandleFileSlotKey(Keys keyData) {
 		string sFile = App.ReadValue(c_sFileSlotSection, iSlot.ToString(), "");
 		sFile = Util.Unquote(sFile).Trim();
 		if (sFile.Length == 0) {
-		AddMessage("Numbered file " + iSlot + " is empty!");
+		AddMessage(JezykInterfejsu.Polski ? String.Format("Plik numerowany {0} jest pusty!", iSlot) : "Numbered file " + iSlot + " is empty!");
 		return;
 		}
 
 		if (!File.Exists(sFile)) {
-		AddMessage("Numbered file " + iSlot + " not found!");
+		AddMessage(JezykInterfejsu.Polski ? String.Format("Nie znaleziono pliku numerowanego {0}!", iSlot) : "Numbered file " + iSlot + " not found!");
 		return;
 		}
 
@@ -11595,7 +11533,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		return;
 		}
 
-		AnnounceWindowName("Opening " + sName);
+		AnnounceWindowName(JezykInterfejsu.Wybierz("Opening ", "Otwieranie ") + sName);
 		OpenOrActivateWindow(sFile, 0);
 		} // OpenFileSlot method
 
@@ -11615,14 +11553,14 @@ private bool HandleFileSlotKey(Keys keyData) {
 		}
 
 		if (lsValue.Count == 0) {
-		AddMessage("No numbered files are assigned!");
+		AddMessage(JezykInterfejsu.Wybierz("No numbered files are assigned!", "Nie przypisano plików numerowanych!"));
 		return;
 		}
 
-		string sPick = Dialog.Pick("Numbered Files", lsValue.ToArray(), lsDisplay.ToArray(), false, 0);
+		string sPick = Dialog.Pick(JezykInterfejsu.Wybierz("Numbered Files", "Pliki numerowane"), lsValue.ToArray(), lsDisplay.ToArray(), false, 0);
 		if (sPick.Length == 0) return;
 		if (!File.Exists(sPick)) {
-		AddMessage("File not found!");
+		AddMessage(JezykInterfejsu.Wybierz("File not found!", "Nie znaleziono pliku!"));
 		return;
 		}
 
@@ -11639,7 +11577,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 
 				List<int> starts = GetSectionStarts(sText);
 			if (starts.Count <= 1) {
-			AnnounceSectionMoveMessage("No section to move");
+			AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("No section to move", "Brak sekcji do przeniesienia"));
 			return;
 			}
 
@@ -11657,12 +11595,12 @@ private bool HandleFileSlotKey(Keys keyData) {
 		}
 
 			if (bUp && iSection == 0) {
-			AnnounceSectionMoveMessage("Top!");
+			AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("Top!", "Początek!"));
 			return;
 			}
 
 			if (!bUp && iSection >= starts.Count - 1) {
-			AnnounceSectionMoveMessage("Bottom!");
+			AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("Bottom!", "Koniec!"));
 			return;
 			}
 
@@ -11679,7 +11617,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				string sPreviousTitle = GetSectionAnnouncementTitle(sPrevious);
 				rtb.Text = sBefore + sCurrent + sPrevious + sAfter;
 				rtb.Index = iPrevStart + iOffset;
-				AnnounceSectionMoveMessage("Above " + sPreviousTitle);
+				AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("Above ", "Powyżej: ") + sPreviousTitle);
 				}
 				else {
 			int iNextEnd = (iSection + 2 < starts.Count) ? starts[iSection + 2] : sText.Length;
@@ -11689,7 +11627,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				string sNextTitle = GetSectionAnnouncementTitle(sNext);
 				rtb.Text = sBefore + sNext + sCurrent + sAfter;
 				rtb.Index = iThisStart + sNext.Length + iOffset;
-				AnnounceSectionMoveMessage("Below " + sNextTitle);
+				AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("Below ", "Poniżej: ") + sNextTitle);
 				}
 				rtb.Modified = true;
 				} // MoveCurrentSection method
@@ -11715,7 +11653,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 
 				int iHeading = GetCurrentMarkdownSectionHeadingIndex(headings, iCurrent);
 				if (iHeading < 0) {
-				AnnounceSectionMoveMessage("No heading section");
+				AnnounceSectionMoveMessage(JezykInterfejsu.Wybierz("No heading section", "Brak sekcji nagłówka"));
 				return true;
 				}
 
@@ -11775,7 +11713,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				string sText = rtb.Text;
 				List<MarkdownSectionHeading> headings = GetMarkdownSectionHeadings(sText);
 				if (headings.Count == 0) {
-				AddMessage("No headings!");
+				AddMessage(JezykInterfejsu.Wybierz("No headings!", "Brak nagłówków!"));
 				return;
 				}
 
@@ -11799,7 +11737,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				break;
 				}
 				if (iTarget == -1) {
-				AddMessage(bSameLevelOnly ? "First heading at this level!" : "First heading!");
+				AddMessage(bSameLevelOnly ? JezykInterfejsu.Wybierz("First heading at this level!", "Pierwszy nagłówek na tym poziomie!") : JezykInterfejsu.Wybierz("First heading!", "Pierwszy nagłówek!"));
 				return;
 				}
 				}
@@ -11811,7 +11749,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				break;
 				}
 				if (iTarget == -1) {
-				AddMessage(bSameLevelOnly ? "Last heading at this level!" : "Last heading!");
+				AddMessage(bSameLevelOnly ? JezykInterfejsu.Wybierz("Last heading at this level!", "Ostatni nagłówek na tym poziomie!") : JezykInterfejsu.Wybierz("Last heading!", "Ostatni nagłówek!"));
 				return;
 				}
 				}
@@ -11829,7 +11767,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				// The level is announced as "heading 3", NOT "heading level 3"
 				// (14.08.2026 18:59: "nie tresc poziom naglowka 3").
 				string sHeading = GetMarkdownSectionHeadingTitle(headings[iTarget]);
-				Util.Say(sHeading + ", heading " + headings[iTarget].Level);
+				Util.Say(sHeading + String.Format(JezykInterfejsu.Wybierz(", heading {0}", ", nagłówek {0}"), headings[iTarget].Level));
 				} // GoToAdjacentMarkdownHeading method
 
 
@@ -11870,7 +11808,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				rtb.ReplaceRange(iCurrent, iCurrent, sInsert);
 				rtb.Index = iCurrent + sInsert.Length;
 				rtb.Modified = true;
-				AddMessage("Heading " + iLevel);
+				AddMessage(JezykInterfejsu.Polski ? String.Format("Nagłówek {0}", iLevel) : "Heading " + iLevel);
 				} // InsertMarkdownHeadingAtCursor method
 
 				// Document Navigation, F6.  The document's Markdown headings shown as a
@@ -11908,7 +11846,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				List<MarkdownSectionHeading> headings = GetMarkdownSectionHeadings(sText);
 				if (headings.Count == 0) {
 				// His decision: only a message, no empty window to escape from.
-				AddMessage("No headings!");
+				AddMessage(JezykInterfejsu.Wybierz("No headings!", "Brak nagłówków!"));
 				return;
 				}
 
@@ -11918,9 +11856,9 @@ private bool HandleFileSlotKey(Keys keyData) {
 				// shallower climbs back up.  Levels may skip (h1 then h3) and a file
 				// may start at h2 -- both are normal in real documents, so parenting
 				// walks up the open branch instead of assuming level == depth.
-				LbcDialog dlg = new LbcDialog("Document Navigation", App.Frame);
-				TreeView tv = dlg.addTreeView("Enter goes to the heading");
-				dlg.setHelpDetail(tv, "Keys: Up and Down Arrow move, Right Arrow expands a heading, Left Arrow collapses it or goes to the parent, typing letters jumps to a heading starting with them, Enter goes to the selected heading in the text, Escape closes without moving. The tree reopens where you left it.");
+				LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Document Navigation", "Nawigacja po dokumencie"), App.Frame);
+				TreeView tv = dlg.addTreeView(JezykInterfejsu.Wybierz("Enter goes to the heading", "Enter przechodzi do nagłówka"));
+				dlg.setHelpDetail(tv, JezykInterfejsu.Wybierz("Keys: Up and Down Arrow move, Right Arrow expands a heading, Left Arrow collapses it or goes to the parent, typing letters jumps to a heading starting with them, Enter goes to the selected heading in the text, Escape closes without moving. The tree reopens where you left it.", "Klawisze: Strzałka w górę i w dół przesuwa, strzałka w prawo rozwija nagłówek, strzałka w lewo zwija go albo przechodzi do elementu nadrzędnego; wpisanie liter przechodzi do nagłówka zaczynającego się od nich. Enter przechodzi do zaznaczonego nagłówka w tekście, Escape zamyka bez przemieszczania. Drzewo otwiera się ponownie w ostatnim miejscu."));
 
 				List<TreeNode> nodes = new List<TreeNode>();
 				List<int> nodeLevels = new List<int>();
@@ -11995,7 +11933,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 				// AnnounceSectionMoveMessage ucina tamto.
 				int iLanded = GetCurrentMarkdownSectionHeadingIndex(headings, iTarget);
 				string sMessage = "";
-				if (iLanded >= 0) sMessage = GetMarkdownSectionHeadingTitle(headings[iLanded]) + ", heading " + headings[iLanded].Level;
+				if (iLanded >= 0) sMessage = GetMarkdownSectionHeadingTitle(headings[iLanded]) + JezykInterfejsu.Wybierz(", heading ", ", nagłówek ") + headings[iLanded].Level;
 				else sMessage = rtb.RowText;
 				string sDeferred = sMessage;
 				try {
@@ -12125,11 +12063,11 @@ if (anchors[i].Length == 0) continue;
 if (!String.Equals(anchors[i], sAnchor, StringComparison.OrdinalIgnoreCase)) continue;
 try {rtb.Select(headings[i].Start, 0);} catch {}
 try {if (Win32.IsNVDAActive()) Win32.NVDACancelSpeech();} catch {}
-AddMessage(GetMarkdownSectionHeadingTitle(headings[i]) + ", heading " + headings[i].Level);
+AddMessage(GetMarkdownSectionHeadingTitle(headings[i]) + String.Format(JezykInterfejsu.Wybierz(", heading {0}", ", nagłówek {0}"), headings[i].Level));
 return true;
 }
 
-AddMessage("No heading for that link!");
+AddMessage(JezykInterfejsu.Wybierz("No heading for that link!", "Brak nagłówka dla tego łącza!"));
 return true;
 } // TryGoToInternalAnchorAtCursor method
 
@@ -12173,7 +12111,7 @@ string sLabel, sBody;
 if (IsMarkdownFootnoteDefinitionLine(sLine, out sLabel, out sBody)) {
 int iRef = FindMarkdownFootnoteByLabel(refs, sLabel);
 if (iRef < 0) {
-MarkdownReview_SayInView("Footnote " + sLabel + " has no marker in the text!");
+MarkdownReview_SayInView(String.Format(JezykInterfejsu.Wybierz("Footnote {0} has no marker in the text!", "Przypis {0} nie ma znacznika w tekście!"), sLabel));
 return true;
 }
 MarkdownReview_GoToSourceIndex(child, refs[iRef].Start);
@@ -12185,7 +12123,7 @@ MarkdownReview_GoToSourceIndex(child, refs[iRef].Start);
 string sRefLine = GetTextLineAtIndex(sText, refs[iRef].Start).Trim();
 try {sRefLine = MarkdownFootnoteRefRegex.Replace(sRefLine, MarkdownReview_FootnoteMarkerReplacement);} catch {}
 if (sRefLine.Length == 0) sRefLine = "Footnote " + refs[iRef].Label;
-MarkdownReview_SayInView(sRefLine + ", footnote " + refs[iRef].Label + " in text");
+MarkdownReview_SayInView(sRefLine + String.Format(JezykInterfejsu.Wybierz(", footnote {0} in text", ", przypis {0} w tekście"), refs[iRef].Label));
 return true;
 }
 
@@ -12195,7 +12133,7 @@ int iHere = FindMarkdownFootnoteRefAtIndex(refs, sText, iCursor);
 if (iHere < 0) return false;
 int iDef = FindMarkdownFootnoteByLabel(defs, refs[iHere].Label);
 if (iDef < 0) {
-MarkdownReview_SayInView("Footnote " + refs[iHere].Label + " has no text at the end of the document!");
+MarkdownReview_SayInView(String.Format(JezykInterfejsu.Wybierz("Footnote {0} has no text at the end of the document!", "Przypis {0} nie ma tekstu na końcu dokumentu!"), refs[iHere].Label));
 return true;
 }
 MarkdownReview_GoToSourceIndex(child, defs[iDef].Start);
@@ -12442,7 +12380,7 @@ int iBlockStart, iBlockEnd;
 bool bHave = TryGetMarkdownContentsBlock(sText, out iBlockStart, out iBlockEnd);
 List<MarkdownSectionHeading> headings = GetMarkdownHeadingsOutsideContents(sText, bHave ? iBlockStart : -1, iBlockEnd);
 if (headings.Count == 0) {
-AddMessage("No headings!");
+AddMessage(JezykInterfejsu.Wybierz("No headings!", "Brak nagłówków!"));
 return;
 }
 
@@ -12452,12 +12390,12 @@ string sContents = BuildMarkdownContentsText(headings, anchors);
 if (bHave) {
 rtb.ReplaceRange(iBlockStart, iBlockEnd, sContents);
 rtb.Index = iBlockStart;
-AddMessage("Contents updated, " + Util.Pluralize(headings.Count, "item"));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Contents updated, {0} item(s)", "Zaktualizowano spis treści: {0} elementów"), headings.Count));
 }
 else {
 rtb.ReplaceRange(0, 0, sContents);
 rtb.Index = 0;
-AddMessage("Contents, " + Util.Pluralize(headings.Count, "item"));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Contents, {0} item(s)", "Spis treści: {0} elementów"), headings.Count));
 }
 rtb.Modified = true;
 } // WriteMarkdownContents method
@@ -12481,7 +12419,7 @@ return;
 
 if (!bHave) {
 if (headings.Count == 0) AddMessage("No headings!");
-else AddMessage("No contents yet, press Alt+Shift+T to create it!");
+else AddMessage(JezykInterfejsu.Wybierz("No contents yet, press Alt+Shift+T to create it!", "Nie ma jeszcze spisu treści; naciśnij Alt+Shift+T, aby go utworzyć!"));
 return;
 }
 
@@ -12493,7 +12431,7 @@ string sLine = GetTextLineAtIndex(sText, iCurrent);
 Match m = null;
 try {m = MarkdownContentsEntryRegex.Match(sLine);} catch {}
 if (m == null || !m.Success) {
-AddMessage("Put the cursor on a contents item!");
+AddMessage(JezykInterfejsu.Wybierz("Put the cursor on a contents item!", "Umieść kursor na pozycji spisu treści!"));
 return;
 }
 
@@ -12505,10 +12443,10 @@ if (!String.Equals(anchors[i], sAnchor, StringComparison.OrdinalIgnoreCase)) con
 rtb.Index = headings[i].Start;
 // Ta sama forma wypowiedzi co przy Control z PageUp i PageDown oraz po
 // Enter w drzewie F6, wiec kazde dojscie do naglowka brzmi identycznie.
-Util.Say(GetMarkdownSectionHeadingTitle(headings[i]) + ", heading " + headings[i].Level);
+Util.Say(GetMarkdownSectionHeadingTitle(headings[i]) + String.Format(JezykInterfejsu.Wybierz(", heading {0}", ", nagłówek {0}"), headings[i].Level));
 return;
 }
-AddMessage("That heading is gone, press Alt+Shift+T to refresh the contents!");
+AddMessage(JezykInterfejsu.Polski ? String.Format("Tego nagłówka już nie ma; naciśnij Alt+Shift+T, aby odświeżyć spis treści!") : "That heading is gone, press Alt+Shift+T to refresh the contents!");
 } // GoFromContentsEntryToHeading method
 
 private void GoFromHeadingToContentsEntry(HomerRichTextBox rtb, string sText, List<MarkdownSectionHeading> headings, int iBlockStart, int iBlockEnd, int iCurrent) {
@@ -12532,7 +12470,7 @@ Match m = null;
 try {m = MarkdownContentsEntryRegex.Match(sLine);} catch {}
 if (m != null && m.Success && String.Equals(m.Groups["anchor"].Value.Trim(), sWant, StringComparison.OrdinalIgnoreCase)) {
 rtb.Index = iScan;
-Util.Say(m.Groups["label"].Value.Trim() + ", contents");
+Util.Say(m.Groups["label"].Value.Trim() + JezykInterfejsu.Wybierz(", contents", ", spis treści"));
 return;
 }
 if (iNewLine < 0) break;
@@ -12541,7 +12479,7 @@ iScan = iNewLine + 1;
 }
 
 rtb.Index = iBlockStart;
-Util.Say("Contents");
+Util.Say(JezykInterfejsu.Wybierz("Contents", "Spis treści"));
 } // GoFromHeadingToContentsEntry method
 
 // PRZYPISY MARKDOWNOWE (zlecenie 1787832545532-3, ustalenia Kasperczaka z
@@ -12779,7 +12717,7 @@ if (s.Length == 0) return "footnote";
 // wymawial "przypisemfootnote 1" jednym slowem, bo w zdaniu znacznik przylega
 // do wyrazu ("...przypisem[^1]").  Nawias i daszek same rozdzielaly wyrazy,
 // wiec po zamianie na slowa trzeba ten rozdzielnik dolozyc jawnie.
-return " footnote " + s;
+return JezykInterfejsu.Wybierz(" footnote ", " przypis ") + s;
 } // MarkdownReview_FootnoteMarkerText method
 
 // Podmiana znacznika w CYTOWANYM zdaniu, uzywana przy powrocie z tresci
@@ -12867,7 +12805,7 @@ if (iCursor < 0) iCursor = 0;
 if (iCursor > sText.Length) iCursor = sText.Length;
 List<int[]> fences = MarkdownReview_FindFenceRanges(sText);
 if (IsMarkdownIndexInFence(fences, iCursor)) {
-AddMessage("Cannot put a link inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot put a link inside a code block!", "Nie można umieścić łącza wewnątrz bloku kodu!"));
 return;
 }
 
@@ -12886,19 +12824,19 @@ lAnchorLabels.Add(sHeadingLabel);
 bool bInternalPossible = (lAnchorValues.Count > 0);
 
 List<string> lKinds = new List<string>();
-lKinds.Add("Web or file link");
-lKinds.Add("Image");
-if (bInternalPossible) lKinds.Add("Place in this document");
+lKinds.Add(JezykInterfejsu.Wybierz("Web or file link", "Łącze internetowe lub do pliku"));
+lKinds.Add(JezykInterfejsu.Wybierz("Image", "Obraz"));
+if (bInternalPossible) lKinds.Add(JezykInterfejsu.Wybierz("Place in this document", "Miejsce w tym dokumencie"));
 
-LbcDialog dlg = new LbcDialog("Insert Link", this);
-TextBox txtLabel = dlg.addInputBox("Link &text", sSelected);
-TextBox txtAddress = dlg.addInputBox("&Address", "");
-ComboBox cboKind = dlg.addComboPickBox("Link &kind", lKinds, lKinds[0],
-bInternalPossible ? "Image inserts a picture; place in this document jumps to a heading"
-: "No heading with an anchor in this document, so an internal link is not offered");
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Insert Link", "Wstaw łącze"), this);
+TextBox txtLabel = dlg.addInputBox(JezykInterfejsu.Wybierz("Link &text", "&Tekst łącza"), sSelected);
+TextBox txtAddress = dlg.addInputBox(JezykInterfejsu.Wybierz("&Address", "&Adres"), "");
+ComboBox cboKind = dlg.addComboPickBox(JezykInterfejsu.Wybierz("Link &kind", "&Rodzaj łącza"), lKinds, lKinds[0],
+bInternalPossible ? JezykInterfejsu.Wybierz("Image inserts a picture; place in this document jumps to a heading", "Obraz wstawia grafikę; miejsce w tym dokumencie przechodzi do nagłówka")
+: JezykInterfejsu.Wybierz("No heading with an anchor in this document, so an internal link is not offered", "W tym dokumencie nie ma nagłówka z kotwicą, więc łącze wewnętrzne nie jest dostępne"));
 ComboBox cboTarget = null;
-if (bInternalPossible) cboTarget = dlg.addComboPickBox("&Heading to jump to",
-lAnchorLabels, lAnchorLabels[0], "Used only when the kind is a place in this document");
+if (bInternalPossible) cboTarget = dlg.addComboPickBox(JezykInterfejsu.Wybierz("&Heading to jump to", "&Nagłówek docelowy"),
+lAnchorLabels, lAnchorLabels[0], JezykInterfejsu.Wybierz("Used only when the kind is a place in this document", "Używane tylko, gdy rodzajem jest miejsce w tym dokumencie"));
 if (!dlg.runOkCancel()) {
 dlg.Dispose();
 return;
@@ -12916,7 +12854,7 @@ bool bInternal = (bInternalPossible && iKind == 2);
 // prawa znac zasady liczenia kotwic, a my ja znamy.
 if (bInternal) {
 if (iTarget < 0 || iTarget >= lAnchorValues.Count) {
-AddMessage("No heading picked, nothing inserted!");
+AddMessage(JezykInterfejsu.Wybierz("No heading picked, nothing inserted!", "Nie wybrano nagłówka; nic nie wstawiono!"));
 return;
 }
 sAddress = "#" + lAnchorValues[iTarget];
@@ -12924,7 +12862,7 @@ if (sLabelText.Length == 0) sLabelText = lAnchorLabels[iTarget];
 }
 
 if (sAddress.Length == 0) {
-AddMessage("No address, nothing inserted!");
+AddMessage(JezykInterfejsu.Wybierz("No address, nothing inserted!", "Brak adresu; nic nie wstawiono!"));
 return;
 }
 
@@ -12934,7 +12872,7 @@ return;
 // tresc, bo odsylacz musi cos mowic.
 if (sLabelText.Length == 0) {
 if (bImage) {
-AddMessage("An image needs a description for screen reader users!");
+AddMessage(JezykInterfejsu.Wybierz("An image needs a description for screen reader users!", "Obraz wymaga opisu dla użytkowników czytników ekranu!"));
 return;
 }
 sLabelText = sAddress;
@@ -12952,7 +12890,7 @@ int iEnd = (iSelLength > 0) ? (iSelStart + iSelLength) : iCursor;
 rtb.ReplaceRange(iStart, iEnd, sMarkup);
 rtb.Index = iStart + sMarkup.Length;
 rtb.Modified = true;
-AddMessage(bImage ? "Image inserted" : (bInternal ? "Internal link inserted" : "Link inserted"));
+AddMessage(bImage ? JezykInterfejsu.Wybierz("Image inserted", "Wstawiono obraz") : (bInternal ? JezykInterfejsu.Wybierz("Internal link inserted", "Wstawiono łącze wewnętrzne") : JezykInterfejsu.Wybierz("Link inserted", "Wstawiono łącze")));
 } // InsertMarkdownLink method
 
 // ==================== LISTA LINKOW (Control+F6) ====================
@@ -13107,7 +13045,7 @@ return sKind;
 // tresci, wiec dla niego wierszem JEST adres - inaczej pozycja byla by pusta.
 private static string GetMarkdownLinkListLine(MarkdownLink link) {
 if (link == null) return "";
-if (link.Title.Length > 0) return link.Image ? link.Title + ", image" : link.Title;
+if (link.Title.Length > 0) return link.Image ? link.Title + JezykInterfejsu.Wybierz(", image", ", obraz") : link.Title;
 if (link.Url.Length > 0) return link.Image ? link.Url + ", image" : link.Url;
 return link.Image ? "image" : "link";
 } // GetMarkdownLinkListLine method
@@ -13120,9 +13058,9 @@ return link.Image ? "image" : "link";
 // wtedy strzalka mowi o tym wprost, zamiast powtarzac to samo.
 private static string GetMarkdownLinkAddressSpeech(MarkdownLink link, int iLine) {
 if (link == null) return "";
-string sLine = (iLine > 0) ? ", line " + iLine : "";
-if (link.Url.Length == 0) return "This link has no address" + sLine;
-if (link.Title.Length == 0) return "Address only, " + link.Url + sLine;
+string sLine = (iLine > 0) ? JezykInterfejsu.Wybierz(", line ", ", wiersz ") + iLine : "";
+if (link.Url.Length == 0) return JezykInterfejsu.Wybierz("This link has no address", "To łącze nie ma adresu") + sLine;
+if (link.Title.Length == 0) return JezykInterfejsu.Wybierz("Address only, ", "Tylko adres, ") + link.Url + sLine;
 return link.Url + sLine;
 } // GetMarkdownLinkAddressSpeech method
 
@@ -13168,15 +13106,15 @@ return true;
 private bool EditMarkdownLink(HomerRichTextBox rtb, MarkdownLink link) {
 if (rtb == null || link == null) return false;
 if (rtb.ReadOnly) {
-AddMessage("Document is guarded!");
+AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 return false;
 }
 string sText = rtb.Text ?? "";
 
-LbcDialog dlg = new LbcDialog("Edit Link", this);
-TextBox txtLabel = dlg.addInputBox("Link &text", link.Title,
-link.Inline ? "" : "This is a plain address; giving it a text turns it into a Markdown link");
-TextBox txtAddress = dlg.addInputBox("&Address", link.Url, "");
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Edit Link", "Edytuj łącze"), this);
+TextBox txtLabel = dlg.addInputBox(JezykInterfejsu.Wybierz("Link &text", "&Tekst łącza"), link.Title,
+link.Inline ? "" : JezykInterfejsu.Wybierz("This is a plain address; giving it a text turns it into a Markdown link", "To jest zwykły adres; nadanie mu tekstu zmienia go w łącze Markdown."));
+TextBox txtAddress = dlg.addInputBox(JezykInterfejsu.Wybierz("&Address", "&Adres"), link.Url, "");
 if (!dlg.runOkCancel()) {
 dlg.Dispose();
 return false;
@@ -13186,7 +13124,7 @@ string sAddress = (txtAddress.Text ?? "").Trim();
 dlg.Dispose();
 
 if (sAddress.Length == 0) {
-AddMessage("No address, nothing changed!");
+AddMessage(JezykInterfejsu.Wybierz("No address, nothing changed!", "Brak adresu; nic nie zmieniono!"));
 return false;
 }
 
@@ -13200,7 +13138,7 @@ if (sTitle.Length == 0) {
 // Bez tresci zostaje goly adres.  Przy obrazku to blad dostepnosci, o
 // ktorym mowimy wprost - obrazek bez opisu jest dla niewidomego niewidzialny.
 if (link.Image) {
-AddMessage("An image needs a description for screen reader users!");
+AddMessage(JezykInterfejsu.Wybierz("An image needs a description for screen reader users!", "Obraz wymaga opisu dla użytkowników czytników ekranu!"));
 return false;
 }
 sMarkup = sAddressEscaped;
@@ -13210,14 +13148,14 @@ else sMarkup = (link.Image ? "!" : "") + "[" + sTitle + "](" + sAddressEscaped +
 string sOld = "";
 try {sOld = sText.Substring(link.Start, link.End - link.Start);} catch {sOld = "";}
 if (sOld == sMarkup) {
-AddMessage("Link unchanged");
+AddMessage(JezykInterfejsu.Wybierz("Link unchanged", "Łącze bez zmian"));
 return false;
 }
 
 rtb.ReplaceRange(link.Start, link.End, sMarkup);
 rtb.Index = link.Start + sMarkup.Length;
 rtb.Modified = true;
-AddMessage("Link changed");
+AddMessage(JezykInterfejsu.Wybierz("Link changed", "Zmieniono łącze"));
 return true;
 } // EditMarkdownLink method
 
@@ -13231,7 +13169,7 @@ while (true) {
 string sText = rtb.Text ?? "";
 List<MarkdownLink> links = GetMarkdownLinks(sText);
 if (links.Count == 0) {
-AddMessage("No links!");
+AddMessage(JezykInterfejsu.Wybierz("No links!", "Brak łączy!"));
 return;
 }
 
@@ -13252,9 +13190,9 @@ foreach (MarkdownLink link in links) {
 lsShow.Add(GetMarkdownLinkListLine(link));
 }
 
-LbcDialog dlg = new LbcDialog("Links", this);
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Links", "Łącza"), this);
 ListBox lst = dlg.addListBox(lsShow, "", "");
-dlg.setHelpDetail(lst, "Keys: Left Arrow reads the web address and the line number, Control+C copies the link as Markdown, Control+Shift+C copies it as a formatted link, F2 edits the title and address, Enter goes to the link in the text, Escape closes the list.");
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Keys: Left Arrow reads the web address and the line number, Control+C copies the link as Markdown, Control+Shift+C copies it as a formatted link, F2 edits the title and address, Enter goes to the link in the text, Escape closes the list.", "Klawisze: Strzałka w lewo odczytuje adres internetowy i numer wiersza, Control+C kopiuje łącze jako Markdown, Control+Shift+C kopiuje je jako sformatowane łącze, F2 edytuje tytuł i adres, Enter przechodzi do łącza w tekście, Escape zamyka listę."));
 // Znacznik mowi okienku Lbc, zeby ODDALO nam Control+C: jego domyslna
 // obsluga skopiowala by widoczny wiersz listy razem z numerem wiersza,
 // a my kopiujemy sam odsylacz.
@@ -13280,14 +13218,14 @@ Say.sayForced(GetMarkdownLinkAddressSpeech(link, GetTextLineNumberAtIndex(sText,
 }
 else if (ev.KeyData == (Keys.Control | Keys.C)) {
 string sMarkup = GetMarkdownLinkMarkup(link, sText);
-if (sMarkup.Length == 0) AddMessage("Nothing to copy!");
-else if (!Util.SetClipboardText(sMarkup)) AddMessage("Clipboard is busy, link not copied!");
-else AddMessage("Copied as Markdown");
+if (sMarkup.Length == 0) AddMessage(JezykInterfejsu.Wybierz("Nothing to copy!", "Nie ma czego skopiować!"));
+else if (!Util.SetClipboardText(sMarkup)) AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, link not copied!", "Schowek jest zajęty, łącze nie zostało skopiowane!"));
+else AddMessage(JezykInterfejsu.Wybierz("Copied as Markdown", "Skopiowano jako Markdown"));
 ev.Handled = true; ev.SuppressKeyPress = true;
 }
 else if (ev.KeyData == (Keys.Control | Keys.Shift | Keys.C)) {
-if (CopyMarkdownLinkAsRichText(link)) AddMessage("Copied as formatted link");
-else AddMessage("This link has no web address to format!");
+if (CopyMarkdownLinkAsRichText(link)) AddMessage(JezykInterfejsu.Wybierz("Copied as formatted link", "Skopiowano jako sformatowane łącze"));
+else AddMessage(JezykInterfejsu.Wybierz("This link has no web address to format!", "To łącze nie ma adresu internetowego do sformatowania!"));
 ev.Handled = true; ev.SuppressKeyPress = true;
 }
 else if (ev.KeyData == Keys.F2) {
@@ -13354,7 +13292,7 @@ return;
 public void EditCsvAsTable(string sFile) {
 if (sFile == null || sFile.Length == 0) return;
 if (!File.Exists(sFile)) {
-Dialog.Show("CSV Table", "This file no longer exists:\n" + sFile);
+Dialog.Show(JezykInterfejsu.Wybierz("CSV Table", "Tabela CSV"), String.Format(JezykInterfejsu.Wybierz("This file no longer exists:\n{0}", "Ten plik już nie istnieje:\n{0}"), sFile));
 return;
 }
 
@@ -13369,7 +13307,7 @@ sText = Util.File2String(sFile, ref enFile);
 if (enFile == null) enFile = new UTF8Encoding(true);
 }
 catch (Exception ex) {
-Dialog.Show("CSV Table", "This file could not be read.\n" + ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("CSV Table", "Tabela CSV"), String.Format(JezykInterfejsu.Wybierz("This file could not be read.\n{0}", "Nie można odczytać pliku.\n{0}"), ex.Message));
 return;
 }
 
@@ -13384,7 +13322,7 @@ else if (sText.IndexOf('\r') >= 0) sBreak = "\r";
 
 List<List<string>> rows = EdSharp.Csv.Czytaj(sText, cSep, 0);
 if (rows.Count == 0) {
-Dialog.Show("CSV Table", "This file is empty, so there is no table to show.");
+Dialog.Show("CSV Table", JezykInterfejsu.Wybierz("This file is empty, so there is no table to show.", "Ten plik jest pusty, więc nie ma tabeli do pokazania."));
 return;
 }
 
@@ -13413,12 +13351,12 @@ naglowki.Add(sH);
 }
 
 string sTytul = Path.GetFileName(sFile);
-LbcDialog dlg = new LbcDialog("CSV Table - " + sTytul, App.Frame);
-Homer.LbcGrid grid = dlg.addPickGrid("&Table cells", "Correct the cells; Control+Enter saves the file");
-dlg.setHelpDetail(grid, "Keys: Arrow keys move between cells, Right Arrow from the last column adds a column, Down Arrow from the last row adds a row, typing replaces what is in the cell, F2 edits what is already there and Enter confirms it, Delete clears the cell, Control+Enter saves the file, Escape closes without changing the file. Column names come from the first line of the file.");
+LbcDialog dlg = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("CSV Table - {0}", "Tabela CSV - {0}"), sTytul), App.Frame);
+Homer.LbcGrid grid = dlg.addPickGrid(JezykInterfejsu.Wybierz("&Table cells", "&Komórki tabeli"), JezykInterfejsu.Wybierz("Correct the cells; Control+Enter saves the file", "Popraw komórki; Control+Enter zapisuje plik"));
+dlg.setHelpDetail(grid, JezykInterfejsu.Wybierz("Keys: Arrow keys move between cells, Right Arrow from the last column adds a column, Down Arrow from the last row adds a row, typing replaces what is in the cell, F2 edits what is already there and Enter confirms it, Delete clears the cell, Control+Enter saves the file, Escape closes without changing the file. Column names come from the first line of the file.", "Klawisze strzałek przechodzą między komórkami; strzałka w prawo z ostatniej kolumny dodaje kolumnę, strzałka w dół z ostatniego wiersza dodaje wiersz. Pisanie zastępuje zawartość komórki, F2 edytuje jej bieżącą zawartość, Enter potwierdza, Delete czyści komórkę, Control+Enter zapisuje plik, Escape zamyka bez zmiany pliku. Nazwy kolumn pochodzą z pierwszego wiersza pliku."));
 
 for (int c = 0; c < iCols; c++) {
-string sHeader = bMaNaglowki ? naglowki[c] : ("Column " + (c + 1));
+string sHeader = bMaNaglowki ? naglowki[c] : (JezykInterfejsu.Wybierz("Column ", "Kolumna ") + (c + 1));
 Homer.LbcDialog.addGridColumn(grid, "c" + (c + 1), sHeader);
 }
 
@@ -13462,7 +13400,7 @@ return;
 if (keyData == Keys.Escape) {
 if (bEditing) return;
 if (BuildCsvFromGrid(grid, bMaNaglowki ? naglowki : null, cSep, sBreak) != sOryginal) {
-if (Dialog.Confirm("Confirm", "Close the table without saving your changes to the file?", "N") != "Y") {
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("Close the table without saving your changes to the file?", "Zamknąć tabelę bez zapisania zmian w pliku?"), "N") != "Y") {
 ev.Handled = true;
 return;
 }
@@ -13479,9 +13417,9 @@ if (keyData == Keys.Delete) {
 if (bEditing) return;
 ev.Handled = true;
 string sBylo = GetMarkdownTableCellText(grid, grid.CurrentCell.RowIndex, grid.CurrentCell.ColumnIndex);
-if (sBylo.Trim().Length == 0) { Say.sayForced("Cell is already empty"); return; }
+if (sBylo.Trim().Length == 0) { Say.sayForced(JezykInterfejsu.Wybierz("Cell is already empty", "Komórka jest już pusta")); return; }
 grid.CurrentCell.Value = "";
-Say.sayForced("Cleared");
+Say.sayForced(JezykInterfejsu.Wybierz("Cleared", "Wyczyszczono"));
 return;
 }
 
@@ -13506,7 +13444,7 @@ int iRow = grid.CurrentCell.RowIndex;
 if (bEditing) grid.EndEdit();
 // Nowa kolumna dostaje numer, nie nazwe - nazwy z pliku sa tylko dla
 // kolumn, ktore plik mial.
-int iNew = Homer.LbcDialog.addGridColumn(grid, "c" + (grid.Columns.Count + 1), "Column " + (grid.Columns.Count + 1));
+int iNew = Homer.LbcDialog.addGridColumn(grid, "c" + (grid.Columns.Count + 1), JezykInterfejsu.Wybierz("Column ", "Kolumna ") + (grid.Columns.Count + 1));
 if (bMaNaglowki) naglowki.Add("Column " + grid.Columns.Count);
 grid.CurrentCell = grid.Rows[iRow].Cells[iNew];
 return;
@@ -13524,12 +13462,12 @@ return;
 }
 };
 
-dlg.runWithButtons(new string[] {"Save", "Cancel"});
+dlg.runWithButtons(new string[] {JezykInterfejsu.Wybierz("Save", "Zapisz"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")});
 if (!abSave[0]) return;
 
 string sNowy = BuildCsvFromGrid(grid, bMaNaglowki ? naglowki : null, cSep, sBreak);
 if (sNowy == sOryginal) {
-AddMessage("Nothing changed in " + sTytul);
+AddMessage(JezykInterfejsu.Polski ? String.Format("Nothing changed w {0}", sTytul) : "Nothing changed in " + sTytul);
 return;
 }
 
@@ -13546,13 +13484,13 @@ try {
 File.WriteAllText(sFile, sNowy, enFile);
 }
 catch (Exception ex) {
-Dialog.Show("CSV Table", "The file could not be saved.\n" + ex.Message + "\n\nYour previous version is still on disk.");
+Dialog.Show(JezykInterfejsu.Wybierz("CSV Table", "Tabela CSV"), String.Format(JezykInterfejsu.Wybierz("The file could not be saved.\n{0}\n\nYour previous version is still on disk.", "Nie można zapisać pliku.\n{0}\n\nPoprzednia wersja nadal jest na dysku."), ex.Message));
 return;
 }
 
 // Gdy ten sam plik jest otwarty w edytorze, jego tresc na ekranie jest juz
 // nieaktualna - milczenie kazalo by uzytkownikowi pracowac na starej.
-AddMessage("Saved " + sTytul + " (a copy of the previous version is in " + Path.GetFileName(sFile) + ".bak)");
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Saved {0} (a copy of the previous version is in {1}.bak)", "Zapisano {0} (kopia poprzedniej wersji jest w {1}.bak)"), sTytul, Path.GetFileName(sFile)));
 } // EditCsvAsTable method
 
 // Sklada plik CSV z siatki. Naglowki wracaja jako pierwszy wiersz TYLKO
@@ -13602,17 +13540,17 @@ bool bEdit = FindMarkdownTableAtCursor(sText, iCursor, fencesHere, out iTableSta
 // "Table inserted" byl by nieprawda.  Tabeli JUZ ISTNIEJACEJ to nie dotyczy -
 // jej nie ma w bloku kodu, bo rozpoznanie bloki kodu pomija.
 if (!bEdit && IsMarkdownIndexInFence(fencesHere, iCursor)) {
-AddMessage("Cannot put a table inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot put a table inside a code block!", "Nie można umieścić tabeli wewnątrz bloku kodu!"));
 return;
 }
 
-LbcDialog dlg = new LbcDialog(bEdit ? "Edit Table" : "Insert Table", App.Frame);
-Homer.LbcGrid grid = dlg.addPickGrid("&Table cells", bEdit ? "Correct the cells; Control+Enter saves the table" : "Type to fill a cell; Control+Enter inserts the table");
-dlg.setHelpDetail(grid, "Keys: Arrow keys move between cells, Right Arrow from the last column adds a column, Down Arrow from the last row adds a row, typing replaces what is in the cell, F2 edits what is already there and Enter confirms it, Delete clears the cell, Control+Enter puts the table into the document, Escape closes without changing the document. The first row is the table header. Empty columns and rows at the end are left out.");
+LbcDialog dlg = new LbcDialog(bEdit ? JezykInterfejsu.Wybierz("Edit Table", "Edytuj tabelę") : JezykInterfejsu.Wybierz("Insert Table", "Wstaw tabelę"), App.Frame);
+Homer.LbcGrid grid = dlg.addPickGrid(JezykInterfejsu.Wybierz("&Table cells", "&Komórki tabeli"), bEdit ? JezykInterfejsu.Wybierz("Correct the cells; Control+Enter saves the table", "Popraw komórki; Control+Enter zapisuje tabelę") : JezykInterfejsu.Wybierz("Type to fill a cell; Control+Enter inserts the table", "Pisz, aby wypełnić komórkę; Control+Enter wstawia tabelę"));
+dlg.setHelpDetail(grid, JezykInterfejsu.Wybierz("Keys: Arrow keys move between cells, Right Arrow from the last column adds a column, Down Arrow from the last row adds a row, typing replaces what is in the cell, F2 edits what is already there and Enter confirms it, Delete clears the cell, Control+Enter puts the table into the document, Escape closes without changing the document. The first row is the table header. Empty columns and rows at the end are left out.", "Klawisze strzałek przechodzą między komórkami; strzałka w prawo z ostatniej kolumny dodaje kolumnę, strzałka w dół z ostatniego wiersza dodaje wiersz. Pisanie zastępuje zawartość komórki, F2 edytuje bieżącą zawartość, Enter potwierdza, Delete czyści komórkę, Control+Enter wstawia tabelę do dokumentu, Escape zamyka bez zmiany dokumentu. Pierwszy wiersz jest nagłówkiem tabeli. Puste końcowe kolumny i wiersze są pomijane."));
 
 if (bEdit) FillGridFromMarkdownTable(grid, rowsFound);
 else {
-Homer.LbcDialog.addGridColumn(grid, "c1", "Column 1");
+Homer.LbcDialog.addGridColumn(grid, "c1", JezykInterfejsu.Wybierz("Column 1", "Kolumna 1"));
 grid.Rows.Add();
 }
 SetMarkdownTableRowHeaders(grid);
@@ -13641,7 +13579,7 @@ if (bEditing) grid.EndEdit();
 if (IsMarkdownTableGridEmpty(grid)) {
 // Przy edycji pusta siatka nie znaczy "usun tabele" - takiej decyzji nie
 // podejmujemy za uzytkownika, bo usuniecie tresci musi byc jawne.
-Say.sayForced(bEdit ? "The table is empty, nothing to save" : "The table is empty, nothing to insert");
+Say.sayForced(bEdit ? JezykInterfejsu.Wybierz("The table is empty, nothing to save", "Tabela jest pusta; nie ma czego zapisać") : JezykInterfejsu.Wybierz("The table is empty, nothing to insert", "Tabela jest pusta; nie ma czego wstawić"));
 return;
 }
 abInsert[0] = true;
@@ -13656,7 +13594,7 @@ return;
 if (keyData == Keys.Escape) {
 if (bEditing) return;
 if (BuildMarkdownTableFromGrid(grid, alignFound) != sOryginal) {
-if (Dialog.Confirm("Confirm", bEdit ? "Close the table without saving your changes?" : "Close the table without inserting it?  What you typed will be lost.", "N") != "Y") {
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), bEdit ? JezykInterfejsu.Wybierz("Close the table without saving your changes?", "Zamknąć tabelę bez zapisania zmian?") : JezykInterfejsu.Wybierz("Close the table without inserting it?  What you typed will be lost.", "Zamknąć tabelę bez jej wstawienia? Wpisana treść zostanie utracona."), "N") != "Y") {
 ev.Handled = true;
 return;
 }
@@ -13678,13 +13616,13 @@ if (bEditing) return;
 ev.Handled = true;
 string sBylo = GetMarkdownTableCellText(grid, grid.CurrentCell.RowIndex, grid.CurrentCell.ColumnIndex);
 if (sBylo.Trim().Length == 0) {
-Say.sayForced("Cell is already empty");
+Say.sayForced(JezykInterfejsu.Wybierz("Cell is already empty", "Komórka jest już pusta"));
 return;
 }
 grid.CurrentCell.Value = "";
 // Mowa WYMUSZONA, bo tresc komorki sie zmienila, a fokus NIE drgnal -
 // czytnik nie ma z czego sam wywnioskowac, ze cos zniknelo.
-Say.sayForced("Cleared");
+Say.sayForced(JezykInterfejsu.Wybierz("Cleared", "Wyczyszczono"));
 return;
 }
 
@@ -13715,7 +13653,7 @@ if (grid.CurrentCell.ColumnIndex != grid.Columns.Count - 1) return;
 ev.Handled = true;
 int iRow = grid.CurrentCell.RowIndex;
 if (bEditing) grid.EndEdit();
-int iNew = Homer.LbcDialog.addGridColumn(grid, "c" + (grid.Columns.Count + 1), "Column " + (grid.Columns.Count + 1));
+int iNew = Homer.LbcDialog.addGridColumn(grid, "c" + (grid.Columns.Count + 1), JezykInterfejsu.Wybierz("Column ", "Kolumna ") + (grid.Columns.Count + 1));
 grid.CurrentCell = grid.Rows[iRow].Cells[iNew];
 return;
 }
@@ -13734,7 +13672,7 @@ return;
 }
 };
 
-dlg.runWithButtons(new string[] {bEdit ? "Save" : "Insert", "Cancel"});
+dlg.runWithButtons(new string[] {bEdit ? JezykInterfejsu.Wybierz("Save", "Zapisz") : JezykInterfejsu.Wybierz("Insert", "Wstaw"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")});
 bool bInsert = abInsert[0];
 string sTable = bInsert ? BuildMarkdownTableFromGrid(grid, alignFound) : "";
 int iRows = 0, iCols = 0;
@@ -13742,7 +13680,7 @@ if (bInsert) GetMarkdownTableGridExtent(grid, out iRows, out iCols);
 dlg.Dispose();
 
 if (!bInsert || sTable.Length == 0) {
-AddMessage(bEdit ? "Table not changed" : "No table inserted");
+AddMessage(bEdit ? JezykInterfejsu.Wybierz("Table not changed", "Tabela bez zmian") : JezykInterfejsu.Wybierz("No table inserted", "Nie wstawiono tabeli"));
 return;
 }
 
@@ -13760,7 +13698,7 @@ return;
 rtb.ReplaceRange(iTableStart, iTableEnd, sNowa);
 rtb.Index = iTableStart;
 rtb.Modified = true;
-AddMessage("Table saved, " + iRows + (iRows == 1 ? " row, " : " rows, ") + iCols + (iCols == 1 ? " column" : " columns"));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Table saved, {0}{1}{2}{3}", "Zapisano tabelę: {0} wierszy, {2} kolumn"), iRows, (iRows == 1 ? " row, " : " rows, "), iCols, (iCols == 1 ? " column" : " columns")));
 return;
 }
 
@@ -13784,7 +13722,7 @@ string sInsert = sPrefix + sTable;
 rtb.ReplaceRange(iCursor, iCursor, sInsert);
 rtb.Index = iCursor + sInsert.Length;
 rtb.Modified = true;
-AddMessage("Table inserted, " + iRows + (iRows == 1 ? " row, " : " rows, ") + iCols + (iCols == 1 ? " column" : " columns"));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Table inserted, {0}{1}{2}{3}", "Wstawiono tabelę: {0} wierszy, {2} kolumn"), iRows, (iRows == 1 ? " row, " : " rows, "), iCols, (iCols == 1 ? " column" : " columns")));
 } // RunMarkdownTableWizard method
 
 // Gotowa tabela pod kursorem.  Blok SASIADUJACYCH linii, z ktorych kazda ma
@@ -14044,13 +13982,13 @@ if (iCursor > sText.Length) iCursor = sText.Length;
 // skoku spisem tresci, wiec blokada bylaby uciazliwa bez powodu.
 List<int[]> fencesHere = MarkdownReview_FindFenceRanges(sText);
 if (IsMarkdownIndexInFence(fencesHere, iCursor)) {
-AddMessage("Cannot put a footnote inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot put a footnote inside a code block!", "Nie można umieścić przypisu wewnątrz bloku kodu!"));
 return;
 }
 string sCursorLine = GetTextLineAtIndex(sText, iCursor);
 string sCursorLabel, sCursorBody;
 if (IsMarkdownFootnoteDefinitionLine(sCursorLine, out sCursorLabel, out sCursorBody)) {
-AddMessage("Cannot put a footnote inside the text of footnote " + sCursorLabel + "!");
+AddMessage(JezykInterfejsu.Polski ? String.Format("Nie można umieścić przypisu wewnątrz tekstu przypisu {0}!", sCursorLabel) : "Cannot put a footnote inside the text of footnote " + sCursorLabel + "!");
 return;
 }
 
@@ -14066,18 +14004,18 @@ return;
 int iChapterEnd = GetMarkdownFootnoteChapterEnd(sText, iCursor);
 bool bChapterPossible = (iChapterEnd >= 0);
 
-LbcDialog dlg = new LbcDialog("Insert Footnote", this);
-TextBox txtContent = dlg.addInputBox("Footnote &text", "");
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Insert Footnote", "Wstaw przypis"), this);
+TextBox txtContent = dlg.addInputBox(JezykInterfejsu.Wybierz("Footnote &text", "&Tekst przypisu"), "");
 List<string> lPlaces = new List<string>();
-lPlaces.Add("End of document");
+lPlaces.Add(JezykInterfejsu.Wybierz("End of document", "Koniec dokumentu"));
 // Pozycji "koniec rozdzialu" NIE POKAZUJEMY, gdy rozdzialu nie ma: martwa
 // pozycja na liscie jest dla niewidomego gorsza niz jej brak, bo wybiera ja,
 // czeka na skutek i nie dostaje go.  Powod nazywamy w podpowiedzi ponizej.
-if (bChapterPossible) lPlaces.Add("End of current chapter");
-ComboBox cboPlace = dlg.addComboPickBox("Footnote text &goes to",
+if (bChapterPossible) lPlaces.Add(JezykInterfejsu.Wybierz("End of current chapter", "Koniec bieżącego rozdziału"));
+ComboBox cboPlace = dlg.addComboPickBox(JezykInterfejsu.Wybierz("Footnote text &goes to", "Tekst przypisu &trafia do"),
 lPlaces, lPlaces[0],
-bChapterPossible ? "Where the footnote text lands"
-: "Only end of document: the cursor is not inside a chapter");
+bChapterPossible ? JezykInterfejsu.Wybierz("Where the footnote text lands", "Miejsce wstawienia tekstu przypisu") : JezykInterfejsu.Wybierz("Only end of document: the cursor is not inside a chapter", "Tylko koniec dokumentu: kursor nie jest wewnątrz rozdziału"));
+// Full PL/EN help sentence selected above.
 if (!dlg.runOkCancel()) {
 dlg.Dispose();
 return;
@@ -14087,7 +14025,7 @@ bool bToChapter = bChapterPossible && cboPlace.SelectedIndex == 1;
 dlg.Dispose();
 
 if (sContent.Length == 0) {
-AddMessage("No footnote text, nothing inserted!");
+AddMessage(JezykInterfejsu.Wybierz("No footnote text, nothing inserted!", "Brak tekstu przypisu; nic nie wstawiono!"));
 return;
 }
 
@@ -14124,7 +14062,7 @@ rtb.Modified = true;
 // Mowimy, GDZIE wyladowala tresc, a nie tylko ze cokolwiek sie stalo: user
 // wlasnie podjal te decyzje, wiec potwierdzenie jej jest tanie i rozstrzyga,
 // czy klawisz zrobil to, co wybral.
-AddMessage("Footnote " + sLabel + (bToChapter ? " inserted at end of chapter" : " inserted"));
+AddMessage(String.Format(JezykInterfejsu.Wybierz(bToChapter ? "Footnote {0} inserted at end of chapter" : "Footnote {0} inserted", bToChapter ? "Przypis {0} wstawiono na końcu rozdziału" : "Przypis {0} wstawiono"), sLabel));
 } // InsertMarkdownFootnote method
 
 // Skok kontekstowy w obie strony - ta sama zasada, ktora sam wybral dla spisu
@@ -14142,7 +14080,7 @@ string sText = rtb.Text ?? "";
 List<MarkdownFootnote> refs = GetMarkdownFootnoteRefs(sText);
 List<MarkdownFootnote> defs = GetMarkdownFootnoteDefs(sText);
 if (refs.Count == 0 && defs.Count == 0) {
-AddMessage("No footnotes!", true);
+AddMessage(JezykInterfejsu.Wybierz("No footnotes!", "Brak przypisów!"), true);
 return;
 }
 
@@ -14152,7 +14090,7 @@ string sLabel, sBody;
 if (IsMarkdownFootnoteDefinitionLine(sLine, out sLabel, out sBody)) {
 int iRef = FindMarkdownFootnoteByLabel(refs, sLabel);
 if (iRef < 0) {
-AddMessage("Footnote " + sLabel + " has no marker in the text!", true);
+AddMessage(JezykInterfejsu.Polski ? String.Format("Przypis {0} nie ma znacznika w tekście!", sLabel) : JezykInterfejsu.Wybierz("Footnote ", "Przypis ") + sLabel + " has no marker in the text!", true);
 return;
 }
 GoToMarkdownFootnoteRef(rtb, sText, refs[iRef], true);
@@ -14167,18 +14105,18 @@ if (iHere < 0) {
 // z tego bysmy zrezygnowali".  Komunikat nazywa DRUGI klawisz, wiec nie
 // jest to slepy zaulek: skok po przypisach ma teraz Control+Alt+PageDown
 // i Control+Alt+PageUp.
-AddMessage("Put the cursor in a line with a footnote marker, or use Control+Alt+PageDown to find one!", true);
+AddMessage(JezykInterfejsu.Polski ? String.Format("Umieść kursor w wierszu ze znacznikiem przypisu albo użyj Control+Alt+PageDown, aby go znaleźć!") : "Put the cursor in a line with a footnote marker, or use Control+Alt+PageDown to find one!", true);
 return;
 }
 int iDef = FindMarkdownFootnoteByLabel(defs, refs[iHere].Label);
 if (iDef < 0) {
-AddMessage("Footnote " + refs[iHere].Label + " has no text at the end of the document!", true);
+AddMessage(String.Format(JezykInterfejsu.Wybierz("Footnote {0} has no text at the end of the document!", "Przypis {0} nie ma tekstu na końcu dokumentu!"), refs[iHere].Label), true);
 return;
 }
 rtb.Index = defs[iDef].Start;
 // Forma wypowiedzi jak przy naglowkach i spisie tresci: najpierw tresc,
 // potem czym ona jest - jego wybor, powtorzony tu swiadomie.
-Util.Say(defs[iDef].Text + ", footnote " + defs[iDef].Label, true);
+Util.Say(defs[iDef].Text + String.Format(JezykInterfejsu.Wybierz(", footnote {0}", ", przypis {0}"), defs[iDef].Label), true);
 } // GoToMarkdownFootnoteOrBack method
 
 // Parametr bGlobal istnieje WYLACZNIE z powodu bramki mowy przy Control+Alt.
@@ -14189,8 +14127,8 @@ Util.Say(defs[iDef].Text + ", footnote " + defs[iDef].Label, true);
 private void GoToMarkdownFootnoteRef(HomerRichTextBox rtb, string sText, MarkdownFootnote note, bool bGlobal) {
 rtb.Index = note.Start;
 string sLine = GetTextLineAtIndex(sText, note.Start).Trim();
-if (sLine.Length == 0) sLine = "Footnote " + note.Label;
-Util.Say(sLine + ", footnote " + note.Label + " in text", bGlobal);
+if (sLine.Length == 0) sLine = JezykInterfejsu.Wybierz("Footnote ", "Przypis ") + note.Label;
+Util.Say(sLine + String.Format(JezykInterfejsu.Wybierz(", footnote {0} in text", ", przypis {0} w tekście"), note.Label), bGlobal);
 } // GoToMarkdownFootnoteRef method
 
 // Lista przypisow.  Enter idzie do ZNACZNIKA w zdaniu, bo tam sie pisze;
@@ -14205,17 +14143,17 @@ List<string> lsShow = new List<string>();
 foreach (MarkdownFootnote note in defs) {
 lsLabel.Add(note.Label);
 string sShow = note.Text;
-if (sShow.Length == 0) sShow = "(no text)";
+if (sShow.Length == 0) sShow = JezykInterfejsu.Wybierz("(no text)", "(brak tekstu)");
 lsShow.Add(note.Label + ". " + sShow);
 }
 foreach (MarkdownFootnote note in refs) {
 if (FindMarkdownFootnoteByLabel(defs, note.Label) >= 0) continue;
 if (lsLabel.Contains(note.Label)) continue;
 lsLabel.Add(note.Label);
-lsShow.Add(note.Label + ". (no text at the end of the document)");
+lsShow.Add(note.Label + JezykInterfejsu.Wybierz(". (no text at the end of the document)", ". (brak tekstu na końcu dokumentu)"));
 }
 if (lsLabel.Count == 0) {
-AddMessage("No footnotes!");
+AddMessage(JezykInterfejsu.Wybierz("No footnotes!", "Brak przypisów!"));
 return;
 }
 
@@ -14226,9 +14164,9 @@ string[] aFootShow = lsShow.ToArray();
 // przypisow mogla by czytac linie w ktorej jest przypis").  Pozycja niesie
 // TRESC przypisu, wiec brakujaca informacja to zdanie, do ktorego przypis
 // nalezy - dokladnie odwrotnie niz na liscie zakladek zwyklych.
-LbcDialog dlgFoot = new LbcDialog("Footnotes", this);
+LbcDialog dlgFoot = new LbcDialog(JezykInterfejsu.Wybierz("Footnotes", "Przypisy"), this);
 ListBox lstFoot = dlgFoot.addListBox(new List<string>(aFootShow), "", "");
-dlgFoot.setHelpDetail(lstFoot, "Keys: Left Arrow reads the sentence line where the footnote marker is, Enter goes to the marker in the text, Escape closes the list.");
+dlgFoot.setHelpDetail(lstFoot, JezykInterfejsu.Wybierz("Keys: Left Arrow reads the sentence line where the footnote marker is, Enter goes to the marker in the text, Escape closes the list.", "Klawisze: Strzałka w lewo odczytuje wiersz zdania ze znacznikiem przypisu, Enter przechodzi do znacznika w tekście, Escape zamyka listę."));
 LbcDialog.selectOnly(lstFoot, 0);
 
 lstFoot.KeyDown += delegate(object oSender, KeyEventArgs ev) {
@@ -14240,7 +14178,7 @@ int iSel = lb.SelectedIndex;
 if (iSel < 0 || iSel >= aFootValues.Length) return;
 int iRefRead = FindMarkdownFootnoteByLabel(refs, aFootValues[iSel]);
 if (iRefRead < 0) {
-Say.sayForced("Footnote " + aFootValues[iSel] + " has no marker in the text");
+Say.sayForced(String.Format(JezykInterfejsu.Wybierz("Footnote {0} has no marker in the text", "Przypis {0} nie ma znacznika w tekście"), aFootValues[iSel]));
 return;
 }
 // ZNACZNIK ZDJETY Z CYTOWANEGO WIERSZA: cytat jest do sluchania, a numer
@@ -14249,7 +14187,7 @@ return;
 string sMarkLine = GetTextLineAtIndex(sText, refs[iRefRead].Start).Trim();
 try {sMarkLine = MarkdownFootnoteRefRegex.Replace(sMarkLine, MarkdownReview_FootnoteMarkerReplacement);} catch {}
 sMarkLine = sMarkLine.Trim();
-Say.sayForced(sMarkLine.Length == 0 ? "Empty line" : sMarkLine);
+Say.sayForced(sMarkLine.Length == 0 ? JezykInterfejsu.Wybierz("Empty line", "Pusty wiersz") : sMarkLine);
 };
 
 bool bFootOk = dlgFoot.runOkCancel();
@@ -14269,7 +14207,7 @@ return;
 int iDef = FindMarkdownFootnoteByLabel(defs, sPicked);
 if (iDef < 0) return;
 rtb.Index = defs[iDef].Start;
-Util.Say(defs[iDef].Text + ", footnote " + defs[iDef].Label);
+Util.Say(defs[iDef].Text + String.Format(JezykInterfejsu.Wybierz(", footnote {0}", ", przypis {0}"), defs[iDef].Label));
 } // ShowMarkdownFootnoteList method
 
 // WYBOR NASTEPNEGO ALBO POPRZEDNIEGO ZNACZNIKA - osobna metoda statyczna, bo
@@ -14301,7 +14239,7 @@ return -1;
 //
 // BEZ ZAWIJANIA, tak jak zakladki, komentarze i wyroznienia: niewidomy nie
 // widzi, ze wrocil na poczatek dokumentu, i szukalby fragmentu, ktory juz
-// przeczytal.  Zamiast tego mowimy "Last footnote!" i kursor stoi.
+// przeczytal.  Zamiast tego mowimy JezykInterfejsu.Wybierz("Last footnote!", "Ostatni przypis!") i kursor stoi.
 //
 // Chodzimy po ZNACZNIKACH, nie po tresciach: tresci stoja wszystkie razem na
 // koncu dokumentu albo rozdzialu, wiec skakanie po nich byloby chodzeniem po
@@ -14312,7 +14250,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<MarkdownFootnote> refs = GetMarkdownFootnoteRefs(sText);
 if (refs.Count == 0) {
-AddMessage("No footnotes!", true);
+AddMessage(JezykInterfejsu.Wybierz("No footnotes!", "Brak przypisów!"), true);
 return;
 }
 int iCursor = rtb.Index;
@@ -14320,7 +14258,7 @@ if (iCursor < 0) iCursor = 0;
 
 int iFound = FindMarkdownFootnoteMarkerIndex(refs, iCursor, bForward);
 if (iFound < 0) {
-AddMessage(bForward ? "Last footnote!" : "First footnote!", true);
+AddMessage(bForward ? JezykInterfejsu.Wybierz("Last footnote!", "Ostatni przypis!") : JezykInterfejsu.Wybierz("First footnote!", "Pierwszy przypis!"), true);
 return;
 }
 // Tryb globalny mowy, bo oba chordy tej pary maja Control+Alt (jeden z
@@ -14454,16 +14392,16 @@ List<MarkdownFootnote> defs = GetMarkdownFootnoteDefs(sText);
 // ODMOWA PRZED OKNEM, nie po nim: okno, ktore po zatwierdzeniu mowi "nie ma
 // przypisow", kaze niewidomemu przejsc cala droge po nic.
 if (refs.Count == 0 && defs.Count == 0) {
-AddMessage("No footnotes!");
+AddMessage(JezykInterfejsu.Wybierz("No footnotes!", "Brak przypisów!"));
 return;
 }
 
-LbcDialog dlg = new LbcDialog("Export Footnotes", this);
+LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Export Footnotes", "Eksportuj przypisy"), this);
 List<string> lKinds = new List<string>();
-lKinds.Add("Footnotes only");
-lKinds.Add("Footnotes with their sentences");
-ComboBox cboKind = dlg.addComboPickBox("&What to export", lKinds, lKinds[0],
-"Footnotes only gives a numbered list; with sentences each footnote is preceded by the sentence that carries it");
+lKinds.Add(JezykInterfejsu.Wybierz("Footnotes only", "Tylko przypisy"));
+lKinds.Add(JezykInterfejsu.Wybierz("Footnotes with their sentences", "Przypisy ze zdaniami"));
+ComboBox cboKind = dlg.addComboPickBox(JezykInterfejsu.Wybierz("&What to export", "&Co wyeksportować"), lKinds, lKinds[0],
+JezykInterfejsu.Wybierz("Footnotes only gives a numbered list; with sentences each footnote is preceded by the sentence that carries it", "Tylko przypisy tworzą listę numerowaną; w wariancie ze zdaniami każdy przypis poprzedza zdanie zawierające jego znacznik."));
 if (!dlg.runOkCancel()) {
 dlg.Dispose();
 return;
@@ -14480,7 +14418,7 @@ return;
 new MdiChild(this);
 HomerRichTextBox rtbNew = App.Frame.Child.RTB;
 if (rtbNew == null) {
-AddMessage("Could not open a window for the export!");
+AddMessage(JezykInterfejsu.Wybierz("Could not open a window for the export!", "Nie można otworzyć okna eksportu!"));
 return;
 }
 rtbNew.ReplaceRange(0, 0, sExport);
@@ -14492,8 +14430,8 @@ int iCount = 0;
 List<string> lsSeen = new List<string>();
 foreach (MarkdownFootnote note in refs) {if (!lsSeen.Contains(note.Label)) {lsSeen.Add(note.Label); iCount++;}}
 foreach (MarkdownFootnote note in defs) {if (!lsSeen.Contains(note.Label)) {lsSeen.Add(note.Label); iCount++;}}
-AddMessage(Util.Pluralize(iCount, "footnote", "footnotes") + " exported"
-+ (bWithSentences ? " with sentences" : ""));
+AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} footnote(s) exported{1}", "Wyeksportowano {0} przypisów{1}"), iCount, bWithSentences ? JezykInterfejsu.Wybierz(" with sentences", " ze zdaniami") : ""))
+;
 } // ExportMarkdownFootnotes method
 
 // ==================== KOMENTARZE WEWNETRZNE ====================
@@ -14621,8 +14559,8 @@ listNames.Add(ReadNamedBookmark(sFile, iRow));
 private static string GetMarkdownCommentSpeech(MarkdownComment c) {
 if (c == null) return "comment";
 string s = (c.Text ?? "").Trim();
-if (s.Length == 0) return "empty comment";
-return s + ", comment";
+if (s.Length == 0) return JezykInterfejsu.Wybierz("empty comment", "pusty komentarz");
+return s + JezykInterfejsu.Wybierz(", comment", ", komentarz");
 } // GetMarkdownCommentSpeech method
 
 // Wstawienie NOWEGO komentarza albo poprawka tego, w ktorym stoi kursor.
@@ -14651,13 +14589,13 @@ bool bEdit = (iHere >= 0);
 if (!bEdit) {
 List<int[]> fences = MarkdownReview_FindFenceRanges(sText);
 if (IsMarkdownIndexInFence(fences, iCursor)) {
-AddMessage("Cannot put a comment inside a code block!");
+AddMessage(JezykInterfejsu.Wybierz("Cannot put a comment inside a code block!", "Nie można umieścić komentarza wewnątrz bloku kodu!"));
 return;
 }
 }
 
-LbcDialog dlg = new LbcDialog(bEdit ? "Edit Comment" : "Insert Comment", this);
-TextBox txtBody = dlg.addInputBox("Comment &text", bEdit ? comments[iHere].Text : "");
+LbcDialog dlg = new LbcDialog(bEdit ? JezykInterfejsu.Wybierz("Edit Comment", "Edytuj komentarz") : JezykInterfejsu.Wybierz("Insert Comment", "Wstaw komentarz"), this);
+TextBox txtBody = dlg.addInputBox(JezykInterfejsu.Wybierz("Comment &text", "&Tekst komentarza"), bEdit ? comments[iHere].Text : "");
 if (!dlg.runOkCancel()) {
 dlg.Dispose();
 return;
@@ -14673,11 +14611,11 @@ if (bEdit && sBody.Length == 0) {
 rtb.ReplaceRange(comments[iHere].Start, comments[iHere].End, "");
 rtb.Index = comments[iHere].Start;
 rtb.Modified = true;
-AddMessage("Comment removed");
+AddMessage(JezykInterfejsu.Wybierz("Comment removed", "Usunięto komentarz"));
 return;
 }
 if (sBody.Length == 0) {
-AddMessage("No comment text, nothing inserted!");
+AddMessage(JezykInterfejsu.Wybierz("No comment text, nothing inserted!", "Brak tekstu komentarza; nic nie wstawiono!"));
 return;
 }
 
@@ -14690,13 +14628,13 @@ if (bEdit) {
 rtb.ReplaceRange(comments[iHere].Start, comments[iHere].End, sMarkup);
 rtb.Index = comments[iHere].Start + sMarkup.Length;
 rtb.Modified = true;
-AddMessage("Comment changed");
+AddMessage(JezykInterfejsu.Wybierz("Comment changed", "Zmieniono komentarz"));
 return;
 }
 rtb.ReplaceRange(iCursor, iCursor, sMarkup);
 rtb.Index = iCursor + sMarkup.Length;
 rtb.Modified = true;
-AddMessage("Comment inserted");
+AddMessage(JezykInterfejsu.Wybierz("Comment inserted", "Wstawiono komentarz"));
 } // InsertOrEditMarkdownComment method
 
 // Zabezpieczenie tresci komentarza.  "-->" w srodku ZAMKNELOBY komentarz i
@@ -14725,7 +14663,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<MarkdownLink> links = GetMarkdownLinks(sText);
 if (links.Count == 0) {
-AddMessage("No links!");
+AddMessage(JezykInterfejsu.Wybierz("No links!", "Brak łączy!"));
 return;
 }
 int iCursor = rtb.Index;
@@ -14737,7 +14675,7 @@ for (int i = 0; i < links.Count; i++) {
 if (links[i].TextStart > iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("Last link!");
+AddMessage(JezykInterfejsu.Wybierz("Last link!", "Ostatnie łącze!"));
 return;
 }
 }
@@ -14746,7 +14684,7 @@ for (int i = links.Count - 1; i >= 0; i--) {
 if (links[i].End < iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("First link!");
+AddMessage(JezykInterfejsu.Wybierz("First link!", "Pierwsze łącze!"));
 return;
 }
 }
@@ -14772,7 +14710,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<MarkdownComment> comments = GetMarkdownComments(sText);
 if (comments.Count == 0) {
-AddMessage("No comments!");
+AddMessage(JezykInterfejsu.Wybierz("No comments!", "Brak komentarzy!"));
 return;
 }
 int iCursor = rtb.Index;
@@ -14784,7 +14722,7 @@ for (int i = 0; i < comments.Count; i++) {
 if (comments[i].Start > iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("Last comment!");
+AddMessage(JezykInterfejsu.Wybierz("Last comment!", "Ostatni komentarz!"));
 return;
 }
 }
@@ -14793,7 +14731,7 @@ for (int i = comments.Count - 1; i >= 0; i--) {
 if (comments[i].End < iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("First comment!");
+AddMessage(JezykInterfejsu.Wybierz("First comment!", "Pierwszy komentarz!"));
 return;
 }
 }
@@ -14902,7 +14840,7 @@ return starts;
 // naglowkach, przypisach i komentarzach: najpierw TRESC, potem czym ona jest.
 private static string GetMarkdownEmphasisKind(MarkdownEmphasis note) {
 if (note == null) return "";
-if (note.Level >= 3) return "bold italic";
+if (note.Level >= 3) return JezykInterfejsu.Wybierz("bold italic", "pogrubienie i kursywa");
 if (note.Level == 2) return "bold";
 return "italic";
 } // GetMarkdownEmphasisKind method
@@ -14915,7 +14853,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<MarkdownEmphasis> notes = GetMarkdownEmphases(sText);
 if (notes.Count == 0) {
-AddMessage("No bold or italic text!");
+AddMessage(JezykInterfejsu.Wybierz("No bold or italic text!", "Brak tekstu pogrubionego lub kursywy!"));
 return;
 }
 int iCursor = rtb.Index;
@@ -14927,7 +14865,7 @@ for (int i = 0; i < notes.Count; i++) {
 if (notes[i].Start > iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("Last bold or italic text!");
+AddMessage(JezykInterfejsu.Wybierz("Last bold or italic text!", "Ostatni tekst pogrubiony lub kursywa!"));
 return;
 }
 }
@@ -14936,7 +14874,7 @@ for (int i = notes.Count - 1; i >= 0; i--) {
 if (notes[i].End < iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("First bold or italic text!");
+AddMessage(JezykInterfejsu.Wybierz("First bold or italic text!", "Pierwszy tekst pogrubiony lub kursywa!"));
 return;
 }
 }
@@ -14959,7 +14897,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<int> starts = GetMarkdownListStarts(sText);
 if (starts.Count == 0) {
-AddMessage("No lists!");
+AddMessage(JezykInterfejsu.Wybierz("No lists!", "Brak list!"));
 return;
 }
 int iCursor = rtb.Index;
@@ -14971,7 +14909,7 @@ for (int i = 0; i < starts.Count; i++) {
 if (starts[i] > iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("Last list!");
+AddMessage(JezykInterfejsu.Wybierz("Last list!", "Ostatnia lista!"));
 return;
 }
 }
@@ -14980,7 +14918,7 @@ for (int i = starts.Count - 1; i >= 0; i--) {
 if (starts[i] < iCursor) {iFound = i; break;}
 }
 if (iFound < 0) {
-AddMessage("First list!");
+AddMessage(JezykInterfejsu.Wybierz("First list!", "Pierwsza lista!"));
 return;
 }
 }
@@ -14990,7 +14928,7 @@ rtb.Index = starts[iFound];
 // punktor nie powiedzialby niewidomemu nic o tym, gdzie wlasnie stanal.
 string sLine = GetTextLineAtIndex(sText, starts[iFound]).Trim();
 int iCount = CountMarkdownListItemsFrom(sText, starts[iFound]);
-Util.Say(GetMarkdownPlainText(sLine) + ", list of " + iCount + (iCount == 1 ? " item" : " items"));
+Util.Say(GetMarkdownPlainText(sLine) + String.Format(JezykInterfejsu.Wybierz(", list of {0} item(s)", ", lista {0} elementów"), iCount));
 } // GoToMarkdownList method
 
 // Ile pozycji ma lista zaczynajaca sie w tym miejscu.  Pusty wiersz konczy
@@ -15020,7 +14958,7 @@ if (rtb == null) return;
 string sText = rtb.Text ?? "";
 List<MarkdownComment> comments = GetMarkdownComments(sText);
 if (comments.Count == 0) {
-AddMessage("No comments!");
+AddMessage(JezykInterfejsu.Wybierz("No comments!", "Brak komentarzy!"));
 return;
 }
 string[] aValues = new string[comments.Count];
@@ -15028,13 +14966,13 @@ string[] aShow = new string[comments.Count];
 for (int i = 0; i < comments.Count; i++) {
 aValues[i] = comments[i].Start.ToString();
 string sShow = comments[i].Text;
-if (sShow.Length == 0) sShow = "(empty)";
+if (sShow.Length == 0) sShow = JezykInterfejsu.Wybierz("(empty)", "(pusty)");
 // Numer wiersza, a nie numer komentarza po kolei: uzytkownik szuka miejsca
 // w dokumencie, a nie tego, ktory komentarz napisal jako trzeci.
 int iLine = GetTextLineNumberAtIndex(sText, comments[i].Start);
-aShow[i] = "Line " + iLine + ". " + sShow;
+aShow[i] = JezykInterfejsu.Wybierz("Line ", "Wiersz ") + iLine + ". " + sShow;
 }
-string sPicked = Dialog.Pick("Comments", aValues, aShow, false, 0);
+string sPicked = Dialog.Pick(JezykInterfejsu.Wybierz("Comments", "Komentarze"), aValues, aShow, false, 0);
 if (sPicked == null || sPicked.Length == 0) return;
 int iAt;
 if (!Int32.TryParse(sPicked, out iAt)) return;
@@ -15692,7 +15630,7 @@ return sLine;
 
 			if (IsRichTextFile(child)) {
 			rtb.SelectionBullet = !rtb.SelectionBullet;
-			AddMessage(rtb.SelectionBullet ? "Bulleted list on" : "Bulleted list off");
+			AddMessage(rtb.SelectionBullet ? JezykInterfejsu.Wybierz("Bulleted list on", "Lista wypunktowana włączona") : JezykInterfejsu.Wybierz("Bulleted list off", "Lista wypunktowana wyłączona"));
 			return;
 			}
 
@@ -15775,7 +15713,7 @@ if (aLines.Length == 1) {
 bool bDone;
 string sNowy = Zadania.PrzelaczWiersz(aLines[0], out bDone);
 if (sNowy == null) {
-AddMessage("Not a task list item!");
+AddMessage(JezykInterfejsu.Wybierz("Not a task list item!", "To nie jest element listy zadań!"));
 return;
 }
 int iCursor = rtb.Index;
@@ -15784,7 +15722,7 @@ rtb.ReplaceRange(iStart, iEnd, sNowy);
 // polu zamieniony na inny), wiec nie ma czego przeliczac.
 if (iCursor >= 0 && iCursor <= (rtb.Text ?? "").Length) rtb.Index = iCursor;
 string sTresc = Zadania.TrescZadania(sNowy);
-AddMessage((bDone ? "Done: " : "To do: ") + (sTresc.Length == 0 ? "(empty)" : sTresc));
+AddMessage(TaskStateAnnouncement(bDone, sTresc.Length == 0 ? (AgreedMenuPolish ? "(puste)" : "(empty)") : sTresc));
 return;
 }
 
@@ -15792,15 +15730,35 @@ bool bDoneAll;
 int iChanged;
 string[] aNowe = Zadania.PrzelaczStanZakresu(aLines, out bDoneAll, out iChanged);
 if (aNowe == null) {
-AddMessage("No task list items in the selection!");
+AddMessage(JezykInterfejsu.Wybierz("No task list items in the selection!", "W zaznaczeniu nie ma elementów listy zadań!"));
 return;
 }
 rtb.ReplaceRange(iStart, iEnd, String.Join("\n", aNowe));
 // Liczba MOWIONA, bo przy zaznaczeniu wielu wierszy czlowiek nie ma jak
 // sprawdzic, ile pozycji rzeczywiscie zmienilo stan.
-AddMessage(iChanged.ToString() + (iChanged == 1 ? " item marked " : " items marked ")
-+ (bDoneAll ? "done" : "not done"));
+AddMessage(TaskBatchAnnouncement(iChanged, bDoneAll));
 } // ToggleTaskDoneShortcut method
+
+private string TaskStateAnnouncement(bool bDone, string sText) {
+if (AgreedMenuPolish) return (bDone ? "Wykonane: " : "Niewykonane: ") + sText;
+return (bDone ? "Done: " : "Not done: ") + sText;
+} // TaskStateAnnouncement method
+
+private string TaskBatchAnnouncement(int iChanged, bool bDone) {
+if (AgreedMenuPolish) {
+int iLastTwo = iChanged % 100;
+int iLast = iChanged % 10;
+string sRzeczownik = iChanged == 1 ? " zadanie oznaczono jako " : (iLast >= 2 && iLast <= 4 && (iLastTwo < 12 || iLastTwo > 14) ? " zadania oznaczono jako " : " zadań oznaczono jako ");
+return iChanged.ToString() + sRzeczownik + (bDone ? "wykonane" : "niewykonane");
+}
+return iChanged.ToString() + (iChanged == 1 ? " task marked " : " tasks marked ") + (bDone ? "done" : "not done");
+} // TaskBatchAnnouncement method
+
+private string TaskListEntry(string sLine) {
+string sText = Zadania.TrescZadania(sLine);
+if (sText.Length == 0) sText = AgreedMenuPolish ? "(puste)" : "(empty)";
+return TaskStateAnnouncement(Zadania.CzyZrobione(sLine), sText);
+} // TaskListEntry method
 
 // ZROBIENIE CHECKLISTY Z WIERSZY I POWROT (Control+Shift+F2).
 // Zachowanie jak przy Control+L: gdy wszystkie wiersze sa juz checklista,
@@ -15819,7 +15777,7 @@ bool bRemoved;
 string[] aNowe = Zadania.PrzelaczZakres(aLines, out bRemoved);
 if (aNowe == null) return;
 rtb.ReplaceRange(iStart, iEnd, String.Join("\n", aNowe));
-AddMessage(bRemoved ? "Task list off" : "Task list on");
+AddMessage(bRemoved ? JezykInterfejsu.Wybierz("Task list off", "Lista zadań wyłączona") : JezykInterfejsu.Wybierz("Task list on", "Lista zadań włączona"));
 } // ToggleTaskListShortcut method
 
 // POSTEP (Alt+Shift+F2).  Liczy pozycje CALEGO dokumentu, ale z zaznaczeniem -
@@ -15877,20 +15835,20 @@ liLine.Add(i);
 iPos += aLines[i].Length + 1;
 }
 if (liStart.Count == 0) {
-AddMessage("No task list items!");
+AddMessage(JezykInterfejsu.Wybierz("No task list items!", "Brak elementów listy zadań!"));
 return;
 }
 
 List<string> lsShow = new List<string>();
-for (int i = 0; i < liLine.Count; i++) lsShow.Add(Zadania.PozycjaDoOkna(aLines[liLine[i]]));
+for (int i = 0; i < liLine.Count; i++) lsShow.Add(TaskListEntry(aLines[liLine[i]]));
 
 // Tytul niesie POSTEP, bo czytnik czyta tytul okna przy otwarciu - liczba
 // trafia do czlowieka bez zadnego dodatkowego klawisza.
 int iDoneNow, iAllNow;
 Zadania.Postep(aLines, out iDoneNow, out iAllNow);
-LbcDialog dlgTask = new LbcDialog("Task List - " + Zadania.OpisPostepu(iDoneNow, iAllNow), this);
+LbcDialog dlgTask = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("Task List - {0}", "Lista zadań - {0}"), Zadania.OpisPostepu(iDoneNow, iAllNow)), this);
 ListBox lstTask = dlgTask.addListBox(lsShow, "", "");
-dlgTask.setHelpDetail(lstTask, "Keys: Space toggles done or not done without leaving the list, Enter goes to the item in the text, Escape closes the list.");
+dlgTask.setHelpDetail(lstTask, JezykInterfejsu.Wybierz("Keys: Space toggles done or not done without leaving the list, Enter goes to the item in the text, Escape closes the list.", "Klawisze: Spacja przełącza wykonanie bez opuszczania listy, Enter przechodzi do elementu w tekście, Escape zamyka listę."));
 LbcDialog.selectOnly(lstTask, 0);
 
 // Pozycje zmienione w oknie trzymamy OSOBNO i zapisujemy do dokumentu az na
@@ -15912,11 +15870,11 @@ bool bDone;
 string sNowy = Zadania.PrzelaczWiersz(sCur, out bDone);
 if (sNowy == null) return;
 dictZmiany[iLine] = sNowy;
-lb.Items[iSel] = Zadania.PozycjaDoOkna(sNowy);
+lb.Items[iSel] = TaskListEntry(sNowy);
 LbcDialog.selectOnly(lb, iSel);
 // Samo slowo stanu, nie cala pozycja: tresc czlowiek wlasnie slyszal,
 // zanim nacisnal spacje.
-Say.sayForced(bDone ? "done" : "not done");
+Say.sayForced(AgreedMenuPolish ? (bDone ? "Wykonane" : "Niewykonane") : (bDone ? "done" : "not done"));
 };
 
 bool bOk = dlgTask.runOkCancel();
@@ -15926,7 +15884,7 @@ dlgTask.Dispose();
 // ZAPIS ZMIAN ZE SPACJI.  Idziemy od KONCA dokumentu, zeby wczesniejsze
 // podmiany nie przesuwaly pozycji tych pozniejszych.
 if (dictZmiany.Count > 0) {
-if (rtb.ReadOnly) AddMessage("Document is guarded!");
+if (rtb.ReadOnly) AddMessage(JezykInterfejsu.Wybierz("Document is guarded!", "Dokument jest zablokowany!"));
 else {
 List<int> liKeys = new List<int>(dictZmiany.Keys);
 liKeys.Sort();
@@ -15948,7 +15906,7 @@ int iGo = liStart[iPicked] + Zadania.DlugoscPrefiksu(aLines[liLine[iPicked]]);
 if (iGo > (rtb.Text ?? "").Length) iGo = (rtb.Text ?? "").Length;
 rtb.Index = iGo;
 string sGoLine = dictZmiany.ContainsKey(liLine[iPicked]) ? dictZmiany[liLine[iPicked]] : aLines[liLine[iPicked]];
-Util.Say(Zadania.PozycjaDoOkna(sGoLine));
+Util.Say(TaskListEntry(sGoLine));
 } // ShowTaskListWindow method
 
 // ====================================================== SLEDZENIE ZMIAN (1b)
@@ -15967,9 +15925,9 @@ Zmiana z = bNext ? Zmiany.Nastepna(sText, iCur) : Zmiany.Poprzednia(sText, iCur)
 if (z == null) {
 // CISZA JEST GORSZA OD NICZEGO.  Rozdzielamy dwa przypadki, bo znacza cos
 // innego: "nie ma zmian w ogole" i "jestes na ostatniej".
-if (!Zmiany.CzyMaZmiany(sText)) AddMessage("No changes!");
-else AddMessage(bNext ? "No next change!" : "No prior change!");
-if (Zmiany.CzyNiedomkniete(sText)) AddMessage("Warning: unclosed change marker in document!");
+if (!Zmiany.CzyMaZmiany(sText)) AddMessage(JezykInterfejsu.Wybierz("No changes!", "Brak zmian!"));
+else AddMessage(bNext ? JezykInterfejsu.Wybierz("No next change!", "Brak następnej zmiany!") : JezykInterfejsu.Wybierz("No prior change!", "Brak poprzedniej zmiany!"));
+if (Zmiany.CzyNiedomkniete(sText)) AddMessage(JezykInterfejsu.Wybierz("Warning: unclosed change marker in document!", "Ostrzeżenie: w dokumencie jest niezamknięty znacznik zmiany!"));
 return;
 }
 rtb.Index = z.Start;
@@ -15989,8 +15947,8 @@ int iCur = rtb.Index;
 if (iCur < 0) iCur = 0;
 Zmiana z = Zmiany.WMiejscu(sText, iCur);
 if (z == null) {
-if (!Zmiany.CzyMaZmiany(sText)) AddMessage("No changes!");
-else AddMessage("No change at the cursor!");
+if (!Zmiany.CzyMaZmiany(sText)) AddMessage(JezykInterfejsu.Wybierz("No changes!", "Brak zmian!"));
+else AddMessage(JezykInterfejsu.Wybierz("No change at the cursor!", "Brak zmiany przy kursorze!"));
 return;
 }
 string sKeep = bAccept ? Zmiany.TrescPoPrzyjeciu(z) : Zmiany.TrescPoOdrzuceniu(z);
@@ -16003,7 +15961,7 @@ if (iGo > iLen) iGo = iLen;
 rtb.Index = iGo;
 // LICZNIK W KOMUNIKACIE, bo po przyjeciu czlowiek chce wiedziec, ile zostalo -
 // inaczej musialby otwierac okno tylko po to jedno.
-AddMessage((bAccept ? "Accepted " : "Rejected ") + sWhat + ", " + Zmiany.OpisLiczby(rtb.Text ?? "") + " left");
+AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} {1}, {2} left", "{0} {1}, pozostało {2}"), bAccept ? JezykInterfejsu.Wybierz("Accepted", "Zaakceptowano") : JezykInterfejsu.Wybierz("Rejected", "Odrzucono"), sWhat, Zmiany.OpisLiczby(rtb.Text ?? "")));
 } // ApplyChangeAtCursor method
 
 // PRZYJMIJ ALBO ODRZUC WSZYSTKIE.  Bez klawisza, tylko z menu i palety - to
@@ -16014,18 +15972,18 @@ private void ApplyAllChanges(HomerRichTextBox rtb, bool bAccept) {
 if (rtb == null) return;
 string sText = rtb.Text ?? "";
 if (!Zmiany.CzyMaZmiany(sText)) {
-AddMessage("No changes!");
+AddMessage(JezykInterfejsu.Wybierz("No changes!", "Brak zmian!"));
 return;
 }
 string sCount = Zmiany.OpisLiczby(sText);
-string sQuestion = (bAccept ? "Accept all " : "Reject all ") + sCount + " in this document?";
-if (Dialog.Confirm("Tracked Changes", sQuestion, "N") != "Y") {
-AddMessage("Cancelled");
+string sQuestion = String.Format(JezykInterfejsu.Wybierz(bAccept ? "Accept all {0} in this document?" : "Reject all {0} in this document?", bAccept ? "Zaakceptować wszystkie zmiany ({0}) w tym dokumencie?" : "Odrzucić wszystkie zmiany ({0}) w tym dokumencie?"), sCount);
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Tracked Changes", "Śledzone zmiany"), sQuestion, "N") != "Y") {
+AddMessage(JezykInterfejsu.Wybierz("Cancelled", "Anulowano"));
 return;
 }
 string sNew = bAccept ? Zmiany.TekstPoPrzyjeciu(sText) : Zmiany.TekstPoOdrzuceniu(sText);
 if (sNew == null || sNew == sText) {
-AddMessage("Nothing changed");
+AddMessage(JezykInterfejsu.Wybierz("Nothing changed", "Nic nie zmieniono"));
 return;
 }
 // Tu podmieniamy caly tekst - inaczej niz przy jednej zmianie, bo zakresow jest
@@ -16036,7 +15994,7 @@ rtb.Text = sNew;
 if (iCur > sNew.Length) iCur = sNew.Length;
 if (iCur < 0) iCur = 0;
 rtb.Index = iCur;
-AddMessage((bAccept ? "Accepted " : "Rejected ") + sCount);
+AddMessage(String.Format("{0} {1}", bAccept ? JezykInterfejsu.Wybierz("Accepted", "Zaakceptowano") : JezykInterfejsu.Wybierz("Rejected", "Odrzucono"), sCount));
 } // ApplyAllChanges method
 
 // OKNO "ZMIANY" - lista wszystkich zmian w dokumencie.  Zbudowane tak samo jak
@@ -16058,16 +16016,16 @@ string sText = rtb.Text ?? "";
 List<Zmiana> lista = Zmiany.Znajdz(sText);
 if (lista.Count == 0) {
 AddMessage("No changes!");
-if (Zmiany.CzyNiedomkniete(sText)) AddMessage("Warning: unclosed change marker in document!");
+if (Zmiany.CzyNiedomkniete(sText)) AddMessage(JezykInterfejsu.Wybierz("Warning: unclosed change marker in document!", "Ostrzeżenie: w dokumencie jest niezamknięty znacznik zmiany!"));
 return;
 }
 
 List<string> lsShow = new List<string>();
 for (int i = 0; i < lista.Count; i++) lsShow.Add(Zmiany.OpisDoOkna(lista[i], sText));
 
-LbcDialog dlgChange = new LbcDialog("Changes - " + Zmiany.OpisLiczby(sText), this);
+LbcDialog dlgChange = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("Changes - {0}", "Zmiany - {0}"), Zmiany.OpisLiczby(sText)), this);
 ListBox lstChange = dlgChange.addListBox(lsShow, "", "");
-dlgChange.setHelpDetail(lstChange, "Keys: Enter goes to the change in the text, Escape closes the list.  Accept with Alt+F9 and reject with Alt+Shift+F9 at the cursor.");
+dlgChange.setHelpDetail(lstChange, JezykInterfejsu.Wybierz("Keys: Enter goes to the change in the text, Escape closes the list.  Accept with Alt+F9 and reject with Alt+Shift+F9 at the cursor.", "Klawisze: Enter przechodzi do zmiany w tekście, Escape zamyka listę. Alt+F9 akceptuje zmianę przy kursorze, a Alt+Shift+F9 ją odrzuca."));
 LbcDialog.selectOnly(lstChange, 0);
 
 bool bOk = dlgChange.runOkCancel();
@@ -16130,7 +16088,7 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 			rtb.Select(iRowStart, m.Length);
 			rtb.SelectedText = sIndent;
 			}
-			AddMessage("Numbered list off");
+			AddMessage(JezykInterfejsu.Wybierz("Numbered list off", "Lista numerowana wyłączona"));
 			return;
 			}
 
@@ -16169,7 +16127,7 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 			iNumber++;
 			}
 
-			AddMessage("Numbered list on");
+			AddMessage(JezykInterfejsu.Wybierz("Numbered list on", "Lista numerowana włączona"));
 			return;
 			}
 
@@ -16222,7 +16180,7 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 
 			string sNewText = String.Join("\n", aLines);
 			rtb.ReplaceRange(iStart, iEnd, sNewText);
-			AddMessage(bAllNumbered2 ? "Numbered list off" : "Numbered list on");
+			AddMessage(bAllNumbered2 ? JezykInterfejsu.Wybierz("Numbered list off", "Lista numerowana wyłączona") : JezykInterfejsu.Wybierz("Numbered list on", "Lista numerowana włączona"));
 			} // ToggleNumberedListShortcut method
 
 				private bool TryCopyMarkdownLinkAsRichText(MdiChild child) {
@@ -16280,8 +16238,8 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				if (sRtf.Length > 0) data.SetData(DataFormats.Rtf, sRtf);
 				// Wlasny format: wklejenie w EdSharpie odtwarza skladnie listy.
 				data.SetData(EdSharpMarkdownFormat, Util.Convert2WinLineBreak(GetMarkdownListSourceText(rtb, iFirst, iLast)));
-				if (!Util.SetClipboardData(data)) {App.Frame.AddMessage("Clipboard is busy, list not copied!"); return false;}
-					App.Frame.AddMessage("List copied");
+				if (!Util.SetClipboardData(data)) {App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, list not copied!", "Schowek jest zajęty, lista nie została skopiowana!")); return false;}
+					App.Frame.AddMessage(JezykInterfejsu.Wybierz("List copied", "Skopiowano listę"));
 					return true;
 					} // TryCopyMarkdownList method
 
@@ -16308,8 +16266,8 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 					string sRtf = BuildRtfHeading(sPlain, iLevel);
 					if (sRtf.Length > 0) data.SetData(DataFormats.Rtf, sRtf);
 					data.SetData(EdSharpMarkdownFormat, sLine);
-					if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, heading not copied!"); return false;}
-					AddMessage("Heading copied");
+					if (!Util.SetClipboardData(data)) {AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, heading not copied!", "Schowek jest zajęty, nagłówek nie został skopiowany!")); return false;}
+					AddMessage(JezykInterfejsu.Wybierz("Heading copied", "Skopiowano nagłówek"));
 					return true;
 					}
 
@@ -16323,8 +16281,8 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 					string sRtfLine = BuildRtfPlainText(sPlainLine);
 					if (sRtfLine.Length > 0) dataLine.SetData(DataFormats.Rtf, sRtfLine);
 					dataLine.SetData(EdSharpMarkdownFormat, sLine);
-					if (!Util.SetClipboardData(dataLine)) {AddMessage("Clipboard is busy, text not copied!"); return false;}
-					AddMessage("Rich text copied");
+					if (!Util.SetClipboardData(dataLine)) {AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, text not copied!", "Schowek jest zajęty, tekst nie został skopiowany!")); return false;}
+					AddMessage(JezykInterfejsu.Wybierz("Rich text copied", "Skopiowano tekst sformatowany"));
 					return true;
 					} // TryCopyMarkdownRichLine method
 
@@ -16352,9 +16310,9 @@ Util.Say(Zmiany.OpisDoOkna(lista[iPicked], rtb.Text ?? ""));
 				// Falling through could copy a whole link or list outside that selection.
 				if (!SelectionHasMarkdownMarkup(SplitTextLines(sSelected))) {rtb.Copy(); return true;}
 				DataObject data = BuildMarkdownSelectionClipboardData(sSelected);
-				if (data == null) {AddMessage("Cannot prepare the selected text for copying!"); return true;}
-				if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, selection not copied!"); return true;}
-				AddMessage("Selection copied");
+				if (data == null) {AddMessage(JezykInterfejsu.Wybierz("Cannot prepare the selected text for copying!", "Nie można przygotować zaznaczonego tekstu do skopiowania!")); return true;}
+				if (!Util.SetClipboardData(data)) {AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, selection not copied!", "Schowek jest zajęty, zaznaczenie nie zostało skopiowane!")); return true;}
+				AddMessage(JezykInterfejsu.Wybierz("Selection copied", "Skopiowano zaznaczenie"));
 				return true;
 				} // TryCopyMarkdownSelection method
 
@@ -16626,8 +16584,8 @@ sb.Append("}");
 			// jednolitosci, zeby wklejenie w EdSharpie nigdy nie zalezalo od tego,
 			// KTORA sciezka kopiowania wypelnila schowek.
 			data.SetData(EdSharpMarkdownFormat, sUrl);
-			if (!Util.SetClipboardData(data)) {AddMessage("Clipboard is busy, link not copied!"); return false;}
-					AddMessage("Link copied");
+			if (!Util.SetClipboardData(data)) {AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, link not copied!", "Schowek jest zajęty, łącze nie zostało skopiowane!")); return false;}
+					AddMessage(JezykInterfejsu.Wybierz("Link copied", "Skopiowano łącze"));
 					return true;
 					} // TryCopyMarkdownUrlAsRichText method
 
@@ -16735,7 +16693,7 @@ catch {}
 	case MarkdownReviewKind.List:
 	return "list";
 	case MarkdownReviewKind.ListItem:
-	return "list item";
+	return JezykInterfejsu.Wybierz("list item", "element listy");
 	case MarkdownReviewKind.Link:
 	return "link";
 	case MarkdownReviewKind.Table:
@@ -16752,7 +16710,7 @@ catch {}
 	case MarkdownReviewKind.List:
 	return "lists";
 	case MarkdownReviewKind.ListItem:
-	return "list items";
+	return JezykInterfejsu.Wybierz("list items", "elementy listy");
 	case MarkdownReviewKind.Link:
 	return "links";
 	case MarkdownReviewKind.Table:
@@ -16877,8 +16835,8 @@ catch {}
 	if (this.KeyDescriber) {
 	// While previewing, Escape always leaves and Shift+Escape only flips
 	// the synchronization, so describe the keys by what they really do.
-	if (child.MarkdownReviewMode) AddMessage(bWantNoSync ? "Switch preview synchronization" : "Back to editing");
-	else AddMessage(bWantNoSync ? "Open detached preview" : "Open preview");
+	if (child.MarkdownReviewMode) AddMessage(JezykInterfejsu.Wybierz(bWantNoSync ? "Switch preview synchronization" : "Back to editing", bWantNoSync ? "Przełącz synchronizację podglądu" : "Powrót do edycji"));
+	else AddMessage(bWantNoSync ? JezykInterfejsu.Wybierz("Open detached preview", "Otwórz odłączony podgląd") : JezykInterfejsu.Wybierz("Open preview", "Otwórz podgląd"));
 	return true;
 	}
 	MarkdownReview_ToggleCurrent(bWantNoSync);
@@ -16892,11 +16850,11 @@ catch {}
 	Keys modifiersF7 = keyData & (Keys.Control | Keys.Shift | Keys.Alt);
 	if (keyCodeF7 == Keys.F7 && modifiersF7 == Keys.None) {
 	if (this.KeyDescriber) {
-	AddMessage("Elements list");
+	AddMessage(JezykInterfejsu.Wybierz("Elements list", "Lista elementów"));
 	return true;
 	}
 	if (!MarkdownReview_IsMarkdownFile(child.File)) {
-	AddMessage("Markdown review mode is only for .md files!");
+	AddMessage(JezykInterfejsu.Wybierz("Markdown review mode is only for .md files!", "Tryb przeglądu Markdown jest dostępny tylko dla plików .md!"));
 	return true;
 	}
 	MarkdownReview_ShowElementsList(child);
@@ -16909,7 +16867,7 @@ catch {}
 	Keys keyCode = keyData & Keys.KeyCode;
 	if (keyCode == Keys.Enter) {
 	if (this.KeyDescriber) {
-	AddMessage("Open link");
+	AddMessage(JezykInterfejsu.Wybierz("Open link", "Otwórz łącze"));
 	return true;
 	}
 	// KURSOR NA PUNKTORZE POZYCJI LISTY (zgloszenie Kasperczaka 27.08.2026
@@ -16949,10 +16907,10 @@ catch {}
 	string sUrl;
 	if (MarkdownReview_TryGetLinkUrlAtCursor(child, out sUrl)) {
 	string sError;
-	if (!MarkdownReview_TryOpenUrl(sUrl, out sError)) Dialog.Show("Error", sError);
+	if (!MarkdownReview_TryOpenUrl(sUrl, out sError)) Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), sError);
 	}
 	else {
-	AddMessage("No link at cursor");
+	AddMessage(JezykInterfejsu.Wybierz("No link at cursor", "Brak łącza przy kursorze"));
 	}
 	return true;
 	}
@@ -16980,13 +16938,13 @@ catch {}
 	}
 
 	if (this.KeyDescriber) {
-	string sDirection = bReverse ? "previous" : "next";
-	AddMessage("Go to " + sDirection + " " + MarkdownReview_GetKindName(kind));
+	string sDirection = bReverse ? JezykInterfejsu.Wybierz("previous", "poprzedniego") : JezykInterfejsu.Wybierz("next", "następnego");
+	AddMessage(String.Format(JezykInterfejsu.Wybierz("Go to {0} {1}", "Przejdź do {0} {1}"), sDirection, MarkdownReview_GetKindName(kind)));
 	return true;
 	}
 
 	if (!MarkdownReview_IsMarkdownFile(child.File)) {
-	AddMessage("Markdown review mode is only for .md files!");
+	AddMessage(JezykInterfejsu.Wybierz("Markdown review mode is only for .md files!", "Tryb przeglądu Markdown jest dostępny tylko dla plików .md!"));
 	return true;
 	}
 
@@ -17019,13 +16977,13 @@ catch {}
 
 	MarkdownReview_SortUnique(targets);
 	if (targets.Count == 0) {
-	AddMessage("No lists or links!");
+	AddMessage(JezykInterfejsu.Wybierz("No lists or links!", "Brak list ani łączy!"));
 	return;
 	}
 
 	int iTarget = MarkdownReview_FindTarget(targets, rtb.Index, bReverse);
 	if (iTarget < 0) {
-	AddMessage("No " + (bReverse ? "previous" : "next") + " list or link!");
+	AddMessage(JezykInterfejsu.Wybierz(bReverse ? "No previous list or link!" : "No next list or link!", bReverse ? "Brak poprzedniej listy lub łącza!" : "Brak następnej listy lub łącza!"));
 	return;
 	}
 
@@ -17064,7 +17022,7 @@ catch {}
 	int iAll = MarkdownReview_CountUniqueValid(rtb.TextLength, child.MarkdownReviewHeadings, child.MarkdownReviewLists, child.MarkdownReviewTables, child.MarkdownReviewLinks);
 
 	if (iAll == 0) {
-	AddMessage("No elements!");
+	AddMessage(JezykInterfejsu.Wybierz("No elements!", "Brak elementów!"));
 	return;
 	}
 
@@ -17072,17 +17030,17 @@ catch {}
 	// a sentinel value handled below; the others map to MarkdownReviewKind.
 	List<string> filterValues = new List<string>();
 	List<string> filterDisplay = new List<string>();
-	filterValues.Add("all"); filterDisplay.Add("All, " + iAll);
-	if (iHeadings > 0) {filterValues.Add(((int) MarkdownReviewKind.Heading).ToString()); filterDisplay.Add("Headings, " + iHeadings);}
-	if (iLinks > 0) {filterValues.Add(((int) MarkdownReviewKind.Link).ToString()); filterDisplay.Add("Links, " + iLinks);}
-	if (iLists > 0) {filterValues.Add(((int) MarkdownReviewKind.List).ToString()); filterDisplay.Add("Lists, " + iLists);}
-	if (iTables > 0) {filterValues.Add(((int) MarkdownReviewKind.Table).ToString()); filterDisplay.Add("Tables, " + iTables);}
+	filterValues.Add("all"); filterDisplay.Add(JezykInterfejsu.Wybierz("All, ", "Wszystkie, ") + iAll);
+	if (iHeadings > 0) {filterValues.Add(((int) MarkdownReviewKind.Heading).ToString()); filterDisplay.Add(JezykInterfejsu.Wybierz("Headings, ", "Nagłówki, ") + iHeadings);}
+	if (iLinks > 0) {filterValues.Add(((int) MarkdownReviewKind.Link).ToString()); filterDisplay.Add(JezykInterfejsu.Wybierz("Links, ", "Łącza, ") + iLinks);}
+	if (iLists > 0) {filterValues.Add(((int) MarkdownReviewKind.List).ToString()); filterDisplay.Add(JezykInterfejsu.Wybierz("Lists, ", "Listy, ") + iLists);}
+	if (iTables > 0) {filterValues.Add(((int) MarkdownReviewKind.Table).ToString()); filterDisplay.Add(JezykInterfejsu.Wybierz("Tables, ", "Tabele, ") + iTables);}
 
 	// Skip the filter step when there is only one type of element present
 	// (filterValues then holds just "all" plus that single type): go straight
 	// to the element list with no filter.
 	if (filterValues.Count > 2) {
-	string sFilter = Dialog.Pick("Filter by type", filterValues.ToArray(), filterDisplay.ToArray(), false, 0);
+	string sFilter = Dialog.Pick(JezykInterfejsu.Wybierz("Filter by type", "Filtruj według typu"), filterValues.ToArray(), filterDisplay.ToArray(), false, 0);
 	if (sFilter == null || sFilter.Length == 0) return; // cancelled at the filter step
 	int iKind;
 	if (sFilter != "all" && Int32.TryParse(sFilter, out iKind)) MarkdownReview_PickAndJump(child, rtb, (MarkdownReviewKind) iKind);
@@ -17125,7 +17083,7 @@ catch {}
 	}
 
 	if (listValues.Count == 0) {
-	AddMessage("No elements!");
+	AddMessage(JezykInterfejsu.Wybierz("No elements!", "Brak elementów!"));
 	return false;
 	}
 
@@ -17133,7 +17091,7 @@ catch {}
 	string[] aDisplay = listDisplay.ToArray();
 
 	string sPlural = (filter == null) ? "" : MarkdownReview_GetKindPlural(filter.Value);
-	string sTitle = (filter == null) ? "Markdown elements" : (sPlural.Length > 0 ? Char.ToUpper(sPlural[0]) + sPlural.Substring(1) : "Markdown elements");
+	string sTitle = (filter == null) ? JezykInterfejsu.Wybierz("Markdown elements", "Elementy Markdown") : (sPlural.Length > 0 ? Char.ToUpper(sPlural[0]) + sPlural.Substring(1) : "Markdown elements");
 	// sort=false: the list is already in document order; alphabetical sorting
 	// would scramble it.
 	string sChoice = Dialog.Pick(sTitle, aValues, aDisplay, false, iIndex);
@@ -17225,20 +17183,20 @@ catch {}
 	int iLevel;
 	string sHeading;
 	if (MarkdownReview_IsHeadingLine(sLine, out iLevel, out sHeading)) {
-	if (sHeading.Length == 0) return "Heading " + iLevel;
-	return "Heading " + iLevel + ": " + sHeading;
+	if (sHeading.Length == 0) return JezykInterfejsu.Wybierz("Heading ", "Nagłówek ") + iLevel;
+	return JezykInterfejsu.Wybierz("Heading ", "Nagłówek ") + iLevel + ": " + sHeading;
 	}
-	return sTrim.Length == 0 ? "Heading" : "Heading: " + sTrim;
+	return sTrim.Length == 0 ? JezykInterfejsu.Wybierz("Heading", "Nagłówek") : JezykInterfejsu.Wybierz("Heading: ", "Nagłówek: ") + sTrim;
 	case MarkdownReviewKind.List:
 	string sItem;
-	if (MarkdownReview_TryGetListItemText(sLine, out sItem)) return sItem.Length == 0 ? "List" : "List: " + sItem;
-	return sTrim.Length == 0 ? "List" : "List: " + sTrim;
+	if (MarkdownReview_TryGetListItemText(sLine, out sItem)) return sItem.Length == 0 ? JezykInterfejsu.Wybierz("List", "Lista") : JezykInterfejsu.Wybierz("List: ", "Lista: ") + sItem;
+	return sTrim.Length == 0 ? JezykInterfejsu.Wybierz("List", "Lista") : JezykInterfejsu.Wybierz("List: ", "Lista: ") + sTrim;
 	case MarkdownReviewKind.Link:
 	string sLink = MarkdownReview_BuildLinkLabelAt(child, sText, iOffset);
-	return sLink.Length == 0 ? "Link" : "Link: " + sLink;
+	return sLink.Length == 0 ? JezykInterfejsu.Wybierz("Link", "Łącze") : JezykInterfejsu.Wybierz("Link: ", "Łącze: ") + sLink;
 	case MarkdownReviewKind.Table:
 	string sTable = MarkdownReview_FormatTableLine(sLine);
-	return sTable.Length == 0 ? "Table" : "Table: " + sTable;
+	return sTable.Length == 0 ? JezykInterfejsu.Wybierz("Table", "Tabela") : JezykInterfejsu.Wybierz("Table: ", "Tabela: ") + sTable;
 	default:
 	return sTrim;
 	}
@@ -17301,7 +17259,7 @@ catch {}
 	}
 
 	if (!MarkdownReview_IsMarkdownFile(child.File)) {
-	AddMessage("Markdown review mode is only for .md files!");
+	AddMessage(JezykInterfejsu.Wybierz("Markdown review mode is only for .md files!", "Tryb przeglądu Markdown jest dostępny tylko dla plików .md!"));
 	return;
 	}
 
@@ -17324,7 +17282,7 @@ catch {}
 	catch {}
 	child.MarkdownReviewRtbSelectionHandler = null;
 	child.MarkdownReviewNoSync = true;
-	MarkdownReview_Announce("Detached");
+	MarkdownReview_Announce(JezykInterfejsu.Wybierz("Detached", "Odłączony"));
 	}
 	else {
 	// Detached -> synced: reattach the editor->preview sync and align the
@@ -17339,7 +17297,7 @@ catch {}
 	catch {}
 	}
 	try {MarkdownReview_SyncViewToEdit(child);} catch {}
-	MarkdownReview_Announce("Synced");
+	MarkdownReview_Announce(JezykInterfejsu.Wybierz("Synced", "Zsynchronizowany"));
 	}
 	} // MarkdownReview_SwitchSyncMode method
 
@@ -17360,7 +17318,7 @@ catch {}
 
 	MarkdownReview_EnsureCache(child);
 	MarkdownReview_ShowView(child);
-	MarkdownReview_Announce(bNoSync ? "Preview detached" : "Preview");
+	MarkdownReview_Announce(bNoSync ? JezykInterfejsu.Wybierz("Preview detached", "Podgląd odłączony") : JezykInterfejsu.Wybierz("Preview", "Podgląd"));
 	} // MarkdownReview_Enter method
 
 	private void MarkdownReview_Exit(MdiChild child) {
@@ -17389,7 +17347,7 @@ catch {}
 	}
 	catch {}
 	}
-	MarkdownReview_Announce("Editing");
+	MarkdownReview_Announce(JezykInterfejsu.Wybierz("Editing", "Edycja"));
 	} // MarkdownReview_Exit method
 
 	private void MarkdownReview_ShowView(MdiChild child) {
@@ -17400,7 +17358,7 @@ catch {}
 		if (child.MarkdownReviewView == null || child.MarkdownReviewView.IsDisposed) {
 		MarkdownReviewTextBox view = new MarkdownReviewTextBox();
 		view.AccessibleRole = AccessibleRole.Document;
-		view.AccessibleName = "Markdown preview";
+		view.AccessibleName = JezykInterfejsu.Wybierz("Markdown preview", "Podgląd Markdown");
 		view.AutoWordSelection = false;
 		view.Dock = DockStyle.Fill;
 	view.Multiline = true;
@@ -17510,7 +17468,7 @@ catch {}
 				int iRowStart = rtb.RowStart;
 				if (iRowStart != child.MarkdownReviewLastHeadingRowStart) {
 				child.MarkdownReviewLastHeadingRowStart = iRowStart;
-				if (bAnnounceNavigation) Util.Say("Heading level " + iLevel);
+				if (bAnnounceNavigation) Util.Say(String.Format(JezykInterfejsu.Wybierz("Heading level {0}", "Nagłówek poziomu {0}"), iLevel));
 				}
 				}
 				else {
@@ -17552,11 +17510,11 @@ catch {}
 		if (span == null || span.Length < 6) continue;
 		if (span[0] < iRowStart || span[0] >= iLineEnd) continue;
 		if (span[0] <= iSourceIndex && iSourceIndex <= span[1]) {
-		sMessage = "Link";
+		sMessage = JezykInterfejsu.Wybierz("Link", "Łącze");
 		return true;
 		}
 		if (iSourceIndex >= iRowStart && iSourceIndex <= iLineEnd) {
-		sMessage = "Link";
+		sMessage = JezykInterfejsu.Wybierz("Link", "Łącze");
 		return true;
 		}
 		}
@@ -17566,7 +17524,7 @@ catch {}
 		int iOffset = iSourceIndex - iRowStart;
 		if (iOffset < 0) iOffset = 0;
 		if (MarkdownReview_TryGetLinkUrlFromLine(sLine, iOffset, out sUrl) || MarkdownReview_TryGetSingleUrlFromLine(sLine, out sUrl)) {
-		sMessage = "Link";
+		sMessage = JezykInterfejsu.Wybierz("Link", "Łącze");
 		return true;
 		}
 		}
@@ -18266,7 +18224,7 @@ catch {}
 	MarkdownReview_EnsureCache(child);
 	List<int> list = MarkdownReview_GetList(child, kind);
 	if (list == null || list.Count == 0) {
-	AddMessage("No " + MarkdownReview_GetKindPlural(kind) + "!");
+	AddMessage(String.Format(JezykInterfejsu.Wybierz("No {0}!", "Brak {0}!"), MarkdownReview_GetKindPlural(kind)));
 	return;
 	}
 
@@ -18277,7 +18235,7 @@ catch {}
 	List<int> aFixed = MarkdownReview_ShiftPastListMarkers(rtb.Text, list, kind);
 	int iTarget = MarkdownReview_FindTarget(aFixed, iCurrent, bReverse);
 	if (iTarget < 0) {
-	AddMessage("No " + (bReverse ? "previous" : "next") + " " + MarkdownReview_GetKindName(kind) + "!");
+	AddMessage(String.Format(JezykInterfejsu.Wybierz(bReverse ? "No previous {0}!" : "No next {0}!", bReverse ? "Brak poprzedniego {0}!" : "Brak następnego {0}!"), MarkdownReview_GetKindName(kind)));
 	return;
 	}
 
@@ -18396,32 +18354,32 @@ catch {}
 	int iLevel;
 	string sHeading;
 	if (MarkdownReview_IsHeadingLine(sLine, out iLevel, out sHeading)) {
-	if (sHeading.Length == 0) return "Heading " + iLevel;
-	return sHeading + " Heading " + iLevel;
+	if (sHeading.Length == 0) return JezykInterfejsu.Wybierz("Heading ", "Nagłówek ") + iLevel;
+	return sHeading + JezykInterfejsu.Wybierz(" Heading ", " nagłówek ") + iLevel;
 	}
-	if (sLine.Length == 0) return "Heading";
-	return sLine + " Heading";
+	if (sLine.Length == 0) return JezykInterfejsu.Wybierz("Heading", "Nagłówek");
+	return sLine + JezykInterfejsu.Wybierz(" Heading", " nagłówek");
 	case MarkdownReviewKind.List:
 	string sItem;
 	if (MarkdownReview_TryGetListItemText(sLine, out sItem)) {
-	if (sItem.Length == 0) return "List";
-	return sItem + " List";
+	if (sItem.Length == 0) return JezykInterfejsu.Wybierz("List", "Lista");
+	return sItem + JezykInterfejsu.Wybierz(" List", " lista");
 	}
-	if (sLine.Length == 0) return "List";
-	return sLine + " List";
+	if (sLine.Length == 0) return JezykInterfejsu.Wybierz("List", "Lista");
+	return sLine + JezykInterfejsu.Wybierz(" List", " lista");
 		case MarkdownReviewKind.ListItem:
 		if (MarkdownReview_TryGetListItemText(sLine, out sItem)) {
-		if (sItem.Length == 0) return "Item";
-		return sItem + " Item";
+		if (sItem.Length == 0) return JezykInterfejsu.Wybierz("Item", "Element");
+		return sItem + JezykInterfejsu.Wybierz(" Item", " element");
 		}
-		if (sLine.Length == 0) return "Item";
-		return sLine + " Item";
+		if (sLine.Length == 0) return JezykInterfejsu.Wybierz("Item", "Element");
+		return sLine + JezykInterfejsu.Wybierz(" Item", " element");
 		case MarkdownReviewKind.Link:
 		return MarkdownReview_FormatLinkMessage(child, rtb, iTarget);
 		case MarkdownReviewKind.Table:
 		string sTable = MarkdownReview_FormatTableLine(sLine);
-		if (sTable.Length == 0) return "Table";
-		return sTable + " Table";
+		if (sTable.Length == 0) return JezykInterfejsu.Wybierz("Table", "Tabela");
+		return sTable + JezykInterfejsu.Wybierz(" Table", " tabela");
 	default:
 		return sLine;
 		}
@@ -18469,9 +18427,9 @@ catch {}
 	if (sDest.StartsWith("www.", StringComparison.OrdinalIgnoreCase)) sDest = "https://" + sDest;
 	}
 
-		if (sText.Length > 0) return sText + " Link";
-		if (sDest.Length > 0) return sDest + " Link";
-		return "Link";
+		if (sText.Length > 0) return sText + JezykInterfejsu.Wybierz(" Link", " łącze");
+		if (sDest.Length > 0) return sDest + JezykInterfejsu.Wybierz(" Link", " łącze");
+		return JezykInterfejsu.Wybierz("Link", "Łącze");
 	}
 
 	int iOffset = 0;
@@ -18485,23 +18443,23 @@ catch {}
 
 	foreach (Match m in MarkdownAutoLinkRegex.Matches(sLine)) {
 	if (m == null || !m.Success) continue;
-	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value.Trim('<', '>')) + " Link";
+	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value.Trim('<', '>')) + JezykInterfejsu.Wybierz(" Link", " łącze");
 	}
 	foreach (Match m in MarkdownBareUrlRegex.Matches(sLine)) {
 	if (m == null || !m.Success) continue;
-	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value) + " Link";
+	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value) + JezykInterfejsu.Wybierz(" Link", " łącze");
 	}
 	foreach (Match m in MarkdownWwwUrlRegex.Matches(sLine)) {
 	if (m == null || !m.Success) continue;
-	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value) + " Link";
+	if (m.Index <= iOffset && iOffset < m.Index + m.Length) return MarkdownReview_NormalizeUrl(m.Value) + JezykInterfejsu.Wybierz(" Link", " łącze");
 	}
 	}
 	catch {}
 
-	if (sLine == null) return "Link";
+	if (sLine == null) return JezykInterfejsu.Wybierz("Link", "Łącze");
 	sLine = sLine.Trim();
-	if (sLine.Length == 0) return "Link";
-	return sLine + " Link";
+	if (sLine.Length == 0) return JezykInterfejsu.Wybierz("Link", "Łącze");
+	return sLine + JezykInterfejsu.Wybierz(" Link", " łącze");
 	} // MarkdownReview_FormatLinkMessage method
 
 	private static bool MarkdownReview_TryGetLinkUrlAtCursor(MdiChild child, out string sUrl) {
@@ -18558,7 +18516,7 @@ catch {}
 	sError = "";
 	string s = MarkdownReview_NormalizeUrl(sUrl);
 	if (s.Length == 0) {
-	sError = "Invalid URL.";
+	sError = JezykInterfejsu.Wybierz("Invalid URL.", "Nieprawidłowy adres URL.");
 	return false;
 	}
 
@@ -19091,17 +19049,17 @@ return true;
 
 switch (keyData) {
 case Keys.Alt | Keys.A :
-App.Frame.AddMessage("Alpha order");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Alpha order", "Kolejność alfabetyczna"));
 bs.Sort = "Item asc";
 bs.Position = 0;
 return true;
 case Keys.Alt | Keys.Shift | Keys.A :
-App.Frame.AddMessage("Reverse alpha order");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Reverse alpha order", "Odwrotna kolejność alfabetyczna"));
 bs.Sort = "Item desc";
 bs.Position = 0;
 return true;
 case Keys.Alt | Keys.D :
-App.Frame.AddMessage("Default order");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Default order", "Kolejność domyślna"));
 if (this.tblDefault == null) {
 this.tblDefault = new DataTable();
 this.tblDefault.Columns.Add("Item", typeof(string));
@@ -19114,7 +19072,7 @@ bs.Sort = "";
 bs.Position = 0;
 return true;
 case Keys.Alt | Keys.Shift | Keys.D :
-App.Frame.AddMessage("Reverse default order");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Reverse default order", "Odwrotna kolejność domyślna"));
 if (this.tblDefault == null) {
 this.tblDefault = new DataTable();
 this.tblDefault.Columns.Add("Item", typeof(string));
@@ -19135,20 +19093,20 @@ bs.Sort = "";
 bs.Position = 0;
 return true;
 case Keys.Alt | Keys.Delete :
-App.Frame.AddMessage((bs.Position + 1) + " of " + tbl.DefaultView.Count);
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} of {1}", "{0} z {1}"), bs.Position + 1, tbl.DefaultView.Count));
 return true;
 case Keys.Shift | Keys.Space :
 if (bChecked) {
 int iChecked = ((CheckedListBox) lst).CheckedItems.Count;
-if (iChecked == 0) App.Frame.AddMessage("No items checked!");
-else App.Frame.AddMessage("Checked" + iChecked);
+if (iChecked == 0) App.Frame.AddMessage(JezykInterfejsu.Wybierz("No items checked!", "Nie zaznaczono żadnych elementów!"));
+else App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Checked: {0}", "Zaznaczone: {0}"), iChecked));
 List<int> listChecked = new List<int>();
 foreach (int i in ((CheckedListBox) lst).CheckedIndices) listChecked.Add(i);
 listChecked.Sort();
 foreach (int i in listChecked) App.Frame.AddMessage(tbl.DefaultView[i][0].ToString());
 }
 else {
-App.Frame.AddMessage("Selected");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Selected", "Zaznaczone"));
 foreach (int i in lst.SelectedIndices) App.Frame.AddMessage(tbl.DefaultView[i][0].ToString());
 }
 return true;
@@ -19174,7 +19132,7 @@ break;
 }
 
 if (iStart >= 0) bs.Position = iStart;
-else App.Frame.AddMessage("Not found!");
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return true;
 case Keys.Control | Keys.End :
 if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
@@ -19188,7 +19146,7 @@ break;
 }
 
 if (iEnd >= 0) bs.Position = iEnd;
-else App.Frame.AddMessage("Not found!");
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return true;
 case Keys.Control | Keys.Down :
 if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
@@ -19202,7 +19160,7 @@ break;
 }
 
 if (iNext >= 0) bs.Position = iNext;
-else App.Frame.AddMessage("Not found!");
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return true;
 case Keys.F8 :
 case Keys.Shift | Keys.F8 :
@@ -19225,18 +19183,18 @@ int iAfter = bs.Position;
 string sKey = Util.Key2String(keyData);
 
 if (keyData == Keys.F8) {
-App.Frame.AddMessage("Start Check or Uncheck");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Start Check or Uncheck", "Rozpocznij zaznaczanie lub odznaczanie"));
 this.CheckFirst = iAfter;
 return true;
 }
 else if (keyData == (Keys.Shift | Keys.F8)) {
-App.Frame.AddMessage("Complete Check");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Complete Check", "Zakończ zaznaczanie"));
 bState = true;
 iFirst = this.CheckFirst;
 iLast = iAfter;
 }
 else if (keyData == (Keys.Alt | Keys.Shift | Keys.F8)) {
-App.Frame.AddMessage("Complete Uncheck");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Complete Uncheck", "Zakończ odznaczanie"));
 bState = false;
 iFirst = this.CheckFirst;
 iLast = iAfter;
@@ -19278,13 +19236,13 @@ break;
 }
 
 if (iPrevious >= 0) bs.Position = iPrevious;
-else App.Frame.AddMessage("Not found!");
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 return true;
 case Keys.Control | Keys.A :
 if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
 
 if (bChecked) {
-App.Frame.AddMessage("Check All");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Check All", "Zaznacz wszystko"));
 for (int i = 0; i < tbl.DefaultView.Count; i++) ((CheckedListBox) lst).SetItemChecked(i, true);
 }
 return true;
@@ -19292,7 +19250,7 @@ case Keys.Control | Keys.Shift | Keys.A :
 if (!bChecked || !(this.ActiveControl is ListBox)) return base.ProcessCmdKey (ref msg, keyData);
 
 if (bChecked) {
-App.Frame.AddMessage("Uncheck All");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Uncheck All", "Odznacz wszystko"));
 for (int i = 0; i < tbl.DefaultView.Count; i++) ((CheckedListBox) lst).SetItemChecked(i, false);
 }
 return true;
@@ -19300,10 +19258,10 @@ case Keys.Control | Keys.F :
 case Keys.Control | Keys.Shift | Keys.F :
 string sFilterSql = "";
 string sFilter = "";
-if (keyData == (Keys.Control | Keys.Shift | Keys.F)) App.Frame.AddMessage("Clear filter");
+if (keyData == (Keys.Control | Keys.Shift | Keys.F)) App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clear filter", "Wyczyść filtr"));
 else {
 Dialog.hashFilter.TryGetValue(this.Text, out sFilter);
-sFilter = Dialog.Input("Filter", "Text", sFilter);
+sFilter = Dialog.Input(JezykInterfejsu.Wybierz("Filter", "Filtr"), JezykInterfejsu.Wybierz("Text", "Tekst"), sFilter);
 if (sFilter.Length == 0) return true;
 //sFilterSql = "Item like '" + sFilter + "'";
 sFilterSql = GetFilterSql(sFilter);
@@ -19315,13 +19273,13 @@ bs.Filter = sFilterSql;
 this.Filter = sFilter;
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 bs.Filter = sTemp;
 return true;
 }
 
 bs.Position = 0;
-App.Frame.AddMessage(Util.Pluralize(bs.Count, "item"));
+App.Frame.AddMessage(Util.Pluralize(bs.Count, JezykInterfejsu.Wybierz("item", "element")));
 
 //if (keyData == (Keys.Control | Keys.F)) {
 if (Dialog.hashFilter.ContainsKey(this.Text)) Dialog.hashFilter.Remove(this.Text);
@@ -19334,7 +19292,7 @@ string sTitle = this.Text;
 string sJump = "";
 Dialog.hashJump.TryGetValue(sTitle, out sJump);
 if (keyData == (Keys.Control | Keys.J)) {
-sJump = Dialog.Input("Jump", "Text", sJump);
+sJump = Dialog.Input(JezykInterfejsu.Wybierz("Jump", "Skok"), JezykInterfejsu.Wybierz("Text", "Tekst"), sJump);
 if (sJump.Length == 0) return true;
 }
 
@@ -19357,7 +19315,7 @@ iIndex ++;
 }
 //if (iIndex < iCount) bs.Position = iIndex;
 if (iIndex < iCount) bs.Position = iIndex;
-else App.Frame.AddMessage("Not found!");
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not found!", "Nie znaleziono!"));
 //lst.Update();
 return true;
 }
@@ -19426,7 +19384,7 @@ Array.Sort(aNames, aCodes);
 int iPosition = Array.IndexOf(aCodes, Encoding.Default.CodePage);
 if (iPosition == -1) iPosition = 0;
 
-if (sTitle.Length == 0) sTitle = "Pick Encoding";
+if (sTitle.Length == 0) sTitle = JezykInterfejsu.Wybierz("Pick Encoding", "Wybierz kodowanie");
 string sItem = "";
 if (hashItem.TryGetValue(sTitle, out sItem)) iPosition = 0;
 
@@ -19439,6 +19397,10 @@ return iCodePage;
 } // PickEncoding method
 
 public static string OpenFile(string sTitle, string sPath) {
+return OpenFile(sTitle, sPath, "");
+} // OpenFile method
+
+public static string OpenFile(string sTitle, string sPath, string sFilterOverride) {
 string sReturn = "";
 string sDir;
 
@@ -19457,6 +19419,7 @@ string sFilter = "All files (*.*)|*.*|Text files (*.txt)|*.txt|Rich Text Format 
 // FILTR "pliki biezacego kompilatora" USUNIETY 16.09.2026: bral nazwe z
 // ustawienia Compiler, ktore mogl zmienic tylko usuniety Pick Compiler, wiec
 // warunek byl od tej pory zawsze falszywy - martwy kod.
+if (sFilterOverride != null && sFilterOverride.Length > 0) sFilter = sFilterOverride;
 dlg.Filter = sFilter;
 dlg.FilterIndex = 1;
 dlg.ValidateNames = true;
@@ -19593,24 +19556,30 @@ return Pick(sTitle, aValue, aDisplay, bSort, iIndex);
 public static string PickSynonyms(string sTitle, string[] aValue, string[] aDisplay, string[] aSenseIds, string[] aParts, string sFolder) {
 if (aValue.Length == 0 || aValue.Length != aDisplay.Length || aValue.Length != aSenseIds.Length || aValue.Length != aParts.Length) return "";
 using (LbcDialog dlg = new LbcDialog(sTitle, App.Frame)) {
-dlg.addLabel("Wybierz synonim. F1: pomoc.");
+dlg.addLabel(JezykInterfejsu.Wybierz("Choose a synonym. F1: help.", "Wybierz synonim. F1: pomoc."));
+MarkSynonymControl(dlg.form, 13);
 ListBox lst = dlg.addListBox(new List<string>(aDisplay), "", "");
 lst.SelectionMode = SelectionMode.One;
-lst.AccessibleName = "Synonimy";
-dlg.setHelpDetail(lst, "Góra i dół: wybór synonimu. Enter: wstaw wyświetlony wyraz i zamknij. Escape: anuluj. Strzałka w prawo: definicja, przykład i źródło wybranego znaczenia. F4 jest dodatkowym skrótem do tych samych szczegółów. Shift+Enter: poświadczone odmiany wybranego synonimu. Escape ze szczegółów lub odmian wraca do tej samej pozycji. Te same działania mają przyciski Znaczenie i Odmiany. Wybór słownika: Opcje aplikacji, Słownik synonimów.");
+lst.AccessibleName = JezykInterfejsu.Wybierz("Synonyms", "Synonimy");
+MarkSynonymControl(lst, 3);
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Up and Down: choose a synonym. Enter: insert the displayed word and close. Escape: cancel. Right Arrow: definition, example and source for the selected sense. F4 is another shortcut to the same details. Shift+Enter: attested forms of the selected synonym. Escape from details or forms returns to the same item. The Sense and Inflected forms buttons do the same. Dictionary selection: Application options, Synonym dictionary.", "Góra i dół: wybór synonimu. Enter: wstaw wyświetlony wyraz i zamknij. Escape: anuluj. Strzałka w prawo: definicja, przykład i źródło wybranego znaczenia. F4 jest dodatkowym skrótem do tych samych szczegółów. Shift+Enter: poświadczone odmiany wybranego synonimu. Escape ze szczegółów lub odmian wraca do tej samej pozycji. Te same działania mają przyciski Znaczenie i Odmiany. Wybór słownika: Opcje aplikacji, Słownik synonimów."));
 LbcDialog.selectOnly(lst, 0);
 dlg.setInitialFocus(lst);
 string sFormChoice = "";
 Action showDetails = delegate {
 int i = lst.SelectedIndex;
 if (i < 0 || i >= aSenseIds.Length) return;
-using (LbcDialog details = new LbcDialog("Znaczenie: " + aValue[i], dlg.form)) {
-TextBox memo = details.addMemoBox("Szczegóły znaczenia", SlownikiSynonimow.GetDetails(aSenseIds[i]), "");
+using (LbcDialog details = new LbcDialog(String.Format(JezykInterfejsu.Wybierz("Sense: {0}", "Znaczenie: {0}"), aValue[i]), dlg.form)) {
+MarkSynonymControl(details.form, 11);
+TextBox memo = details.addMemo(SlownikiSynonimow.GetDetails(aSenseIds[i]), "");
 memo.ReadOnly = true;
+memo.AccessibleRole = AccessibleRole.StaticText;
+memo.AccessibleName = "";
+MarkSynonymControl(memo, 1);
 memo.Select(0, 0);
-details.setHelpDetail(memo, "Definicja, przykład i źródło dotyczą wybranego znaczenia. Tekst można czytać i kopiować; nie zmienia dokumentu. Escape: wróć do tego samego synonimu.");
+details.setHelpDetail(memo, JezykInterfejsu.Wybierz("The definition, example and source apply to the selected sense. The text can be read and copied; it does not change the document. Escape: return to the same synonym.", "Definicja, przykład i źródło dotyczą wybranego znaczenia. Tekst można czytać i kopiować; nie zmienia dokumentu. Escape: wróć do tego samego synonimu."));
 details.setInitialFocus(memo);
-details.runWithButtons(new string[] { "Wróć" });
+details.runWithButtons(new string[] { JezykInterfejsu.Wybierz("Back", "Wróć") });
 }
 LbcDialog.selectOnly(lst, i);
 lst.Focus();
@@ -19626,8 +19595,8 @@ dlg.form.Close();
 }
 else { LbcDialog.selectOnly(lst, i); lst.Focus(); }
 };
-AddSynonymAction(dlg, lst, "Znaczenie (w prawo)", showDetails);
-AddSynonymAction(dlg, lst, "Odmiany (Shift+Enter)", chooseForms);
+AddSynonymAction(dlg, lst, JezykInterfejsu.Wybierz("Sense (Right Arrow)", "Znaczenie (w prawo)"), showDetails);
+AddSynonymAction(dlg, lst, JezykInterfejsu.Wybierz("Inflected forms (Shift+Enter)", "Odmiany (Shift+Enter)"), chooseForms);
 // Enter is a dialog key. Make Shift+Enter an input key BEFORE AcceptButton.
 lst.PreviewKeyDown += delegate(object sender, PreviewKeyDownEventArgs ev) {
 if (ev.KeyData == (Keys.Shift | Keys.Enter)) ev.IsInputKey = true;
@@ -19640,13 +19609,37 @@ else if (ev.KeyData == (Keys.Shift | Keys.Enter)) {
 ev.Handled = true; ev.SuppressKeyPress = true; chooseForms();
 }
 };
-string result = dlg.runWithButtons(new string[] { "Wstaw", "Anuluj" });
+string sInsert = JezykInterfejsu.Wybierz("Insert", "Wstaw");
+string sCancel = JezykInterfejsu.Wybierz("Cancel", "Anuluj");
+string result = dlg.runWithButtons(new string[] { sInsert, sCancel });
 if (sFormChoice.Length > 0) return sFormChoice;
-if (result != "Wstaw") return "";
+if (result != sInsert) return "";
 int index = lst.SelectedIndex;
 return index >= 0 && index < aValue.Length ? aValue[index] : "";
 }
 } // PickSynonyms method
+
+// A private HWND property scopes the optional NVDA adapter without changing
+// native names/roles for other readers or relying on translated window titles.
+[DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
+static extern bool SetProp(IntPtr hwnd, string name, IntPtr value);
+[DllImport("user32.dll", CharSet = CharSet.Unicode)]
+static extern IntPtr RemoveProp(IntPtr hwnd, string name);
+static void MarkSynonymControl(Control control, int kind) {
+const string property = "EdSharpNG.SynonymView";
+IntPtr markedHandle = IntPtr.Zero;
+Action mark = delegate {
+markedHandle = control.Handle;
+if (!SetProp(markedHandle, property, new IntPtr(kind)))
+System.Diagnostics.Trace.TraceWarning("Cannot mark synonym accessibility view.");
+};
+control.HandleCreated += delegate { mark(); };
+control.HandleDestroyed += delegate {
+if (markedHandle != IntPtr.Zero) RemoveProp(markedHandle, property);
+markedHandle = IntPtr.Zero;
+};
+if (control.IsHandleCreated) mark();
+} // MarkSynonymControl method
 
 static void AddSynonymAction(LbcDialog dlg, ListBox lst, string sCaption, Action action) {
 Button button = new Button();
@@ -19662,26 +19655,37 @@ lst.Parent.Controls.Add(button);
 
 public static string PickSynonymForm(Form owner, string sFolder, string sWord, string sPart, string sSenseId) {
 List<FormySynonimow.Forma> forms = FormySynonimow.GetForms(sFolder, sWord, sPart, sSenseId);
-using (LbcDialog dlg = new LbcDialog("Odmiany: " + sWord, owner)) {
-if (forms.Count == 0 || FormySynonimow.Error.Length > 0) {
-string text = FormySynonimow.Error.Length > 0 ? FormySynonimow.Error : "Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie zgaduje form.";
-TextBox memo = dlg.addMemoBox("Dostępność odmian", text, "");
+using (LbcDialog dlg = new LbcDialog(JezykInterfejsu.Wybierz("Inflected forms", "Odmiany"), owner)) {
+if (forms.Count == 0) {
+string text = FormySynonimow.Error.Length > 0 ? FormySynonimow.Error : JezykInterfejsu.Wybierz("No inflected forms are available for this word and sense in the supplied data. The program does not guess forms.", "Brak dostępnych odmian dla tego słowa i znaczenia w dołączonych danych. Program nie zgaduje form.");
+TextBox memo = dlg.addMemoBox(JezykInterfejsu.Wybierz("Inflected forms availability", "Dostępność odmian"), text, "");
 memo.ReadOnly = true;
 memo.Select(0, 0);
-dlg.setHelpDetail(memo, "Escape lub przycisk Wróć: powrót do tego samego synonimu bez zmiany dokumentu.");
+dlg.setHelpDetail(memo, JezykInterfejsu.Wybierz("Escape or the Back button: return to the same synonym without changing the document.", "Escape lub przycisk Wróć: powrót do tego samego synonimu bez zmiany dokumentu."));
 dlg.setInitialFocus(memo);
-dlg.runWithButtons(new string[] { "Wróć" });
+dlg.runWithButtons(new string[] { JezykInterfejsu.Wybierz("Back", "Wróć") });
 return "";
 }
+TextBox warning = null;
+if (FormySynonimow.Error.Length > 0) {
+warning = dlg.addMemoBox(JezykInterfejsu.Wybierz("Data warning", "Ostrzeżenie danych"), FormySynonimow.Error, "");
+warning.ReadOnly = true;
+warning.Select(0, 0);
+dlg.setHelpDetail(warning, JezykInterfejsu.Wybierz("Tab: move to the list of retained forms in their existing order. Escape: return to the synonym without changing the document.", "Tab: przejdź do listy zachowanych form w dotychczasowej kolejności. Escape: powrót do synonimu bez zmiany dokumentu."));
+}
 List<string> labels = new List<string>();
-for (int i = 0; i < forms.Count; i++) labels.Add(Synonimy.ApplyCapitalization(sWord, forms[i].Tekst) + ", " + forms[i].Opis + ", " + (i + 1) + " z " + forms.Count);
+MarkSynonymControl(dlg.form, 12);
+for (int i = 0; i < forms.Count; i++) labels.Add(Synonimy.ApplyCapitalization(sWord, forms[i].Tekst) + ", " + forms[i].Opis + String.Format(JezykInterfejsu.Wybierz(", {0} of {1}", ", {0} z {1}"), i + 1, forms.Count));
 ListBox lst = dlg.addListBox(labels, "", "");
 lst.SelectionMode = SelectionMode.One;
-lst.AccessibleName = "Dostępne odmiany";
-dlg.setHelpDetail(lst, "Góra i dół: wybór formy. Enter lub Wstaw: wstaw wybraną formę do dokumentu i zamknij także listę synonimów. Escape lub Anuluj: wróć do tego samego synonimu bez zmiany dokumentu. Lista zawiera wyłącznie formy ze źródła. Dla angielskiego dostępne są poświadczone wyjątki WordNet, nie pełna odmiana regularna.");
+lst.AccessibleName = JezykInterfejsu.Wybierz("Inflected forms", "Odmiany");
+MarkSynonymControl(lst, 2);
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Up and Down: choose a form. Enter or Insert: insert the chosen form into the document and close the synonym list too. Escape or Cancel: return to the same synonym without changing the document. The list contains only source-attested forms. For English, attested WordNet exceptions are available, not a complete regular inflection.", "Góra i dół: wybór formy. Enter lub Wstaw: wstaw wybraną formę do dokumentu i zamknij także listę synonimów. Escape lub Anuluj: wróć do tego samego synonimu bez zmiany dokumentu. Lista zawiera wyłącznie formy ze źródła. Dla angielskiego dostępne są poświadczone wyjątki WordNet, nie pełna odmiana regularna."));
 LbcDialog.selectOnly(lst, 0);
-dlg.setInitialFocus(lst);
-if (dlg.runWithButtons(new string[] { "Wstaw", "Anuluj" }) != "Wstaw") return "";
+dlg.setInitialFocus(warning == null ? (Control)lst : warning);
+string sInsert = JezykInterfejsu.Wybierz("Insert", "Wstaw");
+string sCancel = JezykInterfejsu.Wybierz("Cancel", "Anuluj");
+if (dlg.runWithButtons(new string[] { sInsert, sCancel }) != sInsert) return "";
 int index = lst.SelectedIndex;
 if (index < 0 || index >= forms.Count) return "";
 return Synonimy.ApplyCapitalization(sWord, forms[index].Tekst);
@@ -19740,13 +19744,13 @@ List<int> lMap = new List<int>();      // pozycja na liscie -> indeks w lAll
 for (int i = 0; i < lAll.Count; i++) lMap.Add(i);
 
 LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
-dlg.addLabel("Type to filter commands:");
+dlg.addLabel(JezykInterfejsu.Wybierz("Type to filter commands:", "Wpisz, aby filtrować polecenia:"));
 TextBox tbFilter = dlg.addTextBox("", "");
-dlg.addLabel("Commands:");
+dlg.addLabel(JezykInterfejsu.Wybierz("Commands:", "Polecenia:"));
 ListBox lst = dlg.addListBox(lAll, "", "");
 lst.SelectionMode = SelectionMode.One;
-dlg.setHelpDetail(tbFilter, "Type words in any order to narrow the list; matching ignores case and Polish diacritics. Enter runs the first match, Down Arrow moves into the list, Escape closes the palette.");
-dlg.setHelpDetail(lst, "Enter runs the highlighted command, Escape closes the palette, Shift+Tab returns to the filter box.");
+dlg.setHelpDetail(tbFilter, JezykInterfejsu.Wybierz("Type words in any order to narrow the list; matching ignores case and Polish diacritics. Enter runs the first match, Down Arrow moves into the list, Escape closes the palette.", "Wpisuj słowa w dowolnej kolejności, aby zawęzić listę; dopasowanie ignoruje wielkość liter i polskie znaki. Enter uruchamia pierwszy wynik, Strzałka w dół przechodzi do listy, Escape zamyka paletę."));
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Enter runs the highlighted command, Escape closes the palette, Shift+Tab returns to the filter box.", "Enter uruchamia wyróżnione polecenie, Escape zamyka paletę, Shift+Tab wraca do pola filtrowania."));
 LbcDialog.selectOnly(lst, 0);
 dlg.setInitialFocus(tbFilter);
 
@@ -19763,8 +19767,8 @@ lst.Items.Add(lAll[i]);
 lst.EndUpdate();
 if (lst.Items.Count > 0) LbcDialog.selectOnly(lst, 0);
 // Licznik i pierwszy wynik - jedyny sygnal, ze pisanie cokolwiek dalo.
-if (lst.Items.Count == 0) Say.sayForced("No matching command");
-else Say.sayForced(lst.Items.Count + " commands, " + lAll[lMap[0]]);
+if (lst.Items.Count == 0) Say.sayForced(JezykInterfejsu.Wybierz("No matching command", "Brak pasującego polecenia"));
+else Say.sayForced(String.Format(JezykInterfejsu.Wybierz("{0} commands, {1}", "Polecenia: {0}. {1}"), lst.Items.Count, lAll[lMap[0]]));
 };
 
 int iResult = -1;
@@ -19779,7 +19783,7 @@ return;
 if (ev.KeyData == Keys.Enter) {
 // Enter w polu = uruchom pierwszy wynik, bez schodzenia do listy.
 ev.Handled = true; ev.SuppressKeyPress = true;
-if (lMap.Count == 0) { Say.sayForced("No matching command"); return; }
+if (lMap.Count == 0) { Say.sayForced(JezykInterfejsu.Wybierz("No matching command", "Brak pasującego polecenia")); return; }
 iResult = lMap[0];
 dlg.form.DialogResult = DialogResult.OK;
 dlg.form.Close();
@@ -19797,7 +19801,7 @@ int i = lst.SelectedIndex;
 // przypadek, w ktorym nie ma czego uruchomic: program milczal, a uzytkownik
 // niewidomy nie ma jak odgadnac, czy polecenie sie wykonalo bez efektu, czy
 // wcale go nie ma na liscie.
-if (i < 0 || i >= lMap.Count) { Say.sayForced("Nothing selected"); return; }
+if (i < 0 || i >= lMap.Count) { Say.sayForced(JezykInterfejsu.Wybierz("Nothing selected", "Nie wybrano polecenia")); return; }
 iResult = lMap[i];
 dlg.form.DialogResult = DialogResult.OK;
 dlg.form.Close();
@@ -19864,7 +19868,7 @@ LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
 // program.  Odkrywalnosc zostaje: setHelpDetail pokazuje klawisze w pomocy
 // F1 i wymawia je na zadanie przez Shift+F1.
 ListBox lst = dlg.addListBox(lDisp, "", "");
-dlg.setHelpDetail(lst, "Keys: Delete or Backspace removes the bookmark, Left Arrow previews the bookmarked line, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.");
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Keys: Delete or Backspace removes the bookmark, Left Arrow previews the bookmarked line, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.", "Klawisze: Delete lub Backspace usuwa zakładkę, Strzałka w lewo odczytuje wskazywany wiersz, Enter przechodzi do zakładki, Escape zamyka listę. Usunięcie ostatniej zakładki pozostawia listę otwartą i pustą."));
 LbcDialog.selectOnly(lst, iIndex);
 
 lst.KeyDown += delegate(object oSender, KeyEventArgs ev) {
@@ -19897,7 +19901,7 @@ string sRowHere = (iRowHere >= 0 && iRowHere < aLinesHere.Length)
 ? (aLinesHere[iRowHere] ?? "").Trim() : "";
 // "Empty line" tym samym slowem co lista zakladek nazwanych nizej - dwa
 // rozne komunikaty na to samo zjawisko brzmialyby jak dwa rozne bledy.
-Say.sayForced(sRowHere.Length == 0 ? "Empty line" : sRowHere);
+Say.sayForced(sRowHere.Length == 0 ? JezykInterfejsu.Wybierz("Empty line", "Pusty wiersz") : sRowHere);
 return;
 }
 
@@ -19929,12 +19933,12 @@ lb.Items.RemoveAt(i);
 // zakladki - dla niewidomego cicha zmiana kontekstu z niszczacym skutkiem.
 // Wyjscie jest teraz zawsze jego decyzja: Escape.
 if (lb.Items.Count == 0) {
-Say.sayForced("No bookmarks, press Escape to close the list");
+Say.sayForced(JezykInterfejsu.Wybierz("No bookmarks, press Escape to close the list", "Brak zakładek; naciśnij Escape, aby zamknąć listę"));
 return;
 }
 if (i >= lb.Items.Count) i = lb.Items.Count - 1;
 LbcDialog.selectOnly(lb, i);
-App.Frame.AddMessage("Bookmark removed");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Bookmark removed", "Usunięto zakładkę"));
 };
 
 string sReturn = "";
@@ -19960,7 +19964,7 @@ LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
 // PASEK STANU PUSTY, KLAWISZE POD F1 - ta sama zmiana i ten sam powod, co na
 // liscie zakladek zwyklych (jego zgloszenie 01.09.2026).
 ListBox lst = dlg.addListBox(lDisp, "", "");
-dlg.setHelpDetail(lst, "Keys: Delete or Backspace removes the named bookmark, Left Arrow reads the line it points to, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.");
+dlg.setHelpDetail(lst, JezykInterfejsu.Wybierz("Keys: Delete or Backspace removes the named bookmark, Left Arrow reads the line it points to, Enter goes to the bookmark, Escape closes the list. Removing the last bookmark leaves the list open and empty.", "Klawisze: Delete lub Backspace usuwa nazwaną zakładkę, Strzałka w lewo odczytuje wskazywany wiersz, Enter przechodzi do zakładki, Escape zamyka listę. Usunięcie ostatniej zakładki pozostawia listę otwartą i pustą."));
 LbcDialog.selectOnly(lst, iIndex);
 
 lst.KeyDown += delegate(object oSender, KeyEventArgs ev) {
@@ -19982,11 +19986,11 @@ HomerRichTextBox rtbHere = (App.Frame.Child == null) ? null : App.Frame.Child.RT
 if (rtbHere == null) return;
 string[] aLinesHere = rtbHere.Lines;
 if (iRowRead < 0 || iRowRead >= aLinesHere.Length) {
-Say.sayForced("This line is gone from the document");
+Say.sayForced(JezykInterfejsu.Wybierz("This line is gone from the document", "Tego wiersza nie ma już w dokumencie"));
 return;
 }
 string sRowRead = (aLinesHere[iRowRead] ?? "").Trim();
-Say.sayForced(sRowRead.Length == 0 ? "Empty line" : sRowRead);
+Say.sayForced(sRowRead.Length == 0 ? JezykInterfejsu.Wybierz("Empty line", "Pusty wiersz") : sRowRead);
 return;
 }
 
@@ -20009,12 +20013,12 @@ lb.Items.RemoveAt(i);
 // tekscie dokumentu i nastepny Delete kasowal znak.  Naprawa jednej listy
 // zostawilaby drugie wejscie w to samo.
 if (lb.Items.Count == 0) {
-Say.sayForced("No named bookmarks, press Escape to close the list");
+Say.sayForced(JezykInterfejsu.Wybierz("No named bookmarks, press Escape to close the list", "Brak nazwanych zakładek; naciśnij Escape, aby zamknąć listę"));
 return;
 }
 if (i >= lb.Items.Count) i = lb.Items.Count - 1;
 LbcDialog.selectOnly(lb, i);
-App.Frame.AddMessage("Named bookmark removed");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Named bookmark removed", "Usunięto nazwaną zakładkę"));
 };
 
 string sReturn = "";
@@ -20083,8 +20087,8 @@ if (string.IsNullOrEmpty(sFile)) return;
 
 switch (ev.KeyData) {
 case Keys.Right:
-try { Win32.OpenWith(sFile); App.Frame.AddMessage("Open with"); }
-catch (Exception ex) { Dialog.Show("Error", ex.Message); }
+try { Win32.OpenWith(sFile); App.Frame.AddMessage(JezykInterfejsu.Wybierz("Open with", "Otwórz za pomocą")); }
+catch (Exception ex) { Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message); }
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
@@ -20098,7 +20102,7 @@ try {
 string sArg = File.Exists(sFile) ? "/select," + Util.Quote(sFile) : Util.Quote(Path.GetDirectoryName(sFile));
 Process.Start("explorer.exe", sArg);
 }
-catch (Exception ex) { Dialog.Show("Error", ex.Message); }
+catch (Exception ex) { Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message); }
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
 
@@ -20148,7 +20152,7 @@ break;
 // zaznaczone pozycje naraz (jego zgloszenie 06.09.2026: "nie da sie usunac
 // zaznaczonych dwoch").
 case Keys.Shift | Keys.Delete:
-if (lb.SelectedIndices.Count > 1) App.Frame.AddMessage(lb.SelectedIndices.Count + " items selected; deleting from disk works on one file at a time!");
+if (lb.SelectedIndices.Count > 1) App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("{0} items selected; deleting from disk works on one file at a time!", "Zaznaczono {0} elementów; usuwanie z dysku działa tylko dla jednego pliku naraz!"), lb.SelectedIndices.Count));
 else PickFileDeleteFromDisk(lb, lVal, lDisp, sSection);
 ev.Handled = true; ev.SuppressKeyPress = true;
 break;
@@ -20197,7 +20201,7 @@ List<string> lsPicked = new List<string>();
 foreach (int iSel in lb.SelectedIndices) {
 if (iSel >= 0 && iSel < lVal.Count) lsPicked.Add(lVal[iSel]);
 }
-if (lsPicked.Count == 0) { App.Frame.AddMessage("No item!"); return; }
+if (lsPicked.Count == 0) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("No item!", "Brak elementu!")); return; }
 // NAZWE WYCINAMY ZE SCIEZKI, nie bierzemy jej z wiersza listy: wiersz moze
 // byc dopowiedziany (numer, katalog w nawiasie), a do schowka ma isc czysta
 // nazwa pliku.  Gdy sciezka jest nietypowa i Path nie umie jej rozebrac,
@@ -20216,17 +20220,17 @@ string sText = string.Join("\r\n", lsPicked.ToArray());
 bool bPaths = bFiles;
 // LICZBA POZYCJI W KOMUNIKACIE: bez niej niewidomy nie wie, ile wlasnie
 // zabral, bo podswietlenia nie slyszy.
-string sHowMany = (lsPicked.Count == 1) ? "" : " " + lsPicked.Count + " items";
+string sHowMany = (lsPicked.Count == 1) ? "" : String.Format(JezykInterfejsu.Wybierz(" {0} items", " {0} elementów"), lsPicked.Count);
 // KOMUNIKAT NAZYWA TO, CO FAKTYCZNIE POSZLO NA SCHOWEK.  Przy nazwie mowi
 // "name", przy sciezce "path" - inaczej dwa rozne skroty zapowiadalyby to
 // samo i nie dalo by sie ich po sluchu odroznic.
-string sWhat = bNames ? "name" : "path";
-string sWhatMany = bNames ? "names" : "paths";
+string sWhat = bNames ? JezykInterfejsu.Wybierz("name", "nazwę") : JezykInterfejsu.Wybierz("path", "ścieżkę");
+string sWhatMany = bNames ? JezykInterfejsu.Wybierz("names", "nazwy") : JezykInterfejsu.Wybierz("paths", "ścieżki");
 if (bAppend) {
 string sPrior = Util.GetClipboardText();
 if (sPrior.Length > 0 && !sPrior.EndsWith("\n")) sPrior += "\r\n";
-if (Util.SetClipboardText(sPrior + sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? "Appended " + sWhat : "Appended" + sHowMany);
-else App.Frame.AddMessage("Clipboard is busy, nothing appended!");
+if (Util.SetClipboardText(sPrior + sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? String.Format(JezykInterfejsu.Wybierz("Appended {0}", "Dołączono {0}"), sWhat) : String.Format(JezykInterfejsu.Wybierz("Appended{0}", "Dołączono{0}"), sHowMany));
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, nothing appended!", "Schowek jest zajęty, nic nie zostało dołączone!"));
 return;
 }
 // KOPIOWANIE SCIEZEK KLADZIE NA SCHOWEK TAKZE SAME PLIKI (jego zgloszenie
@@ -20248,7 +20252,7 @@ catch (Exception) {}
 }
 int iMissing = lsPicked.Count - lsFiles.Count;
 if (lsFiles.Count > 0) {
-if (!Util.SetClipboardFileDrop(lsFiles, sText)) { App.Frame.AddMessage("Clipboard is busy, nothing copied!"); return; }
+if (!Util.SetClipboardFileDrop(lsFiles, sText)) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, nothing copied!", "Schowek jest zajęty, nic nie zostało skopiowane!")); return; }
 // KOMUNIKAT MOWI, ZE SKOPIOWANO - I NIC WIECEJ (jego decyzja 11.09.2026:
 // "trocha mylaco mowi Copied file (...) powinien mowic Copied po prostu").
 // Slowo "file" nazywalo FORMAT schowka, czyli wewnetrzna sprawe programu, a
@@ -20259,20 +20263,20 @@ if (!Util.SetClipboardFileDrop(lsFiles, sText)) { App.Frame.AddMessage("Clipboar
 // mial ten komunikat pomagac.
 // Liczba przy wielu pozycjach ZOSTAJE: bez niej niewidomy nie wie, ile
 // wlasnie zabral, bo podswietlenia nie slyszy.
-string sSaid = (lsFiles.Count == 1) ? "Copied" : "Copied " + lsFiles.Count + " items";
-if (iMissing > 0) sSaid += ", " + iMissing + " missing as text only";
+string sSaid = (lsFiles.Count == 1) ? JezykInterfejsu.Wybierz("Copied 1 item", "Skopiowano 1 element") : String.Format(JezykInterfejsu.Wybierz("Copied {0} items", "Liczba skopiowanych elementów: {0}"), lsFiles.Count);
+if (iMissing > 0) sSaid += ", " + iMissing + JezykInterfejsu.Wybierz(" missing as text only", " niedostępnych jako sam tekst");
 App.Frame.AddMessage(sSaid);
 return;
 }
 // Zaden z zaznaczonych wpisow nie istnieje na dysku: pliku nie ma czym
 // skopiowac, wiec MOWIMY to wprost, a na schowek idzie sama sciezka jako
 // tekst - to jedyne, co w tej sytuacji da sie oddac.
-if (!Util.SetClipboardText(sText)) { App.Frame.AddMessage("Clipboard is busy, nothing copied!"); return; }
-App.Frame.AddMessage((lsPicked.Count == 1) ? "Copied path as text, file no longer on disk" : "Copied" + sHowMany + " as text, files no longer on disk");
+if (!Util.SetClipboardText(sText)) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, nothing copied!", "Schowek jest zajęty, nic nie zostało skopiowane!")); return; }
+App.Frame.AddMessage((lsPicked.Count == 1) ? JezykInterfejsu.Wybierz("Copied path as text, file no longer on disk", "Skopiowano ścieżkę jako tekst; pliku nie ma już na dysku") : String.Format(JezykInterfejsu.Wybierz("Copied{0} as text, files no longer on disk", "Skopiowano{0} jako tekst; plików nie ma już na dysku"), sHowMany));
 return;
 }
-if (Util.SetClipboardText(sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? Char.ToUpper(sWhat[0]) + sWhat.Substring(1) + " copied" : "Copied" + sHowMany + " (" + sWhatMany + ")");
-else App.Frame.AddMessage("Clipboard is busy, nothing copied!");
+if (Util.SetClipboardText(sText)) App.Frame.AddMessage((lsPicked.Count == 1) ? String.Format(JezykInterfejsu.Wybierz("{0} copied", "Skopiowano {0}"), sWhat) : String.Format(JezykInterfejsu.Wybierz("Copied{0} ({1})", "Skopiowano{0} ({1})"), sHowMany, sWhatMany));
+else App.Frame.AddMessage(JezykInterfejsu.Wybierz("Clipboard is busy, nothing copied!", "Schowek jest zajęty, nic nie zostało skopiowane!"));
 } // PickFileCopySelection method
 
 // PickFileRemoveSelection: zdejmij z listy WSZYSTKIE zaznaczone wpisy.
@@ -20292,11 +20296,11 @@ else App.Frame.AddMessage("Clipboard is busy, nothing copied!");
 private static void PickFileRemoveSelection(ListBox lb, List<string> lVal, List<string> lDisp, string sSection) {
 List<int> liSel = new List<int>();
 foreach (int iSel in lb.SelectedIndices) if (iSel >= 0 && iSel < lVal.Count) liSel.Add(iSel);
-if (liSel.Count == 0) { App.Frame.AddMessage("No item!"); return; }
+if (liSel.Count == 0) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("No item!", "Brak elementu!")); return; }
 liSel.Sort();
 int iFirst = liSel[0];
 for (int i = liSel.Count - 1; i >= 0; i--) PickFileRemoveEntry(lb, lVal, lDisp, sSection, liSel[i], false);
-if (lb.Items.Count == 0) { App.Frame.AddMessage("List is now empty"); return; }
+if (lb.Items.Count == 0) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("List is now empty", "Lista jest teraz pusta")); return; }
 // Kursor staje tam, gdzie stal PIERWSZY zdjety wpis, czyli na tym, co po
 // usunieciu weszlo na jego miejsce.  Bez tego zaznaczenie zostawaloby na
 // przypadkowej pozycji po ostatnim obiegu petli.
@@ -20305,7 +20309,7 @@ LbcDialog.selectOnly(lb, iFirst);
 // MOWIMY, ILE ZDJETO I ZE TO LISTA, nie dysk.  Ten komunikat stoi obok
 // Shift+Delete, ktore kasuje plik z dysku, a po fakcie nie ma jak tych dwoch
 // odroznic sluchem.
-App.Frame.AddMessage((liSel.Count == 1) ? "Removed from list" : "Removed " + liSel.Count + " entries from list");
+App.Frame.AddMessage((liSel.Count == 1) ? JezykInterfejsu.Wybierz("Removed from list", "Usunięto z listy") : String.Format(JezykInterfejsu.Wybierz("Removed {0} entries from list", "Usunięto z listy {0} wpisów"), liSel.Count));
 } // PickFileRemoveSelection method
 
 // Remove the current item from the list box and (when sSection is set)
@@ -20318,7 +20322,7 @@ lVal.RemoveAt(i);
 lDisp.RemoveAt(i);
 lb.Items.RemoveAt(i);
 if (lb.Items.Count == 0) {
-if (bSpeak) App.Frame.AddMessage("List is now empty");
+if (bSpeak) App.Frame.AddMessage(JezykInterfejsu.Wybierz("List is now empty", "Lista jest teraz pusta"));
 return;
 }
 if (i >= lb.Items.Count) i = lb.Items.Count - 1;
@@ -20326,7 +20330,7 @@ LbcDialog.selectOnly(lb, i);
 // Say WHICH removal happened.  A bare "Removed" is ambiguous next to
 // Shift+Delete, which erases the file from disk, and a screen reader user
 // has no other way to tell the two apart after the fact.
-if (bSpeak) App.Frame.AddMessage("Removed from list");
+if (bSpeak) App.Frame.AddMessage(JezykInterfejsu.Wybierz("Removed from list", "Usunięto z listy"));
 } // PickFileRemoveEntry method
 
 // Permanently delete the current file from disk after an explicit
@@ -20339,13 +20343,13 @@ if (i < 0 || i >= lVal.Count) return;
 string sFile = lVal[i];
 if (sFile.Length == 0) return;
 try {
-if (Directory.Exists(sFile)) { App.Frame.AddMessage("This is a folder, not a file"); return; }
+if (Directory.Exists(sFile)) { App.Frame.AddMessage(JezykInterfejsu.Wybierz("This is a folder, not a file", "To jest folder, a nie plik")); return; }
 if (!File.Exists(sFile)) {
-if (Dialog.Confirm("Confirm", "File not found on disk. Remove this entry from the list?\n" + sFile, "N") != "Y") return;
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("File not found on disk. Remove this entry from the list?\n", "Nie znaleziono pliku na dysku. Usunąć ten wpis z listy?\n") + sFile, "N") != "Y") return;
 PickFileRemoveEntry(lb, lVal, lDisp, sSection, i, true);
 return;
 }
-if (Dialog.Confirm("Confirm", "Permanently delete this file from disk, not just remove it from the list?\n" + sFile, "N") != "Y") return;
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("Permanently delete this file from disk, not just remove it from the list?\n", "Trwale usunąć ten plik z dysku,  nie tylko z listy?\n") + sFile, "N") != "Y") return;
 // Close any editor windows on this file first (snapshot the
 // collection; Close() mutates MdiChildren while we iterate).
 foreach (Form f in new List<Form>(App.Frame.MdiChildren)) {
@@ -20357,15 +20361,15 @@ foreach (Form f in App.Frame.MdiChildren) {
 MdiChild child = f as MdiChild;
 if (child == null) continue;
 if (String.Equals(child.File, sFile, StringComparison.OrdinalIgnoreCase) && !child.IsDisposed) {
-App.Frame.AddMessage("Delete canceled");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Delete canceled", "Anulowano usuwanie"));
 return;
 }
 }
 File.Delete(sFile);
-App.Frame.AddMessage("Deleted from disk");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Deleted from disk", "Usunięto z dysku"));
 PickFileRemoveEntry(lb, lVal, lDisp, sSection, i, false);
 }
-catch (Exception ex) { Dialog.Show("Error", ex.Message); }
+catch (Exception ex) { Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message); }
 } // PickFileDeleteFromDisk method
 
 // CZYTANIE TRESCI OKIENKA PRZEZ CZYTNIK EKRANU (zgloszenie Kasperczaka
@@ -20457,7 +20461,7 @@ tb.Height = tb.Font.Height * iLinie + 8;
 catch {}
 // Fokus NA TRESCI - to jest cala poprawka.  Bez tego czytnik zaczyna od
 // przycisku, tak jak w MessageBox.
-tb.AccessibleName = "Message";
+tb.AccessibleName = JezykInterfejsu.Wybierz("Message", "Wiadomość");
 dlg.setInitialFocus(tb);
 return dlg.runWithButtons(asButtons);
 } // PokazOknoZTrescia method
@@ -20504,10 +20508,10 @@ else defaultButton = MessageBoxDefaultButton.Button1;
 if (UzyjWlasnychOkien()) {
 try {
 string[] asButtons = (sDefault.ToLower() == "n")
-  ? new string[] {"&No", "&Yes", "Cancel"}
-  : new string[] {"&Yes", "&No", "Cancel"};
+  ? new string[] {JezykInterfejsu.Wybierz("&No", "&Nie"), JezykInterfejsu.Wybierz("&Yes", "&Tak"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")}
+  : new string[] {JezykInterfejsu.Wybierz("&Yes", "&Tak"), JezykInterfejsu.Wybierz("&No", "&Nie"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")};
 string sWybor = PokazOknoZTrescia(sTitle, sText, asButtons,
-  "Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.");
+  JezykInterfejsu.Wybierz("Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.", "Odczytaj pytanie strzałkami, potem wybierz odpowiedź. Enter naciska pierwszy przycisk, Escape anuluje."));
 if (sWybor == "Yes") return "Y";
 if (sWybor == "No") return "N";
 return "";
@@ -20570,8 +20574,8 @@ LbcDialog dlg = new LbcDialog(sTitle, App.Frame);
 if (sText != "") dlg.addLabel(sText);
 List<string> lButtons = new List<string>(aButtons);
 bool bHasCancel = false;
-foreach (string sButton in aButtons) if (sButton.Replace("&", "").Equals("Cancel", StringComparison.OrdinalIgnoreCase)) bHasCancel = true;
-if (!bHasCancel) lButtons.Add("Cancel");
+foreach (string sButton in aButtons) if (sButton.Replace("&", "").Equals(JezykInterfejsu.Wybierz("Cancel", "Anuluj"), StringComparison.OrdinalIgnoreCase)) bHasCancel = true;
+if (!bHasCancel) lButtons.Add(JezykInterfejsu.Wybierz("Cancel", "Anuluj"));
 string sClicked = dlg.runWithButtons(lButtons.ToArray());
 dlg.Dispose();
 string sResult = "";
@@ -20595,8 +20599,8 @@ ListBox lst = dlg.addListBox(lNames, "", "");
 LbcDialog.selectOnly(lst, (iIndex >= 0 && iIndex < lNames.Count) ? iIndex : 0);
 List<string> lButtons = new List<string>(aButton);
 bool bHasCancel = false;
-foreach (string sButton in aButton) if (sButton.Replace("&", "").Equals("Cancel", StringComparison.OrdinalIgnoreCase)) bHasCancel = true;
-if (!bHasCancel) lButtons.Add("Cancel");
+foreach (string sButton in aButton) if (sButton.Replace("&", "").Equals(JezykInterfejsu.Wybierz("Cancel", "Anuluj"), StringComparison.OrdinalIgnoreCase)) bHasCancel = true;
+if (!bHasCancel) lButtons.Add(JezykInterfejsu.Wybierz("Cancel", "Anuluj"));
 string sClicked = dlg.runWithButtons(lButtons.ToArray());
 int iPicked = lst.SelectedIndex;
 dlg.Dispose();
@@ -20647,7 +20651,7 @@ btnBrowse.Click += delegate(object o, EventArgs e) {
 txt.Text = Dialog.BrowseForFolder("", sValue, false);
 txt.Select();
 };
-btnBrowse.Text = "&Browse";
+btnBrowse.Text = JezykInterfejsu.Wybierz("&Browse", "&Przeglądaj");
 btnBrowse.AccessibleName = btnBrowse.Text.Replace("&", "");
 
 flpInput.Controls.AddRange(new Control[] {lbl, txt, btnBrowse});
@@ -20664,14 +20668,14 @@ Button btnOK = new Button();
 btnOK.Click += delegate(object o, EventArgs e) {
 sResult = txt.Text.Trim();
 if (sResult != "" && !Directory.Exists(sResult)) {
-string sChoice = Dialog.Confirm("Confirm", "Cannot find folder\n" + sResult + "\nCreate it?", "Y");
+string sChoice = Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("Cannot find folder\n", "Nie można znaleźć folderu\n") + sResult + JezykInterfejsu.Wybierz("\nCreate it?", "\nUtworzyć go?"), "Y");
 if (sChoice == "Y") {
 try {
 DirectoryInfo di = new DirectoryInfo(sResult);
 di.Create();
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 }
 }
 }
@@ -20682,7 +20686,7 @@ txt.Select();
 }
 };
 
-btnOK.Text = "OK";
+btnOK.Text = JezykInterfejsu.Wybierz("OK", "OK");
 btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
@@ -20690,7 +20694,7 @@ btnCancel.Click += delegate(object o, EventArgs e) {
 /*Util.Say("Cancel");*/ sResult = "";
 frm.Close();
 };
-btnCancel.Text = "Cancel";
+btnCancel.Text = JezykInterfejsu.Wybierz("Cancel", "Anuluj");
 btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
@@ -20788,14 +20792,14 @@ lst.Text, txt.Text
 frm.Close();
 };
 
-btnOK.Text = "OK";
+btnOK.Text = JezykInterfejsu.Wybierz("OK", "OK");
 btnOK.AccessibleName = btnOK.Text;
 
 Button btnCancel = new Button();
 btnCancel.Click += delegate(object o, EventArgs e) {
 /*Util.Say("Cancel");*/ frm.Close();
 };
-btnCancel.Text = "Cancel";
+btnCancel.Text = JezykInterfejsu.Wybierz("Cancel", "Anuluj");
 btnCancel.AccessibleName = btnCancel.Text;
 
 flpButtons.Controls.AddRange(new Control[] {btnOK, btnCancel});
@@ -20949,70 +20953,70 @@ private const string sFormFeed = "\f";
 public static object ExcelOpen(object oXlss, string sFile) {
 dynamic xlss = oXlss;
 try { return xlss.Open(sFile, false, true); } // UpdateLinks, ReadOnly
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); return null; }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); return null; }
 } // ExcelOpen method
 
 public static void ExcelSaveAs(object oXls, string sFile, int iFileFormat) {
 dynamic xls = oXls;
 try { xls.SaveAs(sFile, iFileFormat); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // ExcelSaveAs method
 
 public static void ExcelClose(object oXls) {
 dynamic xls = oXls;
 try { xls.Close(0); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // ExcelClose method
 
 public static void ExcelQuit(object oApp) {
 dynamic app = oApp;
 try { app.Quit(); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // ExcelQuit method
 
 // ---- PowerPoint ----
 public static object PowerPointOpen(object oPpts, string sFile) {
 dynamic ppts = oPpts;
 try { return ppts.Open(sFile, true); } // ReadOnly
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); return null; }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); return null; }
 } // PowerPointOpen method
 
 public static void PowerPointSaveAs(object oPpt, string sFile, int iFileFormat) {
 dynamic ppt = oPpt;
 try { ppt.SaveAs(sFile); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // PowerPointSaveAs method
 
 public static void PowerPointClose(object oPpt) {
 dynamic ppt = oPpt;
 try { ppt.Close(); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // PowerPointClose method
 
 public static void PowerPointQuit(object oApp) {
 dynamic app = oApp;
 try { app.Quit(); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // PowerPointQuit method
 
 // ---- Word ----
 public static object WordOpen(object oDocs, string sFile, bool bAppVisible) {
 dynamic docs = oDocs;
 try { return docs.Open(sFile, false, false, false); } // ConfirmConversions, ReadOnly, AddToRecentFiles
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); return null; }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); return null; }
 } // WordOpen method
 
 public static void WordSaveAs(object oDoc, string sFile, int iFileFormat) {
 dynamic doc = oDoc;
 try { doc.SaveAs(sFile, iFileFormat, false, "", false); } // LockComments, Password, AddToRecentFiles
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // WordSaveAs method
 
 public static void WordClose(object oDoc) {
 dynamic doc = oDoc;
 ClearNormalTemplate(doc.Application);
 try { doc.Close(0); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // WordClose method
 
 public static void ClearNormalTemplate(object oApp) {
@@ -21026,7 +21030,7 @@ public static void WordQuit(object oApp) {
 dynamic app = oApp;
 ClearNormalTemplate(app);
 try { app.Quit(0); }
-catch (Exception ex) { MessageBox.Show(ex.Message, "Error!"); }
+catch (Exception ex) { MessageBox.Show(ex.Message, JezykInterfejsu.Wybierz("Error!", "Błąd!")); }
 } // WordQuit method
 
 // ---- Office text extractors (legacy COM) ----
@@ -21509,7 +21513,7 @@ else if (aResults.Length == 1) sResult = aResults[0];
 else if (sForceImport.Length > 0) sResult = sForceImport;
 else {
 //sResult = Dialog.Pick("Import Format", aResults, true, 0);
-string sTitle = "Import " + sExt + " to ";
+string sTitle = JezykInterfejsu.Wybierz("Import ", "Importuj ") + sExt + JezykInterfejsu.Wybierz(" to ", " do ");
 sResult = Dialog.Pick(sTitle, aResults, aDisplay, true, 0);
 //Dialog.Show(sResult);
 if (sResult.Length == 0) return "";
@@ -21533,7 +21537,7 @@ string sCommand = Ini.ReadValue(App.IniFile, "Import", sResult, "");
 if (sCommand.Contains("pandoc")) {
 sCommand = sCommand.Replace("markdown_github", "gfm");
 sCommand = System.Text.RegularExpressions.Regex.Replace(sCommand, @"\s-S\b", "");
-sCommand = sCommand.Replace(" --smart", "");
+sCommand = sCommand.Replace(JezykInterfejsu.Wybierz(" --smart", " --smart"), "");
 // E-BOOK PRZECIEKAL ZNACZNIKAMI HTML (13.09.2026).
 //
 // Zmierzone na .epub: "-f epub -t gfm" zostawia w wyniku <span id=...> i
@@ -21578,7 +21582,7 @@ sCommand = Util.ExpandCommandLine(sCommand, sSource, sTarget);
 // Dialog.Show(sCommand);
 //Clipboard.SetText(sCommand);
 //Clipboard.SetText(sTarget);
-App.Frame.AddMessage("Converting");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Converting", "Konwertowanie"));
 if (File.Exists(sTarget)) sTarget = Win32.GetShortPath(sTarget);
 if (File.Exists(sTarget)) File.Delete(sTarget);
 // BRAK NARZEDZIA KONWERSJI NIE MOZE BYC AWARIA PROGRAMU (13.09.2026).
@@ -21599,7 +21603,7 @@ try {
 Util.RunHideWait(sCommand);
 if (!File.Exists(sTarget)) {
 //Util.RunHide(sCommand);
-sCommand = "cmd.exe /c " + sCommand;
+sCommand = JezykInterfejsu.Wybierz("cmd.exe /c ", "cmd.exe /c ") + sCommand;
 //Util.RunHide(sCommand);
 Util.RunHideWait(sCommand);
 /*
@@ -21623,16 +21627,15 @@ catch (System.ComponentModel.Win32Exception) {
 string sBrak = "";
 try { sBrak = Skladniki.BrakujaceDlaPolecenia(sCommand); } catch {}
 if (sBrak.Length > 0) {
-string sPytanie = "To wymaga narzedzia " + sBrak + ", ktorego nie ma na dysku."
-+ "  Pobrac je teraz?";
-if (Dialog.Confirm("Missing Conversion Tool", sPytanie, "Y") == "Y") {
-App.Frame.AddMessage("Downloading " + sBrak);
+string sPytanie = String.Format(JezykInterfejsu.Wybierz("This requires the tool {0}, which is not on disk.  Download it now?", "Ta operacja wymaga narzędzia {0}, którego nie ma na dysku.  Pobrać je teraz?"), sBrak);
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Missing Conversion Tool", "Brakuje narzędzia do konwersji"), sPytanie, "Y") == "Y") {
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Downloading {0}", "Pobieranie {0}"), sBrak));
 string sZrobione = "";
 try { sZrobione = Skladniki.SprawdzIUzupelnij(true); } catch {}
 if (sZrobione.Length > 0) {
 // Udalo sie - probujemy konwersji jeszcze raz, zeby czlowiek dostal to,
 // o co poprosil, bez powtarzania Control+O.
-App.Frame.AddMessage("Downloaded " + sZrobione + "; converting");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Downloaded {0}; converting", "Pobrano {0}; konwersja"), sZrobione));
 // SCIEZKE TRZEBA PRZELICZYC PONOWNIE.  sCommand zostal zlozony PRZED
 // pobraniem, wiec wskazuje katalog instalacji - a narzedzie wlasnie wyladowalo
 // w profilu uzytkownika.  Bez tej linii druga proba szukala w starym miejscu i
@@ -21644,10 +21647,10 @@ Util.RunHideWait(sCommand);
 catch (System.ComponentModel.Win32Exception) {
 if (FormatSpakowany(sSource)) {
 OdmowaOtwarcia = true;
-App.Frame.AddMessage("Not opened: " + sBrak + " is still missing");
+App.Frame.AddMessage(JezykInterfejsu.Polski ? String.Format("Nie otwarto: nadal brakuje {0}", sBrak) : "Not opened: " + sBrak + " is still missing");
 return "";
 }
-App.Frame.AddMessage("Conversion tool still missing; opening file as is");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Conversion tool still missing; opening file as is", "Narzędzie konwersji nadal jest niedostępne; otwieranie pliku bez zmian"));
 return "";
 }
 }
@@ -21655,15 +21658,15 @@ else {
 // Najczestsza przyczyna: program stoi w Program Files, a dociaganie
 // pisze do wlasnego katalogu Convert - bez uprawnien administratora
 // zapis jest odrzucany (zmierzone 13.09.2026).  Mowimy, co zrobic.
-string sRada = "; try Help > Update Components as administrator";
+string sRada = JezykInterfejsu.Wybierz("; try Help > Update Components as administrator", "; spróbuj użyć Pomoc > Aktualizuj składniki jako administrator");
 if (FormatSpakowany(sSource)) {
 OdmowaOtwarcia = true;
-App.Frame.AddMessage("Could not download " + sBrak + sRada
-+ ".  File not opened - this format cannot be read without it");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Could not download {0}. File not opened - this format cannot be read without it", "Nie można pobrać {0}. Plik nie został otwarty — bez tego nie można odczytać tego formatu"), sBrak + sRada));
+
 return "";
 }
-App.Frame.AddMessage("Could not download " + sBrak + sRada
-+ ".  Opening file as is");
+App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Could not download {0}. Opening file as is", "Nie można pobrać {0}. Otwieranie pliku bez konwersji"), sBrak + sRada));
+
 return "";
 }
 }
@@ -21672,20 +21675,20 @@ else {
 // zawartosc bylaby smieciem, a dalaby sie zapisac na oryginale.
 if (FormatSpakowany(sSource)) {
 OdmowaOtwarcia = true;
-App.Frame.AddMessage("Not opened: " + sBrak + " is needed to read this format");
+App.Frame.AddMessage(JezykInterfejsu.Polski ? String.Format("Nie otwarto: do odczytania tego formatu potrzebny jest {0}", sBrak) : "Not opened: " + sBrak + " is needed to read this format");
 return "";
 }
-App.Frame.AddMessage("Opening file as is, without " + sBrak);
+App.Frame.AddMessage(JezykInterfejsu.Polski ? String.Format("Otwieranie pliku bez konwersji, bez {0}", sBrak) : "Opening file as is, without " + sBrak);
 return "";
 }
 }
 else {
 if (FormatSpakowany(sSource)) {
 OdmowaOtwarcia = true;
-App.Frame.AddMessage("Not opened: a conversion tool is needed to read this format");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not opened: a conversion tool is needed to read this format", "Nie otwarto: do odczytania tego formatu potrzebne jest narzędzie konwersji"));
 return "";
 }
-App.Frame.AddMessage("Conversion tool not installed; opening file as is");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Conversion tool not installed; opening file as is", "Narzędzie konwersji nie jest zainstalowane; otwieranie pliku bez zmian"));
 return "";
 }
 }
@@ -21703,11 +21706,11 @@ if (File.Exists(sTarget)) sText = Util.File2String(sTarget);
 // (rtf, html, pdf) surowa tresc nadal jest lepsza niz nic.
 if (sText.Length == 0 && FormatSpakowany(sSource)) {
 OdmowaOtwarcia = true;
-App.Frame.AddMessage("Not opened: conversion failed and this format cannot be read raw");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Not opened: conversion failed and this format cannot be read raw", "Nie otwarto: konwersja nie powiodła się, a tego formatu nie można odczytać bezpośrednio"));
 return "";
 }
 
-if (sText.Length == 0) App.Frame.AddMessage("Conversion produced no text; opening file as is");
+if (sText.Length == 0) App.Frame.AddMessage(JezykInterfejsu.Wybierz("Conversion produced no text; opening file as is", "Konwersja nie utworzyła tekstu; otwieranie pliku bez zmian"));
 }
 else {
 if (sTargetExt == sExt) {
@@ -21747,7 +21750,7 @@ sText = Util.File2String(sSource);
 iConvert = 0;
 }
 else {
-App.Frame.AddMessage("Converting");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Converting", "Konwertowanie"));
 sText = WordFile2String(sSource);
 }
 break;
@@ -21831,7 +21834,7 @@ try {
 oDoc = CallMethod(oDocs, "Open", oParams);
 }
 catch (COMException ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 }
 return oDoc;
 } // OpenWordDocument method
@@ -21859,7 +21862,7 @@ try {
 CallMethod(oDoc, "SaveAs", oParams);
 }
 catch (COMException ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 }
 } // WordSaveAs method
 
@@ -21877,7 +21880,7 @@ try {
 CallMethod(oDoc, "Close", oParams);
 }
 catch (COMException ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 }
 } // WordClose method
 
@@ -21901,7 +21904,7 @@ try {
 CallMethod(oApp, "Quit", oParams);
 }
 catch (COMException ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 }
 } // WordQuit method
 
@@ -21911,7 +21914,7 @@ o = null;
 } // Release method
 
 public static object WordAccess(out bool bCreate) {
-string sMessage = "Initializing Microsoft Word";
+string sMessage = JezykInterfejsu.Wybierz("Initializing Microsoft Word", "Inicjowanie programu Microsoft Word");
 object oApp = GetOrCreateObject("Word.Application", out bCreate, sMessage);
 if (bCreate) App.WordCreated = true;
 return oApp;
@@ -22485,7 +22488,7 @@ OpenWith(file, IntPtr.Zero);
 } //OpenWith method
 
 public static void OpenWith(string file, IntPtr hParent) {
-if (String.IsNullOrEmpty(file)) throw new ArgumentException("No file was specified.", "file");
+if (String.IsNullOrEmpty(file)) throw new ArgumentException(JezykInterfejsu.Wybierz("No file was specified.", "Nie wskazano pliku."), "file");
 
 // Primary path: classic "Open with" dialog via ShellExecuteEx verb "openas".
 // This is the dialog that offers "Always use this app to open ..." so the user
@@ -22657,30 +22660,85 @@ public class Util {
 //  3. Przycina plik, gdy przekroczy App.ErrorLogMaxBytes - zostawia ogon, bo
 //     najswiezsze wpisy sa najwazniejsze.
 //  4. Dopisuje na koncu, z data w formacie sortowalnym.
+private static readonly object diagnosticLogLock = new object();
+
+// Safe diagnostics are opt-out, but never include a message, document text,
+// filename, path, address, token or Speech.log.  This check is inside the only
+// writer so turning the setting off stops startup and crash-path writes too.
+public static bool DiagnosticLoggingEnabled() {
+try { return Ustawienia.CzyWlaczone(App.ReadOption("DiagnosticLogging", "Y")); }
+catch { return true; }
+}
+
 public static void LogDiagnostic(string sKind, string sBody) {
+if (!DiagnosticLoggingEnabled()) return;
+AppendDiagnosticLine(SafeDiagnosticToken(sKind));
+}
+
+public static void LogDiagnosticException(string sKind, Exception ex) {
+if (!DiagnosticLoggingEnabled()) return;
+string sType = (ex == null || ex.GetType() == null) ? "unknown_exception" : SafeDiagnosticToken(ex.GetType().Name);
+string sStack = SafeDiagnosticStack(ex);
+AppendDiagnosticLine(SafeDiagnosticToken(sKind) + " type=" + sType + (sStack.Length == 0 ? "" : " stack=" + sStack));
+}
+
+private static void AppendDiagnosticLine(string sEvent) {
 try {
 if (App.ErrorLog == null || App.ErrorLog.Length == 0) return;
-string sLine = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\t" + sKind + "\t"
-+ (sBody == null ? "" : sBody.Replace("\r\n", " | ").Replace("\n", " | ")) + "\r\n";
-File.AppendAllText(App.ErrorLog, sLine, Encoding.UTF8);
-TrimDiagnosticLog();
+string sLine = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + "\tevent=" + sEvent + "\r\n";
+lock (diagnosticLogLock) {
+if (!DiagnosticLoggingEnabled()) return;
+File.AppendAllText(App.ErrorLog, sLine, new UTF8Encoding(false));
+TrimDiagnosticLogLocked();
+}
 }
 catch {}
 }
 
-// Przycinanie: czytamy wiersze i zostawiamy druga polowe.  Robione TYLKO gdy
-// plik przekroczyl prog, wiec przy normalnej pracy nie kosztuje nic.
-private static void TrimDiagnosticLog() {
+private static string SafeDiagnosticToken(string sValue) {
+if (string.IsNullOrEmpty(sValue)) return "unknown";
+StringBuilder sb = new StringBuilder();
+foreach (char c in sValue) {
+if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_' || c == '-' || c == '.') sb.Append(c);
+}
+if (sb.Length == 0) return "unknown";
+if (sb.Length > 96) return sb.ToString().Substring(0, 96);
+return sb.ToString();
+}
+
+private static string SafeDiagnosticStack(Exception ex) {
+try {
+if (ex == null) return "";
+StackTrace trace = new StackTrace(ex, false);
+StackFrame[] frames = trace.GetFrames();
+if (frames == null) return "";
+StringBuilder sb = new StringBuilder();
+int iAdded = 0;
+foreach (StackFrame frame in frames) {
+MethodBase method = frame.GetMethod();
+if (method == null) continue;
+string sName = (method.DeclaringType == null ? "" : method.DeclaringType.FullName + ".") + method.Name;
+sName = SafeDiagnosticToken(sName);
+if (sName.Length == 0) continue;
+if (iAdded > 0) sb.Append(">");
+sb.Append(sName); iAdded++;
+if (iAdded >= 8) break;
+}
+return sb.ToString();
+}
+catch { return ""; }
+}
+
+private static void TrimDiagnosticLogLocked() {
 try {
 FileInfo fi = new FileInfo(App.ErrorLog);
 if (!fi.Exists || fi.Length <= App.ErrorLogMaxBytes) return;
 string[] aLines = File.ReadAllLines(App.ErrorLog, Encoding.UTF8);
 int iFrom = aLines.Length / 2;
 StringBuilder sb = new StringBuilder();
-sb.Append("(starsze wpisy usuniete, plik przekroczyl "
-+ (App.ErrorLogMaxBytes / 1024) + " KB)\r\n");
-for (int i = iFrom; i < aLines.Length; i++) sb.Append(aLines[i] + "\r\n");
-File.WriteAllText(App.ErrorLog, sb.ToString(), Encoding.UTF8);
+sb.Append("event=rotation\r\n");
+for (int i = iFrom; i < aLines.Length; i++) sb.Append(aLines[i]).Append("\r\n");
+File.WriteAllText(App.ErrorLog, sb.ToString(), new UTF8Encoding(false));
 }
 catch {}
 }
@@ -22707,14 +22765,14 @@ break;
 } // if
 
 Dictionary<string, string> dFlags = new Dictionary<string, string>();
-dFlags.Add("NotAPortableExecutableImage", "The file is not in portable executable (PE) file format.");
-dFlags.Add("ILOnly", "The executable contains only Microsoft intermediate language (MSIL).");
-dFlags.Add("Required32Bit", "The executable can be run on a 32-bit platform, or in the 32-bit Windows on Windows (WOW) environment on a 64-bit platform.");
-dFlags.Add("PE32Plus", "The executable requires a 64-bit platform.");
-dFlags.Add("Unmanaged32Bit", "The executable contains pure unmanaged code.");
-dFlags.Add("I386", "Targets a 32-bit Intel processor.");
-dFlags.Add("IA64", "Targets a 64-bit Intel processor.");
-dFlags.Add("AMD64", "Targets a 64-bit AMD processor.");
+dFlags.Add("NotAPortableExecutableImage", JezykInterfejsu.Wybierz("The file is not in portable executable (PE) file format.", "Plik nie jest w formacie pliku wykonywalnego (PE)."));
+dFlags.Add("ILOnly", JezykInterfejsu.Wybierz("The executable contains only Microsoft intermediate language (MSIL).", "Plik wykonywalny zawiera wyłącznie pośredni język Microsoft (MSIL)."));
+dFlags.Add("Required32Bit", JezykInterfejsu.Wybierz("The executable can be run on a 32-bit platform, or in the 32-bit Windows on Windows (WOW) environment on a 64-bit platform.", "Plik wykonywalny można uruchomić na platformie 32-bitowej lub w 32-bitowym środowisku Windows on Windows (WOW) na platformie 64-bitowej."));
+dFlags.Add("PE32Plus", JezykInterfejsu.Wybierz("The executable requires a 64-bit platform.", "Plik wykonywalny wymaga platformy 64-bitowej."));
+dFlags.Add("Unmanaged32Bit", JezykInterfejsu.Wybierz("The executable contains pure unmanaged code.", "Plik wykonywalny zawiera wyłącznie kod niezarządzany."));
+dFlags.Add("I386", JezykInterfejsu.Wybierz("Targets a 32-bit Intel processor.", "Jest przeznaczony dla 32-bitowego procesora Intel."));
+dFlags.Add("IA64", JezykInterfejsu.Wybierz("Targets a 64-bit Intel processor.", "Jest przeznaczony dla 64-bitowego procesora Intel."));
+dFlags.Add("AMD64", JezykInterfejsu.Wybierz("Targets a 64-bit AMD processor.", "Jest przeznaczony dla 64-bitowego procesora AMD."));
 string sReturn = "";
 string sPEKind = peKind.ToString();
 string[] aPEKind = sPEKind.Split(',');
@@ -22728,7 +22786,7 @@ else sReturn += sPEKind + "\n\n";
 // Not useful info
 // if (dFlags.ContainsKey(sMachine)) sReturn += dFlags[sMachine] + "\n\n";
 // else sReturn += sMachine + "\n\n";
-sReturn += "Running in " + (IntPtr.Size == 8 ? "64" : "32") + "-bit mode.";
+sReturn += JezykInterfejsu.Wybierz("Running in ", "Uruchomiono w trybie ") + (IntPtr.Size == 8 ? "64" : "32") + JezykInterfejsu.Wybierz("-bit mode.", "-bitowym.");
 // sReturn = sReturn.Replace("\nTargets a ", "\nRunning on a ");
 // Dialog.Show("Portable Executable Kind", sReturn);
 return sReturn;
@@ -22820,10 +22878,10 @@ else if (c == '\n') iLf++;
 }
 int iKinds = (iCrLf > 0 ? 1 : 0) + (iLf > 0 ? 1 : 0) + (iCr > 0 ? 1 : 0);
 if (iKinds == 0) return "";
-if (iKinds > 1) return "mixed";
-if (iCrLf > 0) return "Windows";
-if (iLf > 0) return "Unix";
-return "Macintosh";
+if (iKinds > 1) return JezykInterfejsu.Wybierz("mixed", "mieszane");
+if (iCrLf > 0) return JezykInterfejsu.Wybierz("Windows", "Windows");
+if (iLf > 0) return JezykInterfejsu.Wybierz("Unix", "Unix");
+return JezykInterfejsu.Wybierz("Macintosh", "Macintosh");
 } // DetectLineBreakKind method
 
 // Kodowanie, ktorym zapisujemy dokument, na podstawie tego, czym zostal
@@ -23439,14 +23497,14 @@ sBody = Util.RegExpReplaceCase(sBody, "'", "%27");
 sBody = Util.RegExpReplaceCase(sBody, "\\\\", "%5C");
 // sBody = StringReplaceCase(sBody, "\\", "%5C");
 // string sCommand = "mailto:?BODY=" + sBody;
-string sCommand = "mailto:" + sRecipient + "?SUBJECT=" + sSubject + "&BODY=" + sBody;
+string sCommand = "mailto:" + sRecipient + JezykInterfejsu.Wybierz("?SUBJECT=", "?SUBJECT=") + sSubject + JezykInterfejsu.Wybierz("&BODY=", "&BODY=") + sBody;
 bool bResult;
 try {
 Process.Start(sCommand);
 bResult = true;
 }
 catch (Exception ex) {
-Dialog.Show("Error", ex.Message);
+Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 bResult = false;
 }
 return bResult;
@@ -23597,30 +23655,30 @@ if (keyData == Keys.None) return "";
 Keys keyCode = keyData & Keys.KeyCode;
 string sName;
 switch (keyCode) {
-case Keys.Back: sName = "Backspace"; break;
-case Keys.Return: sName = "Enter"; break;
-case Keys.Escape: sName = "Escape"; break;
-case Keys.Space: sName = "Space"; break;
-case Keys.Left: sName = "Left Arrow"; break;
-case Keys.Right: sName = "Right Arrow"; break;
-case Keys.Up: sName = "Up Arrow"; break;
-case Keys.Down: sName = "Down Arrow"; break;
-case Keys.PageUp: sName = "Page Up"; break;
-case Keys.PageDown: sName = "Page Down"; break;
-case Keys.Delete: sName = "Delete"; break;
-case Keys.Insert: sName = "Insert"; break;
-case Keys.Apps: sName = "Applications"; break;
-case Keys.Oemcomma: sName = "Comma"; break;
-case Keys.OemPeriod: sName = "Period"; break;
-case Keys.OemQuestion: sName = "Slash"; break;
-case Keys.OemMinus: sName = "Minus"; break;
-case Keys.Oemplus: sName = "Equals"; break;
-case Keys.OemQuotes: sName = "Apostrophe"; break;
-case Keys.OemSemicolon: sName = "Semicolon"; break;
-case Keys.OemOpenBrackets: sName = "Left Bracket"; break;
-case Keys.OemCloseBrackets: sName = "Right Bracket"; break;
-case Keys.OemPipe: sName = "Backslash"; break;
-case Keys.Oemtilde: sName = "Grave Accent"; break;
+case Keys.Back: sName = JezykInterfejsu.Wybierz("Backspace", "Backspace"); break;
+case Keys.Return: sName = JezykInterfejsu.Wybierz("Enter", "Enter"); break;
+case Keys.Escape: sName = JezykInterfejsu.Wybierz("Escape", "Escape"); break;
+case Keys.Space: sName = JezykInterfejsu.Wybierz("Space", "Spacja"); break;
+case Keys.Left: sName = JezykInterfejsu.Wybierz("Left Arrow", "Strzałka w lewo"); break;
+case Keys.Right: sName = JezykInterfejsu.Wybierz("Right Arrow", "Strzałka w prawo"); break;
+case Keys.Up: sName = JezykInterfejsu.Wybierz("Up Arrow", "Strzałka w górę"); break;
+case Keys.Down: sName = JezykInterfejsu.Wybierz("Down Arrow", "Strzałka w dół"); break;
+case Keys.PageUp: sName = JezykInterfejsu.Wybierz("Page Up", "Page Up"); break;
+case Keys.PageDown: sName = JezykInterfejsu.Wybierz("Page Down", "Page Down"); break;
+case Keys.Delete: sName = JezykInterfejsu.Wybierz("Delete", "Delete"); break;
+case Keys.Insert: sName = JezykInterfejsu.Wybierz(JezykInterfejsu.Wybierz("Insert", "Insert"), "Insert"); break;
+case Keys.Apps: sName = JezykInterfejsu.Wybierz("Applications", "Menu aplikacji"); break;
+case Keys.Oemcomma: sName = JezykInterfejsu.Wybierz("Comma", "Przecinek"); break;
+case Keys.OemPeriod: sName = JezykInterfejsu.Wybierz("Period", "Kropka"); break;
+case Keys.OemQuestion: sName = JezykInterfejsu.Wybierz("Slash", "Ukośnik"); break;
+case Keys.OemMinus: sName = JezykInterfejsu.Wybierz("Minus", "Minus"); break;
+case Keys.Oemplus: sName = JezykInterfejsu.Wybierz("Equals", "Równa się"); break;
+case Keys.OemQuotes: sName = JezykInterfejsu.Wybierz("Apostrophe", "Apostrof"); break;
+case Keys.OemSemicolon: sName = JezykInterfejsu.Wybierz("Semicolon", "Średnik"); break;
+case Keys.OemOpenBrackets: sName = JezykInterfejsu.Wybierz("Left Bracket", "Lewy nawias kwadratowy"); break;
+case Keys.OemCloseBrackets: sName = JezykInterfejsu.Wybierz("Right Bracket", "Prawy nawias kwadratowy"); break;
+case Keys.OemPipe: sName = JezykInterfejsu.Wybierz("Backslash", "Ukośnik odwrotny"); break;
+case Keys.Oemtilde: sName = JezykInterfejsu.Wybierz("Grave Accent", "Akcent grawis"); break;
 default:
 sName = keyCode.ToString();
 // D1..D0 to cyfry rzedu gornego - litera D nalezy do .NET, nie do
@@ -23689,7 +23747,7 @@ return false;
 
 public static Keys String2Key(string sKey) {
 // A blank key means "menu-only command": the item appears in the menu and
-// is reachable from the Alternate Menu, but carries no chord. Keys.None
+// is reachable from the Command Palette, but carries no chord. Keys.None
 // models that, and KeyMap.register already skips unbound commands.
 // Measured 21 August 2026 with a standalone probe against
 // KeysConverter: ConvertFromString("") and ConvertFromString("   ")
@@ -24542,7 +24600,7 @@ string sCommand = Ini.ReadValue(App.IniFile, "Export", sTargetFormat, "");
 if (sCommand.Length > 0) {
 sCommand = Util.ExpandCommandLine(sCommand, sSource, sTarget);
 // Dialog.Show("show", sCommand);
-App.Frame.AddMessage("Converting");
+App.Frame.AddMessage(JezykInterfejsu.Wybierz("Converting", "Konwertowanie"));
 if (File.Exists(sTarget)) File.Delete(sTarget);
 Util.RunHideWait(sCommand);
 if (!File.Exists(sTarget)) {
@@ -24559,12 +24617,12 @@ if (File.Exists(sTarget)) File.Delete(sTarget);
 // czego brakuje oraz co zrobic.
 string sBrak = Skladniki.BrakujaceDlaPolecenia(sCommand);
 if (sBrak.Length > 0) {
-Dialog.Show("Brakuje skladnika", "Konwersja wymaga narzedzia " + sBrak
-  + ", ktorego nie ma w folderze programu.\n\n"
-  + "Program dociaga skladniki sam przy starcie, gdy jest internet. "
-  + "Mozesz tez pobrac je od razu: menu Tools, Update Components.");
+Dialog.Show(JezykInterfejsu.Wybierz("Missing component", "Brakuje składnika"), String.Format(JezykInterfejsu.Wybierz("Conversion requires the tool {0}, which is not in the program folder.\n\nThe program downloads components at startup when there is internet access. You can also download them now: Help menu, Update Components.", "Konwersja wymaga narzędzia {0}, którego nie ma w folderze programu.\n\nProgram pobiera składniki przy uruchomieniu, gdy ma dostęp do internetu. Możesz też pobrać je teraz: menu Pomoc, Aktualizuj składniki."), sBrak));
+
+
+
 }
-else Dialog.Show("Error", "Command line:\n" + sCommand);
+else Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), String.Format(JezykInterfejsu.Wybierz("Command line:\n{0}", "Wiersz polecenia:\n{0}"), sCommand));
 }
 }
 else {

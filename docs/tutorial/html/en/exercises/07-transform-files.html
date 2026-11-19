@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Exercise 07 — Transform Files</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Skip to content</a>
+<header><p>EdSharp offline handbook — pre-translation draft.</p></header>
+<main id="tresc"><h1>Exercise 07 — Transform Files</h1><nav aria-labelledby="contents"><h2 id="contents">Contents</h2><ol><li><a href="#steps">Steps</a></li></ol></nav><p><strong>Goal.</strong> Run a safe Test on copies and recognize writing by Run and Verbose.</p>
+<h2 id="steps">Steps</h2>
+<p>Create a folder named <code>transform-copies</code>. Put copies of two small <code>.md</code> files in it; do not point to your own documents. In a new document, type the full paths of both copies, one path per line.</p>
+<p>Prepare <code>trim-spaces.inix</code>:</p>
+<pre><code class="language-ini">[Trim trailing whitespace]
+Options=multiline
+Find=[ \t]+$
+Replace=</code></pre>
+<p>Press <code>Alt+=</code>, choose that file, then choose <strong>Test</strong>.</p>
+<p><strong>Check:</strong> you hear copy names, the section name, and match counts; both copies remain identical to their pre-test contents. Choose <strong>Run</strong> only after comparing your copies. When you need more messages, choose <strong>Verbose</strong>: it also applies changes, it is not a test.</p>
+<p>Add a separate section with <code>Extract=true</code> if you want to collect matches. That section writes to the clipboard, not files.</p>
+<p><strong>Safe return:</strong> <code>Run</code> may save every copy with a match, including when <code>Replace</code> is empty. There is no bulk Undo or promised rollback. Delete the copy folder and recreate it from your own backup instead of running a job on user work.</p>
+<p><a href="../handbook.html">Return to handbook</a>.</p></main>
+<footer>Generated locally; this page loads no network resources.</footer>
+</body></html>

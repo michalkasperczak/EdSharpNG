@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EdSharp: podręcznik offline — DRAFT nowego menu PL/EN</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Przejdź do treści</a>
+<header><p>Podręcznik offline EdSharp — szkic przed tłumaczeniem interfejsu.</p></header>
+<main id="tresc"><h1>EdSharp: podręcznik offline — DRAFT nowego menu PL/EN</h1><nav aria-labelledby="contents"><h2 id="contents">Spis treści</h2><ol><li><a href="#1-dokument-i-zapis">1. Dokument i zapis</a></li><li><a href="#2-zaznaczanie-i-wyszukiwanie">2. Zaznaczanie i wyszukiwanie</a></li><li><a href="#3-markdown-i-podgl-d">3. Markdown i podgląd</a></li><li><a href="#4-zadania-i-tabele">4. Zadania i tabele</a></li><li><a href="#5-snippety-trwa-y-folder-zip-i-rozwijanie">5. Snippety: trwały folder, ZIP i rozwijanie</a></li><li><a href="#6-operacje-listowe">6. Operacje listowe</a></li><li><a href="#7-przekszta-pliki-najpierw-kopie-i-test">7. Przekształć pliki: najpierw kopie i Test</a></li><li><a href="#granice-tego-draft-u">Granice tego DRAFT-u</a></li></ol></nav><aside class="notice"><strong>DRAFT nieopublikowanej wersji.</strong> Ten podręcznik opisuje docelowy, zamrożony model menu PL/EN, a nie bieżące wydanie zainstalowane u Michała. Nie oznacza wykonania ćwiczeń w GUI ani pomiaru żywego NVDA. Pracuj na nowym pliku lub kopii ćwiczenia, nigdy na własnym dokumencie.</aside>
+<h2 id="1-dokument-i-zapis">1. Dokument i zapis</h2>
+<p><strong>Cel.</strong> Utworzyć mały dokument Markdown i zachować go pod własną nazwą.</p>
+<ol><li>Naciśnij <code>Ctrl+N</code>, wpisz tytuł i dwa zdania.</li><li>Naciśnij <code>Ctrl+Shift+S</code>, wybierz folder ćwiczeń i nazwę <code>notatka.md</code>.</li><li>Dopisz trzecie zdanie i naciśnij <code>Ctrl+S</code>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> Jest osobny plik <code>notatka.md</code> z trzema zdaniami. <code>Ctrl+S</code> zapisuje bieżący dokument, a <code>Ctrl+Shift+S</code> pyta o nową nazwę.</p>
+<p><strong>Bezpieczny powrót.</strong> <code>Ctrl+Z</code> cofa ostatnią zmianę; zamknięcie bez zapisu pozwala odrzucić niezapisane zmiany. To nie zastępuje własnej kopii pliku.</p>
+<p>Ćwiczenie: <a href="exercises/01-dokument-i-zapis.html">01 — dokument i zapis</a>.</p>
+<h2 id="2-zaznaczanie-i-wyszukiwanie">2. Zaznaczanie i wyszukiwanie</h2>
+<p><strong>Cel.</strong> Zaznaczyć dwa wiersze bez myszy i znaleźć powtarzające się słowo.</p>
+<ol><li>Ustaw kursor przed pierwszym wierszem i naciśnij <code>F8</code>.</li><li>Przejdź na koniec zakresu i naciśnij <code>Shift+F8</code>.</li><li>Użyj <code>Ctrl+F</code>, a potem <code>F3</code> lub <code>Shift+F3</code>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> Zaznaczenie biegnie od punktu <code>F8</code> do kursora; wyszukiwanie nie zmienia tekstu. <code>Alt+F3</code> szuka tekstu pod kursorem albo zaznaczenia.</p>
+<p><strong>Bezpieczny powrót.</strong> <code>Ctrl+Shift+F8</code> odtwarza poprzedni zakres, a <code>Alt+Shift+F8</code> wraca do pierwotnego punktu <code>F8</code>; po zaznaczaniu w górę może on być dolnym końcem zakresu.</p>
+<p>Ćwiczenie: <a href="exercises/02-zaznaczanie-i-wyszukiwanie.html">02 — zaznaczanie i wyszukiwanie</a>.</p>
+<h2 id="3-markdown-i-podgl-d">3. Markdown i podgląd</h2>
+<p><strong>Cel.</strong> Zapisać nagłówek, listę i łącze, a potem sprawdzić podgląd.</p>
+<ol><li>W pliku <code>.md</code> wpisz <code># Spotkanie</code>, pusty wiersz i <code>- kawa</code>.</li><li>Użyj <code>Escape</code>, aby przełączyć tekstowy podgląd Markdown; drugi <code>Escape</code> wraca do edycji.</li><li>Po zapisie użyj <code>F5</code> albo w docelowym menu <strong>Widok</strong> wybierz <strong>Podgląd Markdown w przeglądarce</strong>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> <code>Escape</code> pokazuje tekstowy <code>MarkdownReviewTextBox</code>, nie WebView. <code>F5</code> otwiera zapisany dokument w domyślnej przeglądarce. W <strong>Widok</strong> są też <strong>Zawijanie wierszy</strong> i <strong>Wyłącz zawijanie wierszy</strong>.</p>
+<p><strong>Bezpieczny powrót.</strong> <code>Escape</code> opuszcza podgląd; <code>Ctrl+Z</code> po powrocie cofa tylko zmianę tekstu.</p>
+<p>Ćwiczenie: <a href="exercises/03-markdown-i-podglad.html">03 — Markdown i podgląd</a>.</p>
+<h2 id="4-zadania-i-tabele">4. Zadania i tabele</h2>
+<p><strong>Cel.</strong> Utworzyć checklistę i małą tabelę w nowym pliku.</p>
+<ol><li>Użyj <code>Ctrl+Shift+F2</code>, aby utworzyć listę zadań.</li><li>Naciśnij <code>Ctrl+Shift+X</code>, aby zmienić stan zadania; <code>Alt+Shift+F2</code> podaje postęp.</li><li>Użyj <code>Ctrl+Shift+T</code>, podaj dane kreatora i zatwierdź <code>Ctrl+Enter</code>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> W docelowym menu <strong>Przegląd > Zadania</strong> dynamiczna pozycja mówi <strong>Oznacz jako wykonane</strong> albo <strong>Oznacz jako niewykonane</strong>. Pomoc i paleta nazywają tę samą komendę neutralnie: <strong>Przełącz wykonanie zadania</strong>. Po przełączeniu aplikacja komunikuje skutek: <strong>Wykonane</strong> albo <strong>Niewykonane</strong>. Tabela jest w bieżącym dokumencie; w nowym menu polecenie to <strong>Wstawianie > Wstaw tabelę…</strong>.</p>
+<p><strong>Bezpieczny powrót.</strong> <code>Ctrl+Z</code> cofa ostatnią operację tylko w pliku ćwiczenia.</p>
+<p>Ćwiczenie: <a href="exercises/04-zadania-i-tabela.html">04 — zadania i tabela</a>.</p>
+<h2 id="5-snippety-trwa-y-folder-zip-i-rozwijanie">5. Snippety: trwały folder, ZIP i rozwijanie</h2>
+<p><strong>Cel.</strong> Wybrać jeden trwały folder biblioteki, zapisać snippet, wstawić go, a potem bezpiecznie wyeksportować lub zaimportować ZIP.</p>
+<ol><li>Naciśnij <code>Ctrl+,</code>. W docelowym <strong>Ustawienia > Opcje konfiguracji…</strong> wybierz <strong>Folder biblioteki fragmentów</strong> i przyciskiem <strong>Przeglądaj…</strong> wskaż istniejący trwały folder, np. własny folder dokumentów. Zatwierdź zmianę.</li><li>Zaznacz tekst testowy i użyj <code>Alt+S</code> (<strong>Zapisz Snippet…</strong>). Wstaw go przez <code>Alt+V</code> (<strong>Wstaw Snippet…</strong>), a otwórz do edycji przez <code>Alt+Shift+V</code> (<strong>Edytuj Snippet…</strong>).</li><li>Wpisz fragment nazwy bezpośrednio przed kursorem i użyj <code>Ctrl+Shift+Space</code> (<strong>Rozwiń Snippet</strong>).</li><li>W <strong>Narzędzia > Snippety</strong> wybierz <strong>Eksportuj bibliotekę Snippetów…</strong>, zapisz ZIP poza biblioteką, a następnie wybierz <strong>Importuj bibliotekę Snippetów…</strong> dla kontrolnego ZIP-a.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> Ten sam folder służy do zapisu, wstawiania, edycji, tokenów i ręcznego rozwijania. Pusty wybór używa dotychczasowego <code>Snippets\Default</code>; wskazany, niedostępny folder zgłasza błąd, nie przełącza się po cichu. Rozwijanie preferuje pełną nazwę, potem prefiks, a na końcu fragment; kilka trafień wymaga wyboru. Import ZIP pyta o kolizje: pomiń, zachowaj oba albo zastąp z kopią zapasową. Eksport tworzy ZIP, nie nowe drzewo bibliotek.</p>
+<p><strong>Bezpieczny powrót.</strong> <code>Ctrl+Z</code> cofa wstawienie w bieżącym dokumencie. Przed importem zachowaj własną kopię folderu; po anulowaniu dialogu pliki nie powinny być zmieniane. <code>Ctrl+Space</code> nadal zaznacza ciąg bez spacji — nie rozwija snippetu.</p>
+<p>Ćwiczenie: <a href="exercises/05-snippety.html">05 — snippety</a>.</p>
+<h2 id="6-operacje-listowe">6. Operacje listowe</h2>
+<p><strong>Cel.</strong> Pracować na zaznaczonych wierszach i porównać dwie listy.</p>
+<ol><li>Zaznacz zakres; użyj <code>Alt+Shift+O</code>, <code>Alt+Shift+Z</code> albo <code>Alt+Shift+K</code>.</li><li>Dla porównania ustaw kursor: pierwsza lista jest nad bieżącym wierszem, druga od niego do końca.</li><li>Użyj <code>Alt+Shift+G</code> albo <code>Alt+Shift+Q</code>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> Sortowanie i usuwanie duplikatów ignorują wielkość liter i zostawiają pierwszą pisownię. Porównania dwóch list zachowują kolejność i duplikaty pierwszej listy, lecz są czułe na wielkość liter. Nowe menu umieszcza je w <strong>Narzędzia > Przekształcenia tekstu</strong>.</p>
+<p><strong>Bezpieczny powrót.</strong> Zrób ćwiczenie w kopii; <code>Ctrl+Z</code> cofa ostatnią zmianę tekstu.</p>
+<p>Ćwiczenie: <a href="exercises/06-listy.html">06 — listy</a>.</p>
+<h2 id="7-przekszta-pliki-najpierw-kopie-i-test">7. Przekształć pliki: najpierw kopie i Test</h2>
+<p><strong>Cel.</strong> Uruchomić zadanie znajdowania i zastępowania wyłącznie na kopiach plików.</p>
+<ol><li>Przygotuj kopie w osobnym folderze oraz dokument z ich pełnymi ścieżkami, po jednej w wierszu.</li><li>Użyj <code>Alt+=</code> albo <strong>Narzędzia > Przekształcenia tekstu > Przekształć pliki</strong> i wybierz plik <code>.inix</code>.</li><li>Najpierw wybierz <strong>Test</strong>, potem dopiero <strong>Run</strong> lub <strong>Verbose</strong>.</li></ol>
+<p><strong>Oczekiwany wynik.</strong> <strong>Test</strong> liczy dopasowania bez zapisu. <strong>Run</strong> zapisuje pliki z dopasowaniem. <strong>Verbose</strong> także zapisuje pliki i dodatkowo wypisuje sekcje oraz liczbę dopasowań. <code>Extract=true</code> zbiera dopasowania do schowka bez modyfikacji.</p>
+<p><strong>Bezpieczny powrót.</strong> Nie ma obiecanego pełnego Undo ani transakcji rollbacku wielu plików. Zachowaj własną kopię przed <code>Run</code> lub <code>Verbose</code>; w razie potrzeby usuń tylko folder kopii i odtwórz go z backupu.</p>
+<p>Ćwiczenie: <a href="exercises/07-transform-files.html">07 — Transform Files</a>.</p>
+<h2 id="granice-tego-draft-u">Granice tego DRAFT-u</h2>
+<p>Opis opiera się na zamrożonym modelu menu 210 poleceń. Nie dowodzi finalnej integracji, instalatora, routingu skrótów w żywym GUI ani odczytu NVDA. Usunięte polecenia — Styles, Copy All, Alternate Menu, Clear Favorite, Topic/Alt+T, Read All/Alt+F8, Read Clipboard/Alt+apostrophe, Env Vars editor i Speech Log — nie są tu przywracane ani dokumentowane.</p></main>
+<footer>Wygenerowano lokalnie; strona nie pobiera żadnych zasobów z sieci.</footer>
+</body></html>

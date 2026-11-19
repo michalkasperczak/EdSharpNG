@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.123
-AppVerName=EdSharpNG 5.0.123 (beta)
-VersionInfoVersion=5.0.123
+AppVersion=5.0.130
+AppVerName=EdSharpNG 5.0.130 (beta)
+VersionInfoVersion=5.0.130
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -31,8 +31,8 @@ MinVersion=10.0
 Compression=lzma2/max
 SolidCompression=yes
 OutputBaseFilename=EdSharpNG_Setup
-OutputDir=C:\EdSharp
-SourceDir=C:\EdSharp
+OutputDir=out
+SourceDir=stage
 PrivilegesRequired=admin
 ChangesAssociations=yes
 ChangesEnvironment=yes
@@ -40,110 +40,17 @@ DisableProgramGroupPage=yes
 DisableStartupPrompt=yes
 Uninstallable=yes
 SetupLogging=yes
-; TRYB CICHY (zlecenie Kasperczaka 11.09.2026: "Instalator w trybie cichym").
-; Instalator obsluguje juz /SILENT i /VERYSILENT z samego Inno Setup, ale bez
-; ponizszych ustawien tryb cichy PRZERYWAL prosba o zamkniecie dzialajacego
-; EdSharpNG - a w trybie cichym nie ma komu tej prosby pokazac, wiec instalacja
-; stawala.  Teraz:
-;   CloseApplications=force   - dzialajacy EdSharpNG jest zamykany sam,
-;   RestartApplications=no    - i NIE jest wznawiany przez instalator, bo to
-;                               robi sam program (patrz InstallUpdateSilently
-;                               w EdSharp.cs), zeby wrocil z tym samym
-;                               dokumentem, a nie z pustym oknem,
-;   AppMutex                  - po czym instalator ma po czym rozpoznac, ze
-;                               program faktycznie zniknal z pamieci.
-; Wywolanie bez interfejsu:  EdSharpNG_Setup.exe /VERYSILENT /NORESTART
-CloseApplications=force
+; Updates require the editor to be closed normally. Never force close.
+CloseApplications=no
 RestartApplications=no
 AppMutex=EdSharpNG_Running_Mutex
 
 [Files]
-; Built artifacts (present after BuildEdSharp.cmd).
-Source: "EdSharpNG.exe";        DestDir: "{app}"; Flags: ignoreversion
-; Runtime configuration for EdSharpNG.exe -- carries the startup tuning (disables
-; Authenticode publisher-evidence/CRL checks, enables concurrent GC).  It must
-; sit next to EdSharpNG.exe, and ignoreversion ensures it is always refreshed so
-; it stays in sync with the executable.
-Source: "EdSharpNG.exe.config"; DestDir: "{app}"; Flags: ignoreversion
-; EdSharp.dll (host JScript .NET) NIE JEST JUZ PAKOWANA - warstwa skryptow
-; usunieta 16.09.2026 (docs/CO-USUWAMY.md 2.2).  Wpis w [UninstallDelete]
-; ZOSTAJE, zeby plik z poprzednich instalacji zniknal przy odinstalowaniu.
-Source: "nvdaControllerClient.dll"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Source and build inputs (shipped so users can recompile, EdSharp-style).
-Source: "EdSharp.cs";         DestDir: "{app}"; Flags: ignoreversion
-Source: "Lbc.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Say.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Inix.cs";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "KeyMap.cs";          DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Web.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Pisownia.cs";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Skladniki.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Csv.cs";             DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Sesja.cs";           DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Ustawienia.cs";      DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Wyrazenia.cs -- wlasny kalkulator wyrazen, nastepca warstwy JScript .NET
-; (16.09.2026, docs/CO-USUWAMY.md 2.2).  Zrodla jada z paczka, zeby program dal
-; sie przekompilowac u uzytkownika, jak w oryginale Jamala.
-Source: "Wyrazenia.cs";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Synonimy.cs";        DestDir: "{app}"; Flags: ignoreversion
-Source: "FormySynonimow.cs";     DestDir: "{app}"; Flags: ignoreversion
-Source: "SlownikiSynonimow.cs"; DestDir: "{app}"; Flags: ignoreversion
-Source: "SynonimyOdmiany.cs"; DestDir: "{app}"; Flags: ignoreversion
-; Zadania.cs -- listy zadan (checklisty Markdown), funkcje czyste
-Source: "Zadania.cs";         DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Zmiany.cs -- sledzenie zmian (CriticMarkup), funkcje czyste, krok 1a
-Source: "Zmiany.cs";          DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "ZapisFormatow.cs";   DestDir: "{app}"; Flags: ignoreversion
-Source: "PdfExport.cs";       DestDir: "{app}"; Flags: ignoreversion
-Source: "OriginalFormatSave.cs"; DestDir: "{app}"; Flags: ignoreversion
-Source: "EdSharp.ico";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; EdSharp.js (zrodlo hosta JScript .NET) NIE JEST JUZ PAKOWANY - warstwa
-; skryptow usunieta 16.09.2026 razem z EdSharp.dll (docs/CO-USUWAMY.md 2.2).
-Source: "EdSharp.manifest";   DestDir: "{app}"; Flags: ignoreversion
-Source: "BuildEdSharp.cmd";   DestDir: "{app}"; Flags: ignoreversion
-Source: "PrepareSynonyms.ps1"; DestDir: "{app}"; Flags: ignoreversion
-Source: "FetchConvertTools.ps1";   DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "FetchUde.ps1";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "ModernizePandocConfig.ps1"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Tools.inix";              DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "EdSharp_Setup.iss";  DestDir: "{app}"; Flags: ignoreversion
-Source: "Tektosyne.dll";      DestDir: "{app}"; Flags: ignoreversion
-Source: "Ude.dll";            DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; JAWS settings family (compiled into each installed JAWS version by [Code]).
-Source: "Scripts\*";        DestDir: "{app}\Scripts"; Flags: ignoreversion recursesubdirs skipifsourcedoesntexist
-; NVDA add-ons (installed on the Finish page via [Run]).
-Source: "EdSharp.nvda-addon"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "EdSharpNG-spellcheck.nvda-addon"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Configuration: do not clobber a user's existing settings on upgrade.
-Source: "EdSharp.ini";        DestDir: "{app}"; Flags: onlyifdoesntexist
-; Hotkeys.ini holds ONLY the command descriptions spoken by Key Describer and
-; the Hotkey Summary -- the old per-item [Keys] rebinding was removed, so this
-; is a program resource, not user config.  It MUST be refreshed on upgrade,
-; otherwise an existing install keeps announcing chords that have moved.
-Source: "Hotkeys.ini";        DestDir: "{app}"; Flags: ignoreversion
-; Hotkey Summary (Alt+Shift+H) opens this file from the program directory.
-; The name must match what the code opens: EdSharp_Hotkeys.txt.  The old
-; "HotKeys.txt" line staged a file that has not existed since 5.0.73, and the
-; skipifsourcedoesntexist flag hid that silently.
-Source: "EdSharp_Hotkeys.txt"; DestDir: "{app}"; Flags: ignoreversion
-; Documentation.
-Source: "EdSharp.md";         DestDir: "{app}"; Flags: ignoreversion
-Source: "EdSharp.htm";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Tutorial.md";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Tutorial.htm";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Announce.md";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Announce.htm";       DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "Transform_Example.inix"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "CamelType_JAWSScript.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "CamelType_CSharp.md"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "EdSharp.inix"; DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "history.txt";        DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-Source: "lgpl.txt";           DestDir: "{app}"; Flags: ignoreversion skipifsourcedoesntexist
-; Data trees.
-Source: "Snippets\*"; DestDir: "{app}\Snippets"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
-Source: "Synonyms\*"; DestDir: "{app}\Synonyms"; Excludes: "*.gz,plwordnet-forms.bin,plwordnet-legacy-omw.txt"; Flags: recursesubdirs ignoreversion
-Source: "Synonyms\plwordnet-forms.bin"; DestDir: "{app}\Synonyms"; Flags: ignoreversion
-Source: "Convert\*";  DestDir: "{app}\Convert";  Excludes: "*.sln,*.vcproj,*.vcxproj,*.vcxproj.filters,*.suo,*.user,*.c,*.asm,*.cs,*.obj,*.zip,temp.htm,temp.txt"; Flags: recursesubdirs ignoreversion skipifsourcedoesntexist
+; Release 5.0.130: exact staged runtime/source payload.  This deliberately avoids
+; inherited skipifsourcedoesntexist and Excludes rules that could silently omit data.
+; Preserve the user configuration on upgrade: the recursive payload entry excludes it, and the explicit entry below installs only the default for a new installation.
+Source: "*"; DestDir: "{app}"; Excludes: ".edsharp-staging,EdSharp.ini"; Flags: ignoreversion recursesubdirs
+Source: "EdSharp.ini"; DestDir: "{app}"; Flags: onlyifdoesntexist
 
 [Dirs]
 Name: "{userappdata}\EdSharp";

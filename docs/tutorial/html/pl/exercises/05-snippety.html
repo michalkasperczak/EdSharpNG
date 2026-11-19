@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="pl">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Ćwiczenie 05 — trwała biblioteka snippetów i ZIP</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Przejdź do treści</a>
+<header><p>Podręcznik offline EdSharp — szkic przed tłumaczeniem interfejsu.</p></header>
+<main id="tresc"><h1>Ćwiczenie 05 — trwała biblioteka snippetów i ZIP</h1><nav aria-labelledby="contents"><h2 id="contents">Spis treści</h2><ol><li><a href="#kroki">Kroki</a></li><li><a href="#oczekiwany-wynik">Oczekiwany wynik</a></li><li><a href="#bezpieczny-powr-t">Bezpieczny powrót</a></li></ol></nav><aside class="notice"><strong>DRAFT docelowego menu PL/EN.</strong> Używaj nowego pliku oraz testowego folderu i ZIP-a, nie własnej biblioteki produkcyjnej.</aside>
+<p><strong>Cel.</strong> Ustawić trwały folder, zapisać i rozwinąć snippet oraz poznać jawny eksport/import ZIP.</p>
+<h2 id="kroki">Kroki</h2>
+<ol><li>Naciśnij <code>Ctrl+,</code>. W <strong>Ustawienia > Opcje konfiguracji…</strong> znajdź <strong>Folder biblioteki fragmentów</strong>, wybierz <strong>Przeglądaj…</strong> i wskaż istniejący folder testowy. Zatwierdź.</li><li>W nowym pliku wpisz <code>Pozdrawiam,</code>, zaznacz tekst i użyj <code>Alt+S</code> (<strong>Zapisz Snippet…</strong>); nazwij go <code>podpis</code>.</li><li>W nowym miejscu użyj <code>Alt+V</code> (<strong>Wstaw Snippet…</strong>). <code>Alt+Shift+V</code> (<strong>Edytuj Snippet…</strong>) otwiera plik do odczytu lub edycji.</li><li>Usuń wstawienie, wpisz <code>podpis</code> przed kursorem i naciśnij <code>Ctrl+Shift+Space</code> (<strong>Rozwiń Snippet</strong>).</li><li>W <strong>Narzędzia > Snippety</strong> wybierz <strong>Eksportuj bibliotekę Snippetów…</strong>, zapisz testowy ZIP poza folderem biblioteki. Dla testowego importu wybierz <strong>Importuj bibliotekę Snippetów…</strong> i świadomie wskaż politykę kolizji.</li></ol>
+<h2 id="oczekiwany-wynik">Oczekiwany wynik</h2>
+<p>Jeden folder jest używany przez zapis, wstawianie, edycję, tokeny i ręczne rozwijanie. Pełna nazwa ma pierwszeństwo, potem prefiks, na końcu fragment; wiele trafień wymaga wyboru. Import ZIP pyta: pomiń, zachowaj oba albo zastąp z kopią zapasową. Pusty wybór folderu oznacza dotychczasowy <code>Snippets\Default</code>; jawnie niedostępny folder zgłasza błąd bez cichego fallbacku.</p>
+<h2 id="bezpieczny-powr-t">Bezpieczny powrót</h2>
+<p><code>Ctrl+Z</code> cofa wstawienie w bieżącym dokumencie. Przed importem zachowaj własną kopię folderu i anuluj zamiast zgadywać politykę kolizji. <code>Ctrl+Space</code> tylko zaznacza ciąg bez spacji — nie rozwija snippetu.</p>
+<p><a href="../podrecznik.html">Wróć do podręcznika</a>.</p></main>
+<footer>Wygenerowano lokalnie; strona nie pobiera żadnych zasobów z sieci.</footer>
+</body></html>

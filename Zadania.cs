@@ -205,6 +205,18 @@ public static string[] PrzelaczZakres(string[] aLines, out bool bZdjete) {
 	return aWynik;
 } // PrzelaczZakres method
 
+// Jedno zrodlo decyzji dla skrotu i dynamicznej nazwy menu: gdy istnieje
+// choć jedno niewykonane zadanie, wspólną akcją jest oznaczenie wszystkich
+// jako wykonane; tylko komplet wykonanych odwraca akcję.
+public static bool CzyOznaczycJakoWykonane(string[] aLines) {
+	if (aLines == null) return true;
+	for (int i = 0; i < aLines.Length; i++) {
+		string s = aLines[i] ?? "";
+		if (CzyZadanie(s) && !CzyZrobione(s)) return true;
+	}
+	return false;
+} // CzyOznaczycJakoWykonane method
+
 // PRZELACZENIE STANU NA ZAKRESIE.  Gdy wszystkie pozycje sa zrobione -
 // odznaczamy; inaczej zaznaczamy wszystkie.  Bez tej reguly zaznaczanie
 // zaznaczonego dawaloby mieszanke stanow, ktorej przy czytniku nie widac.
@@ -213,17 +225,14 @@ public static string[] PrzelaczStanZakresu(string[] aLines, out bool bZrobionePo
 	iZmienione = 0;
 	if (aLines == null) return null;
 
-	bool bWszystkieZrobione = true;
 	bool bCokolwiek = false;
 	for (int i = 0; i < aLines.Length; i++) {
 		string s = aLines[i] ?? "";
-		if (!CzyZadanie(s)) continue;
-		bCokolwiek = true;
-		if (!CzyZrobione(s)) {bWszystkieZrobione = false; break;}
+		if (CzyZadanie(s)) bCokolwiek = true;
 	}
 	if (!bCokolwiek) return null;
 
-	bZrobionePo = !bWszystkieZrobione;
+	bZrobionePo = CzyOznaczycJakoWykonane(aLines);
 	string[] aWynik = new string[aLines.Length];
 	for (int i = 0; i < aLines.Length; i++) {
 		string s = aLines[i] ?? "";

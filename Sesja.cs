@@ -351,7 +351,7 @@ string sKiedy = sKiedyZapisano;
 StringBuilder sb = new StringBuilder();
 sb.Append(lista.Count.ToString());
 sb.Append(lista.Count == 1 ? " file was open" : " files were open");
-if (sKiedy.Length > 0) sb.Append(" on " + sKiedy);
+if (sKiedy.Length > 0) sb.Append(JezykInterfejsu.Wybierz(" on ", " dnia ") + sKiedy);
 sb.Append(".");
 if (iZmienionych > 0) {
 sb.Append("\r\n");

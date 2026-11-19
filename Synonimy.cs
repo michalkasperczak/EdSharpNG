@@ -29,12 +29,12 @@ static string sDetailsPath = "";
 static Dictionary<string, string[]> dDetails;
 static string sDetailsError = "";
 public static string GetDetails(string sSenseId) {
-const string sMissing = "Brak definicji i przykładu dla tego znaczenia w dołączonym słowniku.";
+string sMissing = JezykInterfejsu.Wybierz("No definition or example for this sense is available in the bundled dictionary.", "Brak definicji i przykładu dla tego znaczenia w dołączonym słowniku.");
 if (string.IsNullOrEmpty(sSenseId) || sSenseId.StartsWith("omw-2.0:", StringComparison.Ordinal)) return sMissing;
 if (dDetails == null) {
 Dictionary<string, string[]> data = new Dictionary<string, string[]>(StringComparer.Ordinal);
 try {
-if (!File.Exists(sDetailsPath)) sDetailsError = "Brak pliku szczegółów znaczeń. Lista synonimów nadal działa.";
+if (!File.Exists(sDetailsPath)) sDetailsError = JezykInterfejsu.Wybierz("The sense-details file is missing. The synonym list still works.", "Brak pliku szczegółów znaczeń. Lista synonimów nadal działa.");
 else {
 if (new FileInfo(sDetailsPath).Length > 67108864) throw new InvalidDataException();
 using (StreamReader reader = new StreamReader(sDetailsPath, new UTF8Encoding(false, true), false)) {
@@ -50,15 +50,15 @@ data.Add(fields[0], new string[] { fields[1], fields[2] });
 }
 }
 }
-catch (Exception) { data.Clear(); sDetailsError = "Nie można wczytać szczegółów znaczeń. Lista synonimów nadal działa."; }
+catch (Exception) { data.Clear(); sDetailsError = JezykInterfejsu.Wybierz("Sense details could not be loaded. The synonym list still works.", "Nie można wczytać szczegółów znaczeń. Lista synonimów nadal działa."); }
 dDetails = data;
 }
 if (sDetailsError.Length > 0) return sDetailsError;
 string[] detail;
 if (!dDetails.TryGetValue(sSenseId, out detail)) return sMissing;
-string result = detail[0].Length > 0 ? "Definicja:\r\n" + detail[0] : "Brak definicji w dołączonym słowniku.";
-if (detail[1].Length > 0) result += "\r\n\r\nPrzykład:\r\n" + detail[1];
-return result + "\r\n\r\nŹródło: plWordNet 5.0.";
+string result = detail[0].Length > 0 ? JezykInterfejsu.Wybierz("Definition:\r\n", "Definicja:\r\n") + detail[0] : JezykInterfejsu.Wybierz("No definition is available in the bundled dictionary.", "Brak definicji w dołączonym słowniku.");
+if (detail[1].Length > 0) result += JezykInterfejsu.Wybierz("\r\n\r\nExample:\r\n", "\r\n\r\nPrzykład:\r\n") + detail[1];
+return result + JezykInterfejsu.Wybierz("\r\n\r\nSource: plWordNet 5.0.", "\r\n\r\nŹródło: plWordNet 5.0.");
 }
 public static string Error = "";
 public static string FormsError = "";
@@ -87,12 +87,13 @@ return sReplacement;
 } // ApplyCapitalization method
 
 public static string FormatEntry(string sSynonym, string sPartOfSpeech, int iPosition, int iTotal) {
-string sPart = "inna część mowy";
-if (sPartOfSpeech == "n") sPart = "rzeczownik";
-else if (sPartOfSpeech == "v") sPart = "czasownik";
-else if (sPartOfSpeech == "a") sPart = "przymiotnik";
-else if (sPartOfSpeech == "r") sPart = "przysłówek";
-return sSynonym + ", " + sPart + ", " + iPosition + " z " + iTotal;
+string sPart = JezykInterfejsu.Wybierz("other part of speech", JezykInterfejsu.Wybierz("other part of speech", "inna część mowy"));
+if (sPartOfSpeech == "n") sPart = JezykInterfejsu.Wybierz("noun", "rzeczownik");
+else if (sPartOfSpeech == "v") sPart = JezykInterfejsu.Wybierz("verb", "czasownik");
+else if (sPartOfSpeech == "a") sPart = JezykInterfejsu.Wybierz("adjective", "przymiotnik");
+else if (sPartOfSpeech == "r") sPart = JezykInterfejsu.Wybierz("adverb", "przysłówek");
+return JezykInterfejsu.Wybierz("{0}, {1}, {2} of {3}", "{0}, {1}, {2} z {3}")
+    .Replace("{0}", sSynonym).Replace("{1}", sPart).Replace("{2}", iPosition.ToString()).Replace("{3}", iTotal.ToString());
 } // FormatEntry method
 
 public static void ResetForTests() {
@@ -108,7 +109,7 @@ FormsError = "";
 public static bool Load(string sPath) {
 ResetForTests();
 if (sPath == null || sPath.Length == 0 || !File.Exists(sPath)) {
-Error = "Synonym dictionary file was not found.";
+Error = JezykInterfejsu.Wybierz("Synonym dictionary file was not found.", "Nie znaleziono pliku słownika synonimów.");
 return false;
 }
 try {
@@ -120,16 +121,16 @@ iLine++;
 if (sLine.Length == 0 || sLine.StartsWith("#")) continue;
 string[] aPart = sLine.Split(new char[] {'\t'});
 if (aPart.Length != 4) {
-Error = "Invalid synonym dictionary data at line " + iLine + ".";
+Error = JezykInterfejsu.Wybierz("Invalid synonym dictionary data at line {0}.", "Nieprawidłowe dane słownika synonimów w wierszu {0}.").Replace("{0}", iLine.ToString());
 ResetForTests();
-Error = "Invalid synonym dictionary data at line " + iLine + ".";
+Error = JezykInterfejsu.Wybierz("Invalid synonym dictionary data at line {0}.", "Nieprawidłowe dane słownika synonimów w wierszu {0}.").Replace("{0}", iLine.ToString());
 return false;
 }
 string sWord = Normalize(aPart[0]);
 if (sWord.Length == 0 || aPart[1].Trim().Length == 0 || aPart[2].Trim().Length == 0) {
-Error = "Invalid synonym dictionary data at line " + iLine + ".";
+Error = JezykInterfejsu.Wybierz("Invalid synonym dictionary data at line {0}.", "Nieprawidłowe dane słownika synonimów w wierszu {0}.").Replace("{0}", iLine.ToString());
 ResetForTests();
-Error = "Invalid synonym dictionary data at line " + iLine + ".";
+Error = JezykInterfejsu.Wybierz("Invalid synonym dictionary data at line {0}.", "Nieprawidłowe dane słownika synonimów w wierszu {0}.").Replace("{0}", iLine.ToString());
 return false;
 }
 HashSet<string> setSeen = new HashSet<string>(StringComparer.Ordinal);
@@ -155,7 +156,7 @@ return true;
 }
 catch (Exception ex) {
 ResetForTests();
-Error = "Could not load synonym dictionary: " + ex.Message;
+Error = JezykInterfejsu.Wybierz("Could not load synonym dictionary: ", "Nie można wczytać słownika synonimów: ") + ex.Message;
 return false;
 }
 } // Load method
@@ -195,7 +196,7 @@ if (values.Count > 0) result.Add(new Grupa(group.PartOfSpeech, group.SenseId, va
 return result;
 }
 catch (Exception) {
-FormsError = "Nie można odczytać indeksu odmiany słownika synonimów.";
+FormsError = JezykInterfejsu.Wybierz("The synonym-dictionary inflection index could not be read.", "Nie można odczytać indeksu odmiany słownika synonimów.");
 return new List<Grupa>();
 }
 } // Find method

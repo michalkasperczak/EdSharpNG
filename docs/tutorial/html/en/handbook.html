@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EdSharp offline handbook — DRAFT of the new PL/EN menu</title><style>:root { --bg:#ffffff; --fg:#18232d; --muted:#4e5d68; --link:#004c98; --focus:#8a3b00; --panel:#edf5ff; --border:#64748b; }
+@media (prefers-color-scheme: dark) { :root { --bg:#14171a; --fg:#eceff2; --muted:#c1cbd3; --link:#91c9ff; --focus:#ffb55c; --panel:#1d2a36; --border:#a8b8c7; } }
+@media (prefers-contrast: more) { :root { --bg:#fff; --fg:#000; --muted:#000; --link:#0000ee; --focus:#000; --panel:#fff; --border:#000; } }
+* { box-sizing:border-box; }
+body { background:var(--bg); color:var(--fg); font:1.1rem/1.6 Georgia, serif; margin:0; }
+header, main, footer { max-width:46rem; margin:auto; padding:1rem; }
+header { font-family:system-ui, sans-serif; border-bottom:1px solid var(--border); }
+nav { background:var(--panel); border:1px solid var(--border); margin:1rem 0; padding:1rem; }
+nav h2 { margin-top:0; }
+a { color:var(--link); text-decoration-thickness:0.12em; }
+a:focus-visible, summary:focus-visible { outline:3px solid var(--focus); outline-offset:3px; }
+.pomin { position:absolute; left:-9999px; top:auto; }
+.pomin:focus { left:1rem; top:1rem; background:var(--bg); border:2px solid var(--focus); padding:.5rem; z-index:2; }
+code, pre { font-family:ui-monospace, Consolas, monospace; }
+pre { overflow:auto; border:1px solid var(--border); padding:1rem; background:var(--panel); }
+table { border-collapse:collapse; width:100%; margin:1rem 0; }
+th, td { border:1px solid var(--border); padding:.5rem; text-align:left; vertical-align:top; }
+.notice { border-left:.4rem solid var(--focus); padding:.7rem 1rem; background:var(--panel); }
+footer { border-top:1px solid var(--border); color:var(--muted); font:0.95rem/1.5 system-ui, sans-serif; }
+@media print { body { color:#000; background:#fff; } nav, .pomin { display:none; } a { color:#000; text-decoration:none; } }</style></head>
+<body><a class="pomin" href="#tresc">Skip to content</a>
+<header><p>EdSharp offline handbook — pre-translation draft.</p></header>
+<main id="tresc"><h1>EdSharp offline handbook — DRAFT of the new PL/EN menu</h1><nav aria-labelledby="contents"><h2 id="contents">Contents</h2><ol><li><a href="#1-document-and-save">1. Document and save</a></li><li><a href="#2-selection-and-search">2. Selection and search</a></li><li><a href="#3-markdown-and-preview">3. Markdown and preview</a></li><li><a href="#4-tasks-and-tables">4. Tasks and tables</a></li><li><a href="#5-snippets-durable-folder-zip-and-expansion">5. Snippets: durable folder, ZIP, and expansion</a></li><li><a href="#6-list-operations">6. List operations</a></li><li><a href="#7-transform-files-copies-and-test-first">7. Transform Files: copies and Test first</a></li><li><a href="#boundaries-of-this-draft">Boundaries of this DRAFT</a></li></ol></nav><aside class="notice"><strong>Unpublished DRAFT.</strong> This handbook describes the frozen target PL/EN menu model, not Michał's installed release. It does not claim that the exercises were run in the GUI or measured with live NVDA. Work in a new file or an exercise copy, never in your own document.</aside>
+<h2 id="1-document-and-save">1. Document and save</h2>
+<p><strong>Goal.</strong> Create a small Markdown document and keep it under your own name.</p>
+<ol><li>Press <code>Ctrl+N</code>, type a title and two sentences.</li><li>Press <code>Ctrl+Shift+S</code>, choose an exercise folder and name it <code>note.md</code>.</li><li>Add a third sentence and press <code>Ctrl+S</code>.</li></ol>
+<p><strong>Expected result.</strong> A separate <code>note.md</code> contains three sentences. <code>Ctrl+S</code> saves the current document and <code>Ctrl+Shift+S</code> asks for a new name.</p>
+<p><strong>Safe return.</strong> <code>Ctrl+Z</code> reverses the last edit; closing without saving can discard unsaved changes. This is not a replacement for your own file copy.</p>
+<p>Exercise: <a href="exercises/01-document-and-save.html">01 — document and save</a>.</p>
+<h2 id="2-selection-and-search">2. Selection and search</h2>
+<p><strong>Goal.</strong> Select two lines without a mouse and find a repeated word.</p>
+<ol><li>Put the caret before the first line and press <code>F8</code>.</li><li>Move to the end of the range and press <code>Shift+F8</code>.</li><li>Use <code>Ctrl+F</code>, then <code>F3</code> or <code>Shift+F3</code>.</li></ol>
+<p><strong>Expected result.</strong> The selection runs from the <code>F8</code> point to the caret; search does not alter text. <code>Alt+F3</code> searches text at the caret or selection.</p>
+<p><strong>Safe return.</strong> <code>Ctrl+Shift+F8</code> restores the previous range and <code>Alt+Shift+F8</code> returns to the original <code>F8</code> point; after selecting upward, that point can be the lower end of the range.</p>
+<p>Exercise: <a href="exercises/02-selection-and-search.html">02 — selection and search</a>.</p>
+<h2 id="3-markdown-and-preview">3. Markdown and preview</h2>
+<p><strong>Goal.</strong> Write a heading, list, and link, then check preview.</p>
+<ol><li>In an <code>.md</code> file type <code># Meeting</code>, a blank line, and <code>- coffee</code>.</li><li>Use <code>Escape</code> for the text Markdown preview; a second <code>Escape</code> returns to editing.</li><li>After saving, use <code>F5</code> or target-menu <strong>View > Preview Markdown in Web Browser</strong>.</li></ol>
+<p><strong>Expected result.</strong> <code>Escape</code> opens a text <code>MarkdownReviewTextBox</code>, not a WebView. <code>F5</code> opens the saved document in the default browser. <strong>View</strong> also starts with <strong>Word Wrap</strong> and <strong>Unwrap</strong>.</p>
+<p><strong>Safe return.</strong> <code>Escape</code> leaves preview; <code>Ctrl+Z</code> after returning reverses only a text edit.</p>
+<p>Exercise: <a href="exercises/03-markdown-and-preview.html">03 — Markdown and preview</a>.</p>
+<h2 id="4-tasks-and-tables">4. Tasks and tables</h2>
+<p><strong>Goal.</strong> Create a checklist and a small table in a new file.</p>
+<ol><li>Use <code>Ctrl+Shift+F2</code> to create a task list.</li><li>Press <code>Ctrl+Shift+X</code> to change a task; <code>Alt+Shift+F2</code> reports progress.</li><li>Use <code>Ctrl+Shift+T</code>, supply wizard data, and confirm with <code>Ctrl+Enter</code>.</li></ol>
+<p><strong>Expected result.</strong> In target <strong>Review > Tasks</strong>, the dynamic command says <strong>Mark as Done</strong> or <strong>Mark as Not Done</strong>. Help and the command palette use the neutral name <strong>Toggle Task Completion</strong>. After toggling, the application announces <strong>Done</strong> or <strong>Not Done</strong>. The table is in the current document; target menu location is <strong>Insert > Insert Table…</strong>.</p>
+<p><strong>Safe return.</strong> <code>Ctrl+Z</code> reverses the latest operation only in the exercise file.</p>
+<p>Exercise: <a href="exercises/04-tasks-and-table.html">04 — tasks and table</a>.</p>
+<h2 id="5-snippets-durable-folder-zip-and-expansion">5. Snippets: durable folder, ZIP, and expansion</h2>
+<p><strong>Goal.</strong> Choose one durable library folder, save and insert a snippet, then safely export or import a ZIP.</p>
+<ol><li>Press <code>Ctrl+,</code>. In target <strong>Settings > Configuration Options…</strong>, choose <strong>Snippet library folder</strong> and use <strong>Browse…</strong> to select an existing durable folder, such as a folder in your documents. Confirm the change.</li><li>Select test text and use <code>Alt+S</code> (<strong>Save Snippet…</strong>). Insert with <code>Alt+V</code> (<strong>Insert Snippet…</strong>) and open for editing with <code>Alt+Shift+V</code> (<strong>Edit Snippet…</strong>).</li><li>Type a name fragment immediately before the caret and use <code>Ctrl+Shift+Space</code> (<strong>Expand Snippet</strong>).</li><li>In <strong>Tools > Snippets</strong>, choose <strong>Export Snippet Library…</strong>, save a ZIP outside the library, then use <strong>Import Snippet Library…</strong> with a test ZIP.</li></ol>
+<p><strong>Expected result.</strong> The same folder serves saving, inserting, editing, tokens, and manual expansion. An empty setting uses the existing <code>Snippets\Default</code>; an explicit unavailable folder reports an error and does not silently fall back. Expansion prefers an exact name, then a prefix, then a middle/end fragment; several results require a choice. ZIP import asks how to handle conflicts: skip, keep both, or replace with backup. Export creates a ZIP, not another library tree.</p>
+<p><strong>Safe return.</strong> <code>Ctrl+Z</code> reverses insertion in the current document. Keep your own folder copy before import; canceling a dialog should not modify files. <code>Ctrl+Space</code> still selects a non-blank chunk; it does not expand a snippet.</p>
+<p>Exercise: <a href="exercises/05-snippets.html">05 — snippets</a>.</p>
+<h2 id="6-list-operations">6. List operations</h2>
+<p><strong>Goal.</strong> Work on selected lines and compare two lists.</p>
+<ol><li>Select a range and use <code>Alt+Shift+O</code>, <code>Alt+Shift+Z</code>, or <code>Alt+Shift+K</code>.</li><li>For a comparison, put the caret so the first list is above the current row and the second begins at it.</li><li>Use <code>Alt+Shift+G</code> or <code>Alt+Shift+Q</code>.</li></ol>
+<p><strong>Expected result.</strong> Sorting and deduplication ignore case and retain the first spelling. Two-list comparisons retain first-list order and duplicates but are case-sensitive. The target location is <strong>Tools > Text Transformations</strong>.</p>
+<p><strong>Safe return.</strong> Work in a copy; <code>Ctrl+Z</code> reverses the latest text change.</p>
+<p>Exercise: <a href="exercises/06-lists.html">06 — lists</a>.</p>
+<h2 id="7-transform-files-copies-and-test-first">7. Transform Files: copies and Test first</h2>
+<p><strong>Goal.</strong> Run a find-and-replace job only on copied files.</p>
+<ol><li>Prepare copies in a separate folder and a document containing their full paths, one per line.</li><li>Use <code>Alt+=</code> or <strong>Tools > Text Transformations > Transform Files</strong>, then choose an <code>.inix</code> job.</li><li>Choose <strong>Test</strong> first, and only then <strong>Run</strong> or <strong>Verbose</strong>.</li></ol>
+<p><strong>Expected result.</strong> <strong>Test</strong> counts matches without writing. <strong>Run</strong> writes matching files. <strong>Verbose</strong> also writes files and reports sections and match counts. <code>Extract=true</code> collects matches to the clipboard without modifying files.</p>
+<p><strong>Safe return.</strong> No complete Undo or multi-file rollback is promised. Keep your own copy before <code>Run</code> or <code>Verbose</code>; if needed, delete only the copy folder and restore it from backup.</p>
+<p>Exercise: <a href="exercises/07-transform-files.html">07 — Transform Files</a>.</p>
+<h2 id="boundaries-of-this-draft">Boundaries of this DRAFT</h2>
+<p>This content comes from the frozen 210-command menu model. It does not prove final integration, the installer, live GUI shortcut routing, or NVDA speech. Removed commands — Styles, Copy All, Alternate Menu, Clear Favorite, Topic/Alt+T, Read All/Alt+F8, Read Clipboard/Alt+apostrophe, Env Vars editor, and Speech Log — are neither restored nor documented.</p></main>
+<footer>Generated locally; this page loads no network resources.</footer>
+</body></html>
