@@ -8,6 +8,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using Homer;
 
 public class ProblemReportDraft {
 public string Subject = "";
@@ -126,6 +127,8 @@ public static class ProblemReportService {
 public const int MaxPayloadBytes = 60 * 1024;
 private const string ExpectedIssueHost = "github.com";
 private const string ExpectedIssuePath = "/michalkasperczak/EdSharpNG/issues/";
+private const string DedicatedReportHost = "edsharp-sygnalista.amc-sygnalista-worker.workers.dev";
+private const string DedicatedReportPath = "/v1/report";
 
 public static ProblemReportSnapshot CreateSnapshot(ProblemReportDraft d, ProblemReportTechnical t, ProblemReportSnapshot previous) {
 return CreateSnapshot(d, t, previous, "stable");
@@ -207,7 +210,9 @@ Uri u;
 if (!Uri.TryCreate(sValue.Trim(), UriKind.Absolute, out u)) return false;
 if (!string.Equals(u.Scheme, Uri.UriSchemeHttps, StringComparison.OrdinalIgnoreCase)) return false;
 if (!string.IsNullOrEmpty(u.UserInfo) || !string.IsNullOrEmpty(u.Query) || !string.IsNullOrEmpty(u.Fragment)) return false;
-if (u.Host.IndexOf("amc", StringComparison.OrdinalIgnoreCase) >= 0) return false;
+if (u.Host.IndexOf("amc", StringComparison.OrdinalIgnoreCase) >= 0) {
+if (!string.Equals(u.Host, DedicatedReportHost, StringComparison.OrdinalIgnoreCase) || u.Port != 443 || !string.Equals(u.AbsolutePath, DedicatedReportPath, StringComparison.Ordinal)) return false;
+}
 uEndpoint = u;
 return true;
 }
@@ -282,6 +287,7 @@ return true;
 
 public class ProblemReportHttpTransport : IProblemReportTransport {
 public ProblemReportHttpResponse Post(Uri uEndpoint, byte[] abBody) {
+Web.configure();
 HttpWebRequest request = (HttpWebRequest)WebRequest.Create(uEndpoint);
 request.Method = "POST"; request.ContentType = "application/json; charset=utf-8"; request.AllowAutoRedirect = false;
 request.Timeout = 15000; request.ReadWriteTimeout = 15000; request.ContentLength = abBody == null ? 0 : abBody.Length;

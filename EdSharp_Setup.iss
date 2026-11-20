@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.130
-AppVerName=EdSharpNG 5.0.130 (beta)
-VersionInfoVersion=5.0.130
+AppVersion=5.0.131
+AppVerName=EdSharpNG 5.0.131 (beta)
+VersionInfoVersion=5.0.131
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -46,7 +46,7 @@ RestartApplications=no
 AppMutex=EdSharpNG_Running_Mutex
 
 [Files]
-; Release 5.0.130: exact staged runtime/source payload.  This deliberately avoids
+; Release 5.0.131: exact staged runtime/source payload.  This deliberately avoids
 ; inherited skipifsourcedoesntexist and Excludes rules that could silently omit data.
 ; Preserve the user configuration on upgrade: the recursive payload entry excludes it, and the explicit entry below installs only the default for a new installation.
 Source: "*"; DestDir: "{app}"; Excludes: ".edsharp-staging,EdSharp.ini"; Flags: ignoreversion recursesubdirs

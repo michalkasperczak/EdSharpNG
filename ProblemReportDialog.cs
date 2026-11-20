@@ -17,6 +17,7 @@ public static void Complete() { Interlocked.Exchange(ref iSending, 0); }
 public static class ProblemReportDialog {
 private static string T(string en, string pl) { return JezykInterfejsu.Wybierz(en, pl); }
 private static bool Wybrano(string action, string label) { return string.Equals(action, (label ?? "").Replace("&", ""), StringComparison.OrdinalIgnoreCase); }
+private static Button FindButton(Control parent, string text) { if (parent == null) return null; foreach (Control child in parent.Controls) { Button button = child as Button; if (button != null && string.Equals((button.Text ?? "").Replace("&", ""), text ?? "", StringComparison.OrdinalIgnoreCase)) return button; Button nested = FindButton(child, text); if (nested != null) return nested; } return null; }
 
 public static void Show(MdiFrame frame, string sPreSubject, string sPreDescription) {
 ProblemReportDraft draft = new ProblemReportDraft();
@@ -25,13 +26,45 @@ draft.Description = sPreDescription ?? "";
 draft.IncludeDiagnosticLog = Ustawienia.CzyWlaczone(App.ReadOption("AttachDiagnosticLog", "N"));
 ProblemReportSnapshot previous = null;
 string sChannel = ProblemReportService.ResolveChannel(App.ReadData("ProblemReportEndpointProfile", "public"));
-bool bSendingActive = ProblemReportService.ReadEndpoint(App.ProgramDir, sChannel).Length > 0;
+bool bSending = false;
+Form activeEditor = null;
+Label activeStatus = null;
+TextBox activeSubject = null, activeDescription = null, activeEmail = null;
+CheckBox activeConsent = null, activeAttach = null;
+Button activePreview = null, activeSend = null, activeCancel = null;
+bool activeSafeLogAvailable = false;
+Action<ProblemReportSendResult> completed = delegate(ProblemReportSendResult result) {
+bSending = false;
+Form completedEditor = activeEditor;
+if (result.Success) {
+if (completedEditor != null && !completedEditor.IsDisposed) completedEditor.Close();
+if (frame != null && !frame.IsDisposed) frame.BeginInvoke((MethodInvoker)delegate { Dialog.Show(T("Report a problem", "Zgłoś problem"), T("The report was sent. Number: ", "Zgłoszenie wysłano. Numer: ") + result.IssueNumber.ToString() + "."); });
+return;
+}
+if (completedEditor != null && !completedEditor.IsDisposed) {
+if (activeStatus != null) activeStatus.Text = result.Ambiguous ? T("Sending ended without definite confirmation. The local copy remains preserved; you can edit the report before deciding what to do next.", "Wysyłka zakończyła się bez pewnego potwierdzenia. Lokalna kopia pozostała zachowana; możesz edytować zgłoszenie przed decyzją o dalszym kroku.") : result.Code == ProblemReportSendCode.Rejected ? T("The receiver declined the report. The local copy remains preserved; you can edit the report before deciding what to do next.", "Odbiorca odmówił przyjęcia zgłoszenia. Lokalna kopia pozostała zachowana; możesz edytować zgłoszenie przed decyzją o dalszym kroku.") : T("Unable to send the report. The local copy remains preserved; you can edit the report before deciding what to do next.", "Nie udało się wysłać zgłoszenia. Lokalna kopia pozostała zachowana; możesz edytować zgłoszenie przed decyzją o dalszym kroku.");
+if (activeSubject != null) activeSubject.ReadOnly = false;
+if (activeDescription != null) activeDescription.ReadOnly = false;
+if (activeEmail != null) activeEmail.ReadOnly = false;
+if (activeConsent != null) activeConsent.Enabled = true;
+if (activeAttach != null) activeAttach.Enabled = activeSafeLogAvailable;
+if (activePreview != null) activePreview.Enabled = true;
+if (activeSend != null) activeSend.Enabled = true;
+if (activeCancel != null) { activeCancel.Text = T("&Cancel", "&Anuluj"); activeCancel.AccessibleName = T("Cancel", "Anuluj"); }
+}
+if (result.Ambiguous) Dialog.Show(T("Report a problem", "Zgłoś problem"), T("There is no definite confirmation of sending. It was not sent again automatically; the local copy remains preserved.", "Nie ma pewnego potwierdzenia wysyłki. Nie wysłano ponownie automatycznie; lokalna kopia pozostała zachowana."));
+else if (result.Code == ProblemReportSendCode.Rejected) Dialog.Show(T("Report a problem", "Zgłoś problem"), T("The receiver declined the report. The local copy remains preserved.", "Odbiorca odmówił przyjęcia zgłoszenia. Lokalna kopia pozostała zachowana."));
+else Dialog.Show(T("Report a problem", "Zgłoś problem"), T("Unable to send the report. The local copy remains preserved.", "Nie udało się wysłać zgłoszenia. Lokalna kopia pozostała zachowana."));
+if (completedEditor != null && !completedEditor.IsDisposed && activeDescription != null) activeDescription.Focus();
+};
 while (true) {
+bool bSendingActive = ProblemReportService.ReadEndpoint(App.ProgramDir, sChannel).Length > 0;
 string sTitle = T("Report a problem", "Zgłoś problem");
 string sPreview = T("&Preview", "&Podgląd");
+string sSend = T("Send &report", "Wyślij &zgłoszenie");
 string sCancel = T("&Cancel", "&Anuluj");
 LbcDialog edit = new LbcDialog(sTitle, frame);
-edit.addLabel(bSendingActive ? T("Your description will first be shown in a redacted preview. Sending is available only to a configured HTTPS endpoint.", "Opis zostanie najpierw pokazany w zredagowanym podglądzie. Wysyłka jest możliwa tylko do skonfigurowanego punktu HTTPS.") : T("Sending is currently inactive. You can compose, copy, or save the report locally; it will not be sent.", "Wysyłka jest obecnie nieaktywna. Zgłoszenie można zredagować, skopiować albo zapisać lokalnie; nie zostanie nadane."));
+Label status = edit.addLabel(bSending ? T("Sending is in progress. This form is read-only until the result is known. Closing the form does not cancel sending.", "Trwa wysyłanie. Ten formularz jest tylko do odczytu do czasu poznania wyniku. Zamknięcie formularza nie cofa wysyłki.") : bSendingActive ? T("Use Send report to deliver the redacted report now, or Preview to inspect it first. Sending is available only to a configured HTTPS endpoint.", "Użyj Wyślij zgłoszenie, aby od razu nadać zredagowany raport, albo Podgląd, aby go najpierw sprawdzić. Wysyłka jest możliwa tylko do skonfigurowanego punktu HTTPS.") : T("Sending is currently inactive. Send report remains available so you can receive the reason and preserve a local copy; it will not be sent.", "Wysyłka jest obecnie nieaktywna. Wyślij zgłoszenie pozostaje dostępne, aby podać powód i zachować kopię lokalną; zgłoszenie nie zostanie nadane."));
 TextBox subject = edit.addInputBox(T("&Subject", "&Temat"), draft.Subject, T("A short description of the problem.", "Krótki opis problemu."));
 TextBox description = edit.addTextMemo(T("&Description", "&Opis"), draft.Description);
 TextBox email = edit.addInputBox(T("Optional &email address", "Opcjonalny adres &e-mail"), draft.ContactEmail, T("The address will be shared privately only with your explicit consent.", "Adres zostanie przekazany wyłącznie prywatnie po wyraźnej zgodzie."));
@@ -41,23 +74,38 @@ bool bSafeLogAvailable = Ustawienia.CzyWlaczone(App.ReadOption("DiagnosticLoggin
 CheckBox attach = edit.addCheckBox(T("Include a safe &diagnostic log", "Dołącz bezpieczny dziennik &diagnostyczny"), bSafeLogAvailable && draft.IncludeDiagnosticLog,
 T("Only a redacted technical log is included; it does not include speech or document contents.", "Dołączany jest tylko zredagowany dziennik techniczny; nie obejmuje mowy ani treści dokumentów."));
 if (!bSafeLogAvailable) { attach.Enabled = false; attach.Checked = false; }
-string sAction = edit.runWithButtons(new string[] { sPreview, sCancel });
+bool bPendingEditor = bSending;
+if (bPendingEditor) { subject.ReadOnly = true; description.ReadOnly = true; email.ReadOnly = true; consent.Enabled = false; attach.Enabled = false; }
+edit.setInitialFocus(description);
+activeEditor = edit.form;
+activeStatus = status; activeSubject = subject; activeDescription = description; activeEmail = email; activeConsent = consent; activeAttach = attach; activeSafeLogAvailable = bSafeLogAvailable;
+if (bPendingEditor) edit.form.Shown += delegate(object sender, EventArgs args) { activePreview = FindButton(edit.form, sPreview.Replace("&", "")); activeSend = FindButton(edit.form, sSend.Replace("&", "")); activeCancel = FindButton(edit.form, sCancel.Replace("&", "")); if (activePreview != null) activePreview.Enabled = false; if (activeSend != null) activeSend.Enabled = false; if (activeCancel != null) { activeCancel.Text = T("&Close form", "&Zamknij formularz"); activeCancel.AccessibleName = T("Close form", "Zamknij formularz"); } };
+string sAction = edit.runWithButtons(new string[] { sPreview, sSend, sCancel });
 draft.Subject = subject.Text; draft.Description = description.Text; draft.ContactEmail = email.Text; draft.ContactConsented = consent.Checked;
 draft.IncludeDiagnosticLog = bSafeLogAvailable && attach.Checked; edit.Dispose();
+activeEditor = null;
 if (Wybrano(sAction, sCancel) || sAction.Length == 0) return;
 try {
 draft.DiagnosticLogText = draft.IncludeDiagnosticLog ? ReadSafeLogTail() : "";
 ProblemReportTechnical technical = new ProblemReportTechnical(App.VersionString, Environment.OSVersion.VersionString + (Environment.Is64BitOperatingSystem ? " 64-bit" : " 32-bit"), Environment.Version.ToString());
 ProblemReportSnapshot snapshot = ProblemReportService.CreateSnapshot(draft, technical, previous, sChannel);
 previous = snapshot;
-if (!Preview(frame, snapshot)) return;
+if (Wybrano(sAction, sSend)) {
+if (StartSend(frame, snapshot, completed)) { bSending = true; continue; }
+continue;
+}
+bool bStartedFromPreview;
+if (!Preview(frame, snapshot, completed, out bStartedFromPreview)) return;
+if (bStartedFromPreview) bSending = true;
+continue;
 }
 catch (ArgumentException ex) { Dialog.Show(sTitle, ex.Message); }
 catch { Dialog.Show(sTitle, T("Unable to create a safe report preview.", "Nie udało się utworzyć bezpiecznego podglądu zgłoszenia.")); }
 }
 }
 
-private static bool Preview(MdiFrame frame, ProblemReportSnapshot snapshot) {
+private static bool Preview(MdiFrame frame, ProblemReportSnapshot snapshot, Action<ProblemReportSendResult> completed, out bool bStarted) {
+bStarted = false;
 string sSaved = "";
 while (true) {
 string sEndpoint = ProblemReportService.ReadEndpoint(App.ProgramDir, snapshot.Channel);
@@ -84,31 +132,30 @@ try { sSaved = ProblemReportService.SaveAtomically(Path.Combine(App.DataDir, "Re
 catch { Dialog.Show(sTitle, T("Unable to save the report copy. Sending was not started.", "Nie udało się zapisać kopii zgłoszenia. Wysyłka nie została rozpoczęta.")); }
 continue;
 }
-if (Wybrano(sAction, sSend)) {
-if (sSaved.Length == 0) {
-try { sSaved = ProblemReportService.SaveAtomically(Path.Combine(App.DataDir, "Reports"), snapshot); }
-catch { Dialog.Show(sTitle, T("Unable to save the report copy. Sending was not started.", "Nie udało się zapisać kopii zgłoszenia. Wysyłka nie została rozpoczęta.")); continue; }
+if (Wybrano(sAction, sSend)) { if (StartSend(frame, snapshot, completed)) { bStarted = true; return true; } continue; }
 }
-if (sEndpoint.Length == 0) { Dialog.Show(T("Report a problem", "Zgłoś problem"), T("There is no active receiving endpoint. The redacted copy remains saved locally.", "Brak aktywnego punktu odbiorczego. Zredagowana kopia pozostała zapisana lokalnie.")); return false; }
-if (!ProblemReportSendGate.TryBegin()) { Dialog.Show(T("Report a problem", "Zgłoś problem"), T("Another report is already being sent.", "Wysyłanie innego zgłoszenia już trwa.")); continue; }
+}
+
+private static bool StartSend(MdiFrame frame, ProblemReportSnapshot snapshot, Action<ProblemReportSendResult> completed) {
+string sTitle = T("Report a problem", "Zgłoś problem");
+string sSaved;
+try { sSaved = ProblemReportService.SaveAtomically(Path.Combine(App.DataDir, "Reports"), snapshot); }
+catch { Dialog.Show(sTitle, T("Unable to save the report copy. Sending was not started.", "Nie udało się zapisać kopii zgłoszenia. Wysyłka nie została rozpoczęta.")); return false; }
+string sEndpoint = ProblemReportService.ReadEndpoint(App.ProgramDir, snapshot.Channel);
+if (sEndpoint.Length == 0) { Dialog.Show(sTitle, T("There is no active receiving endpoint. The redacted copy remains saved locally.\r\nPath: ", "Brak aktywnego punktu odbiorczego. Zredagowana kopia pozostała zapisana lokalnie.\r\nŚcieżka: ") + sSaved); return false; }
+if (!ProblemReportSendGate.TryBegin()) { Dialog.Show(sTitle, T("Another report is already being sent. The local copy remains preserved.\r\nPath: ", "Wysyłanie innego zgłoszenia już trwa. Lokalna kopia pozostała zachowana.\r\nŚcieżka: ") + sSaved); return false; }
 ThreadPool.QueueUserWorkItem(delegate(object state) {
+bool bPosted = false;
 try {
 ProblemReportSendResult result = ProblemReportService.Send(sEndpoint, snapshot, new ProblemReportHttpTransport());
 if (frame == null || frame.IsDisposed) return;
-frame.BeginInvoke((MethodInvoker)delegate {
-if (result.Success) Dialog.Show(T("Report a problem", "Zgłoś problem"), T("The report was sent. Number: ", "Zgłoszenie wysłano. Numer: ") + result.IssueNumber.ToString() + ".");
-else if (result.Ambiguous) Dialog.Show(T("Report a problem", "Zgłoś problem"), T("There is no definite confirmation of sending. It was not sent again automatically; the local copy remains preserved.", "Nie ma pewnego potwierdzenia wysyłki. Nie wysłano ponownie automatycznie; lokalna kopia pozostała zachowana."));
-else if (result.Code == ProblemReportSendCode.Rejected) Dialog.Show(T("Report a problem", "Zgłoś problem"), T("The receiver declined the report. The local copy remains preserved.", "Odbiorca odmówił przyjęcia zgłoszenia. Lokalna kopia pozostała zachowana."));
-else Dialog.Show(T("Report a problem", "Zgłoś problem"), T("Unable to send the report. The local copy remains preserved.", "Nie udało się wysłać zgłoszenia. Lokalna kopia pozostała zachowana."));
-});
+frame.BeginInvoke((MethodInvoker)delegate { try { if (completed != null) completed(result); } finally { ProblemReportSendGate.Complete(); } });
+bPosted = true;
 }
 catch {}
-finally { ProblemReportSendGate.Complete(); }
+finally { if (!bPosted) ProblemReportSendGate.Complete(); }
 });
-Dialog.Show(T("Report a problem", "Zgłoś problem"), T("Sending is in progress in the background. A local copy was saved.", "Trwa wysyłanie w tle. Lokalna kopia została zapisana."));
-return false;
-}
-}
+return true;
 }
 
 private static bool SafeLogExists() {

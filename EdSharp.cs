@@ -57,7 +57,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.130";
+public const string VersionString = "5.0.131";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -5211,7 +5211,7 @@ if (menuItem == menuNavigateForwardFind || menuItem == menuNavigateForwardFindAt
 iIndex = rtb.Index;
 iStart = 0;
 sText = App.ReadData("Find", "");
-if (menuItem == menuNavigateForwardFind) sText = Dialog.Input(JezykInterfejsu.Wybierz("Forward Find", "Znajdź dalej"), JezykInterfejsu.Wybierz("Text", "Tekst"), sText);
+if (menuItem == menuNavigateForwardFind) sText = Dialog.Input(JezykInterfejsu.Wybierz("Forward Find", "Znajdź"), JezykInterfejsu.Wybierz("Text", "Tekst"), sText);
 else if (menuItem == menuNavigateForwardFindAtCursor) {
 if (rtb.SelectionLength == 0) {
 object[] a = GetChunk();
@@ -11502,7 +11502,7 @@ private bool HandleFileSlotKey(Keys keyData) {
 		}
 
 		App.WriteValue(c_sFileSlotSection, iSlot.ToString(), sFile);
-		AddMessage(String.Format(JezykInterfejsu.Wybierz("Numbered file {0} is {1}", "Plik numerowany {0} to {1}"), iSlot, Path.GetFileName(sFile)));
+		AddMessage(String.Format(JezykInterfejsu.Wybierz("Numbered file {0} is {1}", "{0} przypisana do {1}"), iSlot, Path.GetFileName(sFile)));
 		} // AssignFileSlot method
 
 		// Open (or activate, if already open) the file remembered in a slot.
