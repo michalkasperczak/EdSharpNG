@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.131
-AppVerName=EdSharpNG 5.0.131 (beta)
-VersionInfoVersion=5.0.131
+AppVersion=5.0.133
+AppVerName=EdSharpNG 5.0.133
+VersionInfoVersion=5.0.133
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -30,7 +30,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 Compression=lzma2/max
 SolidCompression=yes
-OutputBaseFilename=EdSharpNG_Setup
+OutputBaseFilename=EdSharpNG_Setup_5.0.133
 OutputDir=out
 SourceDir=stage
 PrivilegesRequired=admin
@@ -49,7 +49,7 @@ AppMutex=EdSharpNG_Running_Mutex
 ; Release 5.0.131: exact staged runtime/source payload.  This deliberately avoids
 ; inherited skipifsourcedoesntexist and Excludes rules that could silently omit data.
 ; Preserve the user configuration on upgrade: the recursive payload entry excludes it, and the explicit entry below installs only the default for a new installation.
-Source: "*"; DestDir: "{app}"; Excludes: ".edsharp-staging,EdSharp.ini"; Flags: ignoreversion recursesubdirs
+Source: "*"; DestDir: "{app}"; Excludes: ".edsharp-staging,EdSharp.ini,\Synonyms\plwordnet-forms.bin.gz"; Flags: ignoreversion recursesubdirs
 Source: "EdSharp.ini"; DestDir: "{app}"; Flags: onlyifdoesntexist
 
 [Dirs]

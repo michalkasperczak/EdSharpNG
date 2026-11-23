@@ -57,7 +57,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.131";
+public const string VersionString = "5.0.133";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -896,8 +896,11 @@ return sFile;
 }
 } // IdentityPath property
 
-public DateTime FileTime;
-public bool FileTimeChecked = false;
+private string trackedDiskPath;
+private Tuple<DateTime, long> loadedDiskRevision;
+private string loadedDiskHash;
+private Tuple<DateTime, long> lastAnnouncedDiskRevision;
+private bool loadedAsLiteral;
 // Order in which this window was opened, used by the Control+digit window
 // navigation: Control+1 goes to the first window opened, Control+2 to the
 // second, and so on (Kasperczak, Telegram 14.08.2026 19:23).  The framework
@@ -1040,7 +1043,6 @@ sText = sTime + "|" + iIndex + "|" + (App.Frame.GetUserGuard(this) ? "G" : "M") 
 App.WriteValue("Recent", sIdent, sText);
 }; // Closing
 
-this.FileTime = System.IO.File.GetLastWriteTime(this.File);
 this.Show();
 } // child constructor
 
@@ -1050,29 +1052,92 @@ App.Frame.SetMessage(JezykInterfejsu.Wybierz("No Key Describer", "Opis klawiszy 
 App.Frame.KeyDescriber = false;
 }
 
-string sFile = this.File;
 bool b = System.IO.File.Exists(App.IndentModeFile);
 if (b && !this.RTB.IndentMode) System.IO.File.Delete(App.IndentModeFile);
 else if (!b && this.RTB.IndentMode) System.IO.File.Create(App.IndentModeFile).Close();
-if (this.FileTimeChecked || sFile.IndexOf(@"\") == -1 || !System.IO.File.Exists(sFile)) return;
-
-DateTime dt = System.IO.File.GetLastWriteTime(sFile);
-//if (this.FileTime >= dt || Util.File2String(sFile).Length == 0) return;
-if (this.FileTime >= dt) return;
-this.FileTimeChecked = true;
-switch (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), this.Text + JezykInterfejsu.Wybierz(" on disk is newer than the version opened in this window.  Open Again?", " na dysku jest nowsza od wersji otwartej w tym oknie. Otworzyć ponownie?"), "Y")) {
-case "Y" :
-int iIndex = this.RTB.Index;
-this.LoadTextOrRtfFile(sFile);
-this.RTB.Index = iIndex;
-break;
-case "N":
-break;
-default :
-this.FileTimeChecked = false;
+if (!TracksDiskPath(this.File)) return;
+Tuple<DateTime, long> observed;
+try { observed = ReadDiskRevision(trackedDiskPath); }
+catch (IOException) { return; }
+catch (UnauthorizedAccessException) { return; }
+if (Object.Equals(observed, loadedDiskRevision)) {
+lastAnnouncedDiskRevision = null;
 return;
 }
+if (Object.Equals(observed, lastAnnouncedDiskRevision)) return;
+lastAnnouncedDiskRevision = observed;
+App.Frame.SetMessage(observed.Item2 < 0
+  ? JezykInterfejsu.Wybierz("The file is missing from disk.", "Brak pliku na dysku.")
+  : JezykInterfejsu.Wybierz("The file changed on disk.", "Plik zmienił się na dysku."));
 } // CheckFileTime handler
+
+private static Tuple<DateTime, long> ReadDiskRevision(string path) {
+try {
+FileInfo info = new FileInfo(path);
+long length = info.Length;
+return Tuple.Create(info.LastWriteTimeUtc, length);
+}
+catch (FileNotFoundException) { return Tuple.Create(DateTime.MinValue, -1L); }
+catch (DirectoryNotFoundException) { return Tuple.Create(DateTime.MinValue, -1L); }
+}
+
+private bool TracksDiskPath(string path) {
+return trackedDiskPath != null && !String.IsNullOrEmpty(path) && Path.IsPathRooted(path)
+  && String.Equals(trackedDiskPath, Path.GetFullPath(path), StringComparison.OrdinalIgnoreCase);
+}
+
+private static string ReadDiskHash(string path, Tuple<DateTime, long> revision) {
+if (revision.Item2 < 0) return null;
+string hash = Util.FileSha256(path);
+if (hash.Length == 0 || !Object.Equals(revision, ReadDiskRevision(path)))
+  throw new IOException("Cannot verify disk revision.");
+return hash;
+}
+
+private void RememberDiskRevision(string path, Tuple<DateTime, long> revision, string hash) {
+trackedDiskPath = Path.GetFullPath(path);
+loadedDiskRevision = revision;
+loadedDiskHash = hash;
+lastAnnouncedDiskRevision = null;
+}
+
+public void FollowDiskRename(string from, string to) {
+if (TracksDiskPath(from)) trackedDiskPath = Path.GetFullPath(to);
+}
+
+public void ReloadDiskFile() {
+string path = this.File;
+if (this.RTB.Modified && Dialog.Confirm(
+  JezykInterfejsu.Wybierz("Reload file", "Wczytywanie pliku"),
+  JezykInterfejsu.Wybierz("Reload from disk and discard your unsaved changes?", "Wczytać plik z dysku i odrzucić niezapisane zmiany?"), "N") != "Y") return;
+int index = this.RTB.Index;
+this.LoadTextOrRtfFile(path, loadedAsLiteral);
+this.RTB.Index = Math.Min(index, this.RTB.TextLength);
+}
+
+public bool ConfirmDiskOverwrite(string path) {
+if (!TracksDiskPath(path)) return true;
+try {
+Tuple<DateTime, long> observed = ReadDiskRevision(trackedDiskPath);
+// Cheap metadata suffices for the focus hint, but not for an overwrite:
+// synchronization tools can preserve both length and last-write time.
+string observedHash = ReadDiskHash(trackedDiskPath, observed);
+if (Object.Equals(observed, loadedDiskRevision) && observedHash == loadedDiskHash) return true;
+string question = observed.Item2 < 0
+  ? JezykInterfejsu.Wybierz("The file is missing from disk. Recreate it with your version?", "Brak pliku na dysku. Zapisać go ponownie z Twoją wersją?")
+  : JezykInterfejsu.Wybierz("The file changed on disk. Overwrite it with your version?", "Plik zmienił się na dysku. Nadpisać go Twoją wersją?");
+if (Dialog.Confirm(JezykInterfejsu.Wybierz("Save conflict", "Konflikt zapisu"), question, "N") != "Y") return false;
+if (Object.Equals(observed, ReadDiskRevision(trackedDiskPath)) && observedHash == ReadDiskHash(trackedDiskPath, observed)) return true;
+App.Frame.SetMessage(JezykInterfejsu.Wybierz("Not saved. The file changed again. Use Save As to keep your version separately.", "Nie zapisano. Plik znów się zmienił. Użyj polecenia Zapisz jako, aby zachować swoją wersję osobno."));
+}
+catch (IOException) { ReportUnverifiedDiskSave(); }
+catch (UnauthorizedAccessException) { ReportUnverifiedDiskSave(); }
+return false;
+}
+
+private static void ReportUnverifiedDiskSave() {
+App.Frame.SetMessage(JezykInterfejsu.Wybierz("Not saved. Cannot verify the version on disk.", "Nie zapisano. Nie można sprawdzić wersji pliku na dysku."));
+}
 
 protected override void WndProc(ref Message m) {
 base.WndProc(ref m);
@@ -1166,8 +1231,6 @@ LoadTextOrRtfFile(sFile, bLiteral);
 } // LoadTextOrRtfFile method
 
 public void LoadTextOrRtfFile(string sFile, bool bLiteral) {
-this.FileTimeChecked = false;
-this.FileTime = System.IO.File.GetLastWriteTime(sFile);
 // Kasperczak's request of 27 August 2026, and Jim's of 24 August in the
 // author's own tree: the current directory used to follow only SAVES, so
 // opening a file to read it left the next Open dialog pointing at wherever
@@ -1182,6 +1245,8 @@ if (sFile != null && sFile.IndexOf(@":\") > 0) Directory.SetCurrentDirectory(Pat
 }
 catch (Exception) {}
 try {
+Tuple<DateTime, long> revision = ReadDiskRevision(sFile);
+string revisionHash = ReadDiskHash(sFile, revision);
 // Flaga rozstrzyga PROWENIENCJE dokumentu, nie nazwe pliku, i musi byc
 // ustawiona na OBU galeziach: dokument wczytany raz jako rich text, raz jako
 // tekst, trafia do zapisu ta sama droga i tylko ta wartosc je rozroznia.
@@ -1257,6 +1322,8 @@ App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Opened as {0}; will 
 this.RTB.Modified = false;
 this.Text = Path.GetFileName(sFile);
 this.File = sFile;
+RememberDiskRevision(sFile, revision, revisionHash);
+loadedAsLiteral = bLiteral;
 }
 catch (Exception exOpen) {
 // PRAWDZIWA PRZYCZYNA IDZIE DO DZIENNIKA (13.09.2026).  Ten catch zamienial
@@ -1286,7 +1353,8 @@ App.Frame.AddMessage(JezykInterfejsu.Wybierz("Cannot open file!", "Nie można ot
 // App.Frame.ApplyFileOptions(sFile);
 } // LoadTextFile method
 
-public void SaveTextOrRtfFile(string sFile) {
+public bool SaveTextOrRtfFile(string sFile) {
+if (!ConfirmDiskOverwrite(sFile)) return false;
 // KOPIA .bak NADPISYWANEGO PLIKU USUNIETA 16.09.2026
 // (docs/OPCJE-USTAWIEN.md: "MK. Proponuje te opcje usunac.").  Opcja
 // KeepBackup byla fabrycznie wylaczona, wiec wlaczal ja tylko ten, kto
@@ -1346,8 +1414,16 @@ this.RTB.Modified = false;
 App.Frame.SetRecent(sFile);
 this.Text = Path.GetFileName(sFile);
 this.File = sFile;
-this.FileTime = System.IO.File.GetLastWriteTime(sFile);
-this.FileTimeChecked = false;
+// The write already succeeded. If rereading for the next save fails,
+// keep an unverified baseline rather than reporting a failed write.
+Tuple<DateTime, long> written = null;
+string writtenHash = null;
+try { written = ReadDiskRevision(sFile); writtenHash = ReadDiskHash(sFile, written); }
+catch (IOException) { }
+catch (UnauthorizedAccessException) { }
+RememberDiskRevision(sFile, written, writtenHash);
+loadedAsLiteral = !this.IsRichTextDocument;
+return true;
 } // SaveTextOrRtfFile method
 
 protected override bool ProcessCmdKey(ref Message msg, Keys keyData) {
@@ -3571,8 +3647,11 @@ return false;
 }
 Util.String2File(text, target);
 }
-else if (wholeDocument) child.SaveTextOrRtfFile(target);
-else Util.String2File(text, target);
+else if (wholeDocument) return child.SaveTextOrRtfFile(target);
+else {
+if (!child.ConfirmDiskOverwrite(target)) return false;
+Util.String2File(text, target);
+}
 return true;
 }
 
@@ -3731,10 +3810,7 @@ AddMessage(JezykInterfejsu.Wybierz("No disk file is open for this command!", "Dl
 return;
 }
 
-iIndex = rtb.Index;
-if (Dialog.Confirm("Confirm", "Existing text will be  replaced.  Sure?", "Y") != "Y") return;
-child.LoadTextOrRtfFile(sFile);
-rtb.Index = iIndex;
+child.ReloadDiskFile();
 }
 
 if (menuItem == menuFileRecent) {
@@ -3787,7 +3863,7 @@ if (menuItem == menuFileSaveCopy) {
 AddMessage(JezykInterfejsu.Wybierz("Save Copy", "Zapisz kopię"));
 sFile = child.File + ".bak";
 sFile = Dialog.SaveFile("", sFile);
-if (sFile.Length == 0) return;
+if (sFile.Length == 0 || !child.ConfirmDiskOverwrite(sFile)) return;
 // Save Copy mial TEN SAM defekt co zwykly zapis, a nawet szerszy: pytal o
 // PODCIAG ".rtf" w calej sciezce, wiec kopia pliku "notatki.rtf.txt" tez szla
 // przez zapis bogaty.  Teraz pyta o ROZSZERZENIE i o proweniencje dokumentu.
@@ -3830,6 +3906,7 @@ if (sFile.Length == 0) return;
 // co do bajta - dodatek nie ma prawa zepsuc zapisu, ktory dzialal.
 string sExtCelu = Path.GetExtension(sFile).ToLower().TrimStart('.');
 if (ZapisFormatow.WymagaKonwersji(sExtZrodla, sExtCelu, CzytajWpisEksportu)) {
+if (!child.ConfirmDiskOverwrite(sFile)) return;
 WynikZapisu wyn = KonwertujDokumentDoPliku(child, rtb.Text, sExtZrodla, sFile);
 
 if (!wyn.Udane) {
@@ -3856,9 +3933,7 @@ return;
 
 //Dialog.Show(sFile);
 //if (Path.GetExtension(sFile).Length == 0) sFile += ".txt";
-child.SaveTextOrRtfFile(sFile);
-//this.SetRecent(sFile);
-rtb.Modified = false;
+if (!child.SaveTextOrRtfFile(sFile)) return;
 }
 
 if (menuItem == menuFileExport) {
@@ -3929,7 +4004,7 @@ sResult = sCodePage;
 string sTargetExt = Util.RegExpReplaceCase(sResult, @"^\w+2", "");
 sFile = Path.ChangeExtension(sFile, sTargetExt);
 sFile = Dialog.SaveFile("", sFile);
-if (sFile.Length == 0) return;
+if (sFile.Length == 0 || !child.ConfirmDiskOverwrite(sFile)) return;
 
 if (sCodePage.Length > 0) sExt = "Other";
 else sExt = sResult.ToLower();
@@ -4004,6 +4079,7 @@ Dialog.Show(JezykInterfejsu.Wybierz("Error", "Błąd"), ex.Message);
 return;
 }
 child.Text = sName;
+child.FollowDiskRename(sFile, sNewFile);
 child.File = sNewFile;
 SetRecent(sNewFile);
 }
@@ -4053,8 +4129,7 @@ return;
 // wysylaly ROZNA tresc, i to bez slowa ostrzezenia.
 if (rtb.Modified) {
 if (Dialog.Confirm("Confirm", "This document has unsaved changes, and the attachment is taken from the file on disk.\nSave it first?", "Y") == "Y") {
-child.SaveTextOrRtfFile(sFile);
-rtb.Modified = false;
+if (!child.SaveTextOrRtfFile(sFile)) return;
 }
 }
 
@@ -6499,8 +6574,7 @@ return;
 }
 if (rtb != null && rtb.Modified) {
 if (Dialog.Confirm("CSV Table", "This file has unsaved changes.  Save them now and open it as a table?", "Y") != "Y") return;
-child.SaveTextOrRtfFile(child.File);
-if (rtb != null) rtb.Modified = false;
+if (!child.SaveTextOrRtfFile(child.File)) return;
 }
 EditCsvAsTable(child.File);
 // Tresc pliku na dysku mogla sie zmienic w tabeli - okno w edytorze
@@ -6945,7 +7019,7 @@ if (choice == PromptCommandSaveChoice.SaveAndRun) {
 string sSave = bHasDiskFile ? sCandidate : Dialog.SaveFile("Save document for command", String.IsNullOrEmpty(sCandidate) ? Directory.GetCurrentDirectory() : sCandidate);
 if (sSave.Length == 0) return;
 try {
-child.SaveTextOrRtfFile(sSave);
+if (!child.SaveTextOrRtfFile(sSave)) return;
 }
 catch {
 AddMessage(JezykInterfejsu.Wybierz("Document was not saved; command was not started.", "Dokument nie został zapisany; polecenie nie zostało uruchomione."), true);
@@ -7429,12 +7503,23 @@ string sWynik;
 try {
 bool bTylkoBrakujace = false;
 string sZrobione = Skladniki.SprawdzIUzupelnij(bTylkoBrakujace);
+bool bOdczytUdany = Skladniki.OstatniaKontrolaOdczytuUdana();
+bool bAktywacjaUdana = Skladniki.OstatniaAktywacjaSkladnikowUdana();
+string sBladAktywacji = JezykInterfejsu.Wybierz(Skladniki.KomunikatBleduAktywacjiPoAngielsku(), Skladniki.KomunikatBleduAktywacjiPoPolsku());
 System.Collections.Generic.List<string> lBrak = Skladniki.Brakujace();
-if (sZrobione.Length > 0 && lBrak.Count == 0)
+if (!bAktywacjaUdana && sZrobione.Length > 0)
+sWynik = JezykInterfejsu.Wybierz("Downloaded: ", "Pobrano: ") + sZrobione + ". " + sBladAktywacji;
+else if (!bAktywacjaUdana)
+sWynik = sBladAktywacji;
+else if (!bOdczytUdany && sZrobione.Length > 0)
+sWynik = JezykInterfejsu.Wybierz("Downloaded: ", "Pobrano: ") + sZrobione + JezykInterfejsu.Wybierz(". Component update check did not complete; other components were left unchanged.", ". Sprawdzanie aktualizacji składników nie doszło do skutku; pozostałe składniki pozostawiono bez zmian.");
+else if (!bOdczytUdany)
+sWynik = JezykInterfejsu.Wybierz("Could not check all component updates. Existing components were kept. Try again later.", "Nie udało się sprawdzić wszystkich aktualizacji składników. Zachowano istniejące składniki. Spróbuj ponownie później.");
+else if (sZrobione.Length > 0 && lBrak.Count == 0)
 sWynik = JezykInterfejsu.Wybierz("Components ready: ", "Składniki gotowe: ") + sZrobione + ".";
 else if (sZrobione.Length > 0)
 sWynik = JezykInterfejsu.Wybierz("Downloaded: ", "Pobrano: ") + sZrobione + JezykInterfejsu.Wybierz(". Still missing: ", ". Nadal brakuje: ") + string.Join(", ", lBrak.ToArray()) + ".";
-else if (lBrak.Count == 0)
+else if (bOdczytUdany && bAktywacjaUdana && lBrak.Count == 0)
 sWynik = JezykInterfejsu.Wybierz("All components are up to date.", "Wszystkie składniki są aktualne.");
 else
 sWynik = JezykInterfejsu.Wybierz("Could not download: ", "Nie udało się pobrać: ") + string.Join(", ", lBrak.ToArray()) + JezykInterfejsu.Wybierz(". Check your Internet connection.", ". Sprawdź połączenie z Internetem.");
@@ -20508,8 +20593,8 @@ else defaultButton = MessageBoxDefaultButton.Button1;
 if (UzyjWlasnychOkien()) {
 try {
 string[] asButtons = (sDefault.ToLower() == "n")
-  ? new string[] {JezykInterfejsu.Wybierz("&No", "&Nie"), JezykInterfejsu.Wybierz("&Yes", "&Tak"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")}
-  : new string[] {JezykInterfejsu.Wybierz("&Yes", "&Tak"), JezykInterfejsu.Wybierz("&No", "&Nie"), JezykInterfejsu.Wybierz("Cancel", "Anuluj")};
+  ? new string[] {"&No", "&Yes", "Cancel"}
+  : new string[] {"&Yes", "&No", "Cancel"};
 string sWybor = PokazOknoZTrescia(sTitle, sText, asButtons,
   JezykInterfejsu.Wybierz("Read the question with the arrow keys, then choose an answer.  Enter presses the first button, Escape cancels.", "Odczytaj pytanie strzałkami, potem wybierz odpowiedź. Enter naciska pierwszy przycisk, Escape anuluje."));
 if (sWybor == "Yes") return "Y";

@@ -1863,6 +1863,8 @@ public class LbcDialog : IDisposable
     {
         string sPlain = (sLabel ?? "").Replace("&", "");
         if (string.Equals(sPlain, "OK", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("OK", "OK");
+        if (sLabel == "&Yes") return JezykInterfejsu.Wybierz("&Yes", "&Tak");
+        if (sLabel == "&No") return JezykInterfejsu.Wybierz("&No", "&Nie");
         if (string.Equals(sPlain, "Cancel", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("Cancel", "Anuluj");
         if (string.Equals(sPlain, "Close", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("Close", "Zamknij");
         if (string.Equals(sPlain, "Help", StringComparison.OrdinalIgnoreCase)) return JezykInterfejsu.Wybierz("&Help", "&Pomoc");
