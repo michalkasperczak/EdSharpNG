@@ -182,7 +182,7 @@ public class LbcTextBox : TextBox
         {
             int iAnchor = SelectionStart + SelectionLength;
             Tag = iAnchor;
-            Say.say("Start selection" + (iAnchor < TextLength ? " at " + Text[iAnchor] : ""));
+            Say.say(JezykInterfejsu.Wybierz("Start selection", "Początek zaznaczenia") + (iAnchor < TextLength ? JezykInterfejsu.Wybierz(" at ", ": ") + Text[iAnchor] : ""));
         }
         else if (key == (Keys.Shift | Keys.F8))
         {
@@ -190,7 +190,7 @@ public class LbcTextBox : TextBox
             int iAnchor2 = (int)Tag;
             int iCaret = SelectionStart + SelectionLength;
             Select(Math.Min(iAnchor2, iCaret), Math.Abs(iCaret - iAnchor2));
-            Say.say(SelectionLength + (SelectionLength == 1 ? " character" : " characters"));
+            Say.say(JezykInterfejsu.LiczbaZnakow(SelectionLength));
         }
         else if (key == (Keys.Control | Keys.F8))
         {
@@ -2540,9 +2540,9 @@ public class LbcDialog : IDisposable
     {
         int iCaret = tb.SelectionStart + tb.SelectionLength;
         tb.Tag = iCaret;
-        lblStatusBar.Text = "Start Selection";
-        string sCh = iCaret < tb.TextLength ? tb.Text.Substring(iCaret, 1) : "end";
-        Say.say("Start selection " + sCh);
+        lblStatusBar.Text = JezykInterfejsu.Wybierz("Start Selection", "Początek zaznaczenia");
+        string sCh = iCaret < tb.TextLength ? tb.Text.Substring(iCaret, 1) : JezykInterfejsu.Wybierz("end", "koniec tekstu");
+        Say.say(JezykInterfejsu.Wybierz("Start selection ", "Początek zaznaczenia: ") + sCh);
     }
 
     // Shift+F8 -- complete a selection from the saved start to
@@ -2564,9 +2564,9 @@ public class LbcDialog : IDisposable
         if (iEnd < iStart) { int t = iStart; iStart = iEnd; iEnd = t; }
         int iLength = iEnd - iStart;
         tb.Select(iStart, iLength);
-        string sCharacterWord = iLength == 1 ? JezykInterfejsu.Wybierz("character", "znak") : JezykInterfejsu.Wybierz("characters", "znaków");
-        lblStatusBar.Text = JezykInterfejsu.Wybierz("Complete Selection, {0} {1}", "Ukończono zaznaczenie, {0} {1}").Replace("{0}", iLength.ToString()).Replace("{1}", sCharacterWord);
-        Say.say(JezykInterfejsu.Wybierz("Selected {0} {1}.", "Zaznaczono {0} {1}.").Replace("{0}", iLength.ToString()).Replace("{1}", sCharacterWord));
+        string sCount = JezykInterfejsu.LiczbaZnakow(iLength);
+        lblStatusBar.Text = JezykInterfejsu.Wybierz("Complete Selection, ", "Ukończono zaznaczenie, ") + sCount;
+        Say.say(JezykInterfejsu.Wybierz("Selected ", "Zaznaczono ") + sCount + ".");
     }
 
     // Ctrl+F8 -- copy ALL text in the field to the clipboard.

@@ -33,6 +33,13 @@ public static class JezykInterfejsu
         return bPolski ? pl : en;
     } // Wybierz method
 
+    public static string LiczbaZnakow(int count)
+    {
+        if (!bPolski) return count + (count == 1 ? " character" : " characters");
+        int units = count % 10, lastTwo = count % 100;
+        return count + (count == 1 ? " znak" : units >= 2 && units <= 4 && (lastTwo < 12 || lastTwo > 14) ? " znaki" : " znaków");
+    }
+
     // Translate only exact, registered UI keys.  User data and document text
     // fall through unchanged, even when they happen to look like UI wording.
     public static string Tekst(string source)

@@ -12,9 +12,9 @@
 
 [Setup]
 AppName=EdSharpNG
-AppVersion=5.0.133
-AppVerName=EdSharpNG 5.0.133
-VersionInfoVersion=5.0.133
+AppVersion=5.0.134
+AppVerName=EdSharpNG 5.0.134
+VersionInfoVersion=5.0.134
 SetupIconFile=EdSharp.ico
 UninstallDisplayIcon={app}\EdSharpNG.exe
 AppPublisher=Michal Kasperczak
@@ -30,7 +30,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 MinVersion=10.0
 Compression=lzma2/max
 SolidCompression=yes
-OutputBaseFilename=EdSharpNG_Setup_5.0.133
+OutputBaseFilename=EdSharpNG_Setup_5.0.134
 OutputDir=out
 SourceDir=stage
 PrivilegesRequired=admin

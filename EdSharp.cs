@@ -57,7 +57,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.133";
+public const string VersionString = "5.0.134";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -3659,6 +3659,16 @@ public static string GetLocalizedTutorialPath(string sProgramDir, bool bPolish) 
 return Path.Combine(sProgramDir, "docs", "tutorial", "html", bPolish ? "pl" : "en", bPolish ? "podrecznik.html" : "handbook.html");
 } // GetLocalizedTutorialPath method
 
+static string GetCommandAnnouncement(ToolStripMenuItem menuItem) {
+// Name is the stable dispatch/Hotkeys.ini key, not the Polish display caption.
+if (!JezykInterfejsu.Polski) return menuItem.Name;
+string sCaption = (menuItem.Text ?? "").Split('\t')[0];
+sCaption = Regex.Replace(sCaption, "&&|&", m => m.Length == 2 ? "&" : "").TrimEnd();
+if (sCaption.EndsWith("…", StringComparison.Ordinal)) sCaption = sCaption.Substring(0, sCaption.Length - 1).TrimEnd();
+else if (sCaption.EndsWith("...", StringComparison.Ordinal)) sCaption = sCaption.Substring(0, sCaption.Length - 3).TrimEnd();
+return sCaption.Length == 0 ? menuItem.Name : sCaption;
+} // GetCommandAnnouncement method
+
 public void menuItem_Click(object sender, EventArgs e) {
 //Util.Beep();
 HomerRichTextBox rtb = null;
@@ -3670,9 +3680,7 @@ string sFile, sMatch, sReplace, sPattern, sSubstitute, sLine, sTitle, sText, sRe
 ToolStripMenuItem menuItem = (ToolStripMenuItem) sender;
 string sOptions = (string) menuItem.Tag;
 sOptions = " " + sOptions.Trim().ToLower() + " ";
-//sLabel = menuItem.Text.Replace("&", "").Replace(" ...", "").Split('\t')[0];
-sLabel = menuItem.Name;
-if (this.KeyDescriber && sLabel != "Key Describer") {
+if (this.KeyDescriber && menuItem.Name != "Key Describer") {
 string[] aSummary = GetKeySummary(menuItem);
 // TRZECIA SCIEZKA MOWY, KTORA BRAMKA CONTROL+ALT TEZ TLUMI (30.08.2026).
 // Ctrl+F1 wlacza tryb opisywania klawiszy - niewidomy naciska skrot, a
@@ -3704,8 +3712,8 @@ return;
 // przelaczniku nazwa komendy nie niesie nic: uzytkownik wie, ktory klawisz
 // nacisnal, a chce uslyszec KIERUNEK zmiany.
 if (sOptions.Contains(" quiet ")) SetStatus("");
-else if (sOptions.Contains(" silent ")) SetStatus(sLabel);
-else SetMessage(sLabel);
+else if (sOptions.Contains(" silent ")) SetStatus(GetCommandAnnouncement(menuItem));
+else SetMessage(GetCommandAnnouncement(menuItem));
 
 MdiChild child = this.Child;
 if (child == null) {
@@ -3849,7 +3857,7 @@ aResults = listResults.ToArray();
 string[] aDisplay = new string[aResults.Length];
 for (int i = 0; i < aDisplay.Length; i++) aDisplay[i] = Path.GetFileName(aResults[i]);
 
-sFile = Dialog.PickFile("Recent Files", aResults, aDisplay, false, 0, "Recent");
+sFile = Dialog.PickFile(JezykInterfejsu.Wybierz("Recent Files", "Ostatnie"), aResults, aDisplay, false, 0, "Recent");
 if (sFile.Length == 0) return;
 
 OpenOrActivateWindow(sFile, GetViewLevel(sFile));
@@ -4383,7 +4391,7 @@ iEnd = rtb.Index;
 if (iStart > iEnd) Util.Swap(ref iStart, ref iEnd);
 rtb.SelectRange(iStart, iEnd);
 iCount = rtb.SelectedText.Length;
-AddMessage(Util.Pluralize(iCount, JezykInterfejsu.Wybierz("character", "znak")));
+AddMessage(JezykInterfejsu.LiczbaZnakow(iCount));
 rtb.OldSelectionStart = rtb.SelectionStart;
 rtb.OldSelectionLength = rtb.SelectionLength;
 }
@@ -4400,7 +4408,7 @@ iStart = (int) a[0];
 iIndex = iStart;
 sText = rtb.Text;
 if (rtb.SelectionLength == 0) {
-AddMessage("Select Chunk");
+AddMessage(GetCommandAnnouncement(menuItem));
 }
 else {
 iStart = rtb.SelectionStart;
@@ -5784,7 +5792,7 @@ return;
 
 string[] aDisplay = new string[aResults.Length];
 for (int i = 0; i < aDisplay.Length; i++) aDisplay[i] = Path.GetFileName(aResults[i]);
-sFile = Dialog.PickFile("List Favorites", aResults, aDisplay, true, 0, "Favorites");
+sFile = Dialog.PickFile(JezykInterfejsu.Wybierz("List Favorites", "Ulubione"), aResults, aDisplay, true, 0, "Favorites");
 if (sFile.Length == 0) return;
 
 OpenOrActivateWindow(sFile, 0);
@@ -6332,10 +6340,13 @@ AddMessage(sText);
 
 if (menuItem == menuQuerySelected) {
 sText = rtb.SelectedText;
+if (sText.Length == 0 && JezykInterfejsu.Polski) AddMessage("Brak zaznaczenia");
+else {
 if (sText.Length == 0) sText = "No text!";
 if (this.KeyRepeat % 2 == 0) AddMessage(sText);
 else {
 Util.Spell(sText);
+}
 }
 }
 
