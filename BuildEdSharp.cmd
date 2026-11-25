@@ -12,7 +12,7 @@ echo EdSharp canonical build log > "!log!"
 echo Started %DATE% %TIME% >> "!log!"
 echo offline=!offline! >> "!log!"
 echo synonymsOutputRoot=!synonymsOutputRoot! >> "!log!"
-for %%F in (EdSharp.cs OpisyPolecen.cs AgreedMenuLayout.cs ControlledCommand.cs PromptCommandUi.cs ProblemReport.cs ProblemReportDialog.cs DialogRozwijaniaSnippetow.cs RozwijanieSnippetow.cs ArchiwumSnippetow.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs Localizacja\JezykInterfejsu.cs Wyrazenia.cs Synonimy.cs SynonimyOdmiany.cs SlownikiSynonimow.cs FormySynonimow.cs Zadania.cs Zmiany.cs ZapisFormatow.cs PdfExport.cs OriginalFormatSave.cs EdSharp.manifest Tektosyne.dll Ude.dll Synonyms\forms-resource.json Synonyms\plwordnet-forms.bin.gz) do if not exist "%%F" (echo ERROR: %%F not found. >> "!log!" & popd & exit /b 1)
+for %%F in (EdSharp.cs OpisyPolecen.cs AgreedMenuLayout.cs ControlledCommand.cs PromptCommandUi.cs ProblemReport.cs ProblemReportDialog.cs DialogRozwijaniaSnippetow.cs RozwijanieSnippetow.cs ArchiwumSnippetow.cs Aktualizacja.cs AktualizacjaEdytora.cs AktualizacjaRunner.cs Lbc.cs Say.cs Inix.cs KeyMap.cs Web.cs Pisownia.cs Skladniki.cs Csv.cs Sesja.cs Ustawienia.cs Localizacja\JezykInterfejsu.cs Wyrazenia.cs Synonimy.cs SynonimyOdmiany.cs SlownikiSynonimow.cs FormySynonimow.cs Zadania.cs Zmiany.cs ZapisFormatow.cs PdfExport.cs OriginalFormatSave.cs EdSharp.manifest Tektosyne.dll Ude.dll Synonyms\forms-resource.json Synonyms\plwordnet-forms.bin.gz) do if not exist "%%F" (echo ERROR: %%F not found. >> "!log!" & popd & exit /b 1)
 set "csc="
 for %%p in ("C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe" "C:\Program Files\Microsoft Visual Studio\2022\BuildTools\MSBuild\Current\Bin\Roslyn\csc.exe" "%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\csc.exe" "%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\csc.exe") do (if not defined csc if exist %%p set "csc=%%~p")
 if not defined csc echo ERROR: No csc.exe found. >> "!log!" & popd & exit /b 1
@@ -54,6 +54,8 @@ if exist EdSharp.ico set "icon=/win32icon:EdSharp.ico"
  echo /reference:Ude.dll
  echo /out:EdSharpNG.exe
  echo EdSharp.cs
+ echo Aktualizacja.cs
+ echo AktualizacjaEdytora.cs
  echo OpisyPolecen.cs
  echo AgreedMenuLayout.cs
  echo ControlledCommand.cs
@@ -89,6 +91,14 @@ echo C# compiler: !csc! >> "!log!"
 echo C# response: BuildEdSharp.csc.args.rsp >> "!log!"
 "!csc!" @BuildEdSharp.csc.args.rsp >> "!log!" 2>&1
 if errorlevel 1 goto failed
+rem The helper deliberately has its own entry point and must not be linked into EdSharpNG.exe.
+echo Building EdSharpUpdate.exe... >> "!log!"
+"!csc!" /nologo /target:winexe /platform:anycpu /optimize+ /reference:System.Runtime.Serialization.dll /out:EdSharpUpdate.exe Aktualizacja.cs AktualizacjaRunner.cs >> "!log!" 2>&1
+if errorlevel 1 goto failed
+if not exist EdSharpUpdate.exe (
+ echo ERROR: EdSharpUpdate.exe was not created. >> "!log!"
+ goto failed
+)
 if "!offline!"=="0" if exist "FetchConvertTools.ps1" "!powershellExe!" -NoProfile -ExecutionPolicy Bypass -File "FetchConvertTools.ps1" >> "!log!" 2>&1
 rem Keep our wrapper outside fetched Convert\liblouis; install it after the optional fetch.
 if exist "ConvertHelpers\brl2txt.bat" (

@@ -184,6 +184,10 @@ public class Ustawienia
             "Files that were open when you last left are opened again.  Work Continuity, in this same menu, also brings back the cursor positions.");
         o.Domyslna = "N"; l.Add(o);
 
+        o = new Opcja("AutoInstallVerifiedUpdate", "Automatically install a verified update at the next normal start", "przelacznik",
+            "Off by default. When on, EdSharp may download and verify a newer installer in the background. It starts that verified package only at a later normal start, before a document is opened. Recovery and files opened from the command line never start it automatically.");
+        o.Domyslna = "N"; l.Add(o);
+
         o = new Opcja("RecentFiles", "How many files the &recent list keeps", "liczba",
             "The length of the list on Alt+R.  Older entries drop off the end.");
         o.Min = 5; o.Max = 500; o.Domyslna = "100"; l.Add(o);

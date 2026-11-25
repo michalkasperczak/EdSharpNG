@@ -83,10 +83,24 @@ echo "[1/6] Budowa EdSharpNG.exe..."
 # Do trzech prob; binarka swiezsza od EdSharp.cs przerywa petle od razu, wiec
 # gotowy build z tej samej sesji nie jest budowany po raz drugi.
 needs_build() {
-    for source in EdSharp.cs Synonimy.cs SynonimyOdmiany.cs SlownikiSynonimow.cs FormySynonimow.cs Ustawienia.cs; do
+    for source in EdSharp.cs Aktualizacja.cs AktualizacjaEdytora.cs Synonimy.cs SynonimyOdmiany.cs SlownikiSynonimow.cs FormySynonimow.cs Ustawienia.cs BuildEdSharp.cmd; do
         [[ EdSharpNG.exe -nt "$source" ]] || return 0
     done
+    [[ -s EdSharpUpdate.exe ]] || return 0
+    for source in Aktualizacja.cs AktualizacjaRunner.cs BuildEdSharp.cmd; do
+        [[ EdSharpUpdate.exe -nt "$source" ]] || return 0
+    done
     return 1
+}
+require_tracked_update_sources() {
+    local source
+    for source in Aktualizacja.cs AktualizacjaEdytora.cs AktualizacjaRunner.cs; do
+        [[ -f "$source" ]] || { echo "BLAD: brak zrodla aktualizacji: $source" >&2; return 1; }
+        git ls-files --error-unmatch -- "$source" >/dev/null 2>&1 || {
+            echo "BLAD: zrodlo aktualizacji nie jest sledzone przez Git: $source" >&2
+            return 1
+        }
+    done
 }
 for proba in 1 2 3; do
     if ! needs_build; then
@@ -114,6 +128,7 @@ fi
     echo "BLAD: build nie utworzyl EdSharpNG.exe" >&2
     exit 1
 }
+[[ -s EdSharpUpdate.exe ]] || { echo "BLAD: build nie utworzyl EdSharpUpdate.exe" >&2; exit 1; }
 
 # Nie wydawaj dwoch roznych buildow pod tym samym numerem.
 OUT="$ROOT/dist/EdSharpNG_Setup_${VERSION}.exe"
@@ -151,6 +166,7 @@ mkdir -p "$STAGE"
 # i wolno go czyscic (patrz bezpiecznik na gorze skryptu).
 : > "$STAGE/.edsharp-staging"
 # Kopiujemy sledzone pliki, zeby staging nie dostal .git, logow ani starych buildow.
+require_tracked_update_sources
 # Pliki, ktorych NIE MA na dysku, pomijamy z ostrzezeniem, a nie wywalamy build:
 # repo dziedziczy z upstream dwie binarki-smieci o nazwach z GUID
 # (<guid>_EdSharp.exe, commit "Initial 5.0 beta."), a antywirus Windows kasuje
@@ -169,7 +185,20 @@ while IFS= read -r -d '' rel; do
     cp -a "$src" "$dst"
 done < <(git ls-files -z)
 # Artefakty buildu sa ignorowane, ale wymagane przez instalator.
-cp -a EdSharpNG.exe EdSharpNG-spellcheck.nvda-addon "$STAGE/"
+cp -a EdSharpNG.exe EdSharpUpdate.exe EdSharpNG-spellcheck.nvda-addon "$STAGE/"
+for rel in Aktualizacja.cs AktualizacjaEdytora.cs AktualizacjaRunner.cs; do
+    [[ -f "$STAGE/$rel" ]] || { echo "BLAD: staging nie zawiera wymaganego zrodla: $rel" >&2; exit 1; }
+    cmp -s "$ROOT/$rel" "$STAGE/$rel" || { echo "BLAD: staging ma inne bajty zrodla: $rel" >&2; exit 1; }
+done
+[[ -s "$STAGE/EdSharpUpdate.exe" ]] || { echo "BLAD: staging nie zawiera EdSharpUpdate.exe" >&2; exit 1; }
+cmp -s "$ROOT/EdSharpNG.exe" "$STAGE/EdSharpNG.exe" || {
+    echo "BLAD: staging zawiera inna binarke EdSharpNG.exe niz build" >&2
+    exit 1
+}
+cmp -s "$ROOT/EdSharpUpdate.exe" "$STAGE/EdSharpUpdate.exe" || {
+    echo "BLAD: staging zawiera inny helper EdSharpUpdate.exe niz build" >&2
+    exit 1
+}
 # Zasoby pobrane best-effort przez BuildEdSharp.cmd (ignorowane przez git).
 for rel in Ude.dll Convert; do
     [[ -e "$ROOT/$rel" ]] && cp -a "$ROOT/$rel" "$STAGE/"
@@ -190,9 +219,12 @@ for key in (b'AppVersion', b'VersionInfoVersion'):
         raise SystemExit(f'BLAD: oczekiwano jednej linii {key.decode()}, znaleziono {n}')
 # AppVerName to nazwa, ktora WIDZI uzytkownik (instalator, Panel sterowania).
 # Bez tego instalator 5.0.12 przedstawialby sie jako poprzednia wersja.
-raw, n = re.subn(rb'(?m)^AppVerName=.*?\r?$', b'AppVerName=EdSharpNG ' + ver.encode() + b' (beta)', raw)
+raw, n = re.subn(rb'(?m)^AppVerName=.*?\r?$', b'AppVerName=EdSharpNG ' + ver.encode(), raw)
 if n != 1:
     raise SystemExit(f'BLAD: oczekiwano jednej linii AppVerName, znaleziono {n}')
+raw, n = re.subn(rb'(?m)^OutputBaseFilename=.*?\r?$', b'OutputBaseFilename=EdSharpNG_Setup_' + ver.encode(), raw)
+if n != 1:
+    raise SystemExit(f'BLAD: oczekiwano jednej linii OutputBaseFilename, znaleziono {n}')
 # SourceDir/OutputDir POD KATALOG STAGINGU, nie zaszyte C:\EdSharp.  Bez tego
 # ISCC czytalby pliki z cudzego katalogu roboczego, a instalator wyladowalby
 # obok - czyli pakowalibysmy NIE TO, co wlasnie zbudowalismy i przetestowali.
@@ -247,7 +279,9 @@ if ! grep -q 'Successful compile' "$LOG_ISCC"; then
 fi
 
 mkdir -p "$ROOT/dist"
-cp -a "$STAGE/EdSharpNG_Setup.exe" "$OUT"
+STAGE_OUT="$STAGE/EdSharpNG_Setup_${VERSION}.exe"
+[[ -s "$STAGE_OUT" ]] || { echo "BLAD: Inno nie utworzyl oczekiwanego instalatora: $STAGE_OUT" >&2; exit 1; }
+cp -a "$STAGE_OUT" "$OUT"
 
 echo "[6/6] Weryfikacja swiezosci i tozsamosci binarki..."
 cmp -s "$ROOT/EdSharpNG.exe" "$STAGE/EdSharpNG.exe" || {

@@ -26,6 +26,8 @@ using System.Net;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
@@ -57,7 +59,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.134";
+public const string VersionString = "5.0.135";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -293,8 +295,21 @@ Sesja.Przygotuj(App.DataDir);
 // Kolejnosc jest wiec teraz taka: najpierw probujemy przywrocic, potem
 // otwieramy pliki z listy [Previous] i z wiersza polecenia, a puste okno
 // powstaje na samym koncu i TYLKO jesli nie ma ani jednego innego.
-Frame.PrzywrocSesje();
-if (App.ReadOption("OpenPrevious", "Y").ToLower().Substring(0, 1) != "n") {
+ReadOnlyCollection<string> cmdLineArgs = this.CommandLineArgs;
+string sUpdateToken = "";
+bool bUpdateArgument = cmdLineArgs.Count > 0 && String.Equals(cmdLineArgs[0], "--resume-update", StringComparison.Ordinal);
+bool bUpdateRequested = TryGetUpdateResumeToken(cmdLineArgs, out sUpdateToken);
+if (!bUpdateArgument && !bUpdateRequested) bUpdateRequested = Frame.TryGetPendingUpdateToken(out sUpdateToken);
+bool bUpdateRestored = bUpdateRequested && Frame.RestoreUpdateSession(sUpdateToken);
+if (bUpdateRequested) Frame.AddMessage(bUpdateRestored ? Frame.GetUpdateResumeMessage(sUpdateToken) : JezykInterfejsu.Wybierz("The update result was not confirmed. EdSharp started normally.", "Nie potwierdzono wyniku aktualizacji. EdSharp uruchomiono normalnie."), true);
+if (cmdLineArgs.Count == 0 && !bUpdateArgument && !bUpdateRequested) {
+if (Frame.TryStartPreparedAutomaticUpdate()) {
+e.Cancel = true;
+return;
+}
+}
+if (!bUpdateRestored) Frame.PrzywrocSesje();
+if (!bUpdateRestored && App.ReadOption("OpenPrevious", "Y").ToLower().Substring(0, 1) != "n") {
 string[] aFiles = App.ReadSectionKeys("Previous");
 int iCount = 0;
 foreach (string s in aFiles) {
@@ -309,8 +324,7 @@ if (iCount > 0) App.Frame.AddMessage(String.Format(JezykInterfejsu.Wybierz("Open
 }
 App.DeleteSection("Previous");
 
-ReadOnlyCollection<string> cmdLineArgs = this.CommandLineArgs;
-if (cmdLineArgs.Count > 0) {
+if (!bUpdateArgument && cmdLineArgs.Count > 0) {
 string sFile = cmdLineArgs[0];
 string sLine = "";
 string sColumn = "";
@@ -331,6 +345,7 @@ App.Frame.StartCiaglosciPracy();
 // Ostatnia rzecz po otwarciu plikow: start ma sie skonczyc, a dopiero potem
 // program moze zagladac do sieci.
 CheckForUpdateOnStartup();
+if (cmdLineArgs.Count == 0 && !bUpdateArgument && !bUpdateRequested) CheckForAutomaticUpdateOnStartup();
 // Skladniki konwersji - osobne sprawdzenie, wlasny watek, wlasny wylacznik.
 CheckComponentsOnStartup();
 };
@@ -376,7 +391,7 @@ System.Threading.Thread thread = new System.Threading.Thread(delegate() {
 try {
 int iHttp;
 string sNotes, sAssetUrl;
-string sTag = Util.FetchLatestRelease("michalkasperczak/EdSharpNG", "EdSharpNG_Setup.exe", out sNotes, out sAssetUrl, out iHttp);
+string sTag = Util.FetchLatestRelease("michalkasperczak/EdSharpNG", Util.EdSharpInstallerAssetContract, out sNotes, out sAssetUrl, out iHttp);
 // Date zapisujemy TYLKO po udanym sprawdzeniu.  Inaczej jeden dzien bez
 // internetu kasowalby sprawdzanie do nastepnej doby.
 if (sTag.Length == 0) return;
@@ -400,6 +415,36 @@ thread.Start();
 }
 catch {}
 } // CheckForUpdateOnStartup method
+
+public void CheckForAutomaticUpdateOnStartup() {
+try {
+if (!Ustawienia.CzyWlaczone(App.ReadOption("AutoInstallVerifiedUpdate", "N"))) return;
+System.Threading.Thread thread = new System.Threading.Thread(delegate() {
+try {
+string sOwnerRepo = "michalkasperczak/EdSharpNG";
+int iHttp;
+string sNotes, sAssetUrl;
+string sTag = Util.FetchLatestRelease(sOwnerRepo, Util.EdSharpInstallerAssetContract, out sNotes, out sAssetUrl, out iHttp);
+if (sTag.Length == 0) return;
+string sLatest = sTag.TrimStart('v', 'V').Trim();
+if (Util.CompareVersions(sLatest, App.VersionString) <= 0 || !AutomaticUpdateStore.CanPrepare(App.DataDir, sLatest)) return;
+string sName = Util.EdSharpInstallerAssetName(sTag);
+if (sName.Length == 0 || sAssetUrl.Length == 0) return;
+string sExpected = UpdateStore.FindInstallerSha256(sNotes, sAssetUrl, sName);
+if (sExpected.Length != 64) return;
+string sFile = Homer.Web.download(sAssetUrl, Path.GetTempPath(), "EdSharpNG_Auto_Setup.exe");
+if (sFile.Length == 0) return;
+try { AutomaticUpdateStore.SaveVerified(App.DataDir, sFile, sExpected, sLatest, DateTime.UtcNow); }
+finally { try { File.Delete(sFile); } catch {} }
+}
+catch {}
+});
+thread.IsBackground = true;
+thread.Priority = System.Threading.ThreadPriority.BelowNormal;
+thread.Start();
+}
+catch {}
+} // CheckForAutomaticUpdateOnStartup method
 
 // SKLADNIKI CONVERT PRZY STARCIE (zadanie 8, 5.0.85).
 //
@@ -463,6 +508,18 @@ thread.Start();
 catch {}
 } // CheckComponentsOnStartup method
 
+public static bool TryGetUpdateResumeToken(IEnumerable<string> args, out string token) {
+token = "";
+if (args == null) return false;
+List<string> values = new List<string>();
+foreach (string value in args) values.Add(value);
+if (values.Count != 2 || !String.Equals(values[0], "--resume-update", StringComparison.Ordinal)) return false;
+Guid id;
+if (!Guid.TryParseExact(values[1], "N", out id) || values[1] != id.ToString("N")) return false;
+token = values[1];
+return true;
+} // TryGetUpdateResumeToken method
+
 protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e) {
 /*
 Util.ActivatePid(Process.GetCurrentProcess().Id);
@@ -484,6 +541,16 @@ Win32.SetForegroundWindow(App.Frame.TopLevelControl.Handle);
 
 //Process.Start(Path.Combine(App.ProgramDir, "ForceWin.exe"), App.Frame.TopLevelControl.Handle.ToString());
 Win32.ForceWindow(App.Frame.TopLevelControl.Handle);
+
+string sUpdateToken = "";
+bool bUpdateArgument = e.CommandLine.Count > 0 && String.Equals(e.CommandLine[0], "--resume-update", StringComparison.Ordinal);
+if (bUpdateArgument) {
+if (TryGetUpdateResumeToken(e.CommandLine, out sUpdateToken)) {
+bool bRestored = App.Frame.RestoreUpdateSession(sUpdateToken);
+App.Frame.AddMessage(bRestored ? App.Frame.GetUpdateResumeMessage(sUpdateToken) : JezykInterfejsu.Wybierz("The update result was not confirmed. EdSharp remains open.", "Nie potwierdzono wyniku aktualizacji. EdSharp pozostaje otwarty."), true);
+}
+return;
+}
 
 if (e.CommandLine.Count == 0) return;
 string sFile = Util.Unquote(e.CommandLine[0]);
@@ -1432,7 +1499,7 @@ return App.Frame.ProcessCmdKey_Helper(ref msg, keyData);
 
 } // MdiChild class
 
-public class MdiFrame : Form {
+public partial class MdiFrame : Form {
 public string LastDescription = "";
 public bool KeyDescriber = false;
 public string KeyString = "";
@@ -8340,12 +8407,11 @@ public void ElevateVersion(bool bForce) {
 // programu, wiec F11 wreszcie ma skad brac paczki.
 string sOwnerRepo = "michalkasperczak/EdSharpNG";
 string sReleasesUrl = "https://github.com/" + sOwnerRepo + "/releases/latest";
-string sName = "EdSharpNG_Setup.exe";
 
 Util.Say(JezykInterfejsu.Wybierz("Checking for updates", "Sprawdzanie aktualizacji"));
 int iHttp;
 string sNotes, sAssetUrl;
-string sTag = Util.FetchLatestRelease(sOwnerRepo, sName, out sNotes, out sAssetUrl, out iHttp);
+string sTag = Util.FetchLatestRelease(sOwnerRepo, Util.EdSharpInstallerAssetContract, out sNotes, out sAssetUrl, out iHttp);
 if (sTag.Length == 0) {
 // DWA ROZNE POWODY, DWA ROZNE KOMUNIKATY.  404 znaczy, ze serwer odpowiedzial
 // i wydania po prostu nie ma - mowic wtedy o "sprawdz polaczenie z internetem"
@@ -8359,6 +8425,20 @@ return;
 
 string sLocal = App.VersionString;
 string sLatest = sTag.TrimStart('v', 'V').Trim();
+string sName = Util.EdSharpInstallerAssetName(sTag);
+if (sName.Length == 0) {
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Release {0} does not publish the exact EdSharpNG installer asset. It was NOT downloaded and your documents remain open.", "Wydanie {0} nie publikuje dokładnego pliku instalatora EdSharpNG. Nie zostało pobrane, a dokumenty pozostają otwarte."), sTag));
+return;
+}
+if (sAssetUrl.Length == 0) {
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Release {0} does not publish the exact EdSharpNG installer URL. It was NOT downloaded and your documents remain open.", "Wydanie {0} nie publikuje dokładnego adresu URL instalatora EdSharpNG. Nie zostało pobrane, a dokumenty pozostają otwarte."), sTag));
+return;
+}
+string sExpected = UpdateStore.FindInstallerSha256(sNotes, sAssetUrl, sName);
+if (sExpected.Length != 64) {
+Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Release {0} does not publish an unambiguous SHA-256 checksum for the exact installer. It was NOT downloaded and your documents remain open.", "Wydanie {0} nie publikuje jednoznacznej sumy SHA-256 dla dokładnego instalatora. Nie został pobrany, a dokumenty pozostają otwarte."), sTag));
+return;
+}
 int iCompare = Util.CompareVersions(sLatest, sLocal);
 // GDY WERSJA JEST AKTUALNA, NIE PYTAMY O NIC (poprawka 11.09.2026).
 // Do tej pory rownosc wersji konczyla sie pytaniem "Download and install
@@ -8384,9 +8464,7 @@ else sMsg = String.Format(JezykInterfejsu.Wybierz("EdSharp's version number ({0}
 if (Dialog.Confirm(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), sMsg, sDefault) != "Y") return;
 
 Util.Say(JezykInterfejsu.Wybierz("Downloading installer", "Pobieranie instalatora"));
-// Adres z API wydania; skladanie z nazwy tylko wtedy, gdy API go nie oddalo.
-string sUrl = (sAssetUrl.Length > 0) ? sAssetUrl : (sReleasesUrl + "/download/" + sName);
-string sFile = Homer.Web.download(sUrl, Path.GetTempPath(), sName);
+string sFile = Homer.Web.download(sAssetUrl, Path.GetTempPath(), sName);
 if (sFile.Length == 0) {
 Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The download did not complete.\nYou can download the installer manually from\n{0}", "Pobieranie nie zostało ukończone.\nInstalator możesz pobrać ręcznie z\n{0}"), sReleasesUrl));
 return;
@@ -8397,12 +8475,6 @@ return;
 // pobranego pliku i porownujemy.  Instalator, ktory nie zgadza sie z suma, NIE
 // jest uruchamiany - to jedyny moment, w ktorym program moze wykryc, ze zamiast
 // naszej paczki przyszlo cos innego (uszkodzone pobranie, podmiana w drodze).
-// Gdy w wydaniu sumy NIE MA, mowimy to wprost i pytamy o zgode, zamiast cicho
-// pominac kontrole - milczenie kazaloby userowi wierzyc, ze sprawdzenie bylo.
-string sExpected = "";
-Match matchSum = Regex.Match(sNotes == null ? "" : sNotes, "\\b([0-9a-fA-F]{64})\\b");
-if (matchSum.Success) sExpected = matchSum.Groups[1].Value.ToUpperInvariant();
-if (sExpected.Length == 64) {
 Util.Say(JezykInterfejsu.Wybierz("Checking the installer", "Sprawdzanie instalatora"));
 string sActual = Util.FileSha256(sFile);
 if (sActual.Length == 0) {
@@ -8416,14 +8488,12 @@ try { File.Delete(sFile); } catch {}
 Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("STOP: the downloaded installer does not match the checksum published with release {0}.\nIt was NOT started and has been deleted.\n\nThis can mean a broken download, or a file that is not ours.\nTry again later, or download it yourself from\n{1}", "STOP: pobrany instalator nie odpowiada sumie kontrolnej opublikowanej z wydaniem {0}.\nNie został uruchomiony i został usunięty.\n\nMoże to oznaczać uszkodzone pobieranie albo obcy plik.\nSpróbuj później albo pobierz go samodzielnie z\n{1}"), sTag, sReleasesUrl));
 return;
 }
-}
-else {
-if (Dialog.Confirm(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("Release {0} does not publish a checksum, so EdSharp cannot verify that the downloaded installer is genuine.\n\nRun it anyway?", "Wydanie {0} nie publikuje sumy kontrolnej, więc EdSharp nie może zweryfikować autentyczności pobranego instalatora.\n\nUruchomić go mimo to?"), sTag), "N") != "Y") {
-Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The installer was not started.\nThe downloaded file is here:\n{0}", "Instalator nie został uruchomiony.\nPobrany plik jest tutaj:\n{0}"), sFile));
-return;
-}
-}
 
+Util.Say(JezykInterfejsu.Wybierz("Preparing the verified update", "Przygotowywanie sprawdzonej aktualizacji"));
+InstallVerifiedUpdate(sFile, sExpected, sLatest);
+return;
+
+#if false // Zastąpione transakcją InstallVerifiedUpdate: nie uruchamiać instalatora przed checkpointem.
 Util.Say(JezykInterfejsu.Wybierz("Starting installer", "Uruchamianie instalatora"));
 // PROGRAM ZAMYKA SIE SAM PRZED AKTUALIZACJA (poprawka 12.09.2026).
 //
@@ -8491,6 +8561,7 @@ if (!ExitApp()) {
 // czeka w tle, wiec uczciwie mowimy, co sie stanie.
 Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The update was not installed, because closing EdSharp was cancelled.\nNothing was lost - your files are still open here.\n\nThe installer is ready at\n{0}\nand will start in a moment; you can close EdSharp and let it run, or cancel it and update later.", "Aktualizacja nie została zainstalowana, ponieważ anulowano zamknięcie EdSharp.\nNic nie utracono — pliki nadal są tutaj otwarte.\n\nInstalator jest gotowy pod adresem\n{0}\ni za chwilę się uruchomi; możesz zamknąć EdSharp i pozwolić mu działać albo anulować i zaktualizować później."), sFile));
 }
+#endif
 } // ElevateVersion method
 
 public void ReportProblem() {
@@ -22745,6 +22816,19 @@ return iByteCount;
 } // GetChars method
 } // MazoviaEncoding class
 
+[DataContract]
+internal sealed class GitHubReleasePayload {
+[DataMember(Name="tag_name")] public string TagName { get; set; }
+[DataMember(Name="body")] public string Body { get; set; }
+[DataMember(Name="assets")] public List<GitHubReleaseAsset> Assets { get; set; }
+}
+
+[DataContract]
+internal sealed class GitHubReleaseAsset {
+[DataMember(Name="name")] public string Name { get; set; }
+[DataMember(Name="browser_download_url")] public string DownloadUrl { get; set; }
+}
+
 public class Util {
 
 // DZIENNIK DIAGNOSTYCZNY - JEDNA DROGA ZAPISU DLA CALEGO PROGRAMU.
@@ -23223,46 +23307,77 @@ string sBody, sAsset;
 return FetchLatestRelease(sOwnerRepo, "", out sBody, out sAsset, out iStatus);
 } // FetchLatestReleaseTag method
 
-public static string FetchLatestRelease(string sOwnerRepo, string sAssetName, out string sBody, out string sAssetUrl, out int iStatus) {
-// Oddaj tag NAJNOWSZEGO wydania oraz - dolozone 11.09.2026 - opis wydania i
-// adres pliku instalatora.  Opis jest potrzebny, bo w nim publikujemy sume
-// kontrolna SHA-256 paczki; bez niej "bezpieczna aktualizacja" znaczylaby tylko
-// "pobierz i uruchom, co przyszlo", a to nie jest zadne zabezpieczenie.
-// Adres pliku bierzemy z API, a nie skladamy z nazwy, bo przy zmianie nazwy
-// artefaktu skladanie po cichu dawaloby 404 zamiast aktualizacji.
+public const string EdSharpInstallerAssetContract = "EdSharpNG_Setup_{tag}.exe";
+
+public static string EdSharpInstallerAssetName(string sTag) {
+string sVersion = (sTag == null ? "" : sTag).TrimStart('v', 'V').Trim();
+return IsSafeReleaseTag(sVersion) ? "EdSharpNG_Setup_" + sVersion + ".exe" : "";
+}
+
+public static string FetchLatestRelease(string sOwnerRepo, string sAssetContract, out string sBody, out string sAssetUrl, out int iStatus) {
 sBody = "";
 sAssetUrl = "";
 string sApiUrl = "https://api.github.com/repos/" + sOwnerRepo + "/releases/latest";
 string sFinalUrl = "";
 string sJson = Homer.Web.getPage(sApiUrl, out sFinalUrl, out iStatus);
-if (sJson.Length > 0) {
-Match matchBody = Regex.Match(sJson, "\"body\"\\s*:\\s*\"((?:[^\"\\\\]|\\\\.)*)\"");
-if (matchBody.Success) sBody = JsonUnescape(matchBody.Groups[1].Value);
-if (sAssetName != null && sAssetName.Length > 0) {
-// Kazdy artefakt wydania to obiekt z "name" i "browser_download_url";
-// szukamy pary, w ktorej nazwa zgadza sie z zadana.
-foreach (Match m in Regex.Matches(sJson, "\"name\"\\s*:\\s*\"([^\"]+)\"[^{}]*?\"browser_download_url\"\\s*:\\s*\"([^\"]+)\"")) {
-if (string.Equals(m.Groups[1].Value, sAssetName, StringComparison.OrdinalIgnoreCase)) { sAssetUrl = m.Groups[2].Value; break; }
-}
-if (sAssetUrl.Length == 0) {
-// Zapasowo: pierwszy artefakt .exe w wydaniu.  Lepiej wziac instalator o
-// innej nazwie niz nie zaktualizowac wcale.
-foreach (Match m in Regex.Matches(sJson, "\"browser_download_url\"\\s*:\\s*\"([^\"]+\\.exe)\"")) { sAssetUrl = m.Groups[1].Value; break; }
-}
-}
-Match matchTag = Regex.Match(sJson, "\"tag_name\"\\s*:\\s*\"([^\"]+)\"");
-if (matchTag.Success) return matchTag.Groups[1].Value;
-}
+string sTag;
+if (TryParseLatestReleaseJson(sJson, sOwnerRepo, sAssetContract, out sTag, out sBody, out sAssetUrl)) return sTag;
 string sPageUrl = "https://github.com/" + sOwnerRepo + "/releases/latest";
 Homer.Web.getPage(sPageUrl, out sFinalUrl);
 string sRedirect = (sFinalUrl == null ? "" : sFinalUrl).TrimEnd('/');
 int iSlash = sRedirect.LastIndexOf('/');
 if (iSlash >= 0 && iSlash < sRedirect.Length - 1) {
-string sTag = sRedirect.Substring(iSlash + 1);
-if (!sTag.Equals("latest", StringComparison.OrdinalIgnoreCase)) return sTag;
+string sRedirectTag = sRedirect.Substring(iSlash + 1);
+if (!sRedirectTag.Equals("latest", StringComparison.OrdinalIgnoreCase)) return sRedirectTag;
 }
 return "";
 } // FetchLatestRelease method
+
+public static bool TryParseLatestReleaseJson(string sJson, string sOwnerRepo, string sAssetContract, out string sTag, out string sBody, out string sAssetUrl) {
+sTag = "";
+sBody = "";
+sAssetUrl = "";
+if (String.IsNullOrEmpty(sJson) || !IsOwnerRepo(sOwnerRepo)) return false;
+try {
+GitHubReleasePayload release;
+using (MemoryStream stream = new MemoryStream(new UTF8Encoding(false, true).GetBytes(sJson))) release = (GitHubReleasePayload)new DataContractJsonSerializer(typeof(GitHubReleasePayload)).ReadObject(stream);
+if (release == null || !IsSafeReleaseTag(release.TagName)) return false;
+sTag = release.TagName;
+sBody = release.Body ?? "";
+if (String.IsNullOrEmpty(sAssetContract)) return true;
+string sName = sAssetContract.Replace("{tag}", sTag.TrimStart('v', 'V'));
+if (sName.Length == 0 || sName.IndexOf('{') >= 0 || sName.IndexOf('/') >= 0 || sName.IndexOf('\\') >= 0) return true;
+int iMatches = 0;
+if (release.Assets != null) foreach (GitHubReleaseAsset asset in release.Assets) {
+if (asset == null || !String.Equals(asset.Name, sName, StringComparison.Ordinal)) continue;
+if (!IsOwnReleaseAssetUrl(asset.DownloadUrl, sOwnerRepo, sTag, sName)) return true;
+iMatches++;
+if (iMatches == 1) sAssetUrl = asset.DownloadUrl;
+}
+if (iMatches != 1) sAssetUrl = "";
+return true;
+}
+catch (Exception) { sTag = ""; sBody = ""; sAssetUrl = ""; return false; }
+}
+
+static bool IsOwnerRepo(string sOwnerRepo) {
+if (String.IsNullOrEmpty(sOwnerRepo) || sOwnerRepo.IndexOf('/') <= 0 || sOwnerRepo.IndexOf('/') != sOwnerRepo.LastIndexOf('/')) return false;
+foreach (char c in sOwnerRepo) if (!(Char.IsLetterOrDigit(c) || c == '-' || c == '_' || c == '.' || c == '/')) return false;
+return sOwnerRepo.IndexOf(' ') < 0;
+}
+
+static bool IsSafeReleaseTag(string sTag) {
+if (String.IsNullOrEmpty(sTag)) return false;
+foreach (char c in sTag) if (!(Char.IsLetterOrDigit(c) || c == '-' || c == '_' || c == '.')) return false;
+return true;
+}
+
+static bool IsOwnReleaseAssetUrl(string sUrl, string sOwnerRepo, string sTag, string sName) {
+Uri uri;
+if (!Uri.TryCreate(sUrl, UriKind.Absolute, out uri) || !uri.Scheme.Equals("https", StringComparison.OrdinalIgnoreCase) || uri.Port != 443 || !uri.Host.Equals("github.com", StringComparison.OrdinalIgnoreCase) || uri.UserInfo.Length != 0 || uri.Query.Length != 0 || uri.Fragment.Length != 0) return false;
+string sPath = Uri.UnescapeDataString(uri.AbsolutePath);
+return String.Equals(sPath, "/" + sOwnerRepo + "/releases/download/" + sTag + "/" + sName, StringComparison.Ordinal) && String.Equals(Path.GetFileName(sPath), sName, StringComparison.Ordinal);
+}
 
 public static string JsonUnescape(string sText) {
 // Rozkoduj zawartosc lancucha JSON.  Opis wydania jest wieloliniowy, wiec bez
