@@ -59,7 +59,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.135";
+public const string VersionString = "5.0.136";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -3131,7 +3131,7 @@ public void RozwinSkrotSnippetu() {
 MdiChild child = this.Child;
 if (child == null || child.RTB == null) return;
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (GetUserGuard(child)) {
@@ -3728,7 +3728,7 @@ return Path.Combine(sProgramDir, "docs", "tutorial", "html", bPolish ? "pl" : "e
 
 static string GetCommandAnnouncement(ToolStripMenuItem menuItem) {
 // Name is the stable dispatch/Hotkeys.ini key, not the Polish display caption.
-if (!JezykInterfejsu.Polski) return menuItem.Name;
+if (!JezykInterfejsu.Polski && menuItem.Name != "Close Window" && menuItem.Name != "Close All but Current Window") return menuItem.Name;
 string sCaption = (menuItem.Text ?? "").Split('\t')[0];
 sCaption = Regex.Replace(sCaption, "&&|&", m => m.Length == 2 ? "&" : "").TrimEnd();
 if (sCaption.EndsWith("…", StringComparison.Ordinal)) sCaption = sCaption.Substring(0, sCaption.Length - 1).TrimEnd();
@@ -3950,65 +3950,7 @@ this.SetRecent(sFile);
 }
 
 if ((menuItem == menuFileSave) || (menuItem == menuFileSaveAs)) {
-string originalError;
-if (menuItem == menuFileSave && TrySaveOriginalDocument(child, out originalError)) {
-if (originalError.Length > 0) Dialog.Show(JezykInterfejsu.Wybierz("Save original document", "Zapisz oryginalny dokument"), originalError);
-return;
-}
-sFile = child.File;
-if ((menuItem == menuFileSave) && sFile.Contains(@"\")) sText = "";//AddMessage("Save");
-else {
-// ZAPISZ JAKO MA NAPRAWDE ZMIENIAC FORMAT, A NIE SAMA NAZWE.
-//
-// Zgloszenie MK 18.09.2026 (docs/UWAGI-MK-18.09.2026.md, wiersz 273):
-// "Mam otwarty jakis plik, naciskam Control+Shift+S (...) i mam do wyboru
-// rozne formaty".  Do tej pory Zapisz jako bralo nazwe z okna i wolalo
-// child.SaveTextOrRtfFile, czyli wpisywalo TRESC KONTROLKI bajt w bajt.
-// Nazwanie pliku "artykul.docx" dawalo plik z Markdownem w srodku - Word
-// takiego pliku nie otwiera, bo prawdziwy .docx to archiwum ZIP.
-// Zmierzone (testy/harness_zapis_formatow.cs, punkt 0): plik po starej
-// drodze NIE ma naglowka PK i zawiera surowe "# Naglowek".
-string sFilter = "";
-string sExtZrodla = Path.GetExtension(child.File).ToLower().TrimStart('.');
-if (sExtZrodla.Length == 0 && !child.IsRichTextDocument) sExtZrodla = "md";
-if (!Util.Equiv(Path.GetExtension(child.File), ".rtf"))
-sFilter = ZapisFormatow.BudujFiltr(sExtZrodla, CzytajWpisEksportu);
-sFile = Dialog.SaveFile("", sFile, sFilter);
-if (sFile.Length == 0) return;
-
-// KONWERSJA TYLKO WTEDY, GDY UZYTKOWNIK NAPRAWDE WYBRAL INNY FORMAT I
-// GDY MAMY CZYM KONWERTOWAC.  W kazdym innym przypadku idzie stara droga,
-// co do bajta - dodatek nie ma prawa zepsuc zapisu, ktory dzialal.
-string sExtCelu = Path.GetExtension(sFile).ToLower().TrimStart('.');
-if (ZapisFormatow.WymagaKonwersji(sExtZrodla, sExtCelu, CzytajWpisEksportu)) {
-if (!child.ConfirmDiskOverwrite(sFile)) return;
-WynikZapisu wyn = KonwertujDokumentDoPliku(child, rtb.Text, sExtZrodla, sFile);
-
-if (!wyn.Udane) {
-// NIE MELDUJEMY SUKCESU, KTOREGO NIE BYLO, I NIE RUSZAMY BUFORA.
-// Plik na dysku zostal taki, jaki byl (harness punkt 3), a dokument
-// w oknie dalej jest tym Markdownem, ktory uzytkownik pisal.
-Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), wyn.Powod);
-return;
-}
-
-// BUFOR EDYCJI ZOSTAJE PRZY ZRODLE.  Po wyeksportowaniu do .docx dalej
-// redagujemy Markdowna - gdybysmy przestawili child.File na .docx, to
-// nastepne Control+S nadpisaloby dokument Worda trescia kontrolki,
-// czyli dokladnie tym bledem, ktory tu naprawiamy.
-AddMessage(ZapisFormatow.KomunikatSukcesu(sExtCelu, Path.GetFileName(child.File)));
-return;
-}
-if (ZapisFormatow.FormatBogaty(sExtCelu) && sExtCelu != sExtZrodla
-&& (sExtCelu != "rtf" || ZapisFormatow.FormatZrodlowy(sExtZrodla))) {
-Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), JezykInterfejsu.Wybierz("No converter is configured for this format. The destination has not been changed.", "Nie skonfigurowano konwertera dla tego formatu. Miejsce docelowe nie zostało zmienione."));
-return;
-}
-}
-
-//Dialog.Show(sFile);
-//if (Path.GetExtension(sFile).Length == 0) sFile += ".txt";
-if (!child.SaveTextOrRtfFile(sFile)) return;
+SaveDocument(child, menuItem == menuFileSaveAs);
 }
 
 if (menuItem == menuFileExport) {
@@ -4286,7 +4228,7 @@ PickFileSlot();
 }
 
 if (menuItem == menuFileClose) {
-CloseWindow(child);
+if (CloseWindow(child) && this.MdiChildren.Length == 0) SetMessage(NoOpenDocumentsMessage());
 }
 
 if (menuItem == menuFileCloseAllButCurrentWindow) {
@@ -5048,7 +4990,7 @@ rtb.Text = sText;
 // rzeczy i komunikat jest jedynym sposobem, zeby wiedziec ktora.
 if (menuItem == menuMiscGuardDocument) {
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 bool bWasGuarded = GetUserGuard(child);
@@ -6281,7 +6223,7 @@ GoToMarkdownList(rtb, menuItem == menuNavigateNextList);
 if (menuItem == menuNavigateLinkList) {
 if (child == null) return;
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 ShowMarkdownLinkList(rtb);
@@ -6298,7 +6240,7 @@ ShowMarkdownLinkList(rtb);
 if (menuItem == menuNavigateNextLink || menuItem == menuNavigatePriorLink) {
 if (child == null) return;
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 GoToMarkdownLink(rtb, menuItem == menuNavigateNextLink);
@@ -6496,7 +6438,7 @@ AddMessage(JezykInterfejsu.Wybierz("Table of Contents works only on Markdown fil
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (rtb.ReadOnly) {
@@ -6532,7 +6474,7 @@ AddMessage(JezykInterfejsu.Wybierz("Footnotes work only on Markdown files!", "Pr
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"), bGlobalSpeech);
+AddMessage(PreviewReturnHint(), bGlobalSpeech);
 return;
 }
 if (menuItem == menuMiscInsertFootnote) {
@@ -6565,7 +6507,7 @@ AddMessage(JezykInterfejsu.Wybierz("Comments work only on Markdown files!", "Kom
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (menuItem == menuMiscInsertComment) {
@@ -6604,7 +6546,7 @@ AddMessage(JezykInterfejsu.Wybierz("Tracked changes work only on Markdown files!
 return;
 }
 if (child.MarkdownReviewMode && !bReadOnlyChange) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (rtb.ReadOnly && !bReadOnlyChange) {
@@ -6630,7 +6572,7 @@ AddMessage(JezykInterfejsu.Wybierz("Links work only on Markdown files!", "Łącz
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (rtb.ReadOnly) {
@@ -6673,7 +6615,7 @@ AddMessage(JezykInterfejsu.Wybierz("Tables work only on Markdown files!", "Tabel
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (rtb.ReadOnly) {
@@ -6698,7 +6640,7 @@ AddMessage(JezykInterfejsu.Wybierz("Lists work only on Markdown files!", "Listy 
 return;
 }
 if (child.MarkdownReviewMode) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 }
@@ -6733,7 +6675,7 @@ AddMessage(JezykInterfejsu.Wybierz("Task lists work only on Markdown files!", "L
 return;
 }
 if (child.MarkdownReviewMode && !bTylkoCzyta) {
-AddMessage(JezykInterfejsu.Wybierz("Close the preview first!", "Najpierw zamknij podgląd!"));
+AddMessage(PreviewReturnHint());
 return;
 }
 if (rtb.ReadOnly && !bTylkoCzyta) {
@@ -6873,7 +6815,7 @@ return;
 aResults = hl.ToArray();
 string[] aDisplay = new string[aResults.Length];
 for (int i = 0; i < aDisplay.Length; i++) aDisplay[i] = Path.GetFileName(aResults[i]);
-sDir = Dialog.Pick("Go to Folder", aResults, aDisplay, true, 0);
+sDir = Dialog.Pick(GetCommandAnnouncement(menuMiscGoToFolder), aResults, aDisplay, true, 0);
 if (sDir.Length == 0) return;
 
 Directory.SetCurrentDirectory(sDir);
@@ -9080,27 +9022,121 @@ Application.Exit();
 return true;
 } // ExitApp method
 
+private void SaveDocument(MdiChild child, bool bSaveAs) {
+HomerRichTextBox rtb = child.RTB;
+string originalError;
+if (!bSaveAs && TrySaveOriginalDocument(child, out originalError)) {
+if (originalError.Length > 0) Dialog.Show(JezykInterfejsu.Wybierz("Save original document", "Zapisz oryginalny dokument"), originalError);
+return;
+}
+string sFile = child.File;
+if (bSaveAs || !sFile.Contains(@"\")) {
+// ZAPISZ JAKO MA NAPRAWDE ZMIENIAC FORMAT, A NIE SAMA NAZWE.
+//
+// Zgloszenie MK 18.09.2026 (docs/UWAGI-MK-18.09.2026.md, wiersz 273):
+// "Mam otwarty jakis plik, naciskam Control+Shift+S (...) i mam do wyboru
+// rozne formaty".  Do tej pory Zapisz jako bralo nazwe z okna i wolalo
+// child.SaveTextOrRtfFile, czyli wpisywalo TRESC KONTROLKI bajt w bajt.
+// Nazwanie pliku "artykul.docx" dawalo plik z Markdownem w srodku - Word
+// takiego pliku nie otwiera, bo prawdziwy .docx to archiwum ZIP.
+// Zmierzone (testy/harness_zapis_formatow.cs, punkt 0): plik po starej
+// drodze NIE ma naglowka PK i zawiera surowe "# Naglowek".
+string sFilter = "";
+string sExtZrodla = Path.GetExtension(child.File).ToLower().TrimStart('.');
+if (sExtZrodla.Length == 0 && !child.IsRichTextDocument) sExtZrodla = "md";
+if (!Util.Equiv(Path.GetExtension(child.File), ".rtf"))
+sFilter = ZapisFormatow.BudujFiltr(sExtZrodla, CzytajWpisEksportu);
+sFile = Dialog.SaveFile("", sFile, sFilter);
+if (sFile.Length == 0) return;
+
+// KONWERSJA TYLKO WTEDY, GDY UZYTKOWNIK NAPRAWDE WYBRAL INNY FORMAT I
+// GDY MAMY CZYM KONWERTOWAC.  W kazdym innym przypadku idzie stara droga,
+// co do bajta - dodatek nie ma prawa zepsuc zapisu, ktory dzialal.
+string sExtCelu = Path.GetExtension(sFile).ToLower().TrimStart('.');
+if (ZapisFormatow.WymagaKonwersji(sExtZrodla, sExtCelu, CzytajWpisEksportu)) {
+if (!child.ConfirmDiskOverwrite(sFile)) return;
+WynikZapisu wyn = KonwertujDokumentDoPliku(child, rtb.Text, sExtZrodla, sFile);
+
+if (!wyn.Udane) {
+// NIE MELDUJEMY SUKCESU, KTOREGO NIE BYLO, I NIE RUSZAMY BUFORA.
+// Plik na dysku zostal taki, jaki byl (harness punkt 3), a dokument
+// w oknie dalej jest tym Markdownem, ktory uzytkownik pisal.
+Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), wyn.Powod);
+return;
+}
+
+// BUFOR EDYCJI ZOSTAJE PRZY ZRODLE.  Po wyeksportowaniu do .docx dalej
+// redagujemy Markdowna - gdybysmy przestawili child.File na .docx, to
+// nastepne Control+S nadpisaloby dokument Worda trescia kontrolki,
+// czyli dokladnie tym bledem, ktory tu naprawiamy.
+AddMessage(ZapisFormatow.KomunikatSukcesu(sExtCelu, Path.GetFileName(child.File)));
+return;
+}
+if (ZapisFormatow.FormatBogaty(sExtCelu) && sExtCelu != sExtZrodla
+&& (sExtCelu != "rtf" || ZapisFormatow.FormatZrodlowy(sExtZrodla))) {
+Dialog.Show(JezykInterfejsu.Wybierz("Save As", "Zapisz jako"), JezykInterfejsu.Wybierz("No converter is configured for this format. The destination has not been changed.", "Nie skonfigurowano konwertera dla tego formatu. Miejsce docelowe nie zostało zmienione."));
+return;
+}
+}
+
+//Dialog.Show(sFile);
+//if (Path.GetExtension(sFile).Length == 0) sFile += ".txt";
+child.SaveTextOrRtfFile(sFile);
+} // SaveDocument method
+
 public bool CloseWindow(MdiChild child) {
 bool bExiting = false;
 return CloseWindow(child, bExiting);
 } // CloseWindow method
 
+private DialogResult ConfirmDocumentClose(MdiChild child) {
+using (Form dlg = new Form()) {
+dlg.Text = JezykInterfejsu.Wybierz("Save changes?", "Zapisać zmiany?");
+dlg.FormBorderStyle = FormBorderStyle.FixedDialog;
+dlg.StartPosition = FormStartPosition.CenterParent;
+dlg.MinimizeBox = dlg.MaximizeBox = dlg.ShowInTaskbar = false;
+dlg.AutoSize = true;
+dlg.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+var contents = new FlowLayoutPanel { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink,
+FlowDirection = FlowDirection.TopDown, WrapContents = false, Padding = new Padding(12) };
+var question = new Label { AutoSize = true, MaximumSize = new Size(480, 0), UseMnemonic = false,
+Text = String.Format(JezykInterfejsu.Wybierz("Save changes to {0}?", "Zapisać zmiany w {0}?"), child.Text) };
+// NVDA reads the dialog name on entry, but not a label nested in a layout panel.
+dlg.AccessibleName = question.Text;
+var buttons = new FlowLayoutPanel { AutoSize = true, AutoSizeMode = AutoSizeMode.GrowAndShrink, WrapContents = false };
+var save = new Button { AutoSize = true, TabIndex = 0, Text = JezykInterfejsu.Wybierz("&Save", "&Zapisz"), DialogResult = DialogResult.Yes };
+var discard = new Button { AutoSize = true, TabIndex = 1, Text = JezykInterfejsu.Wybierz("&Don't save", "&Nie zapisuj"), DialogResult = DialogResult.No };
+var cancel = new Button { AutoSize = true, TabIndex = 2, Text = JezykInterfejsu.Wybierz("&Cancel", "&Anuluj"), DialogResult = DialogResult.Cancel };
+buttons.Controls.AddRange(new Control[] {save, discard, cancel});
+contents.Controls.AddRange(new Control[] {question, buttons});
+dlg.Controls.Add(contents);
+dlg.AcceptButton = save;
+dlg.CancelButton = cancel;
+dlg.ActiveControl = save;
+return dlg.ShowDialog(this);
+}
+} // ConfirmDocumentClose method
+
 public bool CloseWindow(MdiChild child, bool bExiting) {
 HomerRichTextBox rtb = child.RTB;
 if (rtb.Modified) {
-switch (Dialog.Confirm(JezykInterfejsu.Wybierz("Confirm", "Potwierdzenie"), JezykInterfejsu.Wybierz("Save changes to ", "Zapisać zmiany w ") + child.Text + "?", "Y")) {
-case "Y" :
-menuFileSave.PerformClick();
-if (rtb.Modified) return false;
-else break;
-case "" :
+switch (ConfirmDocumentClose(child)) {
+case DialogResult.Yes:
+try { SaveDocument(child, false); }
+catch (Exception ex) {
+Dialog.Show(JezykInterfejsu.Wybierz("Save document", "Zapisz dokument"), ex.Message);
 return false;
+}
+if (rtb.Modified) return false;
+break;
+case DialogResult.No: break;
+default: return false;
 }
 }
 
 if (bExiting && !rtb.Modified && child.File.IndexOf(@"\") >=0 && !Util.Equiv(child.File, App.IniFile)) Ini.WriteValue(App.IniFile, "Previous", child.File, rtb.Index.ToString());
 child.Close();
-return true;
+return child.IsDisposed;
 } // CloseWindow method
 
 // Persist the guard flag for a file in BOTH stores that remember it.
@@ -9270,7 +9306,7 @@ sbPaths.Append(Util.GetTempFolder() + "\n");
 string[] aNames = sbNames.ToString().Trim().Split('\n');
 string[] aPaths = sbPaths.ToString().Trim().Split('\n');
 
-string sDir = Dialog.Pick("Go to Special Folder", aPaths, aNames, true, 0);
+string sDir = Dialog.Pick(GetCommandAnnouncement(menuMiscGoToSpecialFolder), aPaths, aNames, true, 0);
 return sDir;
 } // PickSpecialFolder method
 
@@ -9487,13 +9523,8 @@ public void CloseAllButCurrentWindow() {
 MdiChild child = this.Child;
 if (child == null) return;
 
-object[] children = this.MdiChildren;
-int iCount = 0;
-foreach (MdiChild o in children) {
-if (o != child) {
-o.Close();
-iCount++;
-}
+foreach (MdiChild other in this.MdiChildren) {
+if (other != child && !other.IsDisposed && !CloseWindow(other)) break;
 }
 } // CloseAllButCurrent method
 
@@ -9900,8 +9931,17 @@ else AddMessage("Folder " + sDir + " not found!");
 */
 } //FileFind method
 
+private static string NoOpenDocumentsMessage() {
+return JezykInterfejsu.Wybierz("No open documents", "Brak otwartych dokumentów");
+} // NoOpenDocumentsMessage method
+
+private static string PreviewReturnHint() {
+return JezykInterfejsu.Wybierz("Press Escape to return to editing.", "Naciśnij Escape, aby wrócić do edycji.");
+} // PreviewReturnHint method
+
 public void CurrentWindows() {
 object[] children = this.MdiChildren;
+if (children.Length == 0) { SetMessage(NoOpenDocumentsMessage()); return; }
 string sTitles = "";
 foreach (MdiChild child in children) {
 sTitles += child.Text + "\n";
@@ -11646,14 +11686,14 @@ private bool HandleFileSlotKey(Keys keyData) {
 		if (hashKey.ContainsKey(keyData)) return false;
 
 		if (this.KeyDescriber) {
-		AddMessage(JezykInterfejsu.Wybierz("Close Window", "Zamknij okno"));
+		string[] summary = GetKeySummary(menuFileClose);
+		SetMessage(summary[0]);
+		AddMessage(Util.KeyToSpoken(keyData));
+		AddMessage(summary[2]);
 		return true;
 		}
 
-		MdiChild child = this.Child;
-		if (child == null) return true;
-		SetMessage("Close Window");
-		CloseWindow(child);
+		if (this.Child != null) menuFileClose.PerformClick();
 		return true;
 		} // HandleCloseWindowKey method
 

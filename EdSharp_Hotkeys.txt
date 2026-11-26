@@ -255,8 +255,8 @@ Go to Window, Control+digit, Go to an open editing window by the order it was op
 Preview, Escape, Toggle the Markdown preview of the current .md file, and return to editing from it
 Detached Preview, Shift+Escape, Open the Markdown preview without following the editing cursor, or switch synchronization while previewing
 Current Windows, F4, Activate an editing window from a list of those currently open
-Close Window, Control+F4, Close current editing window, also on Control+W
-Close All but Current Window, Control+Shift+W, Close all editing windows except the current one
+Close Window, Control+F4, Close current document, also on Control+W; ask about unsaved changes
+Close All but Current Window, Control+Shift+W, Close other documents; ask about unsaved changes
 Exit EdSharp, Alt+F4, Exit the EdSharp application
 
 Arrange Icons, Alt+F11, Arrange open windows

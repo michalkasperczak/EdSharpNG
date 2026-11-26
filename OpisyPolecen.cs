@@ -236,8 +236,8 @@ public static class OpisyPolecen
         Dodaj(d, "Preview", "Przełącza podgląd Markdown bieżącego pliku i wraca do edycji");
         Dodaj(d, "Detached Preview", "Otwiera odłączony podgląd Markdown albo przełącza synchronizację podglądu");
         Dodaj(d, "Current Windows", "Uaktywnia okno edycji z listy bieżąco otwartych okien");
-        Dodaj(d, "Close Window", "Zamyka bieżące okno edycji");
-        Dodaj(d, "Close All but Current Window", "Zamyka wszystkie okna edycji oprócz bieżącego");
+        Dodaj(d, "Close Window", "Zamyka bieżący dokument; pyta o zapis niezapisanych zmian");
+        Dodaj(d, "Close All but Current Window", "Zamyka pozostałe dokumenty; pyta o zapis niezapisanych zmian");
         Dodaj(d, "Exit EdSharp", "Kończy działanie EdSharp");
         Dodaj(d, "Arrange Icons", "Rozmieszcza otwarte okna");
         Dodaj(d, "Cascade", "Układa otwarte okna kaskadowo");

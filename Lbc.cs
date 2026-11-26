@@ -758,7 +758,7 @@ public static class HelpDialog
             tb.WordWrap = true;
             tb.Font = new Font(FontFamily.GenericMonospace, 10f);
             tb.Text = sText;
-            tb.AccessibleName = "Help text";
+            tb.AccessibleName = JezykInterfejsu.Wybierz("Help text", "Tekst pomocy");
             tb.TabIndex = 0;
             tb.SelectionStart = 0;
             tb.SelectionLength = 0;
@@ -2194,7 +2194,7 @@ public class LbcDialog : IDisposable
         {
             TextBox tbHelp = dlgHelp.addMemo(sbHelp.ToString(), null);
             tbHelp.ReadOnly = true;
-            tbHelp.AccessibleName = "Help text";
+            tbHelp.AccessibleName = JezykInterfejsu.Wybierz("Help text", "Tekst pomocy");
             dlgHelp.runWithButtons(new string[] { "OK" }, false);
         }
     }
