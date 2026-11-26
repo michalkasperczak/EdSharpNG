@@ -59,7 +59,7 @@ public class App : WindowsFormsApplicationBase {
 // sobie 5.0.1 - czyli po instalacji nie bylo JAK sprawdzic, ktora wersje sie
 // ma.  Dla osoby niewidomej testujacej kolejne paczki to najwazniejsza
 // informacja w calym oknie About.
-public const string VersionString = "5.0.136";
+public const string VersionString = "5.0.137";
 // Sygnalista resolves only a plain HTTPS endpoint from the separately packaged
 // public/test resource file.  No fallback browser, mailto address or secret is
 // compiled into the client.
@@ -8423,7 +8423,7 @@ if (sActual.Length == 0) {
 Dialog.Show(JezykInterfejsu.Wybierz("Elevate Version", "Aktualizacja wersji"), String.Format(JezykInterfejsu.Wybierz("The downloaded installer could not be checked, so it was NOT started.\nThe file is here, if you want to inspect it yourself:\n{0}", "Nie można było sprawdzić pobranego instalatora, więc go nie uruchomiono.\nPlik jest tutaj, jeśli chcesz sprawdzić go samodzielnie:\n{0}"), sFile));
 return;
 }
-if (sActual != sExpected) {
+if (!String.Equals(sActual, sExpected, StringComparison.OrdinalIgnoreCase)) {
 // Plik kasujemy: zostawienie w katalogu tymczasowym pliku o nazwie
 // EdSharpNG_Setup.exe, ktory nie jest nasza paczka, samo w sobie jest pulapka.
 try { File.Delete(sFile); } catch {}
